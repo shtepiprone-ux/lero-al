@@ -112,7 +112,7 @@ Spacing uses Tailwind's default 4px scale (`gap-2 = 8px`, `p-4 = 16px`, …). Th
 |---|---|---|
 | Page section vertical rhythm | `py-8 sm:py-12 lg:py-16 2xl:py-20` | Public sections. Add the `2xl:` step (older pages stopped at `md:py-16`). |
 | Page horizontal padding | owned by the container utility (`.container-wide` / `.container-admin`) | Do NOT add per-page `px-*` that fights the container. |
-| Card padding | `p-4` (default) / `p-3` (compact, e.g. AdminCardList compact mode) | One of the two; no `p-5`/`p-7` one-offs. |
+| Card padding | `p-4` (default) / `p-3` (compact) | One of the two; no `p-5`/`p-7` one-offs. |
 | Control gap (toolbars/rows) | `gap-2` (tight) / `gap-3` / `gap-4` | Toolbars are `flex items-center gap-2`. |
 | Grid gap | `gap-4 lg:gap-6` | Card/listing grids. |
 | Stack gap (form fields, list items) | `space-y-3` / `space-y-4` / `gap-4` | One per surface; consistent within a form. |
@@ -142,8 +142,8 @@ Every visual element belongs to exactly one tier. This determines where it may b
 | Tier | Definition | Lives in | Responsive ownership |
 |---|---|---|---|
 | **1. Primitive UI** | Atomic, domain-agnostic (Button, Input, Combobox, Dialog, Sheet, DropdownMenu, Card, Badge, Tabs, Table primitive). | `src/components/ui/*` | The primitive. Consumers do NOT restyle its internals. Single-source (`ui-rules.md §0`): one Button, one Combobox. |
-| **2. Global layout primitive** | Admin specialisations **AdminPageShell, AdminTable, AdminCardList**. The public half of this tier — **PageShell, PageHeader, Section, FilterBar** — was deleted (Task 788, 2026-09-05): zero production consumers, kept alive only by their own closed-loop Storybook stories. See §11.1/§12a and §18 for the retired prescriptive fragments this leaves behind. | `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
-| **3. Data-surface primitive** | Tabular/list/grid surfaces: AdminTable, AdminCardList, listing grid, card list. | `src/components/admin/*`, `src/modules/*/components` | Owns the table↔card switch (§10) and column visibility. |
+| **2. Global layout primitive** | Admin specialisations **AdminPageShell, AdminTable** (adapter over `MantineDataTableToCards`, Task 877; the separate legacy card list is deleted). The public half of this tier — **PageShell, PageHeader, Section, FilterBar** — was deleted (Task 788, 2026-09-05): zero production consumers, kept alive only by their own closed-loop Storybook stories. See §11.1/§12a and §18 for the retired prescriptive fragments this leaves behind. | `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
+| **3. Data-surface primitive** | Tabular/list/grid surfaces: AdminTable (adapter over `MantineDataTableToCards`, Task 877), listing grid, card list. | `src/components/admin/*`, `src/modules/*/components` | Owns the table↔card switch (§10) and column visibility. |
 | **4. Domain component** | Feature-specific composition (ListingCard, ListingsFilters, CabinetShell, AdminListingsTable). | `src/modules/*`, feature folders | Composes tiers 1–3. May choose a `tableAt` decision and pass a `cardRow`, but may NOT invent a new container/spacing/table style. |
 
 Rule: **layout styling flows down from tiers 1–3; domain components (tier 4) consume, never re-author it.** A tier-4 component that hand-rolls `max-w-* mx-auto`, a raw `<table>`, or a custom mobile-overlay is a violation and a migration target.
@@ -164,7 +164,7 @@ Rule: **layout styling flows down from tiers 1–3; domain components (tier 4) c
 
 1. Every admin route wraps content in **AdminPageShell** (data-container / `.container-admin`).
 2. AdminPageShell header = title + optional countBadge + optional subtitle + an optional actions slot (right-aligned at `md:+`, stacked `<md`), with a FilterBar slot below the header.
-3. Tabular data uses **AdminTable** (Sprint 28 primitive). Non-tabular row data uses **AdminCardList** directly. No raw `<table>` and no card-imitating `<div>` rows outside these primitives in admin routes.
+3. Tabular data uses **AdminTable** (Sprint 28 primitive). (The separate legacy card list was deleted in Task 877; its cards are `MantineDataTableToCards` `CardConfig`.) No raw `<table>` and no card-imitating `<div>` rows outside these primitives in admin routes.
 4. Admin content fills the main area up to `2xl:`, then caps at **1792px** (`.max-w-10xl`). Admin does NOT use `2xl:grid-cols-N` for tables — natural column widths consume available space.
 5. Admin inherits the same spacing, typography, overlay, and form rules as the rest of the app; only its container width and density differ.
 
@@ -182,7 +182,7 @@ Every data surface declares ONE of these responsive strategies. The decision is 
 | `tableAtXl` | Cards `<xl:`, table `xl:+` (1280). | Very wide tables (≥8 columns) that won't fit at 1024. Requires orchestrator note. |
 | `detailLayout` | Two-column detail at `lg:+`, stacked below. | Record-detail pages (user detail, listing detail). |
 | `formLayout` | Single bounded column (`form-container`); no table. | Create/edit forms, settings. |
-| `nonTabular` | AdminCardList (structured cards) at all widths. | Row data that is never tabular. |
+| `nonTabular` | Structured cards (`CardConfig`) at all widths — no dedicated primitive since Task 877 deleted the legacy card list. | Row data that is never tabular. |
 
 Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (sticky-first + 1–2 critical, e.g. price/status), `'sm'` (640+), `'md'` (768+), `'lg'` (1024+), `'xl'` (1280+). Sticky first column applies at `lg:+` only. Cards must carry an explicit `cardRow` (`title/subtitle/meta/trailing`) for any surface with non-trivial row visuals; synthesis from columns is a best-effort fallback only.
 
@@ -338,7 +338,7 @@ Every `Select` trigger and `Combobox` button-variant trigger MUST display its se
 
 ## §13 — Cards + grids
 
-1. Card = the Card primitive (or AdminCardList structured card). Padding `p-4` (or `p-3` compact). No inline ad-hoc card `<div>` patterns (`admin/page.tsx`, `CabinetShell` inline cards are migration targets).
+1. Card = the Card primitive (or a `MantineDataTableToCards` `CardConfig` card). Padding `p-4` (or `p-3` compact). No inline ad-hoc card `<div>` patterns (`admin/page.tsx`, `CabinetShell` inline cards are migration targets).
 2. Grid = `grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6` for catalog/listing surfaces; tune columns to content but ALWAYS define a `2xl:` step.
 3. Cards must not fix a pixel width; they fill their grid track (`w-full min-w-0`).
 4. Card internal rows obey §6 (`min-w-0` + truncate/line-clamp).
@@ -374,7 +374,7 @@ Every `Select` trigger and `Combobox` button-variant trigger MUST display its se
 ❌ Arbitrary spacing for rhythm: p-[13px], gap-[7px], mt-[22px]
 ❌ overflow-hidden / truncate used to hide a layout-overflow bug (fix min-w-0 / flex-wrap)
 ❌ overflow-x-auto on toolbars/filter rows (acceptable ONLY for tables)
-❌ Raw <table> or card-imitating <div> rows outside AdminTable/AdminCardList in admin
+❌ Raw <table> or card-imitating <div> rows outside AdminTable in admin
 ❌ Hand-rolled fixed inset-0 mobile overlay instead of Sheet/Dialog
 ❌ Emergency z-index: z-[999], z-[9999]
 ❌ Duplicated mobile/desktop JSX render trees for heavy content (render once, adapt with CSS)

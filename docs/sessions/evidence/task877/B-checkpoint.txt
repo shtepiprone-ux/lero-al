@@ -1,0 +1,1 @@
+Phase B checkpoint: typecheck + T1 (7/7) - see B-typecheck.txt, B-T1.txt

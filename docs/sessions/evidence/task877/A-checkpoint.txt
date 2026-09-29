@@ -1,0 +1,5 @@
+Phase A checkpoint (re-entry §16.4)
+typecheck: EXIT_CODE=0 (A-typecheck.txt)
+AdminUsersTable.smoke.test.tsx: 21/21, EXIT_CODE=0 (A-usersTable-smoke.txt)
+check:story-coverage: 114 covered, 0 unproven, EXIT_CODE=0 (A-story-coverage.txt)
+Review 1 items: 3 (02d) DONE; 1 (zIndex map) DONE; 2 (chevron F4 rule) DONE; 4 (card Map) DONE.

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { expect } from 'storybook/test'
 import { Badge, Avatar, ActionIcon, Group, Text } from '@mantine/core'
 import { ShieldOff, ChevronRight } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
@@ -180,6 +181,109 @@ export const CardsBelowMd: Story = {
           card={makeCardConfig(l)}
           emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
           cardsBelow="md"
+        />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Task 877 (R1, GR-3a EXTEND — the four exports below prove the additive props on the SAME real pattern;
+// no parallel Story). `onRowClick` / `visibleFrom` / `stickyColumnIndex` / `CardConfig.detail` are all
+// optional, so `Default` above renders unchanged. Fixtures reuse the labelled rows and `storyT` strings above.
+
+// Row + card become interactive: `tabIndex=0`, Enter/Space, hover highlight and a trailing chevron
+// (cards: the automatic chevron, because this fixture's `actions` return an element only in `Default`).
+export const RowClick: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const { actions: _actions, ...cardWithoutActions } = makeCardConfig(l)
+    void _actions
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...makeArgs(l)}
+          card={cardWithoutActions}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
+          onRowClick={() => {}}
+        />
+      </MantineStoryShell>
+    )
+  },
+  parameters: { throwPlayFunctionExceptions: true },
+  play: async ({ canvasElement }) => {
+    expect(canvasElement.querySelector('[tabindex="0"]')).not.toBeNull()
+  },
+}
+
+// `TableColumn.visibleFrom`: the role column appears from `md`, the date column from `lg`.
+export const ResponsiveColumns: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const args = makeArgs(l)
+    const columns = args.columns.map((col) =>
+      col.key === 'role'
+        ? { ...col, visibleFrom: 'md' as const }
+        : col.key === 'date'
+          ? { ...col, visibleFrom: 'lg' as const }
+          : col,
+    )
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...args}
+          columns={columns}
+          card={makeCardConfig(l)}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
+        />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// `stickyColumnIndex`: the first column keeps its place while the wide table scrolls sideways. The column
+// set is the same labelled columns repeated (no fixed widths), so the nowrap content exceeds the viewport.
+export const StickyColumn: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const args = makeArgs(l)
+    const wide = [1, 2, 3].flatMap((n) =>
+      args.columns.map((col) => ({ ...col, key: `${col.key}_${n}`, width: undefined })),
+    )
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...args}
+          columns={wide}
+          card={makeCardConfig(l)}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
+          stickyColumnIndex={0}
+        />
+      </MantineStoryShell>
+    )
+  },
+}
+
+// `CardConfig.detail`: a free-form region below ONE divider where `meta[]` is absent.
+export const CardDetail: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const { meta: _meta, ...cardWithoutMeta } = makeCardConfig(l)
+    void _meta
+    const card: CardConfig<StoryRow> = {
+      ...cardWithoutMeta,
+      detail: (row) => (
+        <Group gap="xs" wrap="wrap">
+          <Badge color="gray" variant="light" size="sm">{storyT(l, 'storybook.mantine.admin_table_col_role')}</Badge>
+          <Text size="sm" c="gray.7">{row.date}</Text>
+        </Group>
+      ),
+    }
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...makeArgs(l)}
+          card={card}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
         />
       </MantineStoryShell>
     )

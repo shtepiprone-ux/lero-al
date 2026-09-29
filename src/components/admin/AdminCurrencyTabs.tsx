@@ -1,32 +1,36 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { AdminCurrenciesManager } from '@/components/admin/AdminCurrenciesManager'
-import { AdminExchangeProvidersManager } from '@/components/admin/AdminExchangeProvidersManager'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import type { DBCurrency, DBExchangeProvider } from '@/types/database'
+import { Tabs } from '@mantine/core'
 
 interface Props {
-  currencies: DBCurrency[]
-  providers: DBExchangeProvider[]
+  /** The currencies tab body (the container, passed by the page). */
+  currencies: ReactNode
+  /** The exchange-providers tab body (the container, passed by the page). */
+  providers: ReactNode
 }
 
+/**
+ * Presentational tab frame of `/admin/currency` (Task 877): Mantine `Tabs` (TailAdmin §6c through the
+ * theme) around two slots. It renders no data of its own — the page passes the two containers in.
+ */
 export function AdminCurrencyTabs({ currencies, providers }: Props) {
   const t = useTranslations('admin.currency')
 
   return (
-    <Tabs defaultValue="currencies" className="flex flex-col gap-6">
-      <TabsList className="w-fit">
-        <TabsTrigger value="currencies">{t('tab_currencies')}</TabsTrigger>
-        <TabsTrigger value="providers">{t('tab_providers')}</TabsTrigger>
-      </TabsList>
+    <Tabs defaultValue="currencies">
+      <Tabs.List>
+        <Tabs.Tab value="currencies">{t('tab_currencies')}</Tabs.Tab>
+        <Tabs.Tab value="providers">{t('tab_providers')}</Tabs.Tab>
+      </Tabs.List>
 
-      <TabsContent value="currencies">
-        <AdminCurrenciesManager initialCurrencies={currencies} />
-      </TabsContent>
-      <TabsContent value="providers">
-        <AdminExchangeProvidersManager initialProviders={providers} />
-      </TabsContent>
+      <Tabs.Panel value="currencies" pt="xl">
+        {currencies}
+      </Tabs.Panel>
+      <Tabs.Panel value="providers" pt="xl">
+        {providers}
+      </Tabs.Panel>
     </Tabs>
   )
 }

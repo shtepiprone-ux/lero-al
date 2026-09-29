@@ -1,0 +1,99 @@
+ M docs/component-catalog.md
+ M docs/design-system.md
+ M docs/mantine-tailadmin-migration-tracker.md
+ M docs/responsive-storybook-inventory.md
+ M docs/storybook-governance.md
+ M scripts/check-locale-leak.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/currency/page.tsx
+ M src/app/globals.css
+ D src/components/admin/AdminCardList.stories.tsx
+ D src/components/admin/AdminCardList.tsx
+ D src/components/admin/AdminCurrenciesManager.stories.tsx
+ M src/components/admin/AdminCurrenciesManager.tsx
+ M src/components/admin/AdminCurrencyTabs.tsx
+ M src/components/admin/AdminPageHeader.tsx
+ D src/components/admin/AdminTable.stories.tsx
+ M src/components/admin/AdminTable.tsx
+ M src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+ M src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+ M src/design-system/mantine/theme.ts
+ M src/stories/mantine/primitives/Table.stories.tsx
+ M src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx
+ M src/stories/patterns/mantine/DashboardHeader.stories.tsx
+?? docs/sessions/2026-09-29-task877-admin-currency-and-shared-admin-adapters.md
+?? docs/sessions/evidence/task877/01-status-before.txt
+?? docs/sessions/evidence/task877/02a-census-page.txt
+?? docs/sessions/evidence/task877/02b-admintable-usage.txt
+?? docs/sessions/evidence/task877/02c-pageheader-consumers.txt
+?? docs/sessions/evidence/task877/02d-references-before.txt
+?? docs/sessions/evidence/task877/03-baseline-diff.txt
+?? docs/sessions/evidence/task877/03a-census-update-baseline.txt
+?? docs/sessions/evidence/task877/03b-removed-keys-classified.txt
+?? docs/sessions/evidence/task877/10-platform.txt
+?? docs/sessions/evidence/task877/11-tests.txt
+?? docs/sessions/evidence/task877/11b-tests.txt
+?? docs/sessions/evidence/task877/12-rls-guards.txt
+?? docs/sessions/evidence/task877/13-typecheck.txt
+?? docs/sessions/evidence/task877/14-lint.txt
+?? docs/sessions/evidence/task877/15-story-coverage.txt
+?? docs/sessions/evidence/task877/16-census-page.txt
+?? docs/sessions/evidence/task877/17-rendered-scope.txt
+?? docs/sessions/evidence/task877/18-rendered-scope-verify.txt
+?? docs/sessions/evidence/task877/19-census-changed.txt
+?? docs/sessions/evidence/task877/20-census-changed-verify.txt
+?? docs/sessions/evidence/task877/21-i18n.txt
+?? docs/sessions/evidence/task877/22-check-stories.txt
+?? docs/sessions/evidence/task877/23b-governance-tailwind.txt
+?? docs/sessions/evidence/task877/23c-references-after.txt
+?? docs/sessions/evidence/task877/24-build-storybook.txt
+?? docs/sessions/evidence/task877/24b-locale-leak.txt
+?? docs/sessions/evidence/task877/25-file-integrity.txt
+?? docs/sessions/evidence/task877/25b-file-integrity.txt
+?? docs/sessions/evidence/task877/25c-file-integrity-final.txt
+?? docs/sessions/evidence/task877/26-mojibake.txt
+?? docs/sessions/evidence/task877/26b-mojibake-final.txt
+?? docs/sessions/evidence/task877/27-build.txt
+?? docs/sessions/evidence/task877/28-hash-object.txt
+?? docs/sessions/evidence/task877/29-status-after.txt
+?? docs/sessions/evidence/task877/30-gr3b-gr3c-measurements.json
+?? docs/sessions/evidence/task877/A-checkpoint.txt
+?? docs/sessions/evidence/task877/A-story-coverage.txt
+?? docs/sessions/evidence/task877/A-typecheck.txt
+?? docs/sessions/evidence/task877/A-usersTable-smoke.txt
+?? docs/sessions/evidence/task877/B-T1.txt
+?? docs/sessions/evidence/task877/B-checkpoint.txt
+?? docs/sessions/evidence/task877/B-typecheck.txt
+?? docs/sessions/evidence/task877/chain-done.txt
+?? docs/sessions/evidence/task877/plant-p1-post-hash.txt
+?? docs/sessions/evidence/task877/plant-p1-pre-hash.txt
+?? docs/sessions/evidence/task877/plant-p1-run.txt
+?? docs/sessions/evidence/task877/plant-p2-post-hash.txt
+?? docs/sessions/evidence/task877/plant-p2-pre-hash.txt
+?? docs/sessions/evidence/task877/plant-p2-run.txt
+?? docs/sessions/evidence/task877/plant-p3-post-hash.txt
+?? docs/sessions/evidence/task877/plant-p3-pre-hash.txt
+?? docs/sessions/evidence/task877/plant-p3-run.txt
+?? docs/sessions/evidence/task877/plant-p4-post-hash.txt
+?? docs/sessions/evidence/task877/plant-p4-pre-hash.txt
+?? docs/sessions/evidence/task877/plant-p4-run.txt
+?? docs/sessions/evidence/task877/r3/
+?? docs/sessions/evidence/task877/r4/
+?? docs/sessions/evidence/task877/r5/
+?? src/components/admin/AdminCurrenciesView.tsx
+?? src/components/admin/CurrencyDetailDialogView.tsx
+?? src/components/admin/CurrencyFormDialogView.tsx
+?? src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+?? src/components/admin/__tests__/AdminTable.adapter.test.tsx
+?? src/stories/_StoryPageGutter.tsx
+?? src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+?? src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx
+?? src/stories/patterns/mantine/AdminPageHeader.stories.tsx
+?? src/stories/patterns/mantine/AdminTable.stories.tsx
+?? src/stories/patterns/mantine/CurrencyDetailDialogView.stories.tsx
+?? src/stories/patterns/mantine/CurrencyFormDialogView.stories.tsx
+EXIT_CODE=0

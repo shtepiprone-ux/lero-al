@@ -1,9 +1,9 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 6 (2026-09-29): the detail dialog's actions go one per line (a kickoff misreading in §21); the executor re-enters at §22.3**
+owner action **O78-6** · **Status: ✅ APPROVED — review 7 (2026-09-29); owner accepted O78-6 / O78-6b (§23)**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
 ## 1. Mode and task type
 
@@ -1019,3 +1019,22 @@ The mode is remediation. Keep all code and evidence. Put the new evidence in `do
 
 Re-check `CurrencyDetailDialogView` (all 3) and `AdminCurrenciesView` `Detail` at 390 and 1440, in `en` and `uk`. Also
 report the result for `AdminExchangeProvidersView` (all 4, gutter), which revision 5 already fixed.
+
+## 23. Review 7 — APPROVED (2026-09-29)
+
+The owner accepted O78-6b (§22.4) on 2026-09-29, verbatim: *"Візуально перевірено, тепер все ок."* That closes AC13 and
+the whole visual matrix:
+- O78-6, returned and re-checked in §18.1, §21.1 and §22.1;
+- `CurrencyDetailDialogView` and `AdminCurrenciesView` `Detail`;
+- the `AdminExchangeProvidersView` gutter.
+
+Revision 6 was verified against the files:
+- `CurrencyDetailDialogView.tsx:80` is `Stack gap={0} align="flex-start"`, with three `variant="transparent"` buttons.
+- Every `r6/` command exits 0, including `14-lint`, `11-tests` (33/33), `24c` (0 leaks) and `27-build`, which lists
+  `ƒ /admin/currency`.
+- The `r6/28` hash equals the working tree. The `r4/` and `r5/` hashes of the files that no later revision touched
+  also still equal it.
+- Every path in `git status` belongs to this task.
+
+No findings remain. Rule GR-3d came out of this task, and it is recorded in `docs/golden-rules.md` and in the three
+skills.

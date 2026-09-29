@@ -1,0 +1,85 @@
+
+> lero-al@0.1.0 governance:tailwind
+> node scripts/governance/governance.mjs tailwind
+
+╔══════════════════════════════════════════════╗
+║        LERO.AL GOVERNANCE SCAN               ║
+╚══════════════════════════════════════════════╝
+Scan scope: tailwind
+
+Running Tailwind Entropy scan...
+╔═════════════════════════════════════════════════╗
+║     TAILWIND UTILITY ENTROPY ANALYSIS           ║
+╚═════════════════════════════════════════════════╝
+
+Files scanned: 470 total, 167 with className
+
+Severity summary:
+  🔴 CRITICAL: 0
+  🟠 HIGH:     0
+  🟡 MEDIUM:   10
+  ⚪ LOW:      132
+  ℹ  INFO:     13
+  ─  TOTAL:    155
+
+Arbitrary values: 110 occurrences, 70 unique tokens
+Duplicated chains: 6 patterns detected
+Fragment clones:   0
+Overflow risks:    5
+Responsive drift:  0
+Huge desktop:      4
+
+=== TAILWIND ENTROPY GOVERNANCE SCAN ===
+CRITICAL: 0  HIGH: 15  MEDIUM: 0  LOW: 1
+Total arbitrary values detected in codebase: 34
+[L] [LOW] src\components\admin\StatusChangeControl.stories.tsx:10 - Arbitrary font size detected. Use canonical type scale: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl.
+[H] [HIGH] src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:57 - Hardcoded background color. Use semantic tokens: bg-card, bg-background, bg-muted.
+[H] [HIGH] src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:57 - Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:59 - Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:60 - Hardcoded Tailwind palette color (text-gray-500). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:61 - Hardcoded Tailwind palette color (text-gray-800). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\patterns\MantineDataTableToCards.tsx:275 - Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:920 - Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:944 - Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1074 - Hardcoded Tailwind palette color (text-gray-700). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1324 - Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1349 - Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1350 - Hardcoded Tailwind palette color (bg-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1545 - Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1560 - Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+[H] [HIGH] src\design-system\mantine\theme.ts:1561 - Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+ 🟠 HIGH REGRESSION (+5)
+
+══════════════════════════════════════════════
+GOVERNANCE SCAN SUMMARY
+══════════════════════════════════════════════
+🔴 CRITICAL: 0
+🟠 HIGH:     15
+🟡 MEDIUM:   0
+⚪ LOW:      1
+   TOTAL:    16
+
+🟠 HIGH VIOLATIONS (must fix before next release):
+  src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:57 — Hardcoded background color. Use semantic tokens: bg-card, bg-background, bg-muted.
+  src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:57 — Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:59 — Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:60 — Hardcoded Tailwind palette color (text-gray-500). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\patterns\MantineDashboardStatCard.tsx:61 — Hardcoded Tailwind palette color (text-gray-800). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\patterns\MantineDataTableToCards.tsx:275 — Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:920 — Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:944 — Hardcoded Tailwind palette color (bg-gray-50). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1074 — Hardcoded Tailwind palette color (text-gray-700). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1324 — Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1349 — Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1350 — Hardcoded Tailwind palette color (bg-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1545 — Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1560 — Hardcoded Tailwind palette color (bg-gray-100). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+  src\design-system\mantine\theme.ts:1561 — Hardcoded Tailwind palette color (border-gray-200). Use a semantic design token from globals.css (e.g. text-foreground, text-muted-foreground, text-status-success, bg-card, border-destructive).
+
+Baseline comparison:
+  tailwind     ❌ REGRESSION (C:0 H:+5) | current: C0/H15/M0 | baseline: C0/H10/M0
+
+❌ Governance check FAILED — violation count exceeds baseline.
+   New HIGH or CRITICAL violations introduced. Fix before merging.
+   See docs/governance-enforcement.md §3 for escalation rules.
+EXIT_CODE=1

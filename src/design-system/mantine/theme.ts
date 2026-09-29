@@ -147,7 +147,9 @@ declare module '@mantine/core' {
     // Value 30 = the pre-879 `HeaderView.module.css` `.header { z-index: 30; }` literal (F5): no
     // `--z-*` custom property is emitted at runtime for this level (Task 718), so the value is kept
     // as a plain theme number, not a `var(--z-…)` reference.
-    zIndex: Record<'siteHeader', number>
+    // Task 877 (D71-4): second role `tableStickyColumn` = the legacy `AdminTable`'s `z-[1]` sticky
+    // column, local to one table (Mantine has no z-index style prop, so it is read for one `zIndex`).
+    zIndex: Record<'siteHeader' | 'tableStickyColumn', number>
     // Task 784 Revision 3 (D69-18) — a single shared micro-tracking role for uppercase filter/
     // section headings. Source: the pre-D69-16 `MantineFilterSection.tsx`/`ListingsFilters.tsx`
     // `letterSpacing: '0.05em'` value (identical in both consumers — one shared role, not two).
@@ -265,6 +267,9 @@ declare module '@mantine/core' {
       appShellNavbarWidth: number
       appShellHeaderHeight: number
       adminTopBarHeight: number
+      // Task 877 (D71-4, precedent Task 825's `lightboxMediaMaxWidth`) — `/admin/currency`'s page
+      // wrapper `max-w-5xl` (64rem, 1024px), the same wrapper the other admin pages still carry.
+      adminPageMaxWidth: string
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -690,6 +695,7 @@ export const theme = createTheme({
     // single `style={{ zIndex }}` (MECHANISM-KEPT, the one permitted inline z-index on the header).
     zIndex: {
       siteHeader: 30,
+      tableStickyColumn: 1, // Task 877: legacy AdminTable `z-[1]` sticky column
     },
     // Task 782 — canonical icon/control dimension scale (D69-6). Plain numbers, consumed directly
     // by a lucide `size` prop / Mantine `Avatar`/`Loader` numeric `size` — see the `MantineThemeOther`
@@ -801,6 +807,7 @@ export const theme = createTheme({
       appShellNavbarWidth: 240,   // Task 852: MantineAppShellFoundation default navbar width (spec §17.1)
       appShellHeaderHeight: 60,   // Task 852: MantineAppShellFoundation default header height
       adminTopBarHeight: 72,      // Task 852: AdminShell's own top-bar height (spec §17.1, all widths)
+      adminPageMaxWidth: '64rem', // 1024px — Task 877: admin page wrapper (legacy `max-w-5xl`)
     },
     overlay: {
       dragHandle: {

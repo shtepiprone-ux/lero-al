@@ -436,7 +436,7 @@ All user-facing story fixture fields must be locale-safe:
 
 ### Global category coverage
 All five Storybook categories are required sweep scope:
-- **Admin**: AdminCardList, AdminPageShell, AdminTable, StatusChangeControl, StatusChangeHistory
+- **Admin**: AdminPageShell, StatusChangeControl, StatusChangeHistory (`AdminTable` and `AdminPageHeader` moved to `Patterns/Mantine/*`, the legacy card list deleted — Task 877)
 - **Layout**: no story-bearing members remain (FilterBar, PageHeader, PageShell, Section deleted —
   Task 788, 2026-09-05, zero production consumers; the surviving `src/components/layout/*` files
   have no stories)

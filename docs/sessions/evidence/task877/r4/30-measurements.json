@@ -1,0 +1,1167 @@
+{
+ "note": "Task 877 revision 4: GR-3d gutter (expected 16/16/32/32), GR-3b/GR-3c, 15 exports, rebuilt storybook-static, en.",
+ "gutterSummary": {
+  "admintable--default": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admintable--synthesized": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admintable--empty": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admintable--row-click": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "adminpageheader--default": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "adminpageheader--with-action": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admincurrenciesview--default": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admincurrenciesview--empty": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admincurrenciesview--delete-confirm": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admincurrenciesview--detail": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "admincurrencytabs--default": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "dashboardheader--default": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "dashboardheader--fresh": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "dashboardheader--with-actions": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  },
+  "dashboardheader--without-period-control": {
+   "320": "16/16",
+   "390": "16/16",
+   "1024": "32/32",
+   "1440": "32/32"
+  }
+ },
+ "stories": {
+  "admintable--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admintable--synthesized": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admintable--empty": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admintable--row-click": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "adminpageheader--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "adminpageheader--with-action": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "admincurrenciesview--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admincurrenciesview--empty": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admincurrenciesview--delete-confirm": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admincurrenciesview--detail": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "admincurrencytabs--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "dashboardheader--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "dashboardheader--fresh": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "dashboardheader--with-actions": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "dashboardheader--without-period-control": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20,
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "harnessPadL": 16,
+    "harnessPadR": 16,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 16,
+    "firstContentRightGap": 16,
+    "h1": [
+     20,
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "harnessPadL": 24,
+    "harnessPadR": 24,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 24,
+    "firstContentRightGap": 24,
+    "h1": [
+     24,
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24,
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "harnessPadL": 32,
+    "harnessPadR": 32,
+    "harnessPadT": 24,
+    "harnessPadB": 24,
+    "firstContentLeft": 32,
+    "firstContentRightGap": 32,
+    "h1": [
+     24,
+     24
+    ],
+    "h2": []
+   }
+  }
+ }
+}

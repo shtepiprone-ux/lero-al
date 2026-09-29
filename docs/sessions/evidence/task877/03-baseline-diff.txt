@@ -1,0 +1,269 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index dee611003..7279a13d3 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -256,27 +256,15 @@
+     "src/app/admin/companies/page.tsx :: src/app/admin/companies/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/companies/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/companies/page.tsx :: src/components/admin/AdminCompaniesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/companies/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/companies/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/companies/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+     "src/app/admin/companies/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+-    "src/app/admin/companies/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/companies/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -286,54 +274,18 @@
+     "src/app/admin/currency/page.tsx :: src/app/admin/currency/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/currency/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/currency/page.tsx :: src/components/admin/AdminCurrenciesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/currency/page.tsx :: src/components/admin/AdminCurrencyTabs.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/currency/page.tsx :: src/components/admin/AdminExchangeProvidersManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/currency/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/currency/page.tsx :: src/components/ui/tabs.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/email-templates/page.tsx :: src/app/admin/email-templates/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/admin/email-templates/page.tsx :: src/components/admin/AdminEmailTemplatesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/email-templates/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/email-templates/page.tsx :: src/components/ui/alert.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -358,9 +310,6 @@
+     "src/app/admin/footer/page.tsx :: src/components/admin/AdminFooterManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/footer/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/footer/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -382,9 +331,6 @@
+     "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/AdminInquiriesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/StatusChangeControl.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -412,9 +358,6 @@
+     "src/app/admin/inquiries/support/page.tsx :: src/components/admin/AdminInquiriesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/inquiries/support/page.tsx :: src/components/admin/StatusChangeControl.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -496,9 +439,6 @@
+     "src/app/admin/listings/page.tsx :: src/app/admin/listings/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/listings/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -511,9 +451,6 @@
+     "src/app/admin/listings/page.tsx :: src/components/admin/AdminSearchInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/listings/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -526,9 +463,6 @@
+     "src/app/admin/listings/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/listings/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -544,9 +478,6 @@
+     "src/app/admin/locations/page.tsx :: src/components/admin/AdminLocationsManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/locations/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/locations/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -571,9 +502,6 @@
+     "src/app/admin/pages/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/pages/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/pages/page.tsx :: src/components/admin/AdminPagesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -613,9 +541,6 @@
+     "src/app/admin/popular-locations/page.tsx :: src/app/admin/popular-locations/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/popular-locations/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/popular-locations/page.tsx :: src/components/admin/AdminPopularLocationsManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -637,21 +562,12 @@
+     "src/app/admin/property-types/page.tsx :: src/app/admin/property-types/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/property-types/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/property-types/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/property-types/page.tsx :: src/components/admin/AdminPropertyTypesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/admin/property-types/page.tsx :: src/components/admin/AdminSearchInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/property-types/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/property-types/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -661,9 +577,6 @@
+     "src/app/admin/property-types/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+-    "src/app/admin/property-types/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/property-types/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -673,9 +586,6 @@
+     "src/app/admin/reports/page.tsx :: src/app/admin/reports/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/reports/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/reports/page.tsx :: src/components/admin/AdminReportsManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -703,9 +613,6 @@
+     "src/app/admin/settings/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/settings/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/settings/page.tsx :: src/components/admin/AdminSettings.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -727,18 +634,9 @@
+     "src/app/admin/support/page.tsx :: src/app/admin/support/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/support/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/support/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/support/page.tsx :: src/components/admin/AdminSupportManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/support/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/support/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+@@ -751,9 +649,6 @@
+     "src/app/admin/support/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+-    "src/app/admin/support/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/support/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+       "reasonCode": "tier2-legacy-primitive"
+     },
+@@ -895,9 +790,6 @@
+     "src/components/admin/AdminUserCreate.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/components/admin/AdminUserCreate.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/components/admin/AdminUserCreate.tsx :: src/components/admin/AdminUserCreate.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+EXIT_CODE=0

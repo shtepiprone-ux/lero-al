@@ -14,6 +14,9 @@ export interface MantineDashboardHeaderProps {
   stale?: { label: string }
   /** Slot for `MantineDashboardPeriodControl` — pass it only where period-based blocks exist. */
   periodControl?: ReactNode
+  /** Task 877 (R3): page-level actions (buttons) at the right end of the right column — below `sm`
+   * after the status line and period control, full width. Pass nothing on the dashboards. */
+  actions?: ReactNode
 }
 
 /**
@@ -33,7 +36,9 @@ export interface MantineDashboardHeaderProps {
  *
  * `'use client'`: `useMantineTheme` supplies the badge icon size (`theme.other.iconSize`).
  *
- * Production consumers: 853 (`/admin`), 854 (`/{locale}/cabinet/statistics`).
+ * `actions` (Task 877): the slot the shared `AdminPageHeader` adapter forwards its `action` to.
+ *
+ * Production consumers: 853 (`/admin`), 854 (`/{locale}/cabinet/statistics`), 877 (`AdminPageHeader`).
  */
 export function MantineDashboardHeader({
   title,
@@ -41,6 +46,7 @@ export function MantineDashboardHeader({
   updatedAtLabel,
   stale,
   periodControl,
+  actions,
 }: MantineDashboardHeaderProps) {
   const theme = useMantineTheme()
   const hasStatusLine = Boolean(updatedAtLabel || stale)
@@ -67,7 +73,7 @@ export function MantineDashboardHeader({
         )}
       </Stack>
 
-      {(hasStatusLine || periodControl) && (
+      {(hasStatusLine || periodControl || actions) && (
         <Flex direction="column" gap="xs" align={{ base: 'stretch', sm: 'flex-end' }}>
           {hasStatusLine && (
             <Flex gap="sm" align="center" wrap="wrap" justify={{ base: 'flex-start', sm: 'flex-end' }}>
@@ -87,6 +93,7 @@ export function MantineDashboardHeader({
             </Flex>
           )}
           {periodControl}
+          {actions}
         </Flex>
       )}
     </Flex>

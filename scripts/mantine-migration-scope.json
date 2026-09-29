@@ -110,5 +110,11 @@
   "src/components/admin/AdminLocaleSwitcher.tsx",
   "src/modules/admin/dashboard/components/AdminDashboardView.tsx",
   "src/components/admin/AdminDashboardRecentListings.tsx",
-  "src/modules/cabinet/statistics/components/AgentStatisticsView.tsx"
+  "src/modules/cabinet/statistics/components/AgentStatisticsView.tsx",
+  "src/components/admin/AdminTable.tsx",
+  "src/components/admin/AdminPageHeader.tsx",
+  "src/components/admin/AdminCurrenciesView.tsx",
+  "src/components/admin/CurrencyFormDialogView.tsx",
+  "src/components/admin/CurrencyDetailDialogView.tsx",
+  "src/components/admin/AdminCurrencyTabs.tsx"
 ]

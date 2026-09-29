@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { AdminExchangeProvidersView } from '@/components/admin/AdminExchangeProvidersView'
+import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 import { FIXTURE_PROVIDERS } from '@/stories/fixtures/admin.fixtures'
 import type { DBExchangeProvider } from '@/types/database'
 
@@ -38,6 +39,7 @@ function ViewDemo({
   const [providers, setProviders] = useState(initialProviders)
   const [deleteTarget, setDeleteTarget] = useState<DBExchangeProvider | null>(initialDeleteTarget)
   return (
+    <StoryPageGutter>
     <AdminExchangeProvidersView
       providers={providers}
       isPending={isPending}
@@ -52,6 +54,7 @@ function ViewDemo({
         setDeleteTarget(null)
       }}
     />
+    </StoryPageGutter>
   )
 }
 

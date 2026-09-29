@@ -1,0 +1,1365 @@
+{
+ "note": "Task 877 revision 5, rebuilt storybook-static. dialogs: 3 CurrencyDetailDialogView exports + AdminCurrenciesView Detail at en/uk x 390/960/1440; providers: AdminExchangeProvidersView 4 exports (GR-3d). footerCheck: buttons outside the transparent action row.",
+ "dialogs": {
+  "patterns-mantine-currencydetaildialogview--default": {
+   "en@390": {
+    "dialog": true,
+    "dialogH": 492,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     728,
+     728,
+     780
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 712,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "en@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "en@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@390": {
+    "dialog": true,
+    "dialogH": 492,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     728,
+     780,
+     780
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 712,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "uk@960": {
+    "dialog": true,
+    "dialogH": 470,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     513,
+     565,
+     565
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 497,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@1440": {
+    "dialog": true,
+    "dialogH": 470,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     513,
+     565,
+     565
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 497,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--default-currency": {
+   "en@390": {
+    "dialog": true,
+    "dialogH": 440,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Deactivate"
+    ],
+    "textButtonTops": [
+     780
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 764,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "en@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Deactivate"
+    ],
+    "textButtonTops": [
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "en@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Deactivate"
+    ],
+    "textButtonTops": [
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@390": {
+    "dialog": true,
+    "dialogH": 440,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Деактивувати"
+    ],
+    "textButtonTops": [
+     780
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 764,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "uk@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Деактивувати"
+    ],
+    "textButtonTops": [
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Деактивувати"
+    ],
+    "textButtonTops": [
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--inactive": {
+   "en@390": {
+    "dialog": true,
+    "dialogH": 440,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Activate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     780,
+     780
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 764,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "en@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Activate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "en@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Activate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@390": {
+    "dialog": true,
+    "dialogH": 440,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Активувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     780,
+     780
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 764,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "uk@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Активувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Активувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   }
+  },
+  "patterns-mantine-admincurrenciesview--detail": {
+   "en@390": {
+    "dialog": true,
+    "dialogH": 492,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     728,
+     728,
+     780
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 712,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "en@960": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "en@1440": {
+    "dialog": true,
+    "dialogH": 418,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "textButtonTops": [
+     539,
+     539,
+     539
+    ],
+    "sameTop": true,
+    "textButtonMinH": 44,
+    "badgeBottom": 523,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@390": {
+    "dialog": true,
+    "dialogH": 492,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     728,
+     780,
+     780
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 712,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     14,
+     14,
+     14,
+     12
+    ]
+   },
+   "uk@960": {
+    "dialog": true,
+    "dialogH": 470,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     513,
+     565,
+     565
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 497,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   },
+   "uk@1440": {
+    "dialog": true,
+    "dialogH": 470,
+    "filledButtons": [],
+    "outlineButtonCount": 0,
+    "textButtons": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "textButtonTops": [
+     513,
+     565,
+     565
+    ],
+    "sameTop": false,
+    "textButtonMinH": 44,
+    "badgeBottom": 497,
+    "rowTopBelowBadges": true,
+    "overflow": false,
+    "hasCloseTextButton": false,
+    "h1": [],
+    "bodyFs": [
+     16,
+     14,
+     12,
+     14
+    ]
+   }
+  }
+ },
+ "footerCheck": {
+  "patterns-mantine-currencydetaildialogview--default": {
+   "en@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     728,
+     728,
+     780
+    ],
+    "rowLefts": [
+     16,
+     165,
+     16
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 712
+   },
+   "en@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539,
+     539
+    ],
+    "rowLefts": [
+     276,
+     425,
+     554
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "en@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539,
+     539
+    ],
+    "rowLefts": [
+     516,
+     665,
+     794
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     728,
+     780,
+     780
+    ],
+    "rowLefts": [
+     16,
+     16,
+     172
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 712
+   },
+   "uk@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     513,
+     565,
+     565
+    ],
+    "rowLefts": [
+     276,
+     276,
+     432
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 497
+   },
+   "uk@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     513,
+     565,
+     565
+    ],
+    "rowLefts": [
+     516,
+     516,
+     672
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 497
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--default-currency": {
+   "en@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     780
+    ],
+    "rowLefts": [
+     16
+    ],
+    "rowWidthsSum": 121,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 764
+   },
+   "en@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539
+    ],
+    "rowLefts": [
+     276
+    ],
+    "rowWidthsSum": 121,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "en@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539
+    ],
+    "rowLefts": [
+     516
+    ],
+    "rowWidthsSum": 121,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     780
+    ],
+    "rowLefts": [
+     16
+    ],
+    "rowWidthsSum": 148,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 764
+   },
+   "uk@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539
+    ],
+    "rowLefts": [
+     276
+    ],
+    "rowWidthsSum": 148,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539
+    ],
+    "rowLefts": [
+     516
+    ],
+    "rowWidthsSum": 148,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--inactive": {
+   "en@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     780,
+     780
+    ],
+    "rowLefts": [
+     16,
+     128
+    ],
+    "rowWidthsSum": 198,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 764
+   },
+   "en@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539
+    ],
+    "rowLefts": [
+     276,
+     388
+    ],
+    "rowWidthsSum": 198,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "en@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539
+    ],
+    "rowLefts": [
+     516,
+     628
+    ],
+    "rowWidthsSum": 198,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     780,
+     780
+    ],
+    "rowLefts": [
+     16,
+     155
+    ],
+    "rowWidthsSum": 250,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 764
+   },
+   "uk@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539
+    ],
+    "rowLefts": [
+     276,
+     415
+    ],
+    "rowWidthsSum": 250,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539
+    ],
+    "rowLefts": [
+     516,
+     655
+    ],
+    "rowWidthsSum": 250,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   }
+  },
+  "patterns-mantine-admincurrenciesview--detail": {
+   "en@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     728,
+     728,
+     780
+    ],
+    "rowLefts": [
+     16,
+     165,
+     16
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 712
+   },
+   "en@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539,
+     539
+    ],
+    "rowLefts": [
+     276,
+     425,
+     554
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "en@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Edit",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     539,
+     539,
+     539
+    ],
+    "rowLefts": [
+     516,
+     665,
+     794
+    ],
+    "rowWidthsSum": 355,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 523
+   },
+   "uk@390": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     728,
+     780,
+     780
+    ],
+    "rowLefts": [
+     16,
+     16,
+     172
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 390,
+    "badgeBottom": 712
+   },
+   "uk@960": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     513,
+     565,
+     565
+    ],
+    "rowLefts": [
+     276,
+     276,
+     432
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 497
+   },
+   "uk@1440": {
+    "buttonsOutsideTheActionRow": [
+     {
+      "text": "(icon only: mantine-focus-auto manti)",
+      "variant": "subtle"
+     },
+     {
+      "text": "Редагувати",
+      "variant": null
+     }
+    ],
+    "rowTops": [
+     513,
+     565,
+     565
+    ],
+    "rowLefts": [
+     516,
+     516,
+     672
+    ],
+    "rowWidthsSum": 532,
+    "dialogInnerWidth": 440,
+    "badgeBottom": 497
+   }
+  }
+ },
+ "providers": {
+  "patterns-mantine-adminexchangeprovidersview--default": {
+   "320": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "390": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "768": {
+    "padL": 24,
+    "padR": 24,
+    "contentLeft": 24,
+    "contentRightGap": 24,
+    "overflow": false
+   },
+   "1024": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   },
+   "1440": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   }
+  },
+  "patterns-mantine-adminexchangeprovidersview--empty": {
+   "320": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "390": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "768": {
+    "padL": 24,
+    "padR": 24,
+    "contentLeft": 24,
+    "contentRightGap": 24,
+    "overflow": false
+   },
+   "1024": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   },
+   "1440": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   }
+  },
+  "patterns-mantine-adminexchangeprovidersview--pending": {
+   "320": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "390": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "768": {
+    "padL": 24,
+    "padR": 24,
+    "contentLeft": 24,
+    "contentRightGap": 24,
+    "overflow": false
+   },
+   "1024": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   },
+   "1440": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   }
+  },
+  "patterns-mantine-adminexchangeprovidersview--delete-confirm": {
+   "320": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "390": {
+    "padL": 16,
+    "padR": 16,
+    "contentLeft": 16,
+    "contentRightGap": 16,
+    "overflow": false
+   },
+   "768": {
+    "padL": 24,
+    "padR": 24,
+    "contentLeft": 24,
+    "contentRightGap": 24,
+    "overflow": false
+   },
+   "1024": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   },
+   "1440": {
+    "padL": 32,
+    "padR": 32,
+    "contentLeft": 32,
+    "contentRightGap": 32,
+    "overflow": false
+   }
+  }
+ }
+}

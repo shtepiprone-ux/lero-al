@@ -1,0 +1,38 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminTable.adapter.test.tsx (5 tests | 1 failed) 376ms
+     × case 3 — visibility 'md' renders the column with visibleFrom=md; 'always' does not 35ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/components/admin/__tests__/AdminTable.adapter. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminTable.adapter.test.tsx > AdminTable adapter (T2) > case 3 — visibility 'md' 
+renders the column with visibleFrom=md; 'always' does not
+AssertionError: expected 'm_4e7aa4ef mantine-Table-td' to contain 'mantine-visible-from-md'
+
+Expected: "mantine-visible-from-md"
+Received: "m_4e7aa4ef mantine-Table-td"
+
+ ❯ src/components/admin/__tests__/AdminTable.adapter.test.tsx:115:26
+    113|     const md = screen.getByText('tag-x').closest('td') as HTMLElement
+    114|     const always = screen.getByText('Alpha').closest('td') as HTMLElem…
+    115|     expect(md.className).toContain('mantine-visible-from-md')
+       |                          ^
+    116|     expect(always.className).not.toContain('mantine-visible-from')
+    117|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  18:29:54
+   Duration  2.71s (transform 122ms, setup 100ms, import 1.16s, tests 376ms, environment 821ms)
+
+EXIT_CODE=1

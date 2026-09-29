@@ -1,0 +1,891 @@
+{
+ "note": "Task 877 revision 3 measurements on the rebuilt storybook-static (Playwright, en; truncation in uk).",
+ "dialogHeight1440en": {
+  "before": {
+   "patterns-mantine-currencydetaildialogview--default": 510,
+   "patterns-mantine-currencydetaildialogview--default-currency": 454,
+   "patterns-mantine-currencydetaildialogview--inactive": 454
+  },
+  "after": {
+   "patterns-mantine-currencydetaildialogview--default": 414,
+   "patterns-mantine-currencydetaildialogview--default-currency": 358,
+   "patterns-mantine-currencydetaildialogview--inactive": 358
+  }
+ },
+ "truncation_uk": {
+  "tabs-providers@768": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "tabs-currencies@768": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "providersview@768": {
+   "truncated": 0,
+   "tables": 1
+  },
+  "tabs-providers@1024": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "tabs-currencies@1024": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "providersview@1024": {
+   "truncated": 0,
+   "tables": 1
+  },
+  "tabs-providers@1440": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "tabs-currencies@1440": {
+   "truncated": 0,
+   "tables": 2
+  },
+  "providersview@1440": {
+   "truncated": 0,
+   "tables": 1
+  }
+ },
+ "harnessGutter": {
+  "admintable--default": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admintable--synthesized": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admintable--empty": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admintable--row-click": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "adminpageheader--default": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "adminpageheader--with-action": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admincurrenciesview--default": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admincurrenciesview--empty": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admincurrenciesview--delete-confirm": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admincurrenciesview--detail": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  },
+  "admincurrencytabs--default": {
+   "320": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "390": {
+    "padL": 24,
+    "left": 0,
+    "right": 0
+   },
+   "1024": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   },
+   "1440": {
+    "padL": 32,
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "stories": {
+  "patterns-mantine-admintable--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 25,
+    "gapRight": 25,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admintable--synthesized": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 25,
+    "gapRight": 25,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admintable--empty": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": null,
+    "gapLeft": null,
+    "gapRight": null,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": null,
+    "gapLeft": null,
+    "gapRight": null,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": null,
+    "gapLeft": null,
+    "gapRight": null,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": null,
+    "gapLeft": null,
+    "gapRight": null,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": null,
+    "gapLeft": null,
+    "gapRight": null,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admintable--row-click": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_e615b15f mantine-Card-root m",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 25,
+    "gapRight": 25,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "TABLE.m_b23fa0ef mantine-Table-table",
+    "gapLeft": 33,
+    "gapRight": 33,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-adminpageheader--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 430,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 32,
+    "gapRight": 678,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 32,
+    "gapRight": 1094,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "patterns-mantine-adminpageheader--with-action": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [
+     20
+    ],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 24,
+    "gapRight": 430,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 32,
+    "gapRight": 678,
+    "h1": [
+     24
+    ],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "H1.m_8a5d1357 mantine-Title-root ",
+    "gapLeft": 32,
+    "gapRight": 1094,
+    "h1": [
+     24
+    ],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admincurrenciesview--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 178,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admincurrenciesview--empty": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 178,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admincurrenciesview--delete-confirm": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 178,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admincurrenciesview--detail": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 24,
+    "gapRight": 178,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "DIV.m_46b77525 mantine-InputWrappe",
+    "gapLeft": 32,
+    "gapRight": 186,
+    "h1": [],
+    "h2": []
+   }
+  },
+  "patterns-mantine-admincurrencytabs--default": {
+   "320": {
+    "iw": 320,
+    "widest": 320,
+    "overflow": false,
+    "firstTag": "DIV.m_89d60db1 mantine-Tabs-root",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "390": {
+    "iw": 390,
+    "widest": 390,
+    "overflow": false,
+    "firstTag": "DIV.m_89d60db1 mantine-Tabs-root",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "768": {
+    "iw": 768,
+    "widest": 768,
+    "overflow": false,
+    "firstTag": "DIV.m_89d60db1 mantine-Tabs-root",
+    "gapLeft": 24,
+    "gapRight": 24,
+    "h1": [],
+    "h2": []
+   },
+   "1024": {
+    "iw": 1024,
+    "widest": 1024,
+    "overflow": false,
+    "firstTag": "DIV.m_89d60db1 mantine-Tabs-root",
+    "gapLeft": 32,
+    "gapRight": 32,
+    "h1": [],
+    "h2": []
+   },
+   "1440": {
+    "iw": 1440,
+    "widest": 1440,
+    "overflow": false,
+    "firstTag": "DIV.m_89d60db1 mantine-Tabs-root",
+    "gapLeft": 32,
+    "gapRight": 32,
+    "h1": [],
+    "h2": []
+   }
+  }
+ }
+}

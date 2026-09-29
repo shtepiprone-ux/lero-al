@@ -1,0 +1,9 @@
+🔍  Locale leak detector — full mode
+    Stories: 27 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-29T19-37/
+
+...................................................................................................................................................................................................................................................
+
+✅  Locale leak detector: ZERO leaks across 27 stories × sq/uk/it.
+    Report: .screenshots/locale-leak/2026-09-29T19-37/report.json
+EXIT_CODE=0

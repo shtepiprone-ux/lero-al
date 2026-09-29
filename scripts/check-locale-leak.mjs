@@ -165,10 +165,6 @@ const PER_STORY_TOKENS = {
     'Phone (error state — letters blocked)',
     'Enter digits only — no letters or symbols.',
   ],
-  // AdminTable: role column renders raw fixture role strings (not via storyT).
-  'admin-admintable': ['User', 'Agent', 'Moderator', 'Admin', 'Administrator'],
-  // AdminCardList: same fixture role data surfaced in card-mode subtitle.
-  'admin-admincardlist': ['User', 'Agent', 'Moderator', 'Admin', 'Administrator'],
   // layout-filterbar entry removed (Task 788, 2026-09-05): src/components/layout/FilterBar.tsx
   // and its story deleted, zero production consumers — the allowlist key can no longer match.
   // StatusChangeHistory: actorName fixture + RawKeyStress humanizes snake_case → Title Case by design.
@@ -177,16 +173,23 @@ const PER_STORY_TOKENS = {
   'admin-statuschangecontrol': ['Admin', 'Moderator', 'New', 'In Progress'],
 
   // ── Task 624 — canonical Mantine-prefix mirrors of the legacy-keyed entries above. The legacy
-  // prefixes ('admin-admintable', etc.) never matched the new Mantine story IDs, so these role/
+  // prefixes (the retired legacy `Admin/AdminTable` Story, etc.) never matched the new Mantine story IDs, so these role/
   // fixture allowances were simply never applied to the Mantine stories until now.
-  // Avatar/SegmentedControl: mirrors admin-admintable's "Administrator" role fixture.
+  // Avatar/SegmentedControl: mirrors the retired legacy table Story's "Administrator" role fixture.
   'mantine-primitives-avatar': ['Administrator'],
   'mantine-primitives-segmentedcontrol': ['Administrator'],
-  // Table: raw fixture role + agency/person names (mirrors admin-admintable's "Agent"; agency/
+  // Table: raw fixture role + agency/person names (mirrors the retired legacy table Story's "Agent"; agency/
   // person names are story-specific, not in the legacy table).
   'mantine-primitives-table': ['Agent', 'Tirana RE', 'Antonio Berluskoni', 'Roma Immobili', 'Albhome', 'Arben Krasniqi-Marashi'],
   // AdminSurfacePattern: same raw fixture role + agency/person names as Table.
   'patterns-mantine-adminsurfacepattern': ['Agent', 'Tirana RE', 'Roma Immobili', 'Albhome', 'Giulia Romano'],
+  // Task 877: currency codes and database-stored multilingual currency names from `FIXTURE_CURRENCIES`
+  // render verbatim by design (the list shows `name_en || name_sq`, the detail shows all four name
+  // columns). The search placeholder `EUR, ALL…` is identical in all four locales.
+  'patterns-mantine-admintable': ['ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar'],
+  'patterns-mantine-admincurrenciesview': ['EUR, ALL…', 'ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar', 'EUR — Euro'],
+  'patterns-mantine-admincurrencytabs': ['EUR, ALL…', 'ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar'],
+  'patterns-mantine-currencydetaildialogview': ['ALL', 'Albanian Lek', 'Lek albanese', 'Euro', 'USD', 'US Dollar', 'Dollar amerikan', 'Dollaro statunitense'],
   // HeaderView/MobileNavDrawer/UserMenu: demo authenticated-user fixture name(s).
   'mantine-primitives-headerview': ['Alba Krasniqi'],
   'mantine-primitives-mobilenavdrawer': ['Alba Krasniqi'],

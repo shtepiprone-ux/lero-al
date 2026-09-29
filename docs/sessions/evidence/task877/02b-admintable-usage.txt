@@ -1,0 +1,12 @@
+src/app/globals.css:748:  /* ── AdminTable right-edge scroll affordance (Epic HH Phase 2, Task 306) ──
+src/components/admin/AdminCompaniesManager.tsx:18:import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+src/components/admin/AdminCompaniesManager.tsx:360:      <AdminTable
+src/components/admin/AdminCurrenciesManager.tsx:13:import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+src/components/admin/AdminCurrenciesManager.tsx:426:      <AdminTable
+src/components/admin/AdminListingsTable.tsx:25:import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+src/components/admin/AdminListingsTable.tsx:705:        <AdminTable
+src/components/admin/AdminPropertyTypesManager.tsx:14:import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+src/components/admin/AdminPropertyTypesManager.tsx:379:      <AdminTable
+src/components/admin/AdminSupportManager.tsx:22:import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+src/components/admin/AdminSupportManager.tsx:827:      <AdminTable
+src/hooks/useIsMobile.ts:9: * in admin components — matches the table↔card boundary in AdminTable (admin-ux-rules §14.3).

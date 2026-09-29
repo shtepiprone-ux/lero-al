@@ -1,0 +1,8 @@
+b5020985fcfd69e1c59edd5ed691018134001918  scripts/check-locale-leak.mjs
+36fef7c217baa950b4e1130337ab3b506b454a1b  src/components/admin/CurrencyDetailDialogView.tsx
+6ac3713d3630f70ceb219a366f1c7d4a25d89219  src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+11c51e6fe75d42c68ee5d5ae8cbccb6509da15e4  src/stories/_StoryPageGutter.tsx
+e87695232c862e495597b9cbc6eacfd2feec4aa4  src/stories/patterns/mantine/AdminTable.stories.tsx
+31c30cd0d44ea6b8effa8e6775e9ad7b70f91ab6  src/stories/patterns/mantine/AdminPageHeader.stories.tsx
+d44026e9cb9aa60ee3d3db6af2af7244c1b05199  src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+b8e094d479a734fa3d7423a2fafc7cd169606073  src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx

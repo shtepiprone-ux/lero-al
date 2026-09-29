@@ -1,0 +1,193 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx (7 tests | 1 failed) 3421ms
+     × case 6 — delete: the confirm names the currency, confirming removes the row; a default refusal shows delete_blocked 1386ms
+npx.cmd : 
+At line:2 char:1
++ npx.cmd vitest run src/components/admin/__tests__/AdminCurrenciesMana ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx > AdminCurrenciesManager (T1) > case 6 — 
+delete: the confirm names the currency, confirming removes the row; a default refusal shows delete_blocked
+AssertionError: expected "vi.fn()" to be called with arguments: [ Array(1) ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   "Cannot delete: this is the default currency",
++   "Cannot delete the default currency",
+  ]
+
+
+Number of calls: 1
+
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mdata-scroll-locked[39m=[32m"1"[39m
+  [36m>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mdata-testid[39m=[32m"admin-currencies-manager"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_8bffd616 mantine-Flex-root __m__-_r_n5_"[39m
+          [33mstyle[39m=[32m"gap: var(--mantine-spacing-sm);"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mstyle[39m=[32m"flex: 1 1 0%;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"default"[39m
+              [33mdata-with-left-section[39m=[32m"true"[39m
+              [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
+--input-radius: var(--mantine-radius-lg);"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
+                [33mdata-position[39m=[32m"left"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-search"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"14"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"14"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21 21-4.34-4.34"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"11"[39m
+                    [33mcy[39m=[32m"11"[39m
+                    [33mr[39m=[32m"8"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<input[39m
+                [33maria-invalid[39m=[32m"false"[39m
+                [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
+                [33mdata-variant[39m=[32m"default"[39m
+                [33mid[39m=[32m"mantine-kemo7vfu1"[39m
+                [33mplaceholder[39m=[32m"EUR, ALL…"[39m
+                [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 
+mantine-UnstyledButton-root __m__-_r_nb_"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-with-left-section[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; 
+align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; 
+--button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-color: 
+var(--mantine-color-white);"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_80f1301b mantine-Button-inner"[39m
+              [33mstyle[39m=[32m"width: 100%; height: auto;"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_a74036a mantine-Button-section"[39m
+                [33mdata-position[39m=[32m"left"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-plus"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"14"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"14"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M5 12h14"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 5v14"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_811560b9 mantine-Button-label"[39m
+                [33mstyle[39m=[32m"white-space: normal; overflow: visible; word-break: normal; overflow-wrap: 
+break-word;"[39m
+              [36m>[39m
+                [0mNew currency[0m
+              [36m</span>[39m
+            [36m</span>[39m
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  18:30:51
+   Duration  8.78s (transform 793ms, setup 107ms, import 4.23s, tests 3.42s, environment 866ms)
+
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mdata-testid[39m=[32m"admin-table"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+            [33mdata-with-border[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-2); --paper-radius: 
+var(--mantine-radius-2xl); overflow: hidden;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_d57069b5 mantine-ScrollArea-root"[39m
+              [33mstyle[39m=[32m"--scrollarea-scrollbar-size: calc(0.375rem * var(--mantine-scale)); 
+--sa-corner-width: 0px; --sa-corner-height: 0px;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_c0783ff9 mantine-ScrollArea-viewport"[39m
+                [33mdata-scrollbars[39m=[32m"xy"[39m
+                [33mstyle[39m=[32m"overflow-x: scroll; overflow-y: scroll;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_b1336c6 mantine-ScrollArea-content"[39m
+                [36m>...
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx:205:48
+    203|     const eurConfirm = await screen.findByRole('dialog')
+    204|     fireEvent.click(within(eurConfirm).getByRole('button', { name: mes…
+    205|     await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(t.…
+       |                                                ^
+    206|   })
+    207|
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+EXIT_CODE=1

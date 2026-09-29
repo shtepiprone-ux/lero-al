@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { expect } from 'storybook/test';
-import { Stack } from '@mantine/core';
+import { Button, Stack } from '@mantine/core';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineDashboardHeader } from '@/design-system/mantine/patterns/MantineDashboardHeader';
 import { MantineDashboardPeriodControl } from '@/design-system/mantine/patterns/MantineDashboardPeriodControl';
@@ -38,7 +39,8 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Stack p="md">
+      <StoryPageGutter>
+        <Stack>
         <MantineDashboardHeader
           title={storyT(l, 'storybook.mantine.dashboard_header_title')}
           subtitle={storyT(l, 'storybook.mantine.dashboard_header_subtitle')}
@@ -47,6 +49,7 @@ export const Default: Story = {
           periodControl={<PeriodSlot locale={l} />}
         />
       </Stack>
+      </StoryPageGutter>
     );
   },
   parameters: { throwPlayFunctionExceptions: true },
@@ -64,7 +67,8 @@ export const Fresh: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Stack p="md">
+      <StoryPageGutter>
+        <Stack>
         <MantineDashboardHeader
           title={storyT(l, 'storybook.mantine.dashboard_header_title')}
           subtitle={storyT(l, 'storybook.mantine.dashboard_header_subtitle')}
@@ -72,6 +76,7 @@ export const Fresh: Story = {
           periodControl={<PeriodSlot locale={l} />}
         />
       </Stack>
+      </StoryPageGutter>
     );
   },
   parameters: { throwPlayFunctionExceptions: true },
@@ -80,12 +85,32 @@ export const Fresh: Story = {
   },
 };
 
+// Task 877 (R3, GR-3a EXTEND): the `actions` slot — the shared `AdminPageHeader` adapter forwards its
+// `action` here. Right end of the right column from `sm`; full width below. Label is a real translation.
+export const WithActions: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <StoryPageGutter>
+        <Stack>
+        <MantineDashboardHeader
+          title={storyT(l, 'storybook.mantine.dashboard_header_title')}
+          subtitle={storyT(l, 'storybook.mantine.dashboard_header_subtitle')}
+          actions={<Button>{storyT(l, 'admin.currency.currencies.new')}</Button>}
+        />
+      </Stack>
+      </StoryPageGutter>
+    );
+  },
+};
+
 // Pages without period-based blocks pass no control (spec §17.2 — admin: ADM-10 only).
 export const WithoutPeriodControl: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Stack p="md">
+      <StoryPageGutter>
+        <Stack>
         <MantineDashboardHeader
           title={storyT(l, 'storybook.mantine.dashboard_header_title')}
           subtitle={storyT(l, 'storybook.mantine.dashboard_header_subtitle')}
@@ -98,6 +123,7 @@ export const WithoutPeriodControl: Story = {
           stale={{ label: storyT(l, 'storybook.mantine.dashboard_header_stale_label') }}
         />
       </Stack>
+      </StoryPageGutter>
     );
   },
 };

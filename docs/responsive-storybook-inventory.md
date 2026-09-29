@@ -48,9 +48,9 @@ are struck below.)
 #### Admin — original 5 (pre-Task 410)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
-| `src/components/admin/AdminCardList.stories.tsx` | ✅ `admin-admincardlist--default` | Product-rendering story |
+| `(retired, Task 877) legacy card-list.stories.tsx` | ✅ `RETIRED-877-admincardlist--default` | Product-rendering story |
 | `src/components/admin/AdminPageShell.stories.tsx` | ✅ `admin-adminpageshell--default` | Product-rendering story |
-| `src/components/admin/AdminTable.stories.tsx` | ✅ `admin-admintable--default` | Product-rendering story |
+| `(retired, Task 877) legacy AdminTable.stories.tsx` | ✅ `RETIRED-877-admintable--default` | Product-rendering story |
 | `src/components/admin/StatusChangeControl.stories.tsx` | ✅ `admin-statuschangecontrol--select` | Product-rendering story |
 | `src/components/admin/StatusChangeHistory.stories.tsx` | ✅ `admin-statuschangehistory--empty` | Product-rendering story |
 
@@ -59,7 +59,7 @@ are struck below.)
 |---|---|---|
 | `src/components/admin/AdminUserAvatar.stories.tsx` | ✅ `admin-adminuseravatar--view-placeholder` + `--edit-mode` | Product-rendering story (2 surfaces) |
 | `src/components/admin/AdminSettings.stories.tsx` | ✅ `admin-adminsettings--default` | Product-rendering story |
-| `src/components/admin/AdminCurrenciesManager.stories.tsx` | ✅ `admin-admincurrenciesmanager--default` | Product-rendering story |
+| `(retired, Task 877) legacy AdminCurrenciesManager.stories.tsx` | ✅ `RETIRED-877-admincurrenciesmanager--default` | Product-rendering story |
 | `src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` | ✅ `patterns-mantine-adminexchangeprovidersview--default` | Product-rendering story (Task 874) |
 | `src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx` | ✅ `patterns-mantine-providerformdialogview--new` | Product-rendering story (Task 874) |
 | `src/components/admin/AdminPropertyTypesManager.stories.tsx` | ✅ `admin-adminpropertytypesmanager--default` | Product-rendering story |
@@ -131,9 +131,9 @@ Legend for "Needs fix?":
 | `skeleton.stories.tsx` | `primitives-skeleton--listing-card-skeleton` | Primitives | Skeleton (listing card, form shapes) | sq/en/uk/it | LOW | NO | Non-interactive loading placeholder. Machine PASS. §6 |
 | `tabs.stories.tsx` | `primitives-tabs--default` | Primitives | Tabs (list + triggers, all locales) | sq/en/uk/it | HIGH | NO | Task 372 v2 fixed TabsList `max-sm:flex max-sm:w-full`. Machine PASS. §12b, §26.1 |
 | `Combobox.stories.tsx` | `shared-combobox--button-variant` | Shared | Combobox (button-variant + input-variant, all location/property/year variants) | sq/en/uk/it | HIGH | OPEN DECISION | Trigger full-width machine-checked for input-variant; button-variant full-width + dropdown bottom-sheet at `<640` needs manual QA. Task 371 fixed left-alignment + label-resolution. §12c, §26.1, §26.2 |
-| `AdminCardList.stories.tsx` | `admin-admincardlist--default` | Admin | AdminCardList (card rows, compact mode) | sq/en/uk/it | MEDIUM | NO | Cards-at-all-widths pattern. Machine PASS. §9, §10 (cardOnly/nonTabular) |
+| `(retired, Task 877) legacy card-list stories` | `RETIRED-877-admincardlist--default` | Admin | retired legacy card list (card rows, compact mode) | sq/en/uk/it | MEDIUM | NO | Cards-at-all-widths pattern. Machine PASS. §9, §10 (cardOnly/nonTabular) |
 | `AdminPageShell.stories.tsx` | `admin-adminpageshell--default` | Admin | AdminPageShell (title + actions + filterbar slot) | sq/en/uk/it | HIGH | OPEN DECISION | Action stacking at `<640` — button full-width NOT machine-checked. Manual QA: buttons full-width at 320/375/390. Machine PASS on overflow. §9, §12b, §26.1 |
-| `AdminTable.stories.tsx` | `admin-admintable--default` + multi | Admin | AdminTable (table ≥1024, cards <1024, sort menus, columns manager) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation; Task 306-Fix pilot. Machine PASS. §10, §12b, §25.1 |
+| `AdminTable.stories.tsx` | `RETIRED-877-admintable--default` + multi | Admin | AdminTable (table ≥1024, cards <1024, sort menus, columns manager) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation; Task 306-Fix pilot. Machine PASS. §10, §12b, §25.1 |
 | `StatusChangeControl.stories.tsx` | `admin-statuschangecontrol--select` | Admin | StatusChangeControl (Select-based status switcher) | sq/en/uk/it | HIGH | OPEN DECISION | SelectTrigger width machine-checked (PASS); status dropdown bottom-sheet at `<640` not checked. Manual QA: §26.2 compliance. §12c, §26.2 |
 | `StatusChangeHistory.stories.tsx` | `admin-statuschangehistory--empty` + multi | Admin | StatusChangeHistory (status timeline list) | sq/en/uk/it | MEDIUM | NO | Text/date list; no interactive popups; wraps naturally. Machine PASS. §6, §25.1 |
 | ~~`AdminLocaleSwitcher.stories.tsx`~~ | — | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate of `Patterns/Mantine/AdminLocaleSwitcher`** | — | — | — | — |
@@ -142,9 +142,9 @@ Legend for "Needs fix?":
 | `AdminUserAvatar.stories.tsx` | `admin-adminuseravatar--edit-mode` (surface 2) | Admin | AdminUserAvatar: edit mode (avatar upload + remove button) | sq/en/uk/it | HIGH | OPEN DECISION | Upload/remove buttons full-width at `<640` NOT machine-checked. Manual QA: §26.1 compliance. §26.1 |
 | ~~`AdminSidebar.stories.tsx`~~ | — (both surfaces) | Admin | **RETIRED (Task 852, 2026-09-25) — legacy duplicate of `Patterns/Mantine/AdminSidebar`** | — | — | — | — |
 | `AdminSettings.stories.tsx` | `admin-adminsettings--default` + multi (--locale-stress, --tablet) | Admin | AdminSettings (settings form with sections, labels, inputs, save/cancel) | sq/en/uk/it | HIGH | OPEN DECISION | Form action buttons (save/cancel) full-width at `<640` NOT machine-checked. Form = `formLayout` pattern. Manual QA: §26.1 + §12 compliance. §12, §12b, §26.1 |
-| `AdminCurrenciesManager.stories.tsx` | `admin-admincurrenciesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCurrenciesManager (raw `<table>` currently; Tabs + currency rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **60 overflow FAIL cells** in Task 411 (sq/en/uk/it × 320/375/390/480/560 = raw table overflows). Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: currency CODE column, rate column, active toggle, add/edit/delete actions, tabs (manual/automatic), empty/loading/error states. §10 (tableAtLg), §25.1 |
-| `AdminPropertyTypesManager.stories.tsx` | `admin-adminpropertytypesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminPropertyTypesManager (raw `<table>` currently; property type rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: name column, icon, order, edit/delete actions, empty/loading/error states. §10 (tableAtLg), §25.1 |
-| `AdminCompaniesManager.stories.tsx` | `admin-admincompaniesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCompaniesManager (raw `<table>` currently; company rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable`/`AdminCardList` `tableAtLg`. Preserve: name, city, type, listings count, edit/delete/view actions, search, filter, empty/loading/error states. §10 (tableAtLg), §25.1 |
+| `AdminCurrenciesManager.stories.tsx` | `RETIRED-877-admincurrenciesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCurrenciesManager (raw `<table>` currently; Tabs + currency rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **60 overflow FAIL cells** in Task 411 (sq/en/uk/it × 320/375/390/480/560 = raw table overflows). Migrate to `AdminTable` `tableAtLg`. Preserve: currency CODE column, rate column, active toggle, add/edit/delete actions, tabs (manual/automatic), empty/loading/error states. §10 (tableAtLg), §25.1 |
+| `AdminPropertyTypesManager.stories.tsx` | `admin-adminpropertytypesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminPropertyTypesManager (raw `<table>` currently; property type rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable` `tableAtLg`. Preserve: name column, icon, order, edit/delete actions, empty/loading/error states. §10 (tableAtLg), §25.1 |
+| `AdminCompaniesManager.stories.tsx` | `admin-admincompaniesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCompaniesManager (raw `<table>` currently; company rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable` `tableAtLg`. Preserve: name, city, type, listings count, edit/delete/view actions, search, filter, empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminSupportManager.stories.tsx` | `admin-adminsupportmanager--default` + multi (--empty-state, --locale-stress, --tablet) | Admin | AdminSupportManager (support ticket list/table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision needed. Likely `tableAtLg`. Verify column set + row actions at 768–1023. §10, §25.1 |
 | `AdminEmailTemplatesManager.stories.tsx` | `admin-adminemailtemplatesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminEmailTemplatesManager (email template list + form) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. Has both list and form surfaces. `formLayout` for form; `nonTabular`/`tableAtLg` for list. Verify form action buttons at `<640`. §10, §12, §26.1 |
 | `AdminListingsTable.stories.tsx` | `admin-adminlistingstable--default` + multi (--filtered-pending, --locale-stress, --tablet) | Admin | AdminListingsTable (reference `tableAtLg` implementation, sort, search, filter) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation (Task 306-Fix). Machine PASS. All columns/row-actions preserved. §10, §25.1 |
@@ -211,7 +211,7 @@ verification for §26 compliance before being marked fully clean.
 
 **Stories in scope:** `AdminCurrenciesManager`, `AdminPropertyTypesManager`, `AdminCompaniesManager`
 **Phase-1 contracts enforced:** §10 (tableAtLg), §25.1 (control-preservation), §26.1 (button full-width at `<640`)
-**Pattern:** migrate raw `<table className="w-full">` to `AdminTable`/`AdminCardList` `tableAtLg` (cards `<1024`, table `≥1024`). Use `AdminListingsTable` as the reference implementation.
+**Pattern:** migrate raw `<table className="w-full">` to `AdminTable` `tableAtLg` (cards `<1024`, table `≥1024`). Use `AdminListingsTable` as the reference implementation.
 **Capability preservation (mandatory per §25):**
 - AdminCurrenciesManager: currency CODE, name, rate, active toggle, add/edit/delete row actions, custom Tabs (manual/auto), search/filter, pagination, empty/loading/error states
 - AdminPropertyTypesManager: name, icon/slug, order, edit/delete row actions, add action, empty/loading/error states
@@ -331,14 +331,14 @@ The `screenshots:assert` PASS (assertions a+b+c) is **necessary but not sufficie
 ### ASSERT_STORIES — all 45 confirmed [OK]
 
 ```
-admin-admincardlist--default               admin-admincompaniesmanager--default
-admin-admincurrenciesmanager--default      admin-adminemailtemplatesmanager--default
+RETIRED-877-admincardlist--default               admin-admincompaniesmanager--default
+RETIRED-877-admincurrenciesmanager--default      admin-adminemailtemplatesmanager--default
 admin-adminlistingstable--default
 RETIRED-852-locale-switcher                RETIRED-852-mobile-header
 admin-adminpageshell--default              admin-adminpropertytypesmanager--default
 admin-adminsettings--default               RETIRED-852-sidebar-desktop
 RETIRED-852-sidebar-drawer-open            admin-adminsupportmanager--default
-admin-admintable--default                  admin-adminuseravatar--edit-mode
+RETIRED-877-admintable--default                  admin-adminuseravatar--edit-mode
 admin-adminuseravatar--view-placeholder    admin-adminuserprofile--default
 admin-adminuserstable--default             admin-statuschangecontrol--select
 admin-statuschangehistory--empty           layout-filterbar--default
@@ -361,7 +361,7 @@ All 160 are supplementary variant exports. None introduce a new responsive surfa
 
 **Admin — `--tablet` exports (10, tableAtLg verification):**
 ```
-admin-admincurrenciesmanager--tablet       admin-adminpropertytypesmanager--tablet
+RETIRED-877-admincurrenciesmanager--tablet       admin-adminpropertytypesmanager--tablet
 admin-admincompaniesmanager--tablet
 admin-adminlistingstable--tablet           admin-adminuserstable--tablet
 admin-adminsettings--tablet                admin-adminsupportmanager--tablet
@@ -371,30 +371,30 @@ Use: open at 768/810/960px to verify `tableAtLg` breakpoint (cards `<1024`, tabl
 
 **Admin — `--locale-stress` exports (19, locale stress):**
 ```
-admin-admincurrenciesmanager--locale-stress    admin-adminpropertytypesmanager--locale-stress
+RETIRED-877-admincurrenciesmanager--locale-stress    admin-adminpropertytypesmanager--locale-stress
 admin-admincompaniesmanager--locale-stress     admin-adminemailtemplatesmanager--locale-stress
 admin-adminlistingstable--locale-stress
 admin-adminuserstable--locale-stress           admin-adminsettings--locale-stress
 admin-adminsupportmanager--locale-stress       admin-adminuserprofile--locale-stress
 RETIRED-852-locale-switcher-locale-stress      RETIRED-852-mobile-header-locale-stress
 RETIRED-852-sidebar-locale-stress              admin-adminuseravatar--locale-stress
-admin-admintable--locale-stress                admin-admincardlist--locale-stress
+RETIRED-877-admintable--locale-stress                RETIRED-877-admincardlist--locale-stress
 admin-adminpageshell--locale-stress            admin-statuschangecontrol--locale-stress
 admin-statuschangehistory--locale-stress
 ```
 
 **Admin — other state variants (15):**
 ```
-admin-admincardlist--compact               admin-admincardlist--empty
-admin-admincardlist--legacy-react-node     admin-admincardlist--loading
-admin-admincardlist--static                admin-adminpageshell--multiple-actions
+RETIRED-877-admincardlist--compact               RETIRED-877-admincardlist--empty
+RETIRED-877-admincardlist--legacy-react-node     RETIRED-877-admincardlist--loading
+RETIRED-877-admincardlist--static                admin-adminpageshell--multiple-actions
 admin-adminpageshell--no-header            admin-adminpageshell--with-actions
 admin-adminpageshell--with-tabs            admin-adminpageshell--with-tabs-and-actions
-admin-adminsupportmanager--empty-state     admin-admintable--card-mode
-admin-admintable--column-menu              admin-admintable--empty-state
-admin-admintable--interactive              admin-admintable--interactive-card-mode
-admin-admintable--loading-state            admin-admintable--manage-columns
-admin-admintable--responsive               admin-adminuseravatar--create-mode
+admin-adminsupportmanager--empty-state     RETIRED-877-admintable--card-mode
+RETIRED-877-admintable--column-menu              RETIRED-877-admintable--empty-state
+RETIRED-877-admintable--interactive              RETIRED-877-admintable--interactive-card-mode
+RETIRED-877-admintable--loading-state            RETIRED-877-admintable--manage-columns
+RETIRED-877-admintable--responsive               admin-adminuseravatar--create-mode
 admin-adminuserstable--location-requests   admin-adminuserstable--verified-tab
 admin-adminuserprofile--create-mode        admin-statuschangecontrol--select-with-note
 admin-statuschangecontrol--workflow        admin-statuschangecontrol--workflow-required-note

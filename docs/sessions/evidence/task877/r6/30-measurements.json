@@ -1,0 +1,1083 @@
+{
+ "note": "Task 877 revision 6, rebuilt storybook-static: 3 CurrencyDetailDialogView exports + AdminCurrenciesView Detail, en/uk x 390/843/1440. verdict = per-tuple checks (distinct ascending tops, left == badge left within 1px, height 44, footer only Edit, no overflow at 390).",
+ "dialogs": {
+  "patterns-mantine-currencydetaildialogview--default": {
+   "en@390": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     692,
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 528,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@843": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     218,
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@1440": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     516,
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "uk@390": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     692,
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 528,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@843": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     218,
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@1440": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     516,
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--default-currency": {
+   "en@390": {
+    "actions": [
+     "Deactivate"
+    ],
+    "tops": [
+     780
+    ],
+    "lefts": [
+     16
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     121
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 440,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@843": {
+    "actions": [
+     "Deactivate"
+    ],
+    "tops": [
+     539
+    ],
+    "lefts": [
+     218
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     121
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 418,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@1440": {
+    "actions": [
+     "Deactivate"
+    ],
+    "tops": [
+     539
+    ],
+    "lefts": [
+     516
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     121
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 418,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "uk@390": {
+    "actions": [
+     "Деактивувати"
+    ],
+    "tops": [
+     780
+    ],
+    "lefts": [
+     16
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     148
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 440,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@843": {
+    "actions": [
+     "Деактивувати"
+    ],
+    "tops": [
+     539
+    ],
+    "lefts": [
+     218
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     148
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 418,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@1440": {
+    "actions": [
+     "Деактивувати"
+    ],
+    "tops": [
+     539
+    ],
+    "lefts": [
+     516
+    ],
+    "heights": [
+     44
+    ],
+    "widths": [
+     148
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 418,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   }
+  },
+  "patterns-mantine-currencydetaildialogview--inactive": {
+   "en@390": {
+    "actions": [
+     "Activate",
+     "Delete"
+    ],
+    "tops": [
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     104,
+     94
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 484,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@843": {
+    "actions": [
+     "Activate",
+     "Delete"
+    ],
+    "tops": [
+     517,
+     561
+    ],
+    "lefts": [
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     104,
+     94
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 462,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@1440": {
+    "actions": [
+     "Activate",
+     "Delete"
+    ],
+    "tops": [
+     517,
+     561
+    ],
+    "lefts": [
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     104,
+     94
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 462,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "uk@390": {
+    "actions": [
+     "Активувати",
+     "Видалити"
+    ],
+    "tops": [
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     131,
+     119
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 484,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@843": {
+    "actions": [
+     "Активувати",
+     "Видалити"
+    ],
+    "tops": [
+     517,
+     561
+    ],
+    "lefts": [
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     131,
+     119
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 462,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@1440": {
+    "actions": [
+     "Активувати",
+     "Видалити"
+    ],
+    "tops": [
+     517,
+     561
+    ],
+    "lefts": [
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44
+    ],
+    "widths": [
+     131,
+     119
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 462,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   }
+  },
+  "patterns-mantine-admincurrenciesview--detail": {
+   "en@390": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     692,
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 528,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@843": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     218,
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "en@1440": {
+    "actions": [
+     "Set as default",
+     "Deactivate",
+     "Delete"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     516,
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     141,
+     121,
+     94
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Edit"
+    ],
+    "overflow": false
+   },
+   "uk@390": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     692,
+     736,
+     780
+    ],
+    "lefts": [
+     16,
+     16,
+     16
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 16,
+    "dialogW": 390,
+    "dialogH": 528,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@843": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     218,
+     218,
+     218
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 218,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   },
+   "uk@1440": {
+    "actions": [
+     "Встановити за замовчуванням",
+     "Деактивувати",
+     "Видалити"
+    ],
+    "tops": [
+     495,
+     539,
+     583
+    ],
+    "lefts": [
+     516,
+     516,
+     516
+    ],
+    "heights": [
+     44,
+     44,
+     44
+    ],
+    "widths": [
+     266,
+     148,
+     119
+    ],
+    "badgeLeft": 516,
+    "dialogW": 440,
+    "dialogH": 506,
+    "footerLabelled": [
+     "Редагувати"
+    ],
+    "overflow": false
+   }
+  }
+ },
+ "gutter": {
+  "320": "16/16",
+  "390": "16/16",
+  "1024": "32/32",
+  "1440": "32/32"
+ },
+ "verdict": [
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "en@390",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "en@843",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "en@1440",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "uk@390",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "uk@843",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default",
+   "k": "uk@1440",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "en@390",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "en@843",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "en@1440",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "uk@390",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "uk@843",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--default-currency",
+   "k": "uk@1440",
+   "n": 1,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "en@390",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "en@843",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "en@1440",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "uk@390",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "uk@843",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "currencydetaildialogview--inactive",
+   "k": "uk@1440",
+   "n": 2,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "en@390",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "en@843",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "en@1440",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Edit"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "uk@390",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": false
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "uk@843",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  },
+  {
+   "id": "admincurrenciesview--detail",
+   "k": "uk@1440",
+   "n": 3,
+   "distinct": true,
+   "ascending": true,
+   "leftOk": true,
+   "oneLine": true,
+   "footerOnlyEdit": true,
+   "footer": [
+    "Редагувати"
+   ],
+   "overflow390": null
+  }
+ ]
+}

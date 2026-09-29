@@ -1,0 +1,3 @@
+a15d50bb7b0e4c65323f4d9c920a4e0f69a4a247  src/components/admin/CurrencyDetailDialogView.tsx
+9b089cc4d0223621a27d25440d7d0b68f3235450  src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+01cc0df80ca71cf49af708b51fabdcdd77c5da2b  src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx

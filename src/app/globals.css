@@ -745,26 +745,6 @@
     }
   }
 
-  /* ── AdminTable right-edge scroll affordance (Epic HH Phase 2, Task 306) ──
-     Applied on .admin-table-scroll (the overflow-x-auto container).
-     Gradient fades content into background from the right edge when overflowing.
-     pointer-events: none ensures it doesn't block clicks.
-  ────────────────────────────────────────────────────────────────────────── */
-  .admin-table-scroll-wrap {
-    position: relative;
-  }
-  .admin-table-scroll-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 1.5rem;
-    pointer-events: none;
-    background: linear-gradient(to right, transparent, hsl(var(--card)));
-    z-index: 1;
-  }
-
   /* ── Performance tier adaptation ─────────────────────────────────────────
      Set via PerformanceStoreInit on <html data-perf-tier="..."> after hydration.
      Applied once after React hydration — never during SSR (no hydration mismatch).

@@ -1,17 +1,24 @@
+'use client'
+
+import type { ReactNode } from 'react'
+import { Box } from '@mantine/core'
+import { MantineDashboardHeader } from '@/design-system/mantine/patterns/MantineDashboardHeader'
+
 interface Props {
   title: string
   subtitle?: string
-  action?: React.ReactNode
+  action?: ReactNode
 }
 
+/**
+ * Shared admin page header (Task 877, D78-8): a thin adapter over the canonical
+ * `MantineDashboardHeader` (title `h4`/24px from `sm`, `gray.5` subtitle, `actions` slot). The props
+ * are the legacy ones, so every admin page that renders it changes with the pattern and needs no edit.
+ */
 export function AdminPageHeader({ title, subtitle, action }: Props) {
   return (
-    <div className="admin-page-header flex items-start justify-between gap-4 mb-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">{title}</h1>
-        {subtitle && <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>}
-      </div>
-      {action && <div className="shrink-0">{action}</div>}
-    </div>
+    <Box mb="xl">
+      <MantineDashboardHeader title={title} subtitle={subtitle} actions={action} />
+    </Box>
   )
 }

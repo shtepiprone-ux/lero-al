@@ -1,5 +1,4 @@
 {
-  "src/components/admin/AdminCurrencyTabs.tsx": "admin sub-component tightly coupled to live currency data from Supabase; no safe standalone mock",
   "src/components/admin/AdminDashboardRecentListings.tsx": "admin dashboard widget requiring live Supabase listing data; no safe mock — future story candidate",
   "src/components/admin/AdminEditLayout.tsx": "admin page layout shell; one-off wrapper with no reuse potential outside its parent route",
   "src/components/admin/AdminFooterManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
@@ -7,7 +6,6 @@
   "src/components/admin/AdminInquiriesManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminLegalManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminLocationsManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
-  "src/components/admin/AdminPageHeader.tsx": "admin page header sub-component; page-specific wrapper with no standalone reuse",
   "src/components/admin/AdminPagesManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminPermissionsManager.tsx": "complex admin manager; requires live Supabase role/permission data + auth session; no safe mock",
   "src/components/admin/AdminPopularLocationsManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",

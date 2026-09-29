@@ -1,0 +1,40 @@
+class 2  src/app/admin/companies/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/companies/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/companies/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried
+class 4  src/app/admin/companies/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive
+class 2  src/app/admin/currency/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried
+class 3  src/app/admin/currency/page.tsx :: src/components/admin/AdminCurrencyTabs.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/currency/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/currency/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive
+class 3  src/app/admin/currency/page.tsx :: src/components/ui/tabs.tsx :: tier2-legacy-primitive
+class 1  src/app/admin/email-templates/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/footer/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/inquiries/sales/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/inquiries/support/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/listings/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/listings/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried
+class 4  src/app/admin/listings/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive
+class 1  src/app/admin/locations/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/pages/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/popular-locations/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/property-types/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/property-types/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/property-types/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried
+class 4  src/app/admin/property-types/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive
+class 1  src/app/admin/reports/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/settings/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/support/page.tsx :: src/components/admin/AdminCardList.tsx :: tier1-unenrolled-or-unstoried
+class 1  src/app/admin/support/page.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+class 2  src/app/admin/support/page.tsx :: src/components/admin/AdminTable.tsx :: tier1-unenrolled-or-unstoried
+class 4  src/app/admin/support/page.tsx :: src/components/ui/dropdown-menu.tsx :: tier2-legacy-primitive
+class 1  src/components/admin/AdminUserCreate.tsx :: src/components/admin/AdminPageHeader.tsx :: tier1-unenrolled-or-unstoried
+
+removed=36 added=0 unclassified=0
+per class: {"1":14,"2":10,"3":8,"4":4,"5":0}
+RESULT: every removed key has a §10.6 class; 0 keys added

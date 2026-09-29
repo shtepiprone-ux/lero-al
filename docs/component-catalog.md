@@ -97,10 +97,9 @@ See `docs/component-risk-register.md` for risk register.
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `AdminCardList` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `AdminCompaniesManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
-| `AdminCurrenciesManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
-| `AdminCurrencyTabs` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `AdminCurrenciesManager` | MIGRATED (Task 877: containers + `AdminCurrenciesView` / `CurrencyFormDialogView` / `CurrencyDetailDialogView`) | ✅ | 🌐 | — |
+| `AdminCurrencyTabs` | MIGRATED (Task 877: presentational Mantine `Tabs` with slots) | ✅ | 🌐 | — |
 | `AdminDashboardRecentListings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminEditLayout` | APPROVED | — | — | —  |
 | `AdminEmailTemplatesManager` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
@@ -113,7 +112,7 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminLocaleSwitcher` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
 | `AdminHeader` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
-| `AdminPageHeader` | APPROVED | — | — | —  |
+| `AdminPageHeader` | MIGRATED (Task 877: adapter over `MantineDashboardHeader`) | ✅ | — | — |
 | `AdminPageShell` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `AdminPagesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminPermissionsManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |

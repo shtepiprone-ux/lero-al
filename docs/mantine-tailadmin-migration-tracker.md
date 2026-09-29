@@ -188,8 +188,8 @@ Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · S
 
 ## PHASE 4 — Admin surfaces (35) — one slice each
 AdminShell (✅ Task 852) · AdminSidebar (✅ Task 852) · AdminHeader (✅ Task 852, the former mobile-only header row) ·
-AdminPageShell · AdminPageHeader · AdminEditLayout · AdminTable ·
-AdminCardList · AdminInput · AdminSearchInput · AdminUserAvatar · AdminUsersTable (🟡 Task 485 — close AFTER its
+AdminPageShell · AdminPageHeader (✅ Task 877) · AdminEditLayout · AdminTable (✅ Task 877) ·
+AdminInput · AdminSearchInput · AdminUserAvatar · AdminUsersTable (🟡 Task 485 — close AFTER its
 primitives) · AdminUserProfile · AdminUserCreate · AdminListingsTable · AdminDashboardRecentListings ·
 AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager (✅ Task 874) ·
 AdminEmailTemplatesManager · AdminFooterManager · AdminInquiriesManager · AdminLegalManager · AdminLocationsManager ·

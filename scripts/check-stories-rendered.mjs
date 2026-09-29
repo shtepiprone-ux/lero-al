@@ -134,9 +134,7 @@ const ASSERT_STORIES = [
   // ── Shared (1) ──
   { id: 'shared-combobox--button-variant',        label: 'Combobox/ButtonVariant',     anchors: [{ type: 'testid', value: 'combobox', label: 'combobox' }] },
   // ── Admin (19) — anchored via data-testid ──
-  { id: 'admin-admincardlist--default',            label: 'AdminCardList/Default',            anchors: [{ type: 'testid', value: 'admin-card-list', label: 'card-list' }] },
   { id: 'admin-adminpageshell--default',           label: 'AdminPageShell/Default',           anchors: [{ type: 'testid', value: 'admin-page-shell', label: 'page-shell' }] },
-  { id: 'admin-admintable--default',               label: 'AdminTable/Default',               anchors: [{ type: 'testid', value: 'admin-table', label: 'table' }] },
   { id: 'admin-statuschangecontrol--select',       label: 'StatusChangeControl/Select',       anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangecontrol--select-with-note', label: 'StatusChangeControl/SelectWithNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangecontrol--workflow-required-note', label: 'StatusChangeControl/WorkflowRequiredNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
@@ -156,7 +154,6 @@ const ASSERT_STORIES = [
   { id: 'admin-adminuseravatar--view-placeholder', label: 'AdminUserAvatar/ViewPlaceholder',  anchors: [{ type: 'testid', value: 'admin-user-avatar', label: 'avatar' }] },
   { id: 'admin-adminuseravatar--edit-mode',        label: 'AdminUserAvatar/EditMode',         anchors: [{ type: 'testid', value: 'admin-user-avatar', label: 'avatar' }] },
   { id: 'admin-adminsettings--default',            label: 'AdminSettings/Default',            anchors: [{ type: 'testid', value: 'admin-settings', label: 'settings' }] },
-  { id: 'admin-admincurrenciesmanager--default',   label: 'AdminCurrenciesManager/Default',   anchors: [{ type: 'testid', value: 'admin-currencies-manager', label: 'currencies' }] },
   { id: 'admin-adminpropertytypesmanager--default', label: 'AdminPropertyTypesManager/Default', anchors: [{ type: 'testid', value: 'admin-property-types-manager', label: 'prop-types' }] },
   { id: 'admin-admincompaniesmanager--default',    label: 'AdminCompaniesManager/Default',    anchors: [{ type: 'testid', value: 'admin-companies-manager', label: 'companies' }] },
   { id: 'admin-adminsupportmanager--default',      label: 'AdminSupportManager/Default',      anchors: [{ type: 'testid', value: 'admin-support-manager', label: 'support' }] },

@@ -1,0 +1,5 @@
+docs/admin-ux-rules.md:131:Before Task 306 (AdminPageShell / AdminHeader / AdminFilterBar primitives) and Task 307 (AdminTable / AdminCardList responsive primitive) can start, the owner must explicitly approve:
+docs/admin-ux-rules.md:537:> instance of the §4 container system; AdminPageShell/AdminTable/AdminCardList are the §7 admin layout
+docs/admin-ux-rules.md:555:- **Non-tabular row data:** use `<AdminCardList>` directly.
+docs/admin-ux-rules.md:557:- DO NOT render ad-hoc `<div>` rows that visually imitate cards outside `<AdminCardList>`.
+EXIT_CODE=0

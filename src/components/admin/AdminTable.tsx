@@ -1,58 +1,33 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import { useTranslations } from 'next-intl'
+import { Group, Text, type MantineBreakpoint } from '@mantine/core'
 import {
-  ArrowUpDown, ArrowUp, ArrowDown, EyeOff, ChevronRight, Check,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { AdminCardList, type StructuredCard } from '@/components/admin/AdminCardList'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu'
-
-function makeSortLabels(
-  tSort: ReturnType<typeof useTranslations<'admin.table_sort'>>,
-  sortType: 'text' | 'numeric' | 'date',
-): { asc: string; desc: string; hide: string } {
-  if (sortType === 'date')    return { asc: tSort('newest_first'), desc: tSort('oldest_first'), hide: tSort('hide_column') }
-  if (sortType === 'numeric') return { asc: tSort('sort_low_high'), desc: tSort('sort_high_low'), hide: tSort('hide_column') }
-  return                             { asc: tSort('sort_az'),       desc: tSort('sort_za'),       hide: tSort('hide_column') }
-}
+  MantineDataTableToCards,
+  type CardConfig,
+  type TableColumn,
+} from '@/design-system/mantine/patterns/MantineDataTableToCards'
 
 export type AdminTableColumn<Row> = {
   key: string
   /** Column label rendered in the header. Pass a string; ReactNode is accepted for advanced cases. */
   header: ReactNode
   cell: (row: Row) => ReactNode
+  /** Desktop-table breakpoint from which the column is shown; `'always'` (default) shows it everywhere. */
   visibility?: 'always' | 'sm' | 'md' | 'lg' | 'xl'
-  /**
-   * sortable: column header renders ⇅ ArrowUpDown (h-3 w-3 — smaller than text-sm font)
-   * as a DropdownMenu trigger. Menu contains type-correct sort items.
-   * Do NOT use funnel/sliders/filter icons — ArrowUpDown is the canonical affordance.
-   */
-  sortable?: boolean
-  /** sortType: drives the sort label wording in the column menu. */
-  sortType?: 'text' | 'numeric' | 'date'
-  sortDirection?: 'asc' | 'desc' | null
-  onSort?: (dir: 'asc' | 'desc') => void
-  /**
-   * hideable: adds a "Hide column" item (EyeOff icon) to the column menu.
-   * The first/sticky column should NOT be hideable to prevent an all-hidden state.
-   */
-  hideable?: boolean
-  onHideColumn?: () => void
-  /**
-   * sortLabels: localized sort/hide menu item labels for sq/en/uk/it.
-   * Omit to use English defaults derived from sortType.
-   */
-  sortLabels?: { asc: string; desc: string; hide: string }
   align?: 'left' | 'right' | 'center'
+  /**
+   * @deprecated Accepted only so the two consumers that still pass a width utility typecheck; NOT
+   * forwarded (Task 877 §5 item 3). Widths belong to `TableColumn.width` in each manager's migration.
+   */
   className?: string
+}
+
+export type AdminTableCard = {
+  title: ReactNode
+  subtitle?: ReactNode
+  meta?: ReactNode
+  trailing?: ReactNode
 }
 
 type AdminTableProps<Row> = {
@@ -62,28 +37,31 @@ type AdminTableProps<Row> = {
   onRowClick?: (row: Row) => void
   rowClassName?: (row: Row) => string
   stickyColumnIndex?: number
-  cardRow?: (row: Row) => StructuredCard
+  cardRow?: (row: Row) => AdminTableCard
   emptyState: ReactNode
-  loading?: boolean
-  loadingState?: ReactNode
-  errorState?: ReactNode
   ariaLabel?: string
 }
 
-const VISIBILITY_CLASS: Record<NonNullable<AdminTableColumn<unknown>['visibility']>, string> = {
-  always: '',
-  sm: 'hidden sm:table-cell',
-  md: 'hidden md:table-cell',
-  lg: 'hidden lg:table-cell',
-  xl: 'hidden xl:table-cell',
+// `MantineDataTableToCards` needs a string `id`; the original row is kept for every callback.
+interface WrappedRow<Row> {
+  id: string
+  row: Row
 }
 
-const ALIGN_CLASS: Record<NonNullable<AdminTableColumn<unknown>['align']>, string> = {
-  left: 'text-left',
-  right: 'text-right',
-  center: 'text-center',
+function visibleFrom(visibility: AdminTableColumn<unknown>['visibility']): MantineBreakpoint | undefined {
+  return visibility && visibility !== 'always' ? visibility : undefined
 }
 
+/**
+ * Shared admin data list (Task 877, D78-8): a thin adapter over the canonical `MantineDataTableToCards`
+ * pattern — cards below 640px, the TailAdmin §6b table above. It keeps the legacy `AdminTable` props
+ * (minus the sorting/hiding/loading/error ones no production consumer ever passed) so the five admin
+ * managers that render it change with the pattern and need no edit.
+ *
+ * Without `cardRow` the card is synthesized: the sticky column is the title, the first two always-visible
+ * columns the subtitle, the rest the detail row. Column `className` is not forwarded (widths belong to
+ * `TableColumn.width` in each manager's own migration).
+ */
 export function AdminTable<Row>({
   rows,
   columns,
@@ -93,227 +71,67 @@ export function AdminTable<Row>({
   stickyColumnIndex = 0,
   cardRow,
   emptyState,
-  loading,
-  loadingState,
-  errorState,
   ariaLabel,
 }: AdminTableProps<Row>) {
-  const tSort = useTranslations('admin.table_sort')
-  const stickyIdx = stickyColumnIndex
-
-  function synthesizeCard(row: Row): StructuredCard {
-    const stickyCol = columns[stickyIdx]
+  function synthesizeCard(row: Row): AdminTableCard {
+    const stickyCol = columns[stickyColumnIndex]
     const otherAlways = columns.filter(
-      (c, i) => i !== stickyIdx && (c.visibility ?? 'always') === 'always',
+      (c, i) => i !== stickyColumnIndex && (c.visibility ?? 'always') === 'always',
     )
-    const mdVisible = columns.filter(
-      c => c.visibility === 'sm' || c.visibility === 'md',
-    )
+    const mdVisible = columns.filter(c => c.visibility === 'sm' || c.visibility === 'md')
     const subtitleCols = otherAlways.slice(0, 2)
     const metaCols = [...otherAlways.slice(2), ...mdVisible]
     return {
       title: stickyCol ? stickyCol.cell(row) : null,
       subtitle: subtitleCols.length > 0 ? (
-        <div className="flex items-center gap-2 flex-wrap mt-1">
+        <Group component="span" gap="xs" wrap="wrap">
           {subtitleCols.map(c => <span key={c.key}>{c.cell(row)}</span>)}
-        </div>
+        </Group>
       ) : undefined,
       meta: metaCols.length > 0 ? (
-        <div className="flex items-center gap-2 flex-wrap mt-0.5">
+        <Group gap="xs" wrap="wrap">
           {metaCols.map(c => <span key={c.key}>{c.cell(row)}</span>)}
-        </div>
+        </Group>
       ) : undefined,
     }
   }
 
-  const resolvedCardRow = cardRow ?? synthesizeCard
+  const resolveCard = cardRow ?? synthesizeCard
+
+  const wrappedRows: WrappedRow<Row>[] = rows.map(row => ({ id: rowKey(row), row }))
+
+  // Review 1 §16.2 item 4 (P3): each row's card (`cardRow` or the synthesized one, with every cell
+  // renderer) is computed once per render; the four `CardConfig` callbacks below read this map.
+  const cards = new Map<string, AdminTableCard>(wrappedRows.map(w => [w.id, resolveCard(w.row)]))
+  const cardOf = (w: WrappedRow<Row>): AdminTableCard => cards.get(w.id) ?? resolveCard(w.row)
+
+  const tableColumns: TableColumn<WrappedRow<Row>>[] = columns.map(col => ({
+    key: col.key,
+    label: col.header,
+    align: col.align,
+    visibleFrom: visibleFrom(col.visibility),
+    render: w => col.cell(w.row),
+  }))
+
+  const card: CardConfig<WrappedRow<Row>> = {
+    title: w => <Text size="sm" fw={500} c="gray.7" component="div">{cardOf(w).title}</Text>,
+    subtitle: w => cardOf(w).subtitle,
+    detail: w => cardOf(w).meta,
+    actions: w => cardOf(w).trailing,
+  }
 
   return (
     <div data-testid="admin-table">
-      {/* ── Card mode: visible below lg: ─────────────────────────────────────── */}
-      <div className="lg:hidden">
-        <AdminCardList
-          rows={rows}
-          rowKey={rowKey}
-          card={resolvedCardRow}
-          onRowClick={onRowClick}
-          rowClassName={rowClassName}
-          emptyState={emptyState}
-          loading={loading}
-          loadingState={loadingState}
-          ariaLabel={ariaLabel}
-        />
-      </div>
-
-      {/* ── Table mode: visible at lg: and above ─────────────────────────────── */}
-      <div className="hidden lg:block admin-table-scroll-wrap bg-card rounded-2xl border shadow-sm overflow-hidden">
-        <div className="admin-table-scroll overflow-x-auto">
-          <table className="w-full text-sm" aria-label={ariaLabel}>
-            <thead className="sticky top-0 z-[2] bg-card">{/* design-tokens-allow: z-[2] — local sticky-cell stacking inside admin table (sticky header over scrolling body); not a global elevation layer */}
-              <tr className="border-b bg-muted/40">
-                {columns.map((col, idx) => {
-                  const visClass   = col.visibility ? VISIBILITY_CLASS[col.visibility] : ''
-                  const alignClass = col.align ? ALIGN_CLASS[col.align] : 'text-left'
-                  const isSticky   = idx === stickyIdx
-                  const hasMenu    = col.sortable || col.hideable
-                  const labels     = col.sortLabels ?? makeSortLabels(tSort, col.sortType ?? 'text')
-
-                  return (
-                    <th
-                      key={col.key}
-                      className={cn(
-                        'px-4 py-3 font-medium whitespace-nowrap text-muted-foreground',
-                        alignClass,
-                        visClass,
-                        isSticky && 'sticky left-0 z-[1] bg-card', // design-tokens-allow: z-[1] — local sticky-cell stacking in admin table (sticky column over scrolling body); not a global elevation layer
-                        col.className,
-                      )}
-                      aria-sort={
-                        col.sortable
-                          ? col.sortDirection === 'asc' ? 'ascending'
-                          : col.sortDirection === 'desc' ? 'descending'
-                          : 'none'
-                          : undefined
-                      }
-                    >
-                      {hasMenu ? (
-                        <DropdownMenu>
-                          <DropdownMenuTrigger
-                            className={cn(
-                              'flex items-center gap-1.5 transition-colors hover:text-foreground bg-transparent border-0 p-0 font-medium cursor-pointer',
-                              col.sortDirection ? 'text-foreground' : '',
-                            )}
-                            aria-label={`Column options: ${String(col.header)}`}
-                          >
-                            {col.header}
-                            {/* ⇅ icon: h-3 w-3 (12px) — strictly smaller than text-sm (14px) header */}
-                            <ArrowUpDown
-                              className={cn(
-                                'h-3 w-3 shrink-0',
-                                col.sortDirection ? 'text-primary' : 'text-muted-foreground/40',
-                              )}
-                              aria-hidden="true"
-                            />
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="start" className="min-w-40">
-                            {col.sortable && (
-                              <>
-                                <DropdownMenuItem onClick={() => col.onSort?.('asc')}>
-                                  <ArrowUp className="h-4 w-4 shrink-0" aria-hidden="true" />
-                                  {labels.asc}
-                                  {col.sortDirection === 'asc' && (
-                                    <Check className="h-3.5 w-3.5 ml-auto shrink-0 text-primary" aria-hidden="true" />
-                                  )}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => col.onSort?.('desc')}>
-                                  <ArrowDown className="h-4 w-4 shrink-0" aria-hidden="true" />
-                                  {labels.desc}
-                                  {col.sortDirection === 'desc' && (
-                                    <Check className="h-3.5 w-3.5 ml-auto shrink-0 text-primary" aria-hidden="true" />
-                                  )}
-                                </DropdownMenuItem>
-                              </>
-                            )}
-                            {col.sortable && col.hideable && <DropdownMenuSeparator />}
-                            {col.hideable && (
-                              <DropdownMenuItem onClick={col.onHideColumn}>
-                                <EyeOff className="h-4 w-4 shrink-0" aria-hidden="true" />
-                                {labels.hide}
-                              </DropdownMenuItem>
-                            )}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      ) : col.header}
-                    </th>
-                  )
-                })}
-                {/* Trailing chevron affordance column — only for interactive rows */}
-                {onRowClick && <th className="w-8 px-2 py-3" aria-hidden="true" />}
-              </tr>
-            </thead>
-
-            <tbody className="divide-y">
-              {loading ? (
-                loadingState ? (
-                  <tr>
-                    <td colSpan={columns.length + (onRowClick ? 1 : 0)}>{loadingState}</td>
-                  </tr>
-                ) : (
-                  Array.from({ length: 5 }).map((_, i) => (
-                    <tr key={i} className="animate-pulse">
-                      {columns.map(col => (
-                        <td
-                          key={col.key}
-                          className={cn('px-4 py-3', col.visibility ? VISIBILITY_CLASS[col.visibility] : '')}
-                        >
-                          <div className="h-4 bg-muted rounded" />
-                        </td>
-                      ))}
-                      {onRowClick && <td className="w-8 px-2 py-3" aria-hidden="true" />}
-                    </tr>
-                  ))
-                )
-              ) : errorState ? (
-                <tr>
-                  <td colSpan={columns.length + (onRowClick ? 1 : 0)} className="px-4 py-12 text-center text-muted-foreground">
-                    {errorState}
-                  </td>
-                </tr>
-              ) : rows.length === 0 ? (
-                <tr>
-                  <td colSpan={columns.length + (onRowClick ? 1 : 0)} className="px-4 py-12 text-center text-muted-foreground">
-                    {emptyState}
-                  </td>
-                </tr>
-              ) : (
-                rows.map(row => (
-                  <tr
-                    key={rowKey(row)}
-                    className={cn(
-                      'transition-colors',
-                      onRowClick && 'hover:bg-muted/20 cursor-pointer focus-visible:bg-muted/20 focus-visible:outline-none',
-                      rowClassName?.(row),
-                    )}
-                    onClick={onRowClick ? () => onRowClick(row) : undefined}
-                    tabIndex={onRowClick ? 0 : undefined}
-                    onKeyDown={
-                      onRowClick
-                        ? e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowClick(row) } }
-                        : undefined
-                    }
-                  >
-                    {columns.map((col, idx) => {
-                      const visClass   = col.visibility ? VISIBILITY_CLASS[col.visibility] : ''
-                      const alignClass = col.align ? ALIGN_CLASS[col.align] : ''
-                      const isSticky   = idx === stickyIdx
-                      return (
-                        <td
-                          key={col.key}
-                          className={cn(
-                            'px-4 py-3',
-                            alignClass,
-                            visClass,
-                            isSticky && 'sticky left-0 z-[1] bg-card', // design-tokens-allow: z-[1] — local sticky-cell stacking in admin table (sticky column over scrolling body); not a global elevation layer
-                            col.className,
-                          )}
-                        >
-                          {col.cell(row)}
-                        </td>
-                      )
-                    })}
-                    {/* Trailing chevron: communicates row is interactive in table mode */}
-                    {onRowClick && (
-                      <td className="w-8 px-2 py-3 text-right" aria-hidden="true">
-                        <ChevronRight className="h-4 w-4 text-muted-foreground/40 inline-block" />
-                      </td>
-                    )}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <MantineDataTableToCards<WrappedRow<Row>>
+        columns={tableColumns}
+        rows={wrappedRows}
+        emptyLabel={emptyState}
+        rowClassName={rowClassName ? w => rowClassName(w.row) : undefined}
+        card={card}
+        onRowClick={onRowClick ? w => onRowClick(w.row) : undefined}
+        stickyColumnIndex={stickyColumnIndex}
+        ariaLabel={ariaLabel}
+      />
     </div>
   )
 }

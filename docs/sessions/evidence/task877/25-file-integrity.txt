@@ -1,0 +1,87 @@
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 70 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+npm.cmd : ❌  check:file-integrity FAILED — 32 corrupt / invalid file(s):
+At line:5 char:31
++ Run "25-file-integrity.txt" { npm.cmd run check:file-integrity }
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  check:file-i...nvalid file(s)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  docs/sessions/evidence/task877/01-status-before.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/02a-census-page.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/02b-admintable-usage.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/02c-pageheader-consumers.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/02d-references-before.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/03-baseline-diff.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/03a-census-update-baseline.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/10-platform.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/11-tests.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/12-rls-guards.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/13-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/14-lint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/15-story-coverage.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/16-census-page.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/17-rendered-scope.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/18-rendered-scope-verify.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/19-census-changed.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/20-census-changed-verify.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/21-i18n.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/22-check-stories.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/23b-governance-tailwind.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/23c-references-after.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/24-build-storybook.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/24b-locale-leak.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/25-file-integrity.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/A-checkpoint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/A-story-coverage.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/A-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/A-usersTable-smoke.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/B-T1.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/B-checkpoint.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+  docs/sessions/evidence/task877/B-typecheck.txt
+    → Stray UTF-8 BOM (EF BB BF) at start of source file
+
+  Remediation:
+    NUL bytes / truncation : re-write the file (Cowork/Windows mount write-failure)
+    Stray BOM              : strip with sed or PowerShell before committing
+    JSON parse error       : validate and fix the JSON
+    node --check failure   : fix the JS/MJS syntax error
+  Rule: docs/agent-contract.md clause 14
+EXIT_CODE=1

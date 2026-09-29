@@ -1,0 +1,1732 @@
+{
+ "out": [
+  {
+   "id": "mantine-primitives-table--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-table--row-click",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-table--responsive-columns",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-table--sticky-column",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-table--card-detail",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-dashboardheader--with-actions",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admintable--synthesized",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admintable--empty",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admintable--row-click",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-adminpageheader--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-adminpageheader--with-action",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [
+      20
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [
+      24
+     ],
+     "h2": [],
+     "body": [
+      14
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--empty",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      16
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--delete-confirm",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--detail",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--new",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--edit",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--submitting",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default-currency",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--inactive",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 320
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      14,
+      14
+     ],
+     "dialogW": 390
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [
+      16
+     ],
+     "body": [
+      16,
+      14
+     ],
+     "dialogW": 440
+    }
+   },
+   "type": {},
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": {
+    "320": {
+     "cw": 320,
+     "iw": 320,
+     "sw": 320,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "390": {
+     "cw": 390,
+     "iw": 390,
+     "sw": 390,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      14
+     ],
+     "dialogW": null
+    },
+    "768": {
+     "cw": 768,
+     "iw": 768,
+     "sw": 768,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1024": {
+     "cw": 1024,
+     "iw": 1024,
+     "sw": 1024,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    },
+    "1440": {
+     "cw": 1440,
+     "iw": 1440,
+     "sw": 1440,
+     "overflow": false,
+     "h1": [],
+     "h2": [],
+     "body": [
+      12,
+      12
+     ],
+     "dialogW": null
+    }
+   },
+   "type": {},
+   "errors": []
+  }
+ ],
+ "sticky": {
+  "scrollable": true,
+  "scrollWidth": 1408,
+  "clientWidth": 1340,
+  "scrolledTo": 68,
+  "before": {
+   "vpLeft": 50,
+   "first": 50,
+   "second": 254,
+   "pos": "sticky",
+   "z": "1"
+  },
+  "after": {
+   "vpLeft": 50,
+   "first": 50,
+   "second": 186,
+   "pos": "sticky",
+   "z": "1"
+  }
+ }
+}

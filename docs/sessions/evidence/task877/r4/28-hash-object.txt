@@ -1,0 +1,6 @@
+3f148e3ae697a61a0a085a6a0d9c6f34ffdabbc2  src/stories/_StoryPageGutter.tsx
+cf9a7eb5f81fbb5362a73bceb596ebb47487ef48  src/stories/patterns/mantine/AdminTable.stories.tsx
+e81ed7c0594567ced67b288140a680fa2930bc52  src/stories/patterns/mantine/AdminPageHeader.stories.tsx
+ff1352fa64145d511f720f49927bc873ad838642  src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+dd05348d6b6a17bebc0d1a6923217abc2f46f3ba  src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx
+bfd5a7c248a619bd8599a067b3ad51d2784e6ac8  src/stories/patterns/mantine/DashboardHeader.stories.tsx

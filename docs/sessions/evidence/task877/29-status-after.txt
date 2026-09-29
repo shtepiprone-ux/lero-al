@@ -1,0 +1,38 @@
+ M docs/component-catalog.md
+ M docs/design-system.md
+ M docs/mantine-tailadmin-migration-tracker.md
+ M docs/responsive-storybook-inventory.md
+ M docs/storybook-governance.md
+ M scripts/check-locale-leak.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/currency/page.tsx
+ M src/app/globals.css
+ D src/components/admin/AdminCardList.stories.tsx
+ D src/components/admin/AdminCardList.tsx
+ D src/components/admin/AdminCurrenciesManager.stories.tsx
+ M src/components/admin/AdminCurrenciesManager.tsx
+ M src/components/admin/AdminCurrencyTabs.tsx
+ M src/components/admin/AdminPageHeader.tsx
+ D src/components/admin/AdminTable.stories.tsx
+ M src/components/admin/AdminTable.tsx
+ M src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+ M src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+ M src/design-system/mantine/theme.ts
+ M src/stories/mantine/primitives/Table.stories.tsx
+ M src/stories/patterns/mantine/DashboardHeader.stories.tsx
+?? docs/sessions/evidence/task877/
+?? src/components/admin/AdminCurrenciesView.tsx
+?? src/components/admin/CurrencyDetailDialogView.tsx
+?? src/components/admin/CurrencyFormDialogView.tsx
+?? src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+?? src/components/admin/__tests__/AdminTable.adapter.test.tsx
+?? src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+?? src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx
+?? src/stories/patterns/mantine/AdminPageHeader.stories.tsx
+?? src/stories/patterns/mantine/AdminTable.stories.tsx
+?? src/stories/patterns/mantine/CurrencyDetailDialogView.stories.tsx
+?? src/stories/patterns/mantine/CurrencyFormDialogView.stories.tsx

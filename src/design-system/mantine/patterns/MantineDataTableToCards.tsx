@@ -1,7 +1,8 @@
 'use client'
 
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea, useMantineTheme } from '@mantine/core'
+import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea, useMantineTheme, type MantineBreakpoint } from '@mantine/core'
+import { ChevronRight } from 'lucide-react'
 import { useMediaQuery } from '@mantine/hooks'
 
 // useLayoutEffect on the client (cards only mount client-side after the mobile
@@ -142,7 +143,7 @@ function CardPrimaryRow({
           <div ref={zoneRef} style={{ flex: 1, minWidth: 0 }}>
             <div ref={titleRef} style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{title}</div>
             {subtitle != null && (
-              <Text size="xs" c="gray.5" truncate="end">{subtitle}</Text>
+              <Text size="xs" c="gray.5" truncate="end" component="div">{subtitle}</Text>
             )}
           </div>
         </Group>
@@ -164,7 +165,7 @@ function CardPrimaryRow({
         <div ref={titleRef} style={{ minWidth: 0 }}>{title}</div>
         {subtitle != null && (
           <div style={{ clear: 'right' }}>
-            <Text size="xs" c="gray.5" truncate="end">{subtitle}</Text>
+            <Text size="xs" c="gray.5" truncate="end" component="div">{subtitle}</Text>
           </div>
         )}
       </div>
@@ -200,11 +201,14 @@ export interface CardConfig<R> {
   badge?: (row: R) => ReactNode
   /** Compact meta rows below ONE divider. Null/undefined returns are skipped. */
   meta?: { label: string; value: (row: R) => ReactNode }[]
+  /** Task 877 (R1): free-form region below ONE divider, used where `meta[]` is absent. */
+  detail?: (row: R) => ReactNode
 }
 
 export interface TableColumn<R = TableRow> {
   key: string
-  label: string
+  /** Task 877: widened from `string` to `ReactNode` (adapters pass a translated node). */
+  label: ReactNode
   isBadge?: boolean
   badgeColor?: string
   /** Horizontal alignment for this column's header and cells. */
@@ -217,6 +221,8 @@ export interface TableColumn<R = TableRow> {
    * title, or a date whose "(in N days)" detail drops to its own line) instead of the table's own
    * default `nowrap`. Defaults to `false` — every existing consumer keeps `nowrap` unchanged. */
   wrap?: boolean
+  /** Task 877 (R1): hides this column's Th/Td below the breakpoint (desktop table only). */
+  visibleFrom?: MantineBreakpoint
 }
 
 export interface TableRow {
@@ -227,7 +233,8 @@ export interface TableRow {
 export interface MantineDataTableToCardsProps<R extends { id: string } = TableRow> {
   columns: TableColumn<R>[]
   rows: R[]
-  emptyLabel?: string
+  /** Task 877: widened from `string` to `ReactNode`. */
+  emptyLabel?: ReactNode
   /** Per-row CSS class (e.g. 'opacity-50' for per-row loading state). */
   rowClassName?: (row: R) => string
   /** Structured card config for mobile.
@@ -244,6 +251,13 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
    * `useMediaQuery`, so there is no first-paint flash on a public-site page.
    */
   cardsBelow?: 'sm' | 'md'
+  /** Task 877 (R1): makes the table row and the card clickable (`tabIndex=0`, Enter/Space) with a
+   * trailing chevron. Omitted → no row interaction, render unchanged. */
+  onRowClick?: (row: R) => void
+  /** Task 877 (R1): index of the desktop column that stays in place while the table scrolls sideways. */
+  stickyColumnIndex?: number
+  /** Task 877 (R1): accessible name of the desktop `<table>`. */
+  ariaLabel?: string
 }
 
 /**
@@ -278,6 +292,9 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
   card,
   tableHeader,
   cardsBelow = 'sm',
+  onRowClick,
+  stickyColumnIndex,
+  ariaLabel,
 }: MantineDataTableToCardsProps<R>) {
   const theme = useMantineTheme()
   // Only consulted for the default 'sm' (useMediaQuery) path; the 'md' (CSS-switch) path ignores it.
@@ -290,6 +307,30 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
       </Text>
     )
   }
+
+  // Task 877 (R1): one activation contract for the table row and the card. Enter/Space only when the
+  // row itself holds focus, so a focused inner button keeps its own Enter/Space.
+  function rowActivation(row: R) {
+    if (!onRowClick) return {}
+    return {
+      onClick: () => onRowClick(row),
+      tabIndex: 0,
+      onKeyDown: (e: React.KeyboardEvent) => {
+        if (e.target !== e.currentTarget) return
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onRowClick(row)
+        }
+      },
+      style: { cursor: 'pointer' },
+    }
+  }
+
+  const rowChevron = (
+    <Group justify="flex-end" c="gray.4" aria-hidden="true">
+      <ChevronRight size={theme.other.iconSize.compact} />
+    </Group>
+  )
 
   function renderCell(col: TableColumn<R>, row: R): ReactNode {
     if (col.render) return col.render(row)
@@ -306,7 +347,13 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
 
   function renderDesignedCard(row: R): ReactNode {
     const cfg = card!
-    const hasHeader = !!(cfg.id || cfg.actions)
+    // Task 877 (R1, review 1 §16.2 item 2): `actions` is called ONCE; the automatic chevron appears only
+    // when it returns nothing (the legacy card list's `trailing ?? chevron` rule).
+    const actionsContent = cfg.actions?.(row)
+    const hasActions = actionsContent != null && actionsContent !== false
+    const autoChevron = !!onRowClick && !hasActions
+    const hasHeader = !!(cfg.id || hasActions || autoChevron)
+    const hasHeaderContent = !!(cfg.id || hasActions)
     const subtitleContent = cfg.subtitle?.(row)
     const badgeContent = cfg.badge?.(row)
 
@@ -317,16 +364,21 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
         radius="2xl"
         padding="lg"
         className={rowClassName?.(row)}
+        {...(onRowClick ? { role: 'button' } : {})}
+        {...rowActivation(row)}
       >
         <Stack gap="sm">
           {/* HEADER: id → left edge ↔ actions → right edge */}
           {hasHeader && (
             <Group justify="space-between" wrap="nowrap" align="center">
               <Text size="xs" c="gray.5">{cfg.id?.(row)}</Text>
-              <Group gap="xs" wrap="nowrap">{cfg.actions?.(row)}</Group>
+              <Group gap="xs" wrap="nowrap">
+                {hasActions ? actionsContent : null}
+                {autoChevron && rowChevron}
+              </Group>
             </Group>
           )}
-          {hasHeader && <Divider color="gray.1" />}
+          {hasHeaderContent && <Divider color="gray.1" />}
 
           {/* PRIMARY: three measured states (see CardPrimaryRow).
               States 1 & 2 keep the badge inline (right of the first name, surname wraps
@@ -357,6 +409,14 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
               </Stack>
             </>
           )}
+
+          {/* DETAIL (Task 877): free-form region below ONE divider, where meta[] is absent */}
+          {!cfg.meta?.length && cfg.detail && (
+            <>
+              <Divider color="gray.1" />
+              {cfg.detail(row)}
+            </>
+          )}
         </Stack>
       </Card>
     )
@@ -372,6 +432,8 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
               key={row.id}
               withBorder
               className={rowClassName?.(row)}
+              {...(onRowClick ? { role: 'button' } : {})}
+              {...rowActivation(row)}
             >
               {columns.map((col, idx) => (
                 <Group
@@ -413,6 +475,15 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
     </Stack>
   )
 
+  // Task 877 (R1): the sticky column keeps its place via Mantine style props; the stacking level is the
+  // one non-visual value, so it goes through the single `zIndex` entry (Mantine has no z-index prop).
+  function stickyProps(idx: number, background: string) {
+    return idx === stickyColumnIndex ? ({ pos: 'sticky', left: 0, bg: background } as const) : {}
+  }
+  function stickyStyle(idx: number) {
+    return idx === stickyColumnIndex ? { zIndex: theme.other.zIndex.tableStickyColumn } : {}
+  }
+
   // Desktop: TailAdmin CRM card-wrapped table (§6b).
   // Paper provides rounded-2xl card with gray-2 border; Table fills it edge-to-edge
   // so thead border-y spans the full card width. Cell padding (xl×sm = 24×12) provides visual inset.
@@ -430,7 +501,15 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
         </Box>
       )}
       <ScrollArea>
+        {/* Task 877 revision 3 (kickoff §18.2): a Mantine `Badge` label ellipsizes, so its min-content
+            width is near zero and a table narrower than its content squeezed exactly those columns into
+            "А…". `miw="max-content"` keeps every cell at its content width; the table still fills the card
+            when the content fits and scrolls inside the `ScrollArea` when it does not. */}
         <Table
+          miw="max-content"
+          stickyHeader
+          highlightOnHover={!!onRowClick}
+          aria-label={ariaLabel}
           withRowBorders
           withColumnBorders={false}
           styles={{
@@ -446,29 +525,35 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
         >
           <Table.Thead>
             <Table.Tr>
-              {columns.map((col) => (
+              {columns.map((col, idx) => (
                 <Table.Th
                   key={col.key}
-                  style={{ width: col.width, textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}) }}
+                  visibleFrom={col.visibleFrom}
+                  {...stickyProps(idx, 'gray.0')}
+                  style={{ width: col.width, textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}), ...stickyStyle(idx) }}
                 >
                   <Text size="xs" fw={500} c="gray.5">
                     {col.label}
                   </Text>
                 </Table.Th>
               ))}
+              {onRowClick && <Table.Th aria-hidden="true" />}
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
             {rows.map((row) => (
-              <Table.Tr key={row.id} className={rowClassName?.(row)}>
-                {columns.map((col) => (
+              <Table.Tr key={row.id} className={rowClassName?.(row)} {...rowActivation(row)}>
+                {columns.map((col, idx) => (
                   <Table.Td
                     key={col.key}
-                    style={{ textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}) }}
+                    visibleFrom={col.visibleFrom}
+                    {...stickyProps(idx, 'var(--mantine-color-body)')}
+                    style={{ textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}), ...stickyStyle(idx) }}
                   >
                     {renderCell(col, row)}
                   </Table.Td>
                 ))}
+                {onRowClick && <Table.Td aria-hidden="true">{rowChevron}</Table.Td>}
               </Table.Tr>
             ))}
           </Table.Tbody>

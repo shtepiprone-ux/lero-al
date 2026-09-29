@@ -695,7 +695,7 @@ re-checks only the tuples in §18.4.
 | `Patterns/Mantine/AdminTable` (all 4), `AdminPageHeader` (both), `AdminCurrenciesView` (all 4), `CurrencyFormDialogView` (all 3) | accepted |
 | `Patterns/Mantine/CurrencyDetailDialogView` (all 3) | **returned:** *"Має бути баланс між стовпчиками. Наразі виходить так, що перший стовпчик заповнений повністю, а другий стовпчик пустий, через що попап дуже великий. Виправити!"* |
 | `Patterns/Mantine/AdminCurrencyTabs` `Default` | **returned:** *"Якось не до кінця ця таблиця адаптивна, там нічого взагалі не прочитаєш, бо на екранах меньше 1920px увесь контент всередині таблиці обрізається і виходить щось накшталт "В...", взагалі не розібрати що це за стовпчик і що там написано."* |
-| All Stories | **new owner rule:** *"необхідно занести в правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* It is now `docs/golden-rules.md` **GR-3d** (owner D85-1 *"Як у продакшні"*). The sweep of the other Stories is Task **898** (D85-2). |
+| All Stories | **new owner rule:** *"необхідно занести в правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* It is now `docs/golden-rules.md` **GR-3d**. The owner then amended it, verbatim: *"насправді не треба окрема задача для відступів у Story, достатньо буде зробити один і той самий профіль для всіх Story, щоб вони завжди мали однаковий відступ від країв екрану"*. So there is one shared profile, `StoryPageGutter`, and no separate task. |
 
 The blast-radius legacy Stories got no return.
 
@@ -714,8 +714,8 @@ The blast-radius legacy Stories got no return.
 - **The gutters.**
   - `AdminCurrenciesView.stories.tsx` has no gutter at all (full bleed).
   - `AdminTable`, `AdminPageHeader` and `AdminCurrencyTabs` write a fixed `p="md"` (16px at every width).
-  - Production `/admin/currency` uses `p={{ base: 'xl', lg: '2xl' }}` (24px, and 32px from 1024px;
-    `src/app/admin/currency/page.tsx`).
+  - The GR-3d profile is 16px, then 24px from 640px, then 32px from 1024px. That is the same as the default
+    `.container-wide` canvas every legacy Story already has.
 
 ### 18.3 Re-entry (a fresh Sonnet session starts here)
 
@@ -731,20 +731,25 @@ Put the new evidence in `docs/sessions/evidence/task877/r3/`.
    add `miw="max-content"` to the desktop `<Table>`. This is a Mantine style prop with a CSS keyword, so it adds no
    raw value. The table still fills its card when the content fits, and scrolls inside the `ScrollArea` when it does
    not. Add a comment citing §18.2.
-4. **The Story gutter harness (GR-3d).** Before writing it, emit the GR-0 and GR-3a receipts: search `src/stories`
-   for an existing gutter helper. `MantineStoryShell` is the primitive showcase shell, with card chrome and 16/24px,
-   so it is **not** the admin page gutter.
-   - Create `src/stories/_StoryPageGutter.tsx`. It exports `StoryPageGutter({ surface, children })` with
-     `surface: 'admin'`, which renders `<Box p={{ base: 'xl', lg: '2xl' }}>`. Add a comment citing
-     `src/app/admin/currency/page.tsx` and GR-3d. No other surface: the public branches are 898's.
-   - Wrap the page content of these Stories in it, and delete their own `Box p="md"` decorators and wrappers:
+4. **The shared Story gutter profile (GR-3d, amended 2026-09-29).** The owner's rule is **one profile for all
+   Stories**. There are no per-surface variants. Before writing it, emit the GR-0 and GR-3a receipts: search
+   `src/stories` for an existing gutter helper. `MantineStoryShell` is the primitive showcase shell (card chrome,
+   16/24px), and GR-3d names it as a known exception, so it is **not** the profile.
+   - Create `src/stories/_StoryPageGutter.tsx`. It exports `StoryPageGutter({ children })` with **no other prop**, and
+     renders `<Box px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl">{children}</Box>`. Add a comment citing GR-3d and
+     its source: the `.container-wide` ladder (`src/app/globals.css:714-724`) with the canvas `py-6`
+     (`.storybook/preview.tsx` `withCanvas`). **If an earlier draft of this step already made the file with a
+     `surface` prop or `p={{ base: 'xl', lg: '2xl' }}`, replace it with this form.**
+   - Wrap the page content of every export in these Stories in it, and delete their own `Box`/`Stack` `p`/`px`/`py`
+     gutters and decorators:
      - `src/stories/patterns/mantine/AdminTable.stories.tsx` (4 exports);
      - `…/AdminPageHeader.stories.tsx` (decorator);
      - `…/AdminCurrenciesView.stories.tsx` (all 4 renders; for `DeleteConfirm`/`Detail` the page content, not the modal);
-     - `…/AdminCurrencyTabs.stories.tsx` (decorator).
-   - `CurrencyFormDialogView` and `CurrencyDetailDialogView` are overlay-only. They get no harness.
-   - `Table.stories.tsx` (on `MantineStoryShell`, §8.1) and `DashboardHeader.stories.tsx`, whose other exports belong
-     to other tasks, are **not** changed. They are 898's.
+     - `…/AdminCurrencyTabs.stories.tsx` (decorator);
+     - `…/DashboardHeader.stories.tsx`: this task changed the file, so all 4 exports move. `Stack p="md"` becomes
+       `<StoryPageGutter><Stack …>` without `p`.
+   - `CurrencyFormDialogView` and `CurrencyDetailDialogView` are overlay-only, so they get no wrapper.
+     `Table.stories.tsx` stays on `MantineStoryShell` (the GR-3d exception), so it is not changed.
 5. Run this block from the project root, in Windows PowerShell. After each command, append
    `"EXIT_CODE=$LASTEXITCODE" | Add-Content <file>`.
 
@@ -775,7 +780,7 @@ Put the new evidence in `docs/sessions/evidence/task877/r3/`.
    - `11` passes 33 tests or more, with `AdminUsersTable.smoke` unchanged.
 6. **Measure on the new `storybook-static`, and save the result as `r3/30-measurements.json`.**
    - **GR-3b/GR-3c:** every Story file this revision changed, at 320/390/768/1024/1440.
-   - **GR-3d:** the edge gap of the first page-content box at 320/390/1024/1440. The expected values are 24/24/32/32.
+   - **GR-3d:** the edge gap of the first page-content box at 320/390/1024/1440. The expected values are 16/16/32/32.
    - **Truncation:** the number of elements inside `#storybook-root table` whose `text-overflow` is `ellipsis` and
      whose `scrollWidth > clientWidth`. Measure it at 768/1024/1440, `uk`, for two Stories:
      `patterns-mantine-admincurrencytabs--default` with the **Providers tab clicked**, and
@@ -794,7 +799,7 @@ Use the toolbar locales `en` and `uk`.
 |---|---|---|---|
 | `Patterns/Mantine/CurrencyDetailDialogView` | all 3 | 390, 1440 | both columns balanced |
 | `Patterns/Mantine/AdminCurrencyTabs` | `Default`, **both tabs** | 390, 768, 1024, 1440 | nothing truncated; the table scrolls sideways where needed |
-| `Patterns/Mantine/AdminCurrenciesView`, `AdminTable`, `AdminPageHeader` | all | 390, 1440 | edge gutter as on the admin page |
+| `Patterns/Mantine/AdminCurrenciesView`, `AdminTable`, `AdminPageHeader`, `DashboardHeader` | all | 390, 1440 | the same edge gutter as every other Story (GR-3d) |
 | `Mantine/Primitives/Table` `Default` · `Patterns/Mantine/AdminExchangeProvidersView` `Default` | — | 1024 | blast radius of step 3 |
 
 Every other O78-6 tuple stays accepted. Approval needs O78-6b accepted and §18.3 done.

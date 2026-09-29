@@ -221,49 +221,57 @@ With no receipt, or with any listed violation, the executor returns `BLOCKED —
 `NEEDS REVISION`. No automated gate reads computed font sizes. `check:design-tokens` only sees raw literals, so a
 theme key used statically (`size="h3"`) passes it (GR-2).
 
-## GR-3d — A Story sits at the production page's edge gutter, through one shared harness
+## GR-3d — Every Story has the same edge gutter: one shared profile
 
 **Owner rule, 2026-09-29.** Task 877: the owner returned O78-6 and wrote, verbatim: *"Також, необхідно занести в
 правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна
-проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"*
+проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* The same day the owner fixed
+the form of the rule, verbatim: *"насправді не треба окрема задача для відступів у Story, достатньо буде зробити один
+і той самий профіль для всіх Story, щоб вони завжди мали однаковий відступ від країв екрану. Тому запиши це у
+правило"*.
 
-Asked which gutter is canonical, the owner chose *"Як у продакшні (Recommended)"*: the Story repeats the edge gutter
-of the page on which the component lives in production, through one shared harness. Asked about the other Stories
-with the same defect, the owner chose *"Окрема задача + гейт (Recommended)"*, which is Task **898** (Sprint 85).
+The cause was structural. A `skipCanvas` Story drops the `.container-wide` canvas and then picks its own padding.
+Measured 2026-09-29: the values ranged from no gutter to a fixed `p="md"`, and
+`docs/mantine-responsive-design-system.md` §8.1 named three different "canonical" gutters.
 
-The cause was structural. A `skipCanvas` Story drops the `.container-wide` canvas and then picks its own padding. On
-2026-09-29, 57 of the 64 `Patterns/Mantine/*` Stories that set `skipCanvas` used neither `MantineStoryShell` nor the
-§8.1 gutter. Values ranged from `0` to a fixed `p="md"`, and `docs/mantine-responsive-design-system.md` §8.1 named
-three different "canonical" gutters.
+**The profile.** There is one Story gutter profile, `StoryPageGutter` (`src/stories/_StoryPageGutter.tsx`). It takes
+no props and renders:
+
+```tsx
+<Box px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl">
+```
+
+That is 16px, then 24px from 640px, then 32px from 1024px, with 24px top and bottom. Its source is the default
+Storybook canvas, the `.container-wide` horizontal ladder (`src/app/globals.css:714-724`) with `py-6`
+(`.storybook/preview.tsx` `withCanvas`). So a Story that keeps the default canvas and a `skipCanvas` Story in the
+profile sit at the same distance from the screen edge. The one exception is at 1536px and above, where
+`.container-wide` has a 48px rung and Mantine has no breakpoint for it.
+
+**Required in every Story a task creates or changes:**
+- If the Story sets `skipCanvas: true`, it wraps its page content in `<StoryPageGutter>`, in every export.
+- A Story that renders **only** an overlay (a modal, drawer or bottom sheet in a portal) needs no wrapper. A Story
+  that renders page content **and** an open overlay wraps the page content.
+- `StoryPageGutter` is the only place a Story gutter value is written.
 
 **Forbidden in any new or changed Story:**
-- a page-content Story with no edge gutter (full bleed);
-- a gutter written in the Story itself: `p`/`px`/`py` on a `Box`/`Stack` in `decorators` or `render`, a
+- page content with no edge gutter (full bleed);
+- a gutter written in the Story itself: `p`, `px` or `py` on a `Box`/`Stack`/`Group` in `decorators` or `render`, a
   `container-*` class, or a `style` object;
-- a gutter that differs from the production page the component renders on.
+- a second gutter helper, or a variant of the profile.
 
-**Required:** the Story wraps its page content in the shared harness `StoryPageGutter`
-(`src/stories/_StoryPageGutter.tsx`), with the `surface` of its production page. The harness is the only place a
-Story gutter value is written. Each value cites its production source:
-- `surface="admin"` gives `p={{ base: 'xl', lg: '2xl' }}` (24px, and 32px from 1024px). Its source is the admin page
-  wrapper `src/app/admin/currency/page.tsx` (`Box p`), which is identical to the legacy `p-6 lg:p-8` on the other
-  admin pages.
-- A public surface gets its branch in Task 898, measured from its real page frame. Until then, a public Story keeps
-  the default canvas (`.container-wide py-6`, `.storybook/preview.tsx` `withCanvas`) and does not set `skipCanvas`.
-
-A Story that renders **only** an overlay (a modal, drawer or bottom sheet in a portal) needs no harness. A Story that
-renders page content **and** an open overlay wraps the page content.
+**Known exception, not yet unified:** `Mantine/Primitives/*` Stories use `MantineStoryShell`, whose gutter is 16px,
+then 24px from 768px. Its padding steps are load-bearing for `check:card-track-monotonicity` (see the file's own
+header). Moving it onto the profile needs that gate re-proved, so it is not done as a side effect of another task.
 
 **Check, before handoff and at review:** at **320, 390, 1024 and 1440**, measure the left and right distance from the
-viewport edge to the Story's first page-content box. Compare it with the production value for that surface.
+viewport edge to the Story's first page-content box. The expected values are 16 / 16 / 32 / 32.
 
 **Receipt — execution and review alike, one per changed Story:**
 
-`GR-3d STORY GUTTER CHECK — <story id>: surface <admin|public|overlay-only>; harness: StoryPageGutter <yes|n/a>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (production <px/px>); gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
 
 With no receipt, or with a gutter written in a Story, the executor returns `BLOCKED — GR-3d` and the reviewer returns
-`NEEDS REVISION`. A green `check:stories` is not evidence (GR-2): it does not measure edge gaps. Task 898 adds the
-gate.
+`NEEDS REVISION`. A green `check:stories` is not evidence (GR-2): it does not measure edge gaps.
 
 ## GR-4 — An acceptance criterion asserts an observable property, never an absolute
 
@@ -336,7 +344,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
 | GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
-| GR-3d | executor + reviewer edge-gap measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; Task **898** (Sprint 85) moves every Story onto `StoryPageGutter` and adds a blocking gate. |
+| GR-3d | executor + reviewer edge-gap measurement at 320/390/1024/1440 + required receipt; one profile, `StoryPageGutter` | **active** — no automated gate; `check:stories` does not measure edge gaps. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

@@ -1,7 +1,7 @@
 # Task 874 — the exchange-provider manager moves to canonical Mantine, and the last legacy `ui/PasswordInput` goes
 
 Sprint 78 (moved from Sprint 81 by owner decision **D78-7**) · **P3** · QA profile **Q3** · depends on 873 (landed) ·
-owner action **O78-5** · **Status: 📝 REVISION 1 FILED 2026-09-29 (I0 premise drift, §16), READY FOR SONNET — re-enter at §10.1**
+owner action **O78-5** · **Status: 🔁 NEEDS REVISION — review 1 (2026-09-29): implementation kept; owner deletes the three R5 files, then Sonnet re-enters at §17**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 (D78-7 is quoted verbatim there and in §5 below). The sibling nodes of `/admin/currency` are filed as **877**.
@@ -579,3 +579,69 @@ Review of `02a`, `02b`, `02c`, `10` and the fixture at `12ccef6d0`:
 Unchanged and confirmed: platform `win32 v22.22.3`; `02a` = F3 (10 nodes, exit 1); `02b` = F3 (18 nodes: 7 tier-1
 unenrolled + 3 enrolled + 8 tier-2, exit 1); F10 fixture values (now recorded in §10.1 step 4). R1–R8, AC1–AC5 and
 AC7–AC10 are unchanged. Re-entry: §13.1.
+
+## 17. Review 1 — 2026-09-29, `NEEDS REVISION` (revision 2: re-entry after the owner deletes the R5 files)
+
+The executor reported `PARTIALLY IMPLEMENTED`. The Claude Code auto-mode classifier refused the three R5 file
+deletions as "Irreversible Local Destruction", and the executor correctly did not route around it. The reviewer read
+the real diff, both Views, the container, both Stories, the smoke test, the eight docs, the six scripts and the
+evidence. **All of it is kept unchanged.** No code finding was raised. The current hashes equal `28-hash-object.txt`,
+and the plant pre-hash and post-hash files match.
+
+| # | Finding | Evidence | Correction |
+|---|---|---|---|
+| 1 | **P1 [R5, AC5, AC6].** The three R5 files still exist. `check:stories` fails on the deleted allowlist row's Story (`AdminExchangeProvidersManager.stories.tsx:22 [viewport-width-export]`), and `build-storybook` fails behind it. `23c` was never written. | `23-check-stories.txt` and `24-build-storybook.txt` both end `EXIT_CODE=1`; `23c-references-after.txt` is absent | The **owner** deletes the files (§17.1). Sonnet then re-runs the full gate block (§17.2). |
+| 2 | **P1 [GR-3b, GR-3c].** No Story was rendered, so neither receipt exists. | Executor report and session log | §17.3 |
+| 3 | **P2 [§14].** The 874 backlog state cell was not updated by the executor. The reviewer has updated it for this verdict. | `docs/backlog.md` | Sonnet sets it to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` at the end of §17 |
+| 4 | **Evidence freshness.** After the deletions, every earlier `13`–`29` transcript describes a different tree. Build, typecheck and census must be re-proven against the final diff. | Review rule: the build transcript must be current | §17.2 writes a complete new set |
+
+### 17.1 Owner step, before Sonnet starts
+
+The three paths are in §7's deletion list. The agent classifier blocks the deletion, so the owner runs it in native
+PowerShell. `Remove-Item` is a file operation, not a Git mutation.
+
+```powershell
+Remove-Item -LiteralPath src\components\ui\PasswordInput.tsx, src\components\ui\PasswordInput.stories.tsx, src\components\admin\AdminExchangeProvidersManager.stories.tsx
+git --no-optional-locks status --short -- src/components/ui/PasswordInput.tsx src/components/ui/PasswordInput.stories.tsx src/components/admin/AdminExchangeProvidersManager.stories.tsx
+```
+
+Expected result: exactly three ` D` lines.
+
+### 17.2 Sonnet re-entry: the full §13.2 gate block into `r2/`
+
+1. Confirm the three ` D` lines. If any file still exists, stop with `BLOCKED — R5 deletion not performed`. Do **not**
+   delete the file yourself by any route.
+2. Do not edit any product, Story, test, script or doc file. The review accepted them as they are. If a gate fails
+   because of one of those files, stop and report. Do not fix it.
+3. Run the whole §13.2 block again, commands `03a` to `29`, with one change: `$ev = "docs\sessions\evidence\task874\r2"`.
+   Create that folder first, and append `EXIT_CODE` after every command.
+   - `03a` must be idempotent. `r2\03-baseline-diff.txt` must still remove exactly the one `PasswordInput` key.
+   - Every expected result in §13.2 applies. In particular:
+     - `23` and `24` exit 0;
+     - `23c` returns no line (grep exit 1);
+     - `27` exits 0;
+     - `28` equals the top-level `28-hash-object.txt`;
+     - `29` shows the three paths as ` D`.
+   - Do not re-run the plants. Their files are unchanged, and the `28` equality proves that.
+4. Keep the top-level `13`–`29` files unchanged. The session log names them `SUPERSEDED by r2/`.
+5. Write BOM-free evidence. Pipe through `Out-File -Encoding utf8` only if `check:file-integrity` accepts the result;
+   otherwise write through Node. Give every BOM repair a printed path manifest (clause 14).
+
+### 17.3 Sonnet: GR-3b and GR-3c on the built Storybook
+
+Use the `r2\24` static build. For each of the 8 Stories (§13.3):
+- **GR-3b:** measure the component width against the viewport at 320, 390, 1024 and 1440, check horizontal overflow,
+  and confirm that at 320 the two modals open as bottom sheets.
+- **GR-3c:** measure `getComputedStyle(el).fontSize` of the modal title and body text at 320, 390, 768 and 1440.
+  There is no text of 24px or more without a responsive step.
+
+Emit one `GR-3b STORY RESPONSIVE CHECK` and one `GR-3c TYPE RESPONSIVE CHECK` receipt per Story, in the exact form in
+`docs/golden-rules.md`. Keep the measurement script and its JSON output under `r2/`. The script is evidence only and
+is not committed as a repo artifact.
+
+### 17.4 Completion
+
+- Update the session log. Add an `r2` gate table with exit codes, the SUPERSEDED note and the GR receipts, and list
+  the three deletions as `D` in Files Changed.
+- Update the 874 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+- AC10 (owner matrix O78-5) stays `MISSING EVIDENCE`, owed by the owner.

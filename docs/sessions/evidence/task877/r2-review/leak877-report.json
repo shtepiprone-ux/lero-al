@@ -1,0 +1,1044 @@
+{
+  "timestamp": "2026-09-29T17-15",
+  "mode": "full",
+  "mantineOnly": false,
+  "storiesScanned": 27,
+  "storiesExcluded": 0,
+  "localesChecked": [
+    "sq",
+    "uk",
+    "it"
+  ],
+  "leakCount": 147,
+  "leaks": [
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--empty",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Empty",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--empty",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Empty",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--empty",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Empty",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR — Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR — Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--delete-confirm",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Delete Confirm",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR — Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrenciesview--detail",
+      "storyLabel": "Patterns/Mantine/AdminCurrenciesView/Detail",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "EUR, ALL…"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admincurrencytabs--default",
+      "storyLabel": "Patterns/Mantine/AdminCurrencyTabs/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--default",
+      "storyLabel": "Patterns/Mantine/AdminTable/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--synthesized",
+      "storyLabel": "Patterns/Mantine/AdminTable/Synthesized",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-admintable--row-click",
+      "storyLabel": "Patterns/Mantine/AdminTable/Row Click",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Euro"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Lek albanese"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Lek albanese"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "ALL"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Albanian Lek"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--default-currency",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Default Currency",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Lek albanese"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Dollar amerikan"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Dollaro statunitense"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Dollar amerikan"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Dollaro statunitense"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "USD"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "US Dollar"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Dollar amerikan"
+    },
+    {
+      "storyId": "patterns-mantine-currencydetaildialogview--inactive",
+      "storyLabel": "Patterns/Mantine/CurrencyDetailDialogView/Inactive",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Dollaro statunitense"
+    }
+  ]
+}

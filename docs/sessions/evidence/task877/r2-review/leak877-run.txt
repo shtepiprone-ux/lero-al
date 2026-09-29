@@ -1,0 +1,187 @@
+win32 v22.22.3
+C:\Claude_Code_Projects\lero-al
+🔍  Locale leak detector — full mode
+    Stories: 27 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-09-29T17-15/
+
+[progress dots]
+
+node.exe : ❌  Locale leak detector: 147 leak(s) found:
+At line:1 char:580
++ ... -Content "$S\leak877-run.txt"; node.exe "$S\leak877.mjs" *>&1 | Tee-O ...
++                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (❌  Locale leak ... leak(s) found::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  Story: Patterns/Mantine/AdminCurrenciesView/Default
+    [sq] "EUR, ALL…"
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "EUR, ALL…"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "EUR, ALL…"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/AdminCurrenciesView/Empty
+    [sq] "EUR, ALL…"
+    [uk] "EUR, ALL…"
+    [it] "EUR, ALL…"
+
+  Story: Patterns/Mantine/AdminCurrenciesView/Delete Confirm
+    [sq] "EUR, ALL…"
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [sq] "EUR — Euro"
+    [uk] "EUR, ALL…"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [uk] "EUR — Euro"
+    [it] "EUR, ALL…"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+    [it] "EUR — Euro"
+
+  Story: Patterns/Mantine/AdminCurrenciesView/Detail
+    [sq] "EUR, ALL…"
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "EUR, ALL…"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "EUR, ALL…"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/AdminCurrencyTabs/Default
+    [sq] "EUR, ALL…"
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "EUR, ALL…"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "EUR, ALL…"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/AdminTable/Default
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/AdminTable/Synthesized
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/AdminTable/Row Click
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Euro"
+    [sq] "USD"
+    [sq] "US Dollar"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Euro"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Euro"
+    [it] "USD"
+    [it] "US Dollar"
+
+  Story: Patterns/Mantine/CurrencyDetailDialogView/Default
+    [sq] "Euro"
+    [uk] "Euro"
+    [it] "Euro"
+
+  Story: Patterns/Mantine/CurrencyDetailDialogView/Default Currency
+    [sq] "ALL"
+    [sq] "Albanian Lek"
+    [sq] "Lek albanese"
+    [uk] "ALL"
+    [uk] "Albanian Lek"
+    [uk] "Lek albanese"
+    [it] "ALL"
+    [it] "Albanian Lek"
+    [it] "Lek albanese"
+
+  Story: Patterns/Mantine/CurrencyDetailDialogView/Inactive
+    [sq] "USD"
+    [sq] "US Dollar"
+    [sq] "Dollar amerikan"
+    [sq] "Dollaro statunitense"
+    [uk] "USD"
+    [uk] "US Dollar"
+    [uk] "Dollar amerikan"
+    [uk] "Dollaro statunitense"
+    [it] "USD"
+    [it] "US Dollar"
+    [it] "Dollar amerikan"
+    [it] "Dollaro statunitense"
+
+    Report: .screenshots/locale-leak/2026-09-29T17-15/report.json
+EXIT_CODE=1

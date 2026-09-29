@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🔁 NEEDS REVISION — review 1 (2026-09-29) of the partial Phase A; the executor re-enters at §16.4**
+owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 3 (2026-09-29): the owner returned two O78-6 tuples and added GR-3d; the executor re-enters at §18.3, which includes §17.3's step**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -600,3 +600,201 @@ because the tree is no longer the pre-task state. Execute, in order:
 3. Phase B and Phase C unchanged, except that T2 now carries the §16.2 item 2 and §16.3 item 1 cases.
 4. Run the §13.2 gate block and plants P1–P4. The completion report lists §16.2 items 1–4 as `DONE` or
    `NOT DONE`, each with its evidence file.
+
+## 17. Review 2 — NEEDS REVISION (2026-09-29), revision 2
+
+### 17.1 What review 2 verified
+
+- The implementation hashes all equal `docs/sessions/evidence/task877/28-hash-object.txt`. §16.2 items 1–4 are done.
+- The GR-1 census (re-run by the reviewer) has 17 nodes. Every tier-1 node is `manifest:yes story:yes`, except the route
+  root `page.tsx` and the two container-exempt managers.
+- The reviewer measured GR-3b and GR-3c on the built Storybook: 27 Stories at 320, 390 and 1440. There is no overflow,
+  and the only heading ≥18px is the page `h1`, at 20 px below `sm` and 24 px above. Evidence:
+  `docs/sessions/evidence/task877/r2-review/gr3b-gr3c-measure-run.txt`.
+- **AC9 is closed by the orchestrator.** The four `docs/admin-ux-rules.md` lines (`:131`, `:537`, `:555`, `:557`)
+  were a kickoff defect: F11/§10.5 sent an edit to a file the executor may not write. Review 2 rewrote them to the
+  adapter/`CardConfig` wording (D78-8), and added the 640px switch exception to §14.3. The `23c` grep now returns no
+  line.
+- **24b is replaced for the in-scope Stories.** The full `check:locale-leak:mantine-only` (296 Stories) did not finish
+  in 76 minutes. That run is 836's problem, not 877's. Review 2 ran the same detector over only the 27 Stories 877
+  created or extended:
+  - generator: `r2-review/make-leak877-scoped.cjs`;
+  - transcript: `r2-review/leak877-run.txt`;
+  - report: `r2-review/leak877-report.json`.
+
+  Result: 147 leak lines, on 11 Stories. Every token is fixture data or language-neutral text:
+  - the currency codes `ALL`, `USD`;
+  - the database name columns from `FIXTURE_CURRENCIES` (`src/stories/fixtures/admin.fixtures.ts:55`). The list
+    shows `name_en || name_sq` in every locale, as production does, and the detail dialog shows all four columns;
+  - the search placeholder `EUR, ALL…`, which is identical in all four `messages/*.json` (`:1553`).
+
+  No UI string leaks.
+
+### 17.2 Finding (the only one)
+
+**P2 — §10.5 row 2 not done** (`scripts/check-locale-leak.mjs`, `PER_STORY_TOKENS`). §10.5 says: *"If the new
+Stories render raw fixture role strings, add the new story-id prefixes with the same reason (measure with
+check:locale-leak)."* The measurement never completed, so the entries were never added. Without them, every future
+`check:locale-leak:mantine-only` run carries 147 fixture lines for these Stories, and those lines hide real leaks.
+
+### 17.3 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. **Keep** all code and every evidence file. Change only `scripts/check-locale-leak.mjs`, and
+use the Edit tool: the tokens contain `…` and `—`, so a PowerShell read/write would corrupt them.
+
+1. In `PER_STORY_TOKENS`, directly after the `'patterns-mantine-adminsurfacepattern'` entry, add one comment and four
+   entries. Copy each token exactly from `r2-review/leak877-report.json`.
+   - The comment: *"Task 877: currency codes and database-stored multilingual currency names from
+     `FIXTURE_CURRENCIES` render verbatim by design (the list shows `name_en || name_sq`, the detail shows all four
+     name columns). The search placeholder `EUR, ALL…` is identical in all four locales."*
+   - The entries:
+     - `'patterns-mantine-admintable': ['ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar']`
+     - `'patterns-mantine-admincurrenciesview': ['EUR, ALL…', 'ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar', 'EUR — Euro']`
+     - `'patterns-mantine-admincurrencytabs': ['EUR, ALL…', 'ALL', 'Albanian Lek', 'Euro', 'USD', 'US Dollar']`
+     - `'patterns-mantine-currencydetaildialogview': ['ALL', 'Albanian Lek', 'Lek albanese', 'Euro', 'USD', 'US Dollar', 'Dollar amerikan', 'Dollaro statunitense']`
+2. Run this block from the project root, in Windows PowerShell. The existing `storybook-static` is current, because
+   no Story changes; rebuild it only if it is missing.
+
+   ```powershell
+   $ev = "docs\sessions\evidence\task877\r2"
+   New-Item -ItemType Directory -Force $ev | Out-Null
+   node.exe -p "process.platform + ' ' + process.version" *>&1 | Tee-Object "$ev\10-platform.txt"
+   git --no-optional-locks hash-object scripts/check-locale-leak.mjs *>&1 | Tee-Object "$ev\00-pre-hash.txt"
+   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.cjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
+   node.exe .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-locale-leak-877-scoped.txt"
+   npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
+   npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
+   git --no-optional-locks hash-object scripts/check-locale-leak.mjs *>&1 | Tee-Object "$ev\28-hash-object.txt"
+   git --no-optional-locks status --porcelain *>&1 | Tee-Object "$ev\29-status-after.txt"
+   ```
+
+   After each command, append `"EXIT_CODE=$LASTEXITCODE" | Add-Content <file>`.
+
+   Expected: `24c` exits 0 and prints `ZERO leaks across 27 stories`. `25` and `26` exit 0. The pre-hash is
+   `16fad348ae33d88f84fd3e67a9243255baa5e090`, and the new hash differs from it. The only newly changed path is
+   `scripts/check-locale-leak.mjs`, plus the `r2/` evidence.
+3. **Stop, and report `BLOCKED`, on any of these:** `24c` still reports a leak; a token in the report is not in the
+   list above; or a leak line names a UI string rather than fixture data. Do not widen the allowlist beyond these
+   four entries.
+4. In the session log, add a short "Review 2 re-entry" section: the edit, the `r2/` exit codes and the new hash. Set
+   the 877 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 17.4 Owner
+
+**Superseded by §18.** The owner ran O78-6 on 2026-09-29. The executor re-enters at §18.3, and the owner then
+re-checks only the tuples in §18.4.
+
+## 18. O78-6 returned by the owner (2026-09-29), revision 3
+
+### 18.1 The owner's result, verbatim per tuple
+
+| Story | Result |
+|---|---|
+| `Mantine/Primitives/Table` `RowClick`, `ResponsiveColumns`, `StickyColumn`, `CardDetail`; `Default` | *"Підтверджую!"* — accepted |
+| `Patterns/Mantine/DashboardHeader` `WithActions` | accepted |
+| `Patterns/Mantine/AdminTable` (all 4), `AdminPageHeader` (both), `AdminCurrenciesView` (all 4), `CurrencyFormDialogView` (all 3) | accepted |
+| `Patterns/Mantine/CurrencyDetailDialogView` (all 3) | **returned:** *"Має бути баланс між стовпчиками. Наразі виходить так, що перший стовпчик заповнений повністю, а другий стовпчик пустий, через що попап дуже великий. Виправити!"* |
+| `Patterns/Mantine/AdminCurrencyTabs` `Default` | **returned:** *"Якось не до кінця ця таблиця адаптивна, там нічого взагалі не прочитаєш, бо на екранах меньше 1920px увесь контент всередині таблиці обрізається і виходить щось накшталт "В...", взагалі не розібрати що це за стовпчик і що там написано."* |
+| All Stories | **new owner rule:** *"необхідно занести в правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* It is now `docs/golden-rules.md` **GR-3d** (owner D85-1 *"Як у продакшні"*). The sweep of the other Stories is Task **898** (D85-2). |
+
+The blast-radius legacy Stories got no return.
+
+### 18.2 What the reviewer measured
+
+- **The detail dialog.** `CurrencyDetailDialogView.tsx` puts only `symbol`/`decimals` in `SimpleGrid cols={2}`. The
+  four names sit below it in a one-column `Stack`, so the right half is empty for four rows (screenshot, 1440 `en`).
+- **The table.** On the Providers tab of `AdminCurrencyTabs` `Default` (`uk`), the badges render as `А…`, `Гі…`,
+  `Р…`, `Увімк…` at 768 and 1024, and the actions column is cut off. At 1440 nothing is cut.
+
+  The cause is in the canonical pattern, not in a View. A Mantine `Badge` label ellipsizes, so its min-content
+  width is near zero. When the `<table>` is narrower than its content, the table layout squeezes exactly those
+  columns. The reviewer set `min-width: max-content` on the table in the browser: zero truncated elements at 768,
+  1024 and 1440, and the `ScrollArea` scrolls instead. The same defect reaches every `MantineDataTableToCards`
+  consumer with badges between 640px and the width at which its content fits.
+- **The gutters.**
+  - `AdminCurrenciesView.stories.tsx` has no gutter at all (full bleed).
+  - `AdminTable`, `AdminPageHeader` and `AdminCurrencyTabs` write a fixed `p="md"` (16px at every width).
+  - Production `/admin/currency` uses `p={{ base: 'xl', lg: '2xl' }}` (24px, and 32px from 1024px;
+    `src/app/admin/currency/page.tsx`).
+
+### 18.3 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. **Keep** all code and evidence. §17.3's allowlist step is still owed, and it is step 1 here.
+Put the new evidence in `docs/sessions/evidence/task877/r3/`.
+
+1. **§17.3 steps 1 and 3:** the `PER_STORY_TOKENS` entries, and the stop conditions.
+2. **Detail dialog balance.** In `src/components/admin/CurrencyDetailDialogView.tsx`, render all six fields in **one**
+   `SimpleGrid cols={2} spacing="md"`, in this order: `symbol`, `decimals`, `name_sq`, `name_en`, `name_uk`,
+   `name_it`. Delete the separate `Stack` of names. Nothing else in the dialog changes: the subtitle, the badges and
+   the footer stay as they are.
+3. **The table never truncates cell content.** In `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`,
+   add `miw="max-content"` to the desktop `<Table>`. This is a Mantine style prop with a CSS keyword, so it adds no
+   raw value. The table still fills its card when the content fits, and scrolls inside the `ScrollArea` when it does
+   not. Add a comment citing §18.2.
+4. **The Story gutter harness (GR-3d).** Before writing it, emit the GR-0 and GR-3a receipts: search `src/stories`
+   for an existing gutter helper. `MantineStoryShell` is the primitive showcase shell, with card chrome and 16/24px,
+   so it is **not** the admin page gutter.
+   - Create `src/stories/_StoryPageGutter.tsx`. It exports `StoryPageGutter({ surface, children })` with
+     `surface: 'admin'`, which renders `<Box p={{ base: 'xl', lg: '2xl' }}>`. Add a comment citing
+     `src/app/admin/currency/page.tsx` and GR-3d. No other surface: the public branches are 898's.
+   - Wrap the page content of these Stories in it, and delete their own `Box p="md"` decorators and wrappers:
+     - `src/stories/patterns/mantine/AdminTable.stories.tsx` (4 exports);
+     - `…/AdminPageHeader.stories.tsx` (decorator);
+     - `…/AdminCurrenciesView.stories.tsx` (all 4 renders; for `DeleteConfirm`/`Detail` the page content, not the modal);
+     - `…/AdminCurrencyTabs.stories.tsx` (decorator).
+   - `CurrencyFormDialogView` and `CurrencyDetailDialogView` are overlay-only. They get no harness.
+   - `Table.stories.tsx` (on `MantineStoryShell`, §8.1) and `DashboardHeader.stories.tsx`, whose other exports belong
+     to other tasks, are **not** changed. They are 898's.
+5. Run this block from the project root, in Windows PowerShell. After each command, append
+   `"EXIT_CODE=$LASTEXITCODE" | Add-Content <file>`.
+
+   ```powershell
+   $ev = "docs\sessions\evidence\task877\r3"
+   New-Item -ItemType Directory -Force $ev | Out-Null
+   $base = git --no-optional-locks rev-parse HEAD
+   node.exe -p "process.platform + ' ' + process.version" *>&1 | Tee-Object "$ev\10-platform.txt"
+   npx.cmd vitest run src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx src/components/admin/__tests__/AdminTable.adapter.test.tsx src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx *>&1 | Tee-Object "$ev\11-tests.txt"
+   npm.cmd run typecheck *>&1 | Tee-Object "$ev\13-typecheck.txt"
+   npm.cmd run lint *>&1 | Tee-Object "$ev\14-lint.txt"
+   npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\15-story-coverage.txt"
+   npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\17-rendered-scope.txt"
+   node.exe scripts\check-surface-census-changed.mjs --base $base *>&1 | Tee-Object "$ev\19-census-changed.txt"
+   npm.cmd run check:stories *>&1 | Tee-Object "$ev\22-check-stories.txt"
+   npm.cmd run build-storybook *>&1 | Tee-Object "$ev\24-build-storybook.txt"
+   node.exe docs\sessions\evidence\task877\r2-review\make-leak877-scoped.cjs .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-generate.txt"
+   node.exe .screenshots\leak877-scoped.mjs *>&1 | Tee-Object "$ev\24c-locale-leak-877-scoped.txt"
+   npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
+   npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
+   npm.cmd run build *>&1 | Tee-Object "$ev\27-build.txt"
+   git --no-optional-locks status --porcelain *>&1 | Tee-Object "$ev\29-status-after.txt"
+   ```
+
+   Expected results:
+   - Every command exits 0, except `24c` if a stop condition fires.
+   - `24c` prints `ZERO leaks across 27 stories`.
+   - `11` passes 33 tests or more, with `AdminUsersTable.smoke` unchanged.
+6. **Measure on the new `storybook-static`, and save the result as `r3/30-measurements.json`.**
+   - **GR-3b/GR-3c:** every Story file this revision changed, at 320/390/768/1024/1440.
+   - **GR-3d:** the edge gap of the first page-content box at 320/390/1024/1440. The expected values are 24/24/32/32.
+   - **Truncation:** the number of elements inside `#storybook-root table` whose `text-overflow` is `ellipsis` and
+     whose `scrollWidth > clientWidth`. Measure it at 768/1024/1440, `uk`, for two Stories:
+     `patterns-mantine-admincurrencytabs--default` with the **Providers tab clicked**, and
+     `patterns-mantine-adminexchangeprovidersview--default`. The expected value is 0.
+   - **Dialog balance:** the detail dialog's height at 1440 `en`, before and after. The height must drop.
+7. Record `git hash-object` of every created or changed file in `r3/28-hash-object.txt`. Emit one `GR-3d STORY GUTTER
+   CHECK` receipt per changed Story.
+8. Add a "Revision 3" section to the session log. Set the 877 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR
+   REVIEW`.
+
+### 18.4 Owner — O78-6b, after the executor's re-entry
+
+Use the toolbar locales `en` and `uk`.
+
+| Story | Exports | Widths | What to check |
+|---|---|---|---|
+| `Patterns/Mantine/CurrencyDetailDialogView` | all 3 | 390, 1440 | both columns balanced |
+| `Patterns/Mantine/AdminCurrencyTabs` | `Default`, **both tabs** | 390, 768, 1024, 1440 | nothing truncated; the table scrolls sideways where needed |
+| `Patterns/Mantine/AdminCurrenciesView`, `AdminTable`, `AdminPageHeader` | all | 390, 1440 | edge gutter as on the admin page |
+| `Mantine/Primitives/Table` `Default` · `Patterns/Mantine/AdminExchangeProvidersView` `Default` | — | 1024 | blast radius of step 3 |
+
+Every other O78-6 tuple stays accepted. Approval needs O78-6b accepted and §18.3 done.

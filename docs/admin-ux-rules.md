@@ -128,7 +128,7 @@ For the 12 non-flagged routes, severity baseline is not yet established for Spri
 
 > ⛔ **Phase 2 (Tasks 306 / 307) is BLOCKED until this document receives owner sign-off.**
 
-Before Task 306 (AdminPageShell / AdminHeader / AdminFilterBar primitives) and Task 307 (AdminTable / AdminCardList responsive primitive) can start, the owner must explicitly approve:
+Before Task 306 (AdminPageShell / AdminHeader / AdminFilterBar primitives) and Task 307 (AdminTable and its card-list responsive primitive; the card list was retired by Task 877) can start, the owner must explicitly approve:
 
 1. The per-route policy table in §4 — especially the CORRECTED routes.
 2. The card-row fallback pattern spec (§2) — field display rules and action placement.
@@ -534,7 +534,7 @@ Task 307 MUST add these 11 keys to `messages/{sq,en,uk,it}.json` under the `admi
 
 > ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340).**
 > This §14 is the **admin specialisation** of the global contract: `.container-admin` is the admin
-> instance of the §4 container system; AdminPageShell/AdminTable/AdminCardList are the §7 admin layout
+> instance of the §4 container system; AdminPageShell/AdminTable (and, until Task 877, its legacy card list) are the §7 admin layout
 > + data-surface primitives; the `lg:` table↔card switch is the §10 `tableAtLg` default; the
 > verification gate (§14.6) uses `docs/qa-profiles.md`: Q2 for targeted admin UI changes and the full
 > 14-width × 4-locale canon for Q3/Q4 visual work. Where this legacy section and the current Mantine
@@ -551,14 +551,14 @@ Task 307 MUST add these 11 keys to `messages/{sq,en,uk,it}.json` under the `admi
 
 ### 14.2 Data display
 
-- **Tabular data:** use `<AdminTable>`. The primitive internally renders a card list at `<lg:` and a table at `lg:+`. Consumers MUST supply `columns` and SHOULD supply `cardRow` (a structured `title/subtitle/meta/trailing` renderer). If `cardRow` is omitted, the primitive synthesizes from `columns` (best-effort default — surfaces with non-trivial row visuals MUST pass an explicit `cardRow`).
-- **Non-tabular row data:** use `<AdminCardList>` directly.
+- **Tabular data:** use `<AdminTable>`. Since Task 877 (owner D78-8) it is an adapter over the canonical `MantineDataTableToCards`: `CardConfig` cards below `theme.other.mobileGate` (640px) and the TailAdmin §6b table above. Consumers MUST supply `columns` and SHOULD supply `cardRow` (a structured `title/subtitle/meta/trailing` renderer). If `cardRow` is omitted, the adapter synthesizes from `columns` (best-effort default — surfaces with non-trivial row visuals MUST pass an explicit `cardRow`).
+- **Non-tabular row data:** use `MantineDataTableToCards` cards (`CardConfig`) at all widths. The legacy card-list primitive was retired by Task 877.
 - DO NOT render raw `<table>` outside `<AdminTable>` in admin routes.
-- DO NOT render ad-hoc `<div>` rows that visually imitate cards outside `<AdminCardList>`.
+- DO NOT render ad-hoc `<div>` rows that visually imitate cards outside the canonical `MantineDataTableToCards` cards.
 
 ### 14.3 Switch breakpoint
 
-- The canonical table↔card switch is at `lg:` (1024px). Matches the Dialog → bottom-sheet switch in Task 329 / Epic Z.2. Below `lg:` → cards (mobile + tablet). At `lg:+` → table (desktop). No per-surface override without orchestrator STOP & ASK.
+- The canonical table↔card switch is at `lg:` (1024px). Matches the Dialog → bottom-sheet switch in Task 329 / Epic Z.2. Below `lg:` → cards (mobile + tablet). At `lg:+` → table (desktop). No per-surface override without orchestrator STOP & ASK. **Exception, Task 877 (owner D78-8):** `<AdminTable>` now follows the canonical `MantineDataTableToCards` switch at 640px (`theme.other.mobileGate`), so 640–1023px shows the table.
 
 ### 14.4 Column visibility
 

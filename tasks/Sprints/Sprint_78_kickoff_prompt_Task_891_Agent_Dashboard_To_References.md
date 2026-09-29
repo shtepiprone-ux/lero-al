@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** (+ 854's Q4 isolation evidence carried forward) · Wave D (D78-9) · depends on
 **889** approved · builds on **854's working tree** and closes **854 jointly** · folds **855**'s agent half and **856** ·
-**Status: 🔁 NEEDS REVISION (review 4, 2026-09-28) — the owner returned §13.4 rows 1–5; execute §20 (revision 3, composition) on top of the current working tree**
+**Status: 🔁 NEEDS REVISION (review 6, 2026-09-29) — execute §22 (revision 5: `RangeDatePicker` chrome in Storybook, mobile bar divider, mobile header month, fresh evidence) on top of the current working tree**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для … агента"*. Their chart
@@ -1192,3 +1192,153 @@ npm.cmd run check:locale-leak:mantine-only
   - Row 3 reads "3 KPI cards, 2 + 1 below `lg`; splits stacked; at 1024 the charts sit under the values (§21.2)".
   - One row is added: `Mantine/Primitives/RangeDatePicker` → `OpenBoundedNoValue` and `AgentStatisticsView` with
     Custom open, at 390 and 1440, in `sq` and `en`.
+  - **Superseded by §22.4:** the owner matrix follows review 7.
+
+## 22. Review 6 — NEEDS REVISION (Opus, 2026-09-29) · revision 5
+
+Reviewer evidence: `docs/sessions/evidence/task891/review6/`. It was measured on the executor's final `storybook-static`
+(built 00:47), served natively (`win32 v22.22.3`):
+- `probe.out.json`;
+- `daycell-computed.json`;
+- `mobile-anchor.json`;
+- the screenshots.
+
+### 22.1 Accepted from revision 4
+
+No action is owed on these:
+- **F11 / AC30** — row-1 values end at 288/288/288 at 1440, and sparklines start at 275/275/275 at 1024.
+- **F12 / AC31** — the `Fill` and `WithCounts` widths.
+- **F14 / AC34** — the reviewer re-measured the **Custom** segment, which `rev4/measure.mjs` skipped. At 1024 and
+  1440, the hero's `scrollHeight` equals its `clientHeight` (296/296 and 278/278), and all 4 links lie inside it.
+- **AC33** — accepted.
+- **AC35** — the grep, the 39 / 150 / 100 sizes, "Clear", and the `sq` day `aria-label` are accepted.
+- **AC36, desktop header and focus** — accepted. For the "with a value" trigger, the reviewer measured the text centre
+  at 190.5 against a trigger centre of 191, and 544.5 against 545.
+- **GR-1** — `AgentStatisticsView` returns 24/24 nodes on the reviewer's re-run.
+- **GR-1 on `FiltersPanel` / `ListingsFilters`** — it reports 4 blocking nodes: `FilterChoiceGroup`,
+  `FilterRangeInputs`, `FilterRoomsRow` and `YearCombobox`. They are baselined and already filed as reserved **840**
+  (Sprint 69). They are not in 891's scope.
+- **F13 item 5, a deviation the executor did not record.** The executor used `FocusTrap.InitialFocus` instead of
+  `data-autofocus` on the month trigger. `MantineCombobox` has no trigger-prop passthrough (`MantineCombobox.tsx:31-55`),
+  so the reviewer accepts the Mantine-native initial-focus anchor. No action.
+
+### 22.2 Findings and required corrections
+
+**F15 · P1 · F13 item 1, clause 16c, GR-3 — the canonical Story renders no day-cell states.**
+- Revision 4 moved every day-cell colour into `range-date-picker-chrome.css`.
+  - `src/app/layout.tsx:15` imports that file.
+  - `.storybook/preview.tsx:13-20` imports every other chrome file, but not this one.
+- In every `Mantine/Primitives/RangeDatePicker` export, and in `AgentStatisticsView` with Custom open, the following
+  compute to `color: rgb(0,0,0)`, `opacity: 1`, `border: 0` (`review6/daycell-computed.json`):
+  - disabled days after `maxDate` (Sep 18–30);
+  - out-of-month fillers;
+  - today's border;
+  - the boundary fill and the in-range band.
+- No `range-day-cell` rule is present in the document's stylesheets. `review6/rdp-open-1440-uk.png` shows it.
+- Before revision 4 these states were inline, so Storybook rendered them.
+- The owner reviews this Story, and the "криво" complaint gets worse.
+- **Correction:**
+  - Import the file in `.storybook/preview.tsx`, between `notification-chrome.css` and `typography-chrome.css` (the
+    `layout.tsx` order).
+  - Change no other file for this finding.
+
+**F16 · P2 · F13 item 1, Task 561 D4 — the mobile Confirm bar is boxed on four sides.**
+- `RangeDatePicker.tsx` `MobileBody` renders `<Box pt="sm" bd={…}>`. Mantine's `bd` is the `border` shorthand, so the
+  bar gets a 1px border on top, left, right and bottom (`review6/probe.out.json` → `mobileBar`;
+  `review6/rdp-mobile-390.png`).
+- Before this revision it had `borderTop` only.
+- **Correction:**
+  - Remove `bd` from that `Box`.
+  - Render a Mantine `<Divider />` immediately above the `Box`. Its theme default is gray.2 at 1px
+    (`theme.ts:1342-1353`), the same value the old top border used.
+  - Keep `pt="sm"`.
+
+**F17 · P2 · F13 item 4, AC36 — the mobile sheet opens with its header reading the previous month.**
+- `maxDate`'s month is the **last** section of the list, so the scroll clamps at the end. Measured at 390,
+  `OpenBoundedNoValue`: `scrollTop` 3273 = max, and the "September 2026" title sits 105px below the viewport top.
+- `handleScrollPositionChange` (`RangeDatePicker.tsx:620-627`) picks the last section whose top is at or above
+  `scrollTop + 4`. That is **August**, so the fixed month selector reads "August" (`review6/rdp-mobile-390.png`).
+  Filters with `maxDate={today}` open the same way.
+- The session log says `rev4/measure.mjs` used "the same closest-offset rule the mobile body's own scroll-position
+  handler uses". The handler does not use a closest-offset rule, so the log is wrong here.
+- **Correction:**
+  - Extract the index choice into an exported pure function, `pickVisibleMonthIdx(sectionTops, scrollTop,
+    clientHeight, scrollHeight)`. It returns the **last** index when `scrollTop + clientHeight >= scrollHeight - 1`,
+    and otherwise the current rule.
+  - Call it from `handleScrollPositionChange` with `viewportRef.current`'s metrics.
+
+**F18 · P3 · GR-2, §21.5 — revision 4's evidence does not describe the final tree.**
+- The three AC37 plants ran against RangeDatePicker hash `4a1d61…`. The final hash is `5f3947…`, because the header
+  was redesigned after the plants.
+- `DashboardCard.stories.tsx` was edited at 00:46:32. That is after these were written: `typecheck-final`,
+  `lint-final`, `check-stories-final`, `check-design-tokens-final`, `build-final` and `grep-hardcode-final`.
+  - `grep-hardcode-final.txt` still prints line 85 (`SimpleGrid cols={2}` inside `Fill`).
+  - The session log says the grep printed nothing inside `Fill`.
+  - The reviewer's re-run on the current tree is clean.
+- The session log calls the `AgentStatisticsView` Custom trigger "a real staged-value trigger". It shows the
+  placeholder.
+- **Correction:**
+  - Run §22.4's whole block after the last write.
+  - Re-plant all AC37 tests and AC40's new test against the final file.
+  - In the Revision 5 section, correct the three statements above.
+
+### 22.3 Acceptance criteria added by revision 5
+
+Measure with `rev5/measure.mjs`, extended from `rev4/measure.mjs`, on a fresh `build-storybook`. Compare every colour
+with `getComputedStyle(document.documentElement).getPropertyValue('--mantine-color-…')` resolved on the same page.
+
+- **AC38 [F15]** — `OpenBoundedNoValue`, 1440, `en`:
+  - day `2026-09-20` (after `maxDate`) computes to the gray-3 colour at opacity 0.4, with `cursor: not-allowed`;
+  - the out-of-month `2026-10-02` computes to gray-4;
+  - `2026-09-10` computes to gray-7 at opacity 1;
+  - on `Default`, the staged boundary days have a brand-7 background and white text, and a middle day's
+    `.range-day-band` has a brand-0 background.
+  - **Route proof:** `npm.cmd run start`, then `/en/listings` at 1440 and 390. Open the period picker in the filters,
+    and record the same two computed values: a day after today (blocked) and an available day.
+- **AC39 [F16]** — `OpenBoundedNoValue`, 390:
+  - the Confirm bar's container computes to `border-left`, `border-right` and `border-bottom` width 0;
+  - a 1px gray-2 divider sits directly above it, as wide as the bar.
+  - Add a screenshot.
+- **AC40 [F17]** — at 390:
+  - `OpenBoundedNoValue` opens with the header month selector reading "September" (`en`) and "Shtator" (`sq`);
+  - `Default` still opens reading its staged month ("January").
+  - Add one unit test for `pickVisibleMonthIdx` in `RangeDatePicker.smoke.test.tsx`, covering three cases: at the end,
+    mid-list and at the top. Plant it: remove the end-of-list branch → FAIL; restore → PASS. Record the content hash
+    before and after, using Node I/O only.
+  - Add the test to the "Listings date-range filter" row of `docs/critical-flow-registry.md`.
+- **AC41 [F18]:**
+  - each of the 4 plants (3 from AC37 plus AC40's) fails under its plant and passes restored, and the restored hash
+    equals the final file hash in `rev5/hash-list.txt`;
+  - every §22.4 artifact is newer than the last source write;
+  - `hash-list.txt` is written last.
+
+`GR-4 AC AUDIT — 4 criteria added (AC38–AC41); each states an observable property; absolutes: AC38's exact token colours and 0.4 opacity, AC39's zero side borders, AC40's month labels, AC41's hash equality, each on named stories/widths.`
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: RangeDatePicker Storybook chrome, mobile bar divider, visible-month rule; semantic queries: range-date-picker-chrome import sites, Divider theme default, ScrollArea viewport metrics; inspected candidates: src/app/layout.tsx:7-17, .storybook/preview.tsx:11-20, theme.ts:1342-1353 (Divider gray.2, --divider-size-xs 1px), RangeDatePicker.tsx:606-627 and :717-726; decision: REUSE (existing chrome file, Mantine Divider default) + EXTEND (one pure helper inside RangeDatePicker.tsx); selected canonical owner: RangeDatePicker.tsx, .storybook/preview.tsx; Mantine/TailAdmin token path: Divider theme default, existing chrome CSS; new hardcoded visual values: NONE; rationale: all three defects are wiring errors in revision 4, not missing design.`
+
+### 22.4 Re-entry, gate block, report
+
+- Re-entry is `remediation`. Put new artifacts in `evidence/task891/rev5/`, and keep `rev4/` and `review6/` untouched.
+- Scope added to §7: `.storybook/preview.tsx`, that one import only. The files §21.5 named for `RangeDatePicker` stay
+  in scope. Nothing else changes; F11, F12 and F14 are closed.
+- QA: Q4 for this revision, since every change is inside the critical-flow component.
+- Gate: run §21.5's block with `rev5/` in every path. Add `node.exe docs\sessions\evidence\task891\rev5\measure.mjs`
+  in place of the `rev4` line, and after `npm.cmd run build` run:
+
+  ```powershell
+  npm.cmd run start
+  ```
+
+  Run it in the background for AC38's route proof. Stop it after the proof.
+  - Expected results are the same as §21.5's.
+  - `check:locale-leak:mantine-only` must show zero findings for `mantine-primitives-rangedatepicker`.
+- Report:
+  - Append a "Revision 5" section to the session log. It must hold:
+    - AC38–AC41 quoted from `rev5/measure.out.json`;
+    - the 4 plant transcripts;
+    - the route-proof values;
+    - the three corrections from F18.
+  - Keep the header month of the mobile sheet in the §13.4 row that §21.5 added.
+  - End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
+- After review 7 accepts revision 5, the owner re-runs §13.4 in full as **O891-1**, with §21.5's row 3 text and its
+  added row.

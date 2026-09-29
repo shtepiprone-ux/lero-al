@@ -1,0 +1,171 @@
+﻿{
+ "ac34custom": {
+  "1024": {
+   "heroTop": 471.109375,
+   "heroBottom": 767.25,
+   "scrollHeight": 296,
+   "clientHeight": 296,
+   "links": [
+    {
+     "top": 641.21875,
+     "bottom": 679.234375,
+     "inside": true
+    },
+    {
+     "top": 641.21875,
+     "bottom": 679.234375,
+     "inside": true
+    },
+    {
+     "top": 687.234375,
+     "bottom": 743.25,
+     "inside": true
+    },
+    {
+     "top": 687.234375,
+     "bottom": 743.25,
+     "inside": true
+    }
+   ],
+   "triggerFound": true
+  },
+  "1440": {
+   "heroTop": 389,
+   "heroBottom": 667.140625,
+   "scrollHeight": 278,
+   "clientHeight": 278,
+   "links": [
+    {
+     "top": 559.109375,
+     "bottom": 597.125,
+     "inside": true
+    },
+    {
+     "top": 559.109375,
+     "bottom": 597.125,
+     "inside": true
+    },
+    {
+     "top": 605.125,
+     "bottom": 643.140625,
+     "inside": true
+    },
+    {
+     "top": 605.125,
+     "bottom": 643.140625,
+     "inside": true
+    }
+   ],
+   "triggerFound": true
+  }
+ },
+ "mobileBar": {
+  "found": true,
+  "borderTop": "1px solid rgb(228, 231, 236)",
+  "borderLeft": "1px solid",
+  "borderRight": "1px solid",
+  "borderBottom": "1px solid",
+  "rect": [
+   16,
+   697.984375,
+   358,
+   86.015625
+  ]
+ },
+ "withValue": [
+  {
+   "text": "Select dates",
+   "triggerCenter": 97,
+   "textCenter": null,
+   "iconCenter": 97,
+   "display": "flex",
+   "overflowX": false
+  },
+  {
+   "text": "28.01.2026 — 05.02.2026",
+   "triggerCenter": 191,
+   "textCenter": 190.5,
+   "iconCenter": 191,
+   "display": "flex",
+   "overflowX": false
+  },
+  {
+   "text": "Select dates",
+   "triggerCenter": 285,
+   "textCenter": null,
+   "iconCenter": 285,
+   "display": "flex",
+   "overflowX": false
+  },
+  {
+   "text": "Select dates",
+   "triggerCenter": 397,
+   "textCenter": null,
+   "iconCenter": 397,
+   "display": "flex",
+   "overflowX": false
+  },
+  {
+   "text": "28.01.2026 — 05.02.2026",
+   "triggerCenter": 545,
+   "textCenter": 544.5,
+   "iconCenter": 545,
+   "display": "flex",
+   "overflowX": false
+  }
+ ],
+ "header": {
+  "en": {
+   "dropdown": [
+    49,
+    668,
+    412
+   ],
+   "ddScrollW": 666,
+   "ddClientW": 666,
+   "comboRects": [],
+   "dayCells": 77,
+   "active": "SPAN.true",
+   "overflowingClipped": 0
+  },
+  "sq": {
+   "dropdown": [
+    49,
+    668,
+    412
+   ],
+   "ddScrollW": 666,
+   "ddClientW": 666,
+   "comboRects": [],
+   "dayCells": 77,
+   "active": "SPAN.true",
+   "overflowingClipped": 0
+  },
+  "uk": {
+   "dropdown": [
+    49,
+    668,
+    412
+   ],
+   "ddScrollW": 666,
+   "ddClientW": 666,
+   "comboRects": [],
+   "dayCells": 77,
+   "active": "SPAN.true",
+   "overflowingClipped": 0
+  },
+  "it": {
+   "dropdown": [
+    49,
+    668,
+    412
+   ],
+   "ddScrollW": 666,
+   "ddClientW": 666,
+   "comboRects": [],
+   "dayCells": 77,
+   "active": "SPAN.true",
+   "overflowingClipped": 0
+  }
+ }
+}

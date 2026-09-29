@@ -1,7 +1,6 @@
 # Sprint 84 — one clock and one date order, on screens that have left Tailwind
 
-**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (885 · 893) · **Reserved:** 4
-(892 · 894 · 895 · 896)
+**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 6 (885 · 892 · 893 · 894 · 895 · 896) · **Reserved:** 0
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -54,11 +53,11 @@ The Tasks table is the **single state source**. The execution-order note below i
 | # | Outcome | State |
 |---|---|---|
 | **885** | 24-hour clock in every locale and day-first `en` numeric dates: `DATE_FORMAT` loses its 12-hour branch, the audit-log timestamp gets `hourCycle: 'h23'`, all pinned literals move, and a repo-wide guard test rejects any 12-hour output or option. | `KICKOFF FILED` 2026-09-27, **blocked** on 892–896 and 859 (§I0 census gate; 877 landed 2026-09-29) → [`…Task_885…`](Sprint_84_kickoff_prompt_Task_885_24_Hour_Clock_And_Day_First_Dates.md) |
-| **892** | `/admin/permissions` on canonical Mantine: `AdminPermissionsManager` (44 `className`; `ui/badge`, `ui/switch`) | reserved — kickoff after its own census |
+| **892** | `/admin/permissions` on canonical Mantine: `AdminPermissionsManager` (44 `className`; `ui/badge`, `ui/switch`) | `KICKOFF FILED` 2026-09-29 → [`…Task_892…`](Sprint_84_kickoff_prompt_Task_892_Admin_Permissions_On_Mantine.md) — needs 893 (`MantineFormSection`); owner matrix **O84-3** |
 | **893** | `/admin/users/[id]` and `/admin/users/new` on canonical Mantine: `AdminUserProfile` → container + `AdminUserProfileView` + `AdminUserProfileDialogsView`; new `AdminUserAvatarField` (+ View) over a hook shared with the legacy avatar; `MantineFormSection` extracted; `RangeDatePicker` single-date mode; legacy `DatePicker` deleted. Shared `Combobox`, `AdminInput`, `AdminEditLayout` and the legacy `AdminUserAvatar` stay for their other consumers (Q4, five critical flows) | `KICKOFF FILED` 2026-09-28, unblocked (877 landed 2026-09-29) → [`…Task_893…`](Sprint_84_kickoff_prompt_Task_893_Admin_User_Profile_On_Mantine.md) |
-| **894** | `/admin/inquiries/{sales,support}` on canonical Mantine: `AdminInquiriesManager` (42), `StatusChangeControl` (12), `StatusChangeHistory` (15). `StatusChangeControl` is also rendered by `ListingFormShellView` | reserved — unblocked (877 landed 2026-09-29) |
-| **895** | `/{locale}/cabinet` on canonical Mantine: `CabinetShell` (17), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection`, `RecentlyViewedGrid`, `ClearRecentlyViewedButton` (enrolment) | reserved — after 893 (`ProfileTab` switches to 893's `AdminUserAvatarField`; 895 then deletes the legacy `AdminUserAvatar` and its Story) |
-| **896** | `/admin/users` list: `page.tsx` (8 `className`) and `AdminUsersTable` enrolled in the manifest (it already has a Story) | reserved |
+| **894** | `/admin/inquiries/{sales,support}` on canonical Mantine: `AdminInquiriesManager` (42), `StatusChangeControl` (12), `StatusChangeHistory` (15). `StatusChangeControl` is also rendered by `ListingFormShellView` | `KICKOFF FILED` 2026-09-29 → [`…Task_894…`](Sprint_84_kickoff_prompt_Task_894_Admin_Inquiries_On_Mantine.md) — new canonical `StatusChangeSelect`; the legacy control stays for the listing form until 796; owner matrix **O84-5** |
+| **895** | `/{locale}/cabinet` on canonical Mantine: `CabinetShell` (17), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection`, `RecentlyViewedGrid`, `ClearRecentlyViewedButton` (enrolment) | `KICKOFF FILED` 2026-09-29 → [`…Task_895…`](Sprint_84_kickoff_prompt_Task_895_Cabinet_On_Mantine.md) — one task (16d; no per-tab split); needs 893, runs after Sprint 83's 886; subsumes Sprint 70's **789** (fold pending **O84-7**); owner matrix **O84-6** |
+| **896** | `/admin/users` list: `page.tsx` (8 `className`) and `AdminUsersTable` enrolled in the manifest (it already has a Story) | `KICKOFF FILED` 2026-09-29 → [`…Task_896…`](Sprint_84_kickoff_prompt_Task_896_Admin_Users_List_Page_On_Mantine.md) — the Story moves to `Patterns/Mantine/AdminUsersTable`, the exact-title hatch is emptied; owner matrix **O84-4** |
 
 External dependencies (Sprint 78, not moved): **877** makes `AdminTable` and `AdminPageHeader` adapters over
 canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportManager` under 16d. Both surfaces
@@ -75,6 +74,8 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
    own root `page.tsx` stops it with `BLOCKED — D84-1`. It also needs `src/lib/formatters.ts` and
    `src/lib/__tests__/formatters.test.ts` committed (854's hunks land with 891).
 5. One UI task at a time where they share `messages/*.json`, `theme.ts` or `scripts/mantine-migration-scope.json`.
+6. **Added 2026-09-29 (kickoffs 892–896):** 892 and 895 also need 893 (`MantineFormSection`, `AdminUserAvatarField`); 895 runs after Sprint 83's **886** (both edit `RecentlyViewedSection`/`RecentlyViewedGridView`). Order: 893 → 896 · 892 · 894 → 895 → (859 in Sprint 78) → 885.
+7. **CONFLICT found 2026-09-29, fix before 885 runs:** the census prints `FAIL [tier1-unenrolled-or-unstoried]` for every GR-1 container-exempt node (measured on `/admin/currency` after 877: `AdminCurrenciesManager`, `AdminExchangeProvidersManager`, both `className:0 ui-imports:0`). 885's I0 rule "no FAIL line except the root `page.tsx`" therefore stops on every surface these migrations produce, and 893's AC7 states the same impossible expectation. Each 892/894/895/896 kickoff lists its exact calibration set; 885's gate must accept container lines with `className:0 ui-imports:0` whose View is enrolled and storied.
 
 ## Owner actions
 
@@ -82,6 +83,11 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
 |---|---|---|
 | **O84-2** | Task 893's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.4, 72 tuples), then one live check after the deploy: block a user with an end date, and create one test user. | 893 approval |
 | **O84-1** | After 885 deploys: in `en` and `sq`, open `/admin/permissions` (audit log), `/admin/users/<id>` (change log) and `/cabinet` (`Member since`), and read one email-change security notice. Every time reads `HH:MM` in 24 hours, and every `en` numeric date is day-first. | 885 closure |
+| **O84-3** | Task 892's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.3, 14 tuples); after the deploy, toggle one permission and read the audit log. | 892 approval |
+| **O84-4** | Task 896's matrix (kickoff §13.3, 12 tuples); after the deploy, read `/admin/users` at phone and desktop width. | 896 approval |
+| **O84-5** | Task 894's matrix (kickoff §13.3, 30 tuples); after the deploy, reply to and close one test inquiry. | 894 approval |
+| **O84-6** | Task 895's matrix (kickoff §13.3, 64 tuples); after the deploy, the live checks on a **test** account listed there (never the self-delete on a real account). | 895 approval |
+| **O84-7** | Decision: confirm that Sprint 70's reserved **789** (the cabinet listings filter bar) is folded into **895** and never re-issued. 895 migrates that bar either way (clause 16d). | registry bookkeeping only |
 
 ## Exit criteria
 

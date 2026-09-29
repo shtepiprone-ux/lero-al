@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 5 (2026-09-29): the owner returned the detail dialog's UX and the `AdminExchangeProvidersView` Story gutter at O78-6b; the executor re-enters at §21.3**
+owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 6 (2026-09-29): the detail dialog's actions go one per line (a kickoff misreading in §21); the executor re-enters at §22.3**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -963,3 +963,59 @@ The mode is remediation. Keep all code and evidence. Put the new evidence in `do
 After the re-entry, re-check `CurrencyDetailDialogView` (all 3) and `AdminCurrenciesView` `Detail` at 390 and 1440, in
 `en` and `uk`. Also check `AdminExchangeProvidersView` (all 4) at 390 and 1440: the edge gutter is 16px on a phone,
 24px from 640px and 32px from 1024px. `Mantine/Primitives/Table` `Default` is already accepted.
+
+## 22. Owner return of revision 5 (2026-09-29), revision 6 — one button per row
+
+### 22.1 The owner's return, verbatim
+
+On `CurrencyDetailDialogView` `Default`, `uk`, 843px: *"не приймаю. Я чітко сказав, щоб кожна кнопка була в своєму
+рядку, це було проігноровано!"*
+
+**This is a kickoff defect, not an executor one.** §21.1 quotes the owner's words *"одна після одної на окремому
+рядку"*, and §21.2 and §21.3 step 1 read them as "one shared row". The executor implemented §21.3 exactly, with a
+wrapping `Group`, so the Ukrainian labels broke over two lines at 843px. The owner meant **each** action on its own
+line, one under another. The text below supersedes §21.2's action row and §21.3 step 1's first bullet.
+
+Everything else from revision 5 stands:
+- no "Close" button;
+- "Edit" alone in the footer;
+- `variant="transparent"`, with `color="red"` for "Delete";
+- the icons, `mih={theme.other.touchTarget}`, and the conditions;
+- T1 case 7;
+- the `AdminExchangeProvidersView` gutter.
+
+The owner has not yet reported on `AdminExchangeProvidersView` (§21.4).
+
+### 22.2 Required after behaviour
+
+Directly below the badge row there is a **vertical** list. "Set as default", then the toggle, then "Delete": **one
+button per line**, left-aligned, in that order. Each button is only as wide as its own label. None stretches to the
+dialog width, and none shares a line with another.
+
+### 22.3 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. Keep all code and evidence. Put the new evidence in `docs/sessions/evidence/task877/r6/`.
+
+1. In `src/components/admin/CurrencyDetailDialogView.tsx` (`:79`), replace the action row's `Group gap="xs"
+   wrap="wrap"` with `Stack gap={0} align="flex-start"`. Leave the three buttons and their props unchanged. This is
+   `REUSE` of the canonical Mantine `Stack`, and `gap={0}` adds no raw value: each button already carries the 44px
+   touch target.
+2. Run the §18.3 step 5 block into `r6/`, with `$ev` set to `docs\sessions\evidence\task877\r6`. Every command must
+   exit 0.
+3. Measure on the new `storybook-static`, and save the result as `r6/30-measurements.json`. Use the 3
+   `CurrencyDetailDialogView` exports and `AdminCurrenciesView` `Detail`, at 390/843/1440, `en` and `uk`:
+   - each action button has a **different** `top`, and they appear in the order set default → toggle → delete;
+   - each button's `left` equals the badge row's `left`, within 1px;
+   - no button label wraps: each button is exactly one line tall, i.e. 44px;
+   - the footer has only "Edit";
+   - there is no overflow at 390;
+   - GR-3b, GR-3c and GR-3d receipts.
+
+   The revision-5 checks "same row" and "height must drop" are withdrawn: a vertical list is taller by design.
+4. Record the hash-object of every changed file in `r6/28-hash-object.txt`. Add a "Revision 6" section to the session
+   log. Set the 877 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 22.4 Owner
+
+Re-check `CurrencyDetailDialogView` (all 3) and `AdminCurrenciesView` `Detail` at 390 and 1440, in `en` and `uk`. Also
+report the result for `AdminExchangeProvidersView` (all 4, gutter), which revision 5 already fixed.

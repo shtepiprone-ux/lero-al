@@ -1,7 +1,7 @@
 # Task 874 — the exchange-provider manager moves to canonical Mantine, and the last legacy `ui/PasswordInput` goes
 
 Sprint 78 (moved from Sprint 81 by owner decision **D78-7**) · **P3** · QA profile **Q3** · depends on 873 (landed) ·
-owner action **O78-5** · **Status: 📝 KICKOFF FILED 2026-09-24, READY FOR SONNET**
+owner action **O78-5** · **Status: 📝 REVISION 1 FILED 2026-09-29 (I0 premise drift, §16), READY FOR SONNET — re-enter at §10.1**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 (D78-7 is quoted verbatim there and in §5 below). The sibling nodes of `/admin/currency` are filed as **877**.
@@ -93,22 +93,42 @@ Bundles:
   - `scripts/i18n-dynamic-manifest.json:34-39` records the dynamic `mode_${m}` site as
     `AdminExchangeProvidersManager.tsx:132`.
   - `check:i18n`, `check:i18n-dynamic` and `check:stories` exit 0 at HEAD.
-- **F8 (FACT).** Other live references to the artifacts this task deletes or moves (clause 9 audit, measured).
-  Historical folders (`docs/sessions/`, `docs/chat-gpt-reports/`) are excluded.
-  - `scripts/story-realmode-allowlist.json:9`: legacy story export `FormDialogMobileBottomSheet`. `check:stories` has
+- **F8 (FACT, re-measured 2026-09-29 at `12ccef6d0` after the executor's I0 stop — revision 1, §16).** Other live
+  references to the artifacts this task deletes or moves (clause 9 audit). **Line numbers are informative only; each
+  edit targets the named row.** Historical folders are excluded: `docs/sessions/`, `docs/chat-gpt-reports/`,
+  `docs/reviews/` (dated review ledgers and their retained build logs / `storybook-static` snapshots) and
+  `docs/governance-reports/` (dated audit and weekly reports). None of these is edited.
+  - `scripts/story-realmode-allowlist.json:8`: legacy story export `FormDialogMobileBottomSheet`. `check:stories` has
     a stale-entry check, so this becomes a **failure** once the Story is deleted.
-  - `scripts/check-stories-rendered.mjs:154`: the id `admin-adminexchangeprovidersmanager--default`. That script is
-    `governance:screenshots:assert`, which is **retired** (owner 2026-09-03). Edit its data row; never run it.
+  - `scripts/check-stories-rendered.mjs` — two data rows. That script is `governance:screenshots:assert`, which is
+    **retired** (owner 2026-09-03). Edit its data rows; never run it.
+    - `:161`: the id `admin-adminexchangeprovidersmanager--default`;
+    - `:128`: the id `primitives-passwordinput--default` — the **legacy** `Primitives/PasswordInput` Story this task
+      deletes. (Not the `mantine-primitives-passwordinput--default` geometry-allowlist row at `:~631`, which stays.)
   - `scripts/i18n-dynamic-manifest.json:36`: the `site` line.
-  - `scripts/governance/tailwind-entropy.allowlist.json:128`: an entry for this file. `governance:tailwind` already
-    **exits 1 at HEAD** (pre-existing), so it is recorded, not asserted.
-  - `scripts/surface-census-baseline.json:313`:
-    `src/app/admin/currency/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive`.
-  - Docs:
+  - `scripts/governance/tailwind-entropy.allowlist.json:118` (`"file"` key; the entry object spans the lines around
+    it): an entry for this file. `governance:tailwind` already **exits 1 at HEAD** (pre-existing), so it is recorded,
+    not asserted.
+  - `scripts/surface-census-baseline.json:307`:
+    `src/app/admin/currency/page.tsx :: src/components/ui/PasswordInput.tsx :: tier2-legacy-primitive`. (`:298`, the
+    manager's own `tier1-unenrolled-or-unstoried` key, stays as container debt — R8.)
+  - Docs whose rows name a deleted Story/primitive path or id (they match the AC6 pattern or the legacy id):
     - `docs/component-coverage-matrix.md:25` (`PasswordInput` → the legacy Story path);
+    - `docs/responsive-storybook-inventory.md` — header *"CANONICAL INVENTORY — update when stories are
+      added/removed/fixed"*, so it is live:
+      - table rows `:37` (`src/components/ui/PasswordInput.stories.tsx`), `:64`
+        (`src/components/admin/AdminExchangeProvidersManager.stories.tsx`), `:127` (`PasswordInput.stories.tsx`),
+        `:147` (`AdminExchangeProvidersManager.stories.tsx`);
+      - id-list lines `:338`, `:352`, `:367`, `:378`, `:439`–`:442`, each carrying an
+        `admin-adminexchangeprovidersmanager--*` or legacy `primitives-passwordinput--*` id;
+      - the Slice 3/4 "Stories in scope" lines `:237`, `:245` are dated plan history and **stay**.
+  - Docs whose rows describe the manager's migration state (bare name; they do not match AC6, but go stale):
     - `docs/admin-ux-rules.md:96`, `:352`, `:393-394` (provider dialogs);
     - `docs/component-catalog.md:107`;
-    - `docs/component-risk-register.md:13`, `:72`, `:245`.
+    - `docs/component-risk-register.md:13`, `:72`, `:245`;
+    - `docs/design-system.md:424` (`/admin/currency` route row);
+    - `docs/mantine-responsive-design-system.md:467` (inventory row, "MIGRATE TO MANTINE … Phase 3");
+    - `docs/mantine-tailadmin-migration-tracker.md:194` (PHASE 4 list, `AdminExchangeProvidersManager`).
   - `scripts/governance/reports/*.latest.json` are generated reports. Nothing reads them as input
     (`component-catalog.mjs --check` checks only infrastructure). **Do not hand-edit them.**
 - **F9 (FACT).** `docs/critical-flow-registry.md` has no exchange-provider row. Its "Archetype C" admin write guard
@@ -199,9 +219,12 @@ Files the executor may create, change or delete:
   - `scripts/i18n-dynamic-manifest.json`;
   - `scripts/governance/tailwind-entropy.allowlist.json`;
   - `docs/component-coverage-matrix.md`;
+  - `docs/responsive-storybook-inventory.md` *(revision 1)*;
   - `docs/admin-ux-rules.md`;
   - `docs/component-catalog.md`;
-  - `docs/component-risk-register.md`.
+  - `docs/component-risk-register.md`;
+  - `docs/design-system.md`, `docs/mantine-responsive-design-system.md`,
+    `docs/mantine-tailadmin-migration-tracker.md` *(revision 1)*.
 - `scripts/surface-census-baseline.json`: R8 (updater only)
 - `docs/sessions/2026-09-2?-task874-*.md` and `docs/sessions/evidence/task874/**`
 - `docs/backlog.md`: the 874 state cell only
@@ -246,12 +269,19 @@ Files the executor may create, change or delete:
 2. Re-run both F3 censuses **in full** → `02a-census-manager.txt`, `02b-census-page.txt`. The node sets and FAIL sets
    must equal F3.
 3. Re-run the F4/F8 reference search → `02c-references.txt`:
-   `git --no-optional-locks grep -n -E "ui/PasswordInput|AdminExchangeProvidersManager|adminexchangeprovidersmanager" -- . ":(exclude)docs/sessions" ":(exclude)docs/chat-gpt-reports" ":(exclude)docs/backlog*.md" ":(exclude)tasks"`.
-   It must list the F8 rows plus the F2 consumer and the manager's own file and legacy Story. **Every file this task
-   creates is untracked when it is searched, so the post-change search in §13.2 uses `--untracked` (the 864 lesson).**
-4. Record `FIXTURE_PROVIDERS`' enabled/disabled and mode values (F10) in the session log.
+   `git --no-optional-locks grep -n -E "ui/PasswordInput|AdminExchangeProvidersManager|adminexchangeprovidersmanager|(^|[^-])primitives-passwordinput" -- . ":(exclude)docs/sessions" ":(exclude)docs/chat-gpt-reports" ":(exclude)docs/reviews" ":(exclude)docs/governance-reports" ":(exclude)docs/backlog*.md" ":(exclude)tasks"`.
+   It must list exactly the F8 rows (including the two kept rows `responsive-storybook-inventory.md:237/:245` and
+   `surface-census-baseline.json:298`), the F2 consumer (`AdminCurrencyTabs.tsx:5`, `:28`), the manager's own file
+   (`:11`, `:161`) and its legacy Story — 42 lines in 16 files at `12ccef6d0`, **no other file**. (The legacy
+   `ui/PasswordInput.tsx` and `ui/PasswordInput.stories.tsx` do not match this pattern; F4 establishes them.) **Every file this task creates is untracked when it is searched, so
+   the post-change search in §13.2 uses `--untracked` (the 864 lesson).**
+4. Record `FIXTURE_PROVIDERS`' enabled/disabled and mode values (F10) in the session log. (Measured 2026-09-29:
+   `1 BankOfAlbania auto enabled, api_key null` · `2 ExchangeRatesAPI hybrid enabled, api_key set` ·
+   `3 ManualRates manual disabled, api_key null`.)
 
-A different result from any step is `PREMISE DRIFT`: stop and report.
+A different **file set**, node set, FAIL set or fixture value from any step is `PREMISE DRIFT`: stop and report. A
+line number that moved while the named row is unchanged is **not** drift: record the new number in the session log
+and edit the named row.
 
 ### 10.2 GR receipts before the related write
 
@@ -305,15 +335,19 @@ unchanged: the same validation toasts, the same payload and the same `onSaved` o
 
 ### 10.4 Reference updates (R5)
 
+Line numbers are those measured at `12ccef6d0`; edit the named row.
+
 | Reference | Action |
 |---|---|
-| `story-realmode-allowlist.json:9` | delete the row (its Story is deleted); `check:stories` must pass |
-| `check-stories-rendered.mjs:154` | delete the row; **do not run the script** (retired) |
+| `story-realmode-allowlist.json:8` | delete the `FormDialogMobileBottomSheet` row (its Story is deleted); `check:stories` must pass |
+| `check-stories-rendered.mjs:161` and `:128` | delete the `admin-adminexchangeprovidersmanager--default` row and the legacy `primitives-passwordinput--default` row; keep `mantine-primitives-passwordinput--default`; **do not run the script** (retired) |
 | `i18n-dynamic-manifest.json:36` | `site` → the new file:line |
-| `tailwind-entropy.allowlist.json:128` | delete the entry (the file has no `className` left) |
+| `tailwind-entropy.allowlist.json:118` | delete the whole entry object for this file (the file has no `className` left); the JSON must still parse |
 | `component-coverage-matrix.md:25` | `PasswordInput` → `src/stories/mantine/primitives/PasswordInput.stories.tsx` |
+| `responsive-storybook-inventory.md` | delete table rows `:37`, `:64`, `:127`, `:147`; in the id-list lines `:338`, `:352`, `:367`, `:378`, `:439`–`:442` remove only the `admin-adminexchangeprovidersmanager--*` and legacy `primitives-passwordinput--*` ids, keeping every other id on the line; add one row per new Story file (`src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx`, `…/ProviderFormDialogView.stories.tsx`) in the `:64` table in the same column format; leave `:237`/`:245` (dated slice plans) |
 | `admin-ux-rules.md:96, :352, :393-394` | describe the migrated state: `MantineDataTableToCards`; `MantineModal` for the form (bottom sheet <640) and the delete confirm |
 | `component-catalog.md:107`, `component-risk-register.md:13, :72, :245` | update the row to the migrated state, or remove it where it only describes a resolved legacy defect; record each edit |
+| `design-system.md:424`, `mantine-responsive-design-system.md:467`, `mantine-tailadmin-migration-tracker.md:194` | state the migrated state in the existing cell/list wording: `AdminExchangeProvidersManager` → containers + `AdminExchangeProvidersView` / `ProviderFormDialogView` on `MantineDataTableToCards` + `MantineModal` (Task 874); in the tracker list use the file's own marker form `AdminExchangeProvidersManager (✅ Task 874)`; change no other row |
 
 ### 10.5 T1 — smoke test, observable assertions
 
@@ -383,8 +417,9 @@ transcript:
   exits 0. The public API is therefore unchanged.
 - **AC5 [R4]** Given the two Story files, when read, then each directly imports its View and has exactly the four
   exports named in R4. `check:story-coverage` and `build-storybook` exit 0, and both Views are in the manifest.
-- **AC6 [R5]** Given `--untracked` `git grep` for `ui/PasswordInput|admin-adminexchangeprovidersmanager|Admin/AdminExchangeProvidersManager`
-  outside the historical folders, when run, then it returns no line. The three deleted paths show as `D`, and
+- **AC6 [R5]** Given `--untracked` `git grep` for `ui/PasswordInput|admin-adminexchangeprovidersmanager|Admin/AdminExchangeProvidersManager|(^|[^-])primitives-passwordinput`
+  outside the historical folders (`docs/sessions`, `docs/chat-gpt-reports`, `docs/reviews`, `docs/governance-reports`,
+  `docs/backlog*.md`, `tasks` — F8), when run (the exact `23c` command), then it returns no line. The three deleted paths show as `D`, and
   `check:stories` exits 0.
 - **AC7 [R1, R2, R7]** Given T1, when run, then all four cases pass. **P1** makes case 1 fail, and **P2** makes case
   1's toggle-name assertion fail. Both transcripts show `EXIT_CODE=1`, and each post-restore hash equals its pre-plant
@@ -398,7 +433,7 @@ transcript:
   - `governance:tailwind` is recorded with its exit code (red at HEAD, F8) and is not asserted.
 - **AC10 [Objective] — owner, before approval (O78-5):** the §13.3 matrix.
 
-`GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: none. AC1's "0 className / 0 ui imports" is the enforced D81-2 exemption condition, not a pixel absolute; AC6's empty grep uses --untracked because the task creates files (864); AC8's "exactly one key" has a stop branch.`
+`GR-4 AC AUDIT — 10 criteria; each states an observable property; absolutes: none. AC1's "0 className / 0 ui imports" is the enforced D81-2 exemption condition, not a pixel absolute; AC6's empty grep uses --untracked because the task creates files (864), and since revision 1 every file it can match outside the historical folders is in §7 (re-measured at 12ccef6d0: 42 lines / 16 files with the §10.1 pattern); AC8's "exactly one key" has a stop branch.`
 
 ## 13. QA profile and verification plan
 
@@ -408,7 +443,12 @@ transcript:
 
 ### 13.1 Re-entry
 
-From scratch. Evidence root: `docs/sessions/evidence/task874/`.
+**Mixed (revision 1).** No product file was written before the I0 stop. Evidence root:
+`docs/sessions/evidence/task874/`.
+- Re-run **all of §10.1** from step 1 (HEAD moved with the revision commit). Write `01`, `02a`, `02b` and `10` again
+  (overwrite is safe: nothing derived from them yet), and write step 3 to **`02c-references-rev1.txt`**.
+- Keep `02c-references.txt` unchanged as the superseded witness of the drift; name it superseded in the session log.
+- Then continue at §10.2 as from scratch.
 
 ### 13.2 Gate block (executor, Windows PowerShell, project root, after every §7 write)
 
@@ -432,7 +472,7 @@ npm.cmd run check:i18n *>&1 | Tee-Object "$ev\21-i18n.txt"
 npm.cmd run check:i18n-dynamic *>&1 | Tee-Object "$ev\22-i18n-dynamic.txt"
 npm.cmd run check:stories *>&1 | Tee-Object "$ev\23-check-stories.txt"
 npm.cmd run governance:tailwind *>&1 | Tee-Object "$ev\23b-governance-tailwind.txt"
-git --no-optional-locks grep --untracked -n -E "ui/PasswordInput|admin-adminexchangeprovidersmanager|Admin/AdminExchangeProvidersManager" -- . ":(exclude)docs/sessions" ":(exclude)docs/chat-gpt-reports" ":(exclude)docs/backlog*.md" ":(exclude)tasks" *>&1 | Tee-Object "$ev\23c-references-after.txt"
+git --no-optional-locks grep --untracked -n -E "ui/PasswordInput|admin-adminexchangeprovidersmanager|Admin/AdminExchangeProvidersManager|(^|[^-])primitives-passwordinput" -- . ":(exclude)docs/sessions" ":(exclude)docs/chat-gpt-reports" ":(exclude)docs/reviews" ":(exclude)docs/governance-reports" ":(exclude)docs/backlog*.md" ":(exclude)tasks" *>&1 | Tee-Object "$ev\23c-references-after.txt"
 npm.cmd run build-storybook *>&1 | Tee-Object "$ev\24-build-storybook.txt"
 npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\25-file-integrity.txt"
 npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\26-mojibake.txt"
@@ -519,7 +559,23 @@ Update the 874 backlog state cell. Write the session log with a Files Changed ta
 | GR-1 | full design-time census of both surfaces (F3); tier-1 subtree migrated; the page siblings listed and filed as 877 in the same design session; `AdminTable`/`AdminCardList` leave this subtree and remain 877's |
 | Container / View split | P0 rule applied (F6); the containers are exempt by GR-1's conditions, enforced by AC1 |
 | Canonical owners | every visual piece has an inspected canonical owner (F5); no new token or pattern; `MantineDataTableToCards` and `MantineModal` are consumed unchanged |
-| Deletion audit | the live reference set is measured (F8); the post-change grep uses `--untracked` (864) |
+| Deletion audit | the live reference set is measured (F8, re-measured in revision 1 with the same pattern the I0 step runs); every file AC6 can match outside the historical folders is in §7; the post-change grep uses `--untracked` (864) |
 | Two-armed control | P1 (payload) and P2 (toggle label), transcripts kept |
 | Detector blind spots stated | `governance:tailwind` is red at HEAD and only recorded; `check-stories-rendered.mjs` is retired, so its row is edited but it is not run; R8's post-change census cannot be simulated in advance and has a stop branch |
 | Behaviour changes authorized | the whole-row click is dropped (§5 item 2); three pre-existing oddities are preserved and named (§5 item 3) |
+
+## 16. Revision 1 — 2026-09-29, I0 premise drift (orchestrator review of the executor's `BLOCKED`)
+
+The executor stopped at §10.1 step 3 with no product write; only untracked I0 evidence exists. The stop was correct.
+Review of `02a`, `02b`, `02c`, `10` and the fixture at `12ccef6d0`:
+
+| # | Finding | Evidence | Correction in this file |
+|---|---|---|---|
+| 1 | **P1 task-design defect.** AC6 was unsatisfiable inside §7: its pattern matched `docs/responsive-storybook-inventory.md` (a live "CANONICAL INVENTORY") and `docs/reviews/**` retained artifacts, neither in §7 nor excluded. | `02c-references.txt`; the reviewer's own AC6 grep at `12ccef6d0` | F8, §7, §10.4 add the inventory; `docs/reviews` and `docs/governance-reports` (dated, historical) are excluded in §10.1, AC6 and `23c` |
+| 2 | **P2 task-design defect.** F8 was not measured with the I0 pattern: its bare-name hits in `design-system.md:424`, `mantine-responsive-design-system.md:467`, `mantine-tailadmin-migration-tracker.md:194` were never listed. | `02c-references.txt` | F8, §7, §10.4 add all three as migrated-state edits |
+| 3 | **P2, found by the reviewer, missed by the design and by the executor's report.** `scripts/check-stories-rendered.mjs:128` carries the legacy `primitives-passwordinput--default` id of a Story this task deletes; neither AC6's pattern nor the executor's drift list covered it. | reviewer grep for the legacy id, excluding the `mantine-` prefix (the §10.1 pattern) | F8, §10.4 delete the row; the legacy id is added to the §10.1, AC6 and `23c` patterns |
+| 4 | **P3.** F8 line numbers moved (`:9→:8`, `:154→:161`, `:128→:118`, `:313→:307`). | `02c-references.txt` | F8/§10.4 renumbered; §10.1 now says a moved line with an unchanged named row is not drift |
+
+Unchanged and confirmed: platform `win32 v22.22.3`; `02a` = F3 (10 nodes, exit 1); `02b` = F3 (18 nodes: 7 tier-1
+unenrolled + 3 enrolled + 8 tier-2, exit 1); F10 fixture values (now recorded in §10.1 step 4). R1–R8, AC1–AC5 and
+AC7–AC10 are unchanged. Re-entry: §13.1.

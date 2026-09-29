@@ -1342,3 +1342,179 @@ with `getComputedStyle(document.documentElement).getPropertyValue('--mantine-col
   - End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly).
 - After review 7 accepts revision 5, the owner re-runs §13.4 in full as **O891-1**, with §21.5's row 3 text and its
   added row.
+
+## 23. Review 7 — PARTIALLY VERIFIED (Opus, 2026-09-29)
+
+Revision 5's code is accepted, and no code change is owed. Two evidence items stay open (§23.2), and so does the
+owner matrix (§23.3).
+
+Reviewer evidence: the reviewer's own Playwright probe, measured natively (`win32 v22.22.3`) on the executor's
+`storybook-static`, built at 10:55. Every colour is compared with the same page's `--mantine-color-*`.
+
+### 23.1 Accepted
+
+- **F15 / AC38.** `.storybook/preview.tsx` now imports the chrome file, in `layout.tsx` order (a one-line diff). The
+  document carries `range-day-cell` rules. On `OpenBoundedNoValue` at 1440, `en`:
+  - `09-20` is gray-3, opacity 0.4, `not-allowed`;
+  - `10-02` is gray-4;
+  - `09-10` is gray-7, opacity 1.
+
+  On `Default`, both in-month boundaries are white on brand-7, and the middle band is brand-0. The route proof in
+  `rev5/route-proof.out.json` gives the same values.
+- **F16 / AC39.** At 390, in `en` and `sq`, all four of the bar's borders are 0. Directly above it sits a
+  `mantine-Divider-root`: 1px, gray-2, 358 wide against the bar's 358, with no gap.
+- **F17 / AC40.** At 390:
+  - `OpenBoundedNoValue` reads September (`en`), Shtator (`sq`) and Вересень (`uk`), at `scrollTop` 3273 +
+    `clientHeight` 360 = `scrollHeight` 3633;
+  - `Default` reads January;
+  - scrolling up by 700 reads June, so the ordinary rule is unchanged;
+  - scrolling back to the end reads September.
+
+  `pickVisibleMonthIdx` (`RangeDatePicker.tsx:125-138`) and its call site (`:644-651`) match §22.2.
+- **AC41, plants.** Each of the four `rev5/plant-*.txt` files fails 1 test under its plant and passes restored. In
+  every file, the pre-plant and restored hashes are both `d3a4f6…`, which equals the current content hash. All 6
+  lines of `rev5/hash-list.txt` equal the current files.
+- **The `AgentStatisticsView.tsx` comment deviation is accepted.** The reviewer diffed the revision-4 blob `33755c…`
+  against `30abdb…`: only the comment at `:543-546` changed. §21.5's grep rule requires that rephrase.
+- **GR-1.** The reviewer re-ran both censuses. `AgentStatisticsView` is 24/24 tier1. `FiltersPanel` shows the same 4
+  baselined nodes, filed as **840**. Both are unchanged from review 6.
+
+### 23.2 Open evidence (Sonnet) — no code change
+
+**The correction steps in this section are superseded by §23.4 (owner D891-3). Only the findings stand.**
+
+**E1 · P2 · §22.4 — `check:locale-leak:mantine-only` was required but not run, and the session log misquotes the
+kickoff.**
+- The Revision 5 gate table quotes §22.4 as saying "revision 5 adds/changes no string". §22.4 says no such thing: it
+  requires zero findings for `mantine-primitives-rangedatepicker`.
+- `rev5/check-locale-leak.txt` is an unreported run. It started at 10:44, before `build-storybook` rebuilt
+  `storybook-static/` underneath it at 10:55, and it was still running at 11:32. It is contaminated and cannot be
+  evidence.
+- **Correction:**
+  - Stop that run.
+  - Re-run the gate once on the current `storybook-static`, teeing the output and exit code to
+    `rev5/check-locale-leak-final.txt`.
+  - Quote zero findings for `mantine-primitives-rangedatepicker`, `patterns-mantine-dashboardperiodcontrol` and the
+    §21.1 stories. An exit code of 1 is known red (836).
+  - In the session log, mark `rev5/check-locale-leak.txt` as superseded (contaminated), and replace the misquote
+    with what §22.4 actually says.
+
+**E2 · P3 · AC41 — "`hash-list.txt` was written last" is false.**
+- `hash-list.txt` was written at 11:02:55.
+- These three plant files came after it:
+  - `plant-anchor.txt` at 11:04:52;
+  - `plant-focus.txt` at 11:06:03;
+  - `plant-arialabel.txt` at 11:06:46.
+- Their restores rewrote `RangeDatePicker.tsx` (mtime 11:06:34). The content is unaffected, because every restored
+  hash equals `hash-list.txt`.
+- **Correction:** state the real order in the Revision 5 section. Then, after E1, rewrite `rev5/hash-list.txt` last
+  and confirm that its 6 hashes are unchanged.
+
+No source file may change. If one does, the whole §22.4 gate block re-runs.
+
+### 23.3 Owner matrix — O891-1
+
+No rendered output changes, so this runs now, in parallel with E1 and E2. The owner re-runs §13.4 in full, with
+§21.5's row 3 text and the row it added: `RangeDatePicker` `OpenBoundedNoValue` + `AgentStatisticsView` with Custom
+open, at 390 and 1440, in `sq` and `en`.
+
+A visual note for the owner. It is pre-existing and unchanged since Task 558. On `Default` at 1440, the February
+grid's out-of-month filler `28` keeps the boundary fill, with gray-4 text, while fillers 29–31 show no band.
+`range-date-picker-chrome.css` documents this as the original priority. If the owner returns it, it becomes a row
+finding.
+
+- If every row is accepted and E1/E2 are closed, review 8 approves 854 + 891 jointly and archives both.
+- If a row is returned, it becomes a numbered revision in §24.
+
+**O891-1 — ACCEPTED by the owner, 2026-09-29.** The owner replied to the three matrix steps above, verbatim:
+*"Приймаю."* This covers:
+- every §13.4 row, with row 3 as worded in §21.5;
+- the added `RangeDatePicker` / `AgentStatisticsView` Custom row at 390 and 1440, in `sq` and `en`;
+- the filler-`28` note.
+
+No row was returned. The visual criterion is closed.
+
+The only items still open are E1 and E2 (§23.2). They are evidence-only. Once Sonnet returns them, review 8 checks
+only those two, then approves 854 + 891 jointly and archives both.
+
+### 23.4 Revision 5a — documentation corrections only (supersedes §23.2's correction steps)
+
+**Owner decision D891-3, 2026-09-29 — the `check:locale-leak` re-run is waived.** The owner's words, verbatim:
+*"не треба знову запускати check:locale-leak:mantine-only заради datepicker, я вже його переглянув, все ок."*
+E1's re-run is withdrawn. What remains of E1 and E2 is recording the truth.
+
+**Reviewer-measured state at 12:01, which the corrections must match.**
+- The session log already contains a partial correction, and that correction is itself false:
+  - its AC41 paragraph says `check-locale-leak.txt` was "re-run for real";
+  - it says `hash-list.txt` "was then rewritten as the literal final step".
+- `rev5/check-locale-leak.txt` holds an **aborted** run. It started at 11:55:05 and was last written at 11:59:34. It
+  is 515 bytes, has no result and no exit code, and no process is running it. It overwrote the 10:44 transcript,
+  which the 10:55 `build-storybook` had already contaminated.
+- `rev5/hash-list.txt` was last written at 11:02:55. It has not been rewritten.
+- The `next start` launched for AC38 (PID 17100, started 10:44:24) is **still running**. The gate table says
+  "stopped after".
+
+**Write scope:**
+- `docs/sessions/2026-09-28-task891-agent-dashboard-to-references.md` (the Revision 5 section only);
+- `docs/sessions/evidence/task891/rev5/hash-list.txt`;
+- the 891 row in `docs/backlog.md`.
+
+No source, Story, test or message file changes, and no gate re-runs. If any other path changes, the whole §22.4 gate
+block re-runs.
+
+**Steps, in order:**
+1. **Stop the server.** Run `Stop-Process -Id 17100`, but first confirm with `Get-CimInstance Win32_Process` that
+   PID 17100's command line is still `next ... start`.
+2. **Gate table → `check:locale-leak:mantine-only` row.** Replace the whole cell with:
+   - "Not re-run — waived by the owner, D891-3 (2026-09-29)";
+   - the owner's quote above;
+   - "§22.4 had required zero findings for `mantine-primitives-rangedatepicker`";
+   - "revision 4's completed run (`rev4/check-locale-leak.txt`, report `2026-09-28T22-47`) has zero findings for it".
+
+   The quote "revision 5 adds/changes no string" must not appear anywhere.
+3. **Gate table → the `npm run start` route proof (AC38) row.** Replace "stopped after" with the truth: the server
+   was left running and was stopped at `<time from step 1>` during revision 5a.
+4. **`rev5/check-locale-leak.txt`.** Keep the file and add one bullet under Deviations saying:
+   - it holds an aborted, result-less run (11:55:05–11:59:34);
+   - that run overwrote the 10:44 run, which the 10:55 Storybook rebuild had contaminated;
+   - neither run is evidence, and D891-3 waives the gate.
+
+   Replace the existing Deviations bullet "`check:locale-leak:mantine-only`: not re-run this revision (no
+   new/changed string)…" with this one.
+5. **The AC41 paragraph** (the one beginning "**Real artifact order (corrected**"). Replace it with the measured
+   order:
+   - `hash-list.txt` at 11:02:55;
+   - then `plant-anchor.txt` at 11:04:52, `plant-focus.txt` at 11:06:03 and `plant-arialabel.txt` at 11:06:46;
+   - the plant restores rewrote `RangeDatePicker.tsx` (mtime 11:06:34) with identical content, `d3a4f6…`;
+   - then `check-locale-leak.txt` (aborted, per step 4);
+   - then `hash-list.txt` rewritten in step 7.
+
+   Do not write step 7's claim until step 7 has run.
+6. **Opus handoff and Status.**
+   - Delete the "Open question for Opus" bullet, and write: "Answered by review 7 (§23.1): accepted, comment-only."
+   - Replace "The owner's §13.4 visual matrix runs only after review 7 accepts this revision" with: "Owner O891-1
+     accepted 2026-09-29 (*"Приймаю."*, kickoff §23.3)."
+   - Keep the status line `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (854 + 891 jointly), and add "(revision 5a:
+     documentation corrections only, §23.4)".
+7. **Last write.** Recompute the content hashes of the 6 paths in `rev5/hash-list.txt` (Node I/O), and rewrite the
+   file with the same labels. Every hash must be unchanged:
+   - `.storybook/preview.tsx` `0938c876…`;
+   - `RangeDatePicker.tsx` `d3a4f6cf…`;
+   - `RangeDatePicker.smoke.test.tsx` `e59af008…`;
+   - `critical-flow-registry.md` `e257539c…`;
+   - `AgentStatisticsView.tsx` `30abdb06…`;
+   - `rev5/measure.mjs` `3b8a0a74…`.
+
+   A changed hash means `BLOCKED`: report it and stop. Only after this step, the Opus handoff bullet may say
+   "`hash-list.txt` written last".
+8. **Backlog.** Update the 891 row to: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (revision 5a, documentation only,
+   §23.4).
+
+**Report:**
+- give the before/after text of each of steps 2–6;
+- give step 1's stop time;
+- give step 7's `hash-list.txt` mtime and its six hashes;
+- list the mtimes of the three write-scope paths, and show that no file under `src/`, `.storybook/` or `messages/`
+  has an mtime later than 12:00 on 2026-09-29.
+
+Review 8 checks only those three things, then approves.

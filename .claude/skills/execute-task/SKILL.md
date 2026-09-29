@@ -169,6 +169,16 @@ For every changed user-visible UI component, work from the lowest visible unit u
    If the kickoff has no type-scale table for text you change, stop with `BLOCKED — GR-3c`; do not pick sizes.
    Measure `getComputedStyle(el).fontSize` for every heading and the body text of every changed Story at
    320/390/768/1440. Emit one `GR-3c TYPE RESPONSIVE CHECK` receipt per Story.
+7. **GR-3d, blocking (owner rule 2026-09-29, hardened the same day).** Every Story has the same edge gutter, from the
+   one shared profile `StoryPageGutter` (`src/stories/_StoryPageGutter.tsx`: 16px, 24px from 640px, 32px from
+   1024px). The scope is every Story you create, change, render a changed component in, **or that the kickoff lists
+   in the owner visual matrix, including blast-radius rows**.
+   - A `skipCanvas` Story in that scope without the profile is yours to fix in this task. Wrap its page content in
+     `<StoryPageGutter>`; you need no kickoff permission. "Not changed by this task" is not an exemption.
+   - Never write a gutter in a Story (`p`/`px`/`py` on a wrapper, a `container-*` class, a `style` object).
+   - Exempt: overlay-only Stories, default-canvas Stories, and `Mantine/Primitives/*` on `MantineStoryShell`.
+   - Measure the edge gap at 320/390/1024/1440 (expected 16/16/32/32) and emit one `GR-3d STORY GUTTER CHECK`
+     receipt per Story (`docs/golden-rules.md`). A missing receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
 native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local

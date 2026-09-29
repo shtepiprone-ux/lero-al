@@ -156,6 +156,9 @@ composition. This is a project-wide rule, not a Storybook preference.
    - A child heading never exceeds the page title.
    - A UI kickoff without the table, or with a static size of 24px or more, is not publishable. Task 869's kickoff
      omitted it and the owner returned the result at 320px.
+   - **Gutter (GR-3d, owner rule 2026-09-29).** Give every Story in the owner matrix, blast-radius rows included, a
+     GR-3d line: `profile present` (it already uses `StoryPageGutter`, `MantineStoryShell`, or the default canvas),
+     or `wrap in this task`. A matrix row without that line makes the kickoff unpublishable.
 
 This gate does not require a new story for a non-visible data-only or layout-only change. The task must state that
 classification and its evidence explicitly; a claimed "layout-only" change that alters visible chrome is still

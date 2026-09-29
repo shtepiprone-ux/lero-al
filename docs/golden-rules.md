@@ -247,7 +247,17 @@ Storybook canvas, the `.container-wide` horizontal ladder (`src/app/globals.css:
 profile sit at the same distance from the screen edge. The one exception is at 1536px and above, where
 `.container-wide` has a 48px rung and Mantine has no breakpoint for it.
 
-**Required in every Story a task creates or changes:**
+**Hardened by the owner, 2026-09-29, verbatim:** *"Sonnet схоже все ж таки ігнорує правило. Необхідно жорстко
+впровадити правило, щоб Sonnet не мала прапва це ігнорувати!"* The trigger was `AdminExchangeProvidersView`, which
+reached the owner's matrix with no gutter. It was a blast-radius row, and the rule then covered only Stories a task
+created or changed.
+
+**Scope, with no exceptions:** every Story a task **creates**, **changes**, **renders a changed component in**, or
+**lists in its owner visual matrix**, including blast-radius rows. A `skipCanvas` Story in that scope without the
+profile is **in scope to fix in the same task**. The executor needs no kickoff permission to add the wrapper, may
+not hand off around it, and may not report it as "not changed by this task".
+
+**Required in every in-scope Story:**
 - If the Story sets `skipCanvas: true`, it wraps its page content in `<StoryPageGutter>`, in every export.
 - A Story that renders **only** an overlay (a modal, drawer or bottom sheet in a portal) needs no wrapper. A Story
   that renders page content **and** an open overlay wraps the page content.
@@ -268,7 +278,16 @@ viewport edge to the Story's first page-content box. The expected values are 16 
 
 **Receipt — execution and review alike, one per changed Story:**
 
-`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas | n/a: MantineStoryShell primitive>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
+
+**Who checks what:**
+- **Task design (`create-task`).** Every Story in the owner matrix, including blast-radius rows, gets a GR-3d line in
+  the kickoff: `profile present` or `wrap in this task`. A matrix row without one makes the kickoff unpublishable.
+- **Execution (`execute-task`).** Before handoff, the executor opens every in-scope Story, wraps any that lacks the
+  profile, measures it, and emits one receipt per Story. A missing receipt for any Story in the owner matrix is
+  `BLOCKED — GR-3d`.
+- **Review (`review-task`).** The reviewer measures every Story in the owner matrix **before** handing the matrix to
+  the owner. A Story without the profile is `NEEDS REVISION`, and it never reaches the owner.
 
 With no receipt, or with a gutter written in a Story, the executor returns `BLOCKED — GR-3d` and the reviewer returns
 `NEEDS REVISION`. A green `check:stories` is not evidence (GR-2): it does not measure edge gaps.
@@ -344,7 +363,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
 | GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
-| GR-3d | executor + reviewer edge-gap measurement at 320/390/1024/1440 + required receipt; one profile, `StoryPageGutter` | **active** — no automated gate; `check:stories` does not measure edge gaps. |
+| GR-3d | one profile, `StoryPageGutter`. Scope: every created, changed or owner-matrix Story. Enforced by the `create-task` kickoff line per matrix Story, the blocking `execute-task` item 7 with a receipt per Story, and the `review-task` item 8 measurement before the owner matrix | **active** — enforced by rule and receipt; there is no automated gate, and `check:stories` does not measure edge gaps. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

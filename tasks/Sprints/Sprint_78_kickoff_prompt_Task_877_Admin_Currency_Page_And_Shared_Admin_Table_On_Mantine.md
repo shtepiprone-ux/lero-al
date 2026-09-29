@@ -1,7 +1,7 @@
 # Task 877 — `/admin/currency` finishes on canonical Mantine; the shared `AdminTable` and `AdminPageHeader` become adapters over canonical patterns
 
 Sprint 78 · **P3** · QA profile **Q3** · depends on **874** (approved first) · owner decisions **D78-7, D78-8** ·
-owner action **O78-6** · **Status: 🟡 PARTIALLY VERIFIED — review 5 (2026-09-29): the implementation is verified (§20); approval waits only on the owner's O78-6b (§18.4)**
+owner action **O78-6** · **Status: 🔁 NEEDS REVISION — revision 5 (2026-09-29): the owner returned the detail dialog's UX and the `AdminExchangeProvidersView` Story gutter at O78-6b; the executor re-enters at §21.3**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 
@@ -874,3 +874,92 @@ O78-6b (§18.4) runs after this re-entry. Its gutter row now includes `Dashboard
   `r4/28-hash-object.txt`.
 
 No executor action remains. **Approval waits only on the owner's O78-6b (§18.4).**
+
+## 21. O78-6b — the owner returned `CurrencyDetailDialogView` (2026-09-29), revision 5
+
+### 21.1 The owner's return, verbatim
+
+On `Patterns/Mantine/CurrencyDetailDialogView` `Default`, `uk`, 960px:
+
+*"Не приймаю! UX попапу взагалі повне лайно. … Кнопку "Закрити" прибрати внизу(видалити з попапу), кнопка
+"Встановити за замовчуванням", "Деактивувати" та "Видалити" мають бути текстовими з іконкою одразу після бейджу
+"Активна" одна після одної на окремому рядку."*
+
+Today (`CurrencyDetailDialogView.tsx`, footer) all five actions are outlined or filled buttons in a wrapping footer:
+"Set as default", "Deactivate", "Edit", "Delete" and "Close". At 960px they break over three rows.
+
+The owner accepted the rest of O78-6b on the same day, verbatim: *"AdminCurrencyTabs Default - ок, приймаю.
+AdminCurrenciesView, AdminTable, AdminPageHeader, DashboardHeader - приймаю."* For the blast-radius row the owner answered, verbatim:
+*"Mantine/Primitives/Table Default,- приймаю. AdminExchangeProvidersView Default - не приймаю, немає відступів у
+сторі. … І також виправити відступи в цій сторі!"*
+
+`src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` (Task 874) sets `skipCanvas: true`, and its
+`ViewDemo` has no gutter at all. That is why GR-3d was hardened: its scope now covers every Story in an owner matrix
+(`docs/golden-rules.md` GR-3d).
+
+### 21.2 Required after behaviour
+
+| Element | Now | Required |
+|---|---|---|
+| "Close" footer button | outlined, in the footer | **removed**. The dialog still closes with its header ✕ (≥640px), Escape, and a tap on the overlay; below 640px, with the bottom sheet's own dismissal |
+| "Set as default" · "Deactivate"/"Activate" · "Delete" | footer buttons | **text buttons with an icon**, in **one row of their own, directly below the badge row**, in that order. The canonical text button is `Button variant="transparent"` (`docs/tailadmin-style-reference.md:87-95`, §6a-link, themed resting gray-700). "Delete" gets `color="red"`, as the destructive case the same row names. The icons stay as they are (`Star`, `ToggleLeft`/`ToggleRight`, `Trash2`, `theme.other.iconSize.compact`) |
+| "Edit" | filled, in the footer | **unchanged**: the only footer button, filled, full width below `sm` and `auto` from `sm`, aligned right |
+| Visibility conditions | "set default" only when not default and active; "delete" only when not default; the toggle always | **unchanged** |
+| The fields, subtitle and badges | §18.3 step 2 | **unchanged** |
+
+GR-0: `REUSE` of `Button variant="transparent"`. No new value, no new token, and no other change.
+
+### 21.3 Re-entry (a fresh Sonnet session starts here)
+
+The mode is remediation. Keep all code and evidence. Put the new evidence in `docs/sessions/evidence/task877/r5/`.
+
+1. **`src/components/admin/CurrencyDetailDialogView.tsx`:**
+   - Below the badge `Group`, add a new `Group gap="xs" wrap="wrap"` with the three conditional text buttons, in
+     this order: "set default", then the toggle, then "delete".
+   - Each is a `Button variant="transparent"` with `leftSection` set to its current icon. "Delete" gets
+     `color="red"`. Add `mih={theme.other.touchTarget}` to each, for clause 11 (touch targets). The precedent is
+     `AdminUsersTable.tsx:146`.
+   - Render the row only when at least one of the three buttons renders. The toggle always renders, so in practice
+     the row always renders.
+   - The footer keeps **only** "Edit". Delete the "Close" button, and the now-unused `tc`/`useTranslations('common')`
+     if nothing else reads it.
+   - The props do not change: `onClose` still feeds `MantineModal`.
+2. **T1** (`src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx`), case 7:
+   - The two `getByRole('button', { name: messages.common.close })` clicks (`:214`, `:220`) close the dialog with
+     `fireEvent.keyDown(<dialog>, { key: 'Escape' })` instead. Wait for the dialog to be removed, as the case does now.
+   - Add one assertion: `within(dialog).queryByRole('button', { name: messages.common.close })` is `null`.
+   - Cases 4–6 find the buttons by their accessible name, so they need no change.
+3. **Stories.**
+   - `CurrencyDetailDialogView` `Default`, `DefaultCurrency` and `Inactive` render the three condition sets, and
+     `AdminCurrenciesView` `Detail` renders the same View. Neither file changes.
+   - **`src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx`** (returned by the owner, §21.1): wrap
+     the `<AdminExchangeProvidersView …/>` that `ViewDemo` returns in `<StoryPageGutter>` (import from
+     `@/stories/_StoryPageGutter`). All 4 exports use `ViewDemo`, so this covers them. Write no other gutter, and
+     change nothing else in the file.
+   - **GR-3d sweep of this task's owner matrix** (execute-task item 7). Open every Story in §13.3 and §18.4,
+     blast-radius rows included, and confirm each one has the profile or is exempt. `ProviderFormDialogView` is
+     overlay-only. The legacy `Admin/*` blast-radius Stories are on the default canvas. `Table` is on
+     `MantineStoryShell`. Wrap any other `skipCanvas` Story you find without the profile, and list it in the session
+     log.
+4. Run the §18.3 step 5 block into `r5/`, with `$ev` set to `docs\sessions\evidence\task877\r5`. Every command must
+   exit 0. `11` passes 33 tests or more.
+5. Measure on the new `storybook-static`, and save the result as `r5/30-measurements.json`. Use the 3
+   `CurrencyDetailDialogView` exports and `AdminCurrenciesView` `Detail`, at 390/960/1440, `en` and `uk`:
+   - the footer contains exactly **one** button, "Edit";
+   - the action row sits below the badge row: its top is greater than the badge row's bottom;
+   - at 960 and 1440, the action row's buttons share one `top`;
+   - at 390, there is no horizontal overflow;
+   - each text button is at least `theme.other.touchTarget` tall;
+   - the dialog height at 1440 `en`, which should drop from review 5's 414/358 px;
+   - GR-3b and GR-3c receipts for these Stories.
+   - **GR-3d:** the edge gap of all 4 `AdminExchangeProvidersView` exports is 16/16/32/32 at 320/390/1024/1440. Emit
+     one `GR-3d STORY GUTTER CHECK` receipt per Story in this task's owner matrix (§13.3, §18.4), using the exempt
+     forms where they apply.
+6. Record the hash-object of every changed file in `r5/28-hash-object.txt`. Add a "Revision 5" section to the session
+   log. Set the 877 backlog cell to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 21.4 Owner
+
+After the re-entry, re-check `CurrencyDetailDialogView` (all 3) and `AdminCurrenciesView` `Detail` at 390 and 1440, in
+`en` and `uk`. Also check `AdminExchangeProvidersView` (all 4) at 390 and 1440: the edge gutter is 16px on a phone,
+24px from 640px and 32px from 1024px. `Mantine/Primitives/Table` `Default` is already accepted.

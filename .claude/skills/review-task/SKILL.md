@@ -218,6 +218,12 @@ evidence that a child component has a canonical visual contract.
    Each one without a breakpoint-keyed theme-key `fz` or the canonical rich-text scale is a `NEEDS REVISION` finding.
    So is a heading above 20px below 640 (non-hero), and a child heading larger than the page title. Check the
    executor's `GR-3c TYPE RESPONSIVE CHECK` receipts against your own `getComputedStyle` measurement at 320 and 1440.
+8. **GR-3d (owner rule 2026-09-29, hardened the same day).** Before handing the matrix to the owner, measure the edge
+   gap of **every Story in it**, blast-radius rows included, at 320/390/1024/1440. Expected: 16/16/32/32, from the
+   shared `StoryPageGutter`. Exempt: overlay-only, default-canvas, and `MantineStoryShell` primitives. A `skipCanvas`
+   Story without the profile, or with a gutter written in the Story, is `NEEDS REVISION`, and it never reaches the
+   owner. `AdminExchangeProvidersView` reached the owner without a gutter in Task 877, and that is how this rule was
+   hardened.
    Task 869 reached the owner with a 30px title and a 36px body heading at 320px, which is how this rule was born.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the

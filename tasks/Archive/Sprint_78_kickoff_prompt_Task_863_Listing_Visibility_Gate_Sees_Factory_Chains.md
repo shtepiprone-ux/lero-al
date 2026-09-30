@@ -2,8 +2,10 @@
 
 **Sprint 78** (hosted by discovery, not goal fit; the owner may move it) · **P2** · **Q4** (the gate is the registered
 regression command of a critical flow) · Track B (non-UI) · filed 2026-09-20 by Task 847's review · kickoff written
-2026-09-27 · **Status: 📝 `KICKOFF FILED` — revision 1, 2026-09-30** (first run `BLOCKED — WRITE PATH NOT CLEAN` at I0;
-see §16)
+2026-09-27 · **Status: ✅ `APPROVED WITH NOTES` 2026-09-30 (review 1, §17); R8 held — its recorded text is applied
+when the registry is next staged clean (§17.2); review ledger
+`docs/reviews/2026-09-30-task863-listing-visibility-factory-chains.review-ledger.json`** (revision 1 followed a first run
+`BLOCKED — WRITE PATH NOT CLEAN` at I0; see §16)
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.
@@ -438,6 +440,46 @@ Amended: header status · §3.3 (`ownListings` lines) · §3.4 (probe re-run, `d
 witnesses) · §3.8 (855/891, 893) · §7 item 2 · §8 · §10.2 order, I0 steps 2 and 4, new step R8 · §12 AC3, AC5, AC8 ·
 §13.2 expected · §14 · Appendix C. **Re-entry:** `from-scratch`. The first run produced no evidence files, so there is
 nothing to preserve.
+
+## 17. Review 1 — 2026-09-30 — ✅ `APPROVED WITH NOTES`
+
+### 17.1 Reviewer evidence (win32, Node v22.22.3)
+
+The reviewer re-ran the checks on the final tree and got the following results.
+
+- **Hashes:** `git hash-object` gives script `f5d50aab7f9c423c07a3e8394dddc96666e44dec` (equal to the P3 witness),
+  `queries.ts` `d263d56b…` and `data.ts` `e43f72c3…`, both unchanged.
+- **Self-test and gate:** `--verify-gate` passes 30/0. The gate exits 1 with only `contactEvents.ts:50` (AC4) and
+  prints `Allowlist: 8 entries, 0 stale.`
+- **Registry:** the row-70 comparator prints `ROW70 = HEAD`. The recorded old substring occurs exactly once in the file.
+  The registry diff contains only 893's hunks (`:46-47`, `:53`, `:62`).
+
+The reviewer also ran an adversarial probe on a scratch copy of the detector, cut before the scan section:
+
+- A factory write that carries a literal stays excluded.
+- A call inside a multi-line arrow argument, a derived variable reassigned inside `if`, and an `async` factory are all
+  detected.
+- `database()` is not taken for a call of `base`.
+- A non-factory `map((id) => …from('listings'))` produces no block and no crash.
+
+Findings. Neither is blocking, and both are carried as one unnumbered follow-up in `docs/backlog.md`:
+
+- **N1 (P3).** NO-FP 4 (`base().update({ status: 'active' }).eq('id', id)`) carries no visibility literal. It
+  therefore passes whether or not the per-call-site write exclusion exists. The snippet shape is this kickoff's
+  (§10.3), not the executor's. The exclusion works (probe case A), but no self-test arm locks it.
+- **N2 (P3).** If one file declares two arrow factories with the same name, every call site is reported once per
+  declaration, so it appears twice. This over-reports and never misses. No such file exists today.
+
+The `Allowlist: N entries, K stale.` line that failing runs now print is an addition the executor disclosed. It is
+accepted, and it is what evidences AC3 while 887 keeps the gate red.
+
+### 17.2 R8 — carried, not closed
+
+At closure, `docs/critical-flow-registry.md` still carries Task 893's uncommitted hunks, and 893 is awaiting review.
+Under AC8(b), R8 is carried as an active item on 893's `docs/backlog.md` row. It must be applied in the first approved
+commit that stages the registry. The step is to replace, in row 70,
+`gate self-test (7 bad variants + 3 good + 4 no-false-positive)` with the replacement recorded verbatim in
+`docs/sessions/2026-09-30-task863-listing-visibility-factory-chains.md` §6 (18 / 3 / 9, plus the factory shape).
 
 ## Appendix A — Evidence preflight (task design)
 

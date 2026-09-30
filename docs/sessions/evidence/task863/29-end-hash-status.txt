@@ -1,0 +1,54 @@
+f5d50aab7f9c423c07a3e8394dddc96666e44dec
+ddaf47db921ba46d44f6b7c9f3e2f25ff33e1fc3
+d263d56baabdeaee6ecd2c04efa7cbd7bbe81339
+e43f72c30cfdb0a0d396a893818f7cdeb66e5c11
+ M docs/backlog.md
+ M docs/component-risk-register.md
+ M docs/critical-flow-registry.md
+ M docs/responsive-storybook-inventory.md
+ M scripts/check-listing-visibility.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/users/[id]/page.tsx
+ M src/app/admin/users/new/page.tsx
+ D src/components/shared/DatePicker.tsx
+ D src/components/shared/__tests__/DatePicker.localization.test.tsx
+ M src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/MantineCombobox.tsx
+ M src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+ M src/design-system/mantine/patterns/RangeDatePicker.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/stories/fixtures/admin.fixtures.ts
+ M src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+ M src/stories/patterns/mantine/FormSectionStack.stories.tsx
+?? docs/sessions/evidence/task863/00-gate-baseline.txt
+?? docs/sessions/evidence/task863/00-platform.txt
+?? docs/sessions/evidence/task863/00-probe.txt
+?? docs/sessions/evidence/task863/00-start-manifest.txt
+?? docs/sessions/evidence/task863/00-start-status.txt
+?? docs/sessions/evidence/task863/00-verify-baseline.txt
+?? docs/sessions/evidence/task863/01-verify-before-detector.txt
+?? docs/sessions/evidence/task863/02-verify-after-detector.txt
+?? docs/sessions/evidence/task863/03-gate-after-allowlist.txt
+?? docs/sessions/evidence/task863/10-plant-p1-gate.txt
+?? docs/sessions/evidence/task863/11-plant-p2-gate.txt
+?? docs/sessions/evidence/task863/12-plant-p3-gate.txt
+?? docs/sessions/evidence/task863/13-plant-hashes.txt
+?? docs/sessions/evidence/task863/14-r8-diff-quiet.txt
+?? docs/sessions/evidence/task863/20-verify-final.txt
+?? docs/sessions/evidence/task863/21-gate-final.txt
+?? docs/sessions/evidence/task863/22-report-final.txt
+?? docs/sessions/evidence/task863/23-visibility-vitest.txt
+?? docs/sessions/evidence/task863/24-typecheck.txt
+?? docs/sessions/evidence/task863/25-lint.txt
+?? docs/sessions/evidence/task863/26-file-integrity.txt
+?? docs/sessions/evidence/task863/27-mojibake.txt
+?? docs/sessions/evidence/task863/28-build.txt
+?? docs/sessions/evidence/task863/29-end-hash-status.txt
+?? src/components/admin/useAdminAvatarUpload.ts

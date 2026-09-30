@@ -1,0 +1,20 @@
+
+> lero-al@0.1.0 check:listing-visibility
+> node scripts/check-listing-visibility.mjs
+
+npm.cmd : 
+At line:13 char:1
++ npm.cmd run check:listing-visibility *> "$ev\00-gate-baseline.txt"; " ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+❌ 1 inline visibility literal(s) on listings reads:
+
+   src/modules/listings/actions/contactEvents.ts:50  .in('status', ['active', 'sold', 'rented', 'archived'])
+
+   Remediation: route this read through `applyPublicVisibility` or
+   `applyPublicEligibleButHidden` in `src/modules/listings/lib/visibility.ts`.
+
+❌ 1 issue(s) — gate FAILED.
+gate exit=1

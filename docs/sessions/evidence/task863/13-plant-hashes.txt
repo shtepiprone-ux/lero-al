@@ -1,0 +1,5 @@
+P0 queries.ts hash=d263d56baabdeaee6ecd2c04efa7cbd7bbe81339
+line 237:     countOf(() => applyPublicEligibleButHidden(listingCount(), { reason: 'no_expiry' })),
+P2 restored hash=d263d56baabdeaee6ecd2c04efa7cbd7bbe81339 equal=true
+P3 pre hash=f5d50aab7f9c423c07a3e8394dddc96666e44dec
+P3 restored hash=f5d50aab7f9c423c07a3e8394dddc96666e44dec equal=true

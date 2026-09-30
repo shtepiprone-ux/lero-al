@@ -1,0 +1,37 @@
+🔬 Listing visibility gate self-test (--verify-gate)
+
+  ✅ DETECTED: .eq('status','active')
+  ✅ DETECTED: .in('status',['active'])
+  ✅ DETECTED: .in('status',['active','pending']) multi-status with active
+  ✅ DETECTED: .match({status:'active'})
+  ✅ DETECTED: .filter('status','eq','active')
+  ✅ DETECTED: PostgREST status.eq.active
+  ✅ DETECTED: .gte('expires_at',...)
+  ✅ DETECTED: .lt('expires_at',...) on listings read
+  ✅ DETECTED: .is('expires_at', null) on listings read
+  ✅ DETECTED: expires_at.gte in or()
+  ✅ DETECTED: derived var: query.eq('status','active')
+  ✅ DETECTED: derived var: query.in('status',['active','pending'])
+  ✅ DETECTED: derived var: query.lt('expires_at', now)
+  ❌ MISSED:   factory: listingCount().eq('status','active') head:true count
+  ❌ MISSED:   factory: call line + .gte('expires_at') continuation
+  ❌ MISSED:   factory with args: byOwner(uid).in('status',['active'])
+  ❌ MISSED:   factory: write at one call site does not hide a read at another
+  ❌ MISSED:   factory: variable assigned from factory call, then q.lt('expires_at')
+  ✅ CLEAN:    canonical applyPublicVisibility
+  ✅ CLEAN:    canonical applyPublicEligibleButHidden
+  ✅ CLEAN:    formatVisibility call
+  ✅ NO-FP:    dynamic .eq('status', param) on listings
+  ✅ NO-FP:    status write/update on listings
+  ✅ NO-FP:    other-table .gte('expires_at',...)
+  ✅ NO-FP:    comment with active pattern
+  ✅ NO-FP:    factory wrapped by applyPublicVisibility, no literal
+  ✅ NO-FP:    factory chained with dynamic .eq('status', status)
+  ✅ NO-FP:    factory over another table with .gte('expires_at')
+  ✅ NO-FP:    factory call site that writes
+  ✅ NO-FP:    factory declared, never called
+
+Self-test: 25 passed, 5 failed
+
+❌ Gate self-test FAILED — the detector is broken.
+verify exit=1

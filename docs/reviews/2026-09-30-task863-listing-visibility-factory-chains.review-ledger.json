@@ -1,0 +1,792 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-863 — check:listing-visibility follows a from('listings') builder returned by a same-file arrow factory into every call site (per-call-site write exclusion), two fingerprinted allowlist entries, scope line, self-test 20/0 -> 30/0",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "ea2007405fa1ac82132ec591d0fde3975e824d79",
+  "reviewedRevision": "uncommitted worktree on top of ea2007405fa1ac82132ec591d0fde3975e824d79 (main). Blob: scripts/check-listing-visibility.mjs f5d50aab; queries.ts d263d56b and data.ts e43f72c3 unchanged.",
+  "reviewedPaths": [
+   "scripts/check-listing-visibility.mjs",
+   "docs/sessions/2026-09-30-task863-listing-visibility-factory-chains.md",
+   "docs/sessions/evidence/task863",
+   "docs/backlog.md",
+   "docs/critical-flow-registry.md"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 9,
+   "verified": 9,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-30-task863-listing-visibility-factory-chains.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1 R3 R5",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [
+    "N2"
+   ],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "BAD 1-5 MISSED on the shipped extractor",
+     "final self-test 30 passed 0 failed",
+     "original 20 snippets unchanged"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/01-verify-before-detector.txt",
+     "command": "node scripts/check-listing-visibility.mjs --verify-gate (snippets added, extractor unchanged)",
+     "observable": "BAD 1-5 MISSED; 25 passed, 5 failed; exit 1",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "BAD 1-5 MISSED on the shipped extractor"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/20-verify-final.txt",
+     "command": "npm.cmd run check:listing-visibility:verify",
+     "observable": "30 passed, 0 failed (18 BAD, 3 GOOD, 9 NO-FP); exit 0",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "final self-test 30 passed 0 failed",
+       "original 20 snippets unchanged"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The new shape could miss real-world call forms the snippets do not exercise.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/30-review1-adversarial-probe.txt",
+     "result": "REFUTED: multi-line arrow argument (C), derived variable reassigned in an if (D) and async factory (F) are detected; database() is not taken for base() (E); a non-factory map lambda yields no block (G)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R2",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [
+    "N1"
+   ],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "write at one call site does not hide a read at another",
+     "write-only call site clean"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/20-verify-final.txt",
+     "command": "npm.cmd run check:listing-visibility:verify",
+     "observable": "DETECTED: factory: write at one call site does not hide a read at another; NO-FP: factory call site that writes",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "write at one call site does not hide a read at another",
+       "write-only call site clean"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "NO-FP 4 would stay clean even without the per-call-site write exclusion.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/30-review1-adversarial-probe.txt",
+     "result": "CONFIRMED as a test-strength gap (N1): NO-FP 4 has no visibility literal. The exclusion itself works: case A (a write carrying .eq(status, active) through a factory) yields 0 hits. Carried as a P3 follow-up; BAD 4 does discriminate the per-call-site rule."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "queries.ts:241 and data.ts:281 not reported",
+     "Allowlist: 8 entries, 0 stale",
+     "diff adds exactly the two R4 entries"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/21-gate-final.txt",
+     "command": "npm.cmd run check:listing-visibility",
+     "observable": "Allowlist: 8 entries, 0 stale.; violation list = contactEvents.ts:50 only",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "queries.ts:241 and data.ts:281 not reported",
+       "Allowlist: 8 entries, 0 stale"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "scripts/check-listing-visibility.mjs",
+     "command": "read-only diff of scripts/check-listing-visibility.mjs (reviewer)",
+     "observable": "ALLOWLIST gains exactly the queries.ts .eq(status, active) and data.ts .gte(expires_at, window.startUtc) entries with the R4 reasons; the six original entries are byte-identical",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "diff adds exactly the two R4 entries"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The queries.ts fingerprint could mask a real violation in the same file.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/10-plant-p1-gate.txt",
+     "result": "BOUNDED: path+substring allowlisting masks any .eq(status, active) line in queries.ts (pre-existing gate property, kickoff §10.4); a different literal (.in) planted through the factory in the same file is reported at :237."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "violation list is exactly contactEvents.ts:50 while 887 is open",
+     "exit 1"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/21-gate-final.txt",
+     "command": "npm.cmd run check:listing-visibility",
+     "observable": "one violation src/modules/listings/actions/contactEvents.ts:50; gate exit=1",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "violation list is exactly contactEvents.ts:50 while 887 is open",
+       "exit 1"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The red line could be introduced by 863.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/00-gate-baseline.txt",
+     "result": "REFUTED: the identical single violation is in the I0 baseline before any 863 write; contactEvents.ts is not in the diff."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "changed fingerprint listed as stale, exit 1",
+     "script hash restored"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/12-plant-p3-gate.txt",
+     "command": "plant P3: data.ts fingerprint -> window.startUtcX; gate",
+     "observable": "Allowlist: 8 entries, 1 stale; stale entry named; exit 1",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "changed fingerprint listed as stale, exit 1"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/13-plant-hashes.txt",
+     "command": "hash-object before/after P3",
+     "observable": "P3 pre f5d50aab = restored f5d50aab, equal=true",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "script hash restored"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The restored script could differ from the reviewed one.",
+     "kind": "EXECUTED",
+     "path": "scripts/check-listing-visibility.mjs",
+     "result": "REFUTED: reviewer hash-object = f5d50aab7f9c423c07a3e8394dddc96666e44dec, equal to the P3 witness."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / R6",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "P1 exit 1 naming queries.ts:237",
+     "P2 line absent and hash equals P0",
+     "queries.ts absent from final status"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/10-plant-p1-gate.txt",
+     "command": "plant P1 via Node; gate",
+     "observable": "src/modules/admin/dashboard/queries.ts:237 countOf(() => listingCount().in(status, [active, pending])); exit 1",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "P1 exit 1 naming queries.ts:237"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/11-plant-p2-gate.txt",
+     "command": "restore P2 via Node; gate",
+     "observable": ":237 absent; only contactEvents.ts:50",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "P2 line absent and hash equals P0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/13-plant-hashes.txt",
+     "command": "hash-object P0/P2",
+     "observable": "P0 d263d56b = P2 d263d56b, equal=true",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "P2 line absent and hash equals P0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/29-end-hash-status.txt",
+     "command": "hash-object + status --porcelain",
+     "observable": "queries.ts hash d263d56b; queries.ts absent from porcelain",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "queries.ts absent from final status"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The plant could pass for the wrong reason via the allowlist.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/10-plant-p1-gate.txt",
+     "result": "REFUTED: P1 uses .in(...), which no queries.ts fingerprint covers, and the gate reports :237; reviewer hash of queries.ts today = d263d56b."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC7 / R7",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "scope line once, first, in verify, scan and report"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/20-verify-final.txt",
+     "command": "npm.cmd run check:listing-visibility:verify",
+     "observable": "Scope line printed once before the self-test header",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "scope line once, first, in verify, scan and report"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/21-gate-final.txt",
+     "command": "npm.cmd run check:listing-visibility",
+     "observable": "Scope line printed once before results",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "scope line once, first, in verify, scan and report"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/22-report-final.txt",
+     "command": "npm.cmd run check:listing-visibility:report",
+     "observable": "Scope line printed once before results; exit 0",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "scope line once, first, in verify, scan and report"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The line could be printed only on some paths.",
+     "kind": "EXECUTED",
+     "path": "scripts/check-listing-visibility.mjs",
+     "result": "REFUTED: console.log(SCOPE_LINE) runs at module level before the VERIFY_GATE branch and before the canonical-anchor checks, so every mode prints it once."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC8 / R8 R9",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [
+    "F3"
+   ],
+   "finalSubject": {
+    "path": "docs/sessions/2026-09-30-task863-listing-visibility-factory-chains.md",
+    "symbol": "§6 R8 registry text held",
+    "diffHunks": [
+     "docs/sessions/2026-09-30-task863-listing-visibility-factory-chains.md (new)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "case (b): registry carries no 863 change",
+     "old substring present verbatim in row 70",
+     "replacement counts equal AC1 (18/3/9)",
+     "Files Changed matches the diff",
+     "backlog <= 80 lines"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/14-r8-diff-quiet.txt",
+     "command": "diff --quiet -- docs/critical-flow-registry.md",
+     "observable": "R8 diff --quiet exit=1 (893 hunks present)",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "case (b): registry carries no 863 change"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/2026-09-30-task863-listing-visibility-factory-chains.md",
+     "command": "reviewer read §4 and §6; row-70 comparator",
+     "observable": "reviewer: ROW70 = HEAD; old substring occurs once in row 70 and once in the file; replacement says 18 bad + 3 good + 9 no-false-positive; registry diff hunks only :46-47, :53, :62 (893); Files Changed = script, session log, evidence, backlog",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "old substring present verbatim in row 70",
+       "replacement counts equal AC1 (18/3/9)",
+       "Files Changed matches the diff"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/backlog.md",
+     "command": "line count of docs/backlog.md (reviewer, after closure edits)",
+     "observable": "80 physical lines",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "backlog <= 80 lines"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "R8 could be lost once 863 is archived.",
+     "kind": "EXECUTED",
+     "path": "docs/backlog.md",
+     "result": "MITIGATED: the carry is written on the active 893 row (the task holding the registry) and in the archived kickoff §17.2; F3."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "QA / agent-contract 9, 14",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/check-listing-visibility.mjs",
+    "symbol": "extractListingsQueryBlocks shape 3 + extractFactoryCallBlocks + ALLOWLIST + self-test arrays + SCOPE_LINE",
+    "diffHunks": [
+     "scripts/check-listing-visibility.mjs (blob f5d50aab7f9c423c07a3e8394dddc96666e44dec)"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "build exits 0",
+     "typecheck, lint, file-integrity, mojibake, visibility vitest exit 0",
+     "no path outside §7"
+    ],
+    "phases": [
+     "post-fix"
+    ],
+    "notApplicable": {
+     "stories": "Node CLI governance script and docs; no UI artifact or story.",
+     "locales": "No user-facing string; console output of a CI script only.",
+     "viewports": "Nothing rendered.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task863/28-build.txt",
+     "command": "npm.cmd run build",
+     "observable": "route table printed; build exit=0",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "build exits 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/24-typecheck.txt",
+     "command": "typecheck (24), lint (25, 0 errors), file-integrity (26), mojibake (27), vitest (23, 66 passed)",
+     "observable": "all exit 0",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "typecheck, lint, file-integrity, mojibake, visibility vitest exit 0"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task863/29-end-hash-status.txt",
+     "command": "status --porcelain vs 00-start-status.txt",
+     "observable": "863 adds only the script, backlog, session log and evidence; every other entry is 893 work present at I0",
+     "freshness": "final worktree 2026-09-30 on base ea2007405; reviewer hash-object: script f5d50aab (= P3 witness and 29-end-hash-status), queries.ts d263d56b, data.ts e43f72c3; reviewer re-ran --verify-gate 30/0 exit 0 and the gate (exit 1, only contactEvents.ts:50) on win32 v22.22.3",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no path outside §7"
+      ],
+      "phases": [
+       "post-fix"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The build could predate the final script.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task863/29-end-hash-status.txt",
+     "result": "REFUTED: the script is not a Next build input; its hash at 29 (after the 28 build) equals the reviewer-measured blob f5d50aab."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "JavaScript detector logic and docs; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "N1",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC2 / R2",
+   "requirementIds": [
+    "AC2 / R2"
+   ],
+   "evidence": "NO-FP 4 carries no visibility literal, so it passes with or without the per-call-site write exclusion; the snippet shape is the kickoff's (§10.3). Probe case A proves the exclusion works. Carried as an unnumbered P3 follow-up in docs/backlog.md."
+  },
+  {
+   "id": "N2",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC1 / R1 R3 R5",
+   "requirementIds": [
+    "AC1 / R1 R3 R5"
+   ],
+   "evidence": "Two same-named arrow factories in one file report each call site once per declaration (probe case B: [2,2]). Over-report, never a miss; no such file today. Carried with N1."
+  },
+  {
+   "id": "F3",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC8 / R8 R9",
+   "requirementIds": [
+    "AC8 / R8 R9"
+   ],
+   "evidence": "R8 held under AC8(b): docs/critical-flow-registry.md carries 893's uncommitted hunks. The recorded row-70 text (session log §6) is carried on 893's docs/backlog.md row and in the archived kickoff §17.2, to be applied in the first approved commit that stages the registry."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC8 / R8 R9",
+  "reviewer": "Opus"
+ }
+}

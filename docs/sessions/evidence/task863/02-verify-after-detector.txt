@@ -1,0 +1,37 @@
+ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables, and same-file arrow factories (call sites, their continuation lines, variables assigned from them). CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.
+🔬 Listing visibility gate self-test (--verify-gate)
+
+  ✅ DETECTED: .eq('status','active')
+  ✅ DETECTED: .in('status',['active'])
+  ✅ DETECTED: .in('status',['active','pending']) multi-status with active
+  ✅ DETECTED: .match({status:'active'})
+  ✅ DETECTED: .filter('status','eq','active')
+  ✅ DETECTED: PostgREST status.eq.active
+  ✅ DETECTED: .gte('expires_at',...)
+  ✅ DETECTED: .lt('expires_at',...) on listings read
+  ✅ DETECTED: .is('expires_at', null) on listings read
+  ✅ DETECTED: expires_at.gte in or()
+  ✅ DETECTED: derived var: query.eq('status','active')
+  ✅ DETECTED: derived var: query.in('status',['active','pending'])
+  ✅ DETECTED: derived var: query.lt('expires_at', now)
+  ✅ DETECTED: factory: listingCount().eq('status','active') head:true count
+  ✅ DETECTED: factory: call line + .gte('expires_at') continuation
+  ✅ DETECTED: factory with args: byOwner(uid).in('status',['active'])
+  ✅ DETECTED: factory: write at one call site does not hide a read at another
+  ✅ DETECTED: factory: variable assigned from factory call, then q.lt('expires_at')
+  ✅ CLEAN:    canonical applyPublicVisibility
+  ✅ CLEAN:    canonical applyPublicEligibleButHidden
+  ✅ CLEAN:    formatVisibility call
+  ✅ NO-FP:    dynamic .eq('status', param) on listings
+  ✅ NO-FP:    status write/update on listings
+  ✅ NO-FP:    other-table .gte('expires_at',...)
+  ✅ NO-FP:    comment with active pattern
+  ✅ NO-FP:    factory wrapped by applyPublicVisibility, no literal
+  ✅ NO-FP:    factory chained with dynamic .eq('status', status)
+  ✅ NO-FP:    factory over another table with .gte('expires_at')
+  ✅ NO-FP:    factory call site that writes
+  ✅ NO-FP:    factory declared, never called
+
+Self-test: 30 passed, 0 failed
+✅ Gate self-test PASSED — detector is live and precise.
+verify exit=0

@@ -56,6 +56,9 @@ const ALLOWLIST = [
   { path: 'src/app/[locale]/listings/[slug]/page.tsx', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row detail page, multi-status display filter' },
   // Recently-viewed resolution: by saved IDs, multi-status filter
   { path: 'src/modules/listings/lib/recentlyViewedQueries.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'recently-viewed resolution by saved IDs, not a public list read' },
+  // Arrow-factory reads (Task 863): reached through listingCount()/ownListings() call sites
+  { path: 'src/modules/admin/dashboard/queries.ts', fingerprint: ".eq('status', 'active')", reason: 'ADM-11 consistency check only (Task 847 R3) — raw active head:true count, never displayed, not a public read' },
+  { path: 'src/modules/cabinet/statistics/data.ts', fingerprint: ".gte('expires_at', window.startUtc)", reason: 'AGT-01 expiring window on an applyPublicVisibility set (Task 848) — not a visibility predicate' },
 ];
 
 function isAllowlisted(relPath, matchedText) {
@@ -77,6 +80,10 @@ const VISIBILITY_PATTERNS = [
   /expires_at\.(gte|lt|is)\./,
 ];
 
+const SCOPE_LINE =
+  "ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables, and same-file arrow factories (call sites, their continuation lines, variables assigned from them). " +
+  "CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.";
+
 const WRITE_METHODS = /\.(update|insert|upsert|delete)\s*\(/;
 
 // ── Detector — ONE pure function, shared by scan AND self-test ──────────────
@@ -93,7 +100,11 @@ const WRITE_METHODS = /\.(update|insert|upsert|delete)\s*\(/;
  * 2. Derived variables — `let/const <name> = ...from('listings')...`, then later
  *    lines referencing `<name>.method(...)` or `<name> = <name>.method(...)`.
  *
- * Write operations (.update/.insert/.delete/.upsert) are excluded at block level.
+ * 3. Arrow factories — `const <name> = (...) => ...from('listings')...`; every call of
+ *    `<name>(` in the same file, its `.` continuation lines and variables assigned from it.
+ *
+ * Write operations (.update/.insert/.delete/.upsert) are excluded at block level
+ * (shape 3: per call-site block, so a write at one call never hides a read at another).
  */
 function extractListingsQueryBlocks(lines) {
   const blocks = [];
@@ -131,8 +142,48 @@ function extractListingsQueryBlocks(lines) {
     if (!WRITE_METHODS.test(fullText)) {
       blocks.push(blockLines);
     }
+
+    // Shape 3: arrow factory — `const <name> = (...) => ...from('listings')...`. The builder is
+    // returned by the factory and chained where the factory is CALLED, so every call site
+    // (anywhere in the file) is its own block, with its own write exclusion.
+    if (assignMatch) {
+      const between = lines[i].slice(lines[i].indexOf('=', assignMatch.index), lines[i].search(fromRe));
+      if (between.includes('=>')) {
+        blocks.push(...extractFactoryCallBlocks(lines, i, assignMatch[1]));
+      }
+    }
   }
   return blocks;
+}
+
+/**
+ * Call-site blocks for one arrow factory (name is \w+, so regex-safe).
+ * Block = the call line + its `.`-continuation lines + lines that chain a variable
+ * assigned from the call. The write exclusion is applied per call-site block.
+ */
+function extractFactoryCallBlocks(lines, declIdx, name) {
+  const out = [];
+  const callRe = new RegExp(`\\b${name}\\s*\\(`);
+  const varFromCallRe = new RegExp(`(?:const|let)\\s+(\\w+)[^=]*=.*\\b${name}\\s*\\(`);
+  for (let k = 0; k < lines.length; k++) {
+    if (k === declIdx || !callRe.test(lines[k])) continue;
+    const block = [{ idx: k, text: lines[k] }];
+    let j = k + 1;
+    while (j < lines.length && /^\s*\./.test(lines[j])) {
+      block.push({ idx: j, text: lines[j] });
+      j++;
+    }
+    const varMatch = lines[k].match(varFromCallRe);
+    if (varMatch) {
+      const v = varMatch[1];
+      const varUseRe = new RegExp(`(?:^|\\b)${v}\\s*(?:=\\s*(?:await\\s+)?${v}\\s*\\.|\\.)`);
+      for (let m = j; m < lines.length; m++) {
+        if (varUseRe.test(lines[m])) block.push({ idx: m, text: lines[m] });
+      }
+    }
+    if (!WRITE_METHODS.test(block.map(b => b.text).join('\n'))) out.push(block);
+  }
+  return out;
 }
 
 /**
@@ -200,6 +251,16 @@ function runSelfTest() {
       code: `let query = supabase.from('listings').select('*')\nquery = query.in('status', ['active', 'pending'])` },
     { label: "derived var: query.lt('expires_at', now)",
       code: `let query = supabase.from('listings').select('*')\nquery = query.lt('expires_at', now)` },
+    { label: "factory: listingCount().eq('status','active') head:true count",
+      code: `const listingCount = () => db.from('listings').select('id', { count: 'exact', head: true })\nconst n = await countOf(() => listingCount().eq('status', 'active'))` },
+    { label: "factory: call line + .gte('expires_at') continuation",
+      code: `const base = () => supabase.from('listings').select('*')\nconst { data } = await base()\n  .gte('expires_at', now)` },
+    { label: "factory with args: byOwner(uid).in('status',['active'])",
+      code: `const byOwner = (id) => db.from('listings').select('id').eq('user_id', id)\nconst { data } = await byOwner(uid).in('status', ['active'])` },
+    { label: "factory: write at one call site does not hide a read at another",
+      code: `const base = () => supabase.from('listings').select('*')\nawait base().update({ status: 'x' }).eq('id', id)\nconst r = await base().eq('status', 'active')` },
+    { label: "factory: variable assigned from factory call, then q.lt('expires_at')",
+      code: `const base = () => supabase.from('listings').select('*')\nlet q = base()\nq = q.lt('expires_at', now)` },
   ];
 
   // Good snippets: canonical helpers (no from('listings') chain)
@@ -219,6 +280,16 @@ function runSelfTest() {
       code: `const { data } = await db\n  .from('email_change_tokens')\n  .select('*')\n  .gte('expires_at', new Date().toISOString())` },
     { label: "comment with active pattern",
       code: `// .eq('status', 'active') — just a comment\nconst { data } = await supabase\n  .from('listings')\n  .select('*')` },
+    { label: "factory wrapped by applyPublicVisibility, no literal",
+      code: `const listingCount = () => db.from('listings').select('id', { count: 'exact', head: true })\nconst n = await countOf(() => applyPublicVisibility(listingCount()))` },
+    { label: "factory chained with dynamic .eq('status', status)",
+      code: `const listingCount = () => db.from('listings').select('id', { count: 'exact', head: true })\nconst n = await listingCount().eq('status', status)` },
+    { label: "factory over another table with .gte('expires_at')",
+      code: `const tokens = () => db.from('email_change_tokens').select('*')\nconst r = await tokens().gte('expires_at', now)` },
+    { label: "factory call site that writes",
+      code: `const base = () => supabase.from('listings').select('*')\nawait base().update({ status: 'active' }).eq('id', id)` },
+    { label: "factory declared, never called",
+      code: `const base = () => supabase.from('listings').select('*')` },
   ];
 
   let passed = 0;
@@ -265,6 +336,8 @@ function runSelfTest() {
   console.log('✅ Gate self-test PASSED — detector is live and precise.');
   process.exit(0);
 }
+
+console.log(SCOPE_LINE);
 
 if (VERIFY_GATE) {
   runSelfTest();
@@ -337,6 +410,8 @@ if (allViolations.length === 0 && staleEntries.length === 0) {
   console.log(`   Scanned ${files.length} files.`);
   process.exit(0);
 }
+
+console.error(`   Allowlist: ${ALLOWLIST.length} entries, ${staleEntries.length} stale.`);
 
 if (staleEntries.length > 0) {
   console.error('\n❌ Stale allowlist entries (no longer match — remove them):');

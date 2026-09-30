@@ -1,0 +1,10 @@
+win32 v22.22.3
+AS EXPECTED A write carrying a literal through a factory -> excluded (0): 0 hit(s) []
+AS EXPECTED B same factory name declared twice in one file -> reported twice (over-report, N2): 2 hit(s) [2,2]
+AS EXPECTED C call inside a multi-line arrow argument -> detected: 1 hit(s) [3]
+AS EXPECTED D derived variable reassigned inside if -> detected: 1 hit(s) [3]
+AS EXPECTED E factory name inside another identifier (database) -> clean: 0 hit(s) []
+AS EXPECTED F async arrow factory -> detected: 1 hit(s) [2]
+AS EXPECTED G non-factory lambda before from(listings) -> clean, no crash: 0 hit(s) []
+probe done — 0 mismatch(es)
+probe exit=0 

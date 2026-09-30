@@ -1540,6 +1540,217 @@ The executor paused during the rev5 gate re-run and asked for rulings. The revie
    to the measurement at 320/1440 (rendered width equals viewport, no overflow), and add it to the owner matrix §20.8
    as row 6: `Mantine/Primitives/LightboxView` × `en` × 320/1440.
 
-**Re-entry:** apply item 5, then run the §20.5 gate block **once more** on the final tree. The run in progress becomes
+**Re-entry (executed; see §20.11):** apply item 5, then run the §20.5 gate block **once more** on the final tree. The run in progress becomes
 superseded; mark it so in the session log. Then run the measurement and the corrected grep. AC26 now also covers the
 `LightboxView` exports.
+
+### 20.11 Review 8, 2026-09-30 — `PARTIALLY VERIFIED`, awaiting O83-1 (§20.8) and O83-6
+
+Revision 5 (R31–R36) is verified on the final tree.
+- **Hashes.**
+  - `rev5/i0.log` holds all 12 §20.5 hashes.
+  - All 17 `rev5/hash-object.log` hashes equal the tree, and `SaveToCollectionButton.module.css` is recorded as
+    deleted.
+  - Every other 886 file is byte-identical to its `rev4/hash-object.log` hash. The union of the two witnesses
+    therefore covers the tree.
+  - P3, record only: the rev5 `$files` list was narrower than §18.5's; no drift.
+- **Gates.** Every rev5 gate log ends `EXIT_CODE=0`, `build.log` included, and both census logs pass.
+  `storybook-static` (19:45) and `.next/BUILD_ID` (19:46) are newer than the last source write.
+- **Plant (R34).** Arm 1 fails 1/14 on the planted button, and the hash differs. Arm 2 passes 14/14, and
+  `hash_after` equals `hash_before` (`d2954729…`).
+- **Grep.** `story-grep-corrected.log` is empty.
+  - P3: `story-grep.log` is the superseded pre-R36 `-- src` run, not final evidence.
+  - `git grep "globals: { viewport"` finds nothing in `LightboxView.stories.tsx` on the tree.
+- **`story-measure.log`.**
+  - AC24: every placeholder equals its `offsetParent` at 320/378/390/768/1024/1440, and 0 sit above the first frame.
+  - AC25: send-message is `rgb(255,255,255)` with a `rgb(228,231,236)` border in all three Stories; Call is
+    `rgb(236,84,71)` and WhatsApp is `rgb(2,122,72)`. The label is 1 line everywhere except
+    `listingdetailview--public-listing` `uk` 320. There the card is stacked, not in the sidebar, which is outside
+    AC20's scope.
+- **Reviewer's native probe** (`win32`, Node v22.22.3, 18 Stories × 320/1440):
+  - no overflow, and each Story's rendered width equals the viewport;
+  - edge gaps: `ListingDetailView` 16/48 on `.container-wide`, `ListingCardPattern` 16/32, primitives 16/24;
+  - 0 "Save to collection" buttons on every card Story; the hearts are present (`ListingCardPattern` 12,
+    `FavoritesShell--populated` 8, `ListingCard` 2 and 1);
+  - `SaveToCollectionButton` renders its single shape in all three exports;
+  - the only console errors are the expected 404s of `/__missing-photo__.jpg`, plus two pre-existing
+    `MISSING_MESSAGE` errors (→ **903**).
+- **Favourites untouched.** `FavoriteButton.tsx` is not in `git status`, and `FavoritesShell.tsx`'s diff only drops
+  the save button and its import.
+
+**Filed:** **903** (P2, no sprint yet). `presentationEngine.ts:171` pushes `labelKey: key`, so every
+`ListingDetailView` export logs `MISSING_MESSAGE: listing.condition` / `listing.heating` (the keys that exist are
+`*_label`). It predates 886: `messages/` is unchanged.
+
+**STOP - OWNER DECISION REQUIRED — O83-6** (the owner asked why `ListingDetailView` has no "add to favourites" button).
+Production `src/app/[locale]/listings/[slug]/page.tsx:269` passes `listingId={authUser ? listing.id : undefined}`, and
+`ListingDetailView.tsx:248` renders the heart only when `listingId` is set. So a **guest** sees no heart on the detail
+page, while every card shows one to guests, where `FavoriteButton.tsx:76-83` opens the login sheet. The
+`PublicListing` and staff-preview exports are guest or staff views, so they show no heart. `ArchivedListing` shows a
+disabled one. The options:
+- **(a) Recommended:** the detail page shows the heart to guests too, as cards do. `favoriteSlot` gets `listing.id`
+  whenever the view is not a staff preview. `listingId` keeps gating save-to-collection and report, so those stay
+  signed-in only. The `PublicListing` Story then shows the heart. This is a production change, with a
+  `ListingDetailView` test (guest → heart present; staff preview → absent).
+- **(b)** Production stays as it is. Add a signed-in `ListingDetailView` Story export (`isGuest: false`, a `listingId`,
+  and the `AuthContext` mock), which shows the heart and the save button.
+
+The next review writes the chosen option as Revision 6, together with any O83-1 returns. If every §20.8 tuple is
+accepted and the owner chooses (b), the next review writes (b)'s Story export as Revision 6 and closes 886 after it.
+
+---
+
+## 21. Revision 6 — review 9, 2026-09-30 (`NEEDS REVISION`, owner returned O83-1 and decided O83-6)
+
+This section overrides every earlier section it names. Revisions 1–5 are **kept**. Review 8 verified them (§20.11).
+
+### 21.1 Owner results (2026-09-30, verbatim)
+
+**O83-6 — DECIDED:** *"Обираю варіант (а)."* A guest sees the favourite heart on the listing-detail page, as on cards.
+
+| §20.8 row | Owner verdict |
+|---|---|
+| 1 `ListingDetailPattern` | *"колір «Надіслати повідомлення». - треба зробити #478dec (заведи токен для цього кольору). Кнопка чату(Написати повідомлення) має бути однакова всюди."* |
+| 2 `ListingDetailView` ×4 | *"все ок, але відсутня кнопка "Додати в обране"."* → O83-6 (a). |
+| 3 `ListingContactPattern` | *"все ок, лише треба замінити колір кнопки "Написати повідомлення"."* |
+| 4 `AppImage` `Default`, `Placeholder` | *"поведінка не однакова у Default і Placeholder. Placeholder веде себе адаптивно, Default не веде себе адаптивно."* |
+| 5 `ListingCardPattern`, `ListingCard`, `FavoritesShell` | *"не приймаю. Бейджи продано та орендовано чомусь різні у примітиві і у інших сторісах. Необхідно привести до одного виду - кольорового!"* |
+| 6 `LightboxView` | *"все ок."* — **accepted** |
+| added | *"ListingDetailView Story має баг, коли відкритий Lightbox. Необхідно перевірити всі сторі на цей баг усередині цієї задачі."* (screenshot: Docs view, lightbox open, black thumbnails, page text showing through at the bottom) |
+
+### 21.2 Findings (review 9, reviewer-reproduced on the rev5 `storybook-static`, native Playwright, `win32`)
+
+| # | Severity | Evidence | Req |
+|---|---|---|---|
+| F19 | **P1** owner | The send-message trigger must be `#478dec` everywhere, through a new theme token. The palette pattern is `theme.ts` `MantineColorsTuple` with `primaryShade: 7` (`:367`), so `Button color=…` renders index 7 and hovers on index 8. **Contrast:** white on `#478dec` is 3.34:1, below WCAG AA's 4.5:1 for a 14–16px label. **Owner accepted the value as is, 2026-09-30, verbatim: *"залиш #478dec як є"*.** Implement it unchanged; the contrast is not a finding in later reviews. | R37 |
+| F20 | **P1** owner, O83-6 | `src/app/[locale]/listings/[slug]/page.tsx:269` passes `listingId` only for a signed-in user, and `ListingDetailView.tsx:248` renders `favoriteSlot` only when `effectiveListingId` is set. So a guest sees no heart. `FavoriteButton.tsx:76-83` already opens the login sheet for a guest. | R38 |
+| F21 | **P1** owner | `AppImage.stories.tsx` `Default` puts **one** cell in each `SimpleGrid cols={{ base: 1, sm: 2 }}`. From 640px the photo takes half the width and the right column is empty. `Placeholder` has two cells per row and fills the width. | R39 |
+| F22 | **P1** owner | The sold/rented **overlay** colour exists only in the consumer: `ListingCard.tsx:60-61` `CLOSED_OVERLAY_STYLE` → `ListingCard.module.css:88-106` (`--status-info` / `--status-rented`). The pattern carries no status colour (Task 741's `overlay.className` contract), so `ListingCardPattern.stories.tsx:161-162` shows a neutral overlay while `Mantine/Primitives/ListingCard` and `FavoritesShell` show the colour. The pattern Story has no rented card. | R40 |
+| F23 | **P1** owner | Lightbox. Opened in `listingdetailview--public-listing` (1440, story mode): the three thumbnails are broken `<img>` (the browser glyph), not placeholders. `GalleryThumbnailButton.tsx:37` renders Mantine `Image`, not `AppImage`, so a failed photo never reaches `MediaPlaceholder`. In Docs view they paint black. The dialog surface is `color-mix(in oklab, var(--overlay) 95%, transparent)` (`LightboxView.tsx:88`), so page text shows through at 5%: the faint text under the strip in the owner's screenshot. `MantineListingGalleryPattern.tsx:90/107` also renders Mantine `Image` with `className="h-full w-full"`. `GalleryThumbnailButton` is shared by `LightboxView` and `MantineListingGalleryPattern`. | R41, R42 |
+
+### 21.3 Canonical UI decision record (GR-0) — Revision 6
+
+| Artifact | Disposition | Owner and token path |
+|---|---|---|
+| Send-message colour | **CREATE** token `chat` | `theme.ts`: a `MantineColorsTuple` named `chat`, registered in `colors` (and in the `MantineThemeColors` type if the file declares one). Index 7 = `'#478dec'`, the owner's value, verbatim, with a comment citing O83-1 2026-09-30. Indices 8 and 9 = `darken('#478dec', 0.1)` / `darken('#478dec', 0.2)`; indices 0–6 = `lighten('#478dec', …)` in even steps. These are Mantine's own `@mantine/core` colour functions, so no second hex is invented. Consumers use `color="chat"`, never the hex. |
+| Send-message trigger | **REUSE** Mantine `Button` | `variant="filled" color="chat" fullWidth leftSection={<MessageCircle size={theme.other.iconSize.standard} />}`, identical in production and in both Story stand-ins. |
+| Lightbox / gallery thumbnails | **REUSE** `AppImage` `gallery-strip` | `GalleryThumbnailButton` renders `<AppImage variant="gallery-strip" src alt />`, and inherits the canonical placeholder. |
+| Pattern gallery photos | **REUSE** `AppImage` `gallery-main` / `gallery-side` | Replaces Mantine `Image` + `className`. |
+| Lightbox surface | **EXTEND** `LightboxView` | Opaque `var(--overlay)`, set with a Mantine `bg` prop, not a `style` object. |
+| Closed-listing overlay colour | **EXTEND** `MantineListingCardPattern` | The pattern owns it: `overlay.tone: 'sold' \| 'rented'` → pattern-module classes carrying the moved `ListingCard.module.css:88-106` declarations (same tokens). This supersedes Task 741's "the pattern carries no status colour" by owner instruction (§21.1 row 5); `overlay.className` stays as a pass-through. |
+
+`new hardcoded visual values: NONE` (the one hex is the owner's token value, in `theme.ts`).
+
+### 21.4 Revision requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R37** | Create the `chat` token (§21.3). The send-message trigger becomes `variant="filled" color="chat"` in:<br>• `ListingContact.tsx:202`;<br>• `ListingDetailPattern.stories.tsx` `DemoInquiryTrigger`;<br>• `ListingContactPattern.stories.tsx` `DemoInquiryTrigger`.<br>The disabled branch (`ListingContact.tsx:183-194`) is unchanged. `check:design-tokens` stays at exit 0. | P1 | AC28 |
+| **R38** | O83-6 (a), `ListingDetailView.tsx`: `favoriteSlot` renders `FavoriteButton` with `listingId={listing.id}` whenever `!isStaffPreview`, whatever `listingId` holds. `effectiveListingId` keeps gating save-to-collection and report, so a guest still sees neither. `page.tsx` is unchanged. Add a vitest test (new file `src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx`, or extend an existing one) with three cases:<br>• guest (`listingId` undefined, not staff preview) → an "Add to favourites" button is present;<br>• staff preview → it is absent;<br>• guest → "Save to collection" is absent.<br>Prove the first case two-armed: plant `favoriteSlot` gated on `effectiveListingId` again → the test fails; restore → it passes; record a hash witness. | P1 | AC29 |
+| **R39** | `AppImage.stories.tsx`: one shared frame helper, extracted from `PlaceholderCases`, renders every variant frame in **both** exports, so `Default` and `Placeholder` have the same grid and cell count:<br>• `Default` passes two real sources per variant (`DEMO_SRC` twice is fine);<br>• `Placeholder` keeps `[null, MISSING_SRC]`.<br>`Default` keeps its `avatar` row; its `NoSrcSquare` is deleted, because `Placeholder` covers no-src. At every width ≥640, both exports have 2 cells per variant row. | P1 | AC30 |
+| **R40** | `MantineListingCardOverlay` gains `tone?: 'sold' \| 'rented'`, and the pattern applies its own module classes for it. Move the `ListingCard.module.css:88-106` rules into `MantineListingCardPattern.module.css`, with the same tokens and the `@supports` tier. `ListingCard.tsx` passes `tone: listing.status` and deletes `CLOSED_OVERLAY_STYLE` and the moved CSS.<br>`ListingCardPattern.stories.tsx`:<br>• the sold card passes `tone: 'sold'` (and keeps `className: 'consumer-overlay-hook'` for the Task 741 play assertion);<br>• add one **rented** grid card (`tone: 'rented'`, badge `color: 'purple'`, as production's `ListingCard.tsx:87-88`).<br>Extend `ListingCard.smoke.test.tsx`: a sold card's overlay carries the pattern's sold class, and a rented card's the rented class. | P1 | AC31 |
+| **R41** | `GalleryThumbnailButton.tsx`: `<Image src={src} alt={alt} fit="cover" />` becomes `<AppImage variant="gallery-strip" src={src} alt={alt} />`. Remove the `Image` import. Its own Story `Mantine/Primitives/GalleryThumbnailButton` gains a failed-load example (`src="/__missing-photo__.jpg"`) in an existing or one new export, per GR-3a (EXTEND).<br>`MantineListingGalleryPattern.tsx:90/107`: Mantine `Image` + `className` become `AppImage` (`gallery-main` for the main photo, `gallery-side` for the side cells) filling the same containers. | P1 | AC32 |
+| **R42** | `LightboxView.tsx:88`: the dialog surface becomes opaque `var(--overlay)`, set as a Mantine `bg` prop on the same element with the `style` object deleted. If `Modal.Content` does not accept `bg`, keep one `style` with `backgroundColor: 'var(--overlay)'`, and say so in the log. Update the comment above it. | P1 | AC32 |
+
+**Out of scope:** `page.tsx`, **903**, the favourites page.
+
+### 21.5 Verification plan — re-entry `remediation`
+
+Order: I0-R6 → R37 → R38 (with its plant) → R39 → R40 → R41 → R42 → gate block → measurement → grep. Evidence goes to
+`docs/sessions/evidence/task886/rev6/`. Append `## Revision 6` to the session log. **`hash-object.log` lists every
+file in §18.5's `$files` plus every file this revision changes.** Review 8 recorded the rev5 narrowing as P3.
+
+**I0-R6**, before any write: `win32`, then `git --no-optional-locks hash-object` of these files, into `$ev\i0.log`.
+Expected, in order:
+1. `ffef038dbbd8b0ef63b3105cf959dfeda2907f81` `src/modules/listings/components/ListingDetailView.tsx`
+2. `b51c16d4f6532ff9eb752ffd0338b61a8a8baf65` `src/modules/listings/components/ListingContact.tsx`
+3. `cb602a9c0acac105ee91979501a182352f139642` `src/design-system/mantine/theme.ts`
+4. `a3bd82e4994813546da5d5412ba30582d58302de` `src/design-system/mantine/patterns/GalleryThumbnailButton.tsx`
+5. `08251c2af7d630afd6cb27da9697635ff304d8a3` `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx`
+6. `90e5c0329d032a7ad134176295563d0470dad70c` `src/modules/listings/components/LightboxView.tsx`
+7. `05e8a231a7d257a0512d506a3f2f00633c90a62f` `src/design-system/mantine/patterns/MantineListingCardPattern.tsx`
+8. `2306c025520804167bee13cd61687463ada812c4` `src/design-system/mantine/patterns/MantineListingCardPattern.module.css`
+9. `d2954729089fda9293b4f8070ab1d155caef8a39` `src/modules/listings/components/ListingCard.tsx`
+10. `3e8fd287191518ace5e9cc0c5e689655fcb563c9` `src/modules/listings/components/ListingCard.module.css`
+11. `eeac23f804c8ab467da3c48b372f7b7b5a3bb73f` `src/stories/mantine/primitives/AppImage.stories.tsx`
+12. `14df9633e2bd5727f6f5bc16c6cd95095c41fbdb` `src/stories/patterns/mantine/ListingCardPattern.stories.tsx`
+13. `97ccc3c0bf85561878a00df902fe5983db689937` `src/stories/patterns/mantine/ListingDetailPattern.stories.tsx`
+14. `6b586ce389bb9e51acfc339ec852091260d4acee` `src/stories/patterns/mantine/ListingContactPattern.stories.tsx`
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Gate block:** §18.5's block with `$ev = "docs\sessions\evidence\task886\rev6"`, plus these smoke-test paths:
+- `src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx`;
+- the R38 test file;
+- `MantineListingCardPattern.smoke.test.tsx`.
+
+A stale-baseline report follows the §20.5 rule.
+
+**Measurement**, native Playwright on the rebuilt `storybook-static`, into `$ev\story-measure.log`:
+1. **Lightbox sweep, in story mode and Docs view.**
+   - Scope: every Story whose file renders `LightboxView`, `ListingGallery`, `GalleryThumbnailButton` or
+     `MantineListingGalleryPattern`. Build the list with `git grep -l` and print it. At minimum it holds
+     `listingdetailview--*` (4 exports, plus `--docs`), `lightboxview--*`, `listinggallerypattern--default`,
+     `listingdetailpattern--default` and `gallerythumbnailbutton--*`.
+   - Method: at 390 and 1440, open the lightbox where the Story has a trigger.
+   - Record:
+     - the count of broken `<img>` (`complete && naturalWidth === 0`), which must be **0**;
+     - the placeholders inside the thumbnail buttons;
+     - the dialog's computed `background-color` alpha, which must be **1**.
+2. **Send-message**, in `listingdetailpattern--default`, `listingcontactpattern--default` and
+   `listingdetailview--public-listing` (`en`, `uk`, 320/1024/1440): `background-color` = `rgb(71, 141, 236)` in all
+   three; label line count.
+3. **Favourite**, in `listingdetailview--public-listing` and `--archived-listing`: a heart is present.
+   `--staff-preview-*`: absent. "Save to collection" is absent in `--public-listing`.
+4. **`appimage--default` and `--placeholder`**, at 320/640/1024/1440: cells per variant row, equal in both exports.
+5. **Overlay colour**, in `listingcardpattern--default` and `mantine-primitives-listingcard--*`: the sold overlay's
+   `background-color` is equal across the Stories, and so is the rented one's. Both are non-neutral.
+
+**Grep**, into `$ev\story-grep.log`:
+
+```powershell
+git --no-optional-locks grep -n -E "#478dec" -- src
+git --no-optional-locks grep -n -E "<Image |closedOverlay|CLOSED_OVERLAY_STYLE|95%, transparent" -- src/design-system/mantine/patterns/GalleryThumbnailButton.tsx src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingCard.module.css src/modules/listings/components/LightboxView.tsx
+```
+
+Expected: the first grep prints only `theme.ts` lines; the second prints nothing.
+
+### 21.6 Type scale (GR-3c)
+
+No text changes size. Every changed Story gets a GR-3c receipt.
+
+### 21.7 Acceptance criteria
+
+`GR-4 AC AUDIT — 5 revision criteria; each states an observable property; absolutes: none.`
+
+- **AC28 [R37].** Send-message is `rgb(71, 141, 236)` in all three Stories, in both locales, at every measured width.
+  The only `#478dec` in `src` is in `theme.ts`, and `check:design-tokens` exits 0.
+- **AC29 [R38].**
+  - The heart is present for a guest and absent in staff preview.
+  - "Save to collection" stays absent for a guest.
+  - The R38 test passes, and its plant log shows **fail → pass** with the hash witness.
+- **AC30 [R39].** `Default` and `Placeholder` have equal cells per variant row at every measured width, 2 from 640.
+- **AC31 [R40].**
+  - The sold overlays have equal colour across the Stories, and so do the rented overlays.
+  - The pattern Story has a rented card.
+  - The grep prints no `closedOverlay` or `CLOSED_OVERLAY_STYLE` line, and the smoke tests pass.
+- **AC32 [R41, R42].** In the lightbox sweep, in both modes, there are 0 broken `<img>`, the thumbnails show
+  placeholders, and the dialog background alpha is 1.
+- Every rev6 gate log ends `EXIT_CODE=0`, `build.log` included, and the GR-0/1/3/3a/3b/3c/3d receipts are in the
+  session log. AC1–AC27 stand as amended.
+
+### 21.8 OWNER VISUAL QA REQUIRED — O83-1, Revision 6
+
+1. `ListingDetailPattern`, `ListingContactPattern` × `en`/`uk` × 320/1440: send-message is `#478dec`.
+2. `ListingDetailView` → all four exports × `en` × 320/1440: the heart for a guest; open the lightbox, in the Story
+   and in Docs view.
+3. `AppImage` → `Default`, `Placeholder` × `en` × 320/1024/1440: identical behaviour.
+4. `ListingCardPattern`, `Mantine/Primitives/ListingCard`, `FavoritesShell` × `en` × 320/1440: coloured sold/rented.
+5. `ListingGalleryPattern`, `GalleryThumbnailButton` × `en` × 320/1440, with the lightbox open where it applies.
+
+### 21.9 Completion report for Revision 6
+
+Append `## Revision 6` to the session log. It contains the Files Changed table, R37–R42 with their evidence paths,
+every command with its exit code, the plant logs, a `story-measure.log` summary, and the receipts. Status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cells of
+`docs/backlog.md`. No mutating git.

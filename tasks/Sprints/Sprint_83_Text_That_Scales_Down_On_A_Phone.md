@@ -47,7 +47,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `NEEDS REVISION` 2026-09-30 (review 9: owner returned O83-1 and chose O83-6 (a) → revision 6 = kickoff §21, R37–R42) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
+| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `PARTIALLY VERIFIED` 2026-09-30 (review 10: revision 6 verified, kickoff §21.10; awaits owner O83-1 = §21.8) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
 
 ## Execution order and gating
 

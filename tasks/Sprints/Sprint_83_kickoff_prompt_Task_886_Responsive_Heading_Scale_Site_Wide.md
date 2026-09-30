@@ -1754,3 +1754,39 @@ Append `## Revision 6` to the session log. It contains the Files Changed table, 
 every command with its exit code, the plant logs, a `story-measure.log` summary, and the receipts. Status:
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cells of
 `docs/backlog.md`. No mutating git.
+
+### 21.10 Review 10, 2026-09-30 — `PARTIALLY VERIFIED`, awaiting O83-1 (§21.8)
+
+Revision 6 (R37–R42) is verified on the final tree.
+- **I0 and hashes.** `rev6/i0.log` holds all 14 §21.5 hashes. All 32 `rev6/hash-object.log` hashes equal the tree,
+  and every other changed file equals its rev4 or rev5 witness.
+  - P3, record only: §21.5 asked for the full `$files` list and the log is narrower again. There is no drift.
+- **Gates.** Every rev6 gate log ends `EXIT_CODE=0`. The log mtimes are all 20:57:28, from the BOM pass, so they do
+  not date the runs. `.next/BUILD_ID` (20:56) and `storybook-static` (20:53) are newer than the last source write
+  (20:52:15, `ListingDetailPattern.stories.tsx`), and `next build` type-checks.
+- **Reviewer's re-runs** (`win32`, Node v22.22.3):
+  - `eslint` on the two last-changed Stories: 0;
+  - `vitest`, the R38 test plus `ListingCard.smoke`: 19/19.
+- **Reviewer's native probe:**
+  - **AC28:** send-message is `rgb(71, 141, 236)` in all three Stories.
+  - **AC29:** `--public-listing` has 1 active heart and 0 save buttons; `--archived-listing` has 1 disabled heart;
+    `--staff-preview-*` has none.
+  - **AC30:** `appimage--default` and `--placeholder` have identical grids at 320/640/1440: 2 cells, 2 rows at 320
+    and 1 row from 640.
+  - **AC31:** in `listingcardpattern--default` and `mantine-primitives-listingcard--default`:
+    - the sold badge is `rgb(0,134,201)` and the sold overlay `oklab(0.577 -0.087 -0.151 / 0.8)`;
+    - the rented badge is `rgb(101,71,214)` and the rented overlay `oklab(0.577 0.074 -0.158 / 0.8)`.
+  - **AC32:** the lightbox sweep covers `listingdetailview` ×4 plus Docs view, `lightboxview` ×3,
+    `listinggallerypattern` and `listingdetailpattern` at 390/1440:
+    - every opened dialog has an opaque `oklch(0 0 0)` surface and 0 broken `<img>`;
+    - `listingdetailview` thumbnails are 3/3 placeholders, in story mode and in Docs view.
+  - Edge gaps: `listingdetailpattern` and `listingcontactpattern` 16/32; `listingdetailview` 16/48 on
+    `.container-wide`.
+- **Not established by a probe, and not a defect:** `listingdetailpattern--default` at 390 exposes no lightbox trigger
+  on the mobile swipe gallery. `gallerythumbnailbutton--default` is not a lightbox Story. Both are covered by the owner
+  matrix (§21.8 row 5).
+- **Note:** `ListingGallery.tsx`'s "All photos" trigger is a legacy shadcn `button` (`data-slot="button"`). It is known
+  debt of the listing-detail surface (§18.4) and unchanged.
+
+**Next.** The owner runs §21.8. If every tuple is accepted, the next review approves and closes 886. If the owner
+returns a tuple, the next review writes Revision 7.

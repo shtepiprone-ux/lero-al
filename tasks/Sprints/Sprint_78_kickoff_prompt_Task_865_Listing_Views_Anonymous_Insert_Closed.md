@@ -2,7 +2,8 @@
 
 **Sprint 78** (hosted by discovery, not goal fit; the owner may move it) · **P2** · **Q4** (RLS / write-path
 security) · Track B (non-UI) · filed 2026-09-21 by Task 850's owner-native closure · kickoff written 2026-09-27 ·
-owner action **O78-8** · **Status: 📝 `KICKOFF FILED`**
+owner action **O78-8** · **Status: `PARTIALLY VERIFIED` (review 1, 2026-09-30, §16) — stage 2 inspected; awaiting
+O78-8 steps 2–9; R6 moved to the Opus closure review**
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.
@@ -142,7 +143,7 @@ Fifteen entries, all **Task 854**'s (Track A, in progress): `M messages/{en,it,s
 | R3 | reserved row ⑤ | Two-armed proof: an `anon` insert **succeeds past grant and RLS** BEFORE (row inserted then rolled back, or a foreign-key error, which is raised only after both), and is refused **for the grant reason** AFTER (`permission denied for table listing_views`). The PostgREST probe records the same shift. | P0 | verify parts (a); probe | Confirmed |
 | R4 | §3.1 | `scripts/grant-discipline-audit.sql` no longer grants anything on `listing_views` to `anon`; its `service_role` grant line stays. `check:notifications-grants` and `check:listing-reports-grants` (both read that file) still exit 0. | P1 | diff; §13.2 | Confirmed |
 | R5 | reserved row ④ | View tracking still records: AFTER, `record_listing_view` called as `service_role` inside a rolled-back transaction returns `true` and adds exactly one row visible inside that transaction; and one real guest page view on production returns `{"ok":true,"recorded":true}`. | P0 | verify part (c); O78-8 step 9 | Confirmed |
-| R6 | reserved row ② | `docs/rls-rules.md`: the `:437` row records the closure (date = O78-8 apply date, what was dropped/revoked, and V6's owner/bypass fact) and loses the "falsified" warning; `:410-411`'s parenthetical `listing_views` example is removed. No other line of that file changes. | P1 | diff | Confirmed |
+| R6 | reserved row ② | `docs/rls-rules.md`: the `:437` row records the closure (date = O78-8 apply date, what was dropped/revoked, and V6's owner/bypass fact) and loses the "falsified" warning; `:410-411`'s parenthetical `listing_views` example is removed. No other line of that file changes. **Owner of the edit: Opus, in the closure review (§16.3) — never the executor** (review 1). | P1 | diff at closure | Confirmed |
 | R7 | reserved row "fold in" | The 2026-08-20 guest row is investigated read-only and concluded in the session log as `EXPLAINED` (with the evidence) or `UNKNOWN` (with what would decide it). If the evidence shows a path that is **still** live, stop and report it; do not fix it here. | P3 | V7 grid; session log | Confirmed |
 | R8 | §3.1 | `authenticated`'s privileges on `listing_views` are measured BEFORE and AFTER and reported; they are not changed. The AFTER `authenticated` insert arm is refused for the RLS reason. | P2 | V1; verify part (b) | Confirmed |
 | R9 | `rls-rules.md:237` | `scripts/task-870-privilege-audit.sql` run AFTER reads A5 `(count) 0`; A1, A3, A4, A7 unchanged from their 2026-09-23 AFTER values (`0`). | P1 | O78-8 step 8 | Confirmed |
@@ -176,7 +177,9 @@ in §3.6 · this kickoff. Nothing else.
 4. `scripts/task-865-verify.sql` (new; stage 2) — parts run separately.
 5. `scripts/task-865-anon-probe.mjs` (new; stage 2).
 6. `scripts/grant-discipline-audit.sql` — lines `:218-219` only (R4).
-7. `docs/rls-rules.md` — `:410-411` and `:437` only (R6).
+7. ~~`docs/rls-rules.md`~~ — **not an executor path** (review 1). `docs/*rule*.md` is read-only for Sonnet under the
+   `execute-task` policy-file boundary, which no allowed-files list can override, and R6's text needs the O78-8 step 4
+   apply date, which does not exist at stage 2. Opus makes the R6 edit in the closure review (§16.3).
 8. `docs/sessions/2026-MM-DD-task865-listing-views-anon-insert.md` (new) and `docs/sessions/evidence/task865/` (new).
 9. `docs/backlog.md` — the 865 text inside the reserved-registry row only.
 
@@ -223,7 +226,7 @@ in §3.6 · this kickoff. Nothing else.
   `BLOCKED — AWAITING O78-8 STEP 1 (BEFORE AUDIT GRID)` and the owner block of §13.3 step 1 only.
 - **Owner** — runs step 1, returns the grid.
 - **Stage 2** (a fresh session reads this file and the session log) — save the owner's grid verbatim to
-  `docs/sessions/evidence/task865/10-before-audit.txt`; write files 2–5 of §7 from it (§10.4–§10.6); edit files 6–7;
+  `docs/sessions/evidence/task865/10-before-audit.txt`; write files 2–5 of §7 from it (§10.4–§10.6); edit file 6 (file 7 is Opus's, §16.3);
   run §13.2; report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` with O78-8 steps 2–9 stated as **owed**.
 
 ### 10.3 `task-865-listing-views-audit.sql` — read-only, one grid, one row per fact
@@ -329,7 +332,8 @@ a key, token or row content. No service-role write.
 - **AC6 [R4]** Given the final `grant-discipline-audit.sql`, when read, then it contains no `grant … on public.listing_views to anon`
   statement, keeps the `service_role` line, and both grants gates exit 0.
 - **AC7 [R6]** Given the final `rls-rules.md`, when diffed, then only `:410-411` and `:437` changed, and `:437` states the
-  apply date, the dropped policy, the revoked privileges and V6's owner/`rolbypassrls` value.
+  apply date, the dropped policy, the revoked privileges and V6's owner/`rolbypassrls` value. Checked at the Opus
+  closure review against Opus's own edit (§16.3); not an executor criterion.
 - **AC8 [R7, R8, R10]** Given the session log, when read, then it records V7's rows and an `EXPLAINED`/`UNKNOWN`
   conclusion, the BEFORE/AFTER `authenticated` privileges and part (b)'s reason, a rollback matching V1/V2, and a Files
   Changed table equal to the real diff of §7's paths; `docs/backlog.md` is ≤ 80 physical lines.
@@ -417,6 +421,59 @@ commands.
 | The declaration that could re-open the hole is fixed | R4 |
 | Dirty worktree handled | §3.8, I0 2, §13.2 comparator |
 | Owner decisions needed | none |
+
+## 16. Review 1 — 2026-09-30 — `PARTIALLY VERIFIED`
+
+### 16.1 What was inspected
+
+Stage 2 files at the gate-block hashes (re-hashed at review, all equal): audit `fb4f1516`, close `3194bb32`, rollback
+`cf66dac7`, verify `a4d411b8`, probe `3503f13b`, `grant-discipline-audit.sql` `debcfa26`, `rls-rules.md` `f57cc9a5`
+(unchanged). BEFORE grid `evidence/task865/10-before-audit.txt` (the V6-defective first grid is superseded by it and kept
+as `10a-…-superseded.txt`). Gate transcripts `20-`…`25-` and `27-gate-summary.txt` (`win32 v22.22.3`, every exit 0,
+build `exit=0`); manifest end `28-manifest-end.txt` (1 of 70 changed: `docs/critical-flow-registry.md`, Task 893's,
+`CHANGED — NOT ATTRIBUTED`).
+
+| Req | Status | Basis |
+|---|---|---|
+| R1 | NOT VERIFIABLE | close script source correct (drop + revoke + fail-closed post-condition); live AFTER audit owed (O78-8 step 5) |
+| R2 | VERIFIED (source) | g1–g3 collected into one raise before step 1; BEFORE V5/V6 satisfy g3 (`postgres`, `bypassrls=true`) |
+| R3 | NOT VERIFIABLE | verify (a) and probe P1–P3 match §10.5/§10.6 and V3/V4 (NOT NULL `listing_id`, `ip_hash`; FK on `listing_id`); live runs owed (steps 2, 3, 6, 7) |
+| R4 | VERIFIED | diff `:218-219`; `service_role` line kept; both grants gates exit 0 |
+| R5 | NOT VERIFIABLE | verify (c) source matches; live runs + step 9 owed |
+| R6 | NOT DONE — reassigned | task-design defect F1 below; Opus edit at closure (§16.3) |
+| R7 | VERIFIED | V7 row recorded; conclusion `UNKNOWN`, decider named (Task 289's apply date in the owner's Supabase SQL history); no live path found |
+| R8 | PARTIALLY VERIFIED | BEFORE: `authenticated` holds all seven privileges (V1); AFTER + part (b) owed |
+| R9 | NOT VERIFIABLE | step 8 owed |
+| R10 | VERIFIED (files) | rollback restores V1's three revoked privileges + V2's policy; session log Files Changed matches the status paths; backlog 80 lines |
+
+`GR-2 SCOPE STATED — check:notifications-grants and check:listing-reports-grants inspect only GRANT statements in scripts/*.sql for their own tables; they cannot see the live database or listing_views; R4 is closed by the inspected diff, R1/R3/R5/R8/R9 stay open until the owner-run results.`
+
+### 16.2 Finding F1 — P2 — task-design defect (Opus), not an executor defect
+
+§7 item 7, R6 and AC7 assigned `docs/rls-rules.md` to the executor. `execute-task/SKILL.md` → "Absolute policy-file
+boundary" makes every `docs/*rule*.md` read-only for Sonnet and states that an allowed-files list cannot delegate it,
+and R6's text needs the O78-8 step 4 apply date, which cannot exist at stage 2. The executor correctly stopped and
+reported `POLICY-EDIT AUTHORITY REQUIRED`. **Correction (this revision):** §7 item 7, R6, AC7 and §10.2 now route the
+edit to Opus at closure; no executor revision is needed.
+
+### 16.3 Closure route — after the owner returns O78-8 steps 2–9
+
+1. Opus saves each returned output verbatim to `docs/sessions/evidence/task865/`: `30-verify-before.txt` (step 2, three
+   lines), `31-probe-before.txt` (step 3), `32-close-apply.txt` (step 4), `33-after-audit.txt` (step 5),
+   `34-verify-after.txt` (step 6), `35-probe-after.txt` (step 7), `36-870-audit-after.txt` (step 8),
+   `37-guest-view.txt` (step 9).
+2. Opus checks AC1–AC5 and AC8's `authenticated` half against them. **Checkpoint 4 still binds:** if step 2 PART (a)
+   BEFORE is already refused, the owner must not have applied step 4 — report it. Any AC mismatch → `NEEDS REVISION`
+   routed to Sonnet in a new §17; a (c)/step 9 failure → the owner runs `scripts/task-865-rollback.sql` first.
+3. If all pass, Opus edits `docs/rls-rules.md` (R6/AC7), nothing else in that file:
+   - `:410-411` — `(e.g. anonymous page-view\ntracking via \`listing_views\`)` → removed; the sentence reads
+     "For tables where the insertion is genuinely anonymous-by-design, the policy MAY use …".
+   - `:437` — rationale cell → `Closed <step 4 date> by Task 865: policy "Anyone can insert a view" dropped and anon's
+     INSERT/UPDATE/DELETE on public.listing_views revoked. record_listing_view (SECURITY DEFINER, owner postgres,
+     rolbypassrls=true — audit V6, 2026-09-30) is the only writer and keeps working (verify (c) AFTER, guest view).`;
+     last cell → `Task 269 (rationale comment) · closed by Task 865`. The ⚠️ falsified warning is removed.
+4. Then the normal approved-review closure: archive row, kickoff to `tasks/Archive/`, sprint row, O78-8 removed from
+   the plan's open owner items, commit + push handoff.
 
 ## Appendix A — Evidence preflight (task design)
 

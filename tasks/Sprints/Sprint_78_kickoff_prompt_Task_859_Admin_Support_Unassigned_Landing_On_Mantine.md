@@ -346,3 +346,14 @@ Update the 859 cell of `docs/backlog.md`; session log. No Git.
 | # | State | What |
 |---|---|---|
 | **859** | reserved 2026-09-18 — **Sprint 78**, P2 | **`/admin/support` ignores URL filters**, so the ADM-06 card (853) lands unfiltered. `src/app/admin/support/page.tsx` reads no search params; `AdminSupportManager.tsx` is 903 lines, legacy. Deliverable: the page honours `?assigned=unassigned&status=open,in_progress` (the hrefs are pinned by 847's `hrefs.ts`). Changing that surface's visible filter state brings `AdminSupportManager` under clause 16d → census first, then kickoff. **Also blocks 885 (Sprint 84, owner D84-1, 2026-09-27):** `/admin/support` shows `formatDate` output that 885 changes, so its census must be clean first. It removes its own `Combobox` import (`MantineSelect`, as 893 does) and consumes 877's `AdminTable`/`AdminPageHeader`. |
+
+---
+
+## Addendum — Task 886 closure, 2026-09-30 (owner decision O83-2)
+
+Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-responsive.mjs`). It baselines the legacy site **L6** (`src/components/admin/AdminSupportManager.tsx :: text-2xl`) in `scripts/type-responsive-baseline.json`.
+- When this task removes that site, delete its baseline entry in the same change. The gate fails on a **stale** entry: *"the site was fixed or removed; delete the entry"*.
+- Add `npm.cmd run check:type-responsive` to the final gate block. It must exit 0.
+- The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
+
+Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*

@@ -386,3 +386,14 @@ session log. No Git.
 | # | State | What |
 |---|---|---|
 | **857** | reserved 2026-09-18 — **Sprint 78**, P2 | **`/admin/listings` has no "visible" filter.** `src/app/admin/listings/page.tsx:23,87-103` supports `visibility=hidden_eligible` (+ `reason`) only; `AdminListingsTable.tsx:598-694` renders only that filter's UI, so an unknown `visibility=visible` would filter nothing and show no chip. Needed by ADM-08 and the ADM-11 `visible` segment (847 `hrefs.ts`). The filter must use `applyPublicVisibility` (critical flow "Listing public visibility invariant"). `AdminListingsTable` (759 lines, legacy) comes under clause 16d → census first. |
+
+---
+
+## Addendum — Task 886 closure, 2026-09-30 (owner decision O83-2)
+
+Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-responsive.mjs`). It baselines the legacy site **L5** (`src/components/admin/AdminPageShell.tsx :: text-2xl`) in `scripts/type-responsive-baseline.json`.
+- When this task removes that site, delete its baseline entry in the same change. The gate fails on a **stale** entry: *"the site was fixed or removed; delete the entry"*.
+- Add `npm.cmd run check:type-responsive` to the final gate block. It must exit 0.
+- The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
+
+Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*

@@ -300,3 +300,14 @@ owed. Update the 896 cell of `docs/backlog.md`; session log. No Git.
 | # | State | What |
 |---|---|---|
 | **896** | reserved 2026-09-27 — **Sprint 84**, P3, filed by 885's design (owner D84-1: *"Migrate first"*) | **`/admin/users` list on canonical Mantine.** Census 2026-09-27 (`check-surface-census.mjs --surface src/app/admin/users/page.tsx`): the root `page.tsx` carries 8 `className`; `AdminUsersTable` has 0 `className` and its own Story, but no manifest entry (`tier1-unenrolled-or-unstoried`). Deliverable: the page's chrome moves to canonical patterns (census first; name them in the kickoff), and `AdminUsersTable` is enrolled in `scripts/mantine-migration-scope.json`. The census then shows only the root. Blocks **885**. |
+
+---
+
+## Addendum — Task 886 closure, 2026-09-30 (owner decision O83-2)
+
+Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-responsive.mjs`). It baselines the legacy site **L3** (`src/app/admin/users/page.tsx :: text-2xl`) in `scripts/type-responsive-baseline.json`.
+- When this task removes that site, delete its baseline entry in the same change. The gate fails on a **stale** entry: *"the site was fixed or removed; delete the entry"*.
+- Add `npm.cmd run check:type-responsive` to the final gate block. It must exit 0.
+- The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
+
+Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*

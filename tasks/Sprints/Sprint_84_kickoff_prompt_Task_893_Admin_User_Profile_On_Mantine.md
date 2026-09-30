@@ -2,9 +2,9 @@
 
 Sprint 84 · **P2** · QA profile **Q4** (legacy surface → Mantine, plus five critical flows on it) · **depends on
 877** (hard: the admin page-wrapper form and the `adminPageMaxWidth` token) · blocks **885** and **895** · owner action
-**O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 1 (§17)**: the owner accepted 64 of 72 tuples and
-returned the `RangeDatePicker` year list. The owner chose option A for O84-8 (R17). Review 1 was `PARTIALLY VERIFIED`
-(§16) · kickoff filed 2026-09-28
+**O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 2 (§19)**: on a phone, a year outside the mobile month
+window cannot be selected. Revision 1 (§17) was verified in review 2 (§18). O84-2: 64 of 72 accepted, 12
+`RangeDatePicker` tuples owed after revision 2 · kickoff filed 2026-09-28
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row's text moves into §3.
@@ -580,6 +580,94 @@ build.
 GR-3d: both are `MantineStoryShell` primitives (n/a). R17 changes behaviour, not any visible chrome, so it adds no
 matrix tuple. After the deploy, the O84-2 live check gains one step: unblock the test user with the status select alone,
 and save.
+
+## 18. Review 2 — 2026-09-30 — `PARTIALLY VERIFIED` (revision 1 verified; owner matrix remainder owed)
+
+- **Diff.** Since review 1, the container changes by exactly one line (`status: {}` → `{ shouldDirty: true }`); the
+  reviewer diffed blob `f787f90a` against the current `b418f35d`. `MantineCombobox` gains the `onDropdownOpen` call and
+  the sheet scroll effect. `RangeDatePicker` gains only the desktop year `triggerAriaLabel`.
+- **Accepted deviations:**
+  - The `scrollIntoView` stub in `filtersRangeDatePicker.smoke.test.tsx` sits outside §17.3's write set. Clause 9
+    requires every active consumer to stay green.
+  - T-C1 asserts `data-combobox-active` plus the `scrollIntoView` call. That is the observable property, and Mantine
+    does not set `data-combobox-selected` there.
+  - `suspendedUntil` stays in the payload after blocked → active. That is harmless:
+    `modules/admin/actions/index.ts:377-378` writes `block_reason` and `suspended_until` as `null` whenever the status
+    is not `blocked`.
+- **Full suite (reviewer, native, final tree):** `npx.cmd vitest run` → 2137 passed, 5 failed in 4 files. None of them
+  is attributable to 893, and none reports a `scrollIntoView` error:
+  - `ListingCard.smoke` "archived": already failing in the Task 782/788 logs;
+  - `css-var-resolvability`: `--width-content`, added to `globals.css` by commit `848611017` (Task 877), which 893 does
+    not touch;
+  - `overlay-dual-declaration`: reads the `.next` build output;
+  - `task763/appimage-config-class-assertions`: an evidence-folder test.
+- **Evidence.** Plants P6, P7 and P8 fail as specified and restore to equal hashes. `r1-year-reach.txt` shows 2026
+  visible and 2036 reachable at 1440, and 2026 visible at 390. Gates and build exit 0 after the last source edit
+  (10:08 → build 10:13). The `r1-hash-object` values equal the current files.
+- **P3 note (at approval):** the comment above `FIELD_OPTIONS` (`AdminUserProfile.tsx:90-91`) still says
+  "`status`/`useMainPhone`: none". Only `useMainPhone` is silent now.
+- **Owner matrix remainder:** only the 8 `Mantine/Primitives/RangeDatePicker` `SingleDate` / `SingleDateSelected`
+  tuples. The §17.6 `Combobox` `Default` row is **withdrawn**: that Story has no preset value and 6-option lists, so
+  nothing can scroll there. The behaviour is proven by T-C1–T-C3, P7/P8 and the year-list measurement.
+
+## 19. Revision 2 — 2026-09-30 — `NEEDS REVISION` (owner return: a later year cannot be selected on a phone)
+
+### 19.1 Owner return and what reviews 1–2 missed
+
+The owner returned `Mantine/Primitives/RangeDatePicker` again, at 320px in `uk`, verbatim: *"я як не міг обрати інший
+рік (більше 2026 року) так я його і не можу зараз обрати в жодному з запропонованих datepicker. Це проблема Story чи
+взагалі компоненту?"* (with a screenshot of the `Default` Story's mobile sheet). **It is the component, not the Story.**
+Revision 1 and both reviews proved that later years are **visible** in the list; nobody proved that **choosing** one
+works. The acceptance for this revision is the selection result, never the list's contents.
+
+### 19.2 Root cause (FACT: reviewer, live Storybook `:6006`, Playwright, 2026-09-30)
+
+- **Desktop (1440), works:** choosing `2030` moves the calendar to `Серпень 2030 р.`, and the year field reads 2030.
+- **Mobile (320), broken:** choosing `2030` in the year sheet leaves the field at `2026` and the calendar unmoved.
+  `MobileBody` renders a fixed month window: `[minDate ?? anchor − 12 months, maxDate ?? anchor + 15 months]`, capped
+  at `MOBILE_MAX_MONTHS` (`RangeDatePicker.tsx:86-88`, `:628-640`). With today as the anchor, that is July 2025 –
+  December 2027. The year list (`computeYearOptions`, `:162-168`) offers 2021–2036. `jumpTo` (`:671-677`) returns
+  silently when the target month is outside the window (`if (idx === -1) return`), and `handleYearChange` (`:686-692`)
+  goes through it. The month dropdown (`:710`) has the same dead path for any month outside the window.
+- **Production reach:**
+  - the admin suspended-until field (no cap): on a phone, only years up to 2027 are reachable;
+  - `FiltersPanel.tsx:391` and `ListingsFilters.tsx:403` (`maxDate={today}`): on a phone, the offered years 2021–2024
+    do nothing;
+  - `MantineDashboardPeriodControl` uses the same path.
+  
+  The defect dates from Task 561, not from 893, but 893 owns `RangeDatePicker` (R2) and the owner returned it here.
+
+### 19.3 Requirements (revision 2)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R18** | **Every year and month the mobile dropdowns offer can be selected.** In `MobileBody`, the window is built around a **window anchor** held in state. It starts at today's `anchorMonth`, so the opening view is unchanged. When `jumpTo` receives a month outside the current window, it re-anchors the window on that month (the same `−12 / +15` span, clipped to `minDate`/`maxDate`, still capped by `MOBILE_MAX_MONTHS`). After the window renders, it scrolls to that month's section and sets the header to it. A month inside the window keeps today's path (scroll only, no re-anchor). `if (idx === -1) return` never swallows an offered selection. The staged selection, Confirm, the range/single modes, the desktop body, `computeYearOptions` and every `maxDate` consumer are unchanged. No new visual value. | P1 | AC15 |
+| **R19** | **Tests** in `RangeDatePicker.smoke.test.tsx`, inside the existing `describe('RangeDatePicker — mobile …')` harness:<br>• **T-M1** no value, no bounds: choose year `2030` in the year sheet → the header's year trigger reads `2030` and a `2030` month section is rendered;<br>• **T-M2** choose `2021` → the same for 2021;<br>• **T-M3** `selectionMode="single"`: choose `2030`, pick a day, Confirm → `onChange` gets `{ from: '2030-…', to: the same }`;<br>• **T-M4** `maxDate` = a fixed 2026 date: the year list ends at 2026, and choosing `2022` lands in 2022 (the filters' case);<br>• **T-M5** choosing a month inside the current window still only scrolls: the rendered first section does not change.<br>Every existing test passes unchanged. **Plant P9:** restore the silent `return` for an out-of-window target → T-M1, T-M2 and T-M4 fail (`r2-plant-p9.txt`). | P1 | AC15 |
+
+Write set for revision 2: `src/design-system/mantine/patterns/RangeDatePicker.tsx` (`MobileBody` only),
+`src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx`, the session log, `docs/backlog.md`
+(893 cell only), and `docs/sessions/evidence/task893/r2-*`. Re-entry mode is **remediation**: start from the
+review-2 tree and keep every `01`–`24` and `r1-*` artifact. The P3 comment in §18 is fixed in this revision too
+(`AdminUserProfile.tsx:90-91`, comment only).
+
+### 19.4 Acceptance and rendered proof
+
+- **AC15 [R18, R19]** T-M1–T-M5 pass, P9 fails them and passes after the restore (equal hashes), and the full
+  §17.5 test line plus `RangeDatePickerLocalization` and `filtersRangeDatePicker` pass. **Rendered proof on a fresh
+  `storybook-static`, recorded in `r2-year-select.txt`:** for `SingleDate` **and** `Default` (the owner opened the
+  first, uncapped trigger), at **320** and **1440**, in `uk`, choose `2030` → the calendar shows a 2030 month and the
+  year field reads 2030. At 320, choose a day and Confirm → the trigger shows a 2030 date. Also for `Default` at
+  320, choose `2022` on the capped (`maxDate`) instance → it lands in 2022. The proof records what was **selected**,
+  not what the list contained.
+- Gates: §17.5's block, re-run as `r2-*`, all exit 0 on the final tree.
+
+`GR-4 AC AUDIT — 1 criterion; states an observable property; absolutes: none.`
+
+### 19.5 Owner matrix after revision 2 (O84-2 remainder)
+
+`Mantine/Primitives/RangeDatePicker`: `SingleDate`, `SingleDateSelected` and `Default`, in `uk` and `en`, at 320 and
+1440 (12 tuples). In each one, **choose a year after 2026 and confirm a day**. GR-3d: `MantineStoryShell` primitive
+(n/a).
 
 ---
 

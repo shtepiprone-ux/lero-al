@@ -2,7 +2,8 @@
 
 **Sprint 78** (hosted by discovery, not goal fit; the owner may move it) · **P2** · **Q4** (the gate is the registered
 regression command of a critical flow) · Track B (non-UI) · filed 2026-09-20 by Task 847's review · kickoff written
-2026-09-27 · **Status: 📝 `KICKOFF FILED`**
+2026-09-27 · **Status: 📝 `KICKOFF FILED` — revision 1, 2026-09-30** (first run `BLOCKED — WRITE PATH NOT CLEAN` at I0;
+see §16)
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.
@@ -64,7 +65,7 @@ three. **FACT.**
 | Factory | Declared | Call sites (read) |
 |---|---|---|
 | `listingCount` | `src/modules/admin/dashboard/queries.ts:156` | `:157` (`statusCount`, dynamic `status`), `:234-237` (inside `applyPublicVisibility` / `applyPublicEligibleButHidden`), **`:241` `countOf(() => listingCount().eq('status', 'active'))`** |
-| `ownListings` | `src/modules/cabinet/statistics/data.ts:342` | `:348` (dynamic `status`), `:351-352`, **`:354` `applyPublicVisibility(ownListings()).gte('expires_at', window.startUtc).lt('expires_at', window.endUtc)`**, `:358-359` (`listing_type`) |
+| `ownListings` | `src/modules/cabinet/statistics/data.ts:270` | `:275` (dynamic `status`), `:278-279`, **`:281` `applyPublicVisibility(ownListings()).gte('expires_at', window.startUtc).lt('expires_at', window.endUtc)`**, `:285-286` (`listing_type`) — line numbers re-measured 2026-09-30 after Task 891 (`12ccef6d0`) moved the block from `:342-359`; the text is unchanged |
 | `baseQuery` | `src/modules/listings/components/SimilarListings.tsx:185` | `:65` `let q: any = applyPublicVisibility(baseQuery() as any)` — **before** the declaration line; `q` is then chained with `property_type`, `listing_type`, `id` only (`:66-71`) |
 
 No `function`-declaration factory and no multi-line `=>\n  db.from('listings')` factory exists in `src/` today
@@ -75,19 +76,20 @@ No `function`-declaration factory and no multi-line `=>\n  db.from('listings')` 
 `docs/sessions/evidence/task863/design/factory-reach-probe.mjs` (retained; read-only) mirrors the shipped extractor
 byte-for-byte in logic, adds the §10.1 rules (call sites searched across the **whole file**, each call line plus its
 `.`-continuation lines, plus variables assigned from a factory call), and prints every visibility-pattern line the
-shipped extractor does not reach. Output (`…/factory-reach-probe.out.txt`), run on the dirty tree of §3.6:
+shipped extractor does not reach. Output, re-run 2026-09-30 by the reviewer on win32 v22.22.3 over the tree of §3.6
+(the retained `…/factory-reach-probe.out.txt` is the 2026-09-27 run and still shows `data.ts:354`; it is superseded):
 
 ```
 NEW src/modules/admin/dashboard/queries.ts:241  countOf(() => listingCount().eq('status', 'active')),
-NEW src/modules/cabinet/statistics/data.ts:354  applyPublicVisibility(ownListings()).gte('expires_at', window.startUtc).lt('expires_at', window.endUtc),
+NEW src/modules/cabinet/statistics/data.ts:281  applyPublicVisibility(ownListings()).gte('expires_at', window.startUtc).lt('expires_at', window.endUtc),
 ```
 
 **EXECUTED.** Exactly two new hits; both are legitimate, neither is a public list read:
 
 - `queries.ts:241` — ADM-11's raw active count, used **only** for the consistency check (comment `:239-240`); Task
   847's R3/AC4 explicitly allowed exactly this hit (Sprint 78 plan, 847 row).
-- `data.ts:354` — AGT-01 "expiring" count: an expiry **window** on a set already restricted by
-  `applyPublicVisibility`, not a visibility predicate (comment `:350`).
+- `data.ts:281` — AGT-01 "expiring" count: an expiry **window** on a set already restricted by
+  `applyPublicVisibility`, not a visibility predicate (comment `:277`).
 
 The probe also shows the derived-variable rule fires twice with no violation: `statusCount ← listingCount()`
 (`queries.ts:157`) and `q ← baseQuery()` (`SimilarListings.tsx:65`). This is **design-time evidence of reach only**;
@@ -101,30 +103,26 @@ through an allowlist entry, which R4 specifies. The reserved row's other measure
 `[]`, the same predicate on `from('listings')` → 2 violations) is consistent with §3.1's source reading and is
 re-proved by the executor's plant (R6).
 
-### 3.6 Worktree at design time (read-only `git --no-optional-locks status --porcelain`, 2026-09-27)
+### 3.6 Worktree (re-measured 2026-09-30, revision 1; read-only `git --no-optional-locks status --porcelain`)
 
-```
- M messages/en.json
- M messages/it.json
- M messages/sq.json
- M messages/uk.json
- M src/components/layout/MobileNavDrawer.tsx
- M src/components/layout/UserMenu.tsx
- M src/design-system/mantine/patterns/MantineDataTableToCards.tsx
- M src/design-system/mantine/theme.ts
- M src/stories/mantine/primitives/MobileNavDrawer.stories.tsx
- M src/stories/mantine/primitives/Table.stories.tsx
- M src/stories/mantine/primitives/UserMenu.stories.tsx
-?? docs/sessions/evidence/task854/
-?? src/app/[locale]/cabinet/statistics/
-?? src/modules/cabinet/statistics/components/
-?? src/stories/fixtures/agentStatistics.fixtures.ts
-```
+The 2026-09-27 snapshot (15 Task 854 entries) is superseded: 854 landed jointly with 891 on 2026-09-29. On
+2026-09-30 the tree carries **Task 893**'s uncommitted work (admin user profile → Mantine, `NEEDS REVISION` revision 2,
+not approved): 26 modified/deleted tracked paths and 11 untracked entries, among them
+**`docs/critical-flow-registry.md`**. Every 893 entry is `EXCLUDED AS UNRELATED`; the list is not reproduced here,
+because it will drift again — **I0 captures the live one**.
 
-All 15 entries belong to **Task 854** (Track A, in progress) — `EXCLUDED AS UNRELATED`. None is in this task's write
-set. The gate scans every `.ts`/`.tsx` under `src/`, **including untracked files**, so 854's files are gate input;
-§3.2's result already includes them. Hash witnesses: `queries.ts` `d263d56baabdeaee6ecd2c04efa7cbd7bbe81339`,
-`data.ts` `afd8c6302ee99d5961361f718b199d1fc6d644c4` (both tracked, unmodified).
+The registry is the only §7 path that 893 touches. Its uncommitted diff changes rows `:46`, `:47`, `:53` and `:62`
+only; row `:70` ("Listing public visibility invariant") is byte-identical to `HEAD` (reviewer md5 of `HEAD:…` line 70
+= working-tree line 70 = `2710250eecb75430da1f35f9fce2b597`). **FACT.** It is still a mixed path: any commit that stages
+it ships 893's unreviewed hunks. §7 item 2 and §10.2 route around it.
+
+The gate scans every `.ts`/`.tsx` under `src/`, **including untracked files**, so 893's files are gate input. Reviewer
+run 2026-09-30: gate exit 1 with **only** §3.2's `contactEvents.ts:50` line; the probe prints only §3.4's two `NEW`
+lines. 893's files therefore add no violation and no reach. **FACT.**
+
+Hash witnesses (2026-09-30): `scripts/check-listing-visibility.mjs` `6f9ecc13e38e43b0c75759e5ea7186ae86681374`
+(unchanged since design), `queries.ts` `d263d56baabdeaee6ecd2c04efa7cbd7bbe81339` (unchanged), `data.ts`
+`e43f72c30cfdb0a0d396a893818f7cdeb66e5c11` (changed by Task 891, `12ccef6d0`; tracked, unmodified in the worktree).
 
 ### 3.7 Downstream consumers of the gate (whole-repo audit)
 
@@ -136,9 +134,11 @@ no-false-positive" — **already stale** (today 13/3/4). **FACT.**
 
 ### 3.8 Cross-task consequences (state them; do not act on them)
 
-- **855** will edit `src/modules/cabinet/statistics/data.ts` (855 kickoff `:105`). If it rewrites line 354's text,
-  this task's fingerprint goes stale and the gate fails **naming the entry** — the intended behaviour. 855 then updates
-  or removes the entry. Record this in the session log.
+- **855** was folded into 890/891. **891** landed on 2026-09-29 and moved the AGT-01 expiring count from `:354` to
+  `:281` without changing its text, so R4's fingerprint still matches. A later edit that rewrites that text makes the
+  entry stale, and the gate fails **naming the entry** — the intended behaviour; that task then updates or removes it.
+  Record this in the session log.
+- **893** holds `docs/critical-flow-registry.md` uncommitted (§3.6). R8 is routed by §10.2 step R8.
 - **887** decides `contactEvents.ts:50`. Nothing here pre-empts it.
 
 ## 4. Requirements
@@ -152,7 +152,7 @@ no-false-positive" — **already stale** (today 13/3/4). **FACT.**
 | R5 | reserved row ("state the false-positive boundary first") | These produce **no** hit: a factory call wrapped by a canonical helper with no literal on the chain; a factory chained with a dynamic `status` argument; a factory over another table; a factory call site that writes; a factory declared but never chained with a literal. `head: true` count reads are **not** exempt. | P1 | self-test NO-FP 1–5 + BAD 1 (head:true) | Confirmed |
 | R6 | reserved row; Q4 | Two-armed plant on the real `queries.ts`: a genuine factory-chained predicate fails the real gate naming its line; the same file restored clears that line; the pre-plant hash equals the post-restore hash. | P0 | §10.4 P1/P2 | Confirmed |
 | R7 | `orchestrator-procedures.md` → "Corollary (Sprint 75)" | Every run (scan, `--report`, `--verify-gate`) prints one scope line naming the shapes covered and the classes it cannot see (§10.3). | P1 | gate output | Confirmed |
-| R8 | §3.7; agent-contract 9 | `docs/critical-flow-registry.md:70`'s self-test description states the new BAD/GOOD/NO-FP counts and the factory shape. Nothing else in that row changes. | P2 | diff | Confirmed |
+| R8 | §3.7; agent-contract 9 | `docs/critical-flow-registry.md:70`'s self-test description states the new BAD/GOOD/NO-FP counts and the factory shape. Nothing else in that row changes. Written by you only if the registry is clean at §10.2 step R8; otherwise delivered as recorded text (AC8 b). | P2 | diff or session-log text | Confirmed |
 | R9 | agent-contract 10 | Session log with a "Files Changed" table; `docs/backlog.md` 863 cell updated concisely; `docs/backlog.md` stays ≤ 80 physical lines. | P2 | read-after-write | Confirmed |
 
 ## 5. Assumptions and open questions
@@ -175,7 +175,9 @@ migrations", the 818/819 encoding corollary and "Corollary (Sprint 75)" · this 
 ## 7. Scope — the exact allowed write set
 
 1. `scripts/check-listing-visibility.mjs` — extractor, allowlist (R4), self-test snippets, scope line.
-2. `docs/critical-flow-registry.md` — row `:70` self-test description only (R8).
+2. `docs/critical-flow-registry.md` — row `:70` self-test description only (R8), and **only** when the file has no
+   uncommitted diff at the R8 step (§10.2). While Task 893's hunks are in it, this path is **read-only** for you and
+   R8 is delivered as recorded text instead (§10.2 step R8).
 3. `docs/sessions/2026-MM-DD-task863-listing-visibility-factory-chains.md` (new; use the execution date).
 4. `docs/sessions/evidence/task863/` — new files only (transcripts, plant witnesses). The `design/` subfolder is
    the orchestrator's and is read-only for you.
@@ -191,7 +193,8 @@ P1 only, §10.4).
 - `function`-declaration factories, cross-module (imported) factories, factories passed as arguments or stored on
   objects: **zero exist today (§3.3)**; they are named blind classes in the R7 line, not implemented.
 - Any edit to `queries.ts`, `data.ts` or `SimilarListings.tsx` beyond the restored plant.
-- Every Task 854 path in §3.6.
+- Every path in the I0 start snapshot that is not a §7 path (on 2026-09-30: all of Task 893's), and every
+  uncommitted hunk of `docs/critical-flow-registry.md` outside row `:70`.
 
 ## 9. Current and required behavior
 
@@ -230,19 +233,41 @@ regex-safe. Read and write the script through the Edit tool or Node only (818/81
 ### 10.2 Order
 
 I0 → §10.3 self-test snippets first (they must **fail** on the unmodified extractor — record it) → §10.1 → R4
-allowlist → R7 scope line → §10.4 plant → R8 registry → §13.2 gate block → session log → backlog cell.
+allowlist → R7 scope line → §10.4 plant → step R8 (below) → §13.2 gate block → session log → backlog cell.
 
 **I0 — before any write:**
 
 1. `node.exe -p "process.platform + ' ' + process.version"` → must print `win32`.
 2. Capture `git --no-optional-locks status --porcelain` into `docs/sessions/evidence/task863/00-start-status.txt` and
-   the SHA-256 of every §3.6 entry (files: `Get-FileHash`; directories: hash of each file inside) into
-   `00-start-manifest.txt`. If any path in §7 is already modified, **STOP — `BLOCKED — WRITE PATH NOT CLEAN`**.
+   the SHA-256 of **every entry of that capture** (files: `Get-FileHash`; directories: hash of each file inside) into
+   `00-start-manifest.txt`. Then:
+   - If `scripts/check-listing-visibility.mjs` or `docs/backlog.md` is modified, a `docs/sessions/*task863*` log
+     already exists, or `docs/sessions/evidence/task863/` holds anything besides `design/`, **STOP — `BLOCKED — WRITE PATH NOT CLEAN`**.
+   - `docs/critical-flow-registry.md` is **not** a STOP by itself (revision 1). Record in `00-start-manifest.txt`
+     whether it is modified, and compare line 70 with `HEAD`:
+     `node.exe -e "const cp=require('child_process'),fs=require('fs');const h=cp.execSync('git show HEAD:docs/critical-flow-registry.md').toString().split(/\r?\n/)[69];const w=fs.readFileSync('docs/critical-flow-registry.md','utf8').split(/\r?\n/)[69];console.log(h===w?'ROW70 = HEAD':'ROW70 DIFFERS')"`.
+     `ROW70 DIFFERS` → **STOP — `BLOCKED — REGISTRY ROW 70 ALREADY EDITED`**. `ROW70 = HEAD` → continue.
+   - `git hash-object` of `queries.ts` and `data.ts` must equal §3.6's 2026-09-30 witnesses; any other value → record
+     it and re-read §3.3's line numbers before continuing (do not STOP; §10.4 P0 and I0 step 4 re-measure).
 3. Run the gate and self-test unchanged; save both transcripts. Expected today: gate exit 1 with **only** the §3.2
    line (or exit 0 if 887 has landed); self-test 20/0. Any other violation → **STOP** and report it; do not
    allowlist it.
-4. Re-run `node.exe docs/sessions/evidence/task863/design/factory-reach-probe.mjs`. If it prints any `NEW` line
-   other than the two in §3.4, **STOP — `BLOCKED — FACTORY REACH CHANGED`**, list the lines, and allowlist nothing.
+4. Re-run `node.exe docs/sessions/evidence/task863/design/factory-reach-probe.mjs` and save its output as
+   `00-probe.txt`. If it prints any `NEW` line other than the two in §3.4 (`queries.ts:241`, `data.ts:281` — compare
+   path **and** text; a pure line-number move with identical text is recorded, not a STOP), **STOP —
+   `BLOCKED — FACTORY REACH CHANGED`**, list the lines, and allowlist nothing.
+
+**Step R8 — registry, decided at the moment you reach it (revision 1):**
+
+- Run `git --no-optional-locks diff --quiet -- docs/critical-flow-registry.md` and record the exit code.
+- **Exit 0 (file clean — Task 893 has landed or its registry change was dropped):** edit row 70's self-test description
+  as R8 states. Nothing else in the file.
+- **Exit 1 (another task's hunks are present):** do **not** write the file. In the session log add a section
+  `## R8 — registry text held (docs/critical-flow-registry.md carries another task's uncommitted hunks)` containing
+  the exact current substring of row 70 to replace (today: `7 bad variants + 3 good + 4 no-false-positive`) and the
+  exact replacement string, with the counts taken from your final AC1 transcript and the factory shape named. Report
+  R8 as `HELD — TEXT RECORDED` in the completion report. This is **not** a deviation and does not lower your status.
+  The reviewer applies the recorded text (§12 AC8).
 
 ### 10.3 Self-test additions and the scope line
 
@@ -317,19 +342,24 @@ final `git status --porcelain`.
   summary reports 0 failed; the pre-change transcript shows BAD 1–5 as `MISSED`.
 - **AC2 [R2]** Given BAD 4 and NO-FP 4, when the self-test runs, then the read with a literal is detected and the
   write-only call site is clean.
-- **AC3 [R4]** Given the final tree, when the gate runs, then neither `queries.ts:241` nor `data.ts:354` is reported,
+- **AC3 [R4]** Given the final tree, when the gate runs, then neither `queries.ts:241` nor `data.ts:281` is reported,
   the allowlist line reads 8 entries, 0 stale, and the diff adds exactly the two R4 entries.
 - **AC4 [R4, §3.2]** Given the final tree, when the gate runs, then its violation list is empty if 887 has landed and
   otherwise contains exactly the `contactEvents.ts:50` line; the recorded exit code matches that case (0 or 1).
-- **AC5 [R4]** Given plant P3 (§10.4) — the R4 `data.ts` fingerprint temporarily changed to text that line 354 does
+- **AC5 [R4]** Given plant P3 (§10.4) — the R4 `data.ts` fingerprint temporarily changed to text that line 281 does
   not contain — when the gate runs, then it lists that entry under "Stale allowlist entries" and exits 1; after the
   restore, `git hash-object scripts/check-listing-visibility.mjs` equals the pre-P3 value.
 - **AC6 [R6]** Given P0–P2, when the gate runs after P1, then it exits 1 naming `src/modules/admin/dashboard/queries.ts:237`;
   after P2 that line is absent, `git hash-object` equals P0, and `queries.ts` is absent from `git status --porcelain`.
 - **AC7 [R7]** Given each of the three modes, when run, then the scope line is printed once, before any result.
-- **AC8 [R8, R9]** Given the final docs, when read back, then the registry row's self-test counts equal AC1's printed
-  counts, the session log's Files Changed table equals the real diff of §7's paths, and `docs/backlog.md` is ≤ 80
-  physical lines.
+- **AC8 [R8, R9]** Given the final docs, when read back, then either (a) the registry was clean at step R8 and row
+  70's self-test counts equal AC1's printed counts with no other registry hunk from this task, or (b) it was not, the
+  file carries no change from this task, and the session log's `## R8 — registry text held …` section gives the exact
+  old substring (present verbatim in row 70) and a replacement whose counts equal AC1's; plus the session log's Files
+  Changed table equals the real diff of §7's paths, and `docs/backlog.md` is ≤ 80 physical lines. In case (b) the
+  reviewer applies the recorded replacement to row 70 at 863's closure if the registry is clean by then; otherwise
+  the closure files it as an active item applied in the first approved commit that stages the registry. R8 is closed
+  only when row 70 carries the text.
 
 `GR-4 AC AUDIT — 8 criteria; each states an observable property; absolutes: none.`
 
@@ -365,17 +395,18 @@ git --no-optional-locks status --porcelain
 ```
 
 Expected: platform `win32`; verify exit 0; gate exit per AC4; report exit 0; vitest exit 0 (66 tests today — report
-the real count); typecheck, lint, file-integrity, mojibake and build exit 0; `queries.ts` and `data.ts` hashes equal §3.6; porcelain = the
-I0 start snapshot plus only §7's paths. Return every transcript path and the printed exit codes. If a script name
+the real count); typecheck, lint, file-integrity, mojibake and build exit 0; `queries.ts` and `data.ts` hashes equal
+their `00-start-manifest.txt` values; `docs/critical-flow-registry.md`'s hash equals its manifest value in case AC8(b);
+porcelain = the I0 start snapshot plus only §7's paths. Return every transcript path and the printed exit codes. If a script name
 above does not exist in `package.json`, report it as missing evidence — do not substitute another command.
 
 ## 14. Completion report contract
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Include: changed files;
 requirement IDs completed; each command with its real exit code and transcript path; the I0 manifest and its end
-comparison (a changed §3.6 hash is reported `CHANGED — NOT ATTRIBUTED`, never explained away); the self-test before/after
-counts; P0/P2 hashes; assumptions, deviations, limitations (including the substring-allowlist property of §10.4) and
-unresolved issues. Update the 863 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (≤ 2
+comparison (a changed manifest hash is reported `CHANGED — NOT ATTRIBUTED`, never explained away); the self-test before/after
+counts; P0/P2 hashes; the step R8 `diff --quiet` exit code and R8's state (`APPLIED` or `HELD — TEXT RECORDED`);
+assumptions, deviations, limitations (including the substring-allowlist property of §10.4) and unresolved issues. Update the 863 cell of `docs/backlog.md` to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` (≤ 2
 lines of text) and write the session log. No Git commands.
 
 ## 15. Task quality gate
@@ -387,9 +418,26 @@ lines of text) and write the session log. No Git commands.
 | Current behavior preserved and named | §9 |
 | Detector feasibility proven before publication | §3.4 probe (EXECUTED); §10.4 allowlist interaction found at design, not left to the executor |
 | Two-armed plant that can demonstrably fail | P1 uses a literal R4 does not fingerprint |
-| Dirty worktree handled | §3.6 manifest, I0 2, AC6/§13.2 comparator |
+| Dirty worktree handled | I0 2 live manifest, step R8, AC6/AC8/§13.2 comparator |
 | Unrelated red gate not absorbed | §3.2, AC4, §8 |
 | Owner decisions needed | none |
+
+## 16. Revision 1 — 2026-09-30 (review of the first run's `BLOCKED` report)
+
+The first executor run stopped correctly at I0 step 2 and wrote nothing: `docs/critical-flow-registry.md`, a §7 path,
+carried Task 893's uncommitted edits to rows `:46`, `:47`, `:53` and `:62`. The reviewer confirmed that and found a
+second stale fact the run never reached: Task 891 (`12ccef6d0`, 2026-09-29) moved `data.ts`'s AGT-01 expiring count
+from `:354` to `:281`, so I0 step 4 as written would have stopped on `FACTORY REACH CHANGED`.
+
+The executor's options 1 and 3 are not used. Option 1 (commit 893 first) is not available: 893 is `NEEDS REVISION`,
+and an implementation is committed only after an approved review. Option 3 (edit row 70 over 893's diff) would make
+the registry a mixed path, and any approved commit staging it would ship 893's unreviewed hunks to `main`. Option 2 is
+adopted in a form that does not wait for 893.
+
+Amended: header status · §3.3 (`ownListings` lines) · §3.4 (probe re-run, `data.ts:281`) · §3.6 (worktree, hash
+witnesses) · §3.8 (855/891, 893) · §7 item 2 · §8 · §10.2 order, I0 steps 2 and 4, new step R8 · §12 AC3, AC5, AC8 ·
+§13.2 expected · §14 · Appendix C. **Re-entry:** `from-scratch`. The first run produced no evidence files, so there is
+nothing to preserve.
 
 ## Appendix A — Evidence preflight (task design)
 
@@ -401,7 +449,9 @@ lines of text) and write the session log. No Git commands.
 | Exactly three arrow factories in `src/` | `git grep` §3.3 | VERIFIED |
 | Extension adds exactly two hits | retained probe, §3.4 | VERIFIED (EXECUTED, mirror of the extractor) — re-measured with the real gate at AC3 |
 | Allowlist is path+substring, not line | `:61-64` | VERIFIED; its consequence for P1 recorded in §10.4 |
-| Registry self-test counts stale | `critical-flow-registry.md:70` vs today's 13/3/4 | VERIFIED |
+| Registry self-test counts stale | `critical-flow-registry.md:70` vs today's 13/3/4 | VERIFIED (re-read 2026-09-30: row 70 still says "7 bad variants + 3 good + 4 no-false-positive") |
+| `data.ts` fingerprint survives Task 891 | `data.ts:281` holds `.gte('expires_at', window.startUtc)`; probe re-run 2026-09-30 | VERIFIED (EXECUTED) |
+| Registry held by 893 only outside row 70 | `git diff -U0` hunks `:46-47`, `:53`, `:62`; row-70 comparator prints `ROW70 = HEAD` | VERIFIED (EXECUTED 2026-09-30) |
 | Falsification attempted | a write in one call site hiding another (BAD 4); a call site above the declaration (`SimilarListings.tsx:65`, reached by the probe) | EXECUTED (probe) / ANALYTICAL (BAD 4 until the executor runs it) |
 
 ## Appendix B — Rule-compliance ledger
@@ -425,12 +475,12 @@ lines of text) and write the session log. No Git commands.
 |---|---|
 | Active route | one: extend the extractor + two fingerprinted allowlist entries |
 | Decision source | this kickoff; no owner decision required |
-| Starting worktree | dirty with manifest (§3.6, I0 2) |
+| Starting worktree | dirty with manifest (§3.6, I0 2); the registry may be held by another task (step R8) |
 | Final write set | §7 items 1–5 |
 
 | # | Checkpoint | Producer / artifact | Comparator and failure |
 |---|---|---|---|
-| 0 | I0 | `00-*` files | non-`win32`, dirty §7 path, extra violation or extra probe hit → `BLOCKED` |
+| 0 | I0 | `00-*` files | non-`win32`, a dirty §7 path other than the registry, `ROW70 DIFFERS`, extra violation or extra probe hit → `BLOCKED` |
 | 1 | Self-test arms first | verify transcript before §10.1 | BAD 1–5 not `MISSED` → the snippet is wrong; fix the snippet |
 | 2 | Detector | verify transcript after | any failure → `PARTIALLY IMPLEMENTED` |
 | 3 | Allowlist | gate transcript | an R4 line still reported, or any stale entry → fix before continuing |

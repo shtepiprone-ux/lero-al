@@ -25,6 +25,10 @@
  *   the Next dev error-overlay dialog being present in the DOM (selector verified empirically
  *   against a real running Next 15 dev instance — see `--verify-error-page`).
  *
+ * 🔴 A REDIRECT OFF THE REQUESTED PATH IS A FAIL (Task 888, 2026-09-30): `page.goto` follows redirects, so a
+ *   stale or non-staff admin session used to measure the login page instead of the admin route.
+ *   `checkRoute` now fails with a `redirect` violation naming both pathnames (`--verify-error-page`).
+ *
  * 🔴 DEV-ONLY DIAGNOSTIC — MUST run against `next dev`, NEVER `next start` (Task 599, 2026-07-15):
  *   React strips hydration-mismatch console warnings from PRODUCTION builds by design (perf/size).
  *   `check:hydration` against a `next start` server will PASS even when a real hydration mismatch
@@ -229,17 +233,24 @@ function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
         notRealCoverage: true,
         reason: 'no admin session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
       },
+      {
+        path: null,
+        label: 'Admin dashboard /admin (Task 853)',
+        notRealCoverage: true,
+        reason: 'no admin session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
+      },
     );
     return routes;
   }
 
-  // Session is available — list route is always navigated
-  routes.push({ path: '/en/admin/users', label: 'Admin users list (Task 434 area)' });
+  // Session is available — list route is always navigated.
+  // The admin tree has no [locale] segment (src/middleware.ts excludes /admin), so no /en prefix.
+  routes.push({ path: '/admin/users', label: 'Admin users list (Task 434 area)' });
 
   // Detail route gated on UUID
   if (adminUserId) {
     routes.push({
-      path: `/en/admin/users/${adminUserId}`,
+      path: `/admin/users/${adminUserId}`,
       label: 'Admin user detail /admin/users/[id] (EXACT Task 434 hydration route)',
     });
   } else {
@@ -250,6 +261,9 @@ function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
       reason: 'HYDRATION_ADMIN_USER_ID not set — set to a real user UUID so components render with actual data',
     });
   }
+
+  // Dashboard needs no UUID — always navigated with a session
+  routes.push({ path: '/admin', label: 'Admin dashboard /admin (Task 853)' });
 
   return routes;
 }
@@ -317,6 +331,19 @@ async function checkRoute(page, url, label) {
   // page has no hydration-pattern console text to match, so this was previously a false PASS.
   if (response && !response.ok()) {
     violations.push({ type: 'http', text: `HTTP ${response.status()} on ${url}` });
+  }
+
+  // Task 888: page.goto follows redirects, so a stale/non-staff session lands on the login page and
+  // the verdict would describe that page, not the requested route. Fail whenever the landing pathname
+  // differs from the requested one (query string and one trailing slash ignored).
+  const normalisePath = value => {
+    const pathname = new URL(value).pathname;
+    return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  };
+  const requestedPath = normalisePath(url);
+  const landedPath = normalisePath(page.url());
+  if (requestedPath !== landedPath) {
+    violations.push({ type: 'redirect', text: `redirected ${requestedPath} → ${landedPath}` });
   }
 
   // Task 600: detect the Next.js dev error-overlay in the DOM even if console/pageerror were
@@ -425,6 +452,9 @@ async function runErrorPageSelfTest() {
       if (req.url === '/500') {
         res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(ERROR_PAGE_500_HTML);
+      } else if (req.url === '/redirect') {
+        res.writeHead(307, { Location: '/clean' });
+        res.end();
       } else if (req.url === '/throw') {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(ERROR_PAGE_THROW_HTML);
@@ -448,6 +478,7 @@ async function runErrorPageSelfTest() {
   const cases = [
     { url: `${baseUrl}/500`, label: 'HTTP 500 page', expect: 'FAIL' },
     { url: `${baseUrl}/throw`, label: 'Uncaught pageerror page', expect: 'FAIL' },
+    { url: `${baseUrl}/redirect`, label: 'Redirect off the requested path', expect: 'FAIL' },
     { url: `${baseUrl}/clean`, label: 'Clean 200 page', expect: 'PASS' },
   ];
 
@@ -486,18 +517,18 @@ function verifyAdminConfig() {
 
   let pass = true;
 
-  // State 1: no session → both admin routes must be notRealCoverage
+  // State 1: no session → all three admin routes (list, detail, dashboard) must be notRealCoverage
   const noSessionPlan = planRoutes({ withAdmin: true, hasSession: false, adminUserId: null, listingPath: null });
   const noSessionAdmin = noSessionPlan.filter(r => r.label.includes('Admin'));
-  if (noSessionAdmin.length !== 2) {
-    console.error(`   ❌ [1] no-session plan has ${noSessionAdmin.length} admin routes, expected 2`);
+  if (noSessionAdmin.length !== 3) {
+    console.error(`   ❌ [1] no-session plan has ${noSessionAdmin.length} admin routes, expected 3`);
     pass = false;
   } else if (!noSessionAdmin.every(r => r.notRealCoverage)) {
     const navigable = noSessionAdmin.filter(r => !r.notRealCoverage).map(r => r.label);
     console.error(`   ❌ [1] no-session plan has navigable admin route(s): ${navigable.join(', ')} — false green`);
     pass = false;
   } else {
-    console.log('   ✅ [1] no-session: both admin routes → notRealCoverage (never PASS)');
+    console.log('   ✅ [1] no-session: all three admin routes → notRealCoverage (never PASS)');
   }
 
   // State 2: session, no UUID → list navigable, detail notRealCoverage
@@ -506,7 +537,7 @@ function verifyAdminConfig() {
   const listRoute = sessionNoUuidAdmin.find(r => r.label.includes('list'));
   const detailRoute = sessionNoUuidAdmin.find(r => r.label.includes('detail'));
 
-  if (!listRoute || listRoute.notRealCoverage || listRoute.path !== '/en/admin/users') {
+  if (!listRoute || listRoute.notRealCoverage || listRoute.path !== '/admin/users') {
     console.error(`   ❌ [2] session-no-UUID: list route missing or not navigable (path=${listRoute?.path}, notReal=${listRoute?.notRealCoverage})`);
     pass = false;
   } else {
@@ -520,6 +551,14 @@ function verifyAdminConfig() {
     console.log('   ✅ [2] session-no-UUID: detail route → notRealCoverage (correct)');
   }
 
+  const dashRoute = sessionNoUuidAdmin.find(r => r.label.includes('dashboard'));
+  if (!dashRoute || dashRoute.notRealCoverage || dashRoute.path !== '/admin') {
+    console.error(`   ❌ [2] session-no-UUID: dashboard route missing or not navigable (path=${dashRoute?.path}, notReal=${dashRoute?.notRealCoverage})`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [2] session-no-UUID: dashboard route navigable → ${dashRoute.path}`);
+  }
+
   // State 3: session + UUID → both navigable with correct paths
   const testUuid = 'test-uuid-451';
   const fullPlan = planRoutes({ withAdmin: true, hasSession: true, adminUserId: testUuid, listingPath: null });
@@ -527,19 +566,39 @@ function verifyAdminConfig() {
   const fullList = fullAdmin.find(r => r.label.includes('list'));
   const fullDetail = fullAdmin.find(r => r.label.includes('detail'));
 
-  if (!fullList || fullList.notRealCoverage || fullList.path !== '/en/admin/users') {
+  if (!fullList || fullList.notRealCoverage || fullList.path !== '/admin/users') {
     console.error(`   ❌ [3] session+UUID: list route not navigable`);
     pass = false;
   } else {
     console.log(`   ✅ [3] session+UUID: list route → ${fullList.path}`);
   }
 
-  const expectedDetailPath = `/en/admin/users/${testUuid}`;
+  const expectedDetailPath = `/admin/users/${testUuid}`;
   if (!fullDetail || fullDetail.notRealCoverage || fullDetail.path !== expectedDetailPath) {
     console.error(`   ❌ [3] session+UUID: detail route wrong (path=${fullDetail?.path}, notReal=${fullDetail?.notRealCoverage})`);
     pass = false;
   } else {
     console.log(`   ✅ [3] session+UUID: detail route → ${fullDetail.path}`);
+  }
+
+  const fullDash = fullAdmin.find(r => r.label.includes('dashboard'));
+  if (!fullDash || fullDash.notRealCoverage || fullDash.path !== '/admin') {
+    console.error(`   ❌ [3] session+UUID: dashboard route wrong (path=${fullDash?.path}, notReal=${fullDash?.notRealCoverage})`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [3] session+UUID: dashboard route → ${fullDash.path}`);
+  }
+
+  // The admin tree has no locale segment (src/middleware.ts): a locale-prefixed admin path is a permanent 404.
+  const localePrefixed = [sessionNoUuidPlan, fullPlan]
+    .flat()
+    .filter(r => typeof r.path === 'string' && /^[/][a-z]{2}[/]admin([/]|$)/.test(r.path))
+    .map(r => r.path);
+  if (localePrefixed.length > 0) {
+    console.error(`   ❌ [3] planned admin path(s) carry a locale prefix (admin has no [locale] segment → 404): ${localePrefixed.join(', ')}`);
+    pass = false;
+  } else {
+    console.log('   ✅ [3] no planned admin path carries a locale prefix');
   }
 
   // State 4 (Task 599): authenticated-homepage coverage gates purely on

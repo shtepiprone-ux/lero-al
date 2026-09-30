@@ -1,0 +1,25 @@
+before: b383308a502347ca831b68cc223b979bc15251f3
+
+> lero-al@0.1.0 check:hydration:admin-config
+> node scripts/check-hydration-console.mjs --verify-admin-config
+
+
+🔬 Admin-config self-test (--verify-admin-config)
+   Purpose: prove the admin branch route plan is correctly gated.
+
+   ✅ [1] no-session: all three admin routes → notRealCoverage (never PASS)
+   ❌ [2] session-no-UUID: list route missing or not navigable (path=/en/admin/users, notReal=undefined)
+   ✅ [2] session-no-UUID: detail route → notRealCoverage (correct)
+   ✅ [2] session-no-UUID: dashboard route navigable → /admin
+   ❌ [3] session+UUID: list route not navigable
+   ✅ [3] session+UUID: detail route → /admin/users/test-uuid-451
+   ✅ [3] session+UUID: dashboard route → /admin
+   ❌ [3] planned admin path(s) carry a locale prefix (admin has no [locale] segment → 404): /en/admin/users, /en/admin/users
+   ✅ [4] no-session: both authenticated-homepage routes → notRealCoverage (never PASS)
+   ✅ [5] session (withAdmin=false): authenticated-homepage routes navigable → /en, /uk
+
+❌ Admin-config self-test FAILED — misconfig detected.
+
+P2 exit=1
+after-restore: b383308a502347ca831b68cc223b979bc15251f3
+restored exit=0

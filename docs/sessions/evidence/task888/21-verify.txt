@@ -1,0 +1,20 @@
+
+> lero-al@0.1.0 check:hydration:verify
+> node scripts/check-hydration-console.mjs --verify-gate
+
+
+🔬 Hydration gate self-test (--verify-gate)
+   Purpose: prove the gate is NOT a no-op by planting a violation.
+
+   Planted-violation server started at http://127.0.0.1:60045/
+   This page emits the EXACT React hydration error that Task 434 would trigger.
+
+   Route: Planted hydration violation
+   Status: FAIL
+   Violations detected:
+     [1] (error) Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on ...
+     [2] (error) Text content does not match server-rendered HTML. Server: "January 1 2026" Client: "1 Jan 2026"...
+
+✅ GATE IS FUNCTIONAL — planted violation was correctly detected.
+   The gate will FAIL on real hydration mismatches in the Next.js app.
+

@@ -1,0 +1,768 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-888 — check:hydration --with-admin measures the admin routes that exist, and fails a redirect off the requested path",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "d1ab3a2b5c9157c17d9d1db271e72dc8a3afbae0",
+    "reviewedRevision": "uncommitted worktree on top of d1ab3a2b5c9157c17d9d1db271e72dc8a3afbae0 (main). Blobs: scripts/check-hydration-console.mjs e2f594afc137be1f9db1780cb2442ae0e3f4ed09, docs/critical-flow-registry.md efe18c4d44e92448cb1f27c2fe9e64f52340c869 (before the reviewer closure edit), src/app/admin/page.tsx 74b26361b0f4c90c33e45c0ed15195483fbcfc8e (unchanged vs HEAD).",
+    "reviewedPaths": [
+      "scripts/check-hydration-console.mjs",
+      "docs/critical-flow-registry.md",
+      "docs/sessions/2026-09-30-task888-hydration-admin-routes.md",
+      "docs/sessions/evidence/task888"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 8,
+      "verified": 8,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-30-task888-hydration-admin-routes.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-hydration-console.mjs",
+        "symbol": "planRoutes",
+        "diffHunks": [
+          "scripts/check-hydration-console.mjs:233-266"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "session plan paths /admin/users, /admin/users/<uuid>, /admin",
+          "no /en/admin string in the script"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/rev1/20-admin-config.txt",
+          "command": "npm.cmd run check:hydration:admin-config (final)",
+          "observable": "States [2]/[3]: list /admin/users, detail /admin/users/test-uuid-451, dashboard /admin; PASSED.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "session plan paths /admin/users, /admin/users/<uuid>, /admin"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-hydration-console.mjs",
+          "command": "git --no-optional-locks grep --untracked -n \"/en/admin\" -- scripts/check-hydration-console.mjs (reviewer)",
+          "observable": "No match, exit 1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no /en/admin string in the script"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The live gate could still request a locale-prefixed admin path.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task888/rev1/39-dev-server.log",
+          "result": "REFUTED: 24 admin requests over 8 runs are GET /admin/users, /admin/users/<id>, /admin, all 200; no /en/admin request."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-hydration-console.mjs",
+        "symbol": "planRoutes",
+        "diffHunks": [
+          "scripts/check-hydration-console.mjs:236-241"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "no session: exactly 3 admin rows, all notRealCoverage"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/rev1/20-admin-config.txt",
+          "command": "npm.cmd run check:hydration:admin-config (final)",
+          "observable": "[1] no-session: all three admin routes -> notRealCoverage.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "no session: exactly 3 admin rows, all notRealCoverage"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A no-session run could navigate an admin route unauthenticated.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task888/10-P1-red.txt",
+          "result": "REFUTED: state [1] asserts count 3 and every row notRealCoverage; with the old plan it reported 2 and failed, exit 1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-hydration-console.mjs",
+        "symbol": "verifyAdminConfig",
+        "diffHunks": [
+          "scripts/check-hydration-console.mjs:517-603"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "self-test fails before the plan fix (P1)",
+          "self-test fails on a reintroduced /en/admin path (P2)",
+          "final state exits 0"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/10-P1-red.txt",
+          "command": "npm.cmd run check:hydration:admin-config (P1 red)",
+          "observable": "Exit 1: count 2 != 3, list/detail on /en/admin, dashboard missing, locale-prefix assertion names the paths.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "self-test fails before the plan fix (P1)"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/12-P2.txt",
+          "command": "P2 plant through Node + admin-config",
+          "observable": "Planted /en/admin/users -> exit 1 naming [2]/[3] and the locale-prefix assertion; restore -> exit 0, hash b383308a equal.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "self-test fails on a reintroduced /en/admin path (P2)"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/13-admin-config.txt",
+          "command": "npm.cmd run check:hydration:admin-config (after R7)",
+          "observable": "PASSED, exit 0.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "final state exits 0"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The locale-prefix regex could miss another locale.",
+          "kind": "INSPECTED",
+          "path": "scripts/check-hydration-console.mjs",
+          "result": "REFUTED: /^[/][a-z]{2}[/]admin([/]|$)/ matches any two-letter prefix (sq, en, uk, it) and runs over both session plans."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R4 R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/critical-flow-registry.md",
+        "symbol": "Hydration / console errors - admin routes",
+        "diffHunks": [
+          "docs/critical-flow-registry.md:115"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "route cell lists the three routes",
+          "status sentence carries R4 + R9 text",
+          "no other row changed"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/critical-flow-registry.md",
+          "command": "git --no-optional-locks diff -U0 docs/critical-flow-registry.md (reviewer)",
+          "observable": "One row changed (-1/+1): routes /admin/users, /admin/users/[id], /admin; Task 888 sentence including the redirect rule; status yellow until the approving review.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "route cell lists the three routes",
+              "status sentence carries R4 + R9 text",
+              "no other row changed"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Another registry row could have been touched.",
+          "kind": "EXECUTED",
+          "path": "docs/critical-flow-registry.md",
+          "result": "REFUTED: diff has exactly one removed and one added table row."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task888/plant-admin-mismatch.mjs",
+        "symbol": "apply/restore",
+        "diffHunks": [
+          "new file"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "page.tsx hash equal before apply and after restore",
+          "plant file absent afterwards",
+          "page.tsx absent from final status"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/rev1/45-plant-apply.txt",
+          "command": "node.exe plant-admin-mismatch.mjs apply",
+          "observable": "Before 74b26361, applied 9c50dc7e.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "page.tsx hash equal before apply and after restore"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/49-plant-restore.txt",
+          "command": "node.exe plant-admin-mismatch.mjs restore",
+          "observable": "After 74b26361; plant file present: false.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "page.tsx hash equal before apply and after restore",
+              "plant file absent afterwards"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "src/app/admin/page.tsx",
+          "command": "git --no-optional-locks status --short src/app/admin + hash-object (reviewer)",
+          "observable": "No status entry; hash 74b26361.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "page.tsx absent from final status"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The restore could leave a .pre-apply backup behind.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task888/plant-admin-mismatch.mjs",
+          "result": "REFUTED: restore unlinks the backup; reviewer ls found neither page.tsx.pre-apply nor __hydrationPlant.tsx."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / R6",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-30-task888-hydration-admin-routes.md",
+        "symbol": "Files Changed",
+        "diffHunks": [
+          "new file"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "session log Files Changed matches the real diff",
+          "backlog <= 80 lines"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-30-task888-hydration-admin-routes.md",
+          "command": "reviewer read vs git status",
+          "observable": "Files Changed (original + Revision 1) = script, registry, evidence, log, backlog; status matches (backlog cell committed in d1ab3a2b5, see F1).",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "session log Files Changed matches the real diff"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/backlog.md",
+          "command": "wc -l docs/backlog.md (reviewer)",
+          "observable": "80 lines.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "backlog <= 80 lines"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An out-of-scope path could be task-owned and undocumented.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-09-30-task888-hydration-admin-routes.md",
+          "result": "REFUTED: every other status path belongs to Task 886 (workflow, package.json, type-responsive script, src/**) and none is named by 888."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-hydration-console.mjs",
+        "symbol": "checkRoute + runErrorPageSelfTest",
+        "diffHunks": [
+          "scripts/check-hydration-console.mjs:336-348",
+          "scripts/check-hydration-console.mjs:452-481"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "/redirect case PASSes without the guard and the command exits 1 (P4 red)",
+          "with the guard /redirect FAILs redirect, other three cases unchanged, exit 0"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/rev1/10-P4-red.txt",
+          "command": "npm.cmd run check:hydration:error-page (P4 red)",
+          "observable": "Redirect case expected FAIL got PASS; EXIT_CODE=1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "/redirect case PASSes without the guard and the command exits 1 (P4 red)"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/27-error-page.txt",
+          "command": "npm.cmd run check:hydration:error-page (final)",
+          "observable": "/500 FAIL, /throw FAIL, /redirect FAIL (redirect) redirected /redirect -> /clean, /clean PASS; EXIT_CODE=0.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "with the guard /redirect FAILs redirect, other three cases unchanged, exit 0"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The guard could false-fail same-path routes (trailing slash, query).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task888/rev1/42-clean1.txt",
+          "result": "REFUTED: /clean PASS in the self-test and all 9 navigated rows (public, auth homepage, admin) PASS in each clean live run."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC8 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-hydration-console.mjs",
+        "symbol": "check:hydration --with-admin (live)",
+        "diffHunks": [
+          "n/a (live run of the final script)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "capture:admin-session exit 0",
+          "3 clean + restored runs: three admin rows PASS",
+          "3 planted runs: /admin FAIL on hydration text, no redirect; list/detail PASS",
+          "admin requests answered 200, never 307"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance script and registry text; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task888/rev1/40-capture.txt",
+          "command": "npm.cmd run capture:admin-session",
+          "observable": "Admin session captured (2 auth cookies); EXIT_CODE=0.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "capture:admin-session exit 0"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/42-clean1.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (clean 1)",
+          "observable": "Three admin rows PASS; PASS 9 FAIL 0 SKIP 1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 clean + restored runs: three admin rows PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/43-clean2.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (clean 2)",
+          "observable": "Three admin rows PASS; PASS 9 FAIL 0 SKIP 1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 clean + restored runs: three admin rows PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/44-clean3.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (clean 3)",
+          "observable": "Three admin rows PASS; PASS 9 FAIL 0 SKIP 1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 clean + restored runs: three admin rows PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/50-restored.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (restored)",
+          "observable": "Three admin rows PASS; PASS 9 FAIL 0 SKIP 1.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 clean + restored runs: three admin rows PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/46-planted1.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (planted 1)",
+          "observable": "Admin dashboard /admin FAIL (pageerror) Hydration failed because the server rendered text did not match; list/detail PASS.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 planted runs: /admin FAIL on hydration text, no redirect; list/detail PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/47-planted2.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (planted 2)",
+          "observable": "Same as planted 1; no redirect violation.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 planted runs: /admin FAIL on hydration text, no redirect; list/detail PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/48-planted3.txt",
+          "command": "npm.cmd run check:hydration -- --with-admin (planted 3)",
+          "observable": "Same as planted 1; no redirect violation.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "3 planted runs: /admin FAIL on hydration text, no redirect; list/detail PASS"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task888/rev1/39-dev-server.log",
+          "command": "next dev log (reviewer grep)",
+          "observable": "24 admin requests (8 runs x 3), all 200; zero 307/404/500 lines.",
+          "freshness": "executor revision-1 pass 2026-09-30 win32 v22.22.3 against script blob e2f594af, registry blob efe18c4d, page.tsx blob 74b26361; reviewer re-ran error-page, admin-config and verify natively on the same blobs (all exit 0)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "admin requests answered 200, never 307"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The live runs could predate the final script edit.",
+          "kind": "INSPECTED",
+          "path": "docs/sessions/evidence/task888/rev1/41-warmup.txt",
+          "result": "REFUTED: script mtime 14:41:51, capture 14:42:41, runs 14:43:17-14:45:30; script blob e2f594af unchanged since; the P4 error-page case is in the same blob."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node CLI gate logic and Markdown text; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC6 / R6",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "The executor revision-1 888 backlog cell was committed inside Task 886 commit d1ab3a2b5, so docs/backlog.md has no worktree diff from this task. Content verified; the closure edit removes the cell."
+    },
+    {
+      "id": "F2",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC6 / R6",
+      "requirementIds": [
+        "AC6 / R6"
+      ],
+      "evidence": "The original pass overwrote its first failing check:file-integrity transcript (BOM in its own evidence files) with the passing run instead of keeping it as superseded; the session log records the failure and the Node BOM strip."
+    },
+    {
+      "id": "F3",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC8 / R8",
+      "requirementIds": [
+        "AC8 / R8"
+      ],
+      "evidence": "Every live run SKIPs Listing detail (HYDRATION_LISTING_PATH unset). AC8 asserts only the admin rows by design; the listing-detail row is covered by the public-routes registry row."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC6 / R6",
+    "reviewer": "Opus"
+  }
+}

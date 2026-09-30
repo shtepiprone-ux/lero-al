@@ -2,8 +2,8 @@
 
 **Sprint 78** (hosted next to 887, the other red gate 853's reviews found) · **P2** · **Q4** (was Q2; corrected by
 review 1 — the task changes `docs/critical-flow-registry.md`) · Track B (non-UI) · filed 2026-09-27 by Task 853's
-review 2 (F10) · kickoff written 2026-09-29 · live proof **O78-10** · **Status: 🔁 `NEEDS REVISION` — review 1,
-2026-09-30. Start at §16 (Revision 1).**
+review 2 (F10) · kickoff written 2026-09-29 · live proof **O78-10** · **Status: ✅ `APPROVED WITH NOTES` — review 2,
+2026-09-30 (review 1 `NEEDS REVISION`; ledger `docs/reviews/2026-09-30-task888-hydration-admin-routes.review-ledger.json`). Archived.**
 
 Executor: run this file through the `execute-task` workflow. Strongest permitted status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`. No mutating Git command, ever.

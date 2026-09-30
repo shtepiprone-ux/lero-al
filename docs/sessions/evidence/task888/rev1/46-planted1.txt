@@ -1,0 +1,38 @@
+
+> lero-al@0.1.0 check:hydration
+> node scripts/check-hydration-console.mjs --with-admin
+
+
+🔍 Hydration / console-error gate
+   Target: http://localhost:3000
+   Routes: 10 (public + admin)
+   Auth:   storageState from playwright/.auth/admin-storage-state.json
+
+   Loaded storageState from playwright/.auth/admin-storage-state.json
+
+   Checking Homepage (en) … PASS ✅
+   Checking Listings list (en) … PASS ✅
+   Checking Homepage (sq/Albanian) … PASS ✅
+   Checking Homepage (uk/Ukrainian) … PASS ✅
+   Checking Listing detail — AC1 route (Task 448) … SKIP ⚠  (NOT-REAL-COVERAGE: HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing)
+   Checking Homepage authenticated (en) — header hydration (Task 599) … PASS ✅
+   Checking Homepage authenticated (uk) — header hydration (Task 599) … PASS ✅
+   Checking Admin users list (Task 434 area) … PASS ✅
+   Checking Admin user detail /admin/users/[id] (EXACT Task 434 hydration route) … PASS ✅
+   Checking Admin dashboard /admin (Task 853) … FAIL ❌  (1 violation(s))
+
+── Summary ──────────────────────────────────────────────────
+   PASS: 8  FAIL: 1  SKIP: 1
+
+❌ Hydration violations found:
+
+   Route: Admin dashboard /admin (Task 853) (http://localhost:3000/admin)
+   [1] (pageerror) Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random
+
+Fix the hydration mismatches before merging.
+These errors do NOT appear in tsc / lint / build — only in a running browser.
+
+EXIT_CODE=1

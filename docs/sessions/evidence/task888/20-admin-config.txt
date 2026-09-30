@@ -1,0 +1,21 @@
+
+> lero-al@0.1.0 check:hydration:admin-config
+> node scripts/check-hydration-console.mjs --verify-admin-config
+
+
+🔬 Admin-config self-test (--verify-admin-config)
+   Purpose: prove the admin branch route plan is correctly gated.
+
+   ✅ [1] no-session: all three admin routes → notRealCoverage (never PASS)
+   ✅ [2] session-no-UUID: list route navigable → /admin/users
+   ✅ [2] session-no-UUID: detail route → notRealCoverage (correct)
+   ✅ [2] session-no-UUID: dashboard route navigable → /admin
+   ✅ [3] session+UUID: list route → /admin/users
+   ✅ [3] session+UUID: detail route → /admin/users/test-uuid-451
+   ✅ [3] session+UUID: dashboard route → /admin
+   ✅ [3] no planned admin path carries a locale prefix
+   ✅ [4] no-session: both authenticated-homepage routes → notRealCoverage (never PASS)
+   ✅ [5] session (withAdmin=false): authenticated-homepage routes navigable → /en, /uk
+
+✅ Admin-config self-test PASSED — route plan correctly gates on session state.
+

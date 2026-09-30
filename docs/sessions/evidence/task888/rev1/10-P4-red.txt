@@ -1,0 +1,16 @@
+
+> lero-al@0.1.0 check:hydration:error-page
+> node scripts/check-hydration-console.mjs --verify-error-page
+
+
+🔬 Error-page self-test (--verify-error-page)
+   Purpose: prove checkRoute() FAILs on a hard-errored page instead of a false PASS.
+
+   ✅ HTTP 500 page: expected FAIL, got FAIL — (http) HTTP 500 on http://127.0.0.1:50667/500
+   ✅ Uncaught pageerror page: expected FAIL, got FAIL — (pageerror) Task 600 self-test: deliberate uncaught pageerror
+   ❌ Redirect off the requested path: expected FAIL, got PASS
+   ✅ Clean 200 page: expected PASS, got PASS
+
+❌ ERROR-PAGE HARDENING IS BROKEN — see mismatches above. This is a gate defect.
+
+EXIT_CODE=1

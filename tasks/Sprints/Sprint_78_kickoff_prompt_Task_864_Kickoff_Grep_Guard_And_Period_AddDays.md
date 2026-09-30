@@ -1,7 +1,8 @@
 # Task 864 — no kickoff can ship a `git grep` that is blind to the files its task creates; `period.ts` exports `addDays`
 
 **Sprint 78** (hosted by discovery, not goal fit) · **P2** · **Q1** · Track B (non-UI) · filed 2026-09-20 by Task 848's
-review; partly applied 2026-09-25 (the 852–856 kickoffs) · kickoff written 2026-09-29 · **Status: 📝 `KICKOFF FILED`**
+review; partly applied 2026-09-25 (the 852–856 kickoffs) · kickoff written 2026-09-29 · **Status: 📝 `KICKOFF FILED` —
+revision 1 (2026-09-30, §16): waits for 886's commit; policy edits moved to Opus. §16 overrides every section it names.**
 
 Executor: run this file through the `execute-task` workflow. Strongest permitted status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`. No mutating Git command, ever.
@@ -115,9 +116,11 @@ in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
 
 1. new `scripts/check-kickoff-git-grep.mjs`, new `scripts/kickoff-git-grep-baseline.json`
 2. `package.json` — three script lines only
-3. `.claude/hooks/orchestrator-response-gate.ps1` — R5 block only
-4. `docs/orchestrator-procedures.md` — one paragraph (R1); `.claude/skills/create-task/SKILL.md` — one bullet (R1)
-5. `docs/golden-rules.md` — the GR-6 enforcement-table row gains `+ check:kickoff-git-grep (Task 864)`
+3. ~~`.claude/hooks/orchestrator-response-gate.ps1` — R5 block only~~ **Opus, not the executor (§16.2)**
+4. ~~`docs/orchestrator-procedures.md` — one paragraph (R1); `.claude/skills/create-task/SKILL.md` — one bullet (R1)~~
+   **Opus, not the executor (§16.2)**
+5. ~~`docs/golden-rules.md` — the GR-6 enforcement-table row gains `+ check:kickoff-git-grep (Task 864)`~~ **Opus,
+   not the executor (§16.2)**
 6. `src/lib/dashboard/period.ts` (`export` + comment), `src/lib/dashboard/__tests__/period.test.ts` (R6)
 7. `src/modules/cabinet/statistics/data.ts` — `expiringWindowUtc` and its import line only (R7)
 8. `docs/sessions/2026-MM-DD-task864-kickoff-grep-guard.md`, `docs/sessions/evidence/task864/`
@@ -143,6 +146,8 @@ in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
 
 ### 10.1 I0
 
+0. **Revision 1 start gate (§16.1).** `package.json` must equal `HEAD`, and `HEAD` must already carry Task 886's
+   `check:type-responsive` script. Otherwise stop with `BLOCKED — 886 NOT LANDED` and write nothing.
 1. `node.exe -p "process.platform + ' ' + process.version"` → `win32`.
 2. `git --no-optional-locks status --porcelain` → `docs/sessions/evidence/task864/00-status.txt`; a §7 path already
    modified → `BLOCKED — WRITE PATH NOT CLEAN`.
@@ -152,8 +157,8 @@ in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
 
 ### 10.2 Order
 
-I0 → R2/R4 script + `--verify-gate` → `--update-baseline` (R3) → R5 hook + hook proof → R1 docs → R6 → R7 → gates →
-session log.
+I0 → R2/R4 script + `--verify-gate` → `--update-baseline` (R3) → R6 → R7 → gates → session log. R1, R5 and the P3
+hook proof are Opus's, at review (§16.2).
 
 ### 10.3 Proofs
 
@@ -161,7 +166,7 @@ session log.
 |---|---|---|
 | **P1** guard, failing arm | through Node, append to one baselined kickoff a fenced block holding the plain command (git, grep, then -n foo -- src, with no untracked flag); run the guard | exit 1 naming that file and line; restore → hash equal, exit 0 |
 | **P2** guard, new file | create `tasks/Sprints/Sprint_78_kickoff_prompt_Task_000_Probe.md` with one plain fenced line; run; delete | exit 1; after delete exit 0; the file absent from status |
-| **P3** hook | pipe a synthetic Opus Stop event (copy the shape the backlog proof used: `transcript_path` to a JSONL whose last assistant text contains `TASK-DESIGN PREFLIGHT COMPLETE`) into `powershell -File .claude\hooks\orchestrator-response-gate.ps1` with P2's probe file present, then absent | exit 2 with the R5 heading, then exit 0; `git status --short tasks/` shows no probe |
+| **P3** hook — **run by Opus at review, not the executor (§16.2)** | pipe a synthetic Opus Stop event (copy the shape the backlog proof used: `transcript_path` to a JSONL whose last assistant text contains `TASK-DESIGN PREFLIGHT COMPLETE`) into `powershell -File .claude\hooks\orchestrator-response-gate.ps1` with P2's probe file present, then absent | exit 2 with the R5 heading, then exit 0; `git status --short tasks/` shows no probe |
 | **P4** period | temporarily change R7's `EXPIRING_DAYS_AHEAD` argument to `EXPIRING_DAYS_AHEAD - 1` | `data.test.ts:269` fails; restore → passes, hash equal |
 
 Node `fs` I/O for every plant; `git hash-object` before and after each.
@@ -182,13 +187,14 @@ response is blocked with the file and line; it adds `--untracked`; the response 
 
 ## 12. Acceptance criteria
 
-- **AC1 [R1]** Given the two docs, then each carries the R1 text and no other line changed.
+- **AC1 [R1] — Opus review closure (§16.2), not an executor criterion.** Given the two docs, then each carries the R1
+  text and no other line changed.
 - **AC2 [R2]** Given any run mode, then the scope line prints once before results.
 - **AC3 [R3]** Given the final tree, when `check:kickoff-git-grep` runs, then it exits 0; the baseline's keys equal the
   files the I0 `--update-baseline` run found, and none of this response's new kickoffs (887, 888, 864, 892, 896, 858,
   857, 859, 894, 895) is a key.
 - **AC4 [R4]** Given `check:kickoff-git-grep:verify`, then it reports 9 passed, 0 failed.
-- **AC5 [R5]** Given P3, then the hook exits 2 with the R5 heading while the probe exists and 0 after; the hook diff
+- **AC5 [R5] — Opus review closure (§16.2), not an executor criterion.** Given P3, then the hook exits 2 with the R5 heading while the probe exists and 0 after; the hook diff
   adds only the R5 block.
 - **AC6 [R6]** Given `period.test.ts`, then the three `addDays` cases pass and every earlier case passes unchanged.
 - **AC7 [R7]** Given P4 and the final tree, then `data.test.ts` passes unchanged, P4 makes `:269` fail, and
@@ -243,6 +249,52 @@ cell of `docs/backlog.md`; write the session log. No Git commands.
 | 863 collision avoided | §3.4, R7 (`:354` untouched) |
 | Owner decision needed | none |
 
+## 16. Revision 1 — 2026-09-30, after the executor's I0 block
+
+The first execution stopped at I0 and wrote nothing. Both blockers were confirmed at review and both are defects in
+this kickoff, not in the execution. This section overrides §7, §10, §12, §13.1 and §14 where it names them.
+
+### 16.1 F2 — `package.json` belongs to Task 886 until 886 lands
+
+- **Found (FACT, 2026-09-30).** `git diff package.json` shows +2 lines, `check:type-responsive` and
+  `check:type-responsive:verify`. They are Task 886's, and 886 revision 1 is `IMPLEMENTED - AWAITING ORCHESTRATOR
+  REVIEW`. The §3.5 worktree note (893's paths) is stale: 893 has since been approved and committed.
+- **Correction.** 864 starts only after 886 is approved and its commit, `package.json` included, is on `HEAD`. The
+  owner does **not** commit or stash 886's work to unblock 864. Committing it would publish an unreviewed
+  implementation, and stashing it would put 886's evidence at risk.
+- **I0 step 0**, which §10.1 references, is the block below. Run it before anything else:
+
+```powershell
+node.exe -p "process.platform + ' ' + process.version"
+git --no-optional-locks diff --quiet HEAD -- package.json; "package.json clean exit=$LASTEXITCODE"
+git --no-optional-locks show HEAD:package.json | Select-String -SimpleMatch '"check:type-responsive"'
+```
+
+Expected: `win32`; `clean exit=0`; one match line. Any other result → `BLOCKED — 886 NOT LANDED`, with no write.
+
+### 16.2 F1 — the executor may not edit policy files; R1, R5 and the GR-6 row are Opus's
+
+- **Found (FACT).** §7 items 3–5 gave the executor `.claude/hooks/orchestrator-response-gate.ps1`,
+  `docs/orchestrator-procedures.md`, `.claude/skills/create-task/SKILL.md` and `docs/golden-rules.md`.
+  `.claude/skills/execute-task/SKILL.md` → "Absolute policy-file boundary" and `.claude/agents/executor.md` →
+  "Absolute policy-file boundary" make every one of them read-only for Sonnet. Both files also state that a kickoff's
+  allowed-files list cannot delegate that authority. AC1 and AC5 were therefore unsatisfiable by the executor.
+- **Executor scope, final:** §7 items 1, 2, 6, 7, 8 and 9. The executor proves R2/R3/R4/R6/R7/R8 with P1, P2, P4 and
+  the §13.1 block, unchanged. It opens no policy file for writing. Its completion report states
+  `policy files touched: NONE` and quotes the guard's exit-1 output from P1 verbatim, because Opus's R5 heading wraps
+  that text.
+- **Opus review closure, applied only after the executor's guard passes review:**
+  1. R1: the procedures paragraph and the `create-task` bullet, worded as in §4 R1 (AC1).
+  2. R5: the hook block, using the same `Test-Path` guard, the `Continue` wrapper and the exit-1-only rule as the
+     `check-backlog-active.mjs` block. That way a missing script fails open (AC5).
+  3. The GR-6 enforcement-table row in `docs/golden-rules.md` gains `+ check:kickoff-git-grep (Task 864)`.
+  4. P3, run by Opus, with hook `git hash-object` before and after, and the transcript saved in
+     `docs/sessions/evidence/task864/`.
+  These four ship in the approved-review commit. The owner's commit of that handoff is the owner's sign-off on the
+  policy text.
+- **Why at review and not now.** The R1 text says "enforced by `check:kickoff-git-grep`". Writing it before the script
+  exists would record an enforcement that is not there (GR-2).
+
 ## Appendix A — Evidence preflight
 
 | Claim | Evidence | Status |
@@ -270,7 +322,7 @@ cell of `docs/backlog.md`; write the session log. No Git commands.
 | 0 | I0 | `BLOCKED` |
 | 1 | Verify 9/9 | fix the detector before baselining |
 | 2 | Baseline written; guard exit 0 | a new kickoff in the baseline → remove it and fix the kickoff |
-| 3 | P1–P3 | any arm not failing → `BLOCKED` |
+| 3 | P1–P2 (P3 is Opus's, §16.2) | any arm not failing → `BLOCKED` |
 | 4 | R6/R7 + P4 | `:269` changed or failing → `PARTIALLY IMPLEMENTED` |
 | 5 | Final gates | non-zero → `PARTIALLY IMPLEMENTED` |
 

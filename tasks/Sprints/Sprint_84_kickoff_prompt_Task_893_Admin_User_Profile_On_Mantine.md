@@ -2,9 +2,10 @@
 
 Sprint 84 · **P2** · QA profile **Q4** (legacy surface → Mantine, plus five critical flows on it) · **depends on
 877** (hard: the admin page-wrapper form and the `adminPageMaxWidth` token) · blocks **885** and **895** · owner action
-**O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 2 (§19)**: on a phone, a year outside the mobile month
-window cannot be selected. Revision 1 (§17) was verified in review 2 (§18). O84-2: 64 of 72 accepted, 12
-`RangeDatePicker` tuples owed after revision 2 · kickoff filed 2026-09-28
+**O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 3 (§20)**: revision 2's year jump works, but after the
+phone month window shrinks, the header stops following the scroll; the `minDate` branch has no test. Revisions 1 and
+2 (§17, §19) are otherwise verified. O84-2: 64 of 72 accepted, 12 `RangeDatePicker` tuples owed after revision 3
+(§20.5) · kickoff filed 2026-09-28
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row's text moves into §3.
@@ -665,9 +666,101 @@ review-2 tree and keep every `01`–`24` and `r1-*` artifact. The P3 comment in 
 
 ### 19.5 Owner matrix after revision 2 (O84-2 remainder)
 
-`Mantine/Primitives/RangeDatePicker`: `SingleDate`, `SingleDateSelected` and `Default`, in `uk` and `en`, at 320 and
-1440 (12 tuples). In each one, **choose a year after 2026 and confirm a day**. GR-3d: `MantineStoryShell` primitive
-(n/a).
+**Superseded by §20.5** (review 3): this list did not say which `Default` instance to open, and two of its five end at
+2026 by design.
+
+## 20. Review 3 and revision 3 — 2026-09-30 — `NEEDS REVISION`
+
+### 20.1 Review 3 record (Opus; frontend task, no ledger)
+
+- **Tree:** `RangeDatePicker.tsx` `7fd34906`, `RangeDatePicker.smoke.test.tsx` `274926d3`, `AdminUserProfile.tsx`
+  `ef9d04c2`, equal to `r2-hash-object.txt`. The container diff since review 2 is the `FIELD_OPTIONS` comment only. The
+  `r2-*` gates and build exit 0 and ran after the last source edit (10:36, build 10:39). P9 fails T-M1–T-M4 and
+  restores to an equal hash. The `scrollIntoView` stub in the mobile tests is accepted, because jsdom has no
+  `scrollIntoView`.
+- **Rendered, by the reviewer** (`docs/sessions/evidence/task893/review3-rendered.txt`, `uk`, live `:6006` and the
+  10:38 `storybook-static`):
+  - Choosing 2030 commits in every uncapped instance at 320 and at 1440. At 320: `Default` row 1, `SingleDate` and
+    `SingleDateSelected` each give `15.01.2030` after Confirm.
+  - The r2 session log's deviation 1 is **incorrect**. `Default`'s uncapped row exists at 320: press Escape to close
+    the forced-open sheet, then open the row. Its other claim holds: the forced-open instance and row 3 carry
+    `maxDate` 10.02.2026, so they end at 2026 **by design**.
+  - The extra `windowStart` rule for a moved window with `minDate` works (`disablePastDates` row, 2036 at 320).
+    No test covers it.
+- **Owner message during review 3, verbatim:** *"проблема в тому, що я не можу в Story обрати зі списку 2027-2036 рік,
+  я можу обрати лише любий рік включно з 2026 роком, але не більше. Ця проблема тільки в Story чи взагалі у
+  компоненті? … нахуя тоді у компоненті 4 варіанти, де в жодному я не можу обрати 2027 рік"*.
+  - **It was the component, not the Story.** On a phone, a year outside the month window was a silent no-op (§19.2).
+    On desktop, the 220px year list opened at 2021 with 2026+ below the fold (§17.2).
+  - Both fixes are in the **uncommitted** working tree. A fresh load of `:6006` or of the rebuilt `storybook-static`
+    selects 2027–2036.
+  - `http-server` serves `storybook-static` with `cache-control: max-age=3600`. A tab opened before 10:38 can
+    therefore keep the old picker; reload it with Ctrl+Shift+R.
+  - Of `Default`'s five instances, rows 1, 2 and 4 are uncapped. Row 3 and the forced-open one end at 2026 on purpose.
+
+### 20.2 Finding (blocking)
+
+**P2 — R18 regression: after the window shrinks, the phone header stops following the scroll.**
+- **Where:** `RangeDatePicker.tsx` `MobileBody`: `sectionRefs` (`:654`), `handleScrollPositionChange` (`:670-672`),
+  `visibleMonth = months[visibleMonthIdx] ?? anchorMonth` (`:704`).
+- **Mechanism (FACT):** when a jump replaces the window with a shorter one, `sectionRefs.current` keeps `null` entries
+  past `months.length`. `:672` maps them to `offsetTop 0`, so `pickVisibleMonthIdx` returns an index past `months`,
+  and the header falls back to `anchorMonth`.
+- **Measured** on the forced-open capped instance at 320:
+  1. choose 2022 (the window grows to 60 months), then 2026 (it shrinks to 14);
+  2. scroll the list up: the first visible section is `Листопад 2025 р.`, but the header reads `Січень 2026`.
+  3. Control, the same scroll with no jumps: the header reads `Жовтень 2025`.
+- **Impact:** before R18, only a prop change could replace the window. Now a user's jump does, so the header can show
+  the wrong month and year. That breaks review 6 F17's contract, "the header reads the section actually scrolled
+  into view". It hits every consumer with a bound: the filters (`maxDate`), the dashboard period and
+  `disablePastDates`.
+
+**Also blocking, evidence:** the moved-window `minDate` rule (`:635-637`) decides whether a far target is rendered
+at all. R19 has no test for it, so no plant can prove it.
+
+### 20.3 Requirements (revision 3)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R20** | **The header reads only rendered sections.** In `handleScrollPositionChange`, the section tops come from `sectionRefs.current.slice(0, months.length)`, never from stale entries past the current window. After any re-anchor, larger or smaller, scrolling the list updates both header dropdowns to the section scrolled into view, exactly as without a jump. Nothing else changes: the jump path, R18's window rules, `pickVisibleMonthIdx`, the desktop body, and every visual value. | P2 | AC16 |
+| **R21** | **Tests** in `RangeDatePicker.smoke.test.tsx`, inside the existing `describe('RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19)')` (`:613`), using its harness:<br>• **T-M6 (shrink):** `value` `{ from: '2026-01-28', to: '2026-02-05' }` and `maxDate` `new Date(2026, 1, 10)` (the `Default` forced-open fixture). Choose `2022`, then `2026`, then `fireEvent.scroll` the list's viewport. In jsdom every `offsetTop` is 0, so the header must read the **last rendered** section, February 2026 (month trigger = the `common.calendar_*` February label, year trigger `2026`), and **not** the anchor fallback, January 2026. If the harness cannot deliver a scroll callback in jsdom, stop with `BLOCKED — T-M6 HARNESS`; do not weaken the assertion.<br>• **T-M7 (`minDate` branch):** `disablePastDates`, no `maxDate`, no value. Choose the last offered year (`new Date().getFullYear() + 10`): the year trigger reads it, and a section of that year is rendered.<br>**Plants** (two-armed, Node I/O, hash witnesses as in §10.3): **P10** revert R20 (tops from the full `sectionRefs.current`) → T-M6 fails (`r3-plant-p10.txt`). **P11** make a moved window start at `minDate` again (drop the `moved` branch at `:637`) → T-M7 fails (`r3-plant-p11.txt`). Each file passes after its restore, with equal hashes. | P2 | AC16 |
+
+**Write set:** `src/design-system/mantine/patterns/RangeDatePicker.tsx` (`MobileBody`'s
+`handleScrollPositionChange` only), `src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx`,
+the session log (a "Revision 3" section with its own Files Changed table), `docs/backlog.md` (893 cell only), and
+`docs/sessions/evidence/task893/r3-*`. **Re-entry: remediation.** Start from the review-3 tree (§20.1 hashes), and
+keep every `01`–`24`, `r1-*`, `r2-*` and `review3-*` artifact. No Story file changes.
+
+### 20.4 Acceptance (revision 3)
+
+- **AC16 [R20, R21]** T-M6 and T-M7 pass; P10 and P11 fail them and pass after the restore, with equal hashes.
+  T-M1–T-M5 and the full §17.5 test line still pass.
+  **Rendered proof on a fresh `storybook-static`** (`uk`, Chromium), recorded in `r3-header-follow.txt`:
+  - repeat §20.2's measurement on the `Default` forced-open instance at 320 (choose 2022, then 2026, scroll up about
+    700px). The header must equal the first visible section's month and year, as in the no-jump control;
+  - `Default` row 4 (`disablePastDates`) at 320: choose the last offered year → the year field reads it.
+- **Gates:** §17.5's block, re-run as `r3-*`, all exit 0 on the final tree, with the build after the last source edit.
+  `r3-hash-object.txt` holds the two changed files.
+
+`GR-4 AC AUDIT — 1 criterion; states an observable property; absolutes: none.`
+
+### 20.5 Owner matrix after revision 3 (O84-2 remainder, 12 tuples; supersedes §19.5)
+
+Before opening anything, reload the Storybook tab with **Ctrl+Shift+R**.
+
+| Story | Instance to open | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Mantine/Primitives/RangeDatePicker` `SingleDate` | the open panel | `uk`, `en` | 320, 1440 | 4 |
+| `…` `SingleDateSelected` | the first row (closed trigger) | `uk`, `en` | 320, 1440 | 4 |
+| `…` `Default` | **row 1** (empty). At 320, press Escape first to close the forced-open sheet | `uk`, `en` | 320, 1440 | 4 |
+
+In each tuple, choose a year after 2026, pick a day in that year, and Apply/Confirm. Accepted means the trigger shows
+that date. At 320, also scroll the list after the year jump: the header must follow the visible month.
+
+`Default` row 3 and the forced-open instance, and `OpenBoundedNoValue`, end at 2026 because of their `maxDate`. That is
+by design (fixed fixtures; production filters cannot pick a future publish date), not a defect.
+
+GR-3d: `MantineStoryShell` primitive (n/a).
 
 ---
 

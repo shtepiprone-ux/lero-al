@@ -1507,3 +1507,39 @@ Append `## Revision 5` to the session log. It contains:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cells of
 `docs/backlog.md`. No mutating git.
+
+### 20.10 Mid-execution rulings — review 7b, 2026-09-30 (overrides §20.3–§20.7 where they differ)
+
+The executor paused during the rev5 gate re-run and asked for rulings. The reviewer inspected the working tree.
+1. **R31 deviation — ACCEPTED.** Mantine 8.3's `AspectRatio` sizes its child, not its root, so `pos="relative"` on the
+   root leaves it 0px tall and AC24 could not pass. The Story now nests `<Box pos="relative">` as the `AspectRatio`'s
+   child and puts `MediaPlaceholder` inside it. The file has no `style` object, and a comment explains the nesting.
+   R31 is amended to that shape. AC24 is unchanged.
+2. **R32 colour — clarified, no code change.** In this theme, `variant="outline"` without a `color` renders the neutral
+   §6l secondary style: white, a grey border and grey text (`theme.ts:912-926`, the `vars` branch at `:943`). That is
+   identical to `default`. §20.3's words "the theme's primary `brand`" were wrong. The neutral outline is what the
+   owner accepted in `ListingContactPattern`, and it is distinct from Call (filled `brand`) and WhatsApp (filled
+   `green`). AC25 is unchanged, and the owner re-checks it in §20.8.
+3. **Grep scope — kickoff defect, corrected.** §20.5 ran the `globals: \{ viewport` pattern over all of `src`. Its 46
+   hits are outside 886: 16 in `PlantedVisualViolations.stories.tsx` (a deliberate planted fixture), 27 in legacy admin
+   Stories under `src/components/admin/` and in the legacy `Listings/*` and `Cabinet/*` titles (their migrations replace
+   them, and they are never enrolled), and 2 in `Mantine/Primitives/LightboxView` (R36 below). The corrected grep, into
+   `$ev\story-grep.log`:
+
+   ```powershell
+   git --no-optional-locks grep -n -E "imageActions|variant=.icon." -- src
+   git --no-optional-locks grep -n -E "globals: \{ viewport" -- src/stories/patterns/mantine src/stories/mantine
+   ```
+
+   Expected: no line from either.
+4. **`MantineListingCardTrack.module.css` comment-only edit — ACCEPTED.** It was the only other file that named the
+   removed `.imageActions`. Add it to `$files`.
+5. **R36, new.** `src/stories/mantine/primitives/LightboxView.stories.tsx`: delete both `globals` viewport pins and
+   rewrite any comment that explains them. This Story renders `AppImage` `lightbox`, a placeholder variant since R21,
+   and it was a §18.6 blast-radius row. It stays `n/a: MantineStoryShell primitive` for GR-3d. Add it to `$files` and
+   to the measurement at 320/1440 (rendered width equals viewport, no overflow), and add it to the owner matrix §20.8
+   as row 6: `Mantine/Primitives/LightboxView` × `en` × 320/1440.
+
+**Re-entry:** apply item 5, then run the §20.5 gate block **once more** on the final tree. The run in progress becomes
+superseded; mark it so in the session log. Then run the measurement and the corrected grep. AC26 now also covers the
+`LightboxView` exports.

@@ -3,8 +3,8 @@
 Sprint 84 · **P2** · QA profile **Q4** (legacy surface → Mantine, plus five critical flows on it) · **depends on
 877** (hard: the admin page-wrapper form and the `adminPageMaxWidth` token) · blocks **885** and **895** · owner action
 **O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 1 (§17)**: the owner accepted 64 of 72 tuples and
-returned the `RangeDatePicker` year list. Review 1 was `PARTIALLY VERIFIED` (§16). The owner decision in §16.2 is still
-open · kickoff filed 2026-09-28
+returned the `RangeDatePicker` year list. The owner chose option A for O84-8 (R17). Review 1 was `PARTIALLY VERIFIED`
+(§16) · kickoff filed 2026-09-28
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row's text moves into §3.
@@ -465,7 +465,8 @@ and emits no git command.
 ### 16.2 Open before approval
 
 1. **O84-2**, the owner matrix (§13.4, 72 tuples). It includes two visible changes that §9 did not list: the avatar is 84px (was 96px), and email/website truncate with a `title` tooltip.
-2. **STOP - OWNER DECISION REQUIRED — legacy "status-only change cannot be saved".** `FIELD_OPTIONS.status = {}` (`AdminUserProfile.tsx:94`) keeps the legacy `setValue('status', v)` without `shouldDirty`. So a status change alone leaves `isDirty` false and Save disabled; T2 has to type and clear the reason to get round it. INFERENCE from react-hook-form's `setValue` semantics and T2's own workaround: an admin cannot unblock a user (blocked → active) without editing another field. Options:
+2. **DECIDED 2026-09-30 (O84-8), owner verbatim: *"O84-8: варіант A, виправляємо в 893"*.** Option A is now
+   revision 1's R17 (§17.3). The analysis it answered: legacy "status-only change cannot be saved". `FIELD_OPTIONS.status = {}` (`AdminUserProfile.tsx:94`) keeps the legacy `setValue('status', v)` without `shouldDirty`. So a status change alone leaves `isDirty` false and Save disabled; T2 has to type and clear the reason to get round it. INFERENCE from react-hook-form's `setValue` semantics and T2's own workaround: an admin cannot unblock a user (blocked → active) without editing another field. Options:
    - **A (recommended):** fix it in 893. Set `status: { shouldDirty: true }`, add **T10** ("a status-only change enables Save and sends the new status"), and remove T2's type-and-clear workaround. The verification is the §13.2 test lines plus a P6 plant (restore `status: {}` → T10 fails).
    - **B:** keep 893 byte-faithful and file a separate numbered task for the fix.
 
@@ -507,11 +508,17 @@ census baseline update (R9) or plants P1–P5; keep evidence `01`–`24` unchang
 | **R14** | **No range or cap changes.** `computeYearOptions`, every `maxDate` consumer (§17.2) and the month dropdown stay as they are. The desktop year trigger's missing `aria-label` (measured: the month trigger has `Muaj`, the year trigger `null` at 1440; the mobile one has `Viti`) is fixed by passing `triggerAriaLabel={t('period_year')}` to the desktop year `MantineCombobox` (`RangeDatePicker.tsx:529-538`), the same key the mobile header uses (`:720`). | P2 | AC12 |
 | **R15** | **Tests** in `src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`, new `describe('scroll to the selected option (Task 893 R12/R13)')`:<br>• **T-C1** desktop, 16 options, `value` = the 12th: open → the 12th option has `data-combobox-selected`, and `Element.prototype.scrollIntoView` (stubbed with `vi.fn`, restored after) was called with that option as `this`;<br>• **T-C2** mobile (the file's existing mobile harness, or `matchMedia` mocked to `(max-width: 40em)`): open the sheet → `scrollIntoView` was called on the button of the selected option;<br>• **T-C3** no `value`: open → `scrollIntoView` is not called for any option.<br>Every existing test in the file passes unchanged. | P1 | AC11 |
 | **R16** | **Plants**, two-armed, Node I/O, hash witnesses (§10.3 rules): **P7** remove R12's `onDropdownOpen` → T-C1 fails (`r1-plant-p7.txt`); **P8** remove R13's scroll effect → T-C2 fails (`r1-plant-p8.txt`). | P1 | AC11 |
+| **R17** | **O84-8 option A: a status-only change can be saved.** In `AdminUserProfile.tsx:94`, `FIELD_OPTIONS.status` becomes `{ shouldDirty: true }`. Nothing else in the container changes: the effect that clears `blockReason` (`:193`) keeps its silent `setValue`, and every other field option stays the same. After-behaviour: in edit mode, changing only the status select marks the form dirty and enables Save. Choosing the stored status again makes the form clean again (react-hook-form compares with the defaults), and Save is disabled. Tests in `AdminUserProfile.smoke.test.tsx`:<br>• **T10** a blocked user (`FIXTURE_PROFILE_USER_BLOCKED`): edit → choose `active` → Save is enabled → click → `updateUserProfileFull(id, …)` with `status: 'active'` and the other fields unchanged;<br>• **T10b** active user: choose `inactive`, then `active` again → Save is disabled;<br>• **T2** drops its type-and-clear workaround (`:210-213`): choose `blocked`, click Save with the reason still empty → `block_reason_required`, no action call. The rest of T2 is unchanged.<br>**Plant P6:** set `status` back to `{}` → T10 fails (`r1-plant-p6.txt`). | P1 | AC14 |
 
 Write set for revision 1: `src/design-system/mantine/patterns/MantineCombobox.tsx`,
 `src/design-system/mantine/patterns/RangeDatePicker.tsx` (R14's one prop),
-`src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`, the session log, `docs/backlog.md`
-(893 cell only), and `docs/sessions/evidence/task893/r1-*`. **No Story file changes:** `Mantine/Primitives/Combobox`
+`src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`,
+`src/components/admin/AdminUserProfile.tsx` (R17: one line),
+`src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (R17),
+`docs/critical-flow-registry.md` (row "User status / role / account-type change", `:47`): add the R17 UI proof to the
+command cell (`npx vitest run src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`, T10/T10b), and to the
+coverage cell *"Task 893 (O84-8): a status-only change now enables Save on `/admin/users/[id]`; the legacy form could
+not save it."*; the session log, `docs/backlog.md` (893 cell only), and `docs/sessions/evidence/task893/r1-*`. **No Story file changes:** `Mantine/Primitives/Combobox`
 (`Default`) and `Mantine/Primitives/RangeDatePicker` already render the real component. Both are
 `MantineStoryShell` primitives (GR-3d: n/a).
 
@@ -527,12 +534,16 @@ Write set for revision 1: `src/design-system/mantine/patterns/MantineCombobox.ts
   - `Mantine/Primitives/Combobox--default` at 1440: open with a value, and the selected option is visible.
 - **AC12 [R14]** At 1440 the desktop year trigger's `aria-label` equals `common.period_year` in the active locale.
   `git diff` shows no change to `computeYearOptions` or to any `maxDate` consumer.
+- **AC14 [R17]** T10, T10b and the revised T2 pass, and T1 and T3–T9 still pass. P6 fails T10 and passes after the
+  restore, with equal hashes. `git diff src/components/admin/AdminUserProfile.tsx` against the review-1 tree changes
+  exactly one line (`FIELD_OPTIONS.status`). `npm.cmd run test:admin` passes unchanged. Registry row `:47` cites T10.
 - **AC13 [all]** `typecheck`, `lint` (0 errors), `check:story-coverage`, `check:rendered-scope`,
   `check:surface-census:changed`, `check:design-tokens`, `check:enrolled-tailwind`, `check:file-integrity`,
   `check:mojibake`, `build-storybook` and `npm run build` exit 0 on the final tree. `22-hash-object` is re-captured as
   `r1-hash-object.txt`.
 
-`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+`GR-4 AC AUDIT — 4 criteria; each states an observable property; absolutes: none.` (AC14's "one line" is the declared
+size of R17, measured by the diff.)
 
 ### 17.5 Final gate block (revision 1)
 
@@ -540,6 +551,7 @@ Write set for revision 1: `src/design-system/mantine/patterns/MantineCombobox.ts
 $ev = "docs\sessions\evidence\task893"
 node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r1-platform.txt"
 npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/components/shared/__tests__/PhoneField.smoke.test.tsx src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx *>&1 | Tee-Object "$ev\r1-tests.txt"
+npm.cmd run test:admin *>&1 | Tee-Object "$ev\r1-test-admin.txt"
 npm.cmd run typecheck *>&1 | Tee-Object "$ev\r1-typecheck.txt"
 npm.cmd run lint *>&1 | Tee-Object "$ev\r1-lint.txt"
 npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\r1-story-coverage.txt"
@@ -565,8 +577,9 @@ build.
 | `Mantine/Primitives/RangeDatePicker` | `SingleDate`, `SingleDateSelected` (open the year list) | `sq`, `en` | 390, 1440 | 8 |
 | `Mantine/Primitives/Combobox` | `Default` (blast radius: open with a value) | `sq` | 390, 1440 | 2 |
 
-GR-3d: both are `MantineStoryShell` primitives (n/a). The §16.2 decision (O84-8) is still open. If the owner picks
-**A** before this revision runs, T10 and P6 from §16.2 join this revision, and their test lines join §17.5.
+GR-3d: both are `MantineStoryShell` primitives (n/a). R17 changes behaviour, not any visible chrome, so it adds no
+matrix tuple. After the deploy, the O84-2 live check gains one step: unblock the test user with the status select alone,
+and save.
 
 ---
 

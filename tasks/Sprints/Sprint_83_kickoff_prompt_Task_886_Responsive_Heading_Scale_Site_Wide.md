@@ -1790,3 +1790,141 @@ Revision 6 (R37–R42) is verified on the final tree.
 
 **Next.** The owner runs §21.8. If every tuple is accepted, the next review approves and closes 886. If the owner
 returns a tuple, the next review writes Revision 7.
+
+---
+
+## 22. Revision 7 — review 11, 2026-09-30 (`NEEDS REVISION`, owner returned §21.8 row 5)
+
+This section overrides every earlier section it names. Revisions 1–6 are **kept**. Review 10 verified them (§21.10).
+
+### 22.1 Owner result for §21.8 (2026-09-30, verbatim)
+
+| Row | Owner verdict |
+|---|---|
+| 1 send-message `#478dec` | *"приймаю."* |
+| 2 `ListingDetailView` heart + lightbox | *"приймаю."* |
+| 3 `AppImage` `Default`/`Placeholder` | *"приймаю."* |
+| 4 coloured sold/rented | *"приймаю."* |
+| 5 `ListingGalleryPattern`, `GalleryThumbnailButton` + lightbox | *"не приймаю. Фото ніколи не має перекривати текст над фото, який показує нумерацію фото. Дивись скріншот. Відступ має бути канонічний, не хардкод!"* The screenshot shows `listinggallerypattern--default`'s lightbox at 1234×812: the photo's top edge runs through the "2 / 9" counter. |
+
+### 22.2 Finding (review 11, read in source)
+
+| # | Severity | Evidence | Req |
+|---|---|---|---|
+| F24 | **P1** owner | `LightboxView.tsx:96-104`: the counter is `Box pos="absolute" top={resolveGalleryOffset(theme, 'md')} left="50%"`, an overlay on the media region.<br>• Desktop: the media column (`Stack pos="relative" h="100%"`, `:139-147`) starts at the modal body's top edge, and the media box (`.fill`, `flex: 1`) takes all the height the strip leaves. A photo that fills that height starts under the counter.<br>• Mobile: the swipe track is `h="100%"`, so a full-bleed slide sits under the counter too.<br>The thumbnail strip already follows the right rule: *"reserved space in normal flow, never an overlay"* (`:153-160`, Task 824 R25). The counter is the one text element that does not.<br>`LightboxView` serves every lightbox: `ListingGallery` (production and `ListingDetailView`), `MantineListingGalleryPattern` and the `LightboxView` primitive. | R43 |
+
+### 22.3 Canonical UI decision record (GR-0)
+
+| Artifact | Disposition | Owner and token path |
+|---|---|---|
+| Lightbox counter | **EXTEND** `LightboxView` | The counter becomes an in-flow row **above** the media region, in both the desktop and the mobile branch. It uses Mantine spacing props from the theme scale (`py="md"`, the same `md` step the old `top` offset used), keeps `fz="sm"`, `lh={theme.other.lineHeight.lightboxCounter}` and `.counter`'s colour, and is centred with `ta="center"`. It has no `pos="absolute"`, no `left: 50%` and no `.centerX` transform. No px/rem, and no new CSS rule except deleting `.centerX` if nothing else uses it. |
+
+### 22.4 Revision requirement
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R43** | `LightboxView.tsx`:<br>• the `Center pos="relative" w="100%" h="100%"` body child becomes a column: counter row, media region (`flex: 1`, `min-height: 0` — the existing `.fill`/`.minZero` mechanics), and on desktop the thumbnail strip;<br>• the counter `Box` loses `pos`/`top`/`left`/`.centerX`, and renders in flow with `py="md"` and `ta="center"`;<br>• the mobile branch gets the same counter row above its swipe container, and the swipe container fills the remaining height, not `h="100%"` of the body;<br>• close and prev/next (`GalleryNavActionIcon`, `GalleryDesktopNavigation`) stay as they are; they are controls, not text over the photo;<br>• the mobile pagination rail stays as it is;<br>• rewrite the comments that describe the counter's position;<br>• the `LightboxView` Story needs no change unless a `play` assertion reads the counter's position. Update it if one does.<br>Add a regression test to `ListingGallery.portal.smoke.test.tsx` (or a new `LightboxView` test): the counter element is not `position: absolute`, and it precedes the media region in DOM order. Prove it two-armed: restore `pos="absolute"` → the test fails; revert → it passes; record a hash witness. | P1 | AC33 |
+
+**Out of scope:** everything else. Rows 1–4 are accepted.
+
+### 22.5 Verification plan — re-entry `remediation`
+
+Order: I0-R7 → R43 (with its plant) → gate block → measurement. Evidence goes to `docs/sessions/evidence/task886/rev7/`.
+Append `## Revision 7` to the session log.
+
+**I0-R7:** `win32`, then `git --no-optional-locks hash-object` into `$ev\i0.log`. Expected:
+1. `97ec3e230a00fa7881516be10a2f68b78a6e6104` `src/modules/listings/components/LightboxView.tsx`
+2. `fae9abba107d2effd2aa24f54556bf5da3d6b5ad` `src/modules/listings/components/LightboxView.module.css`
+3. `a406af4149488c08ddc128071f1d8a814586f2cc` `src/stories/mantine/primitives/LightboxView.stories.tsx`
+4. `358cbd0243cf5b513890d7edad0f30c513c85f81` `src/design-system/media/appImageConfig.ts` (added by §22.8a)
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Gate block:** §18.5's block with `$ev = "docs\sessions\evidence\task886\rev7"`, the smoke tests of §21.5, and the
+R43 test. `hash-object.log` lists **every** path in `git status --short` that 886 owns, not only this revision's.
+Reviews 8 and 10 recorded the narrowing twice.
+
+**Measurement**, native Playwright on the rebuilt `storybook-static`, into `$ev\story-measure.log`:
+- Stories: `mantine-primitives-lightboxview--*` (3), `patterns-mantine-listinggallerypattern--default` and
+  `patterns-mantine-listingdetailview--public-listing`, each with the lightbox open.
+- Viewports: 320×640, 390×844, 768×1024, 1024×768, 1234×812, 1440×900 and 1920×1080.
+- Photo index: 1 and 2 (the owner's screenshot shows photo 2).
+- Record:
+  - the counter's box, and the visible media frame's box (the `AppImage` `lightbox` frame's rendered `<img>` or
+    `MediaPlaceholder`);
+  - the vertical gap = media top − counter bottom, which must be **≥ 0** in every cell;
+  - whether the counter is `position: absolute`, which must be **no**;
+  - that the thumbnail strip does not intersect the media;
+  - horizontal overflow.
+
+### 22.6 Acceptance criteria
+
+`GR-4 AC AUDIT — 1 revision criterion; each states an observable property; absolutes: none.`
+
+- **AC33 [R43].**
+  - In `story-measure.log`, in every cell, the counter does not intersect the media frame (gap ≥ 0), the counter is
+    not `position: absolute`, the strip does not intersect the media, and there is no overflow.
+  - The R43 test's plant log shows **fail → pass**, with the hash witness.
+  - Every rev7 gate log ends `EXIT_CODE=0`, `build.log` included.
+  - The session log has GR-0, GR-1 and GR-3b/3c/3d receipts for the lightbox Stories.
+- AC1–AC32 stand.
+
+### 22.7 OWNER VISUAL QA REQUIRED — O83-1, Revision 7
+
+1. `ListingGalleryPattern`, `GalleryThumbnailButton` and `LightboxView` × `en` × 320/1234/1440, with the lightbox open
+   on photos 1 and 2: the counter sits above the photo and never over it.
+2. `ListingDetailView` → `Public Listing` × `en` × 320/1440, with the lightbox open: the same.
+
+### 22.8a Amendment — owner clarification, 2026-09-30 (overrides §22.2–§22.6 where they differ)
+
+**Owner, verbatim:** *"проблема в тому, що контейнер не обрізає фото і воно може взагалі вилазити за межі екрану.
+Тому тут проблема в тому, що має бути контейнер фото, який буде обрізати по своїх межах фото, яке всередині."*
+
+**Reviewer's measurement** (native Playwright on the rev6 `storybook-static`, `mantine-primitives-lightboxview--default`):
+- The desktop photo frame is `overflow: visible`, and its box starts at the viewport's top edge (`top: 0`), under the
+  counter (16–36px).
+- The painted photo starts at y=0 at 1440×600 and at y=24 at 1920×700, so it runs under the counter.
+- At 1234×812 it is letterboxed from y=80.
+- The photo stays inside its `<img>` box only because of `object-fit: contain`. Nothing clips it.
+
+**Source:**
+- `appImageConfig.ts` `lightbox.containerClass` = `cn(styles.frame, styles.frameFill)`. It is the **only**
+  photo-filling variant without `styles.frameClip`.
+- On desktop, the media holder (`LightboxView.tsx`, the `Box pos="relative" w="100%" className={styles.fill}`) clips
+  nothing.
+- The mobile swipe container already clips (`.clip`, `LightboxView.module.css:41`).
+
+**R43 is extended.** The photo gets one bounded, clipping container:
+1. **Bounds.** The photo container is the region between the in-flow counter row (above) and the thumbnail strip
+   (below, desktop) or the bottom edge (mobile). Horizontally it is the existing
+   `maw={theme.other.boxSize.lightboxMediaMaxWidth}` column. Its size comes only from the flex column
+   (`flex: 1; min-height: 0`), with no fixed height.
+2. **Clipping.**
+   - `appImageConfig.ts`: the `lightbox` variant's `containerClass` gains the canonical `styles.frameClip`, so the frame
+     clips whatever it holds.
+   - The desktop media holder also clips, through the existing canonical `.clip` rule of `LightboxView.module.css`
+     (the one the mobile container uses). No new CSS rule, and no `style`.
+   - The mobile branch keeps `.clip`, and its swipe container now fills the region under the counter row, not the
+     full body.
+3. **Test.** In the R43 test file, add a case: `VARIANTS.lightbox.containerClass` contains the `frameClip` class, and
+   the rendered desktop media holder carries `.clip`. Plant it two-armed: remove `frameClip` → the test fails;
+   restore → it passes; record a hash witness.
+
+**Measurement additions** (the §22.5 cells), recorded per cell:
+- the frame's and the holder's computed `overflow`: **hidden**;
+- the painted photo rect (computed from `naturalWidth`/`naturalHeight` and `object-fit`) lies inside the frame rect;
+- the frame rect lies inside the viewport;
+- frame top ≥ counter bottom.
+
+Add one synthetic arm per viewport, run in the page and restored in `finally`: set the `<img>`'s `object-fit` to
+`none` and confirm that the frame still clips it (`overflow: hidden`, and the frame rect is unchanged).
+
+**AC33 is extended:** every cell shows `overflow: hidden` on the frame and the holder, the painted photo inside the
+frame, the frame inside the viewport, and a counter gap ≥ 0. The new plant logs show **fail → pass**. §22.7 is
+unchanged, and the owner also checks the clipping.
+
+### 22.8 Completion report for Revision 7
+
+Append `## Revision 7` to the session log. It contains the Files Changed table, R43 with its evidence, every command
+with its exit code, the plant logs, the `story-measure.log` summary and the receipts. Status: `IMPLEMENTED - AWAITING
+ORCHESTRATOR REVIEW` or `BLOCKED`. Update the 886 cells of `docs/backlog.md`. No mutating git.

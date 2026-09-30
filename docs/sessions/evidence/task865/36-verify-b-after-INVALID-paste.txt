@@ -1,0 +1,5 @@
+-- O78-8 AFTER verify PART (b) (instruction step 8), returned by the owner 2026-09-30, saved verbatim by Opus.
+-- INVALID RUN, not evidence: the pasted text began at the second character of line 50 ("- ====="), so the batch failed to parse and nothing executed. Superseded by the re-run.
+Failed to run sql query: ERROR:  42601: syntax error at or near "-"
+LINE 1: - ===== PART (b) =========================================================================
+        ^

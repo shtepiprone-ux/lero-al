@@ -215,8 +215,8 @@ grant all on public.pages to service_role;
 -- site_settings — admin only.
 grant all on public.site_settings to service_role;
 
--- listing_views — acknowledged exception: anon INSERT for view tracking.
-grant insert on public.listing_views to anon;
+-- listing_views — service_role only. The former anon INSERT exception was closed by Task 865;
+-- view tracking goes through record_listing_view called with service_role.
 grant all on public.listing_views to service_role;
 
 -- ═══════════════════════════════════════════════════════════════════════════

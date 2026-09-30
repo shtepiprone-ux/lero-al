@@ -1,0 +1,16 @@
+win32 v22.22.3
+probe syntax exit=0
+check:notifications-grants exit=exit=0
+check:listing-reports-grants exit=exit=0
+check:file-integrity exit=exit=0
+check:mojibake exit=exit=0
+lint exit=exit=0
+build exit=exit=0
+fb4f1516c6976d9a91f420ff6e4bf53fc2e51fbb
+3194bb324eac650a95661f24b6f915f3ebece3c5
+cf66dac79db109d522598deeda8c1fce84b7f278
+a4d411b8965c8c7e7ce5a819f7ce53205d7b73f7
+3503f13b83f09d0de47a0ead7b56700488cfdd26
+debcfa26a0d8abe647fe75c636291829618cf380
+f57cc9a511dcbb359f02ead3eb6a5af73c84f655
+45

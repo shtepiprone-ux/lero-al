@@ -1,0 +1,17 @@
+-- O78-8 step 8: scripts/task-870-privilege-audit.sql AFTER the Task 865 apply, returned by the owner 2026-09-30, saved verbatim by Opus.
+-- Rows verbatim, one JSON object per line.
+{"check_id":"A1","object_name":"(count)","role_name":null,"detail":"0"}
+{"check_id":"A2","object_name":"(count)","role_name":null,"detail":"1"}
+{"check_id":"A2","object_name":"public_user_profiles","role_name":null,"detail":"owner=postgres bypassrls=true anon_select=false authenticated_select=true"}
+{"check_id":"A3","object_name":"(count)","role_name":null,"detail":"0"}
+{"check_id":"A4","object_name":"(count)","role_name":null,"detail":"0"}
+{"check_id":"A5","object_name":"(count)","role_name":null,"detail":"0"}
+{"check_id":"A6","object_name":"(count)","role_name":null,"detail":"5"}
+{"check_id":"A6","object_name":"get_listing_owner_contact","role_name":"authenticated","detail":"listing_id_param uuid"}
+{"check_id":"A6","object_name":"record_listing_view","role_name":"anon","detail":"p_listing_id uuid, p_user_id uuid, p_ip_hash text"}
+{"check_id":"A6","object_name":"record_listing_view","role_name":"authenticated","detail":"p_listing_id uuid, p_user_id uuid, p_ip_hash text"}
+{"check_id":"A6","object_name":"record_recently_viewed","role_name":"authenticated","detail":"p_listing_id uuid, p_cap integer"}
+{"check_id":"A6","object_name":"record_recently_viewed","role_name":"anon","detail":"p_listing_id uuid, p_cap integer"}
+{"check_id":"A7","object_name":"(count)","role_name":null,"detail":"0"}
+{"check_id":"A8","object_name":"(count)","role_name":null,"detail":"1"}
+{"check_id":"A8","object_name":"public_user_profiles","role_name":"authenticated","detail":"SELECT granted_by=postgres"}

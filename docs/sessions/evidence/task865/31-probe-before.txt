@@ -1,0 +1,5 @@
+-- O78-8 BEFORE probe, owner-run in native PowerShell, returned 2026-09-30 (saved verbatim by Opus, review 2). Probe hash 3503f13b.
+PS C:Claude_Code_Projectslero-al> node.exe scripts	ask-865-anon-probe.mjs --phase before
+phase=before arm=P1 method=POST http_status=409 pg_code=23503 reason=other
+phase=before arm=P2 method=PATCH http_status=204 pg_code=null reason=none
+phase=before arm=P3 method=DELETE http_status=204 pg_code=null reason=none

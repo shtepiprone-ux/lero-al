@@ -1,0 +1,726 @@
+{
+ "$schema": "../review-ledger.schema.json",
+ "schemaVersion": 4,
+ "task": "Task-865 — listing_views anonymous insert closed: policy \"Anyone can insert a view\" dropped, anon INSERT/UPDATE/DELETE revoked, applied to production 2026-09-30 (O78-8); view tracking proven by row count and a real guest view (R1-R10, revision 1)",
+ "review": {
+  "decision": "APPROVED WITH NOTES",
+  "baseRevision": "8013202919b30e413ef65ef9c20873332d1764a3",
+  "reviewedRevision": "uncommitted worktree on top of 8013202919b30e413ef65ef9c20873332d1764a3 (main). Blobs: close 3194bb32, audit fb4f1516, rollback cf66dac7, verify 37be33eb, probe 3503f13b, grant-discipline-audit debcfa26, rls-rules 008a3914.",
+  "reviewedPaths": [
+   "scripts/task-865-listing-views-audit.sql",
+   "scripts/task-865-close-anon-insert.sql",
+   "scripts/task-865-rollback.sql",
+   "scripts/task-865-verify.sql",
+   "scripts/task-865-anon-probe.mjs",
+   "scripts/grant-discipline-audit.sql",
+   "docs/rls-rules.md",
+   "docs/sessions/2026-09-29-task865-listing-views-anon-insert.md",
+   "docs/sessions/evidence/task865"
+  ],
+  "supersedes": [],
+  "coverage": {
+   "total": 8,
+   "verified": 8,
+   "unverified": 0,
+   "openP0": 0,
+   "openP1": 0,
+   "openP2": 0
+  },
+  "ledgerGate": {
+   "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-30-task865-listing-views-anon-insert.review-ledger.json",
+   "status": "PASSED",
+   "exitCode": 0
+  }
+ },
+ "requirements": [
+  {
+   "id": "AC1 / R1 R9",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-865-close-anon-insert.sql",
+    "symbol": "step 1 drop policy + revoke; step 2 post-condition",
+    "diffHunks": [
+     "scripts/task-865-close-anon-insert.sql"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "policy absent after apply",
+     "anon holds no INSERT/UPDATE/DELETE after apply",
+     "870 audit A5 reads 0, A1/A3/A4/A7 stay 0"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task865/10-before-audit.txt",
+     "command": "owner-run audit, O78-8 step 1",
+     "observable": "V1 21 rows incl. anon INSERT/UPDATE/DELETE; V2 lists \"Anyone can insert a view\" (INSERT, {public}, with_check=true).",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "policy absent after apply",
+       "anon holds no INSERT/UPDATE/DELETE after apply"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/34-after-audit.txt",
+     "command": "owner-run audit, O78-8 step 5",
+     "observable": "Set difference vs BEFORE is exactly: anon INSERT/UPDATE/DELETE removed (V1 21->18), policy row removed (V2 2->1); V3-V7 identical.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "policy absent after apply",
+       "anon holds no INSERT/UPDATE/DELETE after apply"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/39-870-audit-after.txt",
+     "command": "owner-run scripts/task-870-privilege-audit.sql, O78-8 step 8",
+     "observable": "A1 0, A3 0, A4 0, A5 0 (was 1 on 2026-09-23), A7 0.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "870 audit A5 reads 0, A1/A3/A4/A7 stay 0"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The revoke could be silently ineffective (column grants, PUBLIC grant or another grantor keeps anon INSERT).",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/35-verify-a-after.txt",
+     "result": "REFUTED: an actual anon insert AFTER is refused 42501 permission denied for table listing_views, and the in-transaction post-condition (has_table_privilege) raised nothing on apply (33-close-apply.txt)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC2 / R3 (SQL arm)",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-865-verify.sql",
+    "symbol": "PART (a)",
+    "diffHunks": [
+     "scripts/task-865-verify.sql"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "anon insert passes grant and RLS BEFORE",
+     "anon insert refused for the grant reason AFTER"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task865/30-verify-before.txt",
+     "command": "owner-run verify PART (a), O78-8 step 2",
+     "observable": "TASK865_A result=refused sqlstate=23503 (FK listing_views_listing_id_fkey) - raised only after the privilege check and RLS WITH CHECK.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "anon insert passes grant and RLS BEFORE"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/35-verify-a-after.txt",
+     "command": "owner-run verify PART (a), O78-8 step 6",
+     "observable": "TASK865_A result=refused sqlstate=42501 msg=permission denied for table listing_views.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "anon insert refused for the grant reason AFTER"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The AFTER refusal could be the pre-existing RLS guard rather than the fix.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/36b-verify-b-after.txt",
+     "result": "REFUTED: the authenticated arm, which keeps its INSERT grant, is refused with the RLS message; the anon arm's message is the grant message, so the two reasons are distinguishable and anon's is the grant."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC3 / R3 (PostgREST arm)",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-865-anon-probe.mjs",
+    "symbol": "arms P1-P3",
+    "diffHunks": [
+     "scripts/task-865-anon-probe.mjs"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "BEFORE: P1 other/23503, P2 none, P3 none",
+     "AFTER: every arm reason=grant"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task865/31-probe-before.txt",
+     "command": "node.exe scripts\\task-865-anon-probe.mjs --phase before (owner, native PowerShell)",
+     "observable": "P1 409/23503/other, P2 204/none, P3 204/none; no MISMATCH.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "BEFORE: P1 other/23503, P2 none, P3 none"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/38-probe-after.txt",
+     "command": "node.exe scripts\\task-865-anon-probe.mjs --phase after (owner, native PowerShell)",
+     "observable": "P1, P2, P3 each 401/42501/grant; no MISMATCH.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "AFTER: every arm reason=grant"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The probe could classify an RLS refusal as grant.",
+     "kind": "EXECUTED",
+     "path": "scripts/task-865-anon-probe.mjs",
+     "result": "REFUTED by source: grant requires /permission denied for (table|relation) listing_views/ and is tested before the RLS regex; an RLS message cannot match it."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC4 / R2",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-865-close-anon-insert.sql",
+    "symbol": "step 0 guard g1-g3",
+    "diffHunks": [
+     "scripts/task-865-close-anon-insert.sql"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "g1-g3 are distinct appended violations",
+     "the raise precedes step 1",
+     "live preconditions satisfy g3"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/task-865-close-anon-insert.sql",
+     "command": "reviewer read of blob 3194bb32",
+     "observable": "g1 (table + RLS), g2 (exists + SECURITY DEFINER), g3 (owner bypassrls or owns table without FORCE RLS) each array_append a named violation; one raise before the drop/revoke.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "g1-g3 are distinct appended violations",
+       "the raise precedes step 1"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/10-before-audit.txt",
+     "command": "owner-run audit V5/V6, O78-8 step 1",
+     "observable": "record_listing_view prosecdef=true, owner postgres bypassrls=true; listing_views relforcerowsecurity=false.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "live preconditions satisfy g3"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The guard could pass while the RPC would stop recording.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/37-verify-c-after.txt",
+     "result": "REFUTED: after the drop, record_listing_view still adds one row (before=4 after=5)."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC5' / R5'",
+   "priority": "P0",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/task-865-verify.sql",
+    "symbol": "PART (c), PART (d)",
+    "diffHunks": [
+     "scripts/task-865-verify.sql"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "RPC as service_role adds exactly one row BEFORE and AFTER",
+     "a real guest page view on production records a row AFTER"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/evidence/task865/32-verify-c-before.txt",
+     "command": "owner-run revised verify PART (c) BEFORE",
+     "observable": "TASK865_C before=4 after=5.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "RPC as service_role adds exactly one row BEFORE and AFTER"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/37-verify-c-after.txt",
+     "command": "owner-run verify PART (c) AFTER, O78-8 step 6",
+     "observable": "TASK865_C before=4 after=5.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "RPC as service_role adds exactly one row BEFORE and AFTER"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/43-guest-view-part-d.txt",
+     "command": "owner guest page view in a private window, then verify PART (d)",
+     "observable": "slug 11-mr7ucly4, viewed_at 2026-09-30 08:42:00+00, guest=true.",
+     "freshness": "live production database 2026-09-30, owner-run O78-8 against close blob 3194bb32, verify blob 37be33eb (parts a/b content-identical to a4d411b8), audit blob fb4f1516, probe blob 3503f13b",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "a real guest page view on production records a row AFTER"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "R5 as first written (RPC returns true; route answers recorded:true) could be satisfied.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/30-verify-before.txt",
+     "result": "CONFIRMED defect: the RPC returns void (22P02 on boolean assignment); R5/AC5 were superseded by R5'/AC5' in kickoff 17 before apply, and the route's always-false flag is filed as Task 899. Recorded as finding F2."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC6 / R4",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "scripts/grant-discipline-audit.sql",
+    "symbol": "listing_views section, :218-220",
+    "diffHunks": [
+     "scripts/grant-discipline-audit.sql"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "no anon grant on listing_views",
+     "service_role line kept",
+     "both grants gates exit 0"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "scripts/grant-discipline-audit.sql",
+     "command": "git diff (reviewer)",
+     "observable": "The anon INSERT grant line is replaced by a comment; grant all ... to service_role stays.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "no anon grant on listing_views",
+       "service_role line kept"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/20-notifications-grants.txt",
+     "command": "npm.cmd run check:notifications-grants (executor, win32)",
+     "observable": "exit 0.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "both grants gates exit 0"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/sessions/evidence/task865/21-listing-reports-grants.txt",
+     "command": "npm.cmd run check:listing-reports-grants (executor, win32)",
+     "observable": "exit 0.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "both grants gates exit 0"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "Another line in the declaration file could still grant anon on listing_views.",
+     "kind": "EXECUTED",
+     "path": "scripts/grant-discipline-audit.sql",
+     "result": "REFUTED: git grep listing_views over scripts/ (excluding task-865/849) returns only the header count, the comment, the service_role grant and a no-change list entry."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC7 / R6",
+   "priority": "P1",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "docs/rls-rules.md",
+    "symbol": ":410-411 and :437",
+    "diffHunks": [
+     "docs/rls-rules.md"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "only :410-411 and :437 change",
+     ":437 states date, dropped policy, revoked privileges, V6 owner/bypass fact"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/rls-rules.md",
+     "command": "git diff -U0 docs/rls-rules.md (reviewer)",
+     "observable": "Two hunks only: @@ -410,2 +410,2 @@ and @@ -437 +437 @@; the row states Closed 2026-09-30, the dropped policy, anon INSERT/UPDATE/DELETE revoked, owner postgres rolbypassrls=true (V6).",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "only :410-411 and :437 change",
+       ":437 states date, dropped policy, revoked privileges, V6 owner/bypass fact"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The row could record a closure that did not happen.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/33-close-apply.txt",
+     "result": "REFUTED: the edit was written only after the apply result and the AFTER grid were returned."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  },
+  {
+   "id": "AC8 / R7 R8 R10",
+   "priority": "P2",
+   "status": "VERIFIED",
+   "findingIds": [],
+   "finalSubject": {
+    "path": "docs/sessions/2026-09-29-task865-listing-views-anon-insert.md",
+    "symbol": "stage 2 and closure sections",
+    "diffHunks": [
+     "docs/sessions/2026-09-29-task865-listing-views-anon-insert.md"
+    ]
+   },
+   "requiredScope": {
+    "subjects": [
+     "V7 recorded with EXPLAINED/UNKNOWN",
+     "authenticated privileges BEFORE/AFTER and part (b) reason",
+     "rollback matches V1/V2",
+     "backlog <= 80 lines"
+    ],
+    "phases": [
+     "O78-8"
+    ],
+    "notApplicable": {
+     "stories": "SQL policy/grant change, read-only catalog query, a Node probe and one declaration file; no UI artifact or story.",
+     "locales": "No user-facing string added or changed.",
+     "viewports": "Nothing rendered by this change.",
+     "states": "The cases are enumerated under subjects."
+    }
+   },
+   "evidence": [
+    {
+     "path": "docs/sessions/2026-09-29-task865-listing-views-anon-insert.md",
+     "command": "reviewer read",
+     "observable": "V7 row b70378c5 recorded, conclusion UNKNOWN with decider named; authenticated holds all seven privileges BEFORE and AFTER, part (b) AFTER refused for the RLS reason.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "V7 recorded with EXPLAINED/UNKNOWN",
+       "authenticated privileges BEFORE/AFTER and part (b) reason"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "scripts/task-865-rollback.sql",
+     "command": "reviewer read of blob cf66dac7",
+     "observable": "Recreates the policy (PERMISSIVE, INSERT, to public, with check true) and grants anon INSERT/UPDATE/DELETE - exactly the V1/V2 delta; self-checks both.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "rollback matches V1/V2"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    },
+    {
+     "path": "docs/backlog.md",
+     "command": "wc -l + npm run check:backlog-active (reviewer)",
+     "observable": "80 physical lines; check passed.",
+     "freshness": "final worktree 2026-09-30 on base 8013202919b3; reviewer git hash-object equals the blobs named in reviewedRevision",
+     "coverageRole": "COVERS",
+     "scope": {
+      "subjects": [
+       "backlog <= 80 lines"
+      ],
+      "phases": [
+       "O78-8"
+      ]
+     }
+    }
+   ],
+   "coverageGaps": [],
+   "counterChecks": [
+    {
+     "claim": "The rollback could restore more than was removed.",
+     "kind": "EXECUTED",
+     "path": "docs/sessions/evidence/task865/34-after-audit.txt",
+     "result": "REFUTED: the BEFORE/AFTER set difference is exactly the three anon privileges and the one policy the rollback restores."
+    }
+   ],
+   "semanticCheck": {
+    "mode": "NOT_APPLICABLE",
+    "reason": "SQL policy/grant change, catalog query and Node probe; no generated CSS, selector or cascade-sensitive syntax."
+   }
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC7 / R6",
+   "requirementIds": [
+    "AC7 / R6"
+   ],
+   "evidence": "Orchestration defect: the kickoff assigned docs/rls-rules.md to the executor, which the execute-task policy-file boundary forbids, and R6 needed the apply date. Executor correctly reported POLICY-EDIT AUTHORITY REQUIRED; R6 moved to the Opus closure (kickoff 16) and applied there."
+  },
+  {
+   "id": "F2",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC5' / R5'",
+   "requirementIds": [
+    "AC5' / R5'"
+   ],
+   "evidence": "Orchestration defect: R5/AC5 assumed record_listing_view returns boolean; live it returns void (22P02). Caught by the BEFORE run before apply; verify PART (c) now counts rows and PART (d) proves the guest view (kickoff 17). The revision edit was made by Opus at the owner's explicit request and is proven only through owner live runs."
+  },
+  {
+   "id": "F3",
+   "priority": "P3",
+   "status": "OPEN",
+   "requirements": "AC5' / R5'",
+   "requirementIds": [
+    "AC5' / R5'"
+   ],
+   "evidence": "Pre-existing, outside 865 scope: /api/listings/[slug]/view always answers recorded:false because the RPC returns void, so ViewTracker never refreshes the counter. Filed as Task 899 (backlog-reserved.md)."
+  },
+  {
+   "id": "F4",
+   "priority": "NOTE",
+   "status": "OPEN",
+   "requirements": "AC8 / R7 R8 R10",
+   "requirementIds": [
+    "AC8 / R7 R8 R10"
+   ],
+   "evidence": "Owner-locked narrow scope leaves anon SELECT/TRUNCATE/REFERENCES/TRIGGER and all seven authenticated privileges on listing_views; none is reachable as a write through PostgREST today (no admitting policy; TRUNCATE not exposed). R7's 2026-08-20 guest contact row stays UNKNOWN pending Task 289's apply date."
+  }
+ ],
+ "handoff": {
+  "commitPush": "ALLOWED"
+ },
+ "attestation": {
+  "lowestEvidenceRequirement": "AC7 / R6",
+  "reviewer": "Opus"
+ }
+}

@@ -1,0 +1,11 @@
+-- O78-8 BEFORE verify, owner-run in the Supabase SQL Editor, returned 2026-09-30 (saved verbatim by Opus, review 2).
+-- Instruction step 1 = PART (a), step 2 = PART (b), step 3 = PART (c) (verify hash a4d411b8).
+Step 1:
+Failed to run sql query: ERROR:  P0001: TASK865_A result=refused sqlstate=23503 msg=insert or update on table "listing_views" violates foreign key constraint "listing_views_listing_id_fkey"
+CONTEXT:  PL/pgSQL function inline_code_block line 15 at RAISE
+Step 2:
+Failed to run sql query: ERROR:  P0001: TASK865_B result=refused sqlstate=23503 msg=insert or update on table "listing_views" violates foreign key constraint "listing_views_listing_id_fkey"
+CONTEXT:  PL/pgSQL function inline_code_block line 15 at RAISE
+Step 3:
+Failed to run sql query: ERROR:  22P02: invalid input syntax for type boolean: ""
+CONTEXT:  PL/pgSQL function inline_code_block line 13 at assignment

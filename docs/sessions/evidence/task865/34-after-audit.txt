@@ -1,0 +1,45 @@
+-- O78-8 AFTER grid (instruction step 6), audit hash fb4f1516, returned by the owner 2026-09-30.
+-- Rows verbatim, one JSON object per line (the owner pasted the same rows as pretty-printed JSON).
+{"check_id":"V1","ord":0,"object_name":"(count)","detail":"18"}
+{"check_id":"V1","ord":1,"object_name":"anon","detail":"SELECT"}
+{"check_id":"V1","ord":1,"object_name":"anon","detail":"TRUNCATE"}
+{"check_id":"V1","ord":1,"object_name":"anon","detail":"REFERENCES"}
+{"check_id":"V1","ord":1,"object_name":"anon","detail":"TRIGGER"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"DELETE"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"INSERT"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"REFERENCES"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"UPDATE"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"TRIGGER"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"SELECT"}
+{"check_id":"V1","ord":1,"object_name":"authenticated","detail":"TRUNCATE"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"INSERT"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"UPDATE"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"DELETE"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"TRUNCATE"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"REFERENCES"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"TRIGGER"}
+{"check_id":"V1","ord":1,"object_name":"service_role","detail":"SELECT"}
+{"check_id":"V2","ord":0,"object_name":"(count)","detail":"1"}
+{"check_id":"V2","ord":1,"object_name":"Listing views viewable by listing owner","detail":"PERMISSIVE | cmd=SELECT | roles={public} | qual=(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_views.listing_id) AND (listings.user_id = auth.uid())))) | with_check=NULL"}
+{"check_id":"V3","ord":0,"object_name":"(count)","detail":"5"}
+{"check_id":"V3","ord":1,"object_name":"id","detail":"uuid | nullable=false | default=gen_random_uuid()"}
+{"check_id":"V3","ord":2,"object_name":"listing_id","detail":"uuid | nullable=false | default=NULL"}
+{"check_id":"V3","ord":3,"object_name":"user_id","detail":"uuid | nullable=true | default=NULL"}
+{"check_id":"V3","ord":4,"object_name":"ip_hash","detail":"text | nullable=false | default=NULL"}
+{"check_id":"V3","ord":5,"object_name":"viewed_at","detail":"timestamp with time zone | nullable=true | default=now()"}
+{"check_id":"V4","ord":0,"object_name":"(count)","detail":"3"}
+{"check_id":"V4","ord":1,"object_name":"listing_views_listing_id_fkey","detail":"contype=f | FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"}
+{"check_id":"V4","ord":1,"object_name":"listing_views_pkey","detail":"contype=p | PRIMARY KEY (id)"}
+{"check_id":"V4","ord":1,"object_name":"listing_views_user_id_fkey","detail":"contype=f | FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL"}
+{"check_id":"V5","ord":0,"object_name":"(count)","detail":"1"}
+{"check_id":"V5","ord":1,"object_name":"listing_views","detail":"relrowsecurity=true | relforcerowsecurity=false | owner=postgres | owner_bypassrls=true"}
+{"check_id":"V6","ord":0,"object_name":"(count)","detail":"1"}
+{"check_id":"V6","ord":1,"object_name":"prosecdef","detail":"true"}
+{"check_id":"V6","ord":2,"object_name":"owner","detail":"postgres | owner_bypassrls=true"}
+{"check_id":"V6","ord":3,"object_name":"proconfig","detail":"search_path=public"}
+{"check_id":"V6","ord":4,"object_name":"body_mentions_listing_views","detail":"true"}
+{"check_id":"V6","ord":5,"object_name":"execute_anon","detail":"true"}
+{"check_id":"V6","ord":5,"object_name":"execute_authenticated","detail":"true"}
+{"check_id":"V6","ord":5,"object_name":"execute_service_role","detail":"true"}
+{"check_id":"V7","ord":0,"object_name":"(count)","detail":"1"}
+{"check_id":"V7","ord":1,"object_name":"b70378c5-c53f-4826-b349-49913b22ff34","detail":"listing_id=ece6db96-e145-41b3-9af9-3386e3e66b03 | channel=whatsapp | source=listing_detail_contact_card | locale=en | is_owner_click=false | created_at=2026-08-20 19:24:15.131167+00"}

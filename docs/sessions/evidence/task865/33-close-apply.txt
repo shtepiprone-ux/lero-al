@@ -1,0 +1,2 @@
+-- O78-8 apply (instruction step 5), scripts/task-865-close-anon-insert.sql (hash 3194bb32), owner-run in the Supabase SQL Editor 2026-09-30, returned verbatim:
+Success. No rows returned.

@@ -1,0 +1,5 @@
+-- O78-8 AFTER probe (instruction step 10), probe hash 3503f13b, native PowerShell, returned by the owner 2026-09-30, saved verbatim by Opus.
+PS C:Claude_Code_Projectslero-al> node.exe scripts	ask-865-anon-probe.mjs --phase after
+phase=after arm=P1 method=POST http_status=401 pg_code=42501 reason=grant
+phase=after arm=P2 method=PATCH http_status=401 pg_code=42501 reason=grant
+phase=after arm=P3 method=DELETE http_status=401 pg_code=42501 reason=grant

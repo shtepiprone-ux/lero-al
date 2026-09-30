@@ -1,0 +1,45 @@
+ M docs/backlog.md
+ M docs/component-risk-register.md
+ M docs/critical-flow-registry.md
+ M docs/responsive-storybook-inventory.md
+ M scripts/check-stories-rendered.mjs
+ M scripts/grant-discipline-audit.sql
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/users/[id]/page.tsx
+ M src/app/admin/users/new/page.tsx
+ M src/components/admin/AdminUserAvatar.tsx
+ D src/components/admin/AdminUserProfile.stories.tsx
+ M src/components/admin/AdminUserProfile.tsx
+ D src/components/shared/DatePicker.tsx
+ D src/components/shared/__tests__/DatePicker.localization.test.tsx
+ M src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+ M src/design-system/mantine/patterns/RangeDatePicker.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/stories/fixtures/admin.fixtures.ts
+ M src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+ M src/stories/patterns/mantine/FormSectionStack.stories.tsx
+ M tasks/Sprints/Sprint_84_One_Clock_And_One_Date_Order.md
+ M tasks/Sprints/Sprint_84_kickoff_prompt_Task_893_Admin_User_Profile_On_Mantine.md
+?? docs/sessions/2026-09-29-task865-listing-views-anon-insert.md
+?? docs/sessions/2026-09-29-task893-admin-user-profile-mantine.md
+?? docs/sessions/evidence/task865/
+?? docs/sessions/evidence/task893/
+?? scripts/task-865-anon-probe.mjs
+?? scripts/task-865-close-anon-insert.sql
+?? scripts/task-865-listing-views-audit.sql
+?? scripts/task-865-rollback.sql
+?? scripts/task-865-verify.sql
+?? src/components/admin/AdminUserAvatarField.tsx
+?? src/components/admin/AdminUserAvatarFieldView.tsx
+?? src/components/admin/AdminUserProfileDialogsView.tsx
+?? src/components/admin/AdminUserProfileView.tsx
+?? src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+?? src/components/admin/useAdminAvatarUpload.ts
+?? src/stories/patterns/mantine/AdminUserAvatarFieldView.stories.tsx
+?? src/stories/patterns/mantine/AdminUserProfileDialogsView.stories.tsx
+?? src/stories/patterns/mantine/AdminUserProfileView.stories.tsx

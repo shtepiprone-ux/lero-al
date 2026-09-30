@@ -47,7 +47,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 8 legacy Tailwind sites as debt that cannot grow. | `KICKOFF FILED` 2026-09-26 → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
+| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `NEEDS REVISION` 2026-09-30 (review 1; revision 1 = kickoff §16) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
 
 ## Execution order and gating
 
@@ -61,7 +61,8 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Action |
 |---|---|
-| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3). |
+| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3, with the GR-3d lines of §16.4). Handed over only after 886 revision 1 is reviewed. |
+| **O83-3** | **Decision, open (added 2026-09-30 by 886 review 1):** `Patterns/Mantine/ResetPasswordView` is a `skipCanvas` Story without `StoryPageGutter`, but the production View already carries the page gutter (`Center p="md"`, measured 16px at 320/390). Choose (a) wrap anyway (32px at 320), (b) record a GR-3d exemption for a View that carries its own page gutter (recommended), or (c) move the padding into the route in a separate task. Options and effects: 886 §16.4. |
 | **O83-2** | **Decision, open:** the six legacy Tailwind `text-2xl` sites with no owning migration task (886 §3.2). Choose one: file migration tasks for them now, or leave them as baselined debt until their surfaces are migrated. |
 
 ## Exit criteria
@@ -71,6 +72,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 2. At 320px, no production Mantine heading measures above 20px, except a hero the kickoff names (886 AC).
 3. The owner has accepted O83-1.
 4. O83-2 is decided and recorded here.
+5. O83-3 is decided and recorded here.
 
 ## Explicitly not in this sprint
 

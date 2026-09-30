@@ -1,8 +1,9 @@
 # Task 886 — every Mantine heading steps down on a phone, through one scale, and a gate keeps it that way
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
-approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2** ·
-**Status: `KICKOFF FILED` 2026-09-26**
+approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2**,
+**O83-3** · **Status: `NEEDS REVISION` — review 1, 2026-09-30. Start at §16 (Revision 1); it overrides every earlier
+section it names.**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -127,6 +128,11 @@ The 7 responsive sites comply and are unchanged:
 - **I0 re-check.** If 853 has not been committed when this task starts, stop. Those paths are 853's uncommitted
   work, and this task must neither edit nor stage them.
 
+### 3.2 The legacy Tailwind census (L1–L8)
+
+**Revision 1 (review 1, 2026-09-30):** L2 is also gone — Task 877 (`848611017`) rewrote `AdminPageHeader.tsx` as an
+adapter, and the reviewer's grep finds no `text-2xl`/`text-3xl` in it. The live set is **L3–L8, six entries** (§16.2).
+
 | # | Site | Owning migration task |
 |---|---|---|
 | L1 | `src/app/admin/page.tsx:113` | **853** (`/admin` operations dashboard, Sprint 78) |
@@ -177,7 +183,7 @@ patch them. 886 **baselines** them in the gate, so they cannot grow. Their dispo
 | **R6** | GR-3, GR-3a | `src/stories/mantine/primitives/SimilarListingsView.stories.tsx` gains one export, `Loading`, which renders `SimilarListingsSkeleton`, imported by name from `@/modules/listings/components/ListingDetailView`. It uses the file's existing shell, with no new decorator, `style` or viewport pin (GR-3b). | P1 | AC4 | Confirmed |
 | **R7** | §2 item 3, M5 | New `scripts/check-type-responsive.mjs`, plus `check:type-responsive` and `check:type-responsive:verify` in `package.json`, plus two steps in `.github/workflows/governance-pr.yml` right after the media-enrolment pair. The contract is §10.4. | P0 | AC6, AC7 | Confirmed |
 | **R8** | §3.2 | New `scripts/type-responsive-baseline.json`, which holds exactly L1–L8. Each entry is keyed `path :: token` and is line-insensitive, and each carries its owning task (or `none`) as the reason. | P0 | AC6 | Confirmed |
-| **R9** | governance | Update the docs:<br>• `docs/golden-rules.md`: the GR-3c row of the Enforcement table names `check:type-responsive` (Task 886) and its blind spots;<br>• `docs/mantine-responsive-design-system.md` §7: the P0 responsive-type row names `TITLE_FZ`.<br>No rule text is narrowed. | P2 | AC8 | Confirmed |
+| **R9** | governance | Update the docs:<br>• `docs/golden-rules.md`: the GR-3c row of the Enforcement table names `check:type-responsive` (Task 886) and its blind spots — **Revision 1: applied by Opus at approval closure, not by Sonnet (§16.2)**;<br>• `docs/mantine-responsive-design-system.md` §7: the P0 responsive-type row names `TITLE_FZ`.<br>No rule text is narrowed. | P2 | AC8 | Confirmed |
 
 `GR-4 AC AUDIT — 9 criteria; each states an observable property; absolutes: none.`
 
@@ -243,8 +249,12 @@ Files the executor may create or change:
 - `src/stories/mantine/primitives/SimilarListingsView.stories.tsx` (R6)
 - `scripts/check-type-responsive.mjs` *(new)*, `scripts/type-responsive-baseline.json` *(new)*, `package.json` (two
   script lines), `.github/workflows/governance-pr.yml` (two steps) (R7, R8)
-- `docs/golden-rules.md` (the GR-3c Enforcement row only) and `docs/mantine-responsive-design-system.md` (the §7
-  GR-3c row only) (R9)
+- `docs/mantine-responsive-design-system.md` (the §7 GR-3c row only) (R9). *(Revision 1: `docs/golden-rules.md` is
+  removed from this list — Opus applies that half of R9, §16.2.)*
+- Revision 1 additions (§16.3): `src/design-system/mantine/patterns/MantineDashboardStatCard.tsx` (R10, the `fz` line
+  and the import only); `src/stories/patterns/mantine/AuthFormPattern.stories.tsx`,
+  `PageHeaderWithActions.stories.tsx`, `TwoColumnForm.stories.tsx`, `ListingDetailPattern.stories.tsx`,
+  `ListingDetailView.stories.tsx` (R11, R12)
 - Any static large `Title` that I0 finds beyond §3.1 (§5.4)
 - `docs/sessions/2026-09-2*-task886-*.md`, `docs/sessions/evidence/task886/**`, and the 886 cell of `docs/backlog.md`
 
@@ -257,7 +267,9 @@ Files the executor may create or change:
 - `typography-chrome.css` and anything else in 869's or 884's scope, except R4's one line.
 - `scripts/surface-census-baseline.json`: **do not edit it**. Removing `RecentlyViewedSkeleton` leaves the existing
   rows correct.
-- Any change to a Story other than R6's one export.
+- Any change to a Story other than R6's one export **and the Story edits Revision 1 lists in §16.3 (R11, R12)**.
+- `docs/golden-rules.md`: **read-only for Sonnet** (`execute-task` → "Absolute policy-file boundary"). R9's
+  golden-rules half moves to Opus (§16.2).
 
 ## 9. Current and required behavior
 
@@ -342,7 +354,8 @@ as today.
   `SECTION_HEADING_FZ`'s hash-relevant line is unchanged: show it with `git diff -U0` of the file.
 - **AC2 [R2, R3, R4].** Given `node.exe scripts\check-type-responsive.mjs`, when run on the final tree, then:
   - Arm A reports **0** violations;
-  - Arm B reports exactly the baselined L1–L8, with 0 stale entries and 0 new entries;
+  - Arm B reports exactly the baselined L3–L8 (six entries; amended by Revision 1, §16.2), with 0 stale entries and
+    0 new entries;
   - the gate exits 0;
   - the printed scope statement is present.
 - **AC3 [R5].** Given `git --no-optional-locks grep -n --untracked "RecentlyViewedSkeleton" -- src`, when run, it
@@ -353,7 +366,8 @@ as today.
   key at 320, 390, 768, 1024 and 1440, within 0.5px. At 320 no heading is above 20px, and at every tuple no child
   heading is larger than its page title.
 - **AC6 [R7, R8].** Given `package.json`, `governance-pr.yml` and `type-responsive-baseline.json`, when read, the two
-  scripts and two CI steps exist, and the baseline has exactly 8 entries, each with a reason.
+  scripts and two CI steps exist, and the baseline holds exactly the L3–L8 set (six entries, each with a reason;
+  amended by Revision 1, §16.2).
 - **AC7 [R7].** Given `npm.cmd run check:type-responsive:verify`, when run, then all 10 arms print their expected
   outcome and the command exits 0. In addition, a **real** plant, made by adding
   `<Title order={1}>x</Title>` to `MantineDashboardHeader.tsx`:
@@ -430,6 +444,9 @@ Expected result:
 
 ### 13.3 OWNER VISUAL QA REQUIRED — O83-1
 
+**Revision 1:** every row below carries a GR-3d line in §16.4. The reviewer hands the matrix to the owner only after
+§16.4's four wraps are measured and O83-3 is decided.
+
 ```powershell
 npm.cmd run storybook
 ```
@@ -487,3 +504,190 @@ resolver source and the `theme.ts` lines.
 precedence support this, and §13.2's measurement is the proof.
 **UNKNOWNS:** whether every §3.1 site is rendered by a current Story state. §13.2 requires extending the Story if not.
 **CONFLICTS:** None.
+
+---
+
+## 16. Revision 1 — review 1, 2026-09-30 (`NEEDS REVISION`)
+
+This section overrides every earlier section it names. The first pass (session
+`docs/sessions/2026-09-30-task886-responsive-heading-scale.md`) is **kept**: the reviewer re-ran
+`check:type-responsive` (298 files, Arm A 0, Arm B 6/0/0, exit 0) and `:verify` (12/12, exit 0) natively, and measured
+every production `Title` in the owner-matrix Stories at 320/390/768/1024/1440 against §4.1 with an independent
+Playwright probe. All of them match. What fails is the Stories the owner will review, one gate contract clause, and
+one evidence artifact.
+
+### 16.1 Re-entry mode — `remediation`
+
+- **Start at I0-R (§16.5), then R10 → R11 → R12 → R13 → R14 → R15, then the §16.5 gate block.**
+- **Keep, do not rewrite:** R1–R8 as shipped — `TITLE_FZ`, the 15 `Title` sites and `CmsPageView`, the skeleton
+  de-duplication, the `Loading` export, the gate, its baseline (six entries), the two scripts, the two CI steps and the
+  `mantine-responsive-design-system.md` row. Edit `scripts/check-type-responsive.mjs` only as R13 says.
+- **Do not overwrite** any first-pass file in `docs/sessions/evidence/task886/`. Revision evidence goes to
+  `docs/sessions/evidence/task886/rev1/`. Append a `## Revision 1` section to the existing session log.
+- **Not yours:** `scripts/check-hydration-console.mjs`, `docs/critical-flow-registry.md`, and every Task 888 file.
+
+### 16.2 Findings from review 1, and what changes
+
+| # | Severity | Evidence (reviewer, 2026-09-30) | Correction |
+|---|---|---|---|
+| F1 | **P1** GR-3d | Owner-matrix Stories with `skipCanvas: true` and no `StoryPageGutter`. The reviewer measured edge gaps: `PageHeaderWithActions--default` **0/0** at every width (full bleed); `TwoColumnForm--default` **0/0**; `AuthFormPattern--default` **40** at 320, from gutters written in the Story (`Stack p="md"` `:45`, `Center p="xl"` `:46`/`:49`/`:65`); `ListingDetailPattern--default` 16 at 1024/1440 (expected 32), from `SECTION_STYLE`, a `style` object. The first pass emitted a GR-3d receipt for `Loading` only; `execute-task` item 7 makes every owner-matrix Story blocking. The first kickoff predates GR-3d (2026-09-29) and carried no GR-3d line per matrix row — an orchestrator defect, corrected in §16.4. | R11 |
+| F2 | **P1** GR-3c | `AuthFormPattern--auth-card` renders its own `<Title order={2} size="h3">` (`AuthFormPattern.stories.tsx:68`) at **30px at 320**. It is in the owner matrix (§13.3 item 2). The §8 "no other Story change" line blocked the fix; that line is amended. | R12 |
+| F3 | **P2** gate contract | §10.4 says the gate exits **2 on a parse error**. The shipped gate counts an opening tag it cannot close, prints the count, **skips the tag and exits 0**. The reviewer reproduced a false negative in memory: in `<Title order={5} title=" //x">`, `stripComments` blanks the rest of the line from ` //`, the tag no longer closes, and it is skipped. Today's tree has 0 such tags, so there is no live miss, but the gate can go blind silently. | R13 |
+| F4 | **P2** AC9 | `docs/sessions/evidence/task886/hash-object.log` holds 18 **paths and no hashes**. AC9 and the §13.2 hash requirement are unmet. (The build log at 12:42 is later than every source edit, 12:33–12:37, so the build itself is fresh — an inference from mtimes, not a hash witness.) | R14 |
+| F5 | P3 kickoff defect | §3.1a says 886 converts S17 (`MantineDashboardStatCard.tsx`) to `TITLE_FZ.h3`; §7 omitted the file, so the executor correctly left it. Its inline object duplicates `TITLE_FZ.h3` exactly, against objective 2 ("no site picks its own steps"). | R10 |
+| F6 | P3 gate scope | The printed scope does not state two blind spots the reviewer measured: an `fz` object literal is accepted without checking its values (`fz={{ base: 'h2' }}` passes), and `size`/`fz` written as another expression is not read as static (`<Title order={5} size={'h3'}>` passes). | R13 |
+| F7 | NEEDS VERIFICATION | Reserved **901** (`docs/backlog-reserved.md`): `/en/auth/login` logged an attribute hydration mismatch under `next dev`, measured with this task's uncommitted `MantineAuthFormPattern.tsx` in the tree. Its row hands the finding to this review if it does not reproduce on `HEAD`. Not attributed yet. | R15 |
+
+**Kickoff defects corrected by Opus in this revision (no executor action):**
+- **AC2/AC6: six baseline entries, not eight.** The executor was right: L2 (`AdminPageHeader.tsx`) has no `text-2xl`
+  after Task 877, re-measured by the reviewer. §3.2, AC2 and AC6 now say L3–L8.
+- **§3.2 existed only as a reference.** The heading is now in the file, above the L-table.
+- **R9's `docs/golden-rules.md` half is Opus's.** That file is read-only for Sonnet. Opus applies the GR-3c
+  Enforcement-row wording (session log §9.2 proposal) at approval closure. §7 and §8 are amended.
+
+**Known, out of scope, recorded (not in the owner matrix, not changed by 886):** Story-fixture `Title`s at 24px or
+more with no responsive `fz` — `src/stories/patterns/mantine/HomeSection.stories.tsx:38/44/50` (`order={3}`, 30px),
+`src/stories/mantine/primitives/ListingCard.stories.tsx:120/129` and
+`src/stories/patterns/mantine/ListingCardPattern.stories.tsx:226/246` (`order={4}`, 24px). The gate excludes Stories
+and says so. Opus files them at 886's closure. Also out of scope: the four `globals.viewport` pins in
+`ListingDetailView.stories.tsx` (`:178/:190/:202/:217`). 886 does not change that Story, it is a default-canvas Story,
+and its state rework belongs to reserved **800**.
+
+### 16.3 Revision requirements
+
+| ID | Finding | Observable requirement | P | AC |
+|---|---|---|---|---|
+| **R10** | F5 | `MantineDashboardStatCard.tsx:184`: `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}` becomes `fz={TITLE_FZ.h3}`, with the `TITLE_FZ` import. Nothing else in the file changes (the `lh` expression stays). | P3 | AC10 |
+| **R11** | F1 | Wrap the page content of every export of these four Stories in `<StoryPageGutter>` (`src/stories/_StoryPageGutter.tsx`), and delete every gutter the Story writes itself:<br>• `PageHeaderWithActions.stories.tsx` `Default`;<br>• `TwoColumnForm.stories.tsx` `Default`;<br>• `AuthFormPattern.stories.tsx` `Default` and `AuthCard`: remove `p="md"` from the `Stack` and `p="xl"` from every `Center` (`Center` stays for centring, `Stack gap="xl"` stays);<br>• `ListingDetailPattern.stories.tsx` `Default`: delete `SECTION_STYLE` and its `CSSProperties` import; each `<div style={SECTION_STYLE}>` becomes `<Box pt={theme.other.layout.listingContactStickyOffset}>`, with `const theme = useMantineTheme()` in the `render` (precedent: `GalleryDesktopNavigation.stories.tsx:31`). The token is `theme.ts:798` `listingContactStickyOffset: 80`, the sticky offset the comment above `SECTION_STYLE` already cites, consumed by `MantineListingContactPattern.tsx:126`. Keep that comment, re-pointed at the token. `SlotDemoCard`'s `style={{ textAlign: 'center' }}` becomes `ta="center"` on its `Text` (GR-3b: a changed Story carries no `style` object).<br>No other line in these files changes. | P1 | AC11 |
+| **R12** | F2 | `AuthFormPattern.stories.tsx` `AuthCard`: the `Title` gains `fz={TITLE_FZ.h3}` (import `TITLE_FZ`). | P1 | AC12 |
+| **R13** | F3, F6 | `scripts/check-type-responsive.mjs`:<br>• an opening tag the scanner cannot close is a **parse error**: print `ERROR  <path>:<line>  opening <Name> tag could not be closed — the gate cannot classify it` for each, and exit **2** (§10.4), before any PASS line;<br>• `evaluateGateExitCode` takes the unparsed count and returns 2 for it (a finding alone returns 1; a parse error wins over a finding);<br>• self-test **Arm 13**: an unclosable tag (e.g. `export const A = () => <Title order={2}` with no `>`) resolves to a parse error; Arm 12's wiring check adds the `unparsed → 2` case; the header line says "13 arms + exit wiring";<br>• the printed "Cannot see" list gains two lines: *an `fz` object literal is accepted without checking its values (the GR-3c measurement closes it)*; *`size`/`fz` written as any other expression (e.g. `size={'h3'}`, a ternary) is not read as static*.<br>No other behaviour changes. | P2 | AC13 |
+| **R14** | F4 | The final hash witness is one `<hash>  <path>` line per file in the §16.5 list, captured in the same pass as the gate block. | P2 | AC14 |
+| **R15** | F7 | A/B the `/en/auth/login` hydration warning (§16.5 step 4). Record the full console text of each arm. If the mismatch appears with 886's `MantineAuthFormPattern.tsx` and **not** with its `HEAD` content, stop and report `BLOCKED — 886 HYDRATION` with the attribute named; do not attempt a fix. Otherwise record the result; 901 stays Opus's to dispose. | P2 | AC15 |
+
+### 16.4 Owner-matrix GR-3d lines (the lines §13.3 lacked), and O83-3
+
+| §13.3 Story | GR-3d |
+|---|---|
+| `Patterns/Mantine/ListingDetailPattern` | **wrap in this task** (R11) |
+| `Patterns/Mantine/PageHeaderWithActions` | **wrap in this task** (R11) |
+| `Patterns/Mantine/AuthFormPattern` (`Default`, `AuthCard`) | **wrap in this task** (R11) |
+| `Patterns/Mantine/TwoColumnForm` | **wrap in this task** (R11) |
+| `Patterns/Mantine/DashboardHeader` | profile present (reviewer measured 16/16/32/32) |
+| `Patterns/Mantine/ListingDetailView` | n/a: default canvas |
+| `Mantine/Primitives/RecentlyViewedGridView`, `SimilarListingsView` (incl. `Loading`) | n/a: `MantineStoryShell` primitive |
+| `Patterns/Mantine/ResetPasswordView` | **O83-3, owner decision below.** Make no edit to this Story. |
+
+**STOP - OWNER DECISION REQUIRED — O83-3 (scoped to `ResetPasswordView.stories.tsx` only; the rest of this revision
+proceeds).** The Story is `skipCanvas` with no `StoryPageGutter`, so GR-3d's literal text requires the wrapper. But the
+production View already carries the page gutter itself (`ResetPasswordView.tsx` renders `Center mih="60vh" p="md"`):
+the reviewer measured 16/16 at 320/390, and the card sits centred at 184/312/520 at 768/1024/1440. Wrapping it doubles
+the phone gutter to 32. GR-3d lets no agent reinterpret it, so the owner chooses:
+- **(a)** wrap it anyway: the 320/390 edge gap becomes 32, not the profile's 16. Unlocks: a one-line wrap in a later
+  revision, re-measured.
+- **(b) (recommended)** record a GR-3d exemption for a page-level View whose production root already carries the page
+  gutter, written verbatim into `docs/golden-rules.md` by Opus. Unlocks: no Story edit; the receipt reads
+  `n/a: View carries the page gutter (O83-3)` with the measured values.
+- **(c)** move the page padding out of the production View into its route, then wrap the Story. Unlocks: a separate
+  production task on `/auth/reset-password`, outside 886.
+
+Until O83-3 is recorded in the Sprint 83 plan, the executor's GR-3d receipt for this Story reads
+`StoryPageGutter pending O83-3` with the four measured edge gaps. That receipt is complete for handoff; the reviewer
+does not hand this Story to O83-1 before O83-3 is decided.
+
+### 16.5 Revision verification plan
+
+**I0-R**, before any write:
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev1"
+New-Item -ItemType Directory -Force $ev
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\i0.log"
+git --no-optional-locks status --short | Tee-Object -Append "$ev\i0.log"
+git --no-optional-locks hash-object src/design-system/mantine/patterns/MantineDashboardStatCard.tsx src/stories/patterns/mantine/AuthFormPattern.stories.tsx src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx src/stories/patterns/mantine/TwoColumnForm.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx scripts/check-type-responsive.mjs src/design-system/mantine/patterns/MantineAuthFormPattern.tsx | Tee-Object -Append "$ev\i0.log"
+```
+
+Expected: `win32`, and the 886 paths still modified as the first pass left them (`MantineAuthFormPattern.tsx` =
+`e47cef761dfb8f4c32a99e477ddea66f8be4c9b7`, `check-type-responsive.mjs` = `8555e07158184dfa02271417098598901a80dcf0`,
+the reviewer's hashes). A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Final gate block** (normalise every `Tee-Object` file to UTF-8 without BOM through Node afterwards):
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev1"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\typecheck.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\typecheck.log"
+npm.cmd run lint *>&1 | Tee-Object "$ev\lint.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\lint.log"
+npm.cmd run check:type-responsive *>&1 | Tee-Object "$ev\check-type-responsive.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-type-responsive.log"
+npm.cmd run check:type-responsive:verify *>&1 | Tee-Object "$ev\check-type-responsive-verify.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-type-responsive-verify.log"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\check-design-tokens.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-design-tokens.log"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\check-story-coverage.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-story-coverage.log"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\check-rendered-scope.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-rendered-scope.log"
+npm.cmd run check:pattern-enrolment *>&1 | Tee-Object "$ev\check-pattern-enrolment.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-pattern-enrolment.log"
+node.exe scripts\check-surface-census-changed.mjs --base HEAD *>&1 | Tee-Object "$ev\census-changed.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\census-changed.log"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\check-file-integrity.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-file-integrity.log"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\check-mojibake.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-mojibake.log"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\build-storybook.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\build-storybook.log"
+npm.cmd run build *>&1 | Tee-Object "$ev\build.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\build.log"
+git --no-optional-locks diff --stat | Tee-Object "$ev\diff-stat.log"
+git --no-optional-locks status --short | Tee-Object "$ev\git-status.log"
+$files = @("src/design-system/mantine/typography.ts","src/design-system/mantine/patterns/MantineAuthFormPattern.tsx","src/design-system/mantine/patterns/MantineListingDetailPattern.tsx","src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx","src/design-system/mantine/patterns/MantineTwoColumnForm.tsx","src/design-system/mantine/patterns/MantineDashboardStatCard.tsx","src/modules/auth/components/ResetPasswordView.tsx","src/modules/cms/components/CmsPageView.tsx","src/modules/listings/components/ListingDetailView.tsx","src/modules/listings/components/RecentlyViewedGridView.tsx","src/modules/listings/components/RecentlyViewedSection.tsx","src/modules/listings/components/SimilarListingsView.tsx","src/stories/mantine/primitives/SimilarListingsView.stories.tsx","src/stories/patterns/mantine/AuthFormPattern.stories.tsx","src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx","src/stories/patterns/mantine/TwoColumnForm.stories.tsx","src/stories/patterns/mantine/ListingDetailPattern.stories.tsx","scripts/check-type-responsive.mjs","scripts/type-responsive-baseline.json","package.json",".github/workflows/governance-pr.yml","docs/mantine-responsive-design-system.md")
+foreach ($f in $files) { "$(git --no-optional-locks hash-object $f)  $f" | Tee-Object -Append "$ev\hash-object.log" }
+```
+
+Expected: every log ends `EXIT_CODE=0`; `census-changed.log` adds no new blocking node; `hash-object.log` has 22
+lines of `<40-hex>  <path>`.
+
+Then, in the same pass:
+1. **R13 real plant, two arms, hash-witnessed** (Node read/write only, never `Get-Content -Raw`), into
+   `$ev\plant.log`: (i) append `export const P = () => <Title order={2}` (no `>`) to
+   `src/design-system/mantine/patterns/MantineDashboardHeader.tsx` → `check:type-responsive` exits **2** and names that
+   file; restore → exit 0, `git hash-object` equal before/after; (ii) repeat the first pass's
+   `<Title order={1}>x</Title>` plant → exit **1**; restore, hashes equal.
+2. **GR-3b/3c/3d measurement** with a throwaway Playwright probe under `.artifacts/`, against `storybook-static`, `en`:
+   every export of the four R11 Stories plus `ResetPasswordView` and `DashboardHeader`, at 320/390/768/1024/1440. Per
+   tuple, write to `$ev\story-measure.log`: the `fontSize` of every `h1`–`h4`, the left/right edge gap of the first
+   page-content box, and horizontal overflow. Expected: fonts per §4.1 (AuthCard `h2` 20/20/30/30/30); edge gap
+   16/16/32/32 at 320/390/1024/1440 for the four R11 Stories; no overflow.
+3. Run this and write its output to `$ev\story-grep.log`; expected: no match.
+
+   ```powershell
+   git --no-optional-locks grep -n -E "SECTION_STYLE|style=\{|p=.(md|xl)." -- src/stories/patterns/mantine/AuthFormPattern.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+   ```
+4. **R15 A/B** into `$ev\hydration-ab.log`. Start `npm.cmd run dev` in the background and wait until it serves. With a
+   throwaway Playwright probe under `.artifacts/`, open `http://localhost:3000/en/auth/login` in a fresh context, wait
+   for `networkidle` plus 2 s, and record **every** console message in full. Arm X: the current tree. Arm Y: write the
+   output of `git show HEAD:src/design-system/mantine/patterns/MantineAuthFormPattern.tsx` over the file through Node,
+   wait for the dev rebuild, and record again in a fresh context. Then restore the 886 content through Node and prove
+   its `git hash-object` equals the I0-R value. Stop the dev server.
+
+### 16.6 Revision acceptance criteria
+
+`GR-4 AC AUDIT — 6 revision criteria; each states an observable property; absolutes: none.`
+
+- **AC10 [R10].** `git diff -U0 -- src/design-system/mantine/patterns/MantineDashboardStatCard.tsx` shows only the
+  `fz` line and the import; `check-type-responsive.log` still reports Arm A 0.
+- **AC11 [R11].** `story-measure.log` shows edge gaps of 16/16/32/32 (±1px) at 320/390/1024/1440 for every export of
+  the four R11 Stories, and no horizontal overflow. `story-grep.log` has no match. The session log carries one GR-3b
+  and one GR-3d receipt per changed Story, and the `pending O83-3` receipt for `ResetPasswordView`.
+- **AC12 [R12].** `story-measure.log`: `authformpattern--auth-card` `h2` measures 20 at 320/390 and 30 at
+  768/1024/1440.
+- **AC13 [R13].** `check-type-responsive-verify.log` shows 13 arms plus the exit wiring, all PASS, exit 0.
+  `plant.log` shows arm (i) exit 2 naming the file and arm (ii) exit 1, each restored with equal hashes. The printed
+  scope has the two new lines.
+- **AC14 [R14].** `hash-object.log` has one `<40-hex>  <path>` line per listed file.
+- **AC15 [R15].** `hydration-ab.log` holds both arms' full console text and the restore hash check, and the session log
+  states which outcome occurred (886-only, both arms, or neither).
+- **AC1–AC9** stand as amended (AC2/AC6: six entries). AC9 is re-proved by `rev1\build.log` together with AC14.
+
+### 16.7 Completion report for Revision 1
+
+Append `## Revision 1` to the session log with:
+- a Files Changed table for this revision;
+- R10–R15, each with its evidence path;
+- every §16.5 command with its exit code;
+- the 13 arm lines, `plant.log`, and `story-measure.log` summarised per Story;
+- the A/B outcome;
+- receipts: GR-0 for R11's token reuse (`REUSE theme.other.layout.listingContactStickyOffset`), GR-3b, GR-3c and
+  GR-3d per changed Story, and GR-2 for the gate's two new scope lines.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
+`docs/backlog.md` with concise state only. No mutating git.

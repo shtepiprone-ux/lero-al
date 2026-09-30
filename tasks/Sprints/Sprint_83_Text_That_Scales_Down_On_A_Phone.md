@@ -1,6 +1,6 @@
 # Sprint 83 — text that scales down on a phone
 
-**Opened:** 2026-09-26 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (886) · **Kickoffs filed:** 1 (886)
+**Opened:** 2026-09-26 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (886) · **Kickoffs filed:** 2 (886, 904)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -48,6 +48,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 | # | Outcome | State |
 |---|---|---|
 | **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | ✅ `APPROVED WITH NOTES` 2026-09-30 (review 12, kickoff §22.9; owner accepted every O83-1 matrix) → [`…Task_886…`](../Archive/Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
+| **904** | `/favorites` renders the canonical listings route chrome (`ListingsPageFrame` + `MantinePageHeaderWithActions`): the Mantine breadcrumb, the responsive page title (`TITLE_FZ.h2`), no legacy Tailwind; legacy site L4 leaves the type-responsive baseline. From owner decision O83-2. | `KICKOFF FILED` 2026-09-30 → [`…Task_904…`](Sprint_83_kickoff_prompt_Task_904_Favorites_Page_Header_On_Mantine.md) |
 
 ## Execution order and gating
 
@@ -67,6 +68,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 | **O83-5** | **DECIDED 2026-09-30 — owner verbatim: *"Я обираю варіант (а)."*** Applied by the reviewer to `docs/golden-rules.md` GR-3d condition 1 (886 kickoff §20.1). *Original question* (added 2026-09-30 by 886 review 5, kickoff §19.4): `PopularLocationsView`'s gutter is `MantineHomeSection`'s `.container-wide` class (16/16/32/48), not Mantine spacing props, so GR-3d exemption condition 1 fails if read literally. Choose (a) condition 1 also accepts the canonical `.container-wide` page container (recommended; rule text only), (b) wrap (doubles the gutter, not viable), or (c) a separate task moves `MantineHomeSection` onto Mantine spacing props. |
 | **O83-6** | **DECIDED 2026-09-30 — owner verbatim: *"Обираю варіант (а)."*** (886 kickoff §21, R38). *Original question* (added 2026-09-30 by 886 review 8, kickoff §20.11; owner asked *"чому в  ListingDetailView відсутня кнопка «Додани в обране»?"* (inner quotes rendered as «»)): a guest sees no favourite heart on the listing-detail page (`page.tsx:269` passes `listingId` only for a signed-in user), while cards show it to guests and `FavoriteButton` opens the login sheet. Choose (a) show the heart to guests on the detail page too, as on cards (recommended), or (b) keep production and add a signed-in Story export. |
 | **O83-2** | **DECIDED 2026-09-30 — owner verbatim: *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*** Reviewer's trace:<br>• L3 `/admin/users` → Task **896**;<br>• L5 `AdminPageShell` (only consumer `/admin/listings`) → Task **857**, which deletes it;<br>• L6 `AdminSupportManager` (`/admin/support`) → Task **859**;<br>each of the three kickoffs gained an addendum to delete its baseline row;<br>• L4 `/favorites` header → reserved **904** (this sprint);<br>• L7 the listing create/edit form → reserved **905**;<br>• L8 `StepPreview` is unused (no importer) and is deleted under **905**.<br>*Original question:* the six legacy Tailwind `text-2xl` sites with no owning migration task (886 §3.2). Choose one: file migration tasks for them now, or leave them as baselined debt until their surfaces are migrated. |
+| **O83-7** | Task 904's `OWNER VISUAL QA REQUIRED` matrix (its §13.3). |
 
 ## Exit criteria
 

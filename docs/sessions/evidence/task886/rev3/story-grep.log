@@ -1,0 +1,3 @@
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:113:    // Task 784 Revision 5 (D69-20): the Revision 3 `styles={{root:{'@media...':{...}}}}` block
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:117:    // regressing the pre-Task-784 `HEAD` behavior (`style={{position:'sticky', top:80}}`, working
+src/modules/listings/components/SaveToCollectionButton.tsx:136:        // `size={28}` matches the legacy `icon-sm` (`size-7` = 1.75rem = 28px) exactly.

@@ -193,9 +193,9 @@
  *
  * `z-index: var(--z-dropdown)` (globals.css:257, `10`) — measured necessary, not decorative: DOM
  * order alone (the controls render after `.rail` inside `.wrapper`) is not sufficient, because
- * `MantineListingCardPattern.module.css`'s `.imageActions` sets `z-index: 1` on a card-internal
- * overlay slot and `.rail` itself establishes no stacking context of its own (no `position`, and
- * `overflow-x: auto` alone does not create one) — that `z-index: 1` therefore competes directly
+ * a card-internal overlay slot could set `z-index: 1` (a since-removed image overlay slot did)
+ * and `.rail` itself establishes no stacking context of its own (no `position`, and
+ * `overflow-x: auto` alone does not create one) — such a `z-index: 1` would compete directly
  * against this sibling rather than staying scoped to its own card, and without an explicit
  * z-index here Playwright's real click hit-tested a card title instead of the control
  * (reproduced live, `docs/sessions/evidence/task810/`). `--z-dropdown` is the lowest named rung

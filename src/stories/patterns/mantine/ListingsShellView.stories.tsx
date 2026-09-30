@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
-import { Box } from '@mantine/core';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 import { ListingsShellView, type ListingsShellViewProps } from '@/modules/listings/components/ListingsShellView';
 import { SaveSearchButton } from '@/modules/listings/components/SaveSearchButton';
 import { makeCardListingFixtures } from '@/stories/fixtures/cardListingData.fixture';
@@ -52,7 +52,7 @@ function ShellDemo(props: Partial<ListingsShellViewProps> & { locale: string }) 
   const listings = makeCardListingFixtures(props.locale);
 
   return (
-    <Box px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="md">
+    <StoryPageGutter>
       <ListingsShellView
         listings={props.listings ?? listings}
         total={props.total ?? listings.length}
@@ -77,7 +77,7 @@ function ShellDemo(props: Partial<ListingsShellViewProps> & { locale: string }) 
         filtersSlot={null}
         saveSearchSlot={<SaveSearchButton />}
       />
-    </Box>
+    </StoryPageGutter>
   );
 }
 

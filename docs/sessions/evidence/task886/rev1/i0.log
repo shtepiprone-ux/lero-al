@@ -1,0 +1,47 @@
+win32 v22.22.3 C:\Claude_Code_Projects\lero-al
+ M .github/workflows/governance-pr.yml
+ M docs/critical-flow-registry.md
+ M docs/mantine-responsive-design-system.md
+ M package.json
+ M scripts/check-hydration-console.mjs
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+ M src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+ M src/design-system/mantine/typography.ts
+ M src/modules/auth/components/ResetPasswordView.tsx
+ M src/modules/cms/components/CmsPageView.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/RecentlyViewedGridView.tsx
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+ M src/modules/listings/components/SimilarListingsView.tsx
+ M src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+?? docs/sessions/2026-09-30-task886-responsive-heading-scale.md
+?? docs/sessions/2026-09-30-task888-hydration-admin-routes.md
+?? docs/sessions/evidence/task886/
+?? docs/sessions/evidence/task888/00-status.txt
+?? docs/sessions/evidence/task888/01-hash-before.txt
+?? docs/sessions/evidence/task888/02-admin-config-before.txt
+?? docs/sessions/evidence/task888/03-verify-before.txt
+?? docs/sessions/evidence/task888/10-P1-red.txt
+?? docs/sessions/evidence/task888/11-P1-green.txt
+?? docs/sessions/evidence/task888/12-P2.txt
+?? docs/sessions/evidence/task888/13-P3.txt
+?? docs/sessions/evidence/task888/20-admin-config.txt
+?? docs/sessions/evidence/task888/21-verify.txt
+?? docs/sessions/evidence/task888/22-typecheck.txt
+?? docs/sessions/evidence/task888/23-lint.txt
+?? docs/sessions/evidence/task888/24-file-integrity.txt
+?? docs/sessions/evidence/task888/25-mojibake.txt
+?? docs/sessions/evidence/task888/26-build.txt
+?? docs/sessions/evidence/task888/plant-admin-mismatch.mjs
+?? docs/sessions/evidence/task888/rev1/
+?? scripts/check-type-responsive.mjs
+?? scripts/type-responsive-baseline.json
+c19dd9fabdf7638045eaee7344a319ae7bbbee51
+b91d354f0b134270722ed7d67f17adff1c36e16c
+d739f3a7ff9017a68132081acbf954ca3d0e24fa
+45fa8cfcf98d56bc3f3d2dd94a293283179b27f4
+53e150e3c1c48ccaa2981508bdeed1a4fa054594
+8555e07158184dfa02271417098598901a80dcf0
+e47cef761dfb8f4c32a99e477ddea66f8be4c9b7

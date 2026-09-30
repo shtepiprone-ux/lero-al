@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Center, Stack, Text, Title } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
+import { TITLE_FZ } from '@/design-system/mantine/typography';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineAuthFormPattern, MantineAuthCard } from '@/design-system/mantine/patterns/MantineAuthFormPattern';
@@ -42,14 +44,16 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Stack gap="xl" p="md">
-        <Center p="xl">
-          <MantineAuthFormPattern {...makeLoginArgs(l)} />
-        </Center>
-        <Center p="xl">
-          <MantineAuthFormPattern {...makeRegisterArgs(l)} />
-        </Center>
-      </Stack>
+      <StoryPageGutter>
+        <Stack gap="xl">
+          <Center>
+            <MantineAuthFormPattern {...makeLoginArgs(l)} />
+          </Center>
+          <Center>
+            <MantineAuthFormPattern {...makeRegisterArgs(l)} />
+          </Center>
+        </Stack>
+      </StoryPageGutter>
     );
   },
 };
@@ -62,18 +66,20 @@ export const AuthCard: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Center p="xl">
-        <MantineAuthCard>
-          <Stack gap="md">
-            <Title order={2} size="h3" ta="center">
-              {storyT(l, 'storybook.mantine.auth_login_title')}
-            </Title>
-            <Text size="sm" ta="center" c="dimmed">
-              {storyT(l, 'storybook.mantine.ta_hint')}
-            </Text>
-          </Stack>
-        </MantineAuthCard>
-      </Center>
+      <StoryPageGutter>
+        <Center>
+          <MantineAuthCard>
+            <Stack gap="md">
+              <Title order={2} size="h3" fz={TITLE_FZ.h3} ta="center">
+                {storyT(l, 'storybook.mantine.auth_login_title')}
+              </Title>
+              <Text size="sm" ta="center" c="dimmed">
+                {storyT(l, 'storybook.mantine.ta_hint')}
+              </Text>
+            </Stack>
+          </MantineAuthCard>
+        </Center>
+      </StoryPageGutter>
     );
   },
 };

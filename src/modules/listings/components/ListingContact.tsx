@@ -199,7 +199,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
       defaultName={inquirerName}
       defaultEmail={inquirerEmail}
       trigger={
-        <Button type="button" fullWidth leftSection={<MessageCircle size={theme.other.iconSize.standard} />} data-track="contact_owner">
+        <Button type="button" fullWidth variant="filled" color="chat" leftSection={<MessageCircle size={theme.other.iconSize.standard} />} data-track="contact_owner">
           {t('send_message')}
         </Button>
       }
@@ -225,7 +225,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
       contactDisabled={contactLifecycleDisabled}
       contactDisabledLabel={contactDisabledLabel}
       inquiryTrigger={inquiryNode}
-      saveTrigger={listingId ? <SaveToCollectionButton listingId={listingId} variant="default" size="lg" /> : undefined}
+      saveTrigger={listingId ? <SaveToCollectionButton listingId={listingId} /> : undefined}
       reportTrigger={canReport && listingId ? <ListingReportDialog listingId={listingId} /> : undefined}
     />
   )

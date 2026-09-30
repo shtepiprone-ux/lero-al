@@ -37,9 +37,14 @@ export interface MantineListingCardOverlay {
   /** Already-translated, already-uppercased label (e.g. "SOLD"). */
   label: string
   /**
+   * Closed-listing status colour, owned by the pattern (Task 886 R40, owner O83-1 2026-09-30 — supersedes
+   * Task 741's "the pattern carries no status colour"): `'sold'` / `'rented'` apply the pattern's own
+   * overlay background and border, so every surface that renders the pattern shows the same colour.
+   */
+  tone?: 'sold' | 'rented'
+  /**
    * Arbitrary consumer-supplied class, merged onto the overlay label element via `cn()`
-   * (Task 741 — the pattern itself carries no status-color styling; the consumer owns the
-   * visual treatment entirely, e.g. `ListingCard.tsx`'s sold/rented closed-listing colors).
+   * (Task 741 — a pass-through; status colour now comes from `tone`).
    */
   className?: string
 }
@@ -81,17 +86,6 @@ export interface MantineListingCardPatternProps {
    * name, not the literal `"shrink-0 -mt-0.5 -mr-1"` string.
    */
   favorite?: ReactNode
-  /**
-   * Task 764 Revision 1 — a second, independent image-section overlay slot for a behaviour-
-   * bearing action that must stay inside the Card's own hover chain (F3: `FavoritesShell.tsx`'s
-   * `SaveToCollectionButton` used to render as a `.group` sibling of `<ListingCard>`, outside
-   * `.cardGrid`, so hovering it never triggered the card's hover zoom). `layout='grid'` only —
-   * the list layout has no consumer for this slot (Q2, kickoff §5) and is byte-identical.
-   * Positioned at the same `top`/`left` offsets as `.badgesGrid` (§3.4) and painted above it
-   * (rendered after `{badges}` below); revealed on `.cardGrid:hover`/`:focus-within`, never via
-   * a Tailwind `group`/`group-hover:` mechanism (owner-forbidden, §1).
-   */
-  imageActions?: ReactNode
   typeLabel?: string
   /** Top-left status/promo badges (new/price_reduced/sold/rented/archived/expired etc.). Renders in both layouts. */
   badges?: MantineListingCardBadge[]
@@ -153,7 +147,6 @@ export function MantineListingCardPattern({
   layout = 'grid',
   image,
   favorite,
-  imageActions,
   typeLabel,
   badges,
   overlay,
@@ -327,15 +320,9 @@ export function MantineListingCardPattern({
           </Box>
         )}
 
-        {imageActions && (
-          <Box className={styles.imageActions}>
-            {imageActions}
-          </Box>
-        )}
-
         {overlay && (
           <Center pos="absolute" inset={0} className={styles.overlayCenter}>
-            <Box component="span" className={cn(styles.overlayLabel, overlay.className)}>
+            <Box component="span" className={cn(styles.overlayLabel, overlay.tone === 'sold' && styles.overlaySold, overlay.tone === 'rented' && styles.overlayRented, overlay.className)}>
               {overlay.label}
             </Box>
           </Center>

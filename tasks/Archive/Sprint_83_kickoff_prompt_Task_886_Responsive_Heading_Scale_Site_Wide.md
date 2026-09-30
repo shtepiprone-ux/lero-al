@@ -1928,3 +1928,28 @@ unchanged, and the owner also checks the clipping.
 Append `## Revision 7` to the session log. It contains the Files Changed table, R43 with its evidence, every command
 with its exit code, the plant logs, the `story-measure.log` summary and the receipts. Status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW` or `BLOCKED`. Update the 886 cells of `docs/backlog.md`. No mutating git.
+
+### 22.9 Review 12, 2026-09-30 — `APPROVED WITH NOTES`
+
+**Owner, verbatim (§22.7):** *"візуально підтверджую, тепер lightbox виглядає і працює корректно"*. That closes the
+last O83-1 matrix. Every other tuple was accepted in earlier rounds: §18.1, §19.1, §20.1, §21.1 and §22.1.
+
+Revision 7 is verified on the final tree.
+- **I0 and hashes.** `rev7/i0.log` holds the four §22.5/§22.8a hashes. All 61 `rev7/hash-object.log` hashes equal the
+  tree, and they cover every 886 path in `git status`.
+- **Gates.** Every rev7 gate log ends `EXIT_CODE=0`, `build.log` included. `.next/BUILD_ID` (21:52) and
+  `storybook-static` (21:50) are newer than the last source write (21:48).
+- **Plants.** A and B each fail 1/6 and pass 6/6 after restore, with equal hashes.
+- **Reviewer's native probe** (`win32`, Node v22.22.3): `lightboxview--default` and `listinggallerypattern--default`,
+  at 1234×812, 1440×600, 1920×700, 390×844 and 320×640, on photos 1 and 2:
+  - the counter is `position: static`, and its bottom (52) equals the photo frame's top (52);
+  - the frame and holder are `overflow: hidden`;
+  - the painted photo lies inside the frame, and the frame inside the viewport.
+- **Double step, not reproduced.** One ArrowRight in `listingdetailview--public-listing` at 390 steps 1 → 2. The
+  executor's "3 / 3" was not reproduced, so no finding is filed.
+
+**Notes (P3 / owner, non-blocking):**
+- `rev5` and `rev6` recorded a narrower `hash-object.log`. There was no drift, and rev7 records the full list.
+- Reserved **903** (the raw `listing.condition`/`heating` keys) and **901** (a cross-reference that names 886) stay
+  live and are not 886's.
+- Owner decision **O83-2** (the six legacy `text-2xl` sites) stays open in the Sprint 83 plan.

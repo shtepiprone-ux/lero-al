@@ -1,15 +1,13 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { Center, Group, Text } from '@mantine/core'
+import { Group, Text } from '@mantine/core'
 import { AppImage } from '@/design-system/media/AppImage'
 import { MantineListingCardPattern, MantineCopyIdButton } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
-import { Maximize2 } from 'lucide-react'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
@@ -51,23 +49,10 @@ interface ListingCardProps {
   priority?: boolean
   /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
   layoutContext?: ListingLayoutContext
-  /**
-   * Task 764 Revision 1 — pass-through to `MantineListingCardPattern`'s `imageActions` slot
-   * (F3 fix). `variant='vertical'` only — forwarded unchanged, this container adds no behavior
-   * of its own for it (same pass-through contract as `favorite`/`footerActions`).
-   */
-  imageActions?: ReactNode
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
-// The centered rotated closed-overlay is plain markup (not the Badge component), so it is
-// unaffected by the Task 617 Badge migration below — left as-is. Task 741 — de-Tailwind: values
-// are now `ListingCard.module.css` `@layer utilities` classes (`.closedOverlaySold`/
-// `.closedOverlayRented`) reproducing the retired Tailwind utilities' own compiled output.
-const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
-  sold:   styles.closedOverlaySold,
-  rented: styles.closedOverlayRented,
-}
+// The sold/rented overlay colour is owned by `MantineListingCardPattern` (`overlay.tone`, Task 886 R40).
 
 // Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —
 // Mantine's `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules, so a Tailwind
@@ -117,7 +102,7 @@ function getBadges(listing: CardListingData) {
   return badges
 }
 
-export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext, imageActions }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
@@ -158,13 +143,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     // legacy list design never had them (badges already convey sold/rented).
 
     const thumbImage = (
-      <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive>
-        {!coverImage && (
-          <Center pos="absolute" inset={0}>
-            <Maximize2 className={styles.placeholderIcon} />
-          </Center>
-        )}
-      </AppImage>
+      <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive />
     )
 
     const inlineFavorite = (
@@ -246,16 +225,10 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   // the pattern's data props and builds the 3 behavior-bearing nodes (image/favorite/
   // footerActions) it cannot own itself (presentational-split gate).
 
-  // The real photo element — only the "no image" fallback lives alongside it (tied to whether
-  // coverImage exists, a pure data-mapping concern, not card chrome).
+  // The real photo element — the no-image / failed-load fallback is AppImage's canonical
+  // `MediaPlaceholder` (Task 886 R22), not a card-local icon.
   const image = (
-    <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
-      {!coverImage && (
-        <Center pos="absolute" inset={0}>
-          <Maximize2 className={styles.placeholderIconLarge} />
-        </Center>
-      )}
-    </AppImage>
+    <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive />
   )
 
   // Real favorite control — self-positions via className (contract with the pattern).
@@ -274,7 +247,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   // Badges + overlay — pre-translated here (pattern stays hook-free/no i18n).
   const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
   const overlay = isClosed
-    ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), className: CLOSED_OVERLAY_STYLE[listing.status] }
+    ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), tone: listing.status as 'sold' | 'rented' }
     : undefined
 
   // Features — icons pre-rendered as nodes so the pattern needs no app-specific icon map.
@@ -320,7 +293,6 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         }}
         image={image}
         favorite={favorite}
-        imageActions={imageActions}
         typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
         badges={patternBadges}
         overlay={overlay}

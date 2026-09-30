@@ -66,6 +66,16 @@ export function LightboxView({
   useKeepActiveInView(railScrollerRef, activeIndex)
   if (!activeImage) return null
 
+  // Task 886 R43 (owner O83-1): the counter is a ROW IN NORMAL FLOW above the media region, never an
+  // overlay on it — a photo that fills the media region can no longer run under the text. Same rule the
+  // thumbnail strip already follows (Task 824 R25: reserved space in flow, never an overlay). `py="md"` is
+  // the `md` step the old absolute `top` offset used; `ta="center"` centres it in its column.
+  const counter = (
+    <Box ta="center" py="md" fz="sm" lh={theme.other.lineHeight.lightboxCounter} className={cn(styles.counter, styles.noShrink)}>
+      {labels.counter(activeIndex + 1, images.length)}
+    </Box>
+  )
+
   return (
     <Modal.Root
       opened={opened}
@@ -79,32 +89,17 @@ export function LightboxView({
           Content) IS the backdrop; a second Mantine overlay would double-darken. Compound API
           (not the shorthand <Modal>) so aria-label lands on Modal.Content — the actual
           role="dialog" element. No Modal.Header — a visible title bar would break the full-bleed
-          media view. Scrim color via inline `style`, not a className — `Paper`, which
-          `Modal.Content` renders through, sets its own unlayered `background-color`, so a
-          className would lose the cascade regardless of specificity. `--overlay` is the single
-          source token this scrim reads. */}
-      <Modal.Content
-        aria-label={labels.close}
-        style={{ backgroundColor: 'color-mix(in oklab, var(--overlay) 95%, transparent)' }}
-      >
+          media view. Task 886 R42 (owner O83-1): the surface is OPAQUE `var(--overlay)` — the former 95%
+          scrim let the page text behind the dialog show through at 5%. Set with the Mantine `bg` style
+          prop (an inline style, so it beats `Paper`'s unlayered `background-color`, which a className
+          could not). `--overlay` is the single source token this surface reads. */}
+      <Modal.Content aria-label={labels.close} bg="var(--overlay)">
         <Modal.Body h="100%" className={styles.body}>
           <Center pos="relative" w="100%" h="100%">
             {/* Close */}
             <GalleryNavActionIcon onClick={onClose} ariaLabel={labels.close} tone="dark" placement={{ top: 'md', right: 'md', raised: true }}>
               <X size={theme.other.iconSize.roomy} />
             </GalleryNavActionIcon>
-
-            {/* Counter */}
-            <Box
-              pos="absolute"
-              top={resolveGalleryOffset(theme, 'md')}
-              left="50%"
-              fz="sm"
-              lh={theme.other.lineHeight.lightboxCounter}
-              className={cn(styles.counter, styles.centerX)}
-            >
-              {labels.counter(activeIndex + 1, images.length)}
-            </Box>
 
             {/* Prev/next — desktop only; mobile browses by swiping/dragging/arrow-keying the image itself. */}
             <GalleryDesktopNavigation
@@ -148,7 +143,11 @@ export function LightboxView({
                 gap={0}
                 className={styles.minZero}
               >
-                <Box pos="relative" w="100%" className={styles.fill}>
+                {counter}
+                {/* The photo container (Task 886 R43, owner O83-1): the region between the counter row above and
+                    the thumbnail strip below, sized only by the flex column (`.fill`: flex 1, min-height 0) and
+                    clipping (`.clip`) whatever it holds, so a photo can never paint outside its own bounds. */}
+                <Box pos="relative" w="100%" className={cn(styles.fill, styles.clip)}>
                   <AppImage variant="lightbox" src={activeImage.url} alt={`${title} ${activeIndex + 1}`} />
                 </Box>
                 {/* Thumbnail strip — desktop only, one canonical square per photo, in normal flow
@@ -180,15 +179,18 @@ export function LightboxView({
                 </Group>
               </Stack>
             ) : (
-              <Box ref={mobileContainerRef} {...containerA11yProps} h="100%" w="100%" className={styles.clip}>
-                <div ref={trackRef} style={mobileTrackStyle}>
-                  {buildWrappedSlides(images).map((img, i) => (
-                    <Box key={i} pos="relative" h="100%" style={mobileSlideStyle} className={styles.noShrink}>
-                      <AppImage variant="lightbox" src={img.url} alt={title} />
-                    </Box>
-                  ))}
-                </div>
-              </Box>
+              <Stack w="100%" h="100%" gap={0} className={styles.minZero}>
+                {counter}
+                <Box ref={mobileContainerRef} {...containerA11yProps} w="100%" className={cn(styles.fill, styles.clip)}>
+                  <div ref={trackRef} style={mobileTrackStyle}>
+                    {buildWrappedSlides(images).map((img, i) => (
+                      <Box key={i} pos="relative" h="100%" style={mobileSlideStyle} className={styles.noShrink}>
+                        <AppImage variant="lightbox" src={img.url} alt={title} />
+                      </Box>
+                    ))}
+                  </div>
+                </Box>
+              </Stack>
             )}
 
             {/* Pagination indicators — mobile only, position indicators (not clickable thumbnails

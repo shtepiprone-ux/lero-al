@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { Stack, TextInput, PasswordInput, Button, Text, Anchor, Paper, Title, Divider, useMantineTheme } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export type AuthMode = 'login' | 'register'
 
@@ -96,7 +97,7 @@ export function MantineAuthFormPattern({
     // `MantineAuthCard` (Task 873), which owns the same `w`/`maw` token path unchanged.
     <MantineAuthCard>
       <Stack gap="md">
-        <Title order={2} size="h3" ta="center">
+        <Title order={2} size="h3" fz={TITLE_FZ.h3} ta="center">
           {title}
         </Title>
         <Divider />

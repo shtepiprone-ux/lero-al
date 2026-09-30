@@ -1,0 +1,50 @@
+ M .github/workflows/governance-pr.yml
+ M docs/backlog-archive.md
+ M docs/backlog.md
+ M docs/critical-flow-registry.md
+ M docs/mantine-responsive-design-system.md
+ M package.json
+ M scripts/check-hydration-console.mjs
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/MantineDashboardStatCard.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+ M src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+ M src/design-system/mantine/typography.ts
+ M src/modules/auth/components/ResetPasswordView.tsx
+ M src/modules/cms/components/CmsPageView.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/RecentlyViewedGridView.tsx
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+ M src/modules/listings/components/SimilarListingsView.tsx
+ M src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+ M src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+ M tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md
+ D tasks/Sprints/Sprint_78_kickoff_prompt_Task_888_Hydration_Gate_Measures_Real_Admin_Routes.md
+?? docs/reviews/2026-09-30-task888-hydration-admin-routes.review-ledger.json
+?? docs/sessions/2026-09-30-task886-responsive-heading-scale.md
+?? docs/sessions/2026-09-30-task888-hydration-admin-routes.md
+?? docs/sessions/evidence/task886/
+?? docs/sessions/evidence/task888/00-status.txt
+?? docs/sessions/evidence/task888/01-hash-before.txt
+?? docs/sessions/evidence/task888/02-admin-config-before.txt
+?? docs/sessions/evidence/task888/03-verify-before.txt
+?? docs/sessions/evidence/task888/10-P1-red.txt
+?? docs/sessions/evidence/task888/11-P1-green.txt
+?? docs/sessions/evidence/task888/12-P2.txt
+?? docs/sessions/evidence/task888/13-P3.txt
+?? docs/sessions/evidence/task888/20-admin-config.txt
+?? docs/sessions/evidence/task888/21-verify.txt
+?? docs/sessions/evidence/task888/22-typecheck.txt
+?? docs/sessions/evidence/task888/23-lint.txt
+?? docs/sessions/evidence/task888/24-file-integrity.txt
+?? docs/sessions/evidence/task888/25-mojibake.txt
+?? docs/sessions/evidence/task888/26-build.txt
+?? docs/sessions/evidence/task888/plant-admin-mismatch.mjs
+?? docs/sessions/evidence/task888/rev1/
+?? scripts/check-type-responsive.mjs
+?? scripts/type-responsive-baseline.json
+?? tasks/Archive/Sprint_78_kickoff_prompt_Task_888_Hydration_Gate_Measures_Real_Admin_Routes.md

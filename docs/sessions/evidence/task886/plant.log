@@ -1,0 +1,8 @@
+before: 7cf05934afaf5063d0ce5001a4a41e1e0df27d8c
+planted: 73a1df56ac2445343151738e3059594d198cd816
+plant exit=1
+FAIL  Arm A  src/design-system/mantine/patterns/MantineDashboardHeader.tsx:54  <Title> effective size h1 is static (fixed at every width). TITLE_FZ has no h1 row: use a breakpoint-keyed fz object built from theme keys.
+after: 7cf05934afaf5063d0ce5001a4a41e1e0df27d8c
+diff-vs-HEAD-quiet=0
+status lines: 0
+restored exit=0

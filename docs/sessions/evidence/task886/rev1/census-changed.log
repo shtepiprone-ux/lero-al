@@ -1,0 +1,48 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: d1ab3a2b5c9157c17d9d1db271e72dc8a3afbae0
+    Changed paths seen: 26
+    Excluded (14):
+      .github/workflows/governance-pr.yml  [outside-src]
+      docs/backlog-archive.md  [outside-src]
+      docs/backlog.md  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      docs/mantine-responsive-design-system.md  [outside-src]
+      package.json  [outside-src]
+      scripts/check-hydration-console.mjs  [outside-src]
+      src/stories/mantine/primitives/SimilarListingsView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AuthFormPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/TwoColumnForm.stories.tsx  [story-or-test-file]
+      tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md  [outside-src]
+      tasks/Sprints/Sprint_78_kickoff_prompt_Task_888_Hydration_Gate_Measures_Real_Admin_Routes.md  [deleted]
+    Included surfaces (12):
+      src/app/[locale]/cabinet/page.tsx
+      src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+      src/design-system/mantine/patterns/MantineDashboardStatCard.tsx
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+      src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+      src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+      src/design-system/mantine/typography.ts
+      src/modules/auth/components/ResetPasswordView.tsx
+      src/modules/cms/components/CmsPageView.tsx
+      src/modules/listings/components/ListingDetailView.tsx
+      src/modules/listings/components/RecentlyViewedGridView.tsx
+      src/modules/listings/components/SimilarListingsView.tsx
+    Re-censused parent surfaces (2):
+      src/app/[locale]/listings/[slug]/page.tsx  <- src/modules/listings/components/RecentlyViewedSection.tsx
+      src/app/admin/listings/[id]/preview/page.tsx  <- src/modules/listings/components/RecentlyViewedSection.tsx
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 14
+    Blocks baselined (recorded debt, does not fail): 69
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 314
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

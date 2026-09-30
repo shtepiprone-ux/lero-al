@@ -1,16 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Image, Stack, Divider, Title, Group } from '@mantine/core';
+import { SimpleGrid, Stack, Divider, Title, Group } from '@mantine/core';
 import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
 import { theme } from '@/design-system/mantine/theme';
-import { expect, within, userEvent } from 'storybook/test';
+import { expect } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineListingCardPattern, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns/MantineListingCardPattern';
 import { MantineCopyIdButton } from '@/design-system/mantine/patterns';
+import { AppImage } from '@/design-system/media/AppImage';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
-import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton';
 import { AuthContext } from '@/modules/auth/context/AuthContext';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
+import { TITLE_FZ } from '@/design-system/mantine/typography';
 import type { User } from '@/types/database';
 
 const meta: Meta<typeof MantineListingCardPattern> = {
@@ -27,8 +29,7 @@ type Story = StoryObj<typeof MantineListingCardPattern>;
 
 const DEMO_IMAGE_URL = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop';
 
-// Task 764 Revision 1 (R23/AC23) — the real `SaveToCollectionButton` needs an authenticated
-// `useAuth()` (§3.6: it returns `null` for a guest). Mirrors `ListingCard.stories.tsx`'s own
+// The real `FavoriteButton` needs an authenticated `useAuth()`. Mirrors `ListingCard.stories.tsx`'s own
 // `AuthContext.Provider` fixture technique — bypasses `AuthProvider`'s live Supabase mount
 // (forbidden in stories) while still exercising the real button in its signed-in state.
 const FIXTURE_USER: User = {
@@ -70,22 +71,6 @@ const MOCK_SIGNED_IN_AUTH = {
   signOut: () => {},
   refreshUser: () => {},
 };
-
-// Demo photo element — a plain Mantine `Image`, standing in for the real app's `AppImage`.
-// The pattern's `.imageSection img` tag-selector hover-zoom targets this the same way it
-// targets AppImage's inner <img> (Task 602 CSS-cascade note).
-function DemoImage({ src, alt }: { src?: string; alt: string }) {
-  if (!src) {
-    // Explicit height — this fallback has no intrinsic size of its own (unlike the real
-    // `AppImage`, whose container class reserves frame height to avoid CLS even with no photo).
-    return (
-      <div className="h-[180px] flex items-center justify-center bg-muted">
-        <Maximize2 size={theme.other!.iconSize!.prominent} className="text-muted-foreground" />
-      </div>
-    );
-  }
-  return <Image src={src} alt={alt} h={180} fit="cover" />;
-}
 
 // Card feature chips — MUST mirror the live `getCardFeatures` output for an apartment,
 // the COMPLETE metric set the real card shows (src/modules/listings/domain: schema
@@ -143,14 +128,13 @@ interface DemoCardOpts {
   premium?: boolean
   archived?: boolean
   sold?: boolean
+  rented?: boolean
   noImage?: boolean
   favorited?: boolean
   photoCount?: number
-  /** Task 764 Revision 1 — renders the real `SaveToCollectionButton` in the new `imageActions` slot (R23). `layout='grid'` only (Q2). */
-  withImageActions?: boolean
 }
 
-function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5, withImageActions = false }: DemoCardOpts) {
+function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, rented = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
   // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
   // new=green, reduced=sale (Task 619 — dedicated owner-provided crimson #dd0939, replacing
   // brand; matches the detail pattern's reduced badge so the signal reads the same color across
@@ -158,7 +142,7 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
   // renders these variant="filled" (opaque, safe over the photo) — no `variant` field needed on
   // the badge data itself.
   const badges: MantineListingCardBadge[] = [];
-  if (!sold && !archived) {
+  if (!sold && !rented && !archived) {
     badges.push({
       label: reduced ? storyT(l, 'storybook.mantine.card_badge_reduced') : storyT(l, 'storybook.mantine.card_badge_new'),
       color: reduced ? 'sale' : 'green',
@@ -167,17 +151,24 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
   if (sold) {
     badges.push({ label: storyT(l, 'storybook.mantine.card_overlay_sold'), color: 'blueLight' });
   }
+  // Task 886 R40 — rented, as production `ListingCard.tsx` maps it (`status_rented` -> `purple`).
+  if (rented) {
+    badges.push({ label: storyT(l, 'listing.status_rented'), color: 'purple' });
+  }
   if (archived) {
     badges.push({ label: storyT(l, 'storybook.mantine.card_badge_archived'), color: 'gray' });
   }
 
-  // Task 741 — the pattern's colour styling is retired; this story now proves only the
-  // `overlay.className` pass-through CONTRACT with a non-Tailwind hook class the scanner cannot
-  // resolve to a utility. Production's real sold/rented colours are proven by
-  // `ListingCard.stories.tsx` through the real `ListingCard` (the actual producer, Task 741 §3.8).
+  // Task 741 — `overlay.className` is a pass-through, proven with a non-Tailwind hook class the scanner
+  // cannot resolve to a utility; the colour itself comes from `overlay.tone` (Task 886 R40).
+  // Task 886 R40 — the pattern now owns the sold/rented overlay COLOUR (`overlay.tone`), so this Story shows the
+  // same coloured overlay as production. `consumer-overlay-hook` stays on the sold card: the Task 741 play
+  // assertion below proves the `overlay.className` pass-through contract.
   const overlay: MantineListingCardOverlay | undefined = sold
-    ? { label: storyT(l, 'storybook.mantine.card_overlay_sold'), className: 'consumer-overlay-hook' }
-    : undefined;
+    ? { label: storyT(l, 'storybook.mantine.card_overlay_sold'), tone: 'sold', className: 'consumer-overlay-hook' }
+    : rented
+      ? { label: storyT(l, 'listing.status_rented').toUpperCase(), tone: 'rented' }
+      : undefined;
 
   return (
     <MantineListingCardPattern
@@ -189,7 +180,9 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
         price: storyT(l, 'storybook.mantine.card_price_1'),
         priceOld: reduced ? storyT(l, 'storybook.mantine.card_price_old_1') : undefined,
       }}
-      image={<DemoImage src={noImage ? undefined : DEMO_IMAGE_URL} alt={storyT(l, 'storybook.mantine.card_title_1')} />}
+      // Task 886 R29: the real `AppImage`, as production `ListingCard.tsx` renders it (`listing` in the grid,
+      // `listing-thumb` in the list). The no-image card shows the canonical `MediaPlaceholder`.
+      image={<AppImage variant={layout === 'list' ? 'listing-thumb' : 'listing'} src={noImage ? null : DEMO_IMAGE_URL} alt={storyT(l, 'storybook.mantine.card_title_1')} />}
       favorite={
         <FavoriteButton
           listingId={id}
@@ -197,11 +190,6 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
           overlay={layout === 'grid'}
           className={layout === 'list' ? 'shrink-0 -mt-0.5 -mr-1' : 'shadow-sm'}
         />
-      }
-      imageActions={
-        withImageActions
-          ? <SaveToCollectionButton listingId={id} />
-          : undefined
       }
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
       badges={badges}
@@ -221,18 +209,21 @@ export const Default: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
-        <Stack gap="xl" p="md">
+        <StoryPageGutter>
+        <Stack gap="xl">
           <Stack gap="sm">
-            <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
+            <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
             <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-              {/* Regular listing — favorite (unfavorited), new badge, photo counter, real SaveToCollectionButton in imageActions (Task 764 Revision 1, R23) */}
-              <DemoCard l={l} id="1" photoCount={5} withImageActions />
+              {/* Regular listing — favorite (unfavorited), new badge, photo counter */}
+              <DemoCard l={l} id="1" photoCount={5} />
               {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
               <DemoCard l={l} id="2" premium favorited photoCount={8} />
               {/* Reduced-price — old price struck through + new price, reduced badge */}
               <DemoCard l={l} id="3" reduced photoCount={3} />
               {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
               <DemoCard l={l} id="4" sold photoCount={4} />
+              {/* Rented — purple badge + the same coloured centered overlay, as production (Task 886 R40) */}
+              <DemoCard l={l} id="13" rented photoCount={4} />
               {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
               <DemoCard l={l} id="5" noImage />
               {/* Archived — grayscale/dimmed whole card + archived badge */}
@@ -243,7 +234,7 @@ export const Default: Story = {
           <Divider />
 
           <Stack gap="sm">
-            <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+            <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
             <Stack gap="sm">
               {/* Regular — favorite inline (unfavorited), new badge, photo counter bottom-left (Task 656); no overlay (never had one — the badge already conveys sold/rented) */}
               <DemoCard l={l} id="7" layout="list" photoCount={5} />
@@ -260,6 +251,7 @@ export const Default: Story = {
             </Stack>
           </Stack>
         </Stack>
+        </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -295,31 +287,5 @@ export const Default: Story = {
     const hookEl = canvasElement.querySelector('.consumer-overlay-hook');
     expect(hookEl).not.toBeNull();
     expect(hookEl?.textContent).toBe(storyT(locale, 'storybook.mantine.card_overlay_sold'));
-
-    // Task 809 Revision 3 (R25) — card #1 carries both a "new" badge and the real
-    // SaveToCollectionButton in imageActions. Hover reveals imageActions (opacity:0 by default,
-    // MantineListingCardPattern.module.css `.cardGrid:hover .imageActions`); assert their
-    // rendered bounding rects never intersect — this is the exact collision the owner's rejection
-    // found live on /favorites and that the existing story never caught because nobody hovered it.
-    const canvas = within(canvasElement.ownerDocument.body);
-    // Multiple cards carry a "new" badge (ids 1, 2, 7, 8); only card #1 (`withImageActions`) is
-    // relevant here, and it is first in DOM order, so the first match is card #1's own badge.
-    const badges = await canvas.findAllByText(storyT(locale, 'storybook.mantine.card_badge_new'));
-    const badge = badges[0];
-    const saveButton = await canvas.findByRole('button', { name: storyT(locale, 'collections.save_to') });
-    await userEvent.hover(saveButton);
-    const badgeRect = badge.getBoundingClientRect();
-    const saveRect = saveButton.getBoundingClientRect();
-    const intersects = !(
-      badgeRect.right <= saveRect.left ||
-      badgeRect.left >= saveRect.right ||
-      badgeRect.bottom <= saveRect.top ||
-      badgeRect.top >= saveRect.bottom
-    );
-    if (intersects) {
-      throw new Error(
-        `badge/imageActions intersect: badge=${JSON.stringify(badgeRect)} save=${JSON.stringify(saveRect)}`
-      );
-    }
   },
 };

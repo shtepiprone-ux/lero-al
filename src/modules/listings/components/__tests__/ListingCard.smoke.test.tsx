@@ -24,11 +24,9 @@ import { theme } from '@/design-system/mantine/theme'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { ListingCard, type CardListingData } from '../ListingCard'
-import { SaveToCollectionButton } from '../SaveToCollectionButton'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 
-// Task 764 Revision 1 (R14/AC15) — `SaveToCollectionButton` returns `null` for a guest (§3.6);
-// the containment test needs a real authenticated `useAuth()`, mirroring
+// `FavoriteButton` needs an authenticated `useAuth()`, mirroring
 // `FavoriteButton.test.tsx`'s established `vi.mock` convention.
 const mockUseAuth = vi.fn(() => ({
   user: { id: 'story-user-001', preferred_currency: 'EUR' },
@@ -39,12 +37,6 @@ const mockUseAuth = vi.fn(() => ({
 }))
 vi.mock('@/modules/auth/context/AuthContext', () => ({
   useAuth: () => mockUseAuth(),
-}))
-vi.mock('@/modules/listings/actions/collectionActions', () => ({
-  getCollectionsWithMembership: vi.fn(async () => ({ collections: [], memberIds: [] })),
-  createCollection: vi.fn(),
-  addToCollection: vi.fn(),
-  removeFromCollection: vi.fn(),
 }))
 
 function loadMessages(locale: string) {
@@ -177,9 +169,26 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
     expect(screen.getByRole('link')).toHaveAttribute('href', '/en/listings/modern-apartment-tirana')
   })
 
+  // Task 886 R40: the pattern owns the closed-listing overlay colour (`overlay.tone`).
+  it('sold listing: the overlay carries the pattern\'s sold class, not the rented one', () => {
+    renderCard({ ...BASE_LISTING, status: 'sold' })
+    const label = screen.getByText('SOLD')
+    expect(label.className).toMatch(/overlaySold/)
+    expect(label.className).not.toMatch(/overlayRented/)
+  })
+
+  it('rented listing: the overlay carries the pattern\'s rented class, not the sold one', () => {
+    renderCard({ ...BASE_LISTING, status: 'rented' })
+    const label = screen.getByText('RENTED')
+    expect(label.className).toMatch(/overlayRented/)
+    expect(label.className).not.toMatch(/overlaySold/)
+  })
+
   it('no-image listing renders the fallback, not a broken image', () => {
-    renderCard({ ...BASE_LISTING, images: [] })
-    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    const { container } = renderCard({ ...BASE_LISTING, images: [] })
+    // Task 886 R21: the fallback is AppImage's canonical MediaPlaceholder (role="img"), so assert on the <img> element.
+    expect(container.querySelector('img')).toBeNull()
+    expect(screen.getByTestId('media-placeholder')).toBeInTheDocument()
   })
 
   it('archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)', () => {
@@ -187,7 +196,7 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
 
     expect(screen.getByText('Archived')).toBeInTheDocument()
     const link = screen.getByRole('link')
-    expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocument()
+    expect(link.querySelector('[class*="archived"]')).toBeInTheDocument()
   })
 
   it('favorite, photo counter, features, and footer actions all render through the pattern (Task 605 single-source proof)', () => {
@@ -262,8 +271,9 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
   })
 
   it('no-image listing renders the fallback, not a broken image', () => {
-    renderCard({ ...BASE_LISTING, images: [] }, 'en', { variant: 'horizontal' })
-    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    const { container } = renderCard({ ...BASE_LISTING, images: [] }, 'en', { variant: 'horizontal' })
+    expect(container.querySelector('img')).toBeNull()
+    expect(screen.getByTestId('media-placeholder')).toBeInTheDocument()
   })
 
   it('archived listing renders the archived badge + dimmed card', () => {
@@ -271,44 +281,17 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
 
     expect(screen.getByText('Archived')).toBeInTheDocument()
     const link = screen.getByRole('link')
-    expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocument()
+    expect(link.querySelector('[class*="archived"]')).toBeInTheDocument()
   })
 })
 
-describe('ListingCard — imageActions slot containment (Task 764 Revision 1, F3/R14)', () => {
-  it('renders the real SaveToCollectionButton as a descendant of the .cardGrid element, not a sibling', () => {
-    const { container } = renderCard(BASE_LISTING, 'en', {
-      isFavorited: true,
-      imageActions: (
-        <SaveToCollectionButton
-          listingId={BASE_LISTING.id}
-          className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
-        />
-      ),
-    })
+describe('ListingCard — no save-to-collection control on cards (Task 886 R34, owner O83-1)', () => {
+  // Critical flow "Listing card rendering" (docs/critical-flow-registry.md): save-to-collection lives only
+  // on the listing-detail page, never on a card (favorites, the heart, is a separate control).
+  it('a vertical grid card renders no Save to collection control', () => {
+    renderCard(BASE_LISTING, 'en', { isFavorited: true })
 
-    const saveButton = screen.getByRole('button', { name: 'Save to collection' })
-
-    // Ordered first (owner instruction, 2026-08-24): this is the STRONGER, discriminating
-    // invariant §3.2 actually establishes — containment inside the grid `Card.Section`
-    // (`.imageSection`) specifically. The rewritten P3 plant (§10.6, D63-H/D63-J) must produce a
-    // retained failure stack pointing at THIS assertion, not at the weaker `.cardGrid` check
-    // below — asserting `.imageSection` first guarantees that when the fixture regresses to the
-    // pre-Revision-1 sibling composition, the retained transcript's failure is unambiguously this
-    // line.
-    const imageSectionEl = container.querySelector('[class*="imageSection"]')
-    expect(imageSectionEl).toBeInTheDocument()
-    expect(imageSectionEl).toContainElement(saveButton)
-
-    // Weaker containment invariant (R14/AC15's own wording: "descendant of `.cardGrid`"), kept as
-    // a second, independent assertion — still real, just not the one that discriminates the P3
-    // mutation on its own (a sibling of `Card.Section` is still a `.cardGrid` descendant, and
-    // `.cardGrid:hover` still fires for it, since CSS `:hover` propagates to every ancestor of the
-    // hovered element regardless of nesting depth — measured, not assumed,
-    // `rev1-favorites-composition.plant-p3.json`).
-    const cardGridEl = container.querySelector('[class*="cardGrid"]')
-    expect(cardGridEl).toBeInTheDocument()
-    expect(cardGridEl).toContainElement(saveButton)
+    expect(screen.queryByRole('button', { name: 'Save to collection' })).toBeNull()
   })
 })
 

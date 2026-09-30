@@ -1,6 +1,7 @@
 'use client'
 
 import { Group, Flex, Title, Button, Stack, Text } from '@mantine/core'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface PageHeaderAction {
   label: string
@@ -40,7 +41,7 @@ export function MantinePageHeaderWithActions({
       )}
       <Group justify="space-between" align="flex-start" wrap="wrap" gap="sm">
         <Stack gap="tight">
-          <Title order={1} size="h2">
+          <Title order={1} size="h2" fz={TITLE_FZ.h2}>
             {title}
           </Title>
           {subtitle && (

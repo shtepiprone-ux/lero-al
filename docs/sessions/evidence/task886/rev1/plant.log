@@ -1,0 +1,20 @@
+hash before: 7cf05934afaf5063d0ce5001a4a41e1e0df27d8c
+== arm (i): unclosed <Title order={2} ==
+planted unclosed src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+      - fz passed through a variable that is not imported from typography.ts;
+    Opening tags this scanner could not close (parse error): 1
+ERROR  src/design-system/mantine/patterns/MantineDashboardHeader.tsx:103  opening <Title> tag could not be closed — the gate cannot classify it
+check:type-responsive EXIT=2 (expected 2)
+restored src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+hash after restore: 7cf05934afaf5063d0ce5001a4a41e1e0df27d8c (equal: True)
+after restore EXIT=0 (expected 0)
+== arm (ii): <Title order={1}>x</Title> ==
+planted order1 src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+      - fz passed through a variable that is not imported from typography.ts;
+    Opening tags this scanner could not close (parse error): 0
+FAIL  Arm A  src/design-system/mantine/patterns/MantineDashboardHeader.tsx:103  <Title> effective size h1 is static (fixed at every width). TITLE_FZ has no h1 row: use a breakpoint-keyed fz object built from theme keys.
+check:type-responsive EXIT=1 (expected 1)
+restored src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+hash after restore: 7cf05934afaf5063d0ce5001a4a41e1e0df27d8c (equal: True)
+after restore EXIT=0 (expected 0)
+git status of target: [] (empty = untouched)

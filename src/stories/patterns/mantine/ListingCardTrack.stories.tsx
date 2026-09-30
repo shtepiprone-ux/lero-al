@@ -4,6 +4,7 @@ import { ListingCard, type CardListingData } from '@/modules/listings/components
 import type { ExchangeRates } from '@/lib/getExchangeRate';
 import type { User } from '@/types/database';
 import { storyT } from '@/stories/_storyI18n';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack';
 
 /**
@@ -125,7 +126,9 @@ export const Grid: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="grid">{fixtureCards(l, 8)}</MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -137,7 +140,9 @@ export const Rail: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="rail">{fixtureCards(l, 8)}</MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -149,7 +154,9 @@ export const GridSingleItem: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="grid">{fixtureCards(l, 1)}</MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -161,7 +168,9 @@ export const RailSingleItem: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="rail">{fixtureCards(l, 1)}</MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -171,17 +180,16 @@ export const RailSingleItem: Story = {
 // zero scrollbar thumb (kickoff §3.3 case 2 — nothing beyond the edge, nothing to peek at). Two
 // items only, deliberately fewer than `Rail`'s eight.
 export const RailNoOverflow: Story = {
-  // Revision 1 (R17.4) — 2 cards overflow the `n=1` rung's own width at mobile canvases (the D74-6
-  // ladder only gets to a container wide enough for 2 fixed-width cards from the `xs2` rung, ≥480px,
-  // per-track — Task 810 Revision 1's D74-9), so this story's own NAME would contradict what a
-  // 320px owner pass sees. Pinned to `desktop1440`, where 2 cards' combined width plus one gap sits
-  // well inside a 1344px track and the "no overflow" state is unambiguous.
-  globals: { viewport: { value: 'desktop1440', isRotated: false } },
+  // Task 886 R26 (GR-3b): no viewport pin. The no-overflow state holds once the track is at least 480px
+  // wide (the D74-9 `xs2` rung, where 2 fixed-width cards plus a gap fit); below that the two cards
+  // scroll, which is `Rail`'s state. Read it with the toolbar at 1024 and 1440.
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="rail">{fixtureCards(l, 2)}</MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -210,11 +218,13 @@ export const RailMixedTitleLengths: Story = {
     const text = MIXED_TITLE_LOCALE_TEXT[l] ?? MIXED_TITLE_LOCALE_TEXT.en;
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="rail">
           <ListingCard key="mixed-short" listing={makeMixedTitleListing(l, 'story-mixed-short', text.short)} variant="vertical" rates={FIXTURE_RATES} />
           <ListingCard key="mixed-long" listing={makeMixedTitleListing(l, 'story-mixed-long', text.long)} variant="vertical" rates={FIXTURE_RATES} />
           {fixtureCards(l, 2)}
         </MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -226,11 +236,13 @@ export const GridMixedTitleLengths: Story = {
     const text = MIXED_TITLE_LOCALE_TEXT[l] ?? MIXED_TITLE_LOCALE_TEXT.en;
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+      <StoryPageGutter>
         <MantineListingCardTrack mode="grid">
           <ListingCard key="mixed-short" listing={makeMixedTitleListing(l, 'story-mixed-short-grid', text.short)} variant="vertical" rates={FIXTURE_RATES} />
           <ListingCard key="mixed-long" listing={makeMixedTitleListing(l, 'story-mixed-long-grid', text.long)} variant="vertical" rates={FIXTURE_RATES} />
           {fixtureCards(l, 2)}
         </MantineListingCardTrack>
+      </StoryPageGutter>
       </AuthContext.Provider>
     );
   },
@@ -238,5 +250,9 @@ export const GridMixedTitleLengths: Story = {
 
 // Zero children — the track renders nothing visible and must not reserve height or throw.
 export const Empty: Story = {
-  render: () => <MantineListingCardTrack mode="grid">{null}</MantineListingCardTrack>,
+  render: () => (
+    <StoryPageGutter>
+      <MantineListingCardTrack mode="grid">{null}</MantineListingCardTrack>
+    </StoryPageGutter>
+  ),
 };

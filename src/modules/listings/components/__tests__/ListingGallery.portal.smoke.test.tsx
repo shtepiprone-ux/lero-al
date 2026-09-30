@@ -38,6 +38,9 @@ import { theme } from '@/design-system/mantine/theme'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { ListingGallery } from '../ListingGallery'
+import lightboxStyles from '../LightboxView.module.css'
+import appImageStyles from '@/design-system/media/AppImage.module.css'
+import { VARIANTS } from '@/design-system/media/appImageConfig'
 
 function loadMessages(locale: string) {
   return JSON.parse(readFileSync(join(process.cwd(), 'messages', `${locale}.json`), 'utf-8'))
@@ -191,5 +194,38 @@ describe('ListingGallery lightbox — Mantine Modal root-cause fix (Task 612)', 
 
     fireEvent.click(within(dialog).getByRole('button', { name: 'Previous' }))
     await waitFor(() => expect(screen.getByText('1 / 2')).toBeInTheDocument())
+  })
+})
+
+// Task 886 R43 (owner O83-1): the counter is a row in normal flow ABOVE the media region, never an
+// overlay on the photo, and the photo container clips whatever it holds (desktop branch — the
+// `sm` matchMedia stub above reports matched).
+describe('ListingGallery lightbox — counter above a clipping photo container (Task 886 R43)', () => {
+  it('the counter is in normal flow (not position:absolute) and precedes the media region in DOM order', async () => {
+    renderGallery()
+    const dialog = await openLightbox()
+    const counter = screen.getByText('1 / 2')
+
+    expect(getComputedStyle(counter).position).not.toBe('absolute')
+    expect(dialog.contains(counter)).toBe(true)
+
+    // The media region is the counter's next sibling, so the counter precedes it in DOM order.
+    const media = counter.nextElementSibling
+    expect(media).not.toBeNull()
+    expect(media!.querySelector('img, [data-testid="media-placeholder"]')).not.toBeNull()
+    // eslint-disable-next-line no-bitwise -- DOM position bitmask comparison
+    expect(counter.compareDocumentPosition(media!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('the photo container clips: the lightbox frame carries frameClip and the desktop holder carries clip', async () => {
+    renderGallery()
+    await openLightbox()
+    const counter = screen.getByText('1 / 2')
+    const holder = counter.nextElementSibling as HTMLElement
+
+    expect(appImageStyles.frameClip).toBeTruthy()
+    expect(VARIANTS.lightbox.containerClass).toContain(appImageStyles.frameClip)
+    expect(lightboxStyles.clip).toBeTruthy()
+    expect(holder.className).toContain(lightboxStyles.clip)
   })
 })

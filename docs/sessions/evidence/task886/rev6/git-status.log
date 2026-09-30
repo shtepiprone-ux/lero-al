@@ -1,0 +1,62 @@
+ M .github/workflows/governance-pr.yml
+ M docs/mantine-responsive-design-system.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package.json
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/GalleryThumbnailButton.tsx
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingCardPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingCardTrack.module.css
+ M src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+ M src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+ M src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+ M src/design-system/mantine/theme.ts
+ M src/design-system/mantine/typography.ts
+ M src/design-system/media/AppImage.tsx
+ M src/design-system/media/appImageConfig.ts
+ M src/modules/auth/components/ResetPasswordView.tsx
+ M src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+ M src/modules/cms/components/CmsPageView.tsx
+ M src/modules/listings/components/FavoritesShell.tsx
+ M src/modules/listings/components/LightboxView.tsx
+ M src/modules/listings/components/ListingCard.module.css
+ M src/modules/listings/components/ListingCard.tsx
+ M src/modules/listings/components/ListingContact.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/RecentlyViewedGridView.tsx
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+ D src/modules/listings/components/SaveToCollectionButton.module.css
+ M src/modules/listings/components/SaveToCollectionButton.tsx
+ M src/modules/listings/components/SimilarListingsView.tsx
+ M src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+ M src/stories/mantine/primitives/AppImage.stories.tsx
+ M src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+ M src/stories/mantine/primitives/LightboxView.stories.tsx
+ M src/stories/mantine/primitives/ListingCard.stories.tsx
+ M src/stories/mantine/primitives/SaveToCollectionButton.stories.tsx
+ M src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+ M src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+ M src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingCardTrack.stories.tsx
+ M src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailView.stories.tsx
+ M src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingsShellView.stories.tsx
+ M src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+ M src/stories/patterns/mantine/ResetPasswordView.stories.tsx
+ M src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+?? docs/sessions/2026-09-30-task886-responsive-heading-scale.md
+?? docs/sessions/evidence/task886/
+?? scripts/check-type-responsive.mjs
+?? scripts/type-responsive-baseline.json
+?? src/design-system/media/MediaPlaceholder.tsx
+?? src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx

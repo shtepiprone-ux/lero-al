@@ -1,0 +1,31 @@
+PLANTS R43 (two, each two-armed)
+
+=== PLANT A counter back to position:absolute : src/modules/listings/components/LightboxView.tsx ===
+hash_before = 2de2063d4935abfe85328bf05dee389b94d3922d
+--- ARM 1: planted --- hash_planted = d1e69e3b1fe2e9c3f06c9495af23bde4cd544036 ; differs_from_before = True
+arm1 EXIT_CODE=1
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (6 tests | 1 failed) 1287ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — 
+AssertionError: expected 'absolute' not to be 'absolute' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+--- ARM 2: restored --- hash_after = 2de2063d4935abfe85328bf05dee389b94d3922d ; equal_to_before = True
+arm2 EXIT_CODE=0
+      Tests  6 passed (6)
+   Duration  3.29s (transform 248ms, setup 85ms, import 958ms, tests 1.28s, environment 741ms)
+
+=== PLANT B frameClip removed from the lightbox frame : src/design-system/media/appImageConfig.ts ===
+hash_before = 35cc2166eacab0b66d6ca0ef12634afd1202e443
+--- ARM 1: planted --- hash_planted = 73d68deda95105b51d9d5de926d966b6f4df2b22 ; differs_from_before = True
+arm1 EXIT_CODE=1
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (6 tests | 1 failed) 1291ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — 
+AssertionError: expected '_frame_f1ba10 _frameFill_f1ba10' to contain '_frameClip_f1ba10'
+Expected: "_frameClip_f1ba10"
+ Test Files  1 failed (1)
+--- ARM 2: restored --- hash_after = 35cc2166eacab0b66d6ca0ef12634afd1202e443 ; equal_to_before = True
+arm2 EXIT_CODE=0
+      Tests  6 passed (6)
+   Duration  3.13s (transform 247ms, setup 87ms, import 933ms, tests 1.25s, environment 727ms)

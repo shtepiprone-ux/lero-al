@@ -1,0 +1,38 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (6 tests | 1 failed) 1291ms
+     × the photo container clips: the lightbox frame carries frameClip and the desktop holder carries clip 71ms
+npx.cmd : 
+At line:15 char:3
++   npx.cmd vitest run $t > "$ev\plant-$tag-arm1.log" 2>&1; $c1 = $LAST ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — 
+counter above a clipping photo container (Task 886 R43) > the photo container clips: the lightbox frame carries 
+frameClip and the desktop holder carries clip
+AssertionError: expected '_frame_f1ba10 _frameFill_f1ba10' to contain '_frameClip_f1ba10'
+
+Expected: "_frameClip_f1ba10"
+Received: "_frame_f1ba10 _frameFill_f1ba10"
+
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:227:46
+    225|
+    226|     expect(appImageStyles.frameClip).toBeTruthy()
+    227|     expect(VARIANTS.lightbox.containerClass).toContain(appImageStyles.…
+       |                                              ^
+    228|     expect(lightboxStyles.clip).toBeTruthy()
+    229|     expect(holder.className).toContain(lightboxStyles.clip)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  21:49:06
+   Duration  3.21s (transform 253ms, setup 88ms, import 956ms, tests 1.29s, environment 731ms)
+

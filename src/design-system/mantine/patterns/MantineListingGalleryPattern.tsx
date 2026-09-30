@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Image, ScrollArea, Group, UnstyledButton, Paper, useMatches } from '@mantine/core'
+import { ScrollArea, Group, UnstyledButton, Paper, useMatches } from '@mantine/core'
+import { AppImage } from '@/design-system/media/AppImage'
 import { Maximize2 } from 'lucide-react'
 import { LightboxView, type LightboxViewLabels } from '@/modules/listings/components/LightboxView'
 import { GalleryDesktopNavigation } from './GalleryDesktopNavigation'
@@ -23,7 +24,7 @@ export interface MantineListingGalleryPatternProps {
 
 /**
  * Canonical listing-detail gallery pattern — the photo IS a Mantine component that owns its own
- * lightbox open/active-index/prev/next/select state. Renders a Mantine `Image` main photo +
+ * lightbox open/active-index/prev/next/select state. Renders an `AppImage` main photo +
  * (desktop only, when >1) a thumbnail row, both wired to the same `LightboxView` modal. Pure,
  * prop-driven, hook-free of data/network — `'use client'` only for the open-state.
  *
@@ -87,7 +88,8 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
             className="absolute inset-0 block h-full w-full"
             aria-label={title}
           >
-            <Image src={images[activeIndex].url} alt={title} fit="cover" className="h-full w-full" />
+            {/* Task 886 R41: AppImage (gallery-main fills its parent), so a failed photo shows the canonical placeholder. */}
+            <AppImage variant="gallery-main" src={images[activeIndex].url} alt={title} />
           </UnstyledButton>
         ) : (
           <div ref={mobileContainerRef} {...containerA11yProps} className="h-full w-full overflow-hidden">
@@ -104,7 +106,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
                     aria-hidden={isVisible ? undefined : true}
                     tabIndex={isVisible ? undefined : -1}
                   >
-                    <Image src={img.url} alt="" fit="cover" className="h-full w-full" />
+                    <AppImage variant="gallery-main" src={img.url} alt="" />
                   </UnstyledButton>
                 )
               })}

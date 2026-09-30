@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Avatar, Text, Group, Stack, Paper, Divider, Button, Flex, Box, ThemeIcon, Loader, useMantineTheme } from '@mantine/core'
+import { Avatar, Text, Group, Stack, Paper, Divider, Button, SimpleGrid, ThemeIcon, Loader, useMantineTheme } from '@mantine/core'
 import { Phone, MessageCircle, CheckCircle, UserX, LogIn } from 'lucide-react'
 
 export interface MantineListingContactAgent {
@@ -78,8 +78,8 @@ export interface MantineListingContactPatternProps {
  * Canonical listing-detail contact-card pattern (Task 616 D2) — ALL Mantine, its own story.
  * Content mirrors `ListingContact.tsx`'s desktop sticky sidebar; `inquiryTrigger`/`reportTrigger`
  * are passed as positioned nodes (Task 605 hook-free split) so this pattern never imports the
- * real stateful dialogs/actions. Preserves the Task 615 CTA fix (per-button `flex:1 minWidth:0`
- * + wrapping `<span>` so long uk/it labels wrap instead of overflowing) and the sticky positioning.
+ * real stateful dialogs/actions. Task 886 R19: the Call/WhatsApp row is a container-keyed `SimpleGrid` (two-up only when the card
+ * itself is wide enough), so long uk/it labels never wrap inside a narrow card. Sticky positioning preserved.
  * Task 784 D69-25 (owner instruction, 2026-09-04): favorite moved out of this card entirely —
  * `MantineListingDetailPattern` now owns it directly, always in its badges row, at every
  * breakpoint (previously split between here and the badges row by viewport; see that
@@ -126,11 +126,11 @@ export function MantineListingContactPattern({
       top={{ lg: theme.other.layout.listingContactStickyOffset }}
     >
       <Stack gap="md">
-        <Group gap="sm" wrap="nowrap" style={dimmed ? { opacity: 0.5 } : undefined}>
+        <Group gap="sm" wrap="nowrap" opacity={dimmed ? 0.5 : undefined}>
           <Avatar src={state === 'ownerDeleted' ? null : agent.avatarUrl} radius="xl" size="lg" color="brand">
             {state === 'ownerDeleted' ? <UserX size={theme.other.iconSize.roomy} /> : agent.initials}
           </Avatar>
-          <Stack gap="micro" style={{ flex: 1, minWidth: 0 }}>
+          <Stack gap="micro" flex={1} miw={0}>
             <Group gap="compact" wrap="nowrap">
               <Text fw={600} size="sm" truncate>
                 {agent.name}
@@ -185,67 +185,50 @@ export function MantineListingContactPattern({
           </Button>
         )}
 
-        {/* Task 784 D69-22 (owner instruction, 2026-09-04): row from xs2 (480px) while the panel
-            is full-width (D69-21's Grid fix stacks it below md=768px). At md and above the panel
-            becomes a narrow Grid sidebar (~245-330px) — row there re-wraps the longest uk label
-            (measured), so direction reverts to column until the sidebar is wide enough again,
-            confirmed only from xl (1280px, 416px sidebar) in both it and uk.
-            Task 793 F2 (owner instruction, 2026-09-06): also renders for `closedListing` (sold/
-            rented) — composed with, not replaced by, the headline block above — so Call/WhatsApp
-            show disabled (via `contactDisabled`) instead of disappearing outright. */}
+        {/* Task 886 R19 (owner O83-1 return): the row is keyed on the CARD's own width, not the
+            viewport (Mantine `SimpleGrid type="container"`, the D74-9 precedent): one column, two-up
+            only when the card is at least `xs2` (480px) wide. Viewport breakpoints picked the row
+            layout inside a ~280px card in the Docs preview and the sidebar. Task 793 F2: also renders
+            for `closedListing`, with Call/WhatsApp disabled via `contactDisabled`. */}
         {(state === 'normal' || state === 'closedListing') && (hasPhone || hasWhatsapp) && (
-          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
+          <SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="sm">
             {hasPhone && (
               <Button
                 color="brand"
+                fullWidth
                 onClick={onCall}
                 disabled={loading || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
                 leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <Phone size={theme.other.iconSize.comfortable} />}
-                style={{ flex: 1, minWidth: 0 }}
-                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
-                <span style={{ minWidth: 0, display: 'block' }}>{labels.call}</span>
+                {labels.call}
               </Button>
             )}
             {hasWhatsapp && (
               <Button
                 color="green"
+                fullWidth
                 onClick={onWhatsApp}
                 disabled={loading || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
                 leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
-                style={{ flex: 1, minWidth: 0 }}
-                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
-                <span style={{ minWidth: 0, display: 'block' }}>{labels.whatsapp}</span>
+                {labels.whatsapp}
               </Button>
             )}
-          </Flex>
+          </SimpleGrid>
         )}
 
-        {/* Send-message trigger — `inquiryTrigger` is an opaque consumer-supplied node that sets
-            its own `fullWidth` internally (hook-free split, Task 605); wrapping it in a
-            `flex:1, minWidth:0` container lets that fill the row. Task 793 (D69-24's share
-            partner) removed Share from this row — it moved to `MantineListingDetailPattern`'s
-            badges row (kickoff §3.4) — so the row now holds only the send-message trigger.
-            F2 — also renders for `closedListing`, same composition rule as the Call/WhatsApp
-            row above (the consumer supplies a disabled "Send message" button for that case). */}
-        {(state === 'normal' || state === 'closedListing') && (
-          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
-            <Box style={{ flex: 1, minWidth: 0 }}>{inquiryTrigger}</Box>
-          </Flex>
-        )}
+        {/* Send-message trigger — `inquiryTrigger` is an opaque consumer-supplied node that sets its
+            own `fullWidth` internally (hook-free split, Task 605), so it fills the card directly.
+            F2 — also renders for `closedListing`, same composition rule as the row above. */}
+        {(state === 'normal' || state === 'closedListing') && inquiryTrigger}
 
-        {/* Task 793 E-A — SaveToCollection, same Flex/Box idiom as the send-message row above.
-            Rendered whenever supplied, independent of `state` (see the prop doc). */}
-        {saveTrigger && (
-          <Flex direction={{ base: 'column', xs2: 'row', md: 'column', xl: 'row' }} gap="sm">
-            <Box style={{ flex: 1, minWidth: 0 }}>{saveTrigger}</Box>
-          </Flex>
-        )}
+        {/* Task 793 E-A — SaveToCollection, rendered whenever supplied, independent of `state`
+            (see the prop doc). Its default shape is `fullWidth`. */}
+        {saveTrigger}
 
         {/* Report listing — real full-width fix (724R V2 route a): the consumer-supplied
             `reportTrigger` node sets its own `fullWidth`, same as `inquiryTrigger`'s established
@@ -272,7 +255,7 @@ function CheckIconBadge({ label }: { label: string }) {
 
 function NoticeBox({ icon, title, desc }: { icon: ReactNode; title?: string; desc: string }) {
   return (
-    <Paper radius="lg" p="md" bg="gray.0" style={{ textAlign: 'center' }}>
+    <Paper radius="lg" p="md" bg="gray.0" ta="center">
       <Stack gap="xs" align="center">
         <ThemeIcon size="xl" radius="xl" color="gray" variant="light">
           {icon}

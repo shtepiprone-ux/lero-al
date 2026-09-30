@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Stack, Text } from '@mantine/core';
 import { within, userEvent } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineListingGalleryPattern } from '@/design-system/mantine/patterns/MantineListingGalleryPattern';
@@ -46,7 +47,8 @@ export const Default: Story = {
     };
 
     return (
-      <Stack gap="xl" p="md">
+      <StoryPageGutter>
+      <Stack gap="xl">
         <Stack gap="xs">
           <Text size="xs" c="gray.5" fw={500}>
             {storyT(l, 'storybook.mantine.listing_detail_gallery_section_default')}
@@ -61,6 +63,7 @@ export const Default: Story = {
           <MantineListingGalleryPattern images={[]} title={title} labels={labels} />
         </Stack>
       </Stack>
+      </StoryPageGutter>
     );
   },
   play: async ({ canvasElement, globals }) => {

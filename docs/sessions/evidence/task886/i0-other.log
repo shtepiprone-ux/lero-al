@@ -1,0 +1,28 @@
+src/design-system/mantine/patterns/MantineAuthFormPattern.tsx:99:        <Title order={2} size="h3" ta="center">
+src/design-system/mantine/patterns/MantineDashboardHeader.tsx:32: * size="h4"` (24/32 — what `AdminPageHeader` renders today), subtitle `Text size="sm"
+src/design-system/mantine/patterns/MantineDashboardHeader.tsx:66:        <Title order={1} size="h4" fz={{ base: 'h5', sm: 'h4' }}>
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:196:            <Title order={1} size="h2" style={{ wordBreak: 'break-word' }}>
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:272:                <Title order={2} size="h4">
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:285:                <Title order={2} size="h4">
+src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx:43:          <Title order={1} size="h2">
+src/design-system/mantine/patterns/MantineTwoColumnForm.tsx:61:          <Title order={2} size="h3">
+src/modules/auth/components/ResetPasswordView.tsx:66:            <Title order={1} size="h3">{t('reset_password_expired_title')}</Title>
+src/modules/auth/components/ResetPasswordView.tsx:85:            <Title order={1} size="h3">{t('reset_password_success_title')}</Title>
+src/modules/auth/components/ResetPasswordView.tsx:100:          <Title order={1} size="h3">{t('reset_password_title')}</Title>
+src/modules/listings/components/ListingDetailView.tsx:58:        <Title order={2} size="h4">&nbsp;</Title>
+src/modules/listings/components/ListingDetailView.tsx:370:            <Title order={2} size="h4">
+src/modules/listings/components/RecentlyViewedGridView.tsx:35: * Task 792 — off Tailwind onto Mantine. Heading reuses `Title order={2} size="h4"`, the same
+src/modules/listings/components/RecentlyViewedGridView.tsx:46:        <Title order={2} size="h4" mb="md">
+src/modules/listings/components/RecentlyViewedGridView.tsx:61:        <Title order={2} size="h4">
+src/modules/listings/components/RecentlyViewedSection.tsx:79:        <Title order={2} size="h4">&nbsp;</Title>
+src/modules/listings/components/SimilarListingsView.tsx:27: * Task 792 — off Tailwind onto Mantine. Heading keeps `Title order={2} size="h4"` — the exact
+src/modules/listings/components/SimilarListingsView.tsx:52:        <Title order={2} size="h4">
+---TW
+src/app/admin/users/page.tsx:84:          <h1 className="text-2xl font-bold">{t('users_title')}</h1>
+src/app/[locale]/contact/page.tsx:32:          <h1 className="text-2xl sm:text-3xl font-bold mb-3">{t('title')}</h1>
+src/app/[locale]/favorites/page.tsx:85:          <h1 className="text-2xl font-bold">{t('page_title')}</h1>
+src/components/admin/AdminPageShell.tsx:35:                  <h1 className="text-2xl font-bold text-foreground leading-tight">{title}</h1>
+src/components/admin/AdminSupportManager.tsx:776:            <p className="text-2xl font-bold">{count}</p>
+src/design-system/mantine/patterns/MantineDashboardStatCard.tsx:61: * c="gray.5"`; value `text-title-sm font-bold text-gray-800` (30/38, bold) → the theme's own h3
+src/modules/listings/components/ListingFormShellView.tsx:135:        <h1 className="text-2xl font-bold">{isEditMode(mode) ? t('edit_listing') : t('create_listing')}</h1>
+src/modules/listings/components/steps/StepPreview.tsx:60:            <p className="text-2xl font-bold text-primary">

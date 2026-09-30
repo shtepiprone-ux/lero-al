@@ -1,0 +1,31 @@
+win32 v22.22.3 C:\Claude_Code_Projects\lero-al
+ M .github/workflows/governance-pr.yml
+ M docs/backlog.md
+ M docs/mantine-responsive-design-system.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+ M src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+ M src/design-system/mantine/typography.ts
+ M src/modules/auth/components/ResetPasswordView.tsx
+ M src/modules/cms/components/CmsPageView.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/RecentlyViewedGridView.tsx
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+ M src/modules/listings/components/SimilarListingsView.tsx
+ M src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+ M src/stories/patterns/mantine/ResetPasswordView.stories.tsx
+ M src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+?? docs/sessions/2026-09-30-task886-responsive-heading-scale.md
+?? docs/sessions/evidence/task886/
+?? scripts/check-type-responsive.mjs
+?? scripts/type-responsive-baseline.json
+14809fd64f43d97bc940177e3a30da4ecf5c0e48
+959e73ab5200d35bce8908a163a2af2389ea09b4
+9a3bd0c642bf81e70983c76a754a039297180747
+c2c5d744d34e0c7c1f52b786bf7f4d6804c20d72
+c19dd9fabdf7638045eaee7344a319ae7bbbee51

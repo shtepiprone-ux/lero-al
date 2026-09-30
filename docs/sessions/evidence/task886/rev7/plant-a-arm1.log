@@ -1,0 +1,34 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx (6 tests | 1 failed) 1287ms
+     × the counter is in normal flow (not position:absolute) and precedes the media region in DOM order 83ms
+npx.cmd : 
+At line:15 char:3
++   npx.cmd vitest run $t > "$ev\plant-$tag-arm1.log" 2>&1; $c1 = $LAST ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx > ListingGallery lightbox — 
+counter above a clipping photo container (Task 886 R43) > the counter is in normal flow (not position:absolute) and 
+precedes the media region in DOM order
+AssertionError: expected 'absolute' not to be 'absolute' // Object.is equality
+ ❯ src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:209:52
+    207|     const counter = screen.getByText('1 / 2')
+    208|
+    209|     expect(getComputedStyle(counter).position).not.toBe('absolute')
+       |                                                    ^
+    210|     expect(dialog.contains(counter)).toBe(true)
+    211|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  21:48:57
+   Duration  3.31s (transform 250ms, setup 88ms, import 961ms, tests 1.29s, environment 736ms)
+

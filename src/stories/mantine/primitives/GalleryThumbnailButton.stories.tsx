@@ -65,6 +65,16 @@ export const Default: Story = {
               />
             </Group>
           </Stack>
+
+          {/* Task 886 R41: the thumbnail renders through AppImage, so a failed photo shows the canonical
+              MediaPlaceholder instead of the browser's broken-image glyph. A relative path that
+              `storybook-static` answers with 404 exercises the failed-load branch with no network. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>{t('gallerythumbnailbutton_failed_caption')}</Text>
+            <Group gap="xs">
+              <GalleryThumbnailButton src="/__missing-photo__.jpg" alt="" label={t('gallerythumbnailbutton_failed_label')} active={false} onClick={() => {}} />
+            </Group>
+          </Stack>
         </Stack>
       </MantineStoryShell>
     )

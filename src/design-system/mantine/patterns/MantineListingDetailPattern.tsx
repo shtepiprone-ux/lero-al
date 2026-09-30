@@ -5,6 +5,7 @@ import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, Box
 import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
 import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface ListingFeature {
   icon: ReactNode
@@ -137,10 +138,12 @@ export function MantineListingDetailPattern({
   sidebarFrom = 'md',
 }: MantineListingDetailPatternProps) {
   const theme = useMantineTheme()
-  const leftSpan = sidebarFrom === 'lg' ? { base: 12, lg: 8 } : { base: 12, md: 8 }
+  // Task 886 R20 (owner O83-1 return): 7/5 from the sidebar breakpoint so the contact card is wide
+  // enough for its CTAs, widening to the 8/4 split only from xl (1280px).
+  const leftSpan = sidebarFrom === 'lg' ? { base: 12, lg: 7, xl: 8 } : { base: 12, md: 7, xl: 8 }
   const leftPr = sidebarFrom === 'lg' ? { base: 0, lg: 'lg' } : { base: 0, md: 'lg' }
   const leftMb = sidebarFrom === 'lg' ? { base: 'lg', lg: 0 } : { base: 'lg', md: 0 }
-  const rightSpan = sidebarFrom === 'lg' ? { base: 12, lg: 4 } : { base: 12, md: 4 }
+  const rightSpan = sidebarFrom === 'lg' ? { base: 12, lg: 5, xl: 4 } : { base: 12, md: 5, xl: 4 }
   return (
     <Grid gutter={0}>
       <Grid.Col span={leftSpan} pr={leftPr} mb={leftMb}>
@@ -193,7 +196,7 @@ export function MantineListingDetailPattern({
               </Group>
             )}
 
-            <Title order={1} size="h2" style={{ wordBreak: 'break-word' }}>
+            <Title order={1} size="h2" fz={TITLE_FZ.h2} style={{ wordBreak: 'break-word' }}>
               {data.title}
             </Title>
 
@@ -269,7 +272,7 @@ export function MantineListingDetailPattern({
           {data.description && (
             <Paper withBorder radius="lg" p="lg">
               <Stack gap="sm">
-                <Title order={2} size="h4">
+                <Title order={2} size="h4" fz={TITLE_FZ.h4}>
                   {descriptionTitle}
                 </Title>
                 <Text c="dimmed" style={{ whiteSpace: 'pre-line', lineHeight: 'var(--mantine-line-height-listingDescription)' }}>
@@ -282,7 +285,7 @@ export function MantineListingDetailPattern({
           {amenities.length > 0 && (
             <Paper withBorder radius="lg" p="lg">
               <Stack gap="md">
-                <Title order={2} size="h4">
+                <Title order={2} size="h4" fz={TITLE_FZ.h4}>
                   {amenitiesTitle}
                 </Title>
                 <Divider />

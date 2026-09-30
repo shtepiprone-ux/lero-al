@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
-import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
@@ -137,26 +136,12 @@ export const Default: Story = {
 }
 
 /**
- * Task 764 Revision 1 — reproduces the `/[locale]/favorites` composition (`FavoritesShell.tsx`)
- * for the R-A/R-D pointer probes (`scripts/task764-pointer-probe.mjs favorites`, kickoff
- * §10.1/§10.4) and for R23/AC23 (the canonical Story must render the new `imageActions` slot
- * with the same composition production uses). Registered as its own export — the kickoff's own
- * §10.1 step 1 directs adding this story ("Add a story export ... reproducing the Favorites
- * composition ... Register it so the probe can address it by story id"), authorizing this
- * departure from the file's otherwise single-export convention.
- *
- * Real `SaveToCollectionButton` (not a demo stand-in, per agent-contract 16c) — needs the same
- * `AuthContext.Provider` signed-in fixture the `Default` export already uses (§3.6: the button
- * returns `null` for a guest).
- *
- * Task 809 (D74-10/D74-11) — `FavoritesShell.tsx` now wraps its cards in the real
- * `MantineListingCardTrack mode="grid"` (the same track `/listings` uses) instead of its own
- * Tailwind column ladder, `layoutContext="card-track-grid"` (`'3-col-xl'` retired), and passes
- * `SaveToCollectionButton` with no `className` — the raw Tailwind chrome it carried was already
- * inert (`SaveToCollectionButton.module.css`'s `[data-shape='icon']` rule unconditionally
- * overrides it; see that file's own comment), so dropping the prop is a no-op visually. The
- * `maxWidth: 360` stand-in div is gone too — the real track, not an arbitrary wrapper, now owns
- * the card's width, matching what a single-card `/favorites` grid actually renders.
+ * Reproduces the `/[locale]/favorites` composition (`FavoritesShell.tsx`): the real
+ * `MantineListingCardTrack mode="grid"` (the same track `/listings` uses) holding a favorited vertical
+ * card with `layoutContext="card-track-grid"`, for the pointer probes
+ * (`scripts/task764-pointer-probe.mjs favorites`). Task 886 R34 (owner O83-1): cards carry no
+ * save-to-collection control; that action lives only on the listing-detail page. It needs the same
+ * `AuthContext.Provider` signed-in fixture as `Default` for the real `FavoriteButton`.
  */
 export const FavoritesComposition: Story = {
   render: (_args, context) => {
@@ -173,7 +158,6 @@ export const FavoritesComposition: Story = {
               isFavorited
               layoutContext="card-track-grid"
               rates={FIXTURE_RATES}
-              imageActions={<SaveToCollectionButton listingId={listing.id} />}
             />
           </MantineListingCardTrack>
         </MantineStoryShell>

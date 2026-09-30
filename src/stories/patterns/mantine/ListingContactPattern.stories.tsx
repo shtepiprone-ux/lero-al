@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Stack, Text, Button } from '@mantine/core';
+import { Grid, Stack, Text, Button, useMantineTheme } from '@mantine/core';
 import { MessageCircle, FolderOpen } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineListingContactPattern, type MantineListingContactLabels } from '@/design-system/mantine/patterns/MantineListingContactPattern';
 import { ListingContact } from '@/modules/listings/components/ListingContact';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 
 const meta: Meta<typeof MantineListingContactPattern> = {
   title: 'Patterns/Mantine/ListingContactPattern',
@@ -41,8 +42,9 @@ function makeLabels(l: string): MantineListingContactLabels {
 // and share are no longer rendered by this card (Task 784 D69-25 + Task 793) — both moved to
 // `MantineListingDetailPattern`'s badges row.
 function DemoInquiryTrigger({ l }: { l: string }) {
+  const theme = useMantineTheme();
   return (
-    <Button variant="outline" fullWidth leftSection={<MessageCircle size={18} />}>
+    <Button variant="filled" color="chat" fullWidth leftSection={<MessageCircle size={theme.other.iconSize.standard} />}>
       {storyT(l, 'storybook.mantine.listing_detail_inquiry')}
     </Button>
   );
@@ -58,8 +60,9 @@ function DemoReportTrigger({ l }: { l: string }) {
 
 // Task 793 E-A demo trigger — stands in for the real `SaveToCollectionButton`.
 function DemoSaveTrigger({ l }: { l: string }) {
+  const theme = useMantineTheme();
   return (
-    <Button variant="default" fullWidth leftSection={<FolderOpen size={18} />}>
+    <Button variant="default" fullWidth leftSection={<FolderOpen size={theme.other.iconSize.comfortable} />}>
       {storyT(l, 'storybook.mantine.listing_detail_save_to_collection')}
     </Button>
   );
@@ -76,7 +79,12 @@ export const Default: Story = {
     };
 
     return (
-      <Stack gap="xl" p="md" maw={360}>
+      // GR-3d: the profile wraps the page content. GR-3b: the card sits in the production sidebar
+      // column (MantineListingDetailPattern `rightSpan`, sidebarFrom 'md': full width, then 5/12, 4/12 from xl).
+      <StoryPageGutter>
+      <Grid gutter={0}>
+      <Grid.Col span={{ base: 12, md: 5, xl: 4 }}>
+      <Stack gap="xl">
         <Stack gap="xs">
           <Text size="xs" c="gray.5" fw={500}>
             {storyT(l, 'storybook.mantine.listing_detail_section_normal')}
@@ -231,6 +239,9 @@ export const Default: Story = {
           />
         </Stack>
       </Stack>
+      </Grid.Col>
+      </Grid>
+      </StoryPageGutter>
     );
   },
 };

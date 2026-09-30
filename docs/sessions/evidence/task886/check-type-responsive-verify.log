@@ -1,0 +1,22 @@
+
+> lero-al@0.1.0 check:type-responsive:verify
+> node scripts/check-type-responsive.mjs --verify-gate
+
+check:type-responsive gate self-test (--verify-gate, Task 886) — running 10 arms + exit wiring
+
+  PASS  Arm 1 — static <Title order={1}> -> fail (expected fail)
+  PASS  Arm 2 — <Title size="h3"> -> fail (expected fail)
+  PASS  Arm 3 — <Title order={2} size="h4" fz={TITLE_FZ.h4}> -> pass (expected pass)
+  PASS  Arm 4 — <Title fz={{ base: 'h5', md: 'h3' }}> -> pass (expected pass)
+  PASS  Arm 5 — <Title order={5}> -> pass (expected pass)
+  PASS  Arm 6 — <Text fz="h2"> -> fail (expected fail)
+  PASS  Arm 7 — new className="text-3xl" -> fail (expected fail)
+  PASS  Arm 8 — className="text-xl sm:text-2xl" -> pass (expected pass)
+  PASS  Arm 9 — a baselined literal -> pass (expected pass)
+  PASS  Arm 10 — a stale baseline entry -> fail (expected fail)
+  PASS  Arm 11 — fz bound to theme.headings.sizes.* -> fail (expected fail)
+  PASS  Arm 12 — exit-code wiring: any finding -> 1, clean -> 0
+
+Self-test: 12 passed, 0 failed
+PASS  check:type-responsive:verify — all arms behave correctly.
+EXIT_CODE=0

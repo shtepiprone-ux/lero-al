@@ -2521,6 +2521,8 @@
       "gallerythumbnailbutton_active_label": "Miniaturë aktive",
       "gallerythumbnailbutton_focus_label": "Miniaturë me fokus nga tastiera",
       "gallerythumbnailbutton_long_label": "Një emër aksesueshëm qëllimisht i gjatë që teston shkurtimin vizual pa e shkurtuar kurrë emrin aksesueshëm në DOM",
+      "gallerythumbnailbutton_failed_caption": "foto e dështuar — vendmbajtësi kanonik, jo një imazh i thyer",
+      "gallerythumbnailbutton_failed_label": "Miniaturë me foto që dështoi të ngarkohet",
       "listing_detail_feature_label_rooms": "Dhoma",
       "listing_detail_feature_label_bathrooms": "Banjo",
       "listing_detail_feature_label_area": "Sipërfaqja",

@@ -1,0 +1,17 @@
+PLANT R38: favoriteSlot gated on effectiveListingId again, two-armed
+hash_before src/modules/listings/components/ListingDetailView.tsx = 5ee5ed0876da0fa99f1efaab111c653f5965e52f
+hash_test src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx = c3433d704eb1fa400f2a524e677abc3378d059d3
+--- ARM 1: planted ---
+hash_planted = f1cf982a2a3b57b9566c86c013cd03fae6d5ac0c ; differs_from_before = True
+arm1 EXIT_CODE=1
+ ❯ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx (3 tests | 2 failed) 2292ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — 
+TestingLibraryElementError: Unable to find role="button" and name "Add to favorites"
+ FAIL  src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — 
+TestingLibraryElementError: Unable to find role="button" and name "Add to favorites"
+--- ARM 2: restored ---
+hash_after = 5ee5ed0876da0fa99f1efaab111c653f5965e52f ; equal_to_before = True
+arm2 EXIT_CODE=0
+      Tests  3 passed (3)
+   Duration  4.36s (transform 1.05s, setup 86ms, import 2.85s, tests 584ms, environment 702ms)

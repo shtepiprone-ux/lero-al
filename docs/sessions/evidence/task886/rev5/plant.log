@@ -1,0 +1,19 @@
+PLANT: R34 regression, two-armed
+hash_before src/modules/listings/components/ListingCard.tsx = d2954729089fda9293b4f8070ab1d155caef8a39
+hash_test src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx = 09563ef4b43a989c11e427542861d6e30e4b71c3
+--- ARM 1: planted (SaveToCollectionButton rendered in vertical image node) ---
+hash_planted = 0bc0910a5c5d5594e3b0869bc740474471a2b6c5 ; differs_from_before = True
+arm1 EXIT_CODE=1
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 1 failed) 678ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — no save-to-collection 
+AssertionError: expected <button …(8)>…(1)</button> to be null
+- Expected:
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Duration  4.29s (transform 797ms, setup 96ms, import 2.57s, tests 678ms, environment 788ms)
+--- ARM 2: restored ---
+hash_after = d2954729089fda9293b4f8070ab1d155caef8a39 ; equal_to_before = True
+arm2 EXIT_CODE=0
+      Tests  14 passed (14)
+   Duration  4.19s (transform 788ms, setup 88ms, import 2.57s, tests 595ms, environment 784ms)

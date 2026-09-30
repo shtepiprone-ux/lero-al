@@ -12,10 +12,11 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Box } from '@mantine/core'
+import { Stack } from '@mantine/core'
 import { FeaturedListingsView } from '@/modules/listings/components/FeaturedListingsView'
 import { LatestListingsView } from '@/modules/listings/components/LatestListingsView'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
+import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 import { makeCardListingFixtures } from '@/stories/fixtures/cardListingData.fixture'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import type { User } from '@/types/database'
@@ -89,7 +90,7 @@ export const Default: Story = {
     const listings = makeCardListingFixtures(locale)
     const favoriteIds = new Set([listings[0]!.id])
     return (
-      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
+      <StoryPageGutter>
         <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
           <Stack gap="xl">
             <FeaturedListingsView
@@ -109,7 +110,7 @@ export const Default: Story = {
             />
           </Stack>
         </AuthContext.Provider>
-      </Box>
+      </StoryPageGutter>
     )
   },
 
@@ -129,7 +130,7 @@ export const Loading: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
+      <StoryPageGutter>
         <Stack gap="xl">
           <FeaturedListingsView
             listings={[]}
@@ -147,7 +148,7 @@ export const Loading: Story = {
             favoriteIds={new Set()}
           />
         </Stack>
-      </Box>
+      </StoryPageGutter>
     )
   },
 
@@ -167,7 +168,7 @@ export const Empty: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <Box maw="var(--width-page-max)" mx="auto" w="100%" px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="2xl">
+      <StoryPageGutter>
         <Stack gap="xl">
           <FeaturedListingsView
             listings={[]}
@@ -185,7 +186,7 @@ export const Empty: Story = {
             favoriteIds={new Set()}
           />
         </Stack>
-      </Box>
+      </StoryPageGutter>
     )
   },
 

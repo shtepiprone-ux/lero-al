@@ -174,9 +174,7 @@ export default meta
 type Story = StoryObj<typeof ListingDetailViewStory>
 
 // ── Public listing detail (no staff banner) ──────────────────────────────────
-export const PublicListing: Story = {
-  globals: { viewport: { value: 'desktop1280', isRotated: false } },
-}
+export const PublicListing: Story = {}
 
 // ── Staff preview — unpublished listing (status: pending) ────────────────────
 export const StaffPreviewUnpublished: Story = {
@@ -187,7 +185,6 @@ export const StaffPreviewUnpublished: Story = {
     isGuest: true,
     listingId: undefined,
   },
-  globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
 // ── Staff preview — published listing (link to public page) ──────────────────
@@ -199,7 +196,6 @@ export const StaffPreviewPublished: Story = {
     isGuest: true,
     listingId: undefined,
   },
-  globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
 // ── Archived listing, public route (Task 793 F1, review §16.2/§17.5) ─────────
@@ -214,5 +210,4 @@ export const ArchivedListing: Story = {
     listingId: 'story-listing-1',
     isInitiallyFavorited: false,
   },
-  globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }

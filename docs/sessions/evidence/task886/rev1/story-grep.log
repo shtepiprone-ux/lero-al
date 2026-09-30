@@ -1,0 +1,4 @@
+src/stories/patterns/mantine/AuthFormPattern.stories.tsx:48:        <Stack gap="xl">
+src/stories/patterns/mantine/AuthFormPattern.stories.tsx:72:            <Stack gap="md">
+src/stories/patterns/mantine/ListingDetailPattern.stories.tsx:242:    <Paper withBorder radius="lg" p="xl" bg="gray.0">
+GREP_EXIT=0 (1 = no match)

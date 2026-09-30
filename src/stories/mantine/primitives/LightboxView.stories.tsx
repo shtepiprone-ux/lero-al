@@ -22,8 +22,9 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * `Default` sections use a trigger `Button`, matching the `Modal.stories.tsx` convention
  * (`ModalStandardSection`/`ModalLongSection`); `Default`'s own `play` clicks the multi-image
  * trigger so the rendered gate captures the desktop thumbnail strip and dark nav open. `SwipeTrackMode`
- * renders already-opened (`opened` always `true`) at the `mobile390` viewport — no interaction
- * needed to prove the swipe track and pagination rail.
+ * renders already-opened (`opened` always `true`) — no interaction needed to prove the swipe track and
+ * pagination rail. The Story pins no viewport (GR-3b): the swipe track shows below the `sm` breakpoint
+ * (switch the toolbar to a phone width); the desktop strip shows above it.
  */
 const meta: Meta = {
   title: 'Mantine/Primitives/LightboxView',
@@ -188,7 +189,6 @@ export const Default: Story = {
 // is absent by design, and `tone="dark"` nav is likewise absent below `sm` (mobile browses by
 // gesture, not arrows). `opened` is always true — no interaction needed to render these states.
 export const SwipeTrackMode: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
 
@@ -205,7 +205,6 @@ export const SwipeTrackMode: Story = {
 // is wider than its scroller) rather than left-aligned from scrollLeft 0 like `SwipeTrackMode`'s
 // 24-photo overflow case. Real production component, first 4 of the same fixture images.
 export const SwipeTrackModeFewPhotos: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
 

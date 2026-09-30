@@ -3,6 +3,7 @@ import { ListingCard, type CardListingData } from '@/modules/listings/components
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface SimilarListingsViewProps {
   /** Pre-translated heading — the container is a Server Component, so it passes
@@ -49,7 +50,7 @@ export function SimilarListingsView({ heading, listings, rates, displayCurrency,
   return (
     <>
       <Flex direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }} justify="space-between" gap="sm" mb="lg">
-        <Title order={2} size="h4">
+        <Title order={2} size="h4" fz={TITLE_FZ.h4}>
           {heading}
         </Title>
         {viewAllHref && viewAllLabel && (

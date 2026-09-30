@@ -1,0 +1,88 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (14 tests | 1 failed) 678ms
+     × a vertical grid card renders no Save to collection control 52ms
+npx.cmd : 
+At line:15 char:1
++ npx.cmd vitest run $t > "$ev\plant-arm1.log" 2>&1; $c1 = $LASTEXITCOD ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — no save-to-collection 
+control on cards (Task 886 R34, owner O83-1) > a vertical grid card renders no Save to collection control
+AssertionError: expected <button …(8)>…(1)</button> to be null
+
+- Expected:
+null
+
++ Received:
+<button
+  aria-label="Save to collection"
+  class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"
+  data-block="true"
+  data-size="sm"
+  data-variant="default"
+  data-with-left-section="true"
+  style="min-height: 2.75rem; font-weight: 500; height: auto; display: flex; align-items: center; justify-content: 
+center; box-shadow: var(--mantine-shadow-xs); --button-height: var(--button-height-sm); --button-padding-x: 1rem; 
+--button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: 
+var(--mantine-color-white); --button-hover: var(--mantine-color-gray-0); --button-color: var(--mantine-color-gray-7); 
+--button-bd: 1px solid var(--mantine-color-gray-2);"
+  type="button"
+>
+  <span
+    class="m_80f1301b mantine-Button-inner"
+    style="width: 100%; height: auto;"
+  >
+    <span
+      class="m_a74036a mantine-Button-section"
+      data-position="left"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-folder-open"
+        fill="none"
+        height="16"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 
+0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"
+        />
+      </svg>
+    </span>
+    <span
+      class="m_811560b9 mantine-Button-label"
+      style="white-space: normal; overflow: visible; word-break: normal; overflow-wrap: break-word;"
+    >
+      Save to collection
+    </span>
+  </span>
+</button>
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:279:74
+    277|     renderCard(BASE_LISTING, 'en', { isFavorited: true })
+    278|
+    279|     expect(screen.queryByRole('button', { name: 'Save to collection' }…
+       |                                                                          ^
+    280|   })
+    281| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  19:12:52
+   Duration  4.29s (transform 797ms, setup 96ms, import 2.57s, tests 678ms, environment 788ms)
+

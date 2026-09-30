@@ -151,6 +151,12 @@ jobs:
       - name: Media-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 813)
         run: npm run check:media-enrolment:verify
 
+      - name: Responsive-type gate (Task 886, GR-3c — blocking, no static large Title/fz/size or bare Tailwind text-2xl+)
+        run: npm run check:type-responsive
+
+      - name: Responsive-type gate self-test (verifies gate detects violations — CI-safe, Task 886)
+        run: npm run check:type-responsive:verify
+
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 

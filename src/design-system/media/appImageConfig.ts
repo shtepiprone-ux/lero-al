@@ -21,6 +21,7 @@
 // stays on `VariantConfig` as an API (`gallery-main`/`gallery-side` still use it via
 // `styles.hoverBrightness`); `listing` simply no longer sets it.
 
+import type { MantineThemeOther } from '@mantine/core'
 import { cn } from '@/lib/utils'
 import styles from './AppImage.module.css'
 
@@ -56,6 +57,14 @@ export interface VariantConfig {
   srcsetEntries: SrcsetEntry[]
   /** Whether to show the LQIP blur background while the main image loads. */
   useLqip: boolean
+  /**
+   * Task 886 R21: whether the frame shows the canonical `MediaPlaceholder` when there is no `src`
+   * or the image fails to load. `false` for the form/management variants (`preview`, `upload`,
+   * `avatar`), which own their own empty state.
+   */
+  placeholder: boolean
+  /** Theme icon-size key for the placeholder glyph (`theme.other.iconSize`). */
+  placeholderIconSize: keyof MantineThemeOther['iconSize']
 }
 
 // ── Variant taxonomy ──────────────────────────────────────────────────────────
@@ -88,6 +97,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 800, h: 600 },
     ],
     useLqip: true,
+    placeholder: true,
+    placeholderIconSize: 'prominent',
   },
   preview: {
     containerClass: cn(styles.frame, styles.frameRatio16x9, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
@@ -100,6 +111,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 800, h: 450 },
     ],
     useLqip: true,
+    placeholder: false,
+    placeholderIconSize: 'prominent',
   },
   upload: {
     containerClass: cn(styles.frame, styles.frameRatio4x3, styles.frameWidth, styles.frameClip, styles.framePlaceholder),
@@ -112,6 +125,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 400, h: 300 },
     ],
     useLqip: true,
+    placeholder: false,
+    placeholderIconSize: 'prominent',
   },
   avatar: {
     containerClass: cn(styles.frame, styles.frameRatioSquare, styles.frameClip, styles.frameCircle, styles.framePlaceholder),
@@ -124,6 +139,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 192, h: 192 },
     ],
     useLqip: false,
+    placeholder: false,
+    placeholderIconSize: 'standard',
   },
   'listing-thumb': {
     containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
@@ -137,6 +154,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 400, h: 300 },
     ],
     useLqip: true,
+    placeholder: true,
+    placeholderIconSize: 'decorative',
   },
   'gallery-main': {
     containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
@@ -156,6 +175,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 1600, h: 900 },
     ],
     useLqip: true,
+    placeholder: true,
+    placeholderIconSize: 'hero',
   },
   'gallery-side': {
     containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
@@ -170,6 +191,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 640, h: 400 },
     ],
     useLqip: true,
+    placeholder: true,
+    placeholderIconSize: 'prominent',
   },
   'gallery-strip': {
     containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
@@ -182,9 +205,12 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 160, h: 112 },
     ],
     useLqip: false,
+    placeholder: true,
+    placeholderIconSize: 'decorative',
   },
   lightbox: {
-    containerClass: cn(styles.frame, styles.frameFill),
+    // Task 886 R43: `frameClip` like every other photo-filling variant, so the frame clips whatever it holds.
+    containerClass: cn(styles.frame, styles.frameFill, styles.frameClip),
     imageClass: styles.fitContain,
     sizes: '(max-width: 768px) 100vw, 90vw',
     cloudinaryTransform: 'w_1920,f_auto,q_auto,dpr_auto',
@@ -195,6 +221,8 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
       { w: 1920 },
     ],
     useLqip: false,
+    placeholder: true,
+    placeholderIconSize: 'hero',
   },
 }
 

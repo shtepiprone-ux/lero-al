@@ -1,5 +1,6 @@
 import { Box, Title, TypographyStylesProvider } from '@mantine/core'
 import { sanitizeCmsHtml } from '@/modules/cms/lib/sanitizeCmsHtml'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface CmsPageViewProps {
   title: string | null | undefined
@@ -21,7 +22,7 @@ export function CmsPageView({ title, body }: CmsPageViewProps) {
   return (
     <Box component="main" maw="var(--width-content)" mx="auto" w="100%" px="md" py={{ base: '2xl', md: '3xl' }}>
       {title && (
-        <Title order={1} fz={{ base: 'h5', sm: 'h4', md: 'h3' }} mb="xl">
+        <Title order={1} fz={TITLE_FZ.h3} mb="xl">
           {title}
         </Title>
       )}

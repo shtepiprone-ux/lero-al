@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { storyT } from '../../_storyI18n'
 import { SimilarListingsView } from '@/modules/listings/components/SimilarListingsView'
+import { SimilarListingsSkeleton } from '@/modules/listings/components/ListingDetailView'
 import { makeCardListingFixtures } from '../../fixtures/cardListingData.fixture'
 import { MantineStoryShell } from '../_MantineStoryShell'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
@@ -78,4 +79,13 @@ export const Empty: Story = {
       </MantineStoryShell>
     )
   },
+}
+
+/** Task 886 (R6) — the Suspense fallback of this block (`SimilarListingsSkeleton`), also used for the recently-viewed rail. */
+export const Loading: Story = {
+  render: () => (
+    <MantineStoryShell>
+      <SimilarListingsSkeleton />
+    </MantineStoryShell>
+  ),
 }

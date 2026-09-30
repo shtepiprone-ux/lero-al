@@ -1,0 +1,545 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx (3 tests | 2 failed) 2292ms
+     × guest (no listingId, not a staff preview) sees the "Add to favorites" heart 1186ms
+     × guest sees no "Save to collection" control 1045ms
+npx.cmd : 
+At line:14 char:1
++ npx.cmd vitest run $t > "$ev\plant-arm1.log" 2>&1; $c1 = $LASTEXITCOD ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — 
+favourite heart (Task 886 R38, O83-6 (a)) > guest (no listingId, not a staff preview) sees the "Add to favorites" heart
+TestingLibraryElementError: Unable to find role="button" and name "Add to favorites"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m""[39m
+      [33mdata-testid[39m=[32m"listing-detail-view"[39m
+      [33mstyle[39m=[32m"padding-bottom: var(--mantine-spacing-2xl);"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_410352e9 mantine-Grid-root __m__-_r_3_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_dee7bd2f mantine-Grid-inner"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_96bdd299 mantine-Grid-col __m__-_r_5_ __m__-_r_6_"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"gallery-wrapper-static"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"hidden"[39m
+                  [33mid[39m=[32m"gallery-interactive-shell"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                  [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-sm); --stack-align: stretch; 
+--stack-justify: flex-start;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                    [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; 
+--group-justify: space-between; --group-wrap: nowrap;"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: wrap;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mFor sale[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mApartment[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: nowrap; flex-shrink: 0;"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33maria-label[39m=[32m"Share listing"[39m
+                        [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root 
+m_87cf2631 mantine-UnstyledButton-root"[39m
+                        [33mdata-variant[39m=[32m"subtle"[39m
+                        [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+                        [36m>[39m
+                          [36m<svg[39m
+                            [33maria-hidden[39m=[32m"true"[39m
+                            [33mclass[39m=[32m"lucide lucide-share2 lucide-share-2"[39m
+                            [33mfill[39m=[32m"none"[39m
+                            [33mheight[39m=[32m"16"[39m
+                            [33mstroke[39m=[32m"currentColor"[39m
+                            [33mstroke-linecap[39m=[32m"round"[39m
+                            [33mstroke-linejoin[39m=[32m"round"[39m
+                            [33mstroke-width[39m=[32m"2"[39m
+                            [33mviewBox[39m=[32m"0 0 24 24"[39m
+                            [33mwidth[39m=[32m"16"[39m
+                            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                          [36m>[39m
+                            [36m<circle[39m
+                              [33mcx[39m=[32m"18"[39m
+                              [33mcy[39m=[32m"5"[39m
+                              [33mr[39m=[32m"3"[39m
+                            [36m/>[39m
+          ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m""[39m
+      [33mdata-testid[39m=[32m"listing-detail-view"[39m
+      [33mstyle[39m=[32m"padding-bottom: var(--mantine-spacing-2xl);"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_410352e9 mantine-Grid-root __m__-_r_3_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_dee7bd2f mantine-Grid-inner"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_96bdd299 mantine-Grid-col __m__-_r_5_ __m__-_r_6_"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"gallery-wrapper-static"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"hidden"[39m
+                  [33mid[39m=[32m"gallery-interactive-shell"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                  [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-sm); --stack-align: stretch; 
+--stack-justify: flex-start;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                    [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; 
+--group-justify: space-between; --group-wrap: nowrap;"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: wrap;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mFor sale[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mApartment[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: nowrap; flex-shrink: 0;"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33maria-label[39m=[32m"Share listing"[39m
+                        [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root 
+m_87cf2631 mantine-UnstyledButton-root"[39m
+                        [33mdata-variant[39m=[32m"subtle"[39m
+                        [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+                        [36m>[39m
+                          [36m<svg[39m
+                            [33maria-hidden[39m=[32m"true"[39m
+                            [33mclass[39m=[32m"lucide lucide-share2 lucide-share-2"[39m
+                            [33mfill[39m=[32m"none"[39m
+                            [33mheight[39m=[32m"16"[39m
+                            [33mstroke[39m=[32m"currentColor"[39m
+                            [33mstroke-linecap[39m=[32m"round"[39m
+                            [33mstroke-linejoin[39m=[32m"round"[39m
+                            [33mstroke-width[39m=[32m"2"[39m
+                            [33mviewBox[39m=[32m"0 0 24 24"[39m
+                            [33mwidth[39m=[32m"16"[39m
+                            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                          [36m>[39m
+                            [36m<circle[39m
+                              [33mcx[39m=[32m"18"[39m
+                              [33mcy[39m=[32m"5"[39m
+                              [33mr[39m=[32m"3"[39m
+                            [36m/>[39m
+          ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx:194:25
+    192|     // Wait for the lazy contact card so the page is fully rendered be…
+    193|     await screen.findAllByRole('button')
+    194|     expect(await screen.findByRole('button', { name: 'Add to favorites…
+       |                         ^
+    195|   })
+    196|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — 
+favourite heart (Task 886 R38, O83-6 (a)) > guest sees no "Save to collection" control
+TestingLibraryElementError: Unable to find role="button" and name "Add to favorites"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m""[39m
+      [33mdata-testid[39m=[32m"listing-detail-view"[39m
+      [33mstyle[39m=[32m"padding-bottom: var(--mantine-spacing-2xl);"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_410352e9 mantine-Grid-root __m__-_r_41_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_dee7bd2f mantine-Grid-inner"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_96bdd299 mantine-Grid-col __m__-_r_43_ __m__-_r_44_"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"gallery-wrapper-static"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"hidden"[39m
+                  [33mid[39m=[32m"gallery-interactive-shell"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                  [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-sm); --stack-align: stretch; 
+--stack-justify: flex-start;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                    [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; 
+--group-justify: space-between; --group-wrap: nowrap;"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: wrap;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mFor sale[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mApartment[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: nowrap; flex-shrink: 0;"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33maria-label[39m=[32m"Share listing"[39m
+                        [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root 
+m_87cf2631 mantine-UnstyledButton-root"[39m
+                        [33mdata-variant[39m=[32m"subtle"[39m
+                        [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+                        [36m>[39m
+                          [36m<svg[39m
+                            [33maria-hidden[39m=[32m"true"[39m
+                            [33mclass[39m=[32m"lucide lucide-share2 lucide-share-2"[39m
+                            [33mfill[39m=[32m"none"[39m
+                            [33mheight[39m=[32m"16"[39m
+                            [33mstroke[39m=[32m"currentColor"[39m
+                            [33mstroke-linecap[39m=[32m"round"[39m
+                            [33mstroke-linejoin[39m=[32m"round"[39m
+                            [33mstroke-width[39m=[32m"2"[39m
+                            [33mviewBox[39m=[32m"0 0 24 24"[39m
+                            [33mwidth[39m=[32m"16"[39m
+                            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                          [36m>[39m
+                            [36m<circle[39m
+                              [33mcx[39m=[32m"18"[39m
+                       ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div[39m
+    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
+    [33mdata-portal[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m""[39m
+      [33mdata-testid[39m=[32m"listing-detail-view"[39m
+      [33mstyle[39m=[32m"padding-bottom: var(--mantine-spacing-2xl);"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_410352e9 mantine-Grid-root __m__-_r_41_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_dee7bd2f mantine-Grid-inner"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_96bdd299 mantine-Grid-col __m__-_r_43_ __m__-_r_44_"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: 
+flex-start;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"gallery-wrapper-static"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"hidden"[39m
+                  [33mid[39m=[32m"gallery-interactive-shell"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                  [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-sm); --stack-align: stretch; 
+--stack-justify: flex-start;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                    [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; 
+--group-justify: space-between; --group-wrap: nowrap;"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: wrap;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  20:33:13
+   Duration  5.74s (transform 794ms, setup 86ms, import 2.43s, tests 2.29s, environment 713ms)
+
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mFor sale[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+                        [33mdata-size[39m=[32m"sm"[39m
+                        [33mdata-variant[39m=[32m"outline"[39m
+                        [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; 
+font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: 
+var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: 
+calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+                        [36m>[39m
+                          [0mApartment[0m
+                        [36m</span>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; 
+--group-justify: flex-start; --group-wrap: nowrap; flex-shrink: 0;"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33maria-label[39m=[32m"Share listing"[39m
+                        [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root 
+m_87cf2631 mantine-UnstyledButton-root"[39m
+                        [33mdata-variant[39m=[32m"subtle"[39m
+                        [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span[39m
+                          [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+                        [36m>[39m
+                          [36m<svg[39m
+                            [33maria-hidden[39m=[32m"true"[39m
+                            [33mclass[39m=[32m"lucide lucide-share2 lucide-share-2"[39m
+                            [33mfill[39m=[32m"none"[39m
+                            [33mheight[39m=[32m"16"[39m
+                            [33mstroke[39m=[32m"currentColor"[39m
+                            [33mstroke-linecap[39m=[32m"round"[39m
+                            [33mstroke-linejoin[39m=[32m"round"[39m
+                            [33mstroke-width[39m=[32m"2"[39m
+                            [33mviewBox[39m=[32m"0 0 24 24"[39m
+                            [33mwidth[39m=[32m"16"[39m
+                            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                          [36m>[39m
+                            [36m<circle[39m
+                              [33mcx[39m=[32m"18"[39m
+                       ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx:205:18
+    203|   it('guest sees no "Save to collection" control', async () => {
+    204|     renderBody({ isGuest: true, listingId: undefined })
+    205|     await screen.findByRole('button', { name: 'Add to favorites' })
+       |                  ^
+    206|     expect(screen.queryByRole('button', { name: 'Save to collection' }…
+    207|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+

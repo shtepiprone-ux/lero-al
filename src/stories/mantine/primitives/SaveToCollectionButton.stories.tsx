@@ -8,11 +8,11 @@ import type { User } from '@/types/database'
 
 /**
  * Task 809 Revision 1 (R14, clause 16d tier-1) — canonical Mantine story for the real production
- * `SaveToCollectionButton` (rendered by `ListingCard`'s `imageActions` slot on `/favorites`, §21
- * census row 7). Statically imports the real component (clause 16c). Enrolled in
+ * `SaveToCollectionButton` (rendered by `ListingContact` on the listing-detail page only; Task 886
+ * R34 removed it from listing cards). Statically imports the real component (clause 16c). Enrolled in
  * `scripts/mantine-migration-scope.json`.
  *
- * Three states: `Closed` (icon trigger, unopened), `DialogOpen` (trigger clicked — the modal's own
+ * Three states: `Closed` (default-shape trigger, unopened), `DialogOpen` (trigger clicked — the modal's own
  * title renders immediately regardless of the collections fetch's outcome, so this state is stable
  * to capture even against the real, unmocked `getCollectionsWithMembership` server action — same
  * "real, unmocked action" precedent as `SaveSearchButton.stories.tsx`), and `Saving` (the inline

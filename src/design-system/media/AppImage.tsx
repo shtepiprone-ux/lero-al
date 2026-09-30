@@ -12,12 +12,14 @@ import styles from './AppImage.module.css'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { useAdaptiveImageConfig } from './useAdaptiveImageConfig'
 import { usePredictivePreload } from '@/lib/performance/predictive'
+import { VARIANTS } from './appImageConfig'
+import { MediaPlaceholder } from './MediaPlaceholder'
 import { notifyPriorityPreload } from '@/lib/performance/imageGuard'
 
 export type { ImageVariant } from './appImageConfig'
 
 interface AppImageProps {
-  /** Cloudinary or any HTTPS image URL. Falsy → renders container with children only. */
+  /** Cloudinary or any HTTPS image URL. Falsy → renders the container with the canonical placeholder (variants with `placeholder: true`) and children. */
   src?: string | null
   alt: string
   variant: import('./appImageConfig').ImageVariant
@@ -76,13 +78,22 @@ export function AppImage({
 
   const hasImage = Boolean(src)
   const [loaded, setLoaded] = useState(false)
+  // Task 886 R21: the URL that failed to load. Keyed on the URL so a new `src` resets it by itself.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null)
+  const failed = hasImage && failedSrc === optimizedSrc
   const imgRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const variantConfig = VARIANTS[variant]
+  const showPlaceholder = variantConfig.placeholder && (!hasImage || failed)
 
-  // Show immediately if the image was already cached before JS ran
+  // Show immediately if the image was already cached before JS ran; an <img> whose error fired
+  // before hydration is `complete` with no pixels — treat it as failed (R21).
   useEffect(() => {
-    if (imgRef.current?.complete) setLoaded(true)
-  }, [])
+    const img = imgRef.current
+    if (!img?.complete) return
+    if (img.naturalWidth === 0) setFailedSrc(optimizedSrc)
+    else setLoaded(true)
+  }, [optimizedSrc])
 
   // React 19 render-phase resource preload — explicitly safe to call during render.
   // Registers a <link rel="preload"> hint; React deduplicates automatically.
@@ -123,12 +134,12 @@ export function AppImage({
       ref={containerRef}
       className={cn(containerClass, className)}
       style={
-        blurUrl && !loaded
+        blurUrl && !loaded && !failed
           ? { backgroundImage: `url(${blurUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
           : undefined
       }
     >
-      {hasImage && (
+      {hasImage && !failed && (
         // AppImage is the canonical <img> render site; next/image is project-wide banned
         // (eslint.config.mjs IMAGE_RENDER_EXCEPTIONS). This disable is intentional and approved.
         // eslint-disable-next-line @next/next/no-img-element
@@ -142,6 +153,7 @@ export function AppImage({
           fetchPriority={fetchPriorityAttr}
           decoding="async"
           onLoad={() => setLoaded(true)}
+          onError={() => setFailedSrc(optimizedSrc)}
           className={cn(
             styles.imageLayer,
             // Priority images (LCP candidates) start opaque so Chrome can measure
@@ -153,6 +165,9 @@ export function AppImage({
             hoverClass,
           )}
         />
+      )}
+      {showPlaceholder && (
+        <MediaPlaceholder iconSize={variantConfig.placeholderIconSize} label={alt} />
       )}
       {children}
     </div>

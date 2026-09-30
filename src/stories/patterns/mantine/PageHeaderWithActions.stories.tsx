@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { storyT } from '@/stories/_storyI18n';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantinePageHeaderWithActions } from '@/design-system/mantine/patterns/MantinePageHeaderWithActions';
@@ -29,6 +30,10 @@ const makeArgs = (l = 'en') => ({
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
-    return <MantinePageHeaderWithActions {...makeArgs(l)} />;
+    return (
+      <StoryPageGutter>
+        <MantinePageHeaderWithActions {...makeArgs(l)} />
+      </StoryPageGutter>
+    );
   },
 };

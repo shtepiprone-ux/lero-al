@@ -1,0 +1,85 @@
+patterns-mantine-authformpattern--default @320: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-authformpattern--default @390: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-authformpattern--default @768: fonts[h2=30] | gutterBox gap L24/R24 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-authformpattern--default @1024: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-authformpattern--default @1440: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @320: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @390: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @768: fonts[h2=30] | gutterBox gap L24/R24 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @1024: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @1440: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-dashboardheader--default @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--default @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--default @768: fonts[h1=24] | gutterBox gap L24/R24 | leaf gap L24/R33 | hOverflow=false
+patterns-mantine-dashboardheader--default @1024: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R41 | hOverflow=false
+patterns-mantine-dashboardheader--default @1440: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R41 | hOverflow=false
+patterns-mantine-dashboardheader--fresh @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--fresh @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--fresh @768: fonts[h1=24] | gutterBox gap L24/R24 | leaf gap L24/R24 | hOverflow=false
+patterns-mantine-dashboardheader--fresh @1024: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-dashboardheader--fresh @1440: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-dashboardheader--with-actions @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--with-actions @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--with-actions @768: fonts[h1=24] | gutterBox gap L24/R24 | leaf gap L24/R41 | hOverflow=false
+patterns-mantine-dashboardheader--with-actions @1024: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R49 | hOverflow=false
+patterns-mantine-dashboardheader--with-actions @1440: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R49 | hOverflow=false
+patterns-mantine-dashboardheader--without-period-control @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--without-period-control @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-dashboardheader--without-period-control @768: fonts[h1=24] | gutterBox gap L24/R24 | leaf gap L24/R24 | hOverflow=false
+patterns-mantine-dashboardheader--without-period-control @1024: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-dashboardheader--without-period-control @1440: fonts[h1=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @320: fonts[h1=20 h2=18] | gutterBox gap L16/R16 | leaf gap L-272/R-1424 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @390: fonts[h1=20 h2=18] | gutterBox gap L16/R16 | leaf gap L-342/R-1774 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @768: fonts[h1=30 h2=24] | gutterBox gap L24/R24 | leaf gap L24/R24 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @1024: fonts[h1=36 h2=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @1440: fonts[h1=36 h2=24] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R130 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L16/R165 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @768: fonts[h1=30] | gutterBox gap L24/R24 | leaf gap L24/R41 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @1024: fonts[h1=36] | gutterBox gap L32/R32 | leaf gap L32/R49 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @1440: fonts[h1=36] | gutterBox gap L32/R32 | leaf gap L32/R49 | hOverflow=false
+patterns-mantine-resetpasswordview--loading @320: fonts[] | gutterBox NONE | leaf gap L138/R138 | hOverflow=false
+patterns-mantine-resetpasswordview--loading @390: fonts[] | gutterBox NONE | leaf gap L173/R173 | hOverflow=false
+patterns-mantine-resetpasswordview--loading @768: fonts[] | gutterBox NONE | leaf gap L362/R362 | hOverflow=false
+patterns-mantine-resetpasswordview--loading @1024: fonts[] | gutterBox NONE | leaf gap L490/R490 | hOverflow=false
+patterns-mantine-resetpasswordview--loading @1440: fonts[] | gutterBox NONE | leaf gap L698/R698 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--success @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--success @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--success @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--success @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--success @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--form-partial @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-partial @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-partial @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--form-partial @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--form-partial @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--form-all-met @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-all-met @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-all-met @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--form-all-met @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--form-all-met @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--form-error @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-error @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-error @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--form-error @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--form-error @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-resetpasswordview--form-submitting @320: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-submitting @390: fonts[h1=20] | gutterBox gap L16/R16 | leaf gap L41/R41 | hOverflow=false
+patterns-mantine-resetpasswordview--form-submitting @768: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L209/R209 | hOverflow=false
+patterns-mantine-resetpasswordview--form-submitting @1024: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L337/R337 | hOverflow=false
+patterns-mantine-resetpasswordview--form-submitting @1440: fonts[h1=30] | gutterBox gap L16/R16 | leaf gap L545/R545 | hOverflow=false
+patterns-mantine-twocolumnform--default @320: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-twocolumnform--default @390: fonts[h2=20] | gutterBox gap L16/R16 | leaf gap L16/R16 | hOverflow=false
+patterns-mantine-twocolumnform--default @768: fonts[h2=30] | gutterBox gap L24/R24 | leaf gap L24/R24 | hOverflow=false
+patterns-mantine-twocolumnform--default @1024: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false
+patterns-mantine-twocolumnform--default @1440: fonts[h2=30] | gutterBox gap L32/R32 | leaf gap L32/R32 | hOverflow=false

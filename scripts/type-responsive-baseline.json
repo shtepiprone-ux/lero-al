@@ -1,0 +1,10 @@
+{
+  "entries": [
+    { "key": "src/app/admin/users/page.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L3, Task 886 section 3.2); owner decision O83-2" },
+    { "key": "src/app/[locale]/favorites/page.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L4); owner decision O83-2" },
+    { "key": "src/components/admin/AdminPageShell.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L5); owner decision O83-2" },
+    { "key": "src/components/admin/AdminSupportManager.tsx :: text-2xl", "reason": "none - legacy Tailwind stat value (L6); owner decision O83-2" },
+    { "key": "src/modules/listings/components/ListingFormShellView.tsx :: text-2xl", "reason": "none - legacy Tailwind h1 (L7); owner decision O83-2" },
+    { "key": "src/modules/listings/components/steps/StepPreview.tsx :: text-2xl", "reason": "none - legacy Tailwind price (L8); owner decision O83-2" }
+  ]
+}

@@ -46,20 +46,6 @@
     height: 100%; /* h-full — I1 */
   }
 
-  /* Site #1 — no-cover-image fallback icon, horizontal card (`:153`). */
-  .placeholderIcon {
-    height: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); h-6 — I1, N1: integer step resolves to the named token */
-    width: var(--homepage-runtime-space-6); /* Task 770 — was @theme inline --space-6 (§22.1); w-6 — I1 */
-    color: var(--muted-foreground); /* text-muted-foreground — I1 */
-  }
-
-  /* Site #5 — no-cover-image fallback icon, vertical card (`:244`). */
-  .placeholderIconLarge {
-    height: var(--homepage-runtime-space-8); /* Task 770 — was @theme inline --space-8 (§22.1); h-8 — I1 */
-    width: var(--homepage-runtime-space-8); /* Task 770 — was @theme inline --space-8 (§22.1); w-8 — I1 */
-    color: var(--muted-foreground); /* text-muted-foreground — I1 */
-  }
-
   /* Sites #3/#7 — ListingFeatureIcon svg sizing (`:173`, `:271`). Forwarded as the icon's ONLY
      className (ListingFeatureIcon.tsx has no default/merge), so this class alone must size it. */
   .featureIcon {
@@ -82,40 +68,5 @@
      `MobileBottomNavView.module.css` (713) `.navBar`/`.fab`. */
   .overlayFavorite {
     box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 2px -1px; /* design-tokens-allow: rgba( — shadow-sm, flattened from the Tailwind --tw-shadow/--tw-ring-* composition; captured live via getComputedStyle (Task 762 Revision 1), not hand-derived — the three registered-invisible (fully transparent) layers are dropped, confirmed absent from this capture */ /* design-tokens-allow: box-shadow: 1px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 3px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 2px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: -1px — same flattened shadow-sm layer */
-  }
-
-  /* Task 741 — CLOSED_OVERLAY_STYLE de-Tailwind (:58-61 -> :268). Reproduces the two retired
-     status-info and status-rented background/border utilities' OWN compiled output verbatim
-     (`.next/static/css/9da9f59077fdb31e.css`), including the D35-degraded static fallback:
-     `--color-status-info`/`--color-status-rented` alias a runtime `var()` (`globals.css:80-81`),
-     so Tailwind could not statically composite the (formerly) 80%-opacity background modifier and
-     the base tier is a bare, fully-opaque `var(--status-*)` — this is already the shipped
-     behaviour, not a regression to fix (D35). The `#0000004d` composited-hex idiom used by
-     `.overlayCenter` above does NOT apply here (owner decision 2026-08-14): that rule's source,
-     `--overlay`, is a literal (`oklch(0 0 0)`), so Tailwind COULD composite it; `--status-info`/
-     `--status-rented` are runtime aliases, so Tailwind could not, and the module must not "fix"
-     that by hex-flattening it either. Stays `@layer utilities` per D34 — this is a straight D28
-     migration of a utility that already loses to Mantine's unlayered CSS, not a cascade-trap fix
-     (contrast `MantineListingCardPattern.module.css`, deliberately unlayered). Deliberate prose,
-     no Tailwind-utility-shaped literal below — Task 695 F8/741 §3.2's scanned-comment hazard: a
-     scanner-matched string in a comment gets re-extracted as a live candidate and regenerated. */
-  .closedOverlaySold {
-    background-color: var(--status-info); /* retired status-info bg utility's static fallback */
-    border-color:      var(--status-info); /* retired status-info border utility */
-  }
-
-  .closedOverlayRented {
-    background-color: var(--status-rented); /* retired status-rented bg utility's static fallback */
-    border-color:      var(--status-rented); /* retired status-rented border utility */
-  }
-}
-@supports (color: color-mix(in lab, red, red)) {
-  @layer utilities {
-    .closedOverlaySold {
-      background-color: color-mix(in oklab, var(--status-info) 80%, transparent); /* retired status-info bg utility, color-mix tier */
-    }
-    .closedOverlayRented {
-      background-color: color-mix(in oklab, var(--status-rented) 80%, transparent); /* retired status-rented bg utility, color-mix tier */
-    }
   }
 }

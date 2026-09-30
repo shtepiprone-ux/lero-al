@@ -1,0 +1,60 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 0ee126c55d1a1ae04ebf202a050c49baa3a2355c
+    Changed paths seen: 37
+    Excluded (19):
+      .github/workflows/governance-pr.yml  [outside-src]
+      docs/mantine-responsive-design-system.md  [outside-src]
+      package.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx  [story-or-test-file]
+      src/modules/listings/components/ListingCard.module.css  [not-ts-tsx]
+      src/stories/mantine/primitives/AppImage.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/SimilarListingsView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AuthFormPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/HomepageListingGrids.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingCardPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingCardTrack.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingContactPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingDetailPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingsShellView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ResetPasswordView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/TwoColumnForm.stories.tsx  [story-or-test-file]
+    Included surfaces (18):
+      src/app/[locale]/cabinet/page.tsx
+      src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+      src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+      src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+      src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+      src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+      src/design-system/mantine/typography.ts
+      src/design-system/media/AppImage.tsx
+      src/design-system/media/appImageConfig.ts
+      src/modules/auth/components/ResetPasswordView.tsx
+      src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+      src/modules/cms/components/CmsPageView.tsx
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingContact.tsx
+      src/modules/listings/components/ListingDetailView.tsx
+      src/modules/listings/components/RecentlyViewedGridView.tsx
+      src/modules/listings/components/SaveToCollectionButton.tsx
+      src/modules/listings/components/SimilarListingsView.tsx
+    Re-censused parent surfaces (2):
+      src/app/[locale]/listings/[slug]/page.tsx  <- src/modules/listings/components/RecentlyViewedSection.tsx
+      src/app/admin/listings/[id]/preview/page.tsx  <- src/modules/listings/components/RecentlyViewedSection.tsx
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 20
+    Blocks baselined (recorded debt, does not fail): 76
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 307
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+
+EXIT_CODE=0

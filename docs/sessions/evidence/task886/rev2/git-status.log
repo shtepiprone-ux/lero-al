@@ -1,0 +1,25 @@
+ M .github/workflows/governance-pr.yml
+ M docs/mantine-responsive-design-system.md
+ M package.json
+ M src/design-system/mantine/patterns/MantineAuthFormPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+ M src/design-system/mantine/patterns/MantineTwoColumnForm.tsx
+ M src/design-system/mantine/typography.ts
+ M src/modules/auth/components/ResetPasswordView.tsx
+ M src/modules/cms/components/CmsPageView.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/RecentlyViewedGridView.tsx
+ M src/modules/listings/components/RecentlyViewedSection.tsx
+ M src/modules/listings/components/SimilarListingsView.tsx
+ M src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+ M src/stories/patterns/mantine/AuthFormPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx
+ M src/stories/patterns/mantine/ResetPasswordView.stories.tsx
+ M src/stories/patterns/mantine/TwoColumnForm.stories.tsx
+ M tasks/Sprints/Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md
+?? docs/sessions/2026-09-30-task886-responsive-heading-scale.md
+?? docs/sessions/evidence/task886/
+?? scripts/check-type-responsive.mjs
+?? scripts/type-responsive-baseline.json

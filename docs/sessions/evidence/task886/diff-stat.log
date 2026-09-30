@@ -1,0 +1,19 @@
+ .github/workflows/governance-pr.yml                |  6 +++
+ docs/backlog.md                                    |  2 +-
+ docs/critical-flow-registry.md                     |  2 +-
+ docs/mantine-responsive-design-system.md           |  2 +-
+ package.json                                       |  2 +
+ scripts/check-hydration-console.mjs                | 58 ++++++++++++++++++----
+ .../mantine/patterns/MantineAuthFormPattern.tsx    |  3 +-
+ .../patterns/MantineListingDetailPattern.tsx       |  7 +--
+ .../patterns/MantinePageHeaderWithActions.tsx      |  3 +-
+ .../mantine/patterns/MantineTwoColumnForm.tsx      |  3 +-
+ src/design-system/mantine/typography.ts            | 26 ++++++++++
+ src/modules/auth/components/ResetPasswordView.tsx  |  7 +--
+ src/modules/cms/components/CmsPageView.tsx         |  3 +-
+ .../listings/components/ListingDetailView.tsx      |  9 ++--
+ .../listings/components/RecentlyViewedGridView.tsx |  5 +-
+ .../listings/components/RecentlyViewedSection.tsx  | 36 --------------
+ .../listings/components/SimilarListingsView.tsx    |  3 +-
+ .../primitives/SimilarListingsView.stories.tsx     | 10 ++++
+ 18 files changed, 121 insertions(+), 66 deletions(-)

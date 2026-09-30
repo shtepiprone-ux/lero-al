@@ -1,0 +1,182 @@
+## 1 appimage--placeholder — every media-placeholder box equals its offsetParent box (±1)
+mantine-primitives-appimage--placeholder w=320: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+mantine-primitives-appimage--placeholder w=378: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+mantine-primitives-appimage--placeholder w=390: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+mantine-primitives-appimage--placeholder w=768: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+mantine-primitives-appimage--placeholder w=1024: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+mantine-primitives-appimage--placeholder w=1440: placeholders=13 allEqualToOffsetParent=true aboveFirstFrame=0 mismatchIdx=[] overflow=false errors=1
+
+## 2 contact CTAs — send-message vs Call, per Story/locale/width
+patterns-mantine-listingdetailpattern--default en w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=246] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default en w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=304] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default en w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=316] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default en w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=258] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default en w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=358] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default en w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=417] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=246] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=304] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=316] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=258] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=358] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailpattern--default uk w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=417] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=246] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=304] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=316] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=258] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=358] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default en w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=417] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=246] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=304] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=316] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=258] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=358] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingcontactpattern--default uk w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=417] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1/1/1/1/1/1/1/1/1/1/1/1/1 errors=0
+patterns-mantine-listingdetailview--public-listing en w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=214] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing en w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=272] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing en w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=284] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing en w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=630] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing en w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=331] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing en w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=374] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=320: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=2 w=214] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/2 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=378: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=272] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=390: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=284] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=768: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=630] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=1024: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=331] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+patterns-mantine-listingdetailview--public-listing uk w=1440: send=[outline bg=rgb(255, 255, 255) color=rgb(52, 64, 84) border=rgb(228, 231, 236) lines=1 w=374] call=[null bg=rgb(236, 84, 71) lines=1] wa=[bg=rgb(2, 122, 72)] bgDiffersFromCall=true allCtaLines=1/1/1/1 errors=3
+
+## 2b send-message style equal across the three Stories (per locale@width):
+en@320: EQUAL
+en@378: EQUAL
+en@390: EQUAL
+en@768: EQUAL
+en@1024: EQUAL
+en@1440: EQUAL
+uk@320: EQUAL
+uk@378: EQUAL
+uk@390: EQUAL
+uk@768: EQUAL
+uk@1024: EQUAL
+uk@1440: EQUAL
+
+## 3 ListingDetailView exports — rendered width equals requested viewport; gap; overflow
+patterns-mantine-listingdetailview--docs w=320: clientWidth=320 widthEqualsViewport=true gapL=Infinity gapR=Infinity overflow=true h=[] errors=13
+patterns-mantine-listingdetailview--docs w=390: clientWidth=390 widthEqualsViewport=true gapL=Infinity gapR=Infinity overflow=true h=[] errors=13
+patterns-mantine-listingdetailview--docs w=768: clientWidth=768 widthEqualsViewport=true gapL=Infinity gapR=Infinity overflow=false h=[] errors=13
+patterns-mantine-listingdetailview--docs w=1024: clientWidth=1024 widthEqualsViewport=true gapL=Infinity gapR=Infinity overflow=false h=[] errors=13
+patterns-mantine-listingdetailview--docs w=1440: clientWidth=1440 widthEqualsViewport=true gapL=Infinity gapR=Infinity overflow=false h=[] errors=13
+patterns-mantine-listingdetailview--public-listing w=320: clientWidth=320 widthEqualsViewport=true gapL=-81 gapR=-111 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=3
+patterns-mantine-listingdetailview--public-listing w=390: clientWidth=390 widthEqualsViewport=true gapL=-46 gapR=-76 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=3
+patterns-mantine-listingdetailview--public-listing w=768: clientWidth=768 widthEqualsViewport=true gapL=-113 gapR=-143 overflow=false h=[h1:30px h2:24px h2:24px h2:24px] errors=3
+patterns-mantine-listingdetailview--public-listing w=1024: clientWidth=1024 widthEqualsViewport=true gapL=32 gapR=32 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=3
+patterns-mantine-listingdetailview--public-listing w=1440: clientWidth=1440 widthEqualsViewport=true gapL=5 gapR=48 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=3
+patterns-mantine-listingdetailview--staff-preview-unpublished w=320: clientWidth=320 widthEqualsViewport=true gapL=-81 gapR=-111 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=2
+patterns-mantine-listingdetailview--staff-preview-unpublished w=390: clientWidth=390 widthEqualsViewport=true gapL=-46 gapR=-76 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=2
+patterns-mantine-listingdetailview--staff-preview-unpublished w=768: clientWidth=768 widthEqualsViewport=true gapL=-113 gapR=-143 overflow=false h=[h1:30px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--staff-preview-unpublished w=1024: clientWidth=1024 widthEqualsViewport=true gapL=32 gapR=32 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--staff-preview-unpublished w=1440: clientWidth=1440 widthEqualsViewport=true gapL=5 gapR=48 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--staff-preview-published w=320: clientWidth=320 widthEqualsViewport=true gapL=-81 gapR=-111 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=2
+patterns-mantine-listingdetailview--staff-preview-published w=390: clientWidth=390 widthEqualsViewport=true gapL=-46 gapR=-76 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=2
+patterns-mantine-listingdetailview--staff-preview-published w=768: clientWidth=768 widthEqualsViewport=true gapL=-113 gapR=-143 overflow=false h=[h1:30px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--staff-preview-published w=1024: clientWidth=1024 widthEqualsViewport=true gapL=32 gapR=32 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--staff-preview-published w=1440: clientWidth=1440 widthEqualsViewport=true gapL=5 gapR=48 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=2
+patterns-mantine-listingdetailview--archived-listing w=320: clientWidth=320 widthEqualsViewport=true gapL=-81 gapR=-111 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=3
+patterns-mantine-listingdetailview--archived-listing w=390: clientWidth=390 widthEqualsViewport=true gapL=-46 gapR=-76 overflow=false h=[h1:20px h2:18px h2:18px h2:18px] errors=3
+patterns-mantine-listingdetailview--archived-listing w=768: clientWidth=768 widthEqualsViewport=true gapL=-113 gapR=-143 overflow=false h=[h1:30px h2:24px h2:24px h2:24px] errors=3
+patterns-mantine-listingdetailview--archived-listing w=1024: clientWidth=1024 widthEqualsViewport=true gapL=32 gapR=32 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=3
+patterns-mantine-listingdetailview--archived-listing w=1440: clientWidth=1440 widthEqualsViewport=true gapL=5 gapR=48 overflow=false h=[h1:36px h2:24px h2:24px h2:24px] errors=3
+
+## 4 card Stories — count of "Save to collection" controls, gap, overflow
+patterns-mantine-listingcardpattern--default w=320: saveToCollection=0 cards=12 gapL=16 gapR=16 overflow=false h=[h4:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h4:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardpattern--default w=390: saveToCollection=0 cards=12 gapL=16 gapR=16 overflow=false h=[h4:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h4:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardpattern--default w=1024: saveToCollection=0 cards=12 gapL=32 gapR=32 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h4:24px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardpattern--default w=1440: saveToCollection=0 cards=12 gapL=32 gapR=32 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h4:24px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+mantine-primitives-listingcard--default w=320: saveToCollection=0 cards=4 gapL=16 gapR=16 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h4:24px h3:14px] errors=0
+mantine-primitives-listingcard--default w=390: saveToCollection=0 cards=4 gapL=16 gapR=16 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h4:24px h3:14px] errors=0
+mantine-primitives-listingcard--default w=1024: saveToCollection=0 cards=4 gapL=49 gapR=49 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h4:24px h3:14px] errors=0
+mantine-primitives-listingcard--default w=1440: saveToCollection=0 cards=4 gapL=49 gapR=49 overflow=false h=[h4:24px h3:14px h3:14px h3:14px h4:24px h3:14px] errors=0
+mantine-primitives-listingcard--favorites-composition w=320: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+mantine-primitives-listingcard--favorites-composition w=390: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+mantine-primitives-listingcard--favorites-composition w=1024: saveToCollection=0 cards=1 gapL=49 gapR=677 overflow=false h=[h3:14px] errors=0
+mantine-primitives-listingcard--favorites-composition w=1440: saveToCollection=0 cards=1 gapL=49 gapR=1068 overflow=false h=[h3:14px] errors=0
+mantine-primitives-favoritesshell--populated w=320: saveToCollection=0 cards=8 gapL=16 gapR=16 overflow=false h=[h2:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=2
+mantine-primitives-favoritesshell--populated w=390: saveToCollection=0 cards=8 gapL=16 gapR=16 overflow=false h=[h2:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=2
+mantine-primitives-favoritesshell--populated w=1024: saveToCollection=0 cards=8 gapL=49 gapR=49 overflow=false h=[h2:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=2
+mantine-primitives-favoritesshell--populated w=1440: saveToCollection=0 cards=8 gapL=49 gapR=49 overflow=false h=[h2:18px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=2
+mantine-primitives-favoritesshell--empty w=320: saveToCollection=0 cards=0 gapL=16 gapR=16 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--empty w=390: saveToCollection=0 cards=0 gapL=36 gapR=36 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--empty w=1024: saveToCollection=0 cards=0 gapL=353 gapR=353 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--empty w=1440: saveToCollection=0 cards=0 gapL=561 gapR=561 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--type-filter-no-matches w=320: saveToCollection=0 cards=0 gapL=16 gapR=16 overflow=false h=[h2:18px] errors=2
+mantine-primitives-favoritesshell--type-filter-no-matches w=390: saveToCollection=0 cards=0 gapL=16 gapR=16 overflow=false h=[h2:18px] errors=2
+mantine-primitives-favoritesshell--type-filter-no-matches w=1024: saveToCollection=0 cards=0 gapL=49 gapR=49 overflow=false h=[h2:18px] errors=2
+mantine-primitives-favoritesshell--type-filter-no-matches w=1440: saveToCollection=0 cards=0 gapL=49 gapR=49 overflow=false h=[h2:18px] errors=2
+mantine-primitives-favoritesshell--error w=320: saveToCollection=0 cards=0 gapL=33 gapR=33 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--error w=390: saveToCollection=0 cards=0 gapL=33 gapR=33 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--error w=1024: saveToCollection=0 cards=0 gapL=66 gapR=658 overflow=false h=[] errors=1
+mantine-primitives-favoritesshell--error w=1440: saveToCollection=0 cards=0 gapL=66 gapR=1074 overflow=false h=[] errors=1
+patterns-mantine-listingcardtrack--grid w=320: saveToCollection=0 cards=8 gapL=16 gapR=16 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid w=390: saveToCollection=0 cards=8 gapL=16 gapR=16 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid w=1024: saveToCollection=0 cards=8 gapL=32 gapR=32 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid w=1440: saveToCollection=0 cards=8 gapL=32 gapR=32 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail w=320: saveToCollection=0 cards=8 gapL=16 gapR=-1282 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail w=390: saveToCollection=0 cards=8 gapL=16 gapR=-1571 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail w=1024: saveToCollection=0 cards=8 gapL=32 gapR=-1360 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail w=1440: saveToCollection=0 cards=8 gapL=32 gapR=-747 overflow=false h=[h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-single-item w=320: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-single-item w=390: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-single-item w=1024: saveToCollection=0 cards=1 gapL=32 gapR=683 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-single-item w=1440: saveToCollection=0 cards=1 gapL=32 gapR=1076 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-single-item w=320: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-single-item w=390: saveToCollection=0 cards=1 gapL=16 gapR=16 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-single-item w=1024: saveToCollection=0 cards=1 gapL=32 gapR=712 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-single-item w=1440: saveToCollection=0 cards=1 gapL=32 gapR=1128 overflow=false h=[h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-no-overflow w=320: saveToCollection=0 cards=2 gapL=16 gapR=-81 overflow=false h=[h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-no-overflow w=390: saveToCollection=0 cards=2 gapL=16 gapR=-100 overflow=false h=[h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-no-overflow w=1024: saveToCollection=0 cards=2 gapL=32 gapR=416 overflow=false h=[h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-no-overflow w=1440: saveToCollection=0 cards=2 gapL=32 gapR=881 overflow=false h=[h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-mixed-title-lengths w=320: saveToCollection=0 cards=4 gapL=16 gapR=-481 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-mixed-title-lengths w=390: saveToCollection=0 cards=4 gapL=16 gapR=-590 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-mixed-title-lengths w=1024: saveToCollection=0 cards=4 gapL=32 gapR=-176 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--rail-mixed-title-lengths w=1440: saveToCollection=0 cards=4 gapL=32 gapR=339 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-mixed-title-lengths w=320: saveToCollection=0 cards=4 gapL=16 gapR=16 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-mixed-title-lengths w=390: saveToCollection=0 cards=4 gapL=16 gapR=16 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-mixed-title-lengths w=1024: saveToCollection=0 cards=4 gapL=32 gapR=32 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--grid-mixed-title-lengths w=1440: saveToCollection=0 cards=4 gapL=32 gapR=32 overflow=false h=[h3:14px h3:14px h3:14px h3:14px] errors=0
+patterns-mantine-listingcardtrack--empty w=320: saveToCollection=0 cards=0 gapL=Infinity gapR=Infinity overflow=false h=[] errors=0
+patterns-mantine-listingcardtrack--empty w=390: saveToCollection=0 cards=0 gapL=Infinity gapR=Infinity overflow=false h=[] errors=0
+patterns-mantine-listingcardtrack--empty w=1024: saveToCollection=0 cards=0 gapL=Infinity gapR=Infinity overflow=false h=[] errors=0
+patterns-mantine-listingcardtrack--empty w=1440: saveToCollection=0 cards=0 gapL=Infinity gapR=Infinity overflow=false h=[] errors=0
+
+## 5 SaveToCollectionButton Stories — render, no console error
+mantine-primitives-savetocollectionbutton--closed w=320: button=true variant=default storybookError=false consoleErrors=0 
+mantine-primitives-savetocollectionbutton--closed w=1440: button=true variant=default storybookError=false consoleErrors=0 
+mantine-primitives-savetocollectionbutton--dialog-open w=320: button=true variant=default storybookError=false consoleErrors=0 
+mantine-primitives-savetocollectionbutton--dialog-open w=1440: button=true variant=default storybookError=false consoleErrors=0 
+mantine-primitives-savetocollectionbutton--saving w=320: button=true variant=default storybookError=false consoleErrors=0 
+mantine-primitives-savetocollectionbutton--saving w=1440: button=true variant=default storybookError=false consoleErrors=0 
+
+## 6 GR-3c/3b/3d — changed Stories: h1–h4 fontSize, gap, overflow at 320/390/768/1440 (en)
+patterns-mantine-listingdetailpattern--default w=320: gapL=-272 gapR=-1424 overflow=false h=[h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px]
+patterns-mantine-listingdetailpattern--default w=390: gapL=-342 gapR=-1774 overflow=false h=[h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px h1:20px h2:18px h2:18px]
+patterns-mantine-listingdetailpattern--default w=768: gapL=24 gapR=24 overflow=false h=[h1:30px h2:24px h2:24px h1:30px h2:24px h2:24px h1:30px h2:24px h2:24px h1:30px h2:24px h2:24px h1:30px h2:24px h2:24px h1:30px h2:24px h2:24px]
+patterns-mantine-listingdetailpattern--default w=1440: gapL=32 gapR=32 overflow=false h=[h1:36px h2:24px h2:24px h1:36px h2:24px h2:24px h1:36px h2:24px h2:24px h1:36px h2:24px h2:24px h1:36px h2:24px h2:24px h1:36px h2:24px h2:24px]
+patterns-mantine-listingcontactpattern--default w=320: gapL=16 gapR=16 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=390: gapL=16 gapR=16 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=768: gapL=24 gapR=444 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=1440: gapL=32 gapR=949 overflow=false h=[]
+mantine-primitives-appimage--default w=320: gapL=16 gapR=16 overflow=false h=[]
+mantine-primitives-appimage--default w=390: gapL=16 gapR=16 overflow=false h=[]
+mantine-primitives-appimage--default w=768: gapL=49 gapR=49 overflow=false h=[]
+mantine-primitives-appimage--default w=1440: gapL=49 gapR=49 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=320: gapL=16 gapR=16 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=390: gapL=16 gapR=16 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=768: gapL=49 gapR=49 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=1440: gapL=49 gapR=49 overflow=false h=[]
+
+## 7 LightboxView exports (R36) — rendered width equals requested viewport, no overflow (measured on the final build)
+mantine-primitives-lightboxview--default w=320: clientWidth=320 widthEqualsViewport=true scrollWidth=320 overflow=false errors=0
+mantine-primitives-lightboxview--default w=1440: clientWidth=1440 widthEqualsViewport=true scrollWidth=1440 overflow=false errors=0
+mantine-primitives-lightboxview--swipe-track-mode w=320: clientWidth=320 widthEqualsViewport=true scrollWidth=320 overflow=false errors=0
+mantine-primitives-lightboxview--swipe-track-mode w=1440: clientWidth=1440 widthEqualsViewport=true scrollWidth=1440 overflow=false errors=0
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=320: clientWidth=320 widthEqualsViewport=true scrollWidth=320 overflow=false errors=0
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=1440: clientWidth=1440 widthEqualsViewport=true scrollWidth=1440 overflow=false errors=0

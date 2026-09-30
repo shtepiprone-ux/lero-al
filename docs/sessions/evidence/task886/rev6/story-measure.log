@@ -1,0 +1,129 @@
+## 1 lightbox sweep — Story files that render LightboxView / ListingGallery / GalleryThumbnailButton / MantineListingGalleryPattern (git grep -l):
+  src/stories/mantine/primitives/AppImage.stories.tsx
+  src/stories/mantine/primitives/GalleryDesktopNavigation.stories.tsx
+  src/stories/mantine/primitives/GalleryNavActionIcon.stories.tsx
+  src/stories/mantine/primitives/GalleryThumbnailButton.stories.tsx
+  src/stories/mantine/primitives/LightboxView.stories.tsx
+  src/stories/mantine/primitives/UnstyledButton.stories.tsx
+  src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx
+sweep scope: 16 entries
+
+story mantine-primitives-appimage--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-appimage--default w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-appimage--placeholder w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=1
+story mantine-primitives-appimage--placeholder w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=1
+story mantine-primitives-gallerydesktopnavigation--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-gallerydesktopnavigation--default w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-gallerynavactionicon--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-gallerynavactionicon--default w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-gallerythumbnailbutton--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=1
+story mantine-primitives-gallerythumbnailbutton--default w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=1
+story mantine-primitives-lightboxview--default w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-lightboxview--default w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=24 thumbPlaceholders=0 thumbImgs=24 errs=0
+story mantine-primitives-lightboxview--swipe-track-mode w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-lightboxview--swipe-track-mode w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=24 thumbPlaceholders=0 thumbImgs=24 errs=0
+story mantine-primitives-lightboxview--swipe-track-mode-few-photos w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-lightboxview--swipe-track-mode-few-photos w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=4 thumbPlaceholders=0 thumbImgs=4 errs=0
+story mantine-primitives-unstyledbutton--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story mantine-primitives-unstyledbutton--default w=1440: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story patterns-mantine-listingdetailpattern--default w=390: lightboxOpened=false brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=null alpha=null thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story patterns-mantine-listingdetailpattern--default w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=5 thumbPlaceholders=0 thumbImgs=5 errs=0
+story patterns-mantine-listingdetailview--public-listing w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=3
+story patterns-mantine-listingdetailview--public-listing w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=3 thumbPlaceholders=3 thumbImgs=0 errs=3
+story patterns-mantine-listingdetailview--staff-preview-unpublished w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=2
+story patterns-mantine-listingdetailview--staff-preview-unpublished w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=3 thumbPlaceholders=3 thumbImgs=0 errs=2
+story patterns-mantine-listingdetailview--staff-preview-published w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=2
+story patterns-mantine-listingdetailview--staff-preview-published w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=3 thumbPlaceholders=3 thumbImgs=0 errs=2
+story patterns-mantine-listingdetailview--archived-listing w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=3
+story patterns-mantine-listingdetailview--archived-listing w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=3 thumbPlaceholders=3 thumbImgs=0 errs=3
+story patterns-mantine-listinggallerypattern--default w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=0
+story patterns-mantine-listinggallerypattern--default w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=9 thumbPlaceholders=0 thumbImgs=9 errs=0
+docs patterns-mantine-listingdetailview--docs w=390: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=0 thumbPlaceholders=0 thumbImgs=0 errs=13
+docs patterns-mantine-listingdetailview--docs w=1440: lightboxOpened=true brokenImgs(page)=0 brokenImgs(open)=0  dialogBg=oklch(0 0 0) alpha=1 thumbButtons=3 thumbPlaceholders=3 thumbImgs=0 errs=13
+
+## 2 send-message background-color — expected rgb(71, 141, 236)
+patterns-mantine-listingdetailpattern--default en w=320: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailpattern--default en w=1024: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailpattern--default en w=1440: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailpattern--default uk w=320: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailpattern--default uk w=1024: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailpattern--default uk w=1440: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default en w=320: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default en w=1024: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default en w=1440: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default uk w=320: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default uk w=1024: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingcontactpattern--default uk w=1440: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(71, 141, 236) / rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing en w=320: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing en w=1024: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing en w=1440: sendBg=rgb(71, 141, 236) ok=true label="Send message" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing uk w=320: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=2 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing uk w=1024: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+patterns-mantine-listingdetailview--public-listing uk w=1440: sendBg=rgb(71, 141, 236) ok=true label="Надіслати повідомлення" lines=1 (message-circle buttons: rgb(2, 122, 72) / rgb(71, 141, 236))
+
+## 3 favourite heart on ListingDetailView
+patterns-mantine-listingdetailview--public-listing: heart=1 (disabled=0) saveToCollection=0
+patterns-mantine-listingdetailview--staff-preview-unpublished: heart=0 (disabled=0) saveToCollection=0
+patterns-mantine-listingdetailview--staff-preview-published: heart=0 (disabled=0) saveToCollection=0
+patterns-mantine-listingdetailview--archived-listing: heart=1 (disabled=1) saveToCollection=0
+
+## 4 AppImage Default vs Placeholder — cells per variant row
+mantine-primitives-appimage--default w=320: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--default w=640: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--default w=1024: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--default w=1440: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--placeholder w=320: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--placeholder w=640: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--placeholder w=1024: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+mantine-primitives-appimage--placeholder w=1440: listing=2 listing-thumb=2 gallery-main=2 gallery-side=2 gallery-strip=2 lightbox=2
+
+## 5 closed-listing overlay colour
+mantine-primitives-favoritesshell--populated: SOLD=none RENTED=none
+mantine-primitives-favoritesshell--empty: SOLD=none RENTED=none
+mantine-primitives-favoritesshell--type-filter-no-matches: SOLD=none RENTED=none
+mantine-primitives-favoritesshell--error: SOLD=none RENTED=none
+mantine-primitives-listingcard--default: SOLD=oklab(0.577 -0.087 -0.150688 / 0.8) | border oklch(0.577 0.174 240) RENTED=oklab(0.577 0.0735356 -0.157698 / 0.8) | border oklch(0.577 0.174 295)
+mantine-primitives-listingcard--favorites-composition: SOLD=none RENTED=none
+patterns-mantine-listingcardpattern--default: SOLD=oklab(0.577 -0.087 -0.150688 / 0.8) | border oklch(0.577 0.174 240) RENTED=oklab(0.577 0.0735356 -0.157698 / 0.8) | border oklch(0.577 0.174 295)
+
+## 6 GR-3b/3c/3d — changed and blast-radius Stories (en): page overflow, edge gap of the outermost content box, h1-h4 fontSize
+mantine-primitives-appimage--default w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-appimage--default w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-appimage--default w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-appimage--default w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-appimage--placeholder w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-gallerythumbnailbutton--default w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-gallerythumbnailbutton--default w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-gallerythumbnailbutton--default w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-gallerythumbnailbutton--default w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--default w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--default w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--default w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--default w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=1024: clientWidth=1024 leftEdgeGap=49 overflow=false h=[]
+mantine-primitives-lightboxview--swipe-track-mode-few-photos w=1440: clientWidth=1440 leftEdgeGap=49 overflow=false h=[]
+patterns-mantine-listingcardpattern--default w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[h4:18px h3:14px]
+patterns-mantine-listingcardpattern--default w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[h4:18px h3:14px]
+patterns-mantine-listingcardpattern--default w=1024: clientWidth=1024 leftEdgeGap=32 overflow=false h=[h4:24px h3:14px]
+patterns-mantine-listingcardpattern--default w=1440: clientWidth=1440 leftEdgeGap=32 overflow=false h=[h4:24px h3:14px]
+patterns-mantine-listingcontactpattern--default w=320: clientWidth=320 leftEdgeGap=16 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=390: clientWidth=390 leftEdgeGap=16 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=1024: clientWidth=1024 leftEdgeGap=32 overflow=false h=[]
+patterns-mantine-listingcontactpattern--default w=1440: clientWidth=1440 leftEdgeGap=32 overflow=false h=[]
+patterns-mantine-listingdetailpattern--default w=320: clientWidth=320 leftEdgeGap=-272 overflow=false h=[h1:20px h2:18px]
+patterns-mantine-listingdetailpattern--default w=390: clientWidth=390 leftEdgeGap=-342 overflow=false h=[h1:20px h2:18px]
+patterns-mantine-listingdetailpattern--default w=1024: clientWidth=1024 leftEdgeGap=32 overflow=false h=[h1:36px h2:24px]
+patterns-mantine-listingdetailpattern--default w=1440: clientWidth=1440 leftEdgeGap=32 overflow=false h=[h1:36px h2:24px]
+patterns-mantine-listinggallerypattern--default w=320: clientWidth=320 leftEdgeGap=-560 overflow=false h=[]
+patterns-mantine-listinggallerypattern--default w=390: clientWidth=390 leftEdgeGap=-700 overflow=false h=[]
+patterns-mantine-listinggallerypattern--default w=1024: clientWidth=1024 leftEdgeGap=32 overflow=false h=[]
+patterns-mantine-listinggallerypattern--default w=1440: clientWidth=1440 leftEdgeGap=32 overflow=false h=[]

@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
+import { createTheme, darken, lighten, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
 import { brand } from '@/design-system/brand'
 
 // Task 775 (D775-C = C1) — native Mantine typing for the two additive spacing keys below.
@@ -498,6 +498,25 @@ const sale: MantineColorsTuple = [
   '#8d0624', // 9 — approximation
 ]
 
+// Task 886 R37 (owner O83-1, 2026-09-30): the listing-contact "Send message" (chat) button colour.
+// The owner's value `#478dec`, verbatim, at index **7** — the index Button `variant="filled"`
+// actually renders (this theme sets `primaryShade: 7`, see the `sale` comment above); hover reads
+// index 8. White on this value is 3.34:1, below WCAG AA's 4.5:1; the owner accepted it as is
+// ("залиш #478dec як є"). The other stops are derived with Mantine's own `lighten`/`darken`, so no
+// second hex is invented. Consumers use `color="chat"`, never the hex.
+const chat: MantineColorsTuple = [
+  lighten('#478dec', 0.84), // 0
+  lighten('#478dec', 0.72), // 1
+  lighten('#478dec', 0.6), // 2
+  lighten('#478dec', 0.48), // 3
+  lighten('#478dec', 0.36), // 4
+  lighten('#478dec', 0.24), // 5
+  lighten('#478dec', 0.12), // 6
+  '#478dec', // 7 — owner-provided (2026-09-30) — Button variant="filled" fill
+  darken('#478dec', 0.1), // 8 — hover
+  darken('#478dec', 0.2), // 9
+]
+
 // Task 845 Pass 10 (owner-provided reference, 2026-09-19): the owner rejected the chart series'
 // original saturated palette ("дуже агресивна") and named a specific external reference —
 // pinterest.com/ideas/warm-pastel-color-palette/959971831841/ — for a warm, muted replacement.
@@ -572,7 +591,7 @@ export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange, dustyRose, warmSage, mutedLilac, warmGold, warmLatte },
+  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, chat, orange, dustyRose, warmSage, mutedLilac, warmGold, warmLatte },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, xs2=480, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.

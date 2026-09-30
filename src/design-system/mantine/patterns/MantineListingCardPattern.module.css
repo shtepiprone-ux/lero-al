@@ -222,56 +222,6 @@
   gap: var(--homepage-runtime-space-1); /* Task 770 — was @theme inline --space-1 (§22.1) */
 }
 
-/*
- * Task 764 Revision 1 — the `imageActions` slot wrapper (F3 fix). `opacity-0`/`transition-opacity`
- * reproduce Tailwind's own compiled `.15s`/`cubic-bezier(0.4,0,0.2,1)`, same values `.cardTitle`
- * above already reproduces at :253-255. `z-index` is explicit (not DOM-order-dependent) so paint
- * order over any sibling overlay holds regardless of future render-order changes.
- *
- * Task 809 Revision 3 (owner rejection 2026-09-10) — repositioned from top-left to bottom-left.
- * The original top-left placement (`absolute top-2 left-2`, same offsets as `.badgesGrid`) was
- * reproduced verbatim from the retired pre-Mantine `FavoritesShell.tsx` overlay div, which shared
- * the exact top-left corner with `.badgesGrid` — a collision nobody noticed because `imageActions`
- * had zero production consumers until Task 809 wired `SaveToCollectionButton` into `/favorites`.
- * On hover/focus, the action icon rendered directly on top of an active badge (e.g. "New"),
- * illegible, both fighting the same 8px×8px corner. Bottom-left is the verified-free corner:
- * `{imageActions}` (`.tsx:330-334`) renders only in the grid-layout branch, after the
- * `if (layout === 'list') return (...)` early return (`.tsx:176`) — `.photoCountList` (bottom-left,
- * list-only, `:264-275`) can never coexist with `.imageActions` on the same rendered card, and
- * `.photoCountGrid` (the grid variant's photo-count badge) is bottom-**right** (`:282-289`). Badges
- * stay top-left, `favorite` (`FavoriteButton`'s own self-positioned `top/right`, `FavoriteButton.tsx:140`)
- * stays top-right — all four overlay occupants now sit in four distinct corners.
- *
- * Reveal rules reproduce the retired `opacity-0 group-hover:opacity-100 focus-within:opacity-100`
- * utilities' OWN compiled guards, not a copy of this file's `:hover` zoom guard: the hover arm
- * carries `(hover: hover)` ONLY — never `and (pointer: fine)` — because that is the exact guard
- * Tailwind's compiled `group-hover:` variant carried (§3.3, the same measured fact Task 763's I1
- * extraction and this file's own header correction record); adding `pointer: fine` here would
- * narrow the reveal on coarse-pointer devices, a behaviour change nobody authorized. The
- * `focus-within` arm carries NO media guard at all, matching `focus-within:opacity-100`'s own
- * compiled form exactly (keyboard focus must reveal the action on every device).
- */
-.imageActions {
-  position: absolute;
-  bottom: var(--homepage-runtime-space-2); /* Task 809 Revision 3 — was top; see comment above */
-  left: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  z-index: 1; /* design-tokens-allow: z-index: 1 — sibling paint-order guarantee over .badgesGrid, not a stacking-context escalation; no --z-* token exists at this low a value */
-  opacity: 0;
-  transition-property: opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); same precedent as .cardTitle above (:254) */
-  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269), same precedent as .cardTitle above (:255) */
-}
-
-@media (hover: hover) {
-  .cardGrid:hover .imageActions {
-    opacity: 1;
-  }
-}
-
-.cardGrid:focus-within .imageActions {
-  opacity: 1;
-}
-
 .photoCountList {
   position: absolute;
   bottom: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
@@ -457,4 +407,30 @@
   rotate: -8deg; /* rotate-[-8deg] */
   border-style: solid; /* border-2 — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1) */
   border-width: 2px; /* design-tokens-allow: border-width: 2px — Tailwind's own compiled border-2 value, no token represents it */
+}
+
+/*
+ * Task 886 R40 (owner O83-1, 2026-09-30): the closed-listing overlay colour is owned by the pattern, so
+ * every Story that renders the pattern shows the same coloured sold/rented overlay as production. This
+ * supersedes Task 741's "the pattern carries no status colour" by owner instruction. The declarations
+ * moved verbatim from `ListingCard.module.css` (same tokens, same two tiers). `--status-info` /
+ * `--status-rented` are runtime aliases, so the base tier is the bare opaque `var()` (D35) and the
+ * `color-mix` tier below carries the 80% background.
+ */
+.overlaySold {
+  background-color: var(--status-info);
+  border-color: var(--status-info);
+}
+
+.overlayRented {
+  background-color: var(--status-rented);
+  border-color: var(--status-rented);
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .overlaySold {
+    background-color: color-mix(in oklab, var(--status-info) 80%, transparent);
+  }
+  .overlayRented {
+    background-color: color-mix(in oklab, var(--status-rented) 80%, transparent);
+  }
 }

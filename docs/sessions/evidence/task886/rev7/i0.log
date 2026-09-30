@@ -1,0 +1,5 @@
+win32 v22.22.3 C:\Claude_Code_Projects\lero-al
+97ec3e230a00fa7881516be10a2f68b78a6e6104  src/modules/listings/components/LightboxView.tsx  match=True
+fae9abba107d2effd2aa24f54556bf5da3d6b5ad  src/modules/listings/components/LightboxView.module.css  match=True
+a406af4149488c08ddc128071f1d8a814586f2cc  src/stories/mantine/primitives/LightboxView.stories.tsx  match=True
+358cbd0243cf5b513890d7edad0f30c513c85f81  src/design-system/media/appImageConfig.ts  match=True

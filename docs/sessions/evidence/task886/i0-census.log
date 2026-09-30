@@ -1,0 +1,32 @@
+total 29 responsive 8 static 21 staticLarge 15
+src/design-system/mantine/patterns/MantineAuthFormPattern.tsx:99 order=2 size="h3" eff=h3
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:196 order=1 size="h2" eff=h2
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:272 order=2 size="h4" eff=h4
+src/design-system/mantine/patterns/MantineListingDetailPattern.tsx:285 order=2 size="h4" eff=h4
+src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx:43 order=1 size="h2" eff=h2
+src/design-system/mantine/patterns/MantineTwoColumnForm.tsx:61 order=2 size="h3" eff=h3
+src/modules/auth/components/ResetPasswordView.tsx:66 order=1 size="h3" eff=h3
+src/modules/auth/components/ResetPasswordView.tsx:85 order=1 size="h3" eff=h3
+src/modules/auth/components/ResetPasswordView.tsx:100 order=1 size="h3" eff=h3
+src/modules/listings/components/ListingDetailView.tsx:58 order=2 size="h4" eff=h4
+src/modules/listings/components/ListingDetailView.tsx:370 order=2 size="h4" eff=h4
+src/modules/listings/components/RecentlyViewedGridView.tsx:46 order=2 size="h4" eff=h4
+src/modules/listings/components/RecentlyViewedGridView.tsx:61 order=2 size="h4" eff=h4
+src/modules/listings/components/RecentlyViewedSection.tsx:79 order=2 size="h4" eff=h4
+src/modules/listings/components/SimilarListingsView.tsx:52 order=2 size="h4" eff=h4
+--- responsive
+src/app/[locale]/page.tsx:40 fz={{
+src/app/[locale]/page.tsx:59 fz={SECTION_HEADING_FZ}
+src/app/[locale]/page.tsx:87 fz={SECTION_HEADING_FZ}
+src/components/shared/HowItWorksSteps.tsx:29 fz={SECTION_HEADING_FZ}
+src/design-system/mantine/patterns/MantineDashboardHeader.tsx:66 fz={{
+src/modules/cms/components/CmsPageView.tsx:24 fz={{
+src/modules/listings/components/FeaturedListingsView.tsx:62 fz={SECTION_HEADING_FZ}
+src/modules/locations/components/PopularLocationsView.tsx:59 fz={SECTION_HEADING_FZ}
+--- static small
+src/components/admin/AdminUserProfileView.tsx:497 eff=xl
+src/components/admin/AdminUserProfileView.tsx:506 eff=xl
+src/design-system/mantine/patterns/MantineDashboardCard.tsx:77 eff=h5
+src/design-system/mantine/patterns/MantineFormSectionStack.tsx:25 eff=md
+src/modules/admin/dashboard/components/AdminDashboardView.tsx:328 eff=h5
+src/modules/listings/components/CollectionsSection.tsx:113 eff=lg

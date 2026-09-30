@@ -2521,6 +2521,8 @@
       "gallerythumbnailbutton_active_label": "Miniatura attiva",
       "gallerythumbnailbutton_focus_label": "Miniatura con focus da tastiera",
       "gallerythumbnailbutton_long_label": "Un nome accessibile deliberatamente lungo che verifica il troncamento visivo senza mai troncare il nome accessibile nel DOM",
+      "gallerythumbnailbutton_failed_caption": "foto non caricata — il segnaposto canonico, non un'immagine rotta",
+      "gallerythumbnailbutton_failed_label": "Miniatura la cui foto non si è caricata",
       "listing_detail_feature_label_rooms": "Stanze",
       "listing_detail_feature_label_bathrooms": "Bagni",
       "listing_detail_feature_label_area": "Superficie",

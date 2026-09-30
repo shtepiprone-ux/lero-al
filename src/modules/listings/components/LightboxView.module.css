@@ -10,12 +10,6 @@
   justify-content: center;
 }
 
-/* `left: 50%` horizontal-center companion for the counter. Task 825 Revision 1 (R10): the mobile
-   pagination rail no longer uses this — it is now `left`/`right`-inset, not centered. */
-.centerX {
-  transform: translateX(-50%);
-}
-
 /* Desktop media column wrapper — kickoff §19/§20 A/B-verified `min-width`/`min-height` floor fix
    (see the render-tree comment above); `Stack`'s own `gap={0}` prop cannot express these. */
 .minZero {
@@ -37,7 +31,8 @@
   overflow-x: auto;
 }
 
-/* Mobile swipe viewport — clips the transform-driven track to the visible frame. */
+/* The photo container's clip — the mobile swipe viewport (clips the transform-driven track) and, since
+   Task 886 R43, the desktop media holder: a photo never paints outside its own bounds. */
 .clip {
   overflow: hidden;
 }

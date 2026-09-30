@@ -2,6 +2,7 @@
 
 import { SimpleGrid, TextInput, Textarea, Select, Button, Flex, Stack, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface TwoColField {
   name: string
@@ -58,7 +59,7 @@ export function MantineTwoColumnForm({
     <form onSubmit={form.onSubmit((values) => onSubmit?.(values))}>
       <Stack gap="md">
         {title && (
-          <Title order={2} size="h3">
+          <Title order={2} size="h3" fz={TITLE_FZ.h3}>
             {title}
           </Title>
         )}

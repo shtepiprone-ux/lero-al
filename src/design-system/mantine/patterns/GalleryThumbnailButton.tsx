@@ -1,6 +1,7 @@
 'use client'
 
-import { AspectRatio, Image, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { AspectRatio, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { AppImage } from '@/design-system/media/AppImage'
 
 export interface GalleryThumbnailButtonProps {
   src: string
@@ -34,7 +35,8 @@ export function GalleryThumbnailButton({ src, alt, label, active, onClick }: Gal
         bd={`${theme.other.borderWidth.galleryThumbActive} solid ${active ? 'var(--mantine-primary-color-filled)' : 'transparent'}`}
         style={{ overflow: 'hidden' }}
       >
-        <Image src={src} alt={alt} fit="cover" />
+        {/* Task 886 R41: the canonical AppImage, so a missing or failed photo shows the MediaPlaceholder, not a broken <img>. */}
+        <AppImage variant="gallery-strip" src={src} alt={alt} />
       </AspectRatio>
     </UnstyledButton>
   )

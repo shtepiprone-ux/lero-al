@@ -1,0 +1,5 @@
+
+docs\golden-rules.md:274:2. The measured edge gap is 16 at 320 and 390, and at least 24 at 1024 and 1440 (widened from 
+32 by owner decision O83-4, 2026-09-30, Task 886 review 4). More than 32 is allowed only when
+
+

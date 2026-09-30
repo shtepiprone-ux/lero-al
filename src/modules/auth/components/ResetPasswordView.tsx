@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Alert, Button, Center, Loader, PasswordInput, Stack, Text, ThemeIcon, Title, useMantineTheme } from '@mantine/core'
 import { MantineAuthCard, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
 import { VARIANT_COLORS } from '@/design-system/mantine/notificationVariants'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export type ResetPasswordPageState = 'loading' | 'form' | 'success' | 'expired'
 
@@ -63,7 +64,7 @@ export function ResetPasswordView({
             <ThemeIcon size="hero" radius="xl" color={VARIANT_COLORS.error} variant="light">
               <XCircle size={theme.other.iconSize.feature} aria-hidden="true" />
             </ThemeIcon>
-            <Title order={1} size="h3">{t('reset_password_expired_title')}</Title>
+            <Title order={1} size="h3" fz={TITLE_FZ.h3}>{t('reset_password_expired_title')}</Title>
             <Text size="sm" c="dimmed">{t('reset_password_expired_body')}</Text>
             <Button fullWidth variant="outline" onClick={onRequestNew}>
               {t('reset_password_request_new')}
@@ -82,7 +83,7 @@ export function ResetPasswordView({
             <ThemeIcon size="hero" radius="xl" color={VARIANT_COLORS.success} variant="light">
               <CheckCircle2 size={theme.other.iconSize.feature} aria-hidden="true" />
             </ThemeIcon>
-            <Title order={1} size="h3">{t('reset_password_success_title')}</Title>
+            <Title order={1} size="h3" fz={TITLE_FZ.h3}>{t('reset_password_success_title')}</Title>
             <Text size="sm" c="dimmed">{t('reset_password_success_body')}</Text>
             <Button fullWidth onClick={onGoLogin}>
               {t('reset_password_go_login')}
@@ -97,7 +98,7 @@ export function ResetPasswordView({
     <Center mih="60vh" p="md">
       <MantineAuthCard>
         <Stack gap="md" component="form" onSubmit={onSubmit}>
-          <Title order={1} size="h3">{t('reset_password_title')}</Title>
+          <Title order={1} size="h3" fz={TITLE_FZ.h3}>{t('reset_password_title')}</Title>
 
           {errorKey && (
             <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { ActionIcon, Badge, Box, Button, Center, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
-import { Check, Eye, ImageOff, Info, MessageCircle, MessageSquare } from 'lucide-react'
+import { Check, Eye, Info, MessageCircle, MessageSquare } from 'lucide-react'
 import { MantineDashboardHeader } from '@/design-system/mantine/patterns/MantineDashboardHeader'
 import { MantineDashboardPeriodControl, type DashboardPeriodControlLabels } from '@/design-system/mantine/patterns/MantineDashboardPeriodControl'
 import {
@@ -265,13 +265,7 @@ export function AgentStatisticsView({
   function thumbnail(row: Agt10Row): ReactNode {
     return (
       <Box w={theme.other.boxSize.dashboardListingThumb} h={theme.other.boxSize.dashboardListingThumb} bg="gray.1" flex="0 0 auto">
-        <AppImage variant="listing-thumb" src={row.coverUrl} alt={row.title}>
-          {!row.coverUrl && (
-            <Center h="100%">
-              <ImageOff size={theme.other.iconSize.compact} color={theme.colors.gray[5]} aria-hidden="true" />
-            </Center>
-          )}
-        </AppImage>
+        <AppImage variant="listing-thumb" src={row.coverUrl} alt={row.title} />
       </Box>
     )
   }

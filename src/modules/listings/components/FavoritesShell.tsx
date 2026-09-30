@@ -12,7 +12,6 @@ import { ListingCard, type CardListingData } from '@/modules/listings/components
 import { FavoritesTypeFilter } from '@/modules/listings/components/FavoritesTypeFilter'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
 import { CollectionsSection } from '@/modules/listings/components/CollectionsSection'
-import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { useFavoritesRealtime } from '@/modules/listings/hooks/useFavoritesRealtime'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
@@ -211,7 +210,6 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
                 layoutContext="card-track-grid"
                 displayCurrency={displayCurrency}
                 rates={rates}
-                imageActions={<SaveToCollectionButton listingId={listing.id} />}
               />
             ))}
           </MantineListingCardTrack>

@@ -1,0 +1,45 @@
+# Task 886 Revision 4 — story-measure.log. Probes: .artifacts/measure886r3.mjs and .artifacts/rail4.mjs (throwaway, gitignored) against storybook-static built in the final gate pass (rev4/build-storybook.log). en; 320/390/1024/1440.
+
+## Edge gap (first padded box), fonts, overflow, placeholders
+mantine-primitives-appimage--placeholder en @320: fonts[] | gutter L16/R16 | hOverflow=false | placeholders n=13 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=0 brokenImgs=0
+mantine-primitives-appimage--placeholder en @390: fonts[] | gutter L16/R16 | hOverflow=false | placeholders n=13 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=0 brokenImgs=0
+mantine-primitives-appimage--placeholder en @1024: fonts[] | gutter L24/R24 | hOverflow=false | placeholders n=13 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=0 brokenImgs=0
+mantine-primitives-appimage--placeholder en @1440: fonts[] | gutter L24/R24 | hOverflow=false | placeholders n=13 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--default en @320: fonts[h2=20 h3=14] | gutter L16/R16 | hOverflow=false | imgs=16 brokenImgs=0
+patterns-mantine-homepagelistinggrids--default en @390: fonts[h2=20 h3=14] | gutter L16/R16 | hOverflow=false | imgs=16 brokenImgs=0
+patterns-mantine-homepagelistinggrids--default en @1024: fonts[h2=24 h3=14] | gutter L32/R32 | hOverflow=false | imgs=16 brokenImgs=0
+patterns-mantine-homepagelistinggrids--default en @1440: fonts[h2=30 h3=14] | gutter L32/R32 | hOverflow=false | imgs=16 brokenImgs=0
+patterns-mantine-homepagelistinggrids--loading en @320: fonts[h2=20] | gutter L16/R16 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--loading en @390: fonts[h2=20] | gutter L16/R16 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--loading en @1024: fonts[h2=24] | gutter L32/R32 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--loading en @1440: fonts[h2=30] | gutter L32/R32 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--empty en @320: fonts[h2=20] | gutter L16/R16 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--empty en @390: fonts[h2=20] | gutter L16/R16 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--empty en @1024: fonts[h2=24] | gutter L32/R32 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-homepagelistinggrids--empty en @1440: fonts[h2=30] | gutter L32/R32 | hOverflow=false | imgs=0 brokenImgs=0
+patterns-mantine-listingcardpattern--default en @320: fonts[h4=18 h3=14] | gutter L16/R16 | hOverflow=false | placeholders n=2 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=10 brokenImgs=0
+patterns-mantine-listingcardpattern--default en @390: fonts[h4=18 h3=14] | gutter L16/R16 | hOverflow=false | placeholders n=2 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=10 brokenImgs=0
+patterns-mantine-listingcardpattern--default en @1024: fonts[h4=24 h3=14] | gutter L32/R32 | hOverflow=false | placeholders n=2 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=10 brokenImgs=0
+patterns-mantine-listingcardpattern--default en @1440: fonts[h4=24 h3=14] | gutter L32/R32 | hOverflow=false | placeholders n=2 bg=rgb(228, 231, 236) icon=32 withImgSibling=0 | imgs=10 brokenImgs=0
+patterns-mantine-listingcardtrack--rail en @320: fonts[h3=14] | gutter L16/R16 | hOverflow=false | imgs=8 brokenImgs=0
+patterns-mantine-listingcardtrack--rail en @390: fonts[h3=14] | gutter L16/R16 | hOverflow=false | imgs=8 brokenImgs=0
+patterns-mantine-listingcardtrack--rail en @1024: fonts[h3=14] | gutter L32/R32 | hOverflow=false | imgs=8 brokenImgs=0
+patterns-mantine-listingcardtrack--rail en @1440: fonts[h3=14] | gutter L32/R32 | hOverflow=false | imgs=8 brokenImgs=0
+patterns-mantine-listingcardtrack--rail-no-overflow en @320: fonts[h3=14] | gutter L16/R16 | hOverflow=false | imgs=2 brokenImgs=0
+patterns-mantine-listingcardtrack--rail-no-overflow en @390: fonts[h3=14] | gutter L16/R16 | hOverflow=false | imgs=2 brokenImgs=0
+patterns-mantine-listingcardtrack--rail-no-overflow en @1024: fonts[h3=14] | gutter L32/R32 | hOverflow=false | imgs=2 brokenImgs=0
+patterns-mantine-listingcardtrack--rail-no-overflow en @1440: fonts[h3=14] | gutter L32/R32 | hOverflow=false | imgs=2 brokenImgs=0
+patterns-mantine-listingdetailpattern--default en @320: fonts[h1=20 h2=18] | gutter L16/R16 | hOverflow=false | card288[Call:246:L1 | WhatsApp:246:L1 | Send message:246:L1 | Save to collec:246:L1 | Report listing:246:L1] card288[Call:246:L1 | WhatsApp:246:L1 | Send message:246:L1 | Save to collec:246:L1 | Report listing:246:L1] card288[Call:246:L1 | WhatsApp:246:L1 | Send message:246:L1 | Save to collec:246:L1 | Report listing:246:L1] card288[Call:246:L1 | WhatsApp:246:L1 | Send message:246:L1 | Save to collec:246:L1 | Report listing:246:L1] card288[Call:246:L1 | WhatsApp:246:L1 | Send message:246:L1 | Save to collec:246:L1 | Report listing:246:L1] | imgs=35 brokenImgs=0
+patterns-mantine-listingdetailpattern--default en @390: fonts[h1=20 h2=18] | gutter L16/R16 | hOverflow=false | card358[Call:316:L1 | WhatsApp:316:L1 | Send message:316:L1 | Save to collec:316:L1 | Report listing:316:L1] card358[Call:316:L1 | WhatsApp:316:L1 | Send message:316:L1 | Save to collec:316:L1 | Report listing:316:L1] card358[Call:316:L1 | WhatsApp:316:L1 | Send message:316:L1 | Save to collec:316:L1 | Report listing:316:L1] card358[Call:316:L1 | WhatsApp:316:L1 | Send message:316:L1 | Save to collec:316:L1 | Report listing:316:L1] card358[Call:316:L1 | WhatsApp:316:L1 | Send message:316:L1 | Save to collec:316:L1 | Report listing:316:L1] | imgs=35 brokenImgs=0
+patterns-mantine-listingdetailpattern--default en @1024: fonts[h1=36 h2=24] | gutter L32/R32 | hOverflow=false | card400[Call:358:L1 | WhatsApp:358:L1 | Send message:358:L1 | Save to collec:358:L1 | Report listing:358:L1] card400[Call:358:L1 | WhatsApp:358:L1 | Send message:358:L1 | Save to collec:358:L1 | Report listing:358:L1] card400[Call:358:L1 | WhatsApp:358:L1 | Send message:358:L1 | Save to collec:358:L1 | Report listing:358:L1] card400[Call:358:L1 | WhatsApp:358:L1 | Send message:358:L1 | Save to collec:358:L1 | Report listing:358:L1] card400[Call:358:L1 | WhatsApp:358:L1 | Send message:358:L1 | Save to collec:358:L1 | Report listing:358:L1] | imgs=30 brokenImgs=0
+patterns-mantine-listingdetailpattern--default en @1440: fonts[h1=36 h2=24] | gutter L32/R32 | hOverflow=false | card459[Call:417:L1 | WhatsApp:417:L1 | Send message:417:L1 | Save to collec:417:L1 | Report listing:417:L1] card459[Call:417:L1 | WhatsApp:417:L1 | Send message:417:L1 | Save to collec:417:L1 | Report listing:417:L1] card459[Call:417:L1 | WhatsApp:417:L1 | Send message:417:L1 | Save to collec:417:L1 | Report listing:417:L1] card459[Call:417:L1 | WhatsApp:417:L1 | Send message:417:L1 | Save to collec:417:L1 | Report listing:417:L1] card459[Call:417:L1 | WhatsApp:417:L1 | Send message:417:L1 | Save to collec:417:L1 | Report listing:417:L1] | imgs=30 brokenImgs=0
+
+## Rail scroll controls (aria-label Previous/Next listings visible) and rail overflow
+patterns-mantine-listingcardtrack--rail-no-overflow en @320: visible scroll controls=1 | rail scrollWidth 385 vs clientWidth 288 (rail overflows: true) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail-no-overflow en @390: visible scroll controls=1 | rail scrollWidth 474 vs clientWidth 358 (rail overflows: true) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail-no-overflow en @1024: visible scroll controls=0 | rail scrollWidth 960 vs clientWidth 960 (rail overflows: false) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail-no-overflow en @1440: visible scroll controls=0 | rail scrollWidth 1376 vs clientWidth 1376 (rail overflows: false) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail en @320: visible scroll controls=1 | rail scrollWidth 1587 vs clientWidth 288 (rail overflows: true) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail en @390: visible scroll controls=1 | rail scrollWidth 1945 vs clientWidth 358 (rail overflows: true) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail en @1024: visible scroll controls=1 | rail scrollWidth 2352 vs clientWidth 960 (rail overflows: true) | page hOverflow=false
+patterns-mantine-listingcardtrack--rail en @1440: visible scroll controls=1 | rail scrollWidth 2155 vs clientWidth 1376 (rail overflows: true) | page hOverflow=false

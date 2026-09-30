@@ -6,6 +6,7 @@ import { Group, Text, Title } from '@mantine/core'
 import { ListingCard, type CardListingData } from './ListingCard'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface RecentlyViewedGridViewProps {
   listings: CardListingData[]
@@ -43,7 +44,7 @@ export function RecentlyViewedGridView({ listings, rates, displayCurrency, showE
     if (!showEmptyState) return null
     return (
       <div data-testid="recently-viewed-section" className="recently-viewed">
-        <Title order={2} size="h4" mb="md">
+        <Title order={2} size="h4" fz={TITLE_FZ.h4} mb="md">
           {t('recently_viewed_title')}
         </Title>
         <Text size="sm" c="dimmed">
@@ -58,7 +59,7 @@ export function RecentlyViewedGridView({ listings, rates, displayCurrency, showE
       {/* Flat wrap: title + clear button on same row; only wraps left-aligned when title fills the
           row. Same fix family as FilterBar (Task 389 / Task 392). */}
       <Group gap="sm" wrap="wrap" align="center" mb="md">
-        <Title order={2} size="h4">
+        <Title order={2} size="h4" fz={TITLE_FZ.h4}>
           {t('recently_viewed_title')}
         </Title>
         {clearSlot}

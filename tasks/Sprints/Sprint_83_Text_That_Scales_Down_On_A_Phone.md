@@ -1,6 +1,6 @@
 # Sprint 83 — text that scales down on a phone
 
-**Opened:** 2026-09-26 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (886)
+**Opened:** 2026-09-26 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (886) · **Kickoffs filed:** 1 (886)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -47,7 +47,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `NEEDS REVISION` 2026-09-30 (review 11: owner accepted §21.8 rows 1–4 and returned row 5, the lightbox counter overlapping the photo → revision 7 = kickoff §22, R43) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
+| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | ✅ `APPROVED WITH NOTES` 2026-09-30 (review 12, kickoff §22.9; owner accepted every O83-1 matrix) → [`…Task_886…`](../Archive/Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
 
 ## Execution order and gating
 
@@ -61,7 +61,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Action |
 |---|---|
-| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3, with the GR-3d lines of §16.4). **Returned 2026-09-30** (886 kickoff §18.1, owner verbatim): rows 2, 3, 5 and `PageHeaderWithActions` accepted; row 1 (collection button) and row 4 (`ListingDetailView`: photo placeholder, unreadable contact buttons) returned. The Revision 3 matrix is kickoff §18.9, handed over after revision 3 is reviewed. |
+| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3, with the GR-3d lines of §16.4). **Returned 2026-09-30** (886 kickoff §18.1, owner verbatim): rows 2, 3, 5 and `PageHeaderWithActions` accepted; row 1 (collection button) and row 4 (`ListingDetailView`: photo placeholder, unreadable contact buttons) returned. The Revision 3 matrix is kickoff §18.9, handed over after revision 3 is reviewed. **CLOSED 2026-09-30:** the owner accepted every later matrix (§19.1, §20.1, §21.1, §22.1) and the last one verbatim, *"візуально підтверджую, тепер lightbox виглядає і працює корректно"* (886 kickoff §22.9). |
 | **O83-3** | **DECIDED 2026-09-30 — owner verbatim: *"Моє рішення (b)"*.** GR-3d now carries a "Page-level View exemption" (`docs/golden-rules.md`); `ResetPasswordView`'s Story stays unwrapped (886 §16.4). *Original question (added 2026-09-30 by 886 review 1):* `Patterns/Mantine/ResetPasswordView` is a `skipCanvas` Story without `StoryPageGutter`, but the production View already carries the page gutter (`Center p="md"`, measured 16px at 320/390). Choose (a) wrap anyway (32px at 320), (b) record a GR-3d exemption for a View that carries its own page gutter (recommended), or (c) move the padding into the route in a separate task. Options and effects: 886 §16.4. |
 | **O83-4** | **DECIDED 2026-09-30 — owner verbatim option chosen: *"Усе в 886, розширити O83-3 (Recommended)"*** (886 kickoff §18.1): the photo placeholder, the save button and the contact card all stay in 886; GR-3d page-level View exemption condition 2 accepts at least 24 at 1024/1440; `AgentStatisticsView`'s Story moves from reserved 902 into 886. **Applied by the owner:** `docs/golden-rules.md:274` reads "at least 24 at 1024 and 1440" (886 rev3 `o83-4-gate.log`, 1 match). |
 | **O83-5** | **DECIDED 2026-09-30 — owner verbatim: *"Я обираю варіант (а)."*** Applied by the reviewer to `docs/golden-rules.md` GR-3d condition 1 (886 kickoff §20.1). *Original question* (added 2026-09-30 by 886 review 5, kickoff §19.4): `PopularLocationsView`'s gutter is `MantineHomeSection`'s `.container-wide` class (16/16/32/48), not Mantine spacing props, so GR-3d exemption condition 1 fails if read literally. Choose (a) condition 1 also accepts the canonical `.container-wide` page container (recommended; rule text only), (b) wrap (doubles the gutter, not viable), or (c) a separate task moves `MantineHomeSection` onto Mantine spacing props. |

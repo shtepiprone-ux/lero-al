@@ -1,0 +1,75 @@
+patterns-mantine-authformpattern--default @320: h2[Sign In]=20 · h2[Create Account]=20 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--default @390: h2[Sign In]=20 · h2[Create Account]=20 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--default @768: h2[Sign In]=30 · h2[Create Account]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--default @1024: h2[Sign In]=30 · h2[Create Account]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--default @1440: h2[Sign In]=30 · h2[Create Account]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @320: h2[Sign In]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @390: h2[Sign In]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @768: h2[Sign In]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @1024: h2[Sign In]=30 | body=16 | hOverflow=false
+patterns-mantine-authformpattern--auth-card @1440: h2[Sign In]=30 | body=16 | hOverflow=false
+patterns-mantine-dashboardheader--default @320: h1[Analytics]=20 | body=16 | hOverflow=false
+patterns-mantine-dashboardheader--default @390: h1[Analytics]=20 | body=16 | hOverflow=false
+patterns-mantine-dashboardheader--default @768: h1[Analytics]=24 | body=16 | hOverflow=false
+patterns-mantine-dashboardheader--default @1024: h1[Analytics]=24 | body=16 | hOverflow=false
+patterns-mantine-dashboardheader--default @1440: h1[Analytics]=24 | body=16 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @320: h1[Modern Apartment in Tira]=20 · h2[Description]=18 · h2[Amenities]=18 | body=16 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @390: h1[Modern Apartment in Tira]=20 · h2[Description]=18 · h2[Amenities]=18 | body=16 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @768: h1[Modern Apartment in Tira]=30 · h2[Description]=24 · h2[Amenities]=24 | body=16 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @1024: h1[Modern Apartment in Tira]=36 · h2[Description]=24 · h2[Amenities]=24 | body=16 | hOverflow=false
+patterns-mantine-listingdetailpattern--default @1440: h1[Modern Apartment in Tira]=36 · h2[Description]=24 · h2[Amenities]=24 | body=16 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @320: h1[Listings]=20 | body=16 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @390: h1[Listings]=20 | body=16 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @768: h1[Listings]=30 | body=16 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @1024: h1[Listings]=36 | body=16 | hOverflow=false
+patterns-mantine-pageheaderwithactions--default @1440: h1[Listings]=36 | body=16 | hOverflow=false
+patterns-mantine-twocolumnform--default @320: h2[Property Details]=20 | body=16 | hOverflow=false
+patterns-mantine-twocolumnform--default @390: h2[Property Details]=20 | body=16 | hOverflow=false
+patterns-mantine-twocolumnform--default @768: h2[Property Details]=30 | body=16 | hOverflow=false
+patterns-mantine-twocolumnform--default @1024: h2[Property Details]=30 | body=16 | hOverflow=false
+patterns-mantine-twocolumnform--default @1440: h2[Property Details]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @320: h1[Link expired]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @390: h1[Link expired]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @768: h1[Link expired]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @1024: h1[Link expired]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--expired @1440: h1[Link expired]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--success @320: h1[Password changed]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--success @390: h1[Password changed]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--success @768: h1[Password changed]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--success @1024: h1[Password changed]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--success @1440: h1[Password changed]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @320: h1[Set new password]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @390: h1[Set new password]=20 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @768: h1[Set new password]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @1024: h1[Set new password]=30 | body=16 | hOverflow=false
+patterns-mantine-resetpasswordview--form-empty @1440: h1[Set new password]=30 | body=16 | hOverflow=false
+patterns-mantine-listingdetailview--public-listing @320: h1[Shitet apartament 2+1 në]=20 · h2[Description]=18 · h2[Features]=18 · h2[Location]=18 | body=16 | hOverflow=false
+patterns-mantine-listingdetailview--public-listing @390: h1[Shitet apartament 2+1 në]=20 · h2[Description]=18 · h2[Features]=18 · h2[Location]=18 | body=16 | hOverflow=false
+patterns-mantine-listingdetailview--public-listing @768: h1[Shitet apartament 2+1 në]=30 · h2[Description]=24 · h2[Features]=24 · h2[Location]=24 | body=16 | hOverflow=false
+patterns-mantine-listingdetailview--public-listing @1024: h1[Shitet apartament 2+1 në]=36 · h2[Description]=24 · h2[Features]=24 · h2[Location]=24 | body=16 | hOverflow=false
+patterns-mantine-listingdetailview--public-listing @1440: h1[Shitet apartament 2+1 në]=36 · h2[Description]=24 · h2[Features]=24 · h2[Location]=24 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--populated @320: h2[Recently viewed]=18 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--populated @390: h2[Recently viewed]=18 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--populated @768: h2[Recently viewed]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--populated @1024: h2[Recently viewed]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--populated @1440: h2[Recently viewed]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--empty @320: h2[Recently viewed]=18 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--empty @390: h2[Recently viewed]=18 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--empty @768: h2[Recently viewed]=24 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--empty @1024: h2[Recently viewed]=24 | body=16 | hOverflow=false
+mantine-primitives-recentlyviewedgridview--empty @1440: h2[Recently viewed]=24 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--default @320: h2[Similar listings]=18 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--default @390: h2[Similar listings]=18 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--default @768: h2[Similar listings]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--default @1024: h2[Similar listings]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--default @1440: h2[Similar listings]=24 · h3[Modern Apartment in Tira]=14 · h3[Villa with Garden in Dur]=14 · h3[Studio Flat in Sauk]=14 · h3[Office Space in Kombinat]=14 · h3[Penthouse in Blloku]=14 · h3[Beach House in Vlorë]=14 · h3[Mountain Retreat in Bera]=14 · h3[Renovated Apartment in E]=14 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--loading @320: h2[&nbsp;]=18 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--loading @390: h2[&nbsp;]=18 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--loading @768: h2[&nbsp;]=24 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--loading @1024: h2[&nbsp;]=24 | body=16 | hOverflow=false
+mantine-primitives-similarlistingsview--loading @1440: h2[&nbsp;]=24 | body=16 | hOverflow=false
+patterns-mantine-cmspageview--default @320: h1[Terms of Service]=20 · h2[1. Introduction]=18 | body=16 | hOverflow=false
+patterns-mantine-cmspageview--default @390: h1[Terms of Service]=20 · h2[1. Introduction]=18 | body=16 | hOverflow=false
+patterns-mantine-cmspageview--default @768: h1[Terms of Service]=30 · h2[1. Introduction]=24 | body=16 | hOverflow=false
+patterns-mantine-cmspageview--default @1024: h1[Terms of Service]=30 · h2[1. Introduction]=24 | body=16 | hOverflow=false
+patterns-mantine-cmspageview--default @1440: h1[Terms of Service]=30 · h2[1. Introduction]=24 | body=16 | hOverflow=false

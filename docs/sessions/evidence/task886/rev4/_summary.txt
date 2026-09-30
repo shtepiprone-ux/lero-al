@@ -1,0 +1,16 @@
+typecheck EXIT_CODE=0
+lint EXIT_CODE=0
+check-type-responsive EXIT_CODE=0
+check-type-responsive-verify EXIT_CODE=0
+check-design-tokens EXIT_CODE=0
+check-story-coverage EXIT_CODE=0
+check-rendered-scope EXIT_CODE=0
+check-pattern-enrolment EXIT_CODE=0
+check-media-enrolment EXIT_CODE=0
+census-changed EXIT_CODE=0
+check-file-integrity EXIT_CODE=0
+check-mojibake EXIT_CODE=0
+smoke-tests EXIT_CODE=0
+build-storybook EXIT_CODE=0
+build EXIT_CODE=0
+DONE

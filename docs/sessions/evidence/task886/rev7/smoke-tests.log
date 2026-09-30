@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test
+> vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  30 passed (30)
+   Start at  21:50:19
+   Duration  4.43s (transform 1.75s, setup 378ms, import 7.38s, tests 2.64s, environment 3.33s)
+
+EXIT_CODE=0

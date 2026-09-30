@@ -2521,6 +2521,8 @@
       "gallerythumbnailbutton_active_label": "Активна мініатюра",
       "gallerythumbnailbutton_focus_label": "Мініатюра з фокусом клавіатури",
       "gallerythumbnailbutton_long_label": "Навмисно довга доступна назва, яка перевіряє візуальне обрізання, ніколи не обрізаючи саму доступну назву в DOM",
+      "gallerythumbnailbutton_failed_caption": "фото не завантажилось — канонічний плейсхолдер, а не зламане зображення",
+      "gallerythumbnailbutton_failed_label": "Мініатюра, фото якої не завантажилось",
       "listing_detail_feature_label_rooms": "Кімнати",
       "listing_detail_feature_label_bathrooms": "Санвузли",
       "listing_detail_feature_label_area": "Площа",

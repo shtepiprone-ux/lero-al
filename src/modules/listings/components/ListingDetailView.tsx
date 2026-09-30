@@ -23,7 +23,7 @@ import { ListingBackButton } from '@/modules/listings/components/ListingBackButt
 import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
 import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyViewedTracker'
-import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listings/components/RecentlyViewedSection'
+import { RecentlyViewedSection } from '@/modules/listings/components/RecentlyViewedSection'
 import { formatPrice } from '@/lib/formatters'
 import type { DetailFeature, DetailAttribute } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived, isListingNonActiveStatus } from '@/modules/listings/domain'
@@ -34,6 +34,7 @@ import { ListingReportDialog } from '@/modules/listings/components/ListingReport
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { ListingShareButton } from '@/modules/listings/components/ListingShareButton'
 import type { Listing, ListingImage, ListingStatus, Location, PublicUserProfile } from '@/types/database'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 // ssr: true keeps the phone/WhatsApp links in the SSR HTML for SEO and screen
@@ -55,7 +56,7 @@ export function SimilarListingsSkeleton() {
   return (
     <Stack gap="lg">
       <Skeleton radius="md">
-        <Title order={2} size="h4">&nbsp;</Title>
+        <Title order={2} size="h4" fz={TITLE_FZ.h4}>&nbsp;</Title>
       </Skeleton>
       <MantineListingCardTrack mode="rail">
         {Array.from({ length: 4 }).map((_, i) => (
@@ -244,10 +245,13 @@ export function ListingDetailViewBody({
         ? t('action_disabled_expired')
         : undefined
 
-  const favoriteSlot = effectiveListingId ? (
+  // Task 886 R38 (owner O83-6 (a)): a guest sees the heart too, as on cards — `FavoriteButton` opens the
+  // login sheet for a guest (`FavoriteButton.tsx:76-83`). `effectiveListingId` still gates save-to-collection
+  // and report, so those stay signed-in only.
+  const favoriteSlot = !isStaffPreview ? (
     <FavoriteButton
       key="favorite"
-      listingId={effectiveListingId}
+      listingId={listing.id}
       isFavorited={effectiveIsFavorited}
       disabled={favoriteDisabled}
       disabledLabel={favoriteDisabledLabel}
@@ -367,7 +371,7 @@ export function ListingDetailViewBody({
       {listing.lat && listing.lng && (
         <Paper withBorder radius="lg" p="lg">
           <Stack gap="md">
-            <Title order={2} size="h4">
+            <Title order={2} size="h4" fz={TITLE_FZ.h4}>
               {t('location_label')}
             </Title>
             <MapWrapper lat={listing.lat} lng={listing.lng} title={listing.title} />
@@ -526,7 +530,7 @@ export async function ListingDetailView(props: ListingDetailViewProps) {
       }
       recentlyViewedSlot={
         !isStaffPreview ? (
-          <Suspense fallback={<RecentlyViewedSkeleton />}>
+          <Suspense fallback={<SimilarListingsSkeleton />}>
             <RecentlyViewedSection currentListingId={listing.id} />
           </Suspense>
         ) : null

@@ -1,0 +1,15 @@
+# git grep -n -E "#478dec" -- src
+src/design-system/mantine/theme.ts:502:// The owner's value `#478dec`, verbatim, at index **7** — the index Button `variant="filled"`
+src/design-system/mantine/theme.ts:505:// ("залиш #478dec як є"). The other stops are derived with Mantine's own `lighten`/`darken`, so no
+src/design-system/mantine/theme.ts:508:  lighten('#478dec', 0.84), // 0
+src/design-system/mantine/theme.ts:509:  lighten('#478dec', 0.72), // 1
+src/design-system/mantine/theme.ts:510:  lighten('#478dec', 0.6), // 2
+src/design-system/mantine/theme.ts:511:  lighten('#478dec', 0.48), // 3
+src/design-system/mantine/theme.ts:512:  lighten('#478dec', 0.36), // 4
+src/design-system/mantine/theme.ts:513:  lighten('#478dec', 0.24), // 5
+src/design-system/mantine/theme.ts:514:  lighten('#478dec', 0.12), // 6
+src/design-system/mantine/theme.ts:515:  '#478dec', // 7 — owner-provided (2026-09-30) — Button variant="filled" fill
+src/design-system/mantine/theme.ts:516:  darken('#478dec', 0.1), // 8 — hover
+src/design-system/mantine/theme.ts:517:  darken('#478dec', 0.2), // 9
+# git grep -n -E "<Image |closedOverlay|CLOSED_OVERLAY_STYLE|95%, transparent" -- <5 files>
+END

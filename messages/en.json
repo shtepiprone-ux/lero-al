@@ -2521,6 +2521,8 @@
       "gallerythumbnailbutton_active_label": "Active thumbnail",
       "gallerythumbnailbutton_focus_label": "Keyboard-focusable thumbnail",
       "gallerythumbnailbutton_long_label": "A deliberately long accessible name that exercises visual truncation without ever truncating the DOM accessible name itself",
+      "gallerythumbnailbutton_failed_caption": "failed photo — the canonical placeholder, not a broken image",
+      "gallerythumbnailbutton_failed_label": "Thumbnail whose photo failed to load",
       "listing_detail_feature_label_rooms": "Rooms",
       "listing_detail_feature_label_bathrooms": "Bathrooms",
       "listing_detail_feature_label_area": "Area",

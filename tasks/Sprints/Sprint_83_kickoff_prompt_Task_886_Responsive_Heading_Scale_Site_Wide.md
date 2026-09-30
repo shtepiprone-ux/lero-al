@@ -1176,3 +1176,135 @@ it.
    it.
 
 AC19–AC22 stand. AC22's "every exempt View Story" clause is satisfied only once the gate has passed.
+
+---
+
+## 19. Revision 4 — review 5, 2026-09-30 (`NEEDS REVISION`)
+
+This section overrides every earlier section it names. Revision 3 (§18, R18–R25) is **kept**. Review 5 verified it
+on the final tree:
+- all 41 `rev3/hash-object.log` hashes equal the tree;
+- every rev3 gate log ends `EXIT_CODE=0`;
+- `storybook-static` and `.next/BUILD_ID` are newer than the last source write.
+
+The reviewer's own native probe (`win32`, Node v22.22.3) re-measured:
+- the wrapped Stories at 16/16/32/32;
+- `AgentStatisticsView` at 16/16/24/24 and `PopularLocationsView` at 16/16/32/48;
+- `appimage--placeholder`: 13 placeholders and 0 `<img>`;
+- save = send width at every width;
+- no broken `<img>` anywhere.
+
+A below-the-fold `loading="lazy"` `<img>` reads `complete:false` in Chromium, so R21's mount check cannot switch a
+lazy image to the placeholder.
+
+### 19.1 Owner result (2026-09-30, verbatim)
+
+*"візуально кнопка тепер така як треба"*. The save-to-collection button (§18.9 row 1's collection button, and row 4)
+is **accepted**. Every other §18.9 row is still owed.
+
+### 19.2 Findings (review 5)
+
+| # | Severity | Evidence | Req |
+|---|---|---|---|
+| F13 | **P1** GR-3b, R24 | R24 required every Story this revision changed to pass GR-3b. The executor left four violations in changed Stories and asked whether to waive them (session log R3-6 item 1). GR-3b gives no waiver for "pre-existing", and R24 already authorised the fix. The violations:<br>• `ListingCardTrack.stories.tsx:188` `globals: { viewport: { value: 'desktop1440' … } }` (a pin);<br>• `HomepageListingGrids.stories.tsx:93/133/171` `Box maw="var(--width-page-max)" mx="auto" w="100%"` (a max-width container);<br>• `ListingDetailPattern.stories.tsx:103` `size={18}` and `:124-127` `size={14}` (raw px);<br>• `ListingCardPattern.stories.tsx:79-90` `DemoImage`: `className="h-[180px] …"` and `Image h={180}` (raw px), plus a local no-photo stand-in that diverges from the canonical `MediaPlaceholder`. | R26–R29 |
+| F14 | owner decision | `mantine-primitives-popularlocationsview`: the gutter comes from `MantineHomeSection.tsx:51` `Box className="container-wide"` (`globals.css:714-724`). GR-3d exemption condition 1 requires "Mantine spacing props", so a literal reading makes it non-exempt. Wrapping it would double the gutter. → **O83-5**, §19.4. | — |
+| — | NOTE, accepted | `ListingCard.smoke.test.tsx` edit (R3-6 item 2): `HEAD`'s `MantineListingCardPattern.tsx:186/313` applies `styles.archived`, and there is no `.grayscale.opacity-60`, so those two assertions were already failing before 886. The two placeholder assertions test R21. `MantineListingContactPattern.tsx`'s three extra `style` → prop conversions are equivalent (R3-6 item 4). The `uk` 320 two-line inquiry label sits in the stacked card, outside AC20's sidebar scope, and goes to the owner matrix (§18.9 row 2). | — |
+
+### 19.3 Revision requirements
+
+| ID | Observable requirement | AC |
+|---|---|---|
+| **R26** | `ListingCardTrack.stories.tsx` `RailNoOverflow`:<br>• delete the `globals` line;<br>• rewrite the comment above it: the no-overflow state holds once the track is at least 480px wide (the D74-9 `xs2` rung); below that, the two cards scroll, which is `Rail`'s state; there is no viewport pin (GR-3b).<br>First `git grep -n "RailNoOverflow\|rail-no-overflow"` outside `storybook-static/`. If any gate or test reads the pin, stop and report it. | AC23 |
+| **R27** | `HomepageListingGrids.stories.tsx`, all three exports: delete the `<Box maw="var(--width-page-max)" mx="auto" w="100%">` wrapper and its closing tag, so that `StoryPageGutter` wraps the content directly. Remove `Box` from the import if it becomes unused. | AC23 |
+| **R28** | `ListingDetailPattern.stories.tsx`: `:103` `size={18}` becomes `theme.other.iconSize.comfortable`, and `:124-127` `size={14}` becomes `theme.other.iconSize.compact`. Follow the file's existing `useMantineTheme()` idiom. | AC23 |
+| **R29** | `ListingCardPattern.stories.tsx`:<br>• delete `DemoImage`;<br>• the `image` slot renders the real `<AppImage variant="listing" src={noImage ? null : DEMO_IMAGE_URL} alt={…} />` (`@/design-system/media/AppImage`), as production `ListingCard.tsx` does. The no-image card then shows the canonical `MediaPlaceholder`;<br>• remove the `Image` import if it becomes unused;<br>• update the comment that described the stand-in. | AC23 |
+| **R30** | `AppImage.stories.tsx` `PlaceholderCases` thumb frames: add a comment citing `GalleryThumbnailButton.tsx:32`. That is the production parent that sizes the thumb with the same `theme.other.boxSize.galleryThumb` token, which GR-3b's "Required" clause asks the Story to cite. No code change. | AC23 |
+
+**Out of scope:** `PopularLocationsView` (O83-5) and any production file. The legacy `className` chains in
+`ListingCardPattern.stories.tsx`'s footer fixture (`:121`, `:133`, `:200`) are not in GR-3b's list, so they are not
+touched here.
+
+### 19.4 STOP - OWNER DECISION REQUIRED — O83-5 (`PopularLocationsView` only; it does not block §19.3)
+
+`Mantine/Primitives/PopularLocationsView` measures 16/16/32/48. That meets condition 2: the 48 at 1440 is
+`.container-wide` centring its 1408px max-width. Its gutter is the canonical page-container **class**, not Mantine
+spacing props, so condition 1 fails on a literal reading. The options:
+- **(a) Recommended:** condition 1 also accepts a View whose root renders the canonical `.container-wide` page
+  container. That class is the ladder `StoryPageGutter` copies. The owner applies the rule text to
+  `docs/golden-rules.md`, and nothing in code changes.
+- **(b)** Wrap the Story in `StoryPageGutter`. The gutter doubles to 32/32/64/80, which fails the profile. Not viable
+  alone.
+- **(c)** A separate task moves `MantineHomeSection`'s gutter to Mantine spacing props. That is a production change to
+  every homepage section, so it stays out of 886.
+
+The executor does not touch `PopularLocationsView` under any option. The review that closes 886 applies the owner's
+answer.
+
+### 19.5 Verification plan — re-entry `remediation`
+
+Order: I0-R4 → R26 → R27 → R28 → R29 → R30 → gate block → measurement → grep. Evidence goes to
+`docs/sessions/evidence/task886/rev4/`. Do not overwrite `task886/`, `rev1/`, `rev2/` or `rev3/`. Append
+`## Revision 4` to the session log.
+
+**I0-R4**, before any write:
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev4"
+New-Item -ItemType Directory -Force $ev
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\i0.log"
+git --no-optional-locks hash-object src/stories/patterns/mantine/ListingCardTrack.stories.tsx src/stories/patterns/mantine/HomepageListingGrids.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/stories/mantine/primitives/AppImage.stories.tsx | Tee-Object -Append "$ev\i0.log"
+```
+
+Expected: `win32`, then these hashes, in this order:
+1. `409d44afa3d4e686ba23bded8e08e4a5ae7080cd`
+2. `7711aeac59fc6443c584c7d0fc3eaeff7734738b`
+3. `e86072613bd52c17bd703c4d405941412c128f0f`
+4. `4289df36c811de6fe6bc5663e75544c996b3cfdf`
+5. `52ea17b5bffa7a0c608d7c35d51a6f0a4a3c0ebd`
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Gate block:** §18.5's final gate block, unchanged, with `$ev = "docs\sessions\evidence\task886\rev4"`, and the same
+`$files` list. Every log ends `EXIT_CODE=0`, and each log is normalised to UTF-8 without a BOM through Node.
+
+**Measurement**, against the rebuilt `storybook-static`, with a throwaway probe under `.artifacts/`, into
+`$ev\story-measure.log`, at 320/390/1024/1440 in `en`:
+- `listingcardtrack--rail-no-overflow` and `--rail`: the edge gap, horizontal overflow, and whether the rail shows
+  scroll controls or a scrollbar;
+- `homepagelistinggrids--{default,loading,empty}`, `listingdetailpattern--default` and `listingcardpattern--default`:
+  the edge gap and horizontal overflow;
+- `listingcardpattern--default`: the number of `[data-testid="media-placeholder"]` elements and the number of `<img>`.
+
+**Grep**, into `$ev\story-grep.log`:
+
+```powershell
+git --no-optional-locks grep -n -E "globals:|maw=|size=\{[0-9]+\}|h=\{[0-9]+\}|h-\[[0-9]|style=\{|styles=\{" -- src/stories/patterns/mantine/ListingCardTrack.stories.tsx src/stories/patterns/mantine/HomepageListingGrids.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/stories/mantine/primitives/AppImage.stories.tsx
+```
+
+Expected: no code line. Report every printed line, and mark any that is a comment.
+
+### 19.6 Acceptance criteria
+
+`GR-4 AC AUDIT — 1 revision criterion; each states an observable property; absolutes: none.`
+
+- **AC23 [R26–R30].**
+  - `story-grep.log` holds no code line.
+  - In `story-measure.log`:
+    - every measured Story has an edge gap of 16/16/32/32 (±1) and no horizontal overflow;
+    - `rail-no-overflow` shows no scroll control at 1024 and 1440;
+    - `listingcardpattern--default` has at least one placeholder, for its no-image card.
+  - The session log has one GR-3b, GR-3c and GR-3d receipt for each of the five Story files.
+  - Every rev4 gate log ends `EXIT_CODE=0`, `build.log` included.
+- AC1–AC22 stand as amended.
+
+### 19.7 Completion report for Revision 4
+
+Append `## Revision 4` to the session log. It contains:
+- the Files Changed table;
+- R26–R30 with their evidence paths;
+- every §19.5 command with its exit code;
+- a `story-measure.log` summary;
+- GR-3b, GR-3c and GR-3d receipts per changed Story.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `BLOCKED`. Update the 886 cell of `docs/backlog.md` (concise
+state). No mutating git. The owner matrix (§18.9, minus the accepted save button) goes to the owner after review 6.

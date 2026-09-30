@@ -56,6 +56,8 @@ const ALLOWLIST = [
   { path: 'src/app/[locale]/listings/[slug]/page.tsx', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row detail page, multi-status display filter' },
   // Recently-viewed resolution: by saved IDs, multi-status filter
   { path: 'src/modules/listings/lib/recentlyViewedQueries.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'recently-viewed resolution by saved IDs, not a public list read' },
+  // Contact-event lookup: one listing by id via service role (Task 850/887)
+  { path: 'src/modules/listings/actions/contactEvents.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row WhatsApp contact-event lookup by id (service role, Task 850) — link-reachable status set, not a public list read' },
   // Arrow-factory reads (Task 863): reached through listingCount()/ownListings() call sites
   { path: 'src/modules/admin/dashboard/queries.ts', fingerprint: ".eq('status', 'active')", reason: 'ADM-11 consistency check only (Task 847 R3) — raw active head:true count, never displayed, not a public read' },
   { path: 'src/modules/cabinet/statistics/data.ts', fingerprint: ".gte('expires_at', window.startUtc)", reason: 'AGT-01 expiring window on an applyPublicVisibility set (Task 848) — not a visibility predicate' },

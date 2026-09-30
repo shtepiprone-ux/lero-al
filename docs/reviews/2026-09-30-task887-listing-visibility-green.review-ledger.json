@@ -1,0 +1,494 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-887 — check:listing-visibility exits 0 again: the contact-event lookup is allowlisted, not rewritten",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "34453dcb8d8052a701cce036c215964004b2c0cf",
+    "reviewedRevision": "uncommitted worktree on top of 34453dcb8d8052a701cce036c215964004b2c0cf (main). Blobs: scripts/check-listing-visibility.mjs 3f070cbd020767000142247d8f64d5568209ba52, src/modules/listings/actions/contactEvents.ts fac96fca513fc161bc91800a2c42e30cf780bab7 (unchanged vs HEAD).",
+    "reviewedPaths": [
+      "scripts/check-listing-visibility.mjs",
+      "src/modules/listings/actions/contactEvents.ts",
+      "docs/sessions/2026-09-30-task887-listing-visibility-green.md",
+      "docs/sessions/evidence/task887"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 5,
+      "verified": 5,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-09-30-task887-listing-visibility-green.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-listing-visibility.mjs",
+        "symbol": "ALLOWLIST",
+        "diffHunks": [
+          "scripts/check-listing-visibility.mjs:59-60"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "exactly one new ALLOWLIST entry with the R1 path, fingerprint and reason",
+          "no other line changed",
+          "allowlist count one higher than 02"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance-script data change; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task887/02-gate-before.txt",
+          "command": "npm.cmd run check:listing-visibility (I0)",
+          "observable": "Allowlist: 8 entries, 0 stale; exit 1 on contactEvents.ts:50 only.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "allowlist count one higher than 02"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/20-gate-final.txt",
+          "command": "npm.cmd run check:listing-visibility (final)",
+          "observable": "PASSED, 0 violations; Allowlist: 9 entries, 0 stale.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "allowlist count one higher than 02"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "scripts/check-listing-visibility.mjs",
+          "command": "git --no-optional-locks diff scripts/check-listing-visibility.mjs (reviewer)",
+          "observable": "Diff is +2 lines only: one comment and the R1 entry with the exact path, fingerprint and reason text; 0 deleted lines.",
+          "freshness": "reviewer read of the final worktree, blob 3f070cbd",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "exactly one new ALLOWLIST entry with the R1 path, fingerprint and reason",
+              "no other line changed"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The entry could be too broad and hide a different literal in the same file.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task887/07-plant-p3.txt",
+          "result": "REFUTED: with the entry present, a planted .eq('status', 'active') at :51 is still reported, exit 1."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Static CLI allowlist data entry; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/actions/contactEvents.ts",
+        "symbol": "trackListingContactEvent",
+        "diffHunks": [
+          "none (unchanged)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "contactEvents.ts hash equal before and final",
+          "path absent from final status"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance-script data change; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task887/01-hash-before.txt",
+          "command": "git hash-object (I0)",
+          "observable": "contactEvents.ts fac96fca513fc161bc91800a2c42e30cf780bab7.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "contactEvents.ts hash equal before and final"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/28-hash-final.txt",
+          "command": "git hash-object (final)",
+          "observable": "contactEvents.ts fac96fca513fc161bc91800a2c42e30cf780bab7.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "contactEvents.ts hash equal before and final"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/29-status-final.txt",
+          "command": "git --no-optional-locks status --porcelain (final)",
+          "observable": "contactEvents.ts not listed.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "path absent from final status"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The file could differ from HEAD even with equal before/after hashes.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/actions/contactEvents.ts",
+          "result": "REFUTED: reviewer git diff --quiet against HEAD exits 0 and git hash-object reads fac96fca after the reviewer probe."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Static CLI allowlist data entry; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-listing-visibility.mjs",
+        "symbol": "isAllowlisted / ALLOWLIST",
+        "diffHunks": [
+          "scripts/check-listing-visibility.mjs:59-60"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "P1 exit 1 naming :50 and :51",
+          "P2 hash restored and :50 only",
+          "P3 exit 1 naming :51 only",
+          "P4 hash restored and exit 0"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance-script data change; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task887/05-plant-p1.txt",
+          "command": "Node plant + npm.cmd run check:listing-visibility",
+          "observable": "hash 10c4645d; exit 1; violations :50 and :51.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P1 exit 1 naming :50 and :51"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/06-plant-p2.txt",
+          "command": "Node restore + gate",
+          "observable": "hash fac96fca equals orig; exit 1 on :50 only.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P2 hash restored and :50 only"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/07-plant-p3.txt",
+          "command": "Node plant + gate (after R1)",
+          "observable": "hash 10c4645d; exit 1; :51 only; Allowlist 9.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P3 exit 1 naming :51 only"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/08-plant-p4.txt",
+          "command": "Node restore + gate (after R1)",
+          "observable": "hash fac96fca equals orig; PASSED, exit 0.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "P4 hash restored and exit 0"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A later rewrite of :50 could leave a silently stale entry (kickoff §11 row).",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task887/30-review1-stale-probe.txt",
+          "result": "REFUTED: reviewer rewrote the literal to ['active', 'sold']; gate exit 1 naming the stale contactEvents entry and the new :50 literal; hash restored fac96fca."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Static CLI allowlist data entry; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R4",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/check-listing-visibility.mjs",
+        "symbol": "--verify-gate self-test",
+        "diffHunks": [
+          "none (self-test unchanged)"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "self-test 0 failed",
+          "same passed count as 03"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance-script data change; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task887/03-verify-before.txt",
+          "command": "npm.cmd run check:listing-visibility:verify (I0)",
+          "observable": "Self-test: 30 passed, 0 failed.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "same passed count as 03"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task887/21-verify-final.txt",
+          "command": "npm.cmd run check:listing-visibility:verify (final)",
+          "observable": "Self-test: 30 passed, 0 failed.",
+          "freshness": "executor final pass 2026-09-30 win32 v22.22.3 against script blob 3f070cbd and contactEvents blob fac96fca; reviewer re-ran gate and --verify-gate natively on the same blobs",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "self-test 0 failed",
+              "same passed count as 03"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The self-test could have been weakened in the diff.",
+          "kind": "EXECUTED",
+          "path": "scripts/check-listing-visibility.mjs",
+          "result": "REFUTED: the diff touches only ALLOWLIST (+2 lines); reviewer native --verify-gate run prints 30 passed, 0 failed."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Static CLI allowlist data entry; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R5 R6",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-09-30-task887-listing-visibility-green.md",
+        "symbol": "§4 Files Changed, §6 Limitations",
+        "diffHunks": [
+          "docs/sessions/2026-09-30-task887-listing-visibility-green.md"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "session log states the R5 blind spot",
+          "Files Changed equals the real diff of the write set",
+          "backlog at most 80 lines"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Governance-script data change; no UI artifact or story.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-09-30-task887-listing-visibility-green.md",
+          "command": "reviewer read",
+          "observable": "§6 states that the path+substring entry silences any later identical literal in contactEvents.ts; §4 lists the script, the log, the evidence dir and docs/backlog.md.",
+          "freshness": "reviewer read of the final worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "session log states the R5 blind spot",
+              "Files Changed equals the real diff of the write set"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/backlog.md",
+          "command": "git show 34453dcb8 -- docs/backlog.md; wc -l docs/backlog.md",
+          "observable": "The 887 cell edit is in HEAD (committed inside 893 review 4 commit 34453dcb8); file 80 lines.",
+          "freshness": "reviewer read before closure edits",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "Files Changed equals the real diff of the write set",
+              "backlog at most 80 lines"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Files Changed could list a path absent from the real diff.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task887/29-status-final.txt",
+          "result": "CONFIRMED as NOTE F1: docs/backlog.md is listed but absent from final status because its edit was swept into 34453dcb8; content verified in that commit."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Static CLI allowlist data entry; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC5 / R5 R6",
+      "requirementIds": [
+        "AC5 / R5 R6"
+      ],
+      "evidence": "The 887 backlog cell was committed inside Task 893 review 4 commit 34453dcb8, so the session log Files Changed row for docs/backlog.md has no worktree diff. Content verified; the closure edit removes the cell."
+    },
+    {
+      "id": "F2",
+      "priority": "NOTE",
+      "status": "OPEN",
+      "requirements": "AC5 / R5 R6",
+      "requirementIds": [
+        "AC5 / R5 R6"
+      ],
+      "evidence": "The first failing check:file-integrity transcript (BOM in 15 evidence files) was overwritten by the passing run in 25-file-integrity.txt instead of being kept as a superseded artifact; the session log §7 records the failure and the Node BOM strip. Current evidence files carry no BOM (reviewer byte check)."
+    }
+  ],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC5 / R5 R6",
+    "reviewer": "Opus"
+  }
+}

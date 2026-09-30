@@ -1,0 +1,23 @@
+P3 hash: 10c4645d5497249ca588e3b11c75b6e8dc8446ed
+
+> lero-al@0.1.0 check:listing-visibility
+> node scripts/check-listing-visibility.mjs
+
+ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables, and same-file arrow factories (call sites, their continuation lines, variables assigned from them). CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.
+npm.cmd :    Allowlist: 9 entries, 0 stale.
+At line:6 char:1
++ npm.cmd run check:listing-visibility *>> "$ev\07-plant-p3.txt"; "P3 g ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   Allowlist: 9 entries, 0 stale.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+❌ 1 inline visibility literal(s) on listings reads:
+
+   src/modules/listings/actions/contactEvents.ts:51  .eq('status', 'active')
+
+   Remediation: route this read through `applyPublicVisibility` or
+   `applyPublicEligibleButHidden` in `src/modules/listings/lib/visibility.ts`.
+
+❌ 1 issue(s) — gate FAILED.
+P3 gate exit=1

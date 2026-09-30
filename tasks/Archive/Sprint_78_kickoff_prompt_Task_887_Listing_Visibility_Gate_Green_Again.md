@@ -1,7 +1,7 @@
 # Task 887 — `check:listing-visibility` exits 0 again: the contact-event lookup is allowlisted, not rewritten
 
 **Sprint 78** (hosted next to 850, whose change it follows) · **P2** · **Q2** · Track B (non-UI) · filed 2026-09-26 by
-Task 853's review 1 · kickoff written 2026-09-29 · **Status: 📝 `KICKOFF FILED`**
+Task 853's review 1 · kickoff written 2026-09-29 · **Status: ✅ `APPROVED WITH NOTES`** (review 1, 2026-09-30; review ledger `docs/reviews/2026-09-30-task887-listing-visibility-green.review-ledger.json`)
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.

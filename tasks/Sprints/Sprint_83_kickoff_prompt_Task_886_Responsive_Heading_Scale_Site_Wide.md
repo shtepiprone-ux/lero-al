@@ -2,8 +2,8 @@
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
 approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2**,
-**O83-3** · **Status: `NEEDS REVISION` — review 1, 2026-09-30. Start at §16 (Revision 1); it overrides every earlier
-section it names.**
+**O83-3** · **Status: `NEEDS REVISION` — review 2, 2026-09-30. Start at §17 (Revision 2); it overrides every earlier
+section it names. §16 (Revision 1) is implemented and kept.**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -575,7 +575,7 @@ and its state rework belongs to reserved **800**.
 | `Patterns/Mantine/DashboardHeader` | profile present (reviewer measured 16/16/32/32) |
 | `Patterns/Mantine/ListingDetailView` | n/a: default canvas |
 | `Mantine/Primitives/RecentlyViewedGridView`, `SimilarListingsView` (incl. `Loading`) | n/a: `MantineStoryShell` primitive |
-| `Patterns/Mantine/ResetPasswordView` | **n/a: View carries the page gutter** (`src/modules/auth/components/ResetPasswordView.tsx`, `Center mih="60vh" p="md"`) — owner O83-3 = (b), 2026-09-30. Make no edit to this Story. |
+| `Patterns/Mantine/ResetPasswordView` | **n/a: View carries the page gutter** (`src/modules/auth/components/ResetPasswordView.tsx`, `Center mih="60vh" p="md"`) — owner O83-3 = (b), 2026-09-30. Make no edit to this Story. **Review 2: the `Loading` export fails condition 1 and is wrapped — §17.2 R16.** |
 
 **O83-3 — DECIDED 2026-09-30, owner verbatim: *"Моє рішення (b)"*.** The exemption is now in `docs/golden-rules.md`
 GR-3d ("Page-level View exemption", three conditions). The executor makes **no** edit to `ResetPasswordView.stories.tsx`,
@@ -694,6 +694,123 @@ Append `## Revision 1` to the session log with:
 - the A/B outcome;
 - receipts: GR-0 for R11's token reuse (`REUSE theme.other.layout.listingContactStickyOffset`), GR-3b, GR-3c and
   GR-3d per changed Story, and GR-2 for the gate's two new scope lines.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
+`docs/backlog.md` with concise state only. No mutating git.
+
+---
+
+## 17. Revision 2 — review 2, 2026-09-30 (`NEEDS REVISION`)
+
+This section overrides every earlier section it names. Revision 1 is **kept**. The reviewer re-ran
+`check:type-responsive` (298 files, Arm A 0, Arm B 6/0/0, 0 unclosable, exit 0) and `:verify` (13 arms, exit 0) in
+native PowerShell. All 22 `rev1/hash-object.log` hashes equal the current tree. An independent Playwright probe
+measured every export of the four R11 Stories and all four `DashboardHeader` exports: 16/16/32/32 at 320/390/1024/1440,
+fonts per §4.1, no overflow. Every `ResetPasswordView` export except `Loading` measures 16/16 on the View's own
+`Center p="md"` box, with the card centred. One Story fails GR-3d, and one kickoff instruction was wrong.
+
+### 17.1 Findings from review 2
+
+| # | Severity | Evidence (reviewer, 2026-09-30) | Correction |
+|---|---|---|---|
+| F8 | **P2** GR-3d | `patterns-mantine-resetpasswordview--loading` (`ResetPasswordView.stories.tsx:55`) has no `StoryPageGutter` and is not exempt. The View's `loading` branch (`ResetPasswordView.tsx:51-55`) renders `<Center mih="60vh">` with **no** `p="md"`, so the production root carries no gutter, and O83-3 condition 1 fails. The reviewer's probe finds no padded box in that export at any width; the loader sits 138/173/490/698 px from each edge. GR-3d is explicit: *"A View that fails any condition is not exempt, and it is wrapped as usual."* The executor reported this correctly (session log R1-5 item 1). No owner decision is needed: the rule already gives the route. Adding `p="md"` to the production branch is **rejected**: it changes a production View only to satisfy a Story rule, and it has no visible effect. | R16 |
+| K1 | kickoff defect (Opus) | §16.5 step 3's regex `p=.(md\|xl).` also matches the tail of `gap="xl"` and `gap="md"`. So its "expected: no match" could not hold for the Stories R11 keeps (`Stack gap="xl"`). The executor's three lines are two `gap=` false positives and `SlotDemoCard`'s `Paper p="xl"`, which is the card's inner padding, not a page gutter. No executor action is needed on those lines. | §17.3 step 2 |
+
+**Notes, no action:**
+- The `listingdetailpattern--default` gallery strip has leaves past the viewport at 320/390. The page does not overflow
+  (`scrollWidth ≤ clientWidth` in both probes); these are carousel slides clipped by the strip.
+- The `<StoryPageGutter>` block in `ListingDetailPattern.stories.tsx` is not re-indented. Leave it as it is: lint is
+  clean, and re-indenting would churn about 130 lines.
+- R15: neither A/B arm reproduced a hydration warning. Opus disposes of reserved **901** at 886's closure, citing
+  `rev1/hydration-ab.log`.
+
+### 17.2 Revision requirement
+
+| ID | Finding | Observable requirement | P | AC |
+|---|---|---|---|---|
+| **R16** | F8 | In `src/stories/patterns/mantine/ResetPasswordView.stories.tsx`, the `Loading` export's `render` wraps `<ResetPasswordView pageState="loading" … />` in `<StoryPageGutter>`, imported from `@/stories/_StoryPageGutter`. **No other export changes**: they stay exempt under O83-3. Do not touch `ResetPasswordView.tsx`, and do not write a gutter in the Story. | P2 | AC16 |
+
+Scope (amends §7): `src/stories/patterns/mantine/ResetPasswordView.stories.tsx`, for R16 only. Its edit amends §16.4's
+"Make no edit to this Story" for this export only.
+
+### 17.3 Revision verification plan — re-entry `remediation`
+
+- Start at I0-R2, then R16, then the gate block.
+- Evidence goes to `docs/sessions/evidence/task886/rev2/`. Do not overwrite anything in `task886/` or `task886/rev1/`.
+- Append `## Revision 2` to the session log.
+
+**I0-R2**, before any write:
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev2"
+New-Item -ItemType Directory -Force $ev
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\i0.log"
+git --no-optional-locks status --short | Tee-Object -Append "$ev\i0.log"
+git --no-optional-locks hash-object src/stories/patterns/mantine/ResetPasswordView.stories.tsx scripts/check-type-responsive.mjs src/stories/patterns/mantine/AuthFormPattern.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx | Tee-Object -Append "$ev\i0.log"
+```
+
+Expected: `win32`, and these reviewer-measured hashes:
+- `ResetPasswordView.stories.tsx` = `cae86b5a71acfdc943c30ed43d27ead61482f888` (this equals `HEAD`, so the file is not in `status`);
+- `check-type-responsive.mjs` = `959e73ab5200d35bce8908a163a2af2389ea09b4`;
+- `AuthFormPattern.stories.tsx` = `9a3bd0c642bf81e70983c76a754a039297180747`;
+- `ListingDetailPattern.stories.tsx` = `c2c5d744d34e0c7c1f52b786bf7f4d6804c20d72`.
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Final gate block:** run §16.5's block unchanged, with two changes:
+- set `$ev = "docs\sessions\evidence\task886\rev2"`;
+- add `"src/stories/patterns/mantine/ResetPasswordView.stories.tsx"` to `$files`, so `hash-object.log` has **23**
+  lines of `<40-hex>  <path>`.
+
+Normalise every `Tee-Object` file to UTF-8 without BOM through Node afterwards. Every log must end `EXIT_CODE=0`, and
+`census-changed.log` must add no new blocking node. **No plant is re-run:** the gate script is unchanged, and the
+I0-R2 hash proves it.
+
+Then, in the same pass:
+1. **Measurement.** Use a throwaway Playwright probe under `.artifacts/`, against the rebuilt `storybook-static`, in
+   `en`. Measure every export of `Patterns/Mantine/ResetPasswordView` and of the four R11 Stories, at
+   320/390/768/1024/1440, and write the results to `$ev\story-measure.log`. Per tuple, record:
+   - the `fontSize` of every `h1`–`h4`;
+   - the left/right edge gap of the first box with horizontal padding;
+   - horizontal overflow.
+
+   Expected:
+   - `resetpasswordview--loading`: 16/16/32/32 at 320/390/1024/1440, from `StoryPageGutter`;
+   - the other seven `ResetPasswordView` exports: unchanged, 16/16 on the View's own `Center p="md"` at every width;
+   - the four R11 Stories: unchanged from `rev1/story-measure.log`;
+   - no overflow anywhere.
+2. **Grep.** This replaces §16.5 step 3, whose regex was wrong (K1). Write the output to `$ev\story-grep.log`.
+
+   ```powershell
+   git --no-optional-locks grep -n -E "SECTION_STYLE|style=\{|[[:space:]](p|px|py)=.(md|xl)." -- src/stories/patterns/mantine/AuthFormPattern.stories.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/PageHeaderWithActions.stories.tsx src/stories/patterns/mantine/TwoColumnForm.stories.tsx src/stories/patterns/mantine/ResetPasswordView.stories.tsx
+   ```
+
+   Expected: exactly one line, `ListingDetailPattern.stories.tsx` `SlotDemoCard` `<Paper … p="xl" …>` (the card's
+   inner padding, allowed). Any other line is a finding: report it; do not edit around it.
+
+### 17.4 Revision acceptance criteria
+
+`GR-4 AC AUDIT — 2 revision criteria; each states an observable property; absolutes: none.`
+
+- **AC16 [R16].** `git diff -- src/stories/patterns/mantine/ResetPasswordView.stories.tsx` shows only the
+  `StoryPageGutter` import and the `Loading` render wrapped. `rev2/story-measure.log` shows
+  `resetpasswordview--loading` at 16/16/32/32 (±1px) at 320/390/1024/1440 and no overflow. The other seven exports
+  are unchanged. `rev2/story-grep.log` holds only the one allowed line.
+- **AC17 [all].** Every `rev2` gate log ends `EXIT_CODE=0`, `rev2/build.log` included. `rev2/hash-object.log` has 23
+  `<40-hex>  <path>` lines, captured in the same pass. This re-proves AC9 and AC14 for the final diff.
+- AC1–AC15 stand as amended.
+
+### 17.5 Completion report for Revision 2
+
+Append `## Revision 2` to the session log, with:
+- a Files Changed table;
+- R16 with its evidence paths;
+- every §17.3 command with its exit code;
+- `story-measure.log` summarised per Story.
+
+Emit these receipts for `ResetPasswordView`:
+- `GR-3b STORY RESPONSIVE CHECK` and `GR-3d STORY GUTTER CHECK` for `--loading` (`StoryPageGutter yes`);
+- the `n/a: View carries the page gutter` receipt for the other seven exports, re-measured.
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
 `docs/backlog.md` with concise state only. No mutating git.

@@ -2,8 +2,8 @@
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
 approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2**,
-**O83-3** · **Status: `PARTIALLY VERIFIED` — review 3, 2026-09-30 (§17.8). Revision 2 is verified; the only open item is
-the owner visual matrix O83-1. No executor action is owed.**
+**O83-3**, **O83-4** · **Status: `NEEDS REVISION` — review 4, 2026-09-30. The owner returned O83-1 rows 1 and 4.
+Start at §18 (Revision 3); it overrides every earlier section it names. §16–§17 are implemented and kept.**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -911,3 +911,236 @@ Revision 2 is verified on the final tree. The only thing left is the owner matri
   `rev2/r16-diff.log` carried a UTF-8 BOM, and the reviewer stripped it through Node (see the session log's Review 3).
 - **Next.** The owner runs O83-1 (§13.3, plus `patterns-mantine-resetpasswordview--loading`). If every tuple is
   accepted, the next review approves and closes 886. If a tuple is returned, the next review writes Revision 3.
+
+---
+
+## 18. Revision 3 — review 4, 2026-09-30 (`NEEDS REVISION`, owner returned O83-1)
+
+This section overrides every earlier section it names. The first pass and Revisions 1–2 are **kept**. Review 3
+verified them (§17.8).
+
+### 18.1 Owner result for O83-1 (2026-09-30, verbatim)
+
+| §13.3 row | Owner verdict |
+|---|---|
+| 1 `ListingDetailPattern`, `PageHeaderWithActions` | *"все ок, окрім кнопки "Додати у колекцію". Вона не співпадає з канонічними кнопками MInetine. Схоже вона або не мігрована, або хардкод."* |
+| 2 `AuthFormPattern`, `TwoColumnForm`, `ResetPasswordView`, `DashboardHeader` | *"все ок."* — **accepted** |
+| 3 `ResetPasswordView` → `Loading` | *"все ок."* — **accepted** |
+| 4 `ListingDetailView` | *"не ок. … Необхідно розробити photo placeholder (типу сіросиній бекграунд і іконка картинки по центру). Згідно UI/UX best practices 2026 року. Додай це завдання у цю задачу! Також біда з кнопками, контент в кнопках не читабельний, що свідчить про те, що немає балансу між контейнером контенту оголошення і карткою контактів. Виправити згідно UI/UX best practices 2026 Року!"* |
+| 5 `RecentlyViewedGridView`, `SimilarListingsView` (incl. `Loading`) | *"все ок."* — **accepted** |
+
+`PageHeaderWithActions` is accepted, because the owner's row-1 defect names only the collection button.
+
+**O83-4 — DECIDED 2026-09-30, owner verbatim option chosen: *"Усе в 886, розширити O83-3 (Recommended)"*.** The
+option read: *"Плейсхолдер + кнопка + контакт-картка в 886. Виняток O83-3, умова 2: View з власним gutter 16/24 на
+≥1024 теж звільнена. Нічого не подвоюється, і AgentStatisticsView переходить з 902 у 886. Це зміна правила GR-3d, я
+впишу її дослівно."* The GR-3d text change in `docs/golden-rules.md` (condition 2: "at least **24** at 1024 and 1440")
+is **owner-applied** (the reviewer's write to that file was refused by the session's permission classifier). §18.5
+I0-R3 checks that it has landed.
+
+### 18.2 Findings (review 4, reviewer-measured on the rev2 `storybook-static`, native Playwright, `win32`)
+
+| # | Severity | Evidence | Req |
+|---|---|---|---|
+| F10 | **P1** owner return, GR-0 | `SaveToCollectionButton.tsx`, default shape: `MantineButton variant="default" size={PILL_SIZE_MAP[size]} radius="1.125rem" bd="1px solid var(--border)"` (hardcoded radius and a legacy border token, with a `design-tokens-allow` marker), plus `<Text span ml={4}>` as the label. It is not `fullWidth`: it measures **170 px** (`en`) and **198 px** (`uk`) while every sibling CTA in the card is full width (278–417 px). The modal it opens carries two `style` objects (`Flex … style={{ borderTop … }}`, `TextInput style={{ flex: 1 }}`). The `ListingContactPattern` Story's own stand-in for this slot is already the canonical shape: `Button variant="default" fullWidth leftSection=…` (`ListingContactPattern.stories.tsx:62`). | R18 |
+| F11 | **P1** owner return | `MantineListingContactPattern.tsx` puts Call and WhatsApp in one row on **viewport** breakpoints (`direction={{ base:'column', xs2:'row', md:'column', xl:'row' }}`), not on the card's width. `listingdetailview--public-listing` at 1280/1440 gives the card 384/416 px, and each CTA 165/181 px. "Write on WhatsApp" wraps to 2 lines (`en`, `uk`), and "Зателефонувати" wraps at 1280 (`uk`). At 1024 the sidebar card is only 299 px (span 4/12). In `listingdetailpattern--default` at 768 it is 240 px, and the `uk` "Надіслати повідомлення" and "Поскаржитися…" wrap. In the Docs view the owner opened, the preview box is narrower than the window, so viewport queries pick the row layout inside a ~280 px card (the screenshot). The CTA rows also carry `style`/`styles` objects and `<span style>` label wrappers. | R19, R20 |
+| F12 | **P1** owner return, GR-0 | There is no canonical photo placeholder. When a photo fails to load, `AppImage` still renders the `<img>`, so the browser shows the broken glyph and the **alt text** inside the frame (the owner's screenshot; `listingdetailview--public-listing` has 3 broken `<img>` at every width, from fixture URLs on `example.com`). An empty `src` leaves a bare muted box. Three consumers each wrote their own empty-cover fallback, and none of them handles a failed load: `ListingCard.tsx:161-167` and `:252-258` (`Maximize2` via `ListingCard.module.css` `.placeholderIcon`/`.placeholderIconLarge`), `AgentStatisticsView.tsx:268-273` (`ImageOff`, `gray[5]`), and `StepPreview.tsx:29-34` (legacy Tailwind, variant `preview`). | R21, R22 |
+
+### 18.3 Canonical UI decision record (GR-0) — Revision 3
+
+`GR-0 CANONICAL REUSE PREFLIGHT` (reviewer, design time):
+- **Semantic queries:** `placeholder`, `fallback`, `ImageOff`, `Maximize2`, `no photo`, `onError`, `framePlaceholder`; `SaveToCollectionButton`, `variant="default" fullWidth`; `type="container"`, `@container`.
+- **Candidates inspected:** `src/design-system/media/AppImage.tsx` + `appImageConfig.ts` + `AppImage.module.css` (`.framePlaceholder` = `var(--muted)`, no icon, no error branch); `Mantine/Primitives/AppImage` Story (`NoSrcSquare`, a `Text` label child); `ListingCard.tsx`; `AgentStatisticsView.tsx`; `StepPreview.tsx`; `MantineListingGalleryPattern.tsx` (Mantine `Image`, not `AppImage`); `ListingContactPattern.stories.tsx:62` (canonical secondary CTA shape); `MantineListingCardTrack.module.css:149-181` (owner **D74-9**: container queries keyed on theme breakpoints); Mantine 8.3.18 `SimpleGrid type="container"` (`SimpleGridVariables.mjs`: the `cols` keys are used verbatim as `@container simple-grid (min-width: <key>)`).
+
+| Visible artifact | Disposition | Canonical owner and token path |
+|---|---|---|
+| Photo placeholder (empty `src` or failed load) | **CREATE** `MediaPlaceholder` + **EXTEND** `AppImage` | New `src/design-system/media/MediaPlaceholder.tsx`: Mantine `Center pos="absolute" inset={0} bg="gray.2"`, lucide `Image` icon (`import { Image as ImageIcon }`), `color={theme.colors.gray[5]}`, `size={theme.other.iconSize[<key>]}`, `aria-hidden`. The tokens are the TailAdmin gray scale (`theme.ts:352-363`, gray.2 `#e4e7ec`, gray.5 `#667085`; the owner's *"сіросиній"*); the icon contrast is ≈4:1 (≥3:1 for a graphic). No px/rem, no CSS rule, no `style`. |
+| Save-to-collection trigger, default shape | **REUSE** the canonical Mantine `Button` | `variant="default"`, `fullWidth`, `leftSection`, theme radius and size (as the sibling CTAs); nothing overridden. |
+| Contact-card CTA row | **REUSE** Mantine `SimpleGrid type="container"` | `cols={{ base: 1, [theme.breakpoints.xs2]: 2 }}` (`'30em'`, `theme.ts:592`): two-up only when the card itself is ≥480px wide. The D74-9 precedent for container-keyed layout. |
+| Detail grid balance | **EXTEND** `MantineListingDetailPattern` spans | Grid spans only (§18.4 R20). |
+
+`new hardcoded visual values: NONE`.
+
+### 18.4 Revision requirements
+
+| ID | Finding | Observable requirement | P | AC |
+|---|---|---|---|---|
+| **R18** | F10 | `src/modules/listings/components/SaveToCollectionButton.tsx`:<br>• the default shape becomes `<MantineButton {...commonProps} variant="default" fullWidth leftSection={icon}>{t('save_to')}</MantineButton>`: no `size`, `radius`, `bd` or `Text span`, and the `design-tokens-allow` marker on that element goes with them;<br>• delete `PILL_SIZE_MAP` and the `size` prop from `Props`, and remove `size="lg"` from its two callers (`ListingContact.tsx:228`, `ListingDetailPattern.stories.tsx:185`); grep for any other caller first;<br>• in the modal, `Flex … style={{ borderTop … }}` becomes `<Divider />` followed by `<Flex gap="xs">`, and the `TextInput`'s `style={{ flex: 1 }}` becomes `flex={1}`;<br>• the **icon shape** (`ActionIcon`, its `radius` marker and `SaveToCollectionButton.module.css`) is **unchanged**: the owner did not return it. | P1 | AC19 |
+| **R19** | F11 | `src/design-system/mantine/patterns/MantineListingContactPattern.tsx`:<br>• the Call/WhatsApp row becomes `<SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="sm">`, and each `Button` gains `fullWidth`;<br>• delete the rows' `style`/`styles` props and the `<span style>` label wrappers; the label is the plain string;<br>• `onClick`, `disabled`, `title`, `aria-disabled` and the loading `leftSection` stay as they are;<br>• the send-message row and the save row drop their `Flex`/`Box style={{ flex: 1, minWidth: 0 }}` wrappers and render the trigger directly (both triggers are `fullWidth`);<br>• the comments above the rows are rewritten to describe the container rule;<br>• the report row is unchanged. | P1 | AC20 |
+| **R20** | F11 | `MantineListingDetailPattern.tsx:141-144`: `leftSpan` = `{ base: 12, [from]: 7, xl: 8 }` and `rightSpan` = `{ base: 12, [from]: 5, xl: 4 }`, where `from` is `sidebarFrom` (`'md'` or `'lg'`). `leftPr` and `leftMb` are unchanged. | P1 | AC20 |
+| **R21** | F12 | Create `src/design-system/media/MediaPlaceholder.tsx` exactly as §18.3 describes, with props `iconSize: keyof MantineThemeOther['iconSize']` and `label: string`. The root is `role="img"` with `aria-label={label}` when `label` is non-empty, and `aria-hidden` otherwise.<br>`appImageConfig.ts` gives every variant `placeholder: boolean` and `placeholderIconSize`: **true** for `listing` (`prominent`), `listing-thumb` (`decorative`), `gallery-main` (`hero`), `gallery-side` (`prominent`), `gallery-strip` (`decorative`) and `lightbox` (`hero`); **false** for `preview`, `upload` and `avatar`.<br>`AppImage.tsx`:<br>• a `failed` state is set by the `<img>`'s `onError`, and by the mount effect when `imgRef.current.complete && naturalWidth === 0` (an error that fired before hydration);<br>• it resets when `optimizedSrc` changes;<br>• the `<img>` renders only when `hasImage && !failed`;<br>• `MediaPlaceholder` (`label={alt}`) renders when the variant's `placeholder` is true and `!hasImage` or `failed`, **before** `children`, so overlays stay on top;<br>• no blur background while `failed`.<br>Register `MediaPlaceholder.tsx` in `scripts/mantine-migration-scope.json`, and satisfy `check:media-enrolment` (directory-listing driven). | P1 | AC21 |
+| **R22** | F12 | Delete the now-duplicate local fallbacks:<br>• `ListingCard.tsx:162-166` and `:253-257` (the `{!coverImage && (<Center …><Maximize2 …/></Center>)}` children), and the `Maximize2` and `Center` imports if they become unused;<br>• the `.placeholderIcon` and `.placeholderIconLarge` rules in `ListingCard.module.css`, and their comments;<br>• `AgentStatisticsView.tsx:269-273` (the `{!row.coverUrl && …ImageOff…}` children), and the `ImageOff` import if unused; the `Box … bg="gray.1"` frame stays.<br>`StepPreview.tsx` is **not** edited: its variant `preview` is `placeholder: false`, so nothing doubles.<br>In `AppImage.stories.tsx`, `NoSrcSquare` drops its `Text` child, because the canonical placeholder replaces it. If `naLabel`'s locale key is then unreferenced, remove it from all four `messages/*` files. | P1 | AC21 |
+| **R23** | GR-3d | The blast-radius Stories in §18.6 are handled exactly as their GR-3d line says. | P1 | AC22 |
+| **R24** | GR-3b, GR-3c | Every Story this revision changes passes GR-3b and GR-3c:<br>• no raw px/rem; for example `ListingContactPattern.stories.tsx:45/62` `size={18}` becomes `theme.other.iconSize.comfortable`;<br>• no `style`;<br>• every fixture `Title` of 24px or more gains `fz={TITLE_FZ.hN}` matching its `order`; known: `ListingCardPattern.stories.tsx:226/246` (`order={4}`) gets `TITLE_FZ.h4`;<br>• the executor reports every other one it finds. | P1 | AC22 |
+| **R25** | F12 | `Mantine/Primitives/AppImage` gains one export, `Placeholder`. For each of the six placeholder variants it renders:<br>• `src={null}`;<br>• `src="/__missing-photo__.jpg"`, a relative path that `storybook-static` answers with 404, so it fails with no network dependency.<br>Each sits in the same sized frames `Default` uses (`AspectRatio` + `theme.other.boxSize.*`).<br>The same export also renders one standalone `<MediaPlaceholder>`, **imported by name** in `AppImage.stories.tsx` (GR-3: *"the file must import that component by name"*; `check:story-coverage` checks that enrolled `MediaPlaceholder` has a Story that imports it). GR-3a: **EXTEND** the existing canonical Story; no new file. | P1 | AC21 |
+
+**Out of scope, recorded:**
+- `MantineListingGalleryPattern.tsx` renders Mantine `Image`, not `AppImage`. Production uses `gallerySlot` → `ListingGallery` → `AppImage`, so the owner's gallery is covered.
+- `StepPreview.tsx` (legacy; `preview` excluded).
+- `GalleryStaticFrame.tsx`: its SSR `<img>` is swapped out on mount, and it is baselined debt of the listing-detail surface.
+- The `ListingDetailView` fixture URLs stay on `example.com`. They now fail into the placeholder, and that is the state the owner asked to see.
+- **No production file outside §18.4 changes.** In particular, not `ListingGallery.tsx` (unenrolled legacy; it gets the placeholder through `AppImage`'s variant config) and not `ListingDetailView.tsx`.
+
+### 18.5 Verification plan — re-entry `remediation`
+
+Order: I0-R3 → R18 → R19 → R20 → R21 → R22 → R25 → R23/R24 → gate block → measurement → grep. Evidence goes to
+`docs/sessions/evidence/task886/rev3/`. Do not overwrite `task886/`, `rev1/` or `rev2/`. Append `## Revision 3` to the
+session log.
+
+**I0-R3**, before any write:
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev3"
+New-Item -ItemType Directory -Force $ev
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\i0.log"
+git --no-optional-locks status --short | Tee-Object -Append "$ev\i0.log"
+git --no-optional-locks hash-object src/modules/listings/components/SaveToCollectionButton.tsx src/design-system/mantine/patterns/MantineListingContactPattern.tsx src/design-system/media/AppImage.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/ResetPasswordView.stories.tsx | Tee-Object -Append "$ev\i0.log"
+Select-String -Path docs\golden-rules.md -Pattern "at least 24 at 1024 and 1440" | Tee-Object -Append "$ev\i0.log"
+```
+
+Expected:
+- the platform line reads `win32`;
+- `SaveToCollectionButton.tsx`, `MantineListingContactPattern.tsx` and `AppImage.tsx` are absent from `git status`, at their
+  `HEAD` content;
+- `ListingDetailPattern.stories.tsx` = `c2c5d744d34e0c7c1f52b786bf7f4d6804c20d72`;
+- `ResetPasswordView.stories.tsx` = `14809fd64f43d97bc940177e3a30da4ecf5c0e48`;
+- the `Select-String` prints one GR-3d condition-2 line.
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop. **No `Select-String` match means the owner's O83-4 rule
+edit has not landed: stop with `BLOCKED — GR-3d O83-4 NOT APPLIED`, before any write.**
+
+**Final gate block:** run §16.5's block unchanged, except:
+- set `$ev = "docs\sessions\evidence\task886\rev3"`;
+- add to `$files`:
+  - `src/modules/listings/components/SaveToCollectionButton.tsx`, `src/modules/listings/components/ListingContact.tsx`;
+  - `src/design-system/mantine/patterns/MantineListingContactPattern.tsx`;
+  - `src/design-system/media/MediaPlaceholder.tsx`, `src/design-system/media/AppImage.tsx`, `src/design-system/media/appImageConfig.ts`;
+  - `src/modules/listings/components/ListingCard.tsx`, `src/modules/listings/components/ListingCard.module.css`;
+  - `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`;
+  - `scripts/mantine-migration-scope.json`;
+  - `src/stories/patterns/mantine/ResetPasswordView.stories.tsx`;
+  - every Story file §18.6 changes;
+  - every `messages/*.json` R22 changes;
+- add these steps:
+
+  ```powershell
+  npm.cmd run check:media-enrolment *>&1 | Tee-Object "$ev\check-media-enrolment.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\check-media-enrolment.log"
+  npm.cmd run test -- src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx *>&1 | Tee-Object "$ev\smoke-tests.log"; "EXIT_CODE=$LASTEXITCODE" | Tee-Object -Append "$ev\smoke-tests.log"
+  ```
+
+Every log must end `EXIT_CODE=0`, `census-changed.log` must add no new blocking node, and `hash-object.log` has one
+`<40-hex>  <path>` line per `$files` entry. Normalise every `Tee-Object` file to UTF-8 without BOM through Node, and
+check `i0.log` too (review 3 found it left with a BOM). **No plant:** `check-type-responsive.mjs` is not changed.
+
+Then, in the same pass, against the rebuilt `storybook-static`, with a throwaway Playwright probe under `.artifacts/`,
+into `$ev\story-measure.log`, for every Story in §18.6 plus `Mantine/Primitives/AppImage` (`Default`,
+`Placeholder`) and `Mantine/Primitives/SaveToCollectionButton` (`Closed`):
+1. **Every tuple.** At 320/390/768/1024/1440 in `en` (and `uk` for the three detail/contact Stories), record:
+   - the edge gap of the first padded box;
+   - horizontal overflow;
+   - the `fontSize` of every `h1`–`h4`.
+2. **Contact card.** For `listingdetailview--public-listing`, `listingdetailpattern--default` and
+   `listingcontactpattern--default`, per width, record:
+   - the card's width;
+   - each CTA's width and label line count (`label.scrollHeight / lineHeight`).
+3. **Placeholder.** Per `AppImage` frame, record:
+   - whether an `<img>` is present;
+   - whether the placeholder is present;
+   - the placeholder's computed `background-color` and the icon's `width`.
+
+Then this grep, into `$ev\story-grep.log`:
+
+```powershell
+git --no-optional-locks grep -n -E "style=\{|styles=\{|radius=.1\.125rem.|bd=.1px|PILL_SIZE_MAP|size=\{[0-9]+\}" -- src/modules/listings/components/SaveToCollectionButton.tsx src/design-system/mantine/patterns/MantineListingContactPattern.tsx src/design-system/media/MediaPlaceholder.tsx src/stories/patterns/mantine/ListingContactPattern.stories.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+```
+
+Expected: no line, except any `style=` or `radius` line inside `SaveToCollectionButton.tsx`'s **icon** shape. Report
+every line that is printed.
+
+### 18.6 Owner-matrix and blast-radius GR-3d lines (Revision 3)
+
+The reviewer computed the blast radius on the render graph: JSX use through named barrels, every Story reaching
+`AppImage`, `SaveToCollectionButton`, `MantineListingContactPattern`, `MantineListingDetailPattern` or `ListingCard`.
+
+| Story | GR-3d |
+|---|---|
+| `Patterns/Mantine/ListingDetailPattern` | profile present |
+| `Patterns/Mantine/ListingDetailView` | n/a: default canvas |
+| `Patterns/Mantine/ListingContactPattern` | **wrap in this task** |
+| `Patterns/Mantine/ListingCardPattern` | **wrap in this task** |
+| `Patterns/Mantine/ListingCardTrack` | **wrap in this task** |
+| `Patterns/Mantine/ListingGalleryPattern` | **wrap in this task** |
+| `Patterns/Mantine/AgentStatisticsView` (moved from reserved **902**) | View Story: measure first. If the View's own root sets the gutter in production source and it measures 16/16 at 320/390 and at least 24 at 1024/1440 (GR-3d as amended by O83-4), the line is `n/a: View carries the page gutter (<path:line>)`. Otherwise **wrap**. |
+| `Patterns/Mantine/ListingsShellView`, `Patterns/Mantine/HomepageListingGrids`, `Mantine/Primitives/PopularLocationsView` | same rule as `AgentStatisticsView` |
+| `Mantine/Primitives/AppImage`, `SaveToCollectionButton`, `ListingCard`, `LightboxView`, `FavoritesShell`, `SimilarListingsView`, `RecentlyViewedGridView` | n/a: `MantineStoryShell` primitive |
+
+A wrap is `<StoryPageGutter>` around the page content of **every** export, and it deletes any gutter the Story writes
+itself. The executor needs no further permission for any row. One GR-3d receipt per Story.
+
+### 18.7 Type scale (GR-3c)
+
+Revision 3 adds or resizes no production text: the button labels keep the theme `Button` size, and the price and
+names are unchanged. Wrapped Stories' fixture `Title`s follow R24. Every changed Story gets a
+`GR-3c TYPE RESPONSIVE CHECK` receipt, measured at 320/390/768/1440.
+
+### 18.8 Acceptance criteria
+
+`GR-4 AC AUDIT — 4 revision criteria; each states an observable property; absolutes: none.`
+
+- **AC19 [R18].**
+  - Given `story-measure.log`, the save trigger's width equals its sibling send-message CTA's width (±1 px) in
+    `listingdetailpattern--default` at every width.
+  - Given the `git diff` of `SaveToCollectionButton.tsx`, the default shape has no `size`, `radius`, `bd` or `Text`,
+    and the icon shape's lines are unchanged.
+  - `story-grep.log` holds no line for the default shape.
+- **AC20 [R19, R20].** In `story-measure.log`, for the three detail/contact Stories in `en` and `uk`:
+  - every Call/WhatsApp/send/save label has a line count of **1** at every measured width where the card is in the
+    sidebar;
+  - the sidebar card is at least 360 px at 1024, 1280 and 1440 in `listingdetailview--public-listing`;
+  - there is no overflow.
+- **AC21 [R21, R22, R25].** In `story-measure.log`, for `appimage--placeholder`:
+  - every `src={null}` frame and every missing-URL frame has **no** `<img>` and has a placeholder;
+  - the placeholder's background is `rgb(228, 231, 236)` and the icon's width is its token;
+  - `listingdetailview--public-listing` shows placeholders, and no broken `<img>`, in its three gallery frames.
+
+  `git grep -n "Maximize2\|placeholderIcon" -- src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingCard.module.css`
+  prints nothing, and `check:media-enrolment` and the two smoke tests exit 0.
+- **AC22 [R23, R24].**
+  - The session log has one GR-3d, GR-3b and GR-3c receipt per Story in §18.6 that this revision changed or
+    exempted.
+  - Every wrapped Story measures 16/16/32/32 (±1) at 320/390/1024/1440.
+  - Every exempt View Story measures 16/16 and at least 24/24, with its source line cited.
+  - Every rev3 gate log ends `EXIT_CODE=0`, `build.log` included, and `hash-object.log` covers `$files`.
+- AC1–AC18 stand as amended.
+
+### 18.9 OWNER VISUAL QA REQUIRED — O83-1, Revision 3
+
+Rows 2, 3 and 5 of §13.3, and the `PageHeaderWithActions` half of row 1, are **accepted** and carried forward. The
+owner reviews these, and records **accepted** or **returned** with a concrete defect for each:
+1. `Patterns/Mantine/ListingDetailPattern` × `en` / `uk` × 320 / 768 / 1024 / 1440: the collection button, the CTA rows
+   and the column balance.
+2. `Patterns/Mantine/ListingDetailView` → `Public Listing` × `en` / `uk` × 320 / 1024 / 1440: the photo placeholder, the
+   contact card and the balance.
+3. `Patterns/Mantine/ListingContactPattern` × `en` / `uk` × 320 / 1440.
+4. `Mantine/Primitives/SaveToCollectionButton` → `Closed` × `en` × 320 / 1440.
+5. `Mantine/Primitives/AppImage` → `Default`, `Placeholder` × `en` × 320 / 1440.
+6. Gutter re-look, × `en` × 320 / 1440: `ListingCardPattern`, `ListingCardTrack`, `ListingGalleryPattern`,
+   `AgentStatisticsView`, `ListingsShellView`, `HomepageListingGrids`, `PopularLocationsView`.
+
+### 18.10 Completion report for Revision 3
+
+Append `## Revision 3` to the session log with these items:
+- **Files Changed** table.
+- **R18–R25** with their evidence paths.
+- **Commands** — every §18.5 command with its exit code.
+- **`story-measure.log`** summarised per Story (contact-card label lines, placeholder frames, edge gaps).
+- **Receipts:**
+  - GR-0 (`MediaPlaceholder` CREATE; the rest REUSE/EXTEND, as §18.3);
+  - GR-1 per changed production file;
+  - GR-2;
+  - GR-3a (the `AppImage` `Placeholder` export);
+  - GR-3 (`MediaPlaceholder` ← `AppImage.stories.tsx`, which imports it by name, per R25);
+  - GR-3b, GR-3c and GR-3d per changed or exempted Story.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
+`docs/backlog.md` (concise state). No mutating git.

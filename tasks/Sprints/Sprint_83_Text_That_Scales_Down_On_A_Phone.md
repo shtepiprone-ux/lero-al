@@ -47,7 +47,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `PARTIALLY VERIFIED` 2026-09-30 (review 3; revision 2 verified; awaiting owner O83-1, kickoff §17.8) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
+| **886** | Every Mantine `Title` of 24px or more steps down on a phone through one canonical responsive scale (`TITLE_FZ` in `src/design-system/mantine/typography.ts`). The duplicate recently-viewed skeleton is removed. A blocking `check:type-responsive` gate with a CI self-test keeps it that way, and it baselines the 6 live legacy Tailwind sites (L3–L8) as debt that cannot grow. | `NEEDS REVISION` 2026-09-30 (review 4; owner returned O83-1 rows 1 and 4; revision 3 = kickoff §18: canonical save button, container-keyed contact CTAs + column balance, `AppImage` photo placeholder) → [`…Task_886…`](Sprint_83_kickoff_prompt_Task_886_Responsive_Heading_Scale_Site_Wide.md) |
 
 ## Execution order and gating
 
@@ -61,8 +61,9 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Action |
 |---|---|
-| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3, with the GR-3d lines of §16.4). **Handed to the owner 2026-09-30 by 886 review 3** (`PARTIALLY VERIFIED`; revision 2 verified): §13.3 plus `patterns-mantine-resetpasswordview--loading`. Accepted → 886 is approved and closed; returned → revision 3. |
+| **O83-1** | Task 886's `OWNER VISUAL QA REQUIRED` matrix (its §13.3, with the GR-3d lines of §16.4). **Returned 2026-09-30** (886 kickoff §18.1, owner verbatim): rows 2, 3, 5 and `PageHeaderWithActions` accepted; row 1 (collection button) and row 4 (`ListingDetailView`: photo placeholder, unreadable contact buttons) returned. The Revision 3 matrix is kickoff §18.9, handed over after revision 3 is reviewed. |
 | **O83-3** | **DECIDED 2026-09-30 — owner verbatim: *"Моє рішення (b)"*.** GR-3d now carries a "Page-level View exemption" (`docs/golden-rules.md`); `ResetPasswordView`'s Story stays unwrapped (886 §16.4). *Original question (added 2026-09-30 by 886 review 1):* `Patterns/Mantine/ResetPasswordView` is a `skipCanvas` Story without `StoryPageGutter`, but the production View already carries the page gutter (`Center p="md"`, measured 16px at 320/390). Choose (a) wrap anyway (32px at 320), (b) record a GR-3d exemption for a View that carries its own page gutter (recommended), or (c) move the padding into the route in a separate task. Options and effects: 886 §16.4. |
+| **O83-4** | **DECIDED 2026-09-30 — owner verbatim option chosen: *"Усе в 886, розширити O83-3 (Recommended)"*** (886 kickoff §18.1): the photo placeholder, the save button and the contact card all stay in 886; GR-3d page-level View exemption condition 2 accepts at least 24 at 1024/1440; `AgentStatisticsView`'s Story moves from reserved 902 into 886. **Owner action still open:** apply the condition-2 text to `docs/golden-rules.md` (the reviewer's write was refused by the permission classifier); 886 I0-R3 blocks until it lands. |
 | **O83-2** | **Decision, open:** the six legacy Tailwind `text-2xl` sites with no owning migration task (886 §3.2). Choose one: file migration tasks for them now, or leave them as baselined debt until their surfaces are migrated. |
 
 ## Exit criteria
@@ -73,6 +74,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 3. The owner has accepted O83-1.
 4. O83-2 is decided and recorded here.
 5. O83-3 is decided and recorded here — done 2026-09-30, (b).
+6. O83-4 is decided (done 2026-09-30) and its GR-3d text is in `docs/golden-rules.md`.
 
 ## Explicitly not in this sprint
 

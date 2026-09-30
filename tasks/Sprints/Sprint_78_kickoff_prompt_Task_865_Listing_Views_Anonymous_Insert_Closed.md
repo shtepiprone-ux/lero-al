@@ -2,8 +2,8 @@
 
 **Sprint 78** (hosted by discovery, not goal fit; the owner may move it) · **P2** · **Q4** (RLS / write-path
 security) · Track B (non-UI) · filed 2026-09-21 by Task 850's owner-native closure · kickoff written 2026-09-27 ·
-owner action **O78-8** · **Status: `NEEDS REVISION` (review 2, 2026-09-30) — executor: do §17.4 only; the close
-script is NOT applied yet; R6 is the Opus closure review's (§16.3)**
+owner action **O78-8** · **Status: revision 1 (§17.4) applied 2026-09-30 by Opus at the owner's request — verify `37be33eb`; awaiting
+the owner's O78-8 continuation (§17.5); the close script is NOT applied yet; R6 is the Opus closure review's (§16.3)**
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.

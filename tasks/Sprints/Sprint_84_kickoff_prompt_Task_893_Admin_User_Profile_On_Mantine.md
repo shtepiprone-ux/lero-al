@@ -762,6 +762,30 @@ by design (fixed fixtures; production filters cannot pick a future publish date)
 
 GR-3d: `MantineStoryShell` primitive (n/a).
 
+## 21. Review 4 — 2026-09-30 — `PARTIALLY VERIFIED` (revision 3 verified; O84-2 remainder owed)
+
+- **Tree:** `RangeDatePicker.tsx` `479c42bf`, `RangeDatePicker.smoke.test.tsx` `b330563e`, `AdminUserProfile.tsx`
+  `ef9d04c2` (unchanged since review 3), equal to `r3-hash-object.txt`. The reviewer diffed both changed files against
+  the review-3 blobs (`7fd34906`, `274926d3`). The source diff is R20's single expression plus a comment (`:672-674`).
+  The test diff is T-M6 and T-M7 only. No Story file changed.
+- **Plants, re-run by the reviewer** (native, Node I/O, blob hashes computed in Node):
+  - P10 → T-M6 fails, `expected 'January' to be 'February'`; the planted hash equals the executor's `63584515`.
+  - P11 → T-M7 fails, `expected '2026' to be '2036'`.
+  - Both restore to `479c42bf`, and the full smoke file then passes 47/47.
+  - Every `r3-*` gate, and the build (11:04), ran after the last source write (11:00:34).
+- **Rendered, by the reviewer** (live `:6006`, `uk`, 320, the forced-open capped `Default` instance):
+  - 2022 → 2026, then scroll up 700 → header `Жовтень 2025`. The no-jump control gives `Жовтень 2025`.
+  - 2022 only, then scroll down 900 → header `Квітень 2022`.
+  - 2022 → 2026, then scroll down 300 → header `Лютий 2026`.
+- **Note on AC16's wording:** in the jump run and in the control alike, the header names the section whose top has
+  passed the viewport top (`pickVisibleMonthIdx`, F17). The first section title still on screen is the month after it.
+  R20 does not change that rule, and AC16 is met in its "as in the no-jump control" sense.
+- **Note, not 893's:** `check:file-integrity` on the current tree fails on 13 BOM files under
+  `docs/sessions/evidence/task887/`, which is Sprint 78's parallel work. `r3-file-integrity.txt` (11:01) was exit 0,
+  and no 893 path is listed.
+- **Open before approval:** the 12 O84-2 tuples in §20.5, then R8 carried from 863 (see the `docs/backlog.md` 893
+  cell), in the approving commit.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

@@ -2,8 +2,9 @@
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
 approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2**,
-**O83-3** · **Status: `NEEDS REVISION` — review 2, 2026-09-30. Start at §17 (Revision 2); it overrides every earlier
-section it names. §16 (Revision 1) is implemented and kept.**
+**O83-3** · **Status: `NEEDS REVISION` — review 2, 2026-09-30. Start at §17 (Revision 2), including its addendum
+§17.6 (R17); it overrides every earlier section it names. §16 (Revision 1) is implemented and kept, except R10, which
+§17.6 withdraws.**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -557,7 +558,7 @@ and its state rework belongs to reserved **800**.
 
 | ID | Finding | Observable requirement | P | AC |
 |---|---|---|---|---|
-| **R10** | F5 | `MantineDashboardStatCard.tsx:184`: `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}` becomes `fz={TITLE_FZ.h3}`, with the `TITLE_FZ` import. Nothing else in the file changes (the `lh` expression stays). | P3 | AC10 |
+| **R10** | F5 | **Withdrawn by §17.6 (R17 reverts it).** `MantineDashboardStatCard.tsx:184`: `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}` becomes `fz={TITLE_FZ.h3}`, with the `TITLE_FZ` import. Nothing else in the file changes (the `lh` expression stays). | P3 | AC10 |
 | **R11** | F1 | Wrap the page content of every export of these four Stories in `<StoryPageGutter>` (`src/stories/_StoryPageGutter.tsx`), and delete every gutter the Story writes itself:<br>• `PageHeaderWithActions.stories.tsx` `Default`;<br>• `TwoColumnForm.stories.tsx` `Default`;<br>• `AuthFormPattern.stories.tsx` `Default` and `AuthCard`: remove `p="md"` from the `Stack` and `p="xl"` from every `Center` (`Center` stays for centring, `Stack gap="xl"` stays);<br>• `ListingDetailPattern.stories.tsx` `Default`: delete `SECTION_STYLE` and its `CSSProperties` import; each `<div style={SECTION_STYLE}>` becomes `<Box pt={theme.other.layout.listingContactStickyOffset}>`, with `const theme = useMantineTheme()` in the `render` (precedent: `GalleryDesktopNavigation.stories.tsx:31`). The token is `theme.ts:798` `listingContactStickyOffset: 80`, the sticky offset the comment above `SECTION_STYLE` already cites, consumed by `MantineListingContactPattern.tsx:126`. Keep that comment, re-pointed at the token. `SlotDemoCard`'s `style={{ textAlign: 'center' }}` becomes `ta="center"` on its `Text` (GR-3b: a changed Story carries no `style` object).<br>No other line in these files changes. | P1 | AC11 |
 | **R12** | F2 | `AuthFormPattern.stories.tsx` `AuthCard`: the `Title` gains `fz={TITLE_FZ.h3}` (import `TITLE_FZ`). | P1 | AC12 |
 | **R13** | F3, F6 | `scripts/check-type-responsive.mjs`:<br>• an opening tag the scanner cannot close is a **parse error**: print `ERROR  <path>:<line>  opening <Name> tag could not be closed — the gate cannot classify it` for each, and exit **2** (§10.4), before any PASS line;<br>• `evaluateGateExitCode` takes the unparsed count and returns 2 for it (a finding alone returns 1; a parse error wins over a finding);<br>• self-test **Arm 13**: an unclosable tag (e.g. `export const A = () => <Title order={2}` with no `>`) resolves to a parse error; Arm 12's wiring check adds the `unparsed → 2` case; the header line says "13 arms + exit wiring";<br>• the printed "Cannot see" list gains two lines: *an `fz` object literal is accepted without checking its values (the GR-3c measurement closes it)*; *`size`/`fz` written as any other expression (e.g. `size={'h3'}`, a ternary) is not read as static*.<br>No other behaviour changes. | P2 | AC13 |
@@ -814,3 +815,43 @@ Emit these receipts for `ResetPasswordView`:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
 `docs/backlog.md` with concise state only. No mutating git.
+
+### 17.6 Addendum — review 2b, 2026-09-30: R10's GR-3d blast radius (F9, R17)
+
+A second review pass on the same tree found one more GR-3d gap. Review 2 did not list it. R16 and §17.1–§17.5 stand;
+this addendum adds one requirement and one revert.
+
+| # | Severity | Evidence (reviewer, 2026-09-30) | Correction |
+|---|---|---|---|
+| F9 | **P2** GR-3d scope | R10 (Revision 1) changed `MantineDashboardStatCard.tsx`. GR-3d's scope covers *"every Story a task … **renders a changed component in**"*, and four `skipCanvas` Stories render that component: `DashboardStatCard.stories.tsx` (direct), `DashboardGrid.stories.tsx` (direct), `AdminDashboardView.stories.tsx` and `AgentStatisticsView.stories.tsx` (through the Views, `AdminDashboardView.tsx`, `AgentStatisticsView.tsx`). None of them uses `StoryPageGutter`. The reviewer's probe on the rev1 `storybook-static` measured the first padded box at 320/390/1024/1440: `dashboardstatcard--default` 16/16/16/16 (gutter written in the Story, `SimpleGrid p="md"` `:27`); `dashboardgrid--default` 16/16/24/24; `admindashboardview--default` 16/16/24/24; `agentstatisticsview--default` 16/16/24/24. R10's rendered output is identical to `HEAD` (the object literal and `TITLE_FZ.h3` hold the same three keys), so R10 buys no visible change, and it puts four Stories owned by the 853/891 surfaces into 886's scope. Two of them are View Stories whose Views appear to carry a 16/24 gutter of their own, which is the O83-3 conflict again (condition 2 needs ≥32 at 1024). That is not 886's work. F5 (P3, "no site picks its own steps") was the orchestrator's own review-1 addition, and it is withdrawn: S17 keeps its inline responsive object, which the gate accepts (Arm 4) and which equals `TITLE_FZ.h3`. The four Stories' gutters are filed as reserved **902** (`docs/backlog-reserved.md`). | R17 |
+
+| ID | Finding | Observable requirement | P | AC |
+|---|---|---|---|---|
+| **R17** | F9 | Restore `src/design-system/mantine/patterns/MantineDashboardStatCard.tsx` to its `HEAD` content, byte for byte, through Node: write the output of `git --no-optional-locks show HEAD:src/design-system/mantine/patterns/MantineDashboardStatCard.tsx` over the file with `writeFileSync` (never `Get-Content -Raw`, never a mutating git command). Afterwards its `git hash-object` is `c19dd9fabdf7638045eaee7344a319ae7bbbee51` and it drops out of `git status`. Make no other change to the file, and do not edit any of the four Stories named in F9. | P2 | AC18 |
+
+**How this changes §17.3:**
+- **I0-R2** also hashes `src/design-system/mantine/patterns/MantineDashboardStatCard.tsx`. Expected:
+  `2437603de9633eeb0161a1751479667a42c26562` (Revision 1's content). Anything else is `TASK SPECIFICATION
+  CONTRADICTION`: stop.
+- **Order:** I0-R2 → R17 → R16 → the final gate block.
+- **Final gate block:** unchanged. `$files` keeps `MantineDashboardStatCard.tsx`, so `hash-object.log` still has
+  **23** lines. That file's line must read `c19dd9fabdf7638045eaee7344a319ae7bbbee51`. Also run this, into
+  `$ev\statcard-revert.log`:
+
+  ```powershell
+  $ev = "docs\sessions\evidence\task886\rev2"
+  git --no-optional-locks diff --quiet HEAD -- src/design-system/mantine/patterns/MantineDashboardStatCard.tsx; "DIFF_QUIET_EXIT=$LASTEXITCODE" | Tee-Object "$ev\statcard-revert.log"
+  git --no-optional-locks hash-object src/design-system/mantine/patterns/MantineDashboardStatCard.tsx | Tee-Object -Append "$ev\statcard-revert.log"
+  ```
+
+  Expected: `DIFF_QUIET_EXIT=0` and `c19dd9fabdf7638045eaee7344a319ae7bbbee51`.
+- **Measurement:** unchanged. The four F9 Stories are **not** measured by this task and **not** in O83-1.
+
+**AC18 [R17].** `rev2/statcard-revert.log` shows `DIFF_QUIET_EXIT=0` and the `HEAD` hash. `rev2/git-status.log` does not
+list `MantineDashboardStatCard.tsx`. `rev2/check-type-responsive.log` still reports Arm A 0 and exit 0. AC10 is
+withdrawn with R10.
+
+**Completion report addition (§17.5):** the Revision 2 Files Changed table lists `MantineDashboardStatCard.tsx` as
+"reverted to `HEAD` (R17); not in the final diff". The first-pass and Revision 1 tables stay as written.
+
+`GR-4 AC AUDIT — 1 addendum criterion; it states an observable property; absolutes: none.`

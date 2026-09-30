@@ -1144,3 +1144,35 @@ Append `## Revision 3` to the session log with these items:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cell of
 `docs/backlog.md` (concise state). No mutating git.
+
+### 18.11 Ruling on the I0-R3 block — review 4b, 2026-09-30
+
+The executor stopped at I0-R3 with `BLOCKED — GR-3d O83-4 NOT APPLIED`, and that stop was correct.
+- The review-4 commit `4bd15b823` landed without the owner's rule edit.
+- `docs/golden-rules.md:274` still reads "at least **32** at 1024 and 1440", and it is the file's only occurrence. The
+  "matching sentence" the executor asked about is that same line, so there is nothing else to change.
+- The executor's other I0 values match §18.5, and the only file written was `rev3/i0.log`.
+
+**Amended route (overrides §18.5 where they differ):** the O83-4 check gates **only** the four View-Story rows of §18.6
+(`AgentStatisticsView`, `ListingsShellView`, `HomepageListingGrids`, `PopularLocationsView`). Nothing else depends on
+it.
+1. **I0-R3** runs as §18.5 says, without the `Select-String` line and its stop. Re-running it overwrites the current
+   `rev3/i0.log`, which is not evidence.
+2. Then R18 → R19 → R20 → R21 → R22 → R25 → R24, plus the four `wrap in this task` rows of §18.6
+   (`ListingContactPattern`, `ListingCardPattern`, `ListingCardTrack`, `ListingGalleryPattern`).
+3. **O83-4 gate**, before the four View-Story rows:
+
+   ```powershell
+   $ev = "docs\sessions\evidence\task886\rev3"
+   Select-String -Path docs\golden-rules.md -Pattern "at least 24 at 1024 and 1440" | Tee-Object "$ev\o83-4-gate.log"
+   ```
+
+   - **One match:** do the four View-Story rows per §18.6, then the gate block, measurement and grep, and report
+     `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+   - **No match:** stop before the four rows and before the gate block, and report
+     `BLOCKED — GR-3d O83-4 NOT APPLIED (R18–R22, R24, R25 and four wraps done)`. List the files written so far,
+     each with its `git hash-object`. Run no gate block on a partial tree: it runs once, on the final tree.
+4. **Do not wrap a View Story on the current rule text.** That doubles the phone gutter, and O83-4 exists to prevent
+   it.
+
+AC19–AC22 stand. AC22's "every exempt View Story" clause is satisfied only once the gate has passed.

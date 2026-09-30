@@ -271,7 +271,7 @@ no `StoryPageGutter` only when **all** of the following are true:
 
 1. The Story renders a production page-level View, and the View's own root sets the page gutter with Mantine
    spacing props in the production source. The Story adds no wrapper, padding, `container-*` class or `style` object.
-2. The measured edge gap is 16 at 320 and 390, and at least 32 at 1024 and 1440. More than 32 is allowed only when
+2. The measured edge gap is 16 at 320 and 390, and at least 24 at 1024 and 1440 (widened from 32 by owner decision O83-4, 2026-09-30, Task 886 review 4). More than 32 is allowed only when
    the View centres narrower content.
 3. The receipt names the production source line of the gutter.
 

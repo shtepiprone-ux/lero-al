@@ -220,7 +220,8 @@ evidence that a child component has a canonical visual contract.
    executor's `GR-3c TYPE RESPONSIVE CHECK` receipts against your own `getComputedStyle` measurement at 320 and 1440.
 8. **GR-3d (owner rule 2026-09-29, hardened the same day).** Before handing the matrix to the owner, measure the edge
    gap of **every Story in it**, blast-radius rows included, at 320/390/1024/1440. Expected: 16/16/32/32, from the
-   shared `StoryPageGutter`. Exempt: overlay-only, default-canvas, and `MantineStoryShell` primitives. A `skipCanvas`
+   shared `StoryPageGutter`. Exempt: overlay-only, default-canvas, `MantineStoryShell` primitives, and a page-level
+   View whose own production root sets the page gutter (owner O83-3, 2026-09-30; all three GR-3d conditions). A `skipCanvas`
    Story without the profile, or with a gutter written in the Story, is `NEEDS REVISION`, and it never reaches the
    owner. `AdminExchangeProvidersView` reached the owner without a gutter in Task 877, and that is how this rule was
    hardened.

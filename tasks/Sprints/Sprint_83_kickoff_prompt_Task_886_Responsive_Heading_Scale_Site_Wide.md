@@ -575,10 +575,17 @@ and its state rework belongs to reserved **800**.
 | `Patterns/Mantine/DashboardHeader` | profile present (reviewer measured 16/16/32/32) |
 | `Patterns/Mantine/ListingDetailView` | n/a: default canvas |
 | `Mantine/Primitives/RecentlyViewedGridView`, `SimilarListingsView` (incl. `Loading`) | n/a: `MantineStoryShell` primitive |
-| `Patterns/Mantine/ResetPasswordView` | **O83-3, owner decision below.** Make no edit to this Story. |
+| `Patterns/Mantine/ResetPasswordView` | **n/a: View carries the page gutter** (`src/modules/auth/components/ResetPasswordView.tsx`, `Center mih="60vh" p="md"`) — owner O83-3 = (b), 2026-09-30. Make no edit to this Story. |
 
-**STOP - OWNER DECISION REQUIRED — O83-3 (scoped to `ResetPasswordView.stories.tsx` only; the rest of this revision
-proceeds).** The Story is `skipCanvas` with no `StoryPageGutter`, so GR-3d's literal text requires the wrapper. But the
+**O83-3 — DECIDED 2026-09-30, owner verbatim: *"Моє рішення (b)"*.** The exemption is now in `docs/golden-rules.md`
+GR-3d ("Page-level View exemption", three conditions). The executor makes **no** edit to `ResetPasswordView.stories.tsx`,
+measures it per §16.5 step 2, and emits `GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter n/a: View carries the
+page gutter (src/modules/auth/components/ResetPasswordView.tsx:<line of each Center p="md">); edge gap 320 · 390 · 1024 ·
+1440 …; gutter written in the Story: NONE.` for every export that renders the page. The `Loading` export renders
+the View's own page root too; if any export's gap is not 16 at 320/390 and at least 32 at 1024/1440, report it —
+that export is then not exempt. The decision record below is kept for provenance.
+
+**Decision record — O83-3 (scoped to `ResetPasswordView.stories.tsx` only).** The Story is `skipCanvas` with no `StoryPageGutter`, so GR-3d's literal text requires the wrapper. But the
 production View already carries the page gutter itself (`ResetPasswordView.tsx` renders `Center mih="60vh" p="md"`):
 the reviewer measured 16/16 at 320/390, and the card sits centred at 184/312/520 at 768/1024/1440. Wrapping it doubles
 the phone gutter to 32. GR-3d lets no agent reinterpret it, so the owner chooses:
@@ -590,9 +597,7 @@ the phone gutter to 32. GR-3d lets no agent reinterpret it, so the owner chooses
 - **(c)** move the page padding out of the production View into its route, then wrap the Story. Unlocks: a separate
   production task on `/auth/reset-password`, outside 886.
 
-Until O83-3 is recorded in the Sprint 83 plan, the executor's GR-3d receipt for this Story reads
-`StoryPageGutter pending O83-3` with the four measured edge gaps. That receipt is complete for handoff; the reviewer
-does not hand this Story to O83-1 before O83-3 is decided.
+*(Superseded 2026-09-30 by the owner's decision above: the `pending O83-3` receipt no longer applies.)*
 
 ### 16.5 Revision verification plan
 
@@ -667,7 +672,8 @@ Then, in the same pass:
   `fz` line and the import; `check-type-responsive.log` still reports Arm A 0.
 - **AC11 [R11].** `story-measure.log` shows edge gaps of 16/16/32/32 (±1px) at 320/390/1024/1440 for every export of
   the four R11 Stories, and no horizontal overflow. `story-grep.log` has no match. The session log carries one GR-3b
-  and one GR-3d receipt per changed Story, and the `pending O83-3` receipt for `ResetPasswordView`.
+  and one GR-3d receipt per changed Story, and the `n/a: View carries the page gutter` receipt per `ResetPasswordView`
+  export (O83-3 = (b)), with its measured gaps.
 - **AC12 [R12].** `story-measure.log`: `authformpattern--auth-card` `h2` measures 20 at 320/390 and 30 at
   768/1024/1440.
 - **AC13 [R13].** `check-type-responsive-verify.log` shows 13 arms plus the exit wiring, all PASS, exit 0.

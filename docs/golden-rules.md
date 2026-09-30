@@ -263,6 +263,21 @@ not hand off around it, and may not report it as "not changed by this task".
   that renders page content **and** an open overlay wraps the page content.
 - `StoryPageGutter` is the only place a Story gutter value is written.
 
+**Page-level View exemption. Owner decision 2026-09-30 (Task 886 review 1, O83-3), verbatim option chosen:**
+*"Моє рішення (b)"* — (b) was: *"record a GR-3d exemption for a View that carries its own page gutter"*. It resolves
+the conflict found on `Patterns/Mantine/ResetPasswordView`, whose production View renders
+`Center mih="60vh" p="md"`: wrapping it in the profile doubles the phone gutter to 32px. A `skipCanvas` Story needs
+no `StoryPageGutter` only when **all** of the following are true:
+
+1. The Story renders a production page-level View, and the View's own root sets the page gutter with Mantine
+   spacing props in the production source. The Story adds no wrapper, padding, `container-*` class or `style` object.
+2. The measured edge gap is 16 at 320 and 390, and at least 32 at 1024 and 1440. More than 32 is allowed only when
+   the View centres narrower content.
+3. The receipt names the production source line of the gutter.
+
+A View that fails any condition is not exempt, and it is wrapped as usual. The exemption never allows a gutter to be
+written in a Story.
+
 **Forbidden in any new or changed Story:**
 - page content with no edge gutter (full bleed);
 - a gutter written in the Story itself: `p`, `px` or `py` on a `Box`/`Stack`/`Group` in `decorators` or `render`, a
@@ -278,7 +293,7 @@ viewport edge to the Story's first page-content box. The expected values are 16 
 
 **Receipt — execution and review alike, one per changed Story:**
 
-`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas | n/a: MantineStoryShell primitive>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas | n/a: MantineStoryShell primitive | n/a: View carries the page gutter (<path:line>)>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
 
 **Who checks what:**
 - **Task design (`create-task`).** Every Story in the owner matrix, including blast-radius rows, gets a GR-3d line in

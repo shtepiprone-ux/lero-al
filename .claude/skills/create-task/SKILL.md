@@ -158,6 +158,7 @@ composition. This is a project-wide rule, not a Storybook preference.
      omitted it and the owner returned the result at 320px.
    - **Gutter (GR-3d, owner rule 2026-09-29).** Give every Story in the owner matrix, blast-radius rows included, a
      GR-3d line: `profile present` (it already uses `StoryPageGutter`, `MantineStoryShell`, or the default canvas),
+     `n/a: View carries the page gutter (<path:line>)` (owner O83-3, 2026-09-30; all three GR-3d conditions measured),
      or `wrap in this task`. A matrix row without that line makes the kickoff unpublishable.
 
 This gate does not require a new story for a non-visible data-only or layout-only change. The task must state that

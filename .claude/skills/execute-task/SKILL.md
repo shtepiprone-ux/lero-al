@@ -176,7 +176,9 @@ For every changed user-visible UI component, work from the lowest visible unit u
    - A `skipCanvas` Story in that scope without the profile is yours to fix in this task. Wrap its page content in
      `<StoryPageGutter>`; you need no kickoff permission. "Not changed by this task" is not an exemption.
    - Never write a gutter in a Story (`p`/`px`/`py` on a wrapper, a `container-*` class, a `style` object).
-   - Exempt: overlay-only Stories, default-canvas Stories, and `Mantine/Primitives/*` on `MantineStoryShell`.
+   - Exempt: overlay-only Stories, default-canvas Stories, `Mantine/Primitives/*` on `MantineStoryShell`, and a
+     page-level View whose own production root sets the page gutter (owner O83-3, 2026-09-30; all three conditions in
+     `docs/golden-rules.md` GR-3d must hold).
    - Measure the edge gap at 320/390/1024/1440 (expected 16/16/32/32) and emit one `GR-3d STORY GUTTER CHECK`
      receipt per Story (`docs/golden-rules.md`). A missing receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
 

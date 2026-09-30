@@ -1,5 +1,5 @@
 # Component Risk Register — Lero.al
-Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/`; 2026-09-25 for Task 852's admin-shell Mantine migration — the mobile-only header row is renamed `AdminHeader`, HIGH classification unchanged)
+Last generated: 2026-07-24 (hand-corrected 2026-09-29 for Task 893's `DatePicker` deletion — two rows removed; 2026-09-24 for Task 873's `PasswordRequirementsHint` relocation out of `src/components/ui/`; 2026-09-25 for Task 852's admin-shell Mantine migration — the mobile-only header row is renamed `AdminHeader`, HIGH classification unchanged)
 
 ## Governance Violations (require fix)
 
@@ -28,7 +28,6 @@ Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRe
 | `AdminUserProfile` | src/components/admin/AdminUserProfile.tsx | ARBITRARY_TW |
 | `HeaderView` | src/components/layout/HeaderView.tsx | ARBITRARY_TW |
 | `Combobox` | src/components/shared/Combobox.tsx | RAW_BUTTON, VIEWPORT_JS |
-| `DatePicker` | src/components/shared/DatePicker.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `HeroSearchClient` | src/components/shared/HeroSearchClient.tsx | ARBITRARY_TW |
 | `PerfDevOverlay` | src/components/shared/PerfDevOverlay.tsx | ARBITRARY_TW |
 | `appImageConfig.ts` | src/components/ui/appImageConfig.ts | ARBITRARY_TW |
@@ -252,7 +251,6 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `AdminUserCreate` | src/components/admin/AdminUserCreate.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminUserProfile` | src/components/admin/AdminUserProfile.tsx | Grid without 2xl step — verify column count at 2560px |
 | `FooterView` | src/components/layout/FooterView.tsx | Grid without 2xl step — verify column count at 2560px |
-| `DatePicker` | src/components/shared/DatePicker.tsx | Grid without 2xl step — verify column count at 2560px |
 | `FiltersPanel` | src/components/shared/FiltersPanel.tsx | Grid without 2xl step — verify column count at 2560px |
 | `alert` | src/components/ui/alert.tsx | Grid without 2xl step — verify column count at 2560px |
 | `card` | src/components/ui/card.tsx | Grid without 2xl step — verify column count at 2560px |

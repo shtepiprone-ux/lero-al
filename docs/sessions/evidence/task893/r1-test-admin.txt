@@ -1,0 +1,14 @@
+
+> lero-al@0.1.0 test:admin
+> vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts src/lib/auth/__tests__/permissions.test.ts src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  5 passed (5)
+      Tests  32 passed (32)
+   Start at  10:09:26
+   Duration  1.11s (transform 489ms, setup 456ms, import 281ms, tests 304ms, environment 3.66s)
+
+EXIT_CODE=0

@@ -1,0 +1,601 @@
+{
+ "patterns-mantine-adminuserprofiledialogsview--unsaved": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 320,
+   "dialogW": 320,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 390,
+   "dialogW": 390,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 768,
+   "dialogW": 440,
+   "dialogLeft": 164,
+   "dialogRight": 164,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1024,
+   "dialogW": 440,
+   "dialogLeft": 292,
+   "dialogRight": 292,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1440,
+   "dialogW": 440,
+   "dialogLeft": 500,
+   "dialogRight": 500,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofiledialogsview--deactivate": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 320,
+   "dialogW": 320,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 390,
+   "dialogW": 390,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 768,
+   "dialogW": 440,
+   "dialogLeft": 164,
+   "dialogRight": 164,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1024,
+   "dialogW": 440,
+   "dialogLeft": 292,
+   "dialogRight": 292,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1440,
+   "dialogW": 440,
+   "dialogLeft": 500,
+   "dialogRight": 500,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofiledialogsview--delete": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 320,
+   "dialogW": 320,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 390,
+   "dialogW": 390,
+   "dialogLeft": 0,
+   "dialogRight": 0,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 768,
+   "dialogW": 440,
+   "dialogLeft": 164,
+   "dialogRight": 164,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1024,
+   "dialogW": 440,
+   "dialogLeft": 292,
+   "dialogRight": 292,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": null,
+   "firstW": 1440,
+   "dialogW": 440,
+   "dialogLeft": 500,
+   "dialogRight": 500,
+   "fonts": {
+    "h1": null,
+    "h2": null,
+    "label": null,
+    "body": null
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofileview--view": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 288,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 358,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": {
+    "left": 24,
+    "right": 24
+   },
+   "firstW": 720,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 960,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 1376,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofileview--view-blocked": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 288,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 358,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": {
+    "left": 24,
+    "right": 24
+   },
+   "firstW": 720,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 960,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 1376,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofileview--edit-errors": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 288,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 358,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": {
+    "left": 24,
+    "right": 24
+   },
+   "firstW": 720,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 960,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 1376,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  }
+ },
+ "patterns-mantine-adminuserprofileview--create": {
+  "320": {
+   "vw": 320,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 288,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "390": {
+   "vw": 390,
+   "overflow": 0,
+   "edge": {
+    "left": 16,
+    "right": 16
+   },
+   "firstW": 358,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "768": {
+   "vw": 768,
+   "overflow": 0,
+   "edge": {
+    "left": 24,
+    "right": 24
+   },
+   "firstW": 720,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1024": {
+   "vw": 1024,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 960,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  },
+  "1440": {
+   "vw": 1440,
+   "overflow": 0,
+   "edge": {
+    "left": 32,
+    "right": 32
+   },
+   "firstW": 1376,
+   "dialogW": null,
+   "dialogLeft": null,
+   "dialogRight": null,
+   "fonts": {
+    "h1": 20,
+    "h2": 16,
+    "label": 14,
+    "body": 12
+   }
+  }
+ }
+}

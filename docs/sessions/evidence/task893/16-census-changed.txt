@@ -1,0 +1,49 @@
+$ npm.cmd run check:surface-census:changed
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 848611017c30e3367414a65c095aedf4e53b3da9
+    Changed paths seen: 24
+    Excluded (16):
+      docs/backlog.md  [outside-src]
+      docs/component-risk-register.md  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      docs/responsive-storybook-inventory.md  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/story-coverage-exempt.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/components/admin/AdminUserProfile.stories.tsx  [deleted]
+      src/components/shared/__tests__/DatePicker.localization.test.tsx  [deleted]
+      src/components/shared/DatePicker.tsx  [deleted]
+      src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx  [story-or-test-file]
+      src/stories/fixtures/admin.fixtures.ts  [non-production-directory]
+      src/stories/mantine/primitives/RangeDatePicker.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/FormSectionStack.stories.tsx  [story-or-test-file]
+    Included surfaces (7):
+      src/app/[locale]/cabinet/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+      src/design-system/mantine/patterns/RangeDatePicker.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/theme.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 7
+    Blocks baselined (recorded debt, does not fail): 24
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 359
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+
+EXIT_CODE=0

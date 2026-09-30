@@ -160,7 +160,7 @@ const ASSERT_STORIES = [
   { id: 'admin-adminemailtemplatesmanager--default', label: 'AdminEmailTemplatesManager/Default', anchors: [{ type: 'testid', value: 'admin-email-templates-manager', label: 'email-tpl' }] },
   { id: 'admin-adminlistingstable--default',       label: 'AdminListingsTable/Default',       anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
   { id: 'admin-adminuserstable--default',          label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },
-  { id: 'admin-adminuserprofile--default',         label: 'AdminUserProfile/Default',         anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
+  { id: 'patterns-mantine-adminuserprofileview--view', label: 'AdminUserProfileView/View',       anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
   // ── Layout (0) — FilterBar/PageHeader/PageShell/Section deleted (Task 788, 2026-09-05):
   // zero production consumers, stories removed with the components ──
   // ── System (3) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7).

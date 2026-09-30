@@ -1,0 +1,7 @@
+00b5212cd2ec967a43cd2e9a7127f5b73a566911  src/design-system/mantine/patterns/MantineCombobox.tsx
+692f870725f328ed3c6894fdb7a9ff9b58cca2f8  src/design-system/mantine/patterns/RangeDatePicker.tsx
+c3a06539c32584569dd8d62560d9f010e68ada39  src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx
+7629f47c7565b5a6efb09ac03a61ac16bbf918fb  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+b418f35d9b298809f2a2a4c1d8fa064317a44738  src/components/admin/AdminUserProfile.tsx
+da6895cb6b1bc144d9e14b0156f6a2a906dccf2f  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+ddaf47db921ba46d44f6b7c9f3e2f25ff33e1fc3  docs/critical-flow-registry.md

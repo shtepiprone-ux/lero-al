@@ -25,7 +25,7 @@
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
+import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
 import { render, fireEvent, within } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
@@ -61,12 +61,12 @@ beforeAll(() => {
   )
 })
 
-function renderOpen(locale: string) {
+function renderOpen(locale: string, selectionMode?: 'range' | 'single') {
   const messages = loadMessages(locale)
   const { baseElement } = render(
     <NextIntlClientProvider locale={locale} messages={messages}>
       <MantineProvider theme={theme} env="test">
-        <RangeDatePicker value={{ from: undefined, to: undefined }} onChange={() => {}} />
+        <RangeDatePicker selectionMode={selectionMode} value={{ from: undefined, to: undefined }} onChange={() => {}} />
       </MantineProvider>
     </NextIntlClientProvider>,
   )
@@ -133,5 +133,49 @@ describe('RangeDatePicker — calendar-body localization (Task 562)', () => {
     )
     expect(allAlbanian).toBe(true)
     expect(anyEnglish).toBe(false)
+  })
+})
+
+// Task 893 (R10): the legacy single-date `DatePicker` was deleted, and its localization test (Task 565)
+// moved here as `selectionMode="single"` cases. Same failure mode simulated: `Intl.DateTimeFormat` throws (a browser
+// whose ICU lacks `sq`). The legacy "today label" assertion has no counterpart — the "Today — <date>" shortcut is
+// gone (recorded in Task 893 §5.3); today's own cell stays marked and selectable.
+// Planted-violation (verified once and reverted, docs/sessions/evidence/task893): making `useCalendarLocaleData`
+// always return English arrays fails both cases below.
+const OriginalDateTimeFormat = Intl.DateTimeFormat
+
+function breakIntlDateTimeFormat() {
+  // @ts-expect-error -- intentionally breaking the global to simulate a browser whose ICU
+  // cannot construct a DateTimeFormat for the active locale at all (the real failure mode).
+  Intl.DateTimeFormat = function () {
+    throw new Error('simulated broken/incomplete ICU locale data')
+  }
+}
+
+describe('RangeDatePicker single mode — calendar localization is ICU-independent (moved from Task 565)', () => {
+  afterEach(() => {
+    Intl.DateTimeFormat = OriginalDateTimeFormat
+  })
+
+  it('sq: weekday row and month/year header render Albanian even when Intl.DateTimeFormat throws', () => {
+    breakIntlDateTimeFormat()
+    const screen = renderOpen('sq', 'single')
+
+    expect(screen.getAllByText('hën').length).toBeGreaterThan(0)
+    expect(screen.queryAllByText('Mon').length).toBe(0)
+    expect(screen.getByText(expectedRightMonthLabel('sq'))).toBeTruthy()
+    expect(
+      screen.queryByText(/^(January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$/),
+    ).toBeNull()
+  })
+
+  it('uk: weekday row and month/year header (genitive year suffix) render Ukrainian even when Intl.DateTimeFormat throws', () => {
+    breakIntlDateTimeFormat()
+    const screen = renderOpen('uk', 'single')
+
+    expect(screen.getAllByText('пн').length).toBeGreaterThan(0)
+    expect(screen.getByText(expectedRightMonthLabel('uk'))).toBeTruthy()
+    const messages = loadMessages('uk')
+    expect(messages.common.calendar_month_year_suffix).toBeTruthy()
   })
 })

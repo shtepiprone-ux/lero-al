@@ -1,0 +1,2 @@
+479c42bfb7e9ffbbfaca09e689c2280153d1e62b  src/design-system/mantine/patterns/RangeDatePicker.tsx
+b330563eb78efe247eb98264ff41f3134e5fbda5  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx

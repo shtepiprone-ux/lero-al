@@ -786,6 +786,22 @@ GR-3d: `MantineStoryShell` primitive (n/a).
 - **Open before approval:** the 12 O84-2 tuples in §20.5, then R8 carried from 863 (see the `docs/backlog.md` 893
   cell), in the approving commit.
 
+## 22. Review 5 — 2026-09-30 — `APPROVED WITH NOTES` (closure)
+
+- **Owner, O84-2 remainder (§20.5, 12 tuples), 2026-09-30, verbatim:** *"тоді все ок, візуально все ок, приймаю."*
+  The owner also asked whether the phone header switching to the last month before its section reaches the top is
+  intended. It is: `pickVisibleMonthIdx` (F17, `RangeDatePicker.tsx:125-145`) returns the last section at the bottom
+  of the scroll range. With all 72 tuples accepted (64 in §17.1, plus these 12 replacing the returned 8), O84-2's visual matrix is closed.
+- **Final tree** equals §21 (`479c42bf`, `b330563e`, `ef9d04c2`). The build (`r3-build.txt`, exit 0) covers that content.
+  The file's later mtime is the reviewer's plant restore (same hash).
+- **R8 carried from 863** is applied in this closure: in `docs/critical-flow-registry.md` row 70, the self-test text
+  now reads 18 bad variants + 3 good + 9 no-false-positive (863 session log §6).
+- **Notes (P3):**
+  - AC16's "first visible section" wording (§21);
+  - revision 3's Files Changed table omits the session log and `r3-*` evidence, which are in the write set.
+- **Still open, carried as owner action O84-2 (post-deploy):** block a user with an end date, unblock with the status
+  select alone and save, and create one test user.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

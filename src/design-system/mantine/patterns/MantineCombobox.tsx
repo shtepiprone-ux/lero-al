@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState, type KeyboardEventHandler, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type KeyboardEventHandler, type ReactNode } from 'react'
 import {
   Box,
   Combobox,
@@ -209,12 +209,16 @@ export function MantineCombobox({
   const theme = useMantineTheme()
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
+    // Same call as Mantine's own `Select` (Task 893 R12): bring the option flagged `active` (the current value)
+    // into view, otherwise a long list (a year list) opens at the top and hides the current and later options.
+    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active', { scrollIntoView: true }),
     onDropdownClose: () => combobox.resetSelectedOption(),
   })
 
   const [search, setSearch] = useState('')
   const [sheetSearch, setSheetSearch] = useState('')
   const selected = options.find((o) => o.value === value)
+  const selectedSheetOptionRef = useRef<HTMLButtonElement | null>(null)
 
   // Reset search when the value is cleared externally (parity with legacy Combobox.tsx).
   useEffect(() => {
@@ -225,6 +229,16 @@ export function MantineCombobox({
   // flow "double-open / re-entry").
   useEffect(() => {
     if (!drawerOpened) setSheetSearch('')
+  }, [drawerOpened])
+
+  // Task 893 R13: when the mobile sheet opens, bring the current value's row into view (the sheet renders from
+  // the top). The Drawer mounts its content after `opened` flips, so the ref is read on the next frame.
+  useEffect(() => {
+    if (!drawerOpened) return
+    const frame = window.requestAnimationFrame(() => {
+      selectedSheetOptionRef.current?.scrollIntoView({ block: 'center' })
+    })
+    return () => window.cancelAnimationFrame(frame)
   }, [drawerOpened])
 
   const desktopQuery = variant === 'input' ? search : search
@@ -445,6 +459,7 @@ export function MantineCombobox({
               sheetFiltered.map((opt) => (
                 <UnstyledButton
                   key={opt.value}
+                  ref={value === opt.value ? selectedSheetOptionRef : undefined}
                   value={opt.value}
                   onClick={() => handleSelect(opt.value)}
                   w="100%"

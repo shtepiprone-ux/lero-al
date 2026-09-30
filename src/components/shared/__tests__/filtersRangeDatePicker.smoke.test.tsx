@@ -91,6 +91,8 @@ beforeAll(() => {
     disconnect() {}
   }
   vi.stubGlobal('ResizeObserver', MockResizeObserver)
+  // jsdom has no `scrollIntoView`; MantineCombobox now scrolls the current value into view on open (Task 893 R12).
+  Element.prototype.scrollIntoView = vi.fn()
   vi.stubGlobal(
     'matchMedia',
     vi.fn().mockImplementation((query: string) => ({

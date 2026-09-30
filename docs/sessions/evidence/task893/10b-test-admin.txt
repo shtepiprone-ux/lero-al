@@ -1,0 +1,16 @@
+$ npm.cmd run test:admin
+
+> lero-al@0.1.0 test:admin
+> vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts src/lib/auth/__tests__/permissions.test.ts src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  5 passed (5)
+      Tests  32 passed (32)
+   Start at  23:17:47
+   Duration  1.18s (transform 497ms, setup 457ms, import 307ms, tests 266ms, environment 4.05s)
+
+
+EXIT_CODE=0

@@ -45,11 +45,13 @@ function RangeDatePickerOpen({
   maxDate,
   disablePastDates,
   placeholder,
+  selectionMode,
 }: {
   value: DateRange
   maxDate?: Date
   disablePastDates?: boolean
   placeholder: string
+  selectionMode?: 'range' | 'single'
 }) {
   const [current, setCurrent] = useState<DateRange>(value)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -73,6 +75,7 @@ function RangeDatePickerOpen({
         maxDate={maxDate}
         disablePastDates={disablePastDates}
         placeholder={placeholder}
+        selectionMode={selectionMode}
       />
     </Box>
   )
@@ -169,11 +172,13 @@ function RangeDatePickerRow({
   maxDate,
   disablePastDates,
   placeholder,
+  selectionMode,
 }: {
   value?: DateRange
   maxDate?: Date
   disablePastDates?: boolean
   placeholder: string
+  selectionMode?: 'range' | 'single'
 }) {
   const [current, setCurrent] = useState<DateRange>(value ?? { from: undefined, to: undefined })
   return (
@@ -185,7 +190,54 @@ function RangeDatePickerRow({
         maxDate={maxDate}
         disablePastDates={disablePastDates}
         placeholder={placeholder}
+        selectionMode={selectionMode}
       />
     </Box>
   )
+}
+
+/**
+ * Task 893 (GR-3a EXTEND — `selectionMode="single"`, used by the admin user profile's suspended-until field):
+ * a day click stages one day and replaces the previous one; Apply / Confirm commit `{ from: d, to: d }`. The
+ * trigger shows one date. `SingleDate` is empty with the panel forced open; `SingleDateSelected` has a committed
+ * day (fixed, no wall-clock) so the trigger shows it with the clear-X and the same day is marked in the panel.
+ * Viewport and locale come from the Storybook toolbar.
+ */
+export const SingleDate: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    return (
+      <MantineStoryShell>
+        <RangeDatePickerOpen
+          selectionMode="single"
+          value={{ from: undefined, to: undefined }}
+          placeholder={t('range_placeholder')}
+        />
+      </MantineStoryShell>
+    )
+  },
+}
+
+export const SingleDateSelected: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    return (
+      <MantineStoryShell>
+        <Stack gap="xl">
+          <RangeDatePickerRow
+            selectionMode="single"
+            value={{ from: '2026-02-05', to: '2026-02-05' }}
+            placeholder={t('range_placeholder')}
+          />
+          <RangeDatePickerOpen
+            selectionMode="single"
+            value={{ from: '2026-02-05', to: '2026-02-05' }}
+            placeholder={t('range_placeholder')}
+          />
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
 }

@@ -1,0 +1,11 @@
+PLANT P7 file=src/design-system/mantine/patterns/MantineCombobox.tsx
+blob-hash-before=00b5212cd2ec967a43cd2e9a7127f5b73a566911
+blob-hash-planted=26e5ad17e6e3b5f3e434fad592e3b545e8dd3f7d
+blob-hash-restored=00b5212cd2ec967a43cd2e9a7127f5b73a566911
+hashes-equal=true
+PLANTED_TEST_EXIT_CODE=1
+--- failing lines ---
+     × T-C1 desktop: opening scrolls the option of the current value (the 12th) into view 1072ms
+      Tests  1 failed | 16 passed (17)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx > MantineCombobox — scroll to the selected option (Task 893 R12/R13) > T-C1 desktop: opening scrolls the option of the current value (the 12th) into view

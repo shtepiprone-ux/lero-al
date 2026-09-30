@@ -1,0 +1,22 @@
+target: src/components/admin/AdminUserProfileView.tsx
+hash BEFORE plant: f409dacf1ea592347f44421649a6661d3dfaa527
+hash AFTER plant (planted): ac7e45b9d67b08855e386769723222298c4cde00
+plant: "id=\"admin-user-first-name\"" -> ""
+--- run with plant: EXIT_CODE=1 (must be non-zero)
+failing tests:
+× T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields 754ms
+× T1 (server error) — the banner shows the server error and the save_error toast fires 419ms
+× T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere 329ms
+× T7 — create with an invalid email shows the inline email error and never calls createAdminUser 227ms
+× T9 — every edit control is reachable by its label 478ms
+Tests  5 failed | 5 passed (10)
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 (server error) — the banner shows the server error and the save_error toast fires
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T7 — create with an invalid email shows the inline email error and never calls createAdminUser
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T9 — every edit control is reachable by its label
+hash AFTER restore: f409dacf1ea592347f44421649a6661d3dfaa527
+hashes equal: true
+--- run after restore: EXIT_CODE=0 (must be 0)
+Tests  10 passed (10)
+VERDICT: PLANT FAILED THE TEST AND RESTORE PASSED (two-armed OK)

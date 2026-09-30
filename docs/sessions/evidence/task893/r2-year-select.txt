@@ -1,0 +1,7 @@
+SingleDate @320: chose 2030 -> year field reads "2030"; day cells rendered for 2030: 436
+SingleDate @320: picked 2030-01-01, Confirm -> trigger values: ["trigger=01.01.2030"]
+SingleDate @1440: chose 2030 -> year field reads "2030"; day cells rendered for 2030: 70
+Default (forced-open capped instance, the only one on a phone) @320: year 2030 NOT OFFERED/selectable in this instance (locator.click: Timeout 8000ms exceeded.)
+Default (first, uncapped row trigger) @1440: chose 2030 -> year field reads "2030"; day cells rendered for 2030: 70
+Default (capped maxDate instance) year 2022 @320: chose 2022 -> year field reads "2022"; day cells rendered for 2022: 443
+NOTE: at 320 the Default Story renders only its forced-open instance, which has maxDate (Feb 2026), so 2030 is not offered there BY DESIGN (the cap stays, R18 does not change maxDate consumers); the 2022 selection on that capped instance lands in 2022. The uncapped first row trigger exists only at 1440 (2030 selected there). The uncapped phone case is the SingleDate Story (first line).

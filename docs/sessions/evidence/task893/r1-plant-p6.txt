@@ -1,0 +1,15 @@
+PLANT P6 file=src/components/admin/AdminUserProfile.tsx
+blob-hash-before=b418f35d9b298809f2a2a4c1d8fa064317a44738
+blob-hash-planted=f787f90a14586d9cde30ba18fd5777510702ec83
+blob-hash-restored=b418f35d9b298809f2a2a4c1d8fa064317a44738
+hashes-equal=true
+PLANTED_TEST_EXIT_CODE=1
+--- failing lines ---
+     × T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both 2912ms
+     × T10 — a status-only change enables Save and sends the new status (O84-8) 2150ms
+     × T10b — choosing the stored status again makes the form clean, so Save is disabled 1768ms
+      Tests  3 failed | 9 passed (12)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both
+ FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10 — a status-only change enables Save and sends the new status (O84-8)
+ FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10b — choosing the stored status again makes the form clean, so Save is disabled

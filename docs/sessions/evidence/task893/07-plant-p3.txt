@@ -1,0 +1,16 @@
+target: src/design-system/mantine/patterns/RangeDatePicker.tsx
+hash BEFORE plant: 441624f2cb7e17d23e40d8a744c17501b9e8d365
+hash AFTER plant (planted): b8267a7a82f030efa048a80ebf79d74d31ecf5ef
+plant: "return mode === 'single' ? { from: day, to: undefined } : pickDay(staged, day)" -> "return pickDay(staged, day)"
+--- run with plant: EXIT_CODE=1 (must be non-zero)
+failing tests:
+× desktop: a second day click replaces the first; Apply commits {from:X, to:X} 150ms
+× mobile: a second day tap replaces the first; Confirm commits {from:X, to:X} 1248ms
+Tests  2 failed | 38 passed (40)
+FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — single selection mode (Task 893) > desktop: a second day click replaces the first; Apply commits {from:X, to:X}
+FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — single selection mode (Task 893) > mobile: a second day tap replaces the first; Confirm commits {from:X, to:X}
+hash AFTER restore: 441624f2cb7e17d23e40d8a744c17501b9e8d365
+hashes equal: true
+--- run after restore: EXIT_CODE=0 (must be 0)
+Tests  40 passed (40)
+VERDICT: PLANT FAILED THE TEST AND RESTORE PASSED (two-armed OK)

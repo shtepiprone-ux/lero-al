@@ -1,0 +1,17 @@
+PLANT P9 file=src/design-system/mantine/patterns/RangeDatePicker.tsx
+blob-hash-before=7fd34906cccd407e12872c161f5c1005adec500f
+blob-hash-planted=6f66872ad08d18408bc1c1e0941fc3bfb26a2bed
+blob-hash-restored=7fd34906cccd407e12872c161f5c1005adec500f
+hashes-equal=true
+PLANTED_TEST_EXIT_CODE=1
+--- failing lines ---
+     × T-M1 choosing a year far after the window renders that year and the header follows 1511ms
+     × T-M2 choosing a year before the window renders that year and the header follows 1661ms
+     × T-M3 single mode: choose a later year, pick a day, Confirm → onChange gets that year, as one day 1664ms
+     × T-M4 with a maxDate (the filters case): the list ends at maxDate's year and an earlier year lands there 1413ms
+      Tests  4 failed | 41 passed (45)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19) > T-M1 choosing a year far after the window renders that year and the header follows
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19) > T-M2 choosing a year before the window renders that year and the header follows
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19) > T-M3 single mode: choose a later year, pick a day, Confirm → onChange gets that year, as one day
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19) > T-M4 with a maxDate (the filters case): the list ends at maxDate's year and an earlier year lands there

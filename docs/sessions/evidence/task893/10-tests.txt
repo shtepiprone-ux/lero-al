@@ -1,0 +1,12 @@
+$ npx.cmd vitest run src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  69 passed (69)
+   Start at  23:17:30
+   Duration  16.12s (transform 1.55s, setup 402ms, import 8.02s, tests 24.96s, environment 3.16s)
+
+
+EXIT_CODE=0

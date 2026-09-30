@@ -1,0 +1,9 @@
+1440 year trigger aria-label present: true
+1440 SingleDate: list scrollTop=26 clientHeight=220 scrollHeight=656
+1440 SingleDate: 2026 inside visible box: true
+1440 SingleDate: last option "2036" reachable+visible after scroll: true
+390 year trigger count: 1
+390 dialogs open: 2
+390 SingleDate: sheet scrollTop=0 clientHeight=700 scrollHeight=704
+390 SingleDate: 2026 inside sheet visible area: true
+1440 Combobox default: NOT MEASURED AS WORDED. The Story renders 10 city comboboxes (6 options each, no preset value; the list never scrolls: clientHeight >= scrollHeight), so 'open with a value' with a long list cannot be exercised there. The same MantineCombobox code path is measured on the RangeDatePicker year list above (16 options in a 220px box) and by unit tests T-C1..T-C3.

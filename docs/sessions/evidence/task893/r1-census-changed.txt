@@ -1,0 +1,54 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 5a663c9b399446b0b77934ce7a58fefd985d980a
+    Changed paths seen: 31
+    Excluded (22):
+      docs/backlog.md  [outside-src]
+      docs/component-risk-register.md  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      docs/responsive-storybook-inventory.md  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/grant-discipline-audit.sql  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/story-coverage-exempt.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/components/admin/AdminUserProfile.stories.tsx  [deleted]
+      src/components/shared/__tests__/DatePicker.localization.test.tsx  [deleted]
+      src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx  [story-or-test-file]
+      src/components/shared/DatePicker.tsx  [deleted]
+      src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx  [story-or-test-file]
+      src/stories/fixtures/admin.fixtures.ts  [non-production-directory]
+      src/stories/mantine/primitives/RangeDatePicker.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/FormSectionStack.stories.tsx  [story-or-test-file]
+      tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md  [outside-src]
+      tasks/Sprints/Sprint_78_kickoff_prompt_Task_865_Listing_Views_Anonymous_Insert_Closed.md  [outside-src]
+      tasks/Sprints/Sprint_84_One_Clock_And_One_Date_Order.md  [outside-src]
+    Included surfaces (8):
+      src/app/[locale]/cabinet/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/design-system/mantine/patterns/MantineCombobox.tsx
+      src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+      src/design-system/mantine/patterns/RangeDatePicker.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/theme.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 8
+    Blocks baselined (recorded debt, does not fail): 24
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 359
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

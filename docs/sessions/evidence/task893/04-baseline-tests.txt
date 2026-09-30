@@ -1,0 +1,27 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  22:39:23
+   Duration  13.96s (transform 992ms, setup 449ms, import 7.97s, tests 15.85s, environment 3.52s)
+
+
+EXIT_CODE(vitest)=0
+=====test:admin=====
+
+> lero-al@0.1.0 test:admin
+> vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts src/lib/auth/__tests__/permissions.test.ts src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  5 passed (5)
+      Tests  32 passed (32)
+   Start at  22:39:38
+   Duration  1.31s (transform 483ms, setup 486ms, import 295ms, tests 296ms, environment 4.15s)
+
+
+EXIT_CODE(test:admin)=0

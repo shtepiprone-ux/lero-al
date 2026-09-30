@@ -1,0 +1,14 @@
+target: src/components/admin/AdminUserProfile.tsx
+hash BEFORE plant: 8168e8aa54d41a4660f8ff79b5e3c4c5fff28b96
+hash AFTER plant (planted): 0c09c16abb66acb433a451326d390355d53440de
+plant: "onDelete={() => setShowDeleteDialog(true)}" -> "onDelete={() => { void handleDelete() }}"
+--- run with plant: EXIT_CODE=1 (must be non-zero)
+failing tests:
+× T4 — delete: the dialog opens first; confirm deletes and redirects; cancel deletes nothing 1118ms
+Tests  1 failed | 9 passed (10)
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T4 — delete: the dialog opens first; confirm deletes and redirects; cancel deletes nothing
+hash AFTER restore: 8168e8aa54d41a4660f8ff79b5e3c4c5fff28b96
+hashes equal: true
+--- run after restore: EXIT_CODE=0 (must be 0)
+Tests  10 passed (10)
+VERDICT: PLANT FAILED THE TEST AND RESTORE PASSED (two-armed OK)

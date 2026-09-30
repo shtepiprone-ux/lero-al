@@ -331,6 +331,74 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
   })
 })
 
+describe('RangeDatePicker — single selection mode (Task 893)', { timeout: 15_000 }, () => {
+  // Planted-violation P3 (docs/sessions/evidence/task893/07-plant-p3.txt): making `pickStaged` fall back to
+  // the range `pickDay` in single mode makes the two "second click replaces" tests FAIL — the 2nd click
+  // builds the range {DAY_10, DAY_15} instead of restaging one day.
+  it('desktop: a second day click replaces the first; Apply commits {from:X, to:X}', () => {
+    stubMatchMedia(false)
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const { baseElement, container } = render(
+      withProviders(
+        <RangeDatePicker selectionMode="single" value={{ from: undefined, to: undefined }} onChange={onChange} />,
+      ),
+    )
+    fireEvent.click(getTrigger(container))
+
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
+    expect(onChange).not.toHaveBeenCalled()
+
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith({ from: DAY_15, to: DAY_15 })
+  })
+
+  it('mobile: a second day tap replaces the first; Confirm commits {from:X, to:X}', () => {
+    stubMatchMedia(true)
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const { baseElement, container } = render(
+      withProviders(
+        <RangeDatePicker selectionMode="single" value={{ from: undefined, to: undefined }} onChange={onChange} />,
+      ),
+    )
+    fireEvent.click(getTrigger(container))
+
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_20}"]`)!)
+    expect(onChange).not.toHaveBeenCalled()
+
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Confirm' }))
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith({ from: DAY_20, to: DAY_20 })
+  })
+
+  it('an already committed single day is replaced by a new pick, never extended into a range', () => {
+    stubMatchMedia(false)
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const { baseElement, container } = render(
+      withProviders(<RangeDatePicker selectionMode="single" value={{ from: DAY_10, to: DAY_10 }} onChange={onChange} />),
+    )
+    fireEvent.click(getTrigger(container))
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_20}"]`)!)
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith({ from: DAY_20, to: DAY_20 })
+  })
+
+  it('range mode is the default: the same two clicks still build a range', () => {
+    stubMatchMedia(false)
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const { baseElement, container } = render(
+      withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} />),
+    )
+    fireEvent.click(getTrigger(container))
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_10}"]`)!)
+    fireEvent.click(baseElement.querySelector(`[data-date="${DAY_15}"]`)!)
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Apply' }))
+    expect(onChange).toHaveBeenCalledWith({ from: DAY_10, to: DAY_15 })
+  })
+})
+
 describe('RangeDatePicker — trigger (Task 558)', { timeout: 15_000 }, () => {
   beforeEach(() => stubMatchMedia(false))
 
@@ -535,5 +603,117 @@ describe('pickVisibleMonthIdx (Task 891 review 6, F17)', () => {
     // The closest-offset rule alone would answer index 2 here (700 <= 700+4, 900 > 700+4) —
     // this is the exact review 6 defect (the header read "August" while "September" was on screen).
     expect(pickVisibleMonthIdx(sectionTops, maxScrollTop, clientHeight, scrollHeight)).toBe(3)
+  })
+})
+
+// Task 893 revision 2 (R18/R19): on a phone, every year/month the header dropdowns offer must be selectable.
+// The month window used to be fixed around today, and `jumpTo` returned silently for a month outside it, so
+// choosing 2030 left the field at the current year. Planted-violation P9 (evidence r2-plant-p9.txt): restoring
+// the silent `return` for an out-of-window target makes T-M1, T-M2 and T-M4 FAIL.
+describe('RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19)', { timeout: 20_000 }, () => {
+  const thisYear = today.getFullYear()
+
+  beforeEach(() => {
+    stubMatchMedia(true)
+    Element.prototype.scrollIntoView = vi.fn()
+  })
+
+  function getYearTrigger(root: ParentNode): HTMLInputElement {
+    return root.querySelector('input[aria-label="Year"]') as HTMLInputElement
+  }
+
+  async function chooseYear(baseElement: HTMLElement, year: number) {
+    fireEvent.click(getYearTrigger(baseElement))
+    await waitFor(() => expect(within(baseElement).getAllByRole('dialog', { hidden: true }).length).toBeGreaterThan(1))
+    const dialogs = within(baseElement).getAllByRole('dialog', { hidden: true })
+    fireEvent.click(within(dialogs[dialogs.length - 1]).getByRole('button', { name: String(year), hidden: true }))
+  }
+
+  function openMobile(props: Partial<React.ComponentProps<typeof RangeDatePicker>> = {}) {
+    const onChange = vi.fn<(next: DateRange) => void>()
+    const utils = render(
+      withProviders(<RangeDatePicker value={{ from: undefined, to: undefined }} onChange={onChange} {...props} />),
+    )
+    fireEvent.click(getTrigger(utils.container))
+    return { onChange, ...utils }
+  }
+
+  it('T-M1 choosing a year far after the window renders that year and the header follows', async () => {
+    const { baseElement } = openMobile()
+    await chooseYear(baseElement, thisYear + 4)
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe(String(thisYear + 4)))
+    expect(baseElement.querySelector(`[data-date^="${thisYear + 4}-"]`)).toBeTruthy()
+  })
+
+  it('T-M2 choosing a year before the window renders that year and the header follows', async () => {
+    const { baseElement } = openMobile()
+    await chooseYear(baseElement, thisYear - 4)
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe(String(thisYear - 4)))
+    expect(baseElement.querySelector(`[data-date^="${thisYear - 4}-"]`)).toBeTruthy()
+  })
+
+  it('T-M3 single mode: choose a later year, pick a day, Confirm → onChange gets that year, as one day', async () => {
+    const { baseElement, onChange } = openMobile({ selectionMode: 'single' })
+    await chooseYear(baseElement, thisYear + 4)
+    await waitFor(() => expect(baseElement.querySelector(`[data-date^="${thisYear + 4}-"]`)).toBeTruthy())
+    const cell = baseElement.querySelector(`[data-date^="${thisYear + 4}-"]:not([disabled])`) as HTMLElement
+    const iso = cell.getAttribute('data-date')!
+    fireEvent.click(cell)
+    fireEvent.click(within(baseElement as HTMLElement).getByRole('button', { name: 'Confirm', hidden: true }))
+    expect(onChange).toHaveBeenCalledWith({ from: iso, to: iso })
+    expect(iso.startsWith(String(thisYear + 4))).toBe(true)
+  })
+
+  it('T-M4 with a maxDate (the filters case): the list ends at maxDate\'s year and an earlier year lands there', async () => {
+    const { baseElement } = openMobile({ maxDate: new Date(thisYear, today.getMonth(), 15) })
+    fireEvent.click(getYearTrigger(baseElement))
+    await waitFor(() => expect(within(baseElement).getAllByRole('dialog', { hidden: true }).length).toBeGreaterThan(1))
+    const dialogs = within(baseElement).getAllByRole('dialog', { hidden: true })
+    const labels = within(dialogs[dialogs.length - 1]).getAllByRole('button', { hidden: true }).map((b) => b.textContent)
+    expect(labels).toContain(String(thisYear))
+    expect(labels).not.toContain(String(thisYear + 1))
+    fireEvent.click(within(dialogs[dialogs.length - 1]).getByRole('button', { name: String(thisYear - 3), hidden: true }))
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe(String(thisYear - 3)))
+    expect(baseElement.querySelector(`[data-date^="${thisYear - 3}-"]`)).toBeTruthy()
+  })
+
+  it('T-M5 a month inside the current window only scrolls: the first rendered section does not change', async () => {
+    const { baseElement } = openMobile()
+    const firstBefore = baseElement.querySelector('[data-date]')!.getAttribute('data-date')
+    fireEvent.click(baseElement.querySelector('input[aria-label="Month"]') as HTMLElement)
+    await waitFor(() => expect(within(baseElement).getAllByRole('dialog', { hidden: true }).length).toBeGreaterThan(1))
+    const dialogs = within(baseElement).getAllByRole('dialog', { hidden: true })
+    const buttons = within(dialogs[dialogs.length - 1]).getAllByRole('button', { hidden: true })
+    fireEvent.click(buttons[0])
+    await waitFor(() => expect(within(baseElement).getAllByRole('dialog', { hidden: true }).length).toBe(1))
+    expect(baseElement.querySelector('[data-date]')!.getAttribute('data-date')).toBe(firstBefore)
+  })
+
+  // Task 893 revision 3 (R20/R21). P10 (r3-plant-p10.txt): section tops read from the full `sectionRefs.current`
+  // again → T-M6 FAILS. P11 (r3-plant-p11.txt): a moved window starts at `minDate` again → T-M7 FAILS.
+  it('T-M6 after a jump shrinks the window, the header follows the last rendered section, not the anchor fallback', async () => {
+    const { baseElement } = openMobile({
+      value: { from: '2026-01-28', to: '2026-02-05' },
+      maxDate: new Date(2026, 1, 10),
+    })
+    await chooseYear(baseElement, 2022)
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe('2022'))
+    await chooseYear(baseElement, 2026)
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe('2026'))
+    const viewport = baseElement.querySelector('.mantine-ScrollArea-viewport') as HTMLElement
+    expect(viewport).toBeTruthy()
+    fireEvent.scroll(viewport)
+    // jsdom: every offsetTop is 0 and scrollHeight/clientHeight are 0, so the "at the end" rule answers the last
+    // rendered section (February 2026). The stale-ref bug answered the anchor fallback (January 2026).
+    await waitFor(() => expect((baseElement.querySelector('input[aria-label="Month"]') as HTMLInputElement).value).toBe('February'))
+    expect(getYearTrigger(baseElement).value).toBe('2026')
+  })
+
+  it('T-M7 disablePastDates (minDate branch): the last offered year renders and the header reads it', async () => {
+    const { baseElement } = openMobile({ disablePastDates: true })
+    const lastYear = thisYear + 10
+    await chooseYear(baseElement, lastYear)
+    await waitFor(() => expect(getYearTrigger(baseElement).value).toBe(String(lastYear)))
+    expect(baseElement.querySelector(`[data-date^="${lastYear}-"]`)).toBeTruthy()
   })
 })

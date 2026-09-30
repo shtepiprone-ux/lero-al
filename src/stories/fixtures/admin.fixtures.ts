@@ -637,3 +637,44 @@ export const FIXTURE_REGIONS = [
   { id: 2, name_al: 'Qarku i Durrësit' },
   { id: 3, name_al: 'Qarku i Vlorës' },
 ]
+
+// Task 893 — AdminUserProfileView fixtures, derived from FIXTURE_PROFILE_USER (frozen dates, no wall clock).
+export const FIXTURE_PROFILE_LOCATION = {
+  id: 1,
+  name_al: 'Tirana',
+  region_id: 1,
+  parent: { id: 1, name_al: 'Qarku i Tiranës' },
+}
+
+export const FIXTURE_PROFILE_USER_PRIVATE = {
+  ...FIXTURE_PROFILE_USER,
+  role: 'user' as UserRole,
+  user_type: 'private' as UserType,
+  company_name: null,
+  is_verified: false,
+  location_id: 1,
+  location: FIXTURE_PROFILE_LOCATION,
+}
+
+export const FIXTURE_PROFILE_USER_AGENT = {
+  ...FIXTURE_PROFILE_USER,
+  website: 'https://tirana-realestate.example',
+  position: 'Broker',
+  year_started: 2015,
+  location_id: 1,
+  location: FIXTURE_PROFILE_LOCATION,
+}
+
+export const FIXTURE_PROFILE_USER_BLOCKED = {
+  ...FIXTURE_PROFILE_USER_PRIVATE,
+  status: 'blocked' as UserStatus,
+  block_reason: 'Repeated policy violations',
+  suspended_until: '2026-12-31',
+}
+
+export const FIXTURE_PROFILE_USER_LOCATION_REQUEST = {
+  ...FIXTURE_PROFILE_USER_PRIVATE,
+  location_id: null,
+  location: null,
+  location_request: { city: 'Shkodër', region: 'Qarku i Shkodrës' },
+}

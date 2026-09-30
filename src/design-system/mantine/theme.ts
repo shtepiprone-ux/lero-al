@@ -270,6 +270,9 @@ declare module '@mantine/core' {
       // Task 877 (D71-4, precedent Task 825's `lightboxMediaMaxWidth`) — `/admin/currency`'s page
       // wrapper `max-w-5xl` (64rem, 1024px), the same wrapper the other admin pages still carry.
       adminPageMaxWidth: string
+      // Task 893 (R8) — `/admin/users/new`'s page wrapper `max-w-3xl` (48rem, 768px), the narrower form
+      // wrapper; same value type and read helper as `adminPageMaxWidth`.
+      adminPageFormMaxWidth: string
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -808,6 +811,7 @@ export const theme = createTheme({
       appShellHeaderHeight: 60,   // Task 852: MantineAppShellFoundation default header height
       adminTopBarHeight: 72,      // Task 852: AdminShell's own top-bar height (spec §17.1, all widths)
       adminPageMaxWidth: '64rem', // 1024px — Task 877: admin page wrapper (legacy `max-w-5xl`)
+      adminPageFormMaxWidth: '48rem', // 768px — Task 893: admin form page wrapper (legacy `max-w-3xl`)
     },
     overlay: {
       dragHandle: {

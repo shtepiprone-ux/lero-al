@@ -19,8 +19,8 @@
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import { render, fireEvent } from '@testing-library/react'
+import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
+import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { MantineCombobox } from '../MantineCombobox'
@@ -362,5 +362,94 @@ describe('MantineCombobox — chevron right-section pointer-events (Task 845 Rev
     )
     const wrapper = container.querySelector('.mantine-TextInput-wrapper') as HTMLElement
     expect(wrapper.style.getPropertyValue('--input-right-section-pointer-events')).toBe('none')
+  })
+})
+
+/**
+ * Task 893 R12/R13 — the list opens on the current value. A year list (16–80 options in a 220px box or a
+ * bottom sheet) used to open at the top, hiding the current year and every later one.
+ */
+describe('MantineCombobox — scroll to the selected option (Task 893 R12/R13)', () => {
+  const yearOptions = Array.from({ length: 16 }, (_, i) => ({ value: String(2021 + i), label: String(2021 + i) }))
+  const originalScrollIntoView = Element.prototype.scrollIntoView
+  const matchMediaStub = (mobile: boolean) =>
+    vi.fn().mockImplementation((query: string) => ({
+      matches: mobile && query.includes('max-width'),
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }))
+
+  afterEach(() => {
+    Element.prototype.scrollIntoView = originalScrollIntoView
+    vi.stubGlobal('matchMedia', matchMediaStub(false))
+  })
+
+  function stubScrollIntoView() {
+    const spy = vi.fn()
+    Element.prototype.scrollIntoView = spy
+    return spy
+  }
+
+  const scrolledElements = (spy: ReturnType<typeof vi.fn>) => spy.mock.contexts as HTMLElement[]
+
+  it('T-C1 desktop: opening scrolls the option of the current value (the 12th) into view', async () => {
+    const spy = stubScrollIntoView()
+    const { baseElement } = render(
+      withProvider(
+        <MantineCombobox options={yearOptions} value="2032" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    fireEvent.click(baseElement.querySelector('input')!)
+    await waitFor(() => expect(spy).toHaveBeenCalled())
+    const target = scrolledElements(spy)[0]
+    expect(target.textContent).toContain('2032')
+    expect(target.hasAttribute('data-combobox-active')).toBe(true)
+    expect(target.closest('.mantine-Combobox-options')).toBeTruthy()
+  })
+
+  it('T-C2 mobile: opening the sheet scrolls the button of the current value into view', async () => {
+    vi.stubGlobal('matchMedia', matchMediaStub(true))
+    const spy = stubScrollIntoView()
+    const { baseElement } = render(
+      withProvider(
+        <MantineCombobox options={yearOptions} value="2032" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    fireEvent.click(baseElement.querySelector('input')!)
+    await screen.findByRole('dialog')
+    await waitFor(() => expect(spy).toHaveBeenCalled())
+    const target = scrolledElements(spy)[0]
+    expect(target.tagName).toBe('BUTTON')
+    expect(target.textContent).toContain('2032')
+  })
+
+  it('T-C3 no value: opening scrolls no option, on desktop and on the mobile sheet', async () => {
+    const spy = stubScrollIntoView()
+    const desktop = render(
+      withProvider(
+        <MantineCombobox options={yearOptions} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    fireEvent.click(desktop.baseElement.querySelector('input')!)
+    await waitFor(() => expect(desktop.baseElement.querySelector('.mantine-Combobox-dropdown')).toBeTruthy())
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(spy).not.toHaveBeenCalled()
+    desktop.unmount()
+
+    vi.stubGlobal('matchMedia', matchMediaStub(true))
+    const mobile = render(
+      withProvider(
+        <MantineCombobox options={yearOptions} value="" onChange={() => {}} variant="button" noResultsLabel="none" triggerAriaLabel="probe" />,
+      ),
+    )
+    fireEvent.click(mobile.baseElement.querySelector('input')!)
+    await screen.findByRole('dialog')
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    expect(spy).not.toHaveBeenCalled()
   })
 })

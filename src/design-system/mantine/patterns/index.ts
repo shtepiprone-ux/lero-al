@@ -4,8 +4,8 @@ export type { MantineAppShellFoundationProps, AppShellNavItem } from './MantineA
 export { MantinePageHeaderWithActions } from './MantinePageHeaderWithActions'
 export type { MantinePageHeaderWithActionsProps, PageHeaderAction } from './MantinePageHeaderWithActions'
 
-export { MantineFormSectionStack } from './MantineFormSectionStack'
-export type { MantineFormSectionStackProps, FormSection, FormField } from './MantineFormSectionStack'
+export { MantineFormSectionStack, MantineFormSection } from './MantineFormSectionStack'
+export type { MantineFormSectionStackProps, MantineFormSectionProps, FormSection, FormField } from './MantineFormSectionStack'
 
 export { MantineTwoColumnForm } from './MantineTwoColumnForm'
 export type { MantineTwoColumnFormProps, TwoColField } from './MantineTwoColumnForm'

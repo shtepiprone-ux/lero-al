@@ -1,0 +1,34 @@
+== shared/Combobox
+src/components/admin/AdminListingsTable.tsx
+src/components/admin/AdminLocationsManager.tsx
+src/components/admin/AdminPopularLocationsManager.tsx
+src/components/admin/AdminSettings.tsx
+src/components/admin/AdminSupportManager.tsx
+src/components/admin/AdminUserCreate.tsx
+src/components/admin/AdminUserProfile.tsx
+src/components/admin/StatusChangeControl.tsx
+src/modules/cabinet/components/ProfileTab.tsx
+src/modules/cabinet/components/SavedSearchesTab.tsx
+src/modules/contacts/components/ContactForm.tsx
+src/stories/patterns/mantine/ListingsFilterBar.stories.tsx
+== admin/AdminInput
+src/components/admin/AdminLegalManager.tsx
+src/components/admin/AdminListingsTable.tsx
+src/components/admin/AdminLocationsManager.tsx
+src/components/admin/AdminPagesManager.tsx
+src/components/admin/AdminSettings.tsx
+src/components/admin/AdminUserCreate.tsx
+src/components/admin/AdminUserProfile.tsx
+== admin/AdminEditLayout
+src/components/admin/AdminUserProfile.tsx
+src/modules/listings/components/ListingFormShellView.tsx
+== admin/AdminUserAvatar
+src/components/admin/AdminUserProfile.tsx
+src/modules/cabinet/components/ProfileTab.tsx
+== shared/DatePicker
+src/components/admin/AdminUserProfile.tsx
+== AdminUserCreate
+src/components/admin/AdminUserCreate.tsx
+src/components/shared/PhoneField.tsx
+src/lib/phone/index.ts
+EXIT_CODE=0

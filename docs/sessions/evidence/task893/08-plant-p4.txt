@@ -1,0 +1,16 @@
+target: src/components/admin/AdminUserProfileView.tsx
+hash BEFORE plant: f409dacf1ea592347f44421649a6661d3dfaa527
+hash AFTER plant (planted): 9a9cee19c5265b34384927198b23cbfcd06b853d
+planted src/app/admin/users/[id]/page.tsx: exit=1; ui/badge lines: 3
+  src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminUserProfileView.tsx
+  FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]
+  GR-1 CENSUS BLOCKED — src/app/admin/users/[id]/page.tsx, src/components/admin/AdminUserProfile.tsx, src/components/admin/AdminUserAvatarField.tsx, src/components/ui/badge.tsx
+planted src/app/admin/users/new/page.tsx: exit=1; ui/badge lines: 3
+  src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminUserProfileView.tsx
+  FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]
+  GR-1 CENSUS BLOCKED — src/app/admin/users/new/page.tsx, src/components/admin/AdminUserProfile.tsx, src/components/admin/AdminUserAvatarField.tsx, src/components/ui/badge.tsx
+hash AFTER restore: f409dacf1ea592347f44421649a6661d3dfaa527
+hashes equal: true
+restored src/app/admin/users/[id]/page.tsx: exit=1; ui/badge lines: 0
+restored src/app/admin/users/new/page.tsx: exit=1; ui/badge lines: 0
+VERDICT: PLANT NAMED ui/badge FOR BOTH ROUTES; RESTORE CLEAN (two-armed OK)

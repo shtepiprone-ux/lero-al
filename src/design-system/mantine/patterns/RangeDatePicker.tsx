@@ -66,7 +66,15 @@ export interface RangeDatePickerProps {
    * `minDate`: effective min = `disablePastDates ? max(minDate ?? -∞, startOfToday) : minDate`.
    */
   disablePastDates?: boolean
+  /**
+   * Task 893 (additive, default `'range'` — the range behaviour is unchanged): in `'single'` a day click
+   * stages exactly one day and replaces any day staged before, so a range is never built. Apply/Confirm
+   * commit `{ from: day, to: day }`, the same shape a one-day range already commits.
+   */
+  selectionMode?: 'range' | 'single'
 }
+
+type SelectionMode = NonNullable<RangeDatePickerProps['selectionMode']>
 
 interface StagedRange {
   from?: Date
@@ -197,6 +205,11 @@ function pickDay(staged: StagedRange, day: Date): StagedRange {
     return { from: day, to: staged.from }
   }
   return { from: staged.from, to: day }
+}
+
+/** Task 893: the day-click reducer for both modes. `'range'` is `pickDay` untouched; `'single'` restages one day. */
+function pickStaged(mode: SelectionMode, staged: StagedRange, day: Date): StagedRange {
+  return mode === 'single' ? { from: day, to: undefined } : pickDay(staged, day)
 }
 
 // Task 562: calendar month/weekday names come from `messages/*.json` `common.calendar_*`, NOT
@@ -377,6 +390,7 @@ function DesktopBody({
   t,
   onApply,
   onCancel,
+  selectionMode,
 }: {
   staged: StagedRange
   setStaged: (next: StagedRange) => void
@@ -388,6 +402,7 @@ function DesktopBody({
   t: TFunc
   onApply: () => void
   onCancel: () => void
+  selectionMode: SelectionMode
 }) {
   const theme = useMantineTheme()
   const rdp = theme.other.rangeDatePicker
@@ -517,6 +532,7 @@ function DesktopBody({
                 value={String(anchorMonth.getFullYear())}
                 onChange={(v) => setLeftMonth(new Date(Number(v), anchorMonth.getMonth(), 1))}
                 noResultsLabel={t('no_results')}
+                triggerAriaLabel={t('period_year')}
                 triggerWidth={rdp.yearTriggerWidth}
                 withinPortal={false}
                 dropdownMinWidth={rdp.yearDropdownMinWidth}
@@ -555,7 +571,7 @@ function DesktopBody({
             minDate={minDate}
             maxDate={maxDate}
             cal={cal}
-            onSelect={(d) => setStaged(pickDay(staged, d))}
+            onSelect={(d) => setStaged(pickStaged(selectionMode, staged, d))}
           />
         </Group>
         <Group gap="xs" wrap="nowrap">
@@ -565,7 +581,7 @@ function DesktopBody({
             minDate={minDate}
             maxDate={maxDate}
             cal={cal}
-            onSelect={(d) => setStaged(pickDay(staged, d))}
+            onSelect={(d) => setStaged(pickStaged(selectionMode, staged, d))}
           />
           {/* Invisible spacer — mirrors the real Next arrow above. */}
           <ActionIcon variant="default" disabled aria-hidden="true" tabIndex={-1} opacity={0}>
@@ -591,6 +607,7 @@ function MobileBody({
   cal,
   t,
   onConfirm,
+  selectionMode,
 }: {
   staged: StagedRange
   setStaged: (next: StagedRange) => void
@@ -600,6 +617,7 @@ function MobileBody({
   cal: CalendarLocaleData
   t: TFunc
   onConfirm: () => void
+  selectionMode: SelectionMode
 }) {
   const theme = useMantineTheme()
   const rdp = theme.other.rangeDatePicker
@@ -607,9 +625,17 @@ function MobileBody({
   // Window bounds (Task 561 point 5 / D2): reaches PAST months via minDate (already the
   // disablePastDates-clamped effective bound by the time it reaches here) instead of the old
   // forward-only scroll; falls back to a bounded span around the anchor when a bound is absent.
+  // Task 893 R18: the window is built around a state anchor that starts at `anchorMonth` (the opening view is
+  // unchanged) and moves when the header dropdowns pick a month outside the window (see `jumpTo`).
+  const [windowAnchor, setWindowAnchor] = useState<Date>(anchorMonth)
+  const pendingJumpRef = useRef<Date | null>(null)
   const months = useMemo(() => {
-    const start = minDate ? startOfMonth(minDate) : startOfMonth(subMonths(anchorMonth, 12))
-    const end = maxDate ? startOfMonth(maxDate) : startOfMonth(addMonths(anchorMonth, 15))
+    // A moved window (re-anchored by a far jump) starts 12 months before the target, clipped to minDate, so the
+    // 60-month cap cannot cut the target off.
+    const moved = !isSameMonth(windowAnchor, anchorMonth)
+    const windowStart = startOfMonth(subMonths(windowAnchor, 12))
+    const start = minDate ? (moved && isAfter(windowStart, startOfMonth(minDate)) ? windowStart : startOfMonth(minDate)) : windowStart
+    const end = maxDate ? startOfMonth(maxDate) : startOfMonth(addMonths(windowAnchor, 15))
     const arr: Date[] = []
     let cursor = start
     let guard = 0
@@ -618,8 +644,8 @@ function MobileBody({
       cursor = addMonths(cursor, 1)
       guard += 1
     }
-    return arr.length ? arr : [anchorMonth]
-  }, [anchorMonth, minDate, maxDate])
+    return arr.length ? arr : [windowAnchor]
+  }, [windowAnchor, anchorMonth, minDate, maxDate])
 
   const initialIdx = Math.max(
     0,
@@ -643,7 +669,9 @@ function MobileBody({
   // section's top has scrolled past the viewport top is the "currently visible" month.
   function handleScrollPositionChange(pos: { x: number; y: number }) {
     const viewport = viewportRef.current
-    const sectionTops = sectionRefs.current.map((el) => el?.offsetTop ?? 0)
+    // Task 893 R20: only the sections of the CURRENT window; after a shrinking re-anchor the array keeps stale
+    // null entries past `months.length`, which would read as offsetTop 0 and push the index past the window.
+    const sectionTops = sectionRefs.current.slice(0, months.length).map((el) => el?.offsetTop ?? 0)
     const clientHeight = viewport?.clientHeight ?? 0
     // No viewport metrics yet: fall back to the closest-offset rule only (never claim "at the end").
     const scrollHeight = viewport?.scrollHeight ?? Number.POSITIVE_INFINITY
@@ -652,11 +680,28 @@ function MobileBody({
 
   function jumpTo(target: Date) {
     const idx = months.findIndex((m) => isSameMonth(m, target))
-    if (idx === -1) return
+    if (idx === -1) {
+      // Out of the window (a year/month the dropdowns offer): re-anchor the window on it; the layout effect
+      // below scrolls to it once the new window has rendered. Never a silent no-op (Task 893 R18).
+      pendingJumpRef.current = target
+      setWindowAnchor(startOfMonth(target))
+      return
+    }
     const el = sectionRefs.current[idx]
     if (el) scrollViewportTo(viewportRef.current, el.offsetTop)
     setVisibleMonthIdx(idx)
   }
+
+  useLayoutEffect(() => {
+    const target = pendingJumpRef.current
+    if (!target) return
+    pendingJumpRef.current = null
+    const idx = months.findIndex((m) => isSameMonth(m, target))
+    if (idx === -1) return
+    const el = sectionRefs.current[idx]
+    if (el) scrollViewportTo(viewportRef.current, el.offsetTop)
+    setVisibleMonthIdx(idx)
+  }, [months])
 
   const visibleMonth = months[visibleMonthIdx] ?? anchorMonth
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
@@ -730,7 +775,7 @@ function MobileBody({
                 minDate={minDate}
                 maxDate={maxDate}
                 cal={cal}
-                onSelect={(d) => setStaged(pickDay(staged, d))}
+                onSelect={(d) => setStaged(pickStaged(selectionMode, staged, d))}
               />
             </Box>
           ))}
@@ -764,6 +809,7 @@ function RangeCalendarBody({
   maxDate,
   close,
   isMobile,
+  selectionMode,
 }: {
   value: DateRange
   onChange: (next: DateRange) => void
@@ -771,6 +817,7 @@ function RangeCalendarBody({
   maxDate?: Date
   close: () => void
   isMobile: boolean
+  selectionMode: SelectionMode
 }) {
   const t = useTranslations('common')
   const cal = useCalendarLocaleData(t)
@@ -815,6 +862,7 @@ function RangeCalendarBody({
         cal={cal}
         t={t}
         onConfirm={commit}
+        selectionMode={selectionMode}
       />
     )
   }
@@ -831,6 +879,7 @@ function RangeCalendarBody({
       t={t}
       onApply={commit}
       onCancel={close}
+      selectionMode={selectionMode}
     />
   )
 }
@@ -866,6 +915,7 @@ export function RangeDatePicker({
   minDate,
   placeholder,
   disablePastDates,
+  selectionMode = 'range',
 }: RangeDatePickerProps) {
   const t = useTranslations('common')
   const theme = useMantineTheme()
@@ -935,6 +985,7 @@ export function RangeDatePicker({
           maxDate={maxDate}
           close={close}
           isMobile={isMobile}
+          selectionMode={selectionMode}
         />
       )}
     </MantinePopover>

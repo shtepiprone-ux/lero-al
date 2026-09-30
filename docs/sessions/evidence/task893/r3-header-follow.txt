@@ -1,0 +1,18 @@
+Task 893 revision 3 (executor), 2026-09-30. Playwright Chromium on fresh storybook-static (build-storybook exit 0, r3-storybook-build.txt), http-server :6140, locale uk, 320px.
+Selectors: year field [aria-label="Рік"], month field [aria-label="Місяць"].
+
+--- Default, forced-open capped instance (maxDate 10.02.2026)
+forced-open @320 initial header: Січень 2026
+after choosing 2022: header Січень 2022
+after choosing 2026: header Січень 2026
+AFTER jumps 2022→2026, scrolled up ~700px: header "Жовтень 2025" | first visible section "Листопад 2025 р."
+CONTROL no jumps, scrolled up ~700px: header "Жовтень 2025" | first visible section "Листопад 2025 р."
+
+Header after the jumps equals the no-jump control (Жовтень 2025); the stale-ref fallback would read Січень 2026 (kickoff §20.2).
+
+--- Default, every instance at 320: choose the LAST offered year (instance 3 = row 4, disablePastDates)
+instance 0: offered 2021..2036 (16); chose 2036 -> year field "2036"
+instance 1: offered 2021..2036 (16); chose 2036 -> year field "2036"
+instance 2: offered 2021..2026 (6); chose 2026 -> year field "2026"
+instance 3: offered 2026..2036 (11); chose 2036 -> year field "2036"
+instance 4: offered 2021..2026 (6); chose 2026 -> year field "2026"

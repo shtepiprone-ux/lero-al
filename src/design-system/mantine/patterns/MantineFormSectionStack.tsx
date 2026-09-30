@@ -1,7 +1,37 @@
 'use client'
 
-import { Stack, Paper, Title, TextInput, Textarea, Button, Flex, Text } from '@mantine/core'
+import type { ReactNode } from 'react'
+import { Stack, Paper, Title, TextInput, Textarea, Button, Flex, Text, Group, Divider, Box } from '@mantine/core'
 import { useForm } from '@mantine/form'
+
+export interface MantineFormSectionProps {
+  title: string
+  /** Lands on the root, so a form can `scrollIntoView` a section that holds an invalid field. */
+  id?: string
+  /** Trailing element of the header row (for example a section-level action button). */
+  headerAction?: ReactNode
+  children: ReactNode
+}
+
+/**
+ * Canonical form section card (Task 893, TailAdmin §6l "Form Layout"): a bordered `rounded-2xl` card whose
+ * header carries a 16px / 500 title, an optional trailing action and a bottom divider; header and body share
+ * the same responsive padding. It owns no form state, so a consumer may hold any form library.
+ */
+export function MantineFormSection({ title, id, headerAction, children }: MantineFormSectionProps) {
+  return (
+    <Paper id={id} withBorder radius="2xl">
+      <Group justify="space-between" align="center" wrap="wrap" gap="sm" p={{ base: 'lg', sm: 'xl' }}>
+        <Title order={2} fz="md" fw={500}>
+          {title}
+        </Title>
+        {headerAction}
+      </Group>
+      <Divider />
+      <Box p={{ base: 'lg', sm: 'xl' }}>{children}</Box>
+    </Paper>
+  )
+}
 
 export interface FormField {
   name: string
@@ -59,10 +89,7 @@ export function MantineFormSectionStack({
     <form onSubmit={form.onSubmit((values) => onSubmit?.(values))}>
       <Stack gap="lg">
         {sections.map((section) => (
-          <Paper key={section.title} shadow="xs" p="md" radius="md">
-            <Title order={3} size="h5" mb="md">
-              {section.title}
-            </Title>
+          <MantineFormSection key={section.title} title={section.title}>
             <Stack gap="sm">
               {section.fields.map((field) =>
                 field.type === 'textarea' ? (
@@ -87,7 +114,7 @@ export function MantineFormSectionStack({
                 )
               )}
             </Stack>
-          </Paper>
+          </MantineFormSection>
         ))}
 
         {/* Task 785 (sites 3-5): the inert `styles={{root:{'@media...'}}}` blocks never emitted CSS

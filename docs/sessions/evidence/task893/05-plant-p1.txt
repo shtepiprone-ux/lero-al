@@ -1,0 +1,14 @@
+target: src/components/admin/AdminUserProfileDialogsView.tsx
+hash BEFORE plant: 5e415f5c640db872b6cadfd4d09ffdcea074382d
+hash AFTER plant (planted): f62f2e2087cbc485c04bc0f2dfb224bc8f3ae1c3
+plant: "confirmDisabled={!reason.trim()}" -> "confirmDisabled={false}"
+--- run with plant: EXIT_CODE=1 (must be non-zero)
+failing tests:
+× T3 — deactivate: confirm is disabled for a blank reason; with a reason it calls deactivateUser(id, reason) 136ms
+Tests  1 failed | 9 passed (10)
+FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T3 — deactivate: confirm is disabled for a blank reason; with a reason it calls deactivateUser(id, reason)
+hash AFTER restore: 5e415f5c640db872b6cadfd4d09ffdcea074382d
+hashes equal: true
+--- run after restore: EXIT_CODE=0 (must be 0)
+Tests  10 passed (10)
+VERDICT: PLANT FAILED THE TEST AND RESTORE PASSED (two-armed OK)

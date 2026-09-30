@@ -68,7 +68,7 @@ are struck below.)
 | `src/components/admin/AdminEmailTemplatesManager.stories.tsx` | ✅ `admin-adminemailtemplatesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminListingsTable.stories.tsx` | ✅ `admin-adminlistingstable--default` | Product-rendering story |
 | `src/components/admin/AdminUsersTable.stories.tsx` | ✅ `admin-adminuserstable--default` | Product-rendering story |
-| `src/components/admin/AdminUserProfile.stories.tsx` | ✅ `admin-adminuserprofile--default` | Product-rendering story |
+| ~~the legacy `AdminUserProfile` Story file~~ | **RETIRED-893** — deleted by Task 893; the canonical Stories are `Patterns/Mantine/AdminUserProfileView`, `…/AdminUserProfileDialogsView` and `…/AdminUserAvatarFieldView` | — |
 
 #### Layout (0 story files — was 4; all deleted, Task 788, 2026-09-05, zero production consumers)
 
@@ -149,7 +149,7 @@ Legend for "Needs fix?":
 | `AdminEmailTemplatesManager.stories.tsx` | `admin-adminemailtemplatesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminEmailTemplatesManager (email template list + form) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. Has both list and form surfaces. `formLayout` for form; `nonTabular`/`tableAtLg` for list. Verify form action buttons at `<640`. §10, §12, §26.1 |
 | `AdminListingsTable.stories.tsx` | `admin-adminlistingstable--default` + multi (--filtered-pending, --locale-stress, --tablet) | Admin | AdminListingsTable (reference `tableAtLg` implementation, sort, search, filter) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation (Task 306-Fix). Machine PASS. All columns/row-actions preserved. §10, §25.1 |
 | `AdminUsersTable.stories.tsx` | `admin-adminuserstable--default` + multi (--locale-stress, --location-requests, --tablet, --verified-tab) | Admin | AdminUsersTable (user management table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. tableAt decision needed. Verify column set + row actions + pagination at 768–1023. `tableAtLg` target. §10, §25.1 |
-| `AdminUserProfile.stories.tsx` | `admin-adminuserprofile--default` + multi (--create-mode, --locale-stress, --tablet) | Admin | AdminUserProfile (user detail form, avatar, role selector, status) | sq/en/uk/it | HIGH | OPEN DECISION | `detailLayout` or `formLayout` pattern. Machine PASS. Action buttons full-width at `<640` NOT machine-checked. Manual QA: §26.1. §10 (detailLayout), §12, §26.1 |
+| ~~legacy `AdminUserProfile` Story~~ | ~~`RETIRED-893-default`~~ | Admin | **RETIRED-893 (2026-09-29) — deleted; replaced by `Patterns/Mantine/AdminUserProfileView` (toolbar viewport and locale)** | — | — | — | — |
 | ~~`FilterBar.stories.tsx`~~ | ~~`layout-filterbar--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
 | ~~`PageHeader.stories.tsx`~~ | ~~`layout-pageheader--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
 | ~~`PageShell.stories.tsx`~~ | ~~`layout-pageshell--default`~~ | Layout | **DELETED (Task 788, 2026-09-05) — zero production consumers** | — | — | — | — |
@@ -339,7 +339,7 @@ admin-adminpageshell--default              admin-adminpropertytypesmanager--defa
 admin-adminsettings--default               RETIRED-852-sidebar-desktop
 RETIRED-852-sidebar-drawer-open            admin-adminsupportmanager--default
 RETIRED-877-admintable--default                  admin-adminuseravatar--edit-mode
-admin-adminuseravatar--view-placeholder    admin-adminuserprofile--default
+admin-adminuseravatar--view-placeholder    RETIRED-893-default
 admin-adminuserstable--default             admin-statuschangecontrol--select
 admin-statuschangehistory--empty           layout-filterbar--default
 layout-pageheader--default                 layout-pageshell--default
@@ -365,7 +365,7 @@ RETIRED-877-admincurrenciesmanager--tablet       admin-adminpropertytypesmanager
 admin-admincompaniesmanager--tablet
 admin-adminlistingstable--tablet           admin-adminuserstable--tablet
 admin-adminsettings--tablet                admin-adminsupportmanager--tablet
-admin-adminemailtemplatesmanager--tablet   admin-adminuserprofile--tablet
+admin-adminemailtemplatesmanager--tablet   RETIRED-893-tablet
 ```
 Use: open at 768/810/960px to verify `tableAtLg` breakpoint (cards `<1024`, table `≥1024`) before/after Slice 1–3.
 
@@ -375,7 +375,7 @@ RETIRED-877-admincurrenciesmanager--locale-stress    admin-adminpropertytypesman
 admin-admincompaniesmanager--locale-stress     admin-adminemailtemplatesmanager--locale-stress
 admin-adminlistingstable--locale-stress
 admin-adminuserstable--locale-stress           admin-adminsettings--locale-stress
-admin-adminsupportmanager--locale-stress       admin-adminuserprofile--locale-stress
+admin-adminsupportmanager--locale-stress       RETIRED-893-locale-stress
 RETIRED-852-locale-switcher-locale-stress      RETIRED-852-mobile-header-locale-stress
 RETIRED-852-sidebar-locale-stress              admin-adminuseravatar--locale-stress
 RETIRED-877-admintable--locale-stress                RETIRED-877-admincardlist--locale-stress
@@ -396,7 +396,7 @@ RETIRED-877-admintable--interactive              RETIRED-877-admintable--interac
 RETIRED-877-admintable--loading-state            RETIRED-877-admintable--manage-columns
 RETIRED-877-admintable--responsive               admin-adminuseravatar--create-mode
 admin-adminuserstable--location-requests   admin-adminuserstable--verified-tab
-admin-adminuserprofile--create-mode        admin-statuschangecontrol--select-with-note
+RETIRED-893-create-mode        admin-statuschangecontrol--select-with-note
 admin-statuschangecontrol--workflow        admin-statuschangecontrol--workflow-required-note
 admin-statuschangecontrol--workflow-with-history  admin-statuschangehistory--multiple
 admin-statuschangehistory--raw-key-stress  admin-statuschangehistory--single

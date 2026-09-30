@@ -1,0 +1,150 @@
+ M docs/component-risk-register.md
+ M docs/critical-flow-registry.md
+ M docs/responsive-storybook-inventory.md
+ M scripts/check-listing-visibility.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/users/[id]/page.tsx
+ M src/app/admin/users/new/page.tsx
+ M src/components/admin/AdminUserAvatar.tsx
+ D src/components/admin/AdminUserProfile.stories.tsx
+ M src/components/admin/AdminUserProfile.tsx
+ D src/components/shared/DatePicker.tsx
+ D src/components/shared/__tests__/DatePicker.localization.test.tsx
+ M src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/MantineCombobox.tsx
+ M src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+ M src/design-system/mantine/patterns/RangeDatePicker.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/stories/fixtures/admin.fixtures.ts
+ M src/stories/mantine/primitives/RangeDatePicker.stories.tsx
+ M src/stories/patterns/mantine/FormSectionStack.stories.tsx
+?? docs/sessions/2026-09-29-task893-admin-user-profile-mantine.md
+?? docs/sessions/evidence/task863/00-gate-baseline.txt
+?? docs/sessions/evidence/task863/00-platform.txt
+?? docs/sessions/evidence/task863/00-probe.txt
+?? docs/sessions/evidence/task863/00-start-manifest.txt
+?? docs/sessions/evidence/task863/00-start-status.txt
+?? docs/sessions/evidence/task863/00-verify-baseline.txt
+?? docs/sessions/evidence/task863/01-verify-before-detector.txt
+?? docs/sessions/evidence/task863/02-verify-after-detector.txt
+?? docs/sessions/evidence/task863/03-gate-after-allowlist.txt
+?? docs/sessions/evidence/task863/10-plant-p1-gate.txt
+?? docs/sessions/evidence/task863/11-plant-p2-gate.txt
+?? docs/sessions/evidence/task863/12-plant-p3-gate.txt
+?? docs/sessions/evidence/task863/13-plant-hashes.txt
+?? docs/sessions/evidence/task863/14-r8-diff-quiet.txt
+?? docs/sessions/evidence/task863/20-verify-final.txt
+?? docs/sessions/evidence/task863/21-gate-final.txt
+?? docs/sessions/evidence/task863/22-report-final.txt
+?? docs/sessions/evidence/task863/23-visibility-vitest.txt
+?? docs/sessions/evidence/task863/24-typecheck.txt
+?? docs/sessions/evidence/task893/01-status-before.txt
+?? docs/sessions/evidence/task893/01b-hash-before.txt
+?? docs/sessions/evidence/task893/02-census-before.txt
+?? docs/sessions/evidence/task893/03-consumers.txt
+?? docs/sessions/evidence/task893/04-baseline-tests.txt
+?? docs/sessions/evidence/task893/05-plant-p1.txt
+?? docs/sessions/evidence/task893/06-plant-p2.txt
+?? docs/sessions/evidence/task893/07-plant-p3.txt
+?? docs/sessions/evidence/task893/08-plant-p4.txt
+?? docs/sessions/evidence/task893/09-plant-p5.txt
+?? docs/sessions/evidence/task893/10-tests.txt
+?? docs/sessions/evidence/task893/10b-test-admin.txt
+?? docs/sessions/evidence/task893/11-census-after.txt
+?? docs/sessions/evidence/task893/12-typecheck.txt
+?? docs/sessions/evidence/task893/13-lint.txt
+?? docs/sessions/evidence/task893/14-story-coverage.txt
+?? docs/sessions/evidence/task893/15-rendered-scope.txt
+?? docs/sessions/evidence/task893/16-census-changed.txt
+?? docs/sessions/evidence/task893/17-design-tokens.txt
+?? docs/sessions/evidence/task893/17b-enrolled-tailwind.txt
+?? docs/sessions/evidence/task893/17c-i18n.txt
+?? docs/sessions/evidence/task893/18-file-integrity.txt
+?? docs/sessions/evidence/task893/18b-mojibake.txt
+?? docs/sessions/evidence/task893/19-storybook-build.txt
+?? docs/sessions/evidence/task893/19b-build.txt
+?? docs/sessions/evidence/task893/20-baseline-diff.txt
+?? docs/sessions/evidence/task893/20b-reference-audit.txt
+?? docs/sessions/evidence/task893/21-status-after.txt
+?? docs/sessions/evidence/task893/22-hash-object.txt
+?? docs/sessions/evidence/task893/23-gr3-measurements-en-type.json
+?? docs/sessions/evidence/task893/23-gr3-measurements-en.json
+?? docs/sessions/evidence/task893/23-gr3-measurements-uk-type.json
+?? docs/sessions/evidence/task893/24-gr3-receipts-en-type.txt
+?? docs/sessions/evidence/task893/24-gr3-receipts-en.txt
+?? docs/sessions/evidence/task893/24-gr3-receipts-uk-type.txt
+?? docs/sessions/evidence/task893/r1-build.txt
+?? docs/sessions/evidence/task893/r1-census-changed.txt
+?? docs/sessions/evidence/task893/r1-design-tokens.txt
+?? docs/sessions/evidence/task893/r1-enrolled-tailwind.txt
+?? docs/sessions/evidence/task893/r1-file-integrity.txt
+?? docs/sessions/evidence/task893/r1-hash-object.txt
+?? docs/sessions/evidence/task893/r1-lint.txt
+?? docs/sessions/evidence/task893/r1-mojibake.txt
+?? docs/sessions/evidence/task893/r1-plant-p6.txt
+?? docs/sessions/evidence/task893/r1-plant-p7.txt
+?? docs/sessions/evidence/task893/r1-plant-p8.txt
+?? docs/sessions/evidence/task893/r1-platform.txt
+?? docs/sessions/evidence/task893/r1-rendered-scope.txt
+?? docs/sessions/evidence/task893/r1-status-after.txt
+?? docs/sessions/evidence/task893/r1-story-coverage.txt
+?? docs/sessions/evidence/task893/r1-storybook-build.txt
+?? docs/sessions/evidence/task893/r1-test-admin.txt
+?? docs/sessions/evidence/task893/r1-tests.txt
+?? docs/sessions/evidence/task893/r1-typecheck.txt
+?? docs/sessions/evidence/task893/r1-year-reach.txt
+?? docs/sessions/evidence/task893/r2-build.txt
+?? docs/sessions/evidence/task893/r2-census-changed.txt
+?? docs/sessions/evidence/task893/r2-design-tokens.txt
+?? docs/sessions/evidence/task893/r2-enrolled-tailwind.txt
+?? docs/sessions/evidence/task893/r2-file-integrity.txt
+?? docs/sessions/evidence/task893/r2-hash-object.txt
+?? docs/sessions/evidence/task893/r2-lint.txt
+?? docs/sessions/evidence/task893/r2-mojibake.txt
+?? docs/sessions/evidence/task893/r2-plant-p9.txt
+?? docs/sessions/evidence/task893/r2-platform.txt
+?? docs/sessions/evidence/task893/r2-rendered-scope.txt
+?? docs/sessions/evidence/task893/r2-status-after.txt
+?? docs/sessions/evidence/task893/r2-story-coverage.txt
+?? docs/sessions/evidence/task893/r2-storybook-build.txt
+?? docs/sessions/evidence/task893/r2-test-admin.txt
+?? docs/sessions/evidence/task893/r2-tests.txt
+?? docs/sessions/evidence/task893/r2-typecheck.txt
+?? docs/sessions/evidence/task893/r2-year-select.txt
+?? docs/sessions/evidence/task893/r3-build.txt
+?? docs/sessions/evidence/task893/r3-census-changed.txt
+?? docs/sessions/evidence/task893/r3-design-tokens.txt
+?? docs/sessions/evidence/task893/r3-enrolled-tailwind.txt
+?? docs/sessions/evidence/task893/r3-file-integrity.txt
+?? docs/sessions/evidence/task893/r3-gates-done.txt
+?? docs/sessions/evidence/task893/r3-hash-object.txt
+?? docs/sessions/evidence/task893/r3-header-follow.txt
+?? docs/sessions/evidence/task893/r3-lint.txt
+?? docs/sessions/evidence/task893/r3-mojibake.txt
+?? docs/sessions/evidence/task893/r3-plant-p10.txt
+?? docs/sessions/evidence/task893/r3-plant-p11.txt
+?? docs/sessions/evidence/task893/r3-platform.txt
+?? docs/sessions/evidence/task893/r3-rendered-scope.txt
+?? docs/sessions/evidence/task893/r3-status-after.txt
+?? docs/sessions/evidence/task893/r3-story-coverage.txt
+?? docs/sessions/evidence/task893/r3-storybook-build.txt
+?? docs/sessions/evidence/task893/r3-test-admin.txt
+?? docs/sessions/evidence/task893/r3-tests.txt
+?? docs/sessions/evidence/task893/r3-typecheck.txt
+?? docs/sessions/evidence/task893/shots/
+?? src/components/admin/AdminUserAvatarField.tsx
+?? src/components/admin/AdminUserAvatarFieldView.tsx
+?? src/components/admin/AdminUserProfileDialogsView.tsx
+?? src/components/admin/AdminUserProfileView.tsx
+?? src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+?? src/components/admin/useAdminAvatarUpload.ts
+?? src/stories/patterns/mantine/AdminUserAvatarFieldView.stories.tsx
+?? src/stories/patterns/mantine/AdminUserProfileDialogsView.stories.tsx
+?? src/stories/patterns/mantine/AdminUserProfileView.stories.tsx

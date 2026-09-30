@@ -1,0 +1,12 @@
+$ git grep -n -E "shared/DatePicker|admin-adminuserprofile|AdminUserProfile\.stories" -- . ":!docs/sessions/**" ":!tasks/Archive/**" ":!docs/backlog-archive.md"   # the literal 13.2 command: matching FILES, all history ledgers
+      1 docs/*
+     19 docs/governance-reports/weekly/*
+      1 docs/reviews/artifacts/2026-08-12-task691R/transcripts/*
+      1 docs/reviews/artifacts/2026-08-13-task695/*
+      4 docs/reviews/artifacts/2026-08-14-task741/*
+      1 docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/*
+      1 docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/*
+      5 tasks/Sprints/*
+
+--- also excluding the history ledgers (weekly governance reports, review artifacts, historical sprint kickoffs, the point-in-time entropy audit):
+(no output above = no match)

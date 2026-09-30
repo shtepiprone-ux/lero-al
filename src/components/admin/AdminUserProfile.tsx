@@ -1,51 +1,37 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import type { UseFormSetValue } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from '@/lib/toast'
-import {
-  Pencil, Trash2, Save, X, ChevronLeft, Loader2,
-  ShieldCheck, MapPin, History, AlertTriangle, UserPlus, RotateCcw,
-} from 'lucide-react'
-import { AdminEditLayout } from '@/components/admin/AdminEditLayout'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { AdminInput } from '@/components/admin/AdminInput'
-import { Label } from '@/components/ui/label'
-import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
-import { Combobox } from '@/components/shared/Combobox'
-import { PhoneField } from '@/components/shared/PhoneField'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone, parsePhoneValue } from '@/lib/phone'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
-import { LocationCombobox } from '@/components/shared/LocationCombobox'
-import { DatePicker } from '@/components/shared/DatePicker'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateUserProfileFull, deactivateUser, reactivateUser, hardDeleteUser, addLocation,
   approveLocationRequest, rejectLocationRequest, createAdminUser,
-  type ProfileType,
 } from '@/modules/admin/actions'
 import { clearHistoryRow, clearHistoryForEntity } from '@/modules/admin/actions/clearHistory'
-import { Textarea } from '@/components/ui/textarea'
-import type { User, UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
-import { formatDate, formatDateTime } from '@/lib/formatters'
+import type { UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
+import {
+  AdminUserProfileView,
+  PROFILE_TYPES,
+  STATUS_VALUES,
+  profileTypeFromUser,
+  type AdminUserProfileErrors,
+  type AdminUserProfileFormValues,
+  type CityOption,
+  type RegionOption,
+  type UserWithLocation,
+} from '@/components/admin/AdminUserProfileView'
+import { AdminUserProfileDialogsView, type AdminUserProfileDialog } from '@/components/admin/AdminUserProfileDialogsView'
+import { AdminUserAvatarField } from '@/components/admin/AdminUserAvatarField'
 
 // ── Types ────────────────────────────────────────────────────────────────────
-
-interface CityOption { id: number; name_al: string; region_id: number | null }
-interface RegionOption { id: number; name_al: string }
-
-type UserWithLocation = User & {
-  location?: { id: number; name_al: string; region_id: number | null; parent?: { id: number; name_al: string } | null } | null
-}
 
 interface Props {
   user: UserWithLocation | null   // null → create mode
@@ -64,11 +50,7 @@ interface Props {
   suspendedUntilFormatted?: string | null
 }
 
-// ── Constants ────────────────────────────────────────────────────────────────
-
-const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
-const STATUS_VALUES = ['active', 'blocked', 'inactive'] as const
-const STATUS_VARIANT = { active: 'success', blocked: 'destructive', inactive: 'warning' } as const
+type FormValues = AdminUserProfileFormValues
 
 function initPhoneState(e164: string | null | undefined): PhoneFieldValue {
   const v = e164 ?? ''
@@ -105,291 +87,16 @@ function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_pro
   // Phone/whatsapp validated country-aware in handleCreate/handleSave via validateNationalPhone()
 }
 
-type FormValues = {
-  firstName: string
-  lastName: string
-  profileType: typeof PROFILE_TYPES[number]
-  phone: string
-  useMainPhone: boolean
-  whatsapp?: string
-  locationId: number
-  companyName?: string
-  companyLogoUrl?: string
-  website?: string
-  position?: string
-  yearStarted?: number | null
-  status: typeof STATUS_VALUES[number]
-  blockReason?: string
-  suspendedUntil?: string | null
-}
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function profileTypeFromUser(user: Pick<User, 'role' | 'user_type'>): ProfileType {
-  if (user.role === 'admin') return 'admin'
-  if (user.role === 'moderator') return 'moderator'
-  if (user.role === 'agent') return 'agent'
-  if (user.user_type === 'developer') return 'developer'
-  return 'private'
-}
-
-// ── Sub-components ────────────────────────────────────────────────────────────
-
-function SectionCard({ title, children, allowOverflow, id }: { title: string; children: React.ReactNode; allowOverflow?: boolean; id?: string }) {
-  return (
-    <div id={id} className={cn("bg-card rounded-2xl border shadow-sm", allowOverflow ? "overflow-visible" : "overflow-hidden")}>
-      <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
-        {title}
-      </p>
-      <div className="p-5 flex flex-col gap-4">{children}</div>
-    </div>
-  )
-}
-
-function FieldRow({ label, viewValue, editContent, mode, error }: {
-  label: string
-  viewValue?: React.ReactNode
-  editContent?: React.ReactNode
-  mode: 'view' | 'edit' | 'create'
-  error?: string
-}) {
-  const isReadOnly = mode === 'view'
-  return (
-    <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-      <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{label}</span>
-      <div className="min-w-0">
-        {isReadOnly
-          ? <span className="text-sm font-medium break-all">{viewValue ?? <span className="text-muted-foreground">—</span>}</span>
-          : <div>{editContent}{error && <p className="text-xs text-destructive mt-1">{error}</p>}</div>
-        }
-      </div>
-    </div>
-  )
-}
-
-// ── Dialogs ───────────────────────────────────────────────────────────────────
-
-function UnsavedChangesDialog({ onLeave, onStay }: { onLeave: () => void; onStay: () => void }) {
-  const t = useTranslations('admin.user_profile')
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onStay() }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-status-warning" />
-            {t('dialogs.unsaved_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <p className="text-sm text-muted-foreground">{t('dialogs.unsaved_body')}</p>
-        <DialogFooter>
-          <Button variant="outline" onClick={onStay}>{t('dialogs.unsaved_stay')}</Button>
-          <Button variant="destructive" onClick={onLeave}>{t('dialogs.unsaved_leave')}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function CancelConfirmDialog({ onConfirm, onReturn }: { onConfirm: () => void; onReturn: () => void }) {
-  const t = useTranslations('admin.user_profile')
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-status-warning" />
-            {t('dialogs.cancel_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <p className="text-sm text-muted-foreground">{t('dialogs.cancel_body')}</p>
-        <DialogFooter>
-          <Button variant="outline" onClick={onReturn}>{t('dialogs.cancel_return')}</Button>
-          <Button variant="destructive" onClick={onConfirm}>{t('dialogs.cancel_confirm')}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function DeactivateReasonDialog({ userName, reason, onReasonChange, onConfirm, onReturn, loading }: {
-  userName: string; reason: string
-  onReasonChange: (v: string) => void
-  onConfirm: () => void; onReturn: () => void; loading: boolean
-}) {
-  const t = useTranslations('admin.user_profile')
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-status-warning">
-            <Trash2 className="h-5 w-5" />
-            {t('dialogs.deactivate_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <div className="flex flex-col gap-3 text-sm">
-          <p className="text-muted-foreground">{t('dialogs.deactivate_about')}</p>
-          <p className="font-semibold">{userName}</p>
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs font-medium">{t('dialogs.deactivate_reason_label')}</Label>
-            <Textarea
-              value={reason}
-              onChange={e => onReasonChange(e.target.value)}
-              placeholder={t('dialogs.deactivate_reason_placeholder')}
-              className="resize-none h-20 text-sm"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.deactivate_cancel')}</Button>
-          <Button
-            variant="default"
-            className="bg-status-warning text-white hover:bg-status-warning/90"
-            onClick={onConfirm}
-            disabled={loading || !reason.trim()}
-          >
-            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {t('dialogs.deactivate_confirm')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function ReactivateReasonDialog({ userName, reason, onReasonChange, onConfirm, onReturn, loading }: {
-  userName: string; reason: string
-  onReasonChange: (v: string) => void
-  onConfirm: () => void; onReturn: () => void; loading: boolean
-}) {
-  const t = useTranslations('admin.user_profile')
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-status-success">
-            <RotateCcw className="h-5 w-5" />
-            {t('dialogs.reactivate_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <div className="flex flex-col gap-3 text-sm">
-          <p className="text-muted-foreground">{t('dialogs.reactivate_about')}</p>
-          <p className="font-semibold">{userName}</p>
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs font-medium">{t('dialogs.reactivate_reason_label')}</Label>
-            <Textarea
-              value={reason}
-              onChange={e => onReasonChange(e.target.value)}
-              placeholder={t('dialogs.reactivate_reason_placeholder')}
-              className="resize-none h-20 text-sm"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.reactivate_cancel')}</Button>
-          <Button
-            variant="default"
-            onClick={onConfirm}
-            disabled={loading || !reason.trim()}
-          >
-            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {t('dialogs.reactivate_confirm')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function DeleteConfirmDialog({ userName, email, onConfirm, onReturn, deleting }: {
-  userName: string; email: string
-  onConfirm: () => void; onReturn: () => void; deleting: boolean
-}) {
-  const t = useTranslations('admin.user_profile')
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
-      <DialogContent showCloseButton={false} className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-destructive">
-            <Trash2 className="h-5 w-5" />
-            {t('dialogs.delete_hard_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <div className="text-sm space-y-2">
-          <p className="text-muted-foreground">{t('dialogs.delete_hard_about')}</p>
-          <p className="font-semibold">{userName}</p>
-          <p className="text-muted-foreground text-xs">{email}</p>
-          <div className="rounded-lg p-3 mt-1 text-xs space-y-1 bg-destructive/10 border border-destructive/20">
-            <p className="font-semibold text-destructive">{t('dialogs.delete_hard_warning')}</p>
-            <p className="text-muted-foreground">{t('dialogs.delete_hard_point1')}</p>
-            <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
-            <p className="text-muted-foreground">{t('dialogs.delete_hard_point3')}</p>
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={onReturn} disabled={deleting}>{t('dialogs.delete_cancel')}</Button>
-          <Button variant="destructive" onClick={onConfirm} disabled={deleting}>
-            {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {t('dialogs.delete_hard_confirm')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function ClearHistoryDialog({ scope, onConfirm, onReturn, loading }: {
-  scope: 'row' | 'entity'
-  onConfirm: () => void; onReturn: () => void; loading: boolean
-}) {
-  const t = useTranslations('admin.user_profile')
-  const isEntity = scope === 'entity'
-  return (
-    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
-      <DialogContent showCloseButton={false} className="sm:max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-destructive">
-            <Trash2 className="h-5 w-5" />
-            {isEntity ? t('dialogs.clear_entity_title') : t('dialogs.clear_row_title')}
-          </DialogTitle>
-        </DialogHeader>
-        <p className="text-sm text-muted-foreground">
-          {isEntity ? t('dialogs.clear_entity_body') : t('dialogs.clear_row_body')}
-        </p>
-        <DialogFooter>
-          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.clear_cancel')}</Button>
-          <Button variant="destructive" onClick={onConfirm} disabled={loading}>
-            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {t('dialogs.clear_confirm')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-// ── Password requirements (create mode) ──────────────────────────────────────
-
-function PasswordInfo() {
-  const t = useTranslations('admin.user_profile')
-  const rules = [
-    t('password_info.rule_length'),
-    t('password_info.rule_case'),
-    t('password_info.rule_digits'),
-    t('password_info.rule_special'),
-  ]
-  return (
-    <div className="bg-muted/50 rounded-xl p-4 border flex flex-col gap-2">
-      <p className="text-sm font-medium">{t('password_info.title')}</p>
-      <p className="text-xs text-muted-foreground">{t('password_info.body')}</p>
-      <ul className="space-y-1 mt-1">
-        {rules.map(r => (
-          <li key={r} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-status-success shrink-0" />{r}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+// The options each control passed to `setValue` before the View split (typed inputs: register semantics;
+// `profileType`/`phone`/`whatsapp`/`suspendedUntil`: dirty; `locationId`: validate; `useMainPhone`: none; `status`: dirty since Task 893 R17).
+const FIELD_OPTIONS: { [K in keyof FormValues]?: Parameters<UseFormSetValue<FormValues>>[2] } = {
+  profileType: { shouldDirty: true },
+  status: { shouldDirty: true },
+  useMainPhone: {},
+  phone: { shouldDirty: true },
+  whatsapp: { shouldDirty: true },
+  locationId: { shouldValidate: true },
+  suspendedUntil: { shouldDirty: true },
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
@@ -397,21 +104,6 @@ function PasswordInfo() {
 export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin, canClearHistory, changeLogDates, statusHistoryDates, suspendedUntilFormatted }: Props) {
   const router = useRouter()
   const t = useTranslations('admin.user_profile')
-  const locale = useLocale()
-
-  // Label maps derived from translations
-  const PROFILE_TYPE_LABELS: Record<ProfileType, string> = {
-    admin: t('profile_types.admin'),
-    moderator: t('profile_types.moderator'),
-    private: t('profile_types.private'),
-    agent: t('profile_types.agent'),
-    developer: t('profile_types.developer'),
-  }
-  const STATUS_LABELS = {
-    active: t('statuses.active'),
-    blocked: t('statuses.blocked'),
-    inactive: t('statuses.inactive'),
-  }
 
   // Mode derivation — create if no user, otherwise view/edit toggle
   const isCreate = user === null
@@ -477,17 +169,15 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         },
   })
 
-  const { register, handleSubmit, watch, setValue, formState: { errors, isDirty } } = form
+  const { handleSubmit, watch, setValue, formState: { errors, isDirty, isSubmitted } } = form
   const profileType = watch('profileType')
   const statusValue = watch('status')
   const useMainPhone = watch('useMainPhone')
   const phoneValue = watch('phone')
-  const locationIdValue = watch('locationId')
+  const values = watch()
 
   const isBusiness = ['agent', 'developer'].includes(profileType)
   const displayName = user ? [user.name, user.last_name].filter(Boolean).join(' ') || '—' : ''
-  const regionName = regions.find(r => r.id === cities.find(c => c.id === locationIdValue)?.region_id)?.name_al
-    ?? user?.location?.parent?.name_al
 
   const needsGuard = isDirty && currentMode !== 'view'
 
@@ -716,520 +406,138 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
 
   // ── Render ────────────────────────────────────────────────────────────────
 
-  // Sidebar — view mode: actions + quick status overview
-  const sidebarView = !isCreate ? (
-    <>
-      <SectionCard title={t('sections.actions')}>
-        <div className="flex flex-col gap-2">
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-xl w-full justify-start"
-            onClick={() => setEditActive(true)}>
-            <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
-          </Button>
-          {isAdmin && user?.status !== 'inactive' && (
-            <Button variant="outline" size="sm"
-              className="gap-1.5 rounded-xl w-full justify-start border-status-warning/40 text-status-warning hover:bg-status-warning/10"
-              onClick={() => setShowDeactivateDialog(true)}>
-              <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
-            </Button>
-          )}
-          {isAdmin && user?.status === 'inactive' && (
-            <Button variant="outline" size="sm"
-              className="gap-1.5 rounded-xl w-full justify-start border-status-success/40 text-status-success hover:bg-status-success/10"
-              onClick={() => setShowReactivateDialog(true)}>
-              <RotateCcw className="h-4 w-4" /> {t('actions.reactivate_profile')}
-            </Button>
-          )}
-          {isAdmin && (
-            <Button variant="outline" size="sm"
-              className="gap-1.5 rounded-xl w-full justify-start border-destructive/40 text-destructive hover:bg-destructive/10"
-              onClick={() => setShowDeleteDialog(true)}>
-              <Trash2 className="h-4 w-4" /> {t('actions.delete_permanently')}
-            </Button>
-          )}
-        </div>
-      </SectionCard>
-      <SectionCard title={t('sections.account_status')}>
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs text-muted-foreground">{t('fields.profile_type').replace(' *', '')}</span>
-            <Badge variant="neutral" className="text-xs capitalize">
-              {PROFILE_TYPE_LABELS[profileTypeFromUser(user!)]}
-            </Badge>
-          </div>
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs text-muted-foreground">{t('fields.status')}</span>
-            <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
-              {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
-            </Badge>
-          </div>
-          {user!.status === 'blocked' && user!.suspended_until && (
-            <p className="text-xs text-muted-foreground border-t pt-2">
-              {t('fields.suspended_until').toLowerCase()}{' '}
-              {suspendedUntilFormatted ?? formatDate(user!.suspended_until, locale)}
-            </p>
-          )}
-          {user!.block_reason && (
-            <p className="text-xs text-muted-foreground italic">{user!.block_reason}</p>
-          )}
-        </div>
-      </SectionCard>
-    </>
-  ) : null
+  function handleFieldChange<K extends keyof FormValues>(field: K, value: FormValues[K]) {
+    const options = FIELD_OPTIONS[field] ?? { shouldDirty: true, shouldTouch: true, shouldValidate: isSubmitted }
+    // `value` is `FormValues[K]` by the View's own signature; RHF's path-value type cannot resolve a generic `K`.
+    setValue(field, value as never, options)
+  }
 
-  // Sidebar — edit / create mode: save actions + role & status controls
-  const sidebarEdit = (
-    <>
-      <SectionCard title={t('sections.actions')}>
-        <div className="flex flex-col gap-2">
-          <Button size="sm" className="gap-1.5 rounded-xl w-full"
-            onClick={handleSubmit(onSubmit, errs => {
-              if (!errs.firstName && !errs.lastName) {
-                if (errs.locationId) document.getElementById('section-location')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                else if (errs.companyName || errs.website) document.getElementById('section-business')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-              }
-            })} disabled={saving || (!isCreate && !isDirty)}>
-            {saving
-              ? <Loader2 className="h-4 w-4 animate-spin" />
-              : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />}
-            {isCreate ? t('actions.create_user') : t('actions.save')}
-          </Button>
-          <Button variant="outline" size="sm" className="gap-1.5 rounded-xl w-full"
-            onClick={handleCancelClick}>
-            <X className="h-4 w-4" /> {t('actions.cancel')}
-          </Button>
-        </div>
-      </SectionCard>
-      <SectionCard title={t('sections.role_status')} allowOverflow>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">{t('fields.profile_type').replace(' *', '')}</Label>
-            <Combobox
-              options={PROFILE_TYPES.map(pt => ({ value: pt, label: PROFILE_TYPE_LABELS[pt] }))}
-              value={profileType}
-              onChange={v => { if (v) setValue('profileType', v as ProfileType, { shouldDirty: true }) }}
-              variant="button"
-              size="sm"
-              disabled={!isAdmin}
-            />
-            {errors.profileType?.message && <p className="text-xs text-destructive">{errors.profileType.message}</p>}
-          </div>
-          {!isCreate && (
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">{t('sections.account_status')}</Label>
-              <Combobox
-                options={[
-                  { value: 'active', label: t('statuses.active') },
-                  { value: 'blocked', label: t('statuses.blocked') },
-                  { value: 'inactive', label: t('statuses.inactive') },
-                ]}
-                value={statusValue ?? ''}
-                onChange={v => { if (v) setValue('status', v as 'active' | 'blocked' | 'inactive') }}
-                variant="button"
-                size="sm"
-              />
-              {errors.status?.message && <p className="text-xs text-destructive">{errors.status.message}</p>}
-            </div>
-          )}
-          {!isCreate && (statusValue === 'blocked' || user?.block_reason) && (
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">{t('fields.block_reason')}</Label>
-              <Input
-                {...register('blockReason')}
-                className="h-9 rounded-xl text-sm"
-                placeholder={t('placeholders.block_reason')}
-              />
-              {errors.blockReason?.message && <p className="text-xs text-destructive">{errors.blockReason.message}</p>}
-            </div>
-          )}
-          {!isCreate && statusValue === 'blocked' && (
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">{t('fields.suspended_until')}</Label>
-              <DatePicker
-                value={watch('suspendedUntil') ?? undefined}
-                onChange={v => setValue('suspendedUntil', v ?? null, { shouldDirty: true })}
-                placeholder={t('fields.block_permanent')}
-              />
-            </div>
-          )}
-        </div>
-      </SectionCard>
-    </>
-  )
+  const viewErrors: AdminUserProfileErrors = {
+    firstName: errors.firstName?.message,
+    lastName: errors.lastName?.message,
+    profileType: errors.profileType?.message,
+    phone: errors.phone?.message,
+    whatsapp: errors.whatsapp?.message,
+    locationId: errors.locationId?.message,
+    companyName: errors.companyName?.message,
+    website: errors.website?.message,
+    yearStarted: errors.yearStarted?.message,
+    status: errors.status?.message,
+    blockReason: errors.blockReason?.message,
+  }
+
+  function handleInvalidSubmit(errs: typeof errors) {
+    if (!errs.firstName && !errs.lastName) {
+      if (errs.locationId) document.getElementById('section-location')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      else if (errs.companyName || errs.website) document.getElementById('section-business')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+
+  const dialog: AdminUserProfileDialog | null =
+    showUnsavedDialog ? 'unsaved'
+    : clearRowTarget ? 'clear-row'
+    : clearEntitySource ? 'clear-entity'
+    : showDeleteDialog && user ? 'delete'
+    : showDeactivateDialog && user ? 'deactivate'
+    : showReactivateDialog && user ? 'reactivate'
+    : showCancelDialog ? 'cancel'
+    : null
+
+  function handleDialogConfirm() {
+    switch (dialog) {
+      case 'unsaved': handleConfirmLeave(); break
+      case 'cancel': handleConfirmCancel(); break
+      case 'deactivate': void handleDeactivate(); break
+      case 'reactivate': void handleReactivate(); break
+      case 'delete': void handleDelete(); break
+      case 'clear-row': void handleClearHistoryRow(); break
+      case 'clear-entity': void handleClearHistoryForEntity(); break
+    }
+  }
+
+  function handleDialogClose() {
+    switch (dialog) {
+      case 'unsaved': setShowUnsavedDialog(false); setPendingNavHref(null); break
+      case 'cancel': setShowCancelDialog(false); break
+      case 'deactivate': setShowDeactivateDialog(false); setDeactivateReason(''); break
+      case 'reactivate': setShowReactivateDialog(false); setReactivateReason(''); break
+      case 'delete': setShowDeleteDialog(false); break
+      case 'clear-row': setClearRowTarget(null); break
+      case 'clear-entity': setClearEntitySource(null); break
+    }
+  }
+
+  const dialogLoading =
+    dialog === 'delete' ? deleting
+    : dialog === 'deactivate' || dialog === 'reactivate' ? deactivating
+    : dialog === 'clear-row' || dialog === 'clear-entity' ? clearingHistory
+    : false
 
   return (
-    <div data-testid="admin-user-profile" className="flex flex-col gap-4">
-
-      {/* ── Back button — full width above layout ───────────────────────────── */}
-      <div className="flex items-center">
-        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => {
+    <>
+      <AdminUserProfileView
+        mode={currentMode}
+        user={user}
+        email={authEmail}
+        emailConfirmedAt={emailConfirmedAt}
+        cities={cities}
+        regions={regions}
+        changeLog={changeLog}
+        statusHistory={statusHistory}
+        isAdmin={isAdmin}
+        canClearHistory={canClearHistory}
+        changeLogDates={changeLogDates}
+        statusHistoryDates={statusHistoryDates}
+        suspendedUntilFormatted={suspendedUntilFormatted}
+        values={values}
+        errors={viewErrors}
+        onFieldChange={handleFieldChange}
+        phoneE164={phoneState.e164}
+        whatsappE164={whatsappState.e164}
+        onPhoneChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
+        onWhatsappChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
+        createEmail={createEmail}
+        createEmailError={createEmailError}
+        onCreateEmailChange={v => { setCreateEmail(v); setCreateEmailError(null) }}
+        saving={saving}
+        saveError={saveError}
+        isDirty={isDirty}
+        avatar={
+          <AdminUserAvatarField
+            userId={user?.id ?? null}
+            avatarUrl={avatarUrl}
+            mode={currentMode}
+            onAvatarChange={setAvatarUrl}
+            onBlobReady={isCreate ? handleBlobReady : undefined}
+          />
+        }
+        locationRequestLoading={reqLoading}
+        onApproveLocationRequest={handleApproveRequest}
+        onRejectLocationRequest={handleRejectRequest}
+        onAddLocation={isAdmin ? addLocation : undefined}
+        onBack={() => {
           if (!interceptHref('/admin/users')) return
           router.push('/admin/users')
-        }}>
-          <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
-        </Button>
-      </div>
-
-      {saveError && (
-        <div className="bg-destructive/10 border border-destructive/20 rounded-xl px-4 py-3 text-sm text-destructive">
-          {saveError}
-        </div>
-      )}
-
-      <AdminEditLayout
-        main={
-          <div className="flex flex-col gap-6">
-
-            {/* ── Header card ───────────────────────────────────────────────── */}
-            <div className="bg-card rounded-2xl border shadow-sm p-5 flex items-start gap-5">
-              <AdminUserAvatar
-                userId={user?.id ?? null}
-                avatarUrl={avatarUrl}
-                mode={currentMode}
-                onAvatarChange={setAvatarUrl}
-                onBlobReady={isCreate ? handleBlobReady : undefined}
-              />
-              <div className="flex flex-col gap-2 min-w-0 pt-1">
-                {isCreate ? (
-                  <>
-                    <h1 className="text-xl font-bold">{t('header.new_user_title')}</h1>
-                    <p className="text-sm text-muted-foreground">{t('header.new_user_subtitle')}</p>
-                  </>
-                ) : (
-                  <>
-                    <h1 className="text-xl font-bold leading-tight">{displayName}</h1>
-                    <div className="flex flex-wrap gap-1.5">
-                      <Badge variant="neutral" className="text-xs capitalize">
-                        {PROFILE_TYPE_LABELS[profileTypeFromUser(user!)]}
-                      </Badge>
-                      <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
-                        {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
-                      </Badge>
-                      {user!.is_verified && (
-                        <Badge variant="success" className="text-xs gap-1">
-                          <ShieldCheck className="h-3 w-3" /> {t('header.verified_badge')}
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{authEmail}</p>
-                    {user!.public_id != null && (
-                      <p className="text-xs text-muted-foreground/50 font-mono">#{user!.public_id}</p>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* ── Location request card ──────────────────────────────────────── */}
-            {user?.location_request && (
-              <div className="bg-status-warning/10 border border-status-warning/30 rounded-2xl p-4 flex flex-col gap-3">
-                <p className="text-sm font-semibold text-status-warning flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> {t('location_request.title')}
-                </p>
-                <p className="text-sm">
-                  <strong>{user.location_request.city}</strong>
-                  {user.location_request.region ? `, ${user.location_request.region}` : ''}
-                </p>
-                <div className="flex gap-2 items-center flex-wrap">
-                  <div className={cn('flex-1 min-w-0', reqLoading && 'pointer-events-none opacity-50')}>
-                    <LocationCombobox
-                      locations={cities}
-                      value=""
-                      onChange={id => { if (id) handleApproveRequest(Number(id)) }}
-                      placeholder={t('placeholders.city_assign')}
-                    />
-                  </div>
-                  <Button variant="ghost" size="sm" className="text-xs text-destructive hover:bg-destructive/5 shrink-0"
-                    onClick={handleRejectRequest} disabled={reqLoading}>
-                    {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* ── Basic info ────────────────────────────────────────────────── */}
-            <SectionCard id="section-identity" title={t('sections.basic_info')} allowOverflow>
-              {isCreate ? (
-                <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-                  <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
-                  <div className="min-w-0">
-                    <AdminInput
-                      type="email"
-                      value={createEmail}
-                      onChange={e => { setCreateEmail(e.target.value); setCreateEmailError(null) }}
-                      placeholder="user@example.com"
-                    />
-                    {createEmailError && <p className="text-xs text-destructive mt-1">{createEmailError}</p>}
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-                  <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email')}</span>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium break-all">{authEmail}</span>
-                      {emailConfirmedAt !== undefined && (
-                        <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-2xs shrink-0">
-                          {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">{t('fields.email_immutable')}</p>
-                  </div>
-                </div>
-              )}
-              <FieldRow label={t('fields.first_name')} mode={currentMode}
-                viewValue={user?.name}
-                editContent={<AdminInput {...register('firstName')} placeholder={t('placeholders.first_name')} />}
-                error={errors.firstName?.message}
-              />
-              <FieldRow label={t('fields.last_name')} mode={currentMode}
-                viewValue={user?.last_name}
-                editContent={<AdminInput {...register('lastName')} placeholder={t('placeholders.last_name')} />}
-                error={errors.lastName?.message}
-              />
-              {/* Profile type shown as read-only; editable in the sidebar Role & Status card */}
-              <FieldRow
-                label={t('fields.profile_type').replace(' *', '')}
-                mode="view"
-                viewValue={PROFILE_TYPE_LABELS[profileType]}
-              />
-            </SectionCard>
-
-            {/* ── Contact ───────────────────────────────────────────────────── */}
-            <SectionCard title={t('sections.contact')}>
-              <FieldRow label={t('fields.phone')} mode={currentMode}
-                viewValue={user?.phone}
-                editContent={
-                  <PhoneField
-                    value={phoneState.e164}
-                    onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
-                    error={errors.phone?.message}
-                  />
-                }
-                error={undefined}
-              />
-              <FieldRow label={t('fields.whatsapp')} mode={currentMode}
-                viewValue={user?.whatsapp}
-                editContent={
-                  <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2 text-sm cursor-pointer">
-                      <Checkbox checked={useMainPhone} onCheckedChange={v => setValue('useMainPhone', v === true)} />
-                      {t('fields.use_main_phone')}
-                    </label>
-                    {!useMainPhone && (
-                      <PhoneField
-                        value={whatsappState.e164}
-                        onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
-                        error={errors.whatsapp?.message}
-                      />
-                    )}
-                  </div>
-                }
-              />
-            </SectionCard>
-
-            {/* ── Location ──────────────────────────────────────────────────── */}
-            <SectionCard id="section-location" title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
-              <FieldRow label={t('fields.city')} mode={currentMode}
-                editContent={
-                  <LocationCombobox
-                    locations={cities}
-                    value={locationIdValue ? String(locationIdValue) : ''}
-                    onChange={id => setValue('locationId', (id ? Number(id) : undefined) as unknown as number, { shouldValidate: true })}
-                    error={errors.locationId?.message}
-                    placeholder={t('placeholders.city_search')}
-                    regions={isAdmin ? regions : undefined}
-                    onAddLocation={isAdmin ? addLocation : undefined}
-                  />
-                }
-                viewValue={
-                  <div className="flex flex-col gap-0.5">
-                    <span>{user?.location?.name_al ?? '—'}</span>
-                    {user?.location?.parent?.name_al && (
-                      <span className="text-xs text-muted-foreground">{user.location.parent.name_al}</span>
-                    )}
-                  </div>
-                }
-                error={undefined}
-              />
-              {currentMode !== 'view' && regionName && (
-                <FieldRow label={t('fields.region')} mode="view"
-                  viewValue={<span className="text-muted-foreground text-sm">{regionName} {t('actions.region_auto')}</span>}
-                />
-              )}
-            </SectionCard>
-
-            {/* ── Business (Agent / Developer) ──────────────────────────────── */}
-            {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
-              <SectionCard id="section-business" title={t('sections.company')}>
-                <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
-                  editContent={<AdminInput {...register('companyName')} placeholder={t('placeholders.company_name')} />}
-                  error={errors.companyName?.message}
-                />
-                <FieldRow label={t('fields.website')} mode={currentMode}
-                  viewValue={user?.website ? <a href={user.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{user.website}</a> : undefined}
-                  editContent={<AdminInput {...register('website')} placeholder={t('placeholders.website')} />}
-                  error={errors.website?.message}
-                />
-                <FieldRow label={t('fields.position')} mode={currentMode} viewValue={user?.position}
-                  editContent={<AdminInput {...register('position')} placeholder={t('placeholders.position')} />}
-                />
-                <FieldRow label={t('fields.year_started')} mode={currentMode} viewValue={user?.year_started?.toString()}
-                  editContent={
-                    <AdminInput {...register('yearStarted', { valueAsNumber: true })} type="number"
-                      min={1900} max={new Date().getFullYear()} className="w-32" placeholder="2015" />
-                  }
-                  error={errors.yearStarted?.message}
-                />
-              </SectionCard>
-            )}
-
-            {/* ── Password info (create mode only) ──────────────────────────── */}
-            {isCreate && <PasswordInfo />}
-
-            {/* ── Change history (not shown in create mode) ─────────────────── */}
-            {!isCreate && changeLog.length > 0 && (
-              <SectionCard title={t('sections.change_log')}>
-                {canClearHistory && (
-                  <Button
-                    type="button" variant="outline"
-                    onClick={() => setClearEntitySource('user_change_log')}
-                    className="self-start"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    {t('actions.clear_history')}
-                  </Button>
-                )}
-                <div className="flex flex-col gap-2">
-                  {changeLog.map(entry => (
-                    <div key={entry.id} className="flex items-start gap-3 text-xs">
-                      <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                      <div className="min-w-0 flex-1">
-                        <span className="text-muted-foreground">
-                          {changeLogDates?.[entry.id] ?? formatDateTime(entry.changed_at, locale)}
-                        </span>
-                        {' · '}
-                        <span className="font-medium">{PROFILE_TYPE_LABELS[entry.old_value as ProfileType] ?? entry.old_value}</span>{' → '}
-                        <span className="font-medium">{PROFILE_TYPE_LABELS[entry.new_value as ProfileType] ?? entry.new_value}</span>
-                      </div>
-                      {canClearHistory && (
-                        <Button
-                          type="button" variant="ghost" size="icon-xl"
-                          className="text-muted-foreground hover:text-destructive shrink-0"
-                          aria-label={t('actions.clear_history_row_aria')}
-                          onClick={() => setClearRowTarget({ source: 'user_change_log', rowId: entry.id })}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </SectionCard>
-            )}
-
-            {/* ── Status history (not shown in create mode) ─────────────────── */}
-            {!isCreate && statusHistory.length > 0 && (
-              <SectionCard title={t('sections.status_history')}>
-                {canClearHistory && (
-                  <Button
-                    type="button" variant="outline"
-                    onClick={() => setClearEntitySource('user_status_history')}
-                    className="self-start"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    {t('actions.clear_history')}
-                  </Button>
-                )}
-                <div className="flex flex-col gap-2">
-                  {statusHistory.slice(0, 10).map(entry => (
-                    <div key={entry.id} className="flex items-start gap-3 text-xs">
-                      <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                      <div className="min-w-0 flex-1 flex flex-col gap-0.5">
-                        <div>
-                          <span className="text-muted-foreground">
-                            {statusHistoryDates?.[entry.id] ?? formatDateTime(entry.changed_at, locale)}
-                          </span>
-                          {' · '}
-                          <span className="font-medium">{entry.old_status ? t(`statuses.${entry.old_status}` as Parameters<typeof t>[0]) : '—'}</span>{' → '}
-                          <span className="font-medium">{t(`statuses.${entry.new_status}` as Parameters<typeof t>[0])}</span>
-                        </div>
-                        {entry.reason && (
-                          <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>
-                        )}
-                      </div>
-                      {canClearHistory && (
-                        <Button
-                          type="button" variant="ghost" size="icon-xl"
-                          className="text-muted-foreground hover:text-destructive shrink-0"
-                          aria-label={t('actions.clear_history_row_aria')}
-                          onClick={() => setClearRowTarget({ source: 'user_status_history', rowId: entry.id })}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </SectionCard>
-            )}
-          </div>
-        }
-        sidebar={currentMode === 'view' ? sidebarView : sidebarEdit}
+        }}
+        onEdit={() => setEditActive(true)}
+        onSave={handleSubmit(onSubmit, handleInvalidSubmit)}
+        onCancel={handleCancelClick}
+        onDeactivate={() => setShowDeactivateDialog(true)}
+        onReactivate={() => setShowReactivateDialog(true)}
+        onDelete={() => setShowDeleteDialog(true)}
+        onClearHistory={(source: HistoryClearSource) => setClearEntitySource(source)}
+        onClearHistoryRow={(source: HistoryClearSource, rowId: string) => setClearRowTarget({ source, rowId })}
       />
-
-      {/* ── Dialogs ─────────────────────────────────────────────────────────── */}
-      {showCancelDialog && (
-        <CancelConfirmDialog onConfirm={handleConfirmCancel} onReturn={() => setShowCancelDialog(false)} />
-      )}
-      {showDeactivateDialog && user && (
-        <DeactivateReasonDialog
-          userName={displayName}
-          reason={deactivateReason}
-          onReasonChange={setDeactivateReason}
-          onConfirm={handleDeactivate}
-          onReturn={() => { setShowDeactivateDialog(false); setDeactivateReason('') }}
-          loading={deactivating}
-        />
-      )}
-      {showReactivateDialog && user && (
-        <ReactivateReasonDialog
-          userName={displayName}
-          reason={reactivateReason}
-          onReasonChange={setReactivateReason}
-          onConfirm={handleReactivate}
-          onReturn={() => { setShowReactivateDialog(false); setReactivateReason('') }}
-          loading={deactivating}
-        />
-      )}
-      {showDeleteDialog && user && (
-        <DeleteConfirmDialog
-          userName={displayName} email={authEmail}
-          onConfirm={handleDelete} onReturn={() => setShowDeleteDialog(false)} deleting={deleting}
-        />
-      )}
-      {showUnsavedDialog && (
-        <UnsavedChangesDialog
-          onLeave={handleConfirmLeave}
-          onStay={() => { setShowUnsavedDialog(false); setPendingNavHref(null) }}
-        />
-      )}
-      {clearRowTarget && (
-        <ClearHistoryDialog
-          scope="row"
-          onConfirm={handleClearHistoryRow}
-          onReturn={() => setClearRowTarget(null)}
-          loading={clearingHistory}
-        />
-      )}
-      {clearEntitySource && (
-        <ClearHistoryDialog
-          scope="entity"
-          onConfirm={handleClearHistoryForEntity}
-          onReturn={() => setClearEntitySource(null)}
-          loading={clearingHistory}
-        />
-      )}
-    </div>
+      <AdminUserProfileDialogsView
+        dialog={dialog}
+        userName={displayName}
+        email={authEmail}
+        reason={dialog === 'reactivate' ? reactivateReason : deactivateReason}
+        onReasonChange={dialog === 'reactivate' ? setReactivateReason : setDeactivateReason}
+        loading={dialogLoading}
+        onConfirm={handleDialogConfirm}
+        onClose={handleDialogClose}
+      />
+    </>
   )
 }

@@ -2,8 +2,9 @@
 
 Sprint 84 · **P2** · QA profile **Q4** (legacy surface → Mantine, plus five critical flows on it) · **depends on
 877** (hard: the admin page-wrapper form and the `adminPageMaxWidth` token) · blocks **885** and **895** · owner action
-**O84-2** · **Status: review 1 `PARTIALLY VERIFIED` 2026-09-30** (implementation verified; approval waits on owner
-matrix O84-2 and the owner decision in §16.2) · kickoff filed 2026-09-28
+**O84-2** · **Status: `NEEDS REVISION` 2026-09-30 — revision 1 (§17)**: the owner accepted 64 of 72 tuples and
+returned the `RangeDatePicker` year list. Review 1 was `PARTIALLY VERIFIED` (§16). The owner decision in §16.2 is still
+open · kickoff filed 2026-09-28
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row's text moves into §3.
@@ -467,6 +468,105 @@ and emits no git command.
 2. **STOP - OWNER DECISION REQUIRED — legacy "status-only change cannot be saved".** `FIELD_OPTIONS.status = {}` (`AdminUserProfile.tsx:94`) keeps the legacy `setValue('status', v)` without `shouldDirty`. So a status change alone leaves `isDirty` false and Save disabled; T2 has to type and clear the reason to get round it. INFERENCE from react-hook-form's `setValue` semantics and T2's own workaround: an admin cannot unblock a user (blocked → active) without editing another field. Options:
    - **A (recommended):** fix it in 893. Set `status: { shouldDirty: true }`, add **T10** ("a status-only change enables Save and sends the new status"), and remove T2's type-and-clear workaround. The verification is the §13.2 test lines plus a P6 plant (restore `status: {}` → T10 fails).
    - **B:** keep 893 byte-faithful and file a separate numbered task for the fix.
+
+## 17. Revision 1 — 2026-09-30 — `NEEDS REVISION` (owner return at O84-2)
+
+### 17.1 Owner result and re-entry
+
+The owner **accepted 64 of 72 tuples** (2026-09-30): every `AdminUserProfileView`, `AdminUserProfileDialogsView`,
+`AdminUserAvatarFieldView` and `FormSectionStack` row of §13.4. **Returned:** `Mantine/Primitives/RangeDatePicker`
+`SingleDate` / `SingleDateSelected` (8 tuples). The owner's words, verbatim: *"не розумію, чому в жодному з datepicker
+не обирається рік вище 2026."*
+
+**Re-entry mode: remediation.** Start from the review-1 tree (§16.1 hashes). Do not re-run I0, the baselines (`04`), the
+census baseline update (R9) or plants P1–P5; keep evidence `01`–`24` unchanged. New evidence goes to
+`docs/sessions/evidence/task893/r1-*`. Everything accepted above stays as it is; only §17.3's files change.
+
+### 17.2 Root cause (measured by the reviewer, 2026-09-30, `storybook-static`, `sq`)
+
+- **The year range is not the cap.** `computeYearOptions` (`RangeDatePicker.tsx:162-168`) gives `currentYear − 5 …
+  currentYear + 10` when there is no `maxDate`, so `SingleDate` offers **2021–2036** (16 options, measured).
+- **Desktop (1440):** `MantineCombobox` opens its list at `scrollTop 0` and never brings the current option into view.
+  The list is capped at 220px (`Combobox.Options mah`, `MantineCombobox.tsx:374`), so on open the user sees
+  **2021–2025**. The current year 2026 and every later year are below the fold, with no cue that the box scrolls
+  (measured: `scrollHeight 656`, `clientHeight 220`). A wheel scroll and the keyboard do reach 2036.
+- **Mobile (390):** the year opens in `MantineCombobox`'s bottom sheet (`:400-477`), which also renders from the top
+  and never scrolls to the selected option. With `YearCombobox`'s ~80 years, the same defect is worse there.
+- **"In none of the datepickers"**: the other date fields cap the year **by design**, and that stays:
+  `FiltersPanel.tsx:391`, `ListingsFilters.tsx:403` (`maxDate={today}`: a listing cannot be published in the future)
+  and `MantineDashboardPeriodControl.tsx:132` (the analytics period ends today). The older Stories
+  (`Default`, `OpenBoundedNoValue`) pin `maxDate` to 2026 on purpose (fixed fixtures). Only the admin
+  suspended-until field and the two `SingleDate*` Stories have no cap. There, 2027–2036 exist but are hidden.
+
+### 17.3 Requirements (revision 1)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R12** | **`MantineCombobox` desktop:** when the dropdown opens, the option whose value equals `value` is the combobox's selected option **and is scrolled into view** inside the 220px list. Follow Mantine's own `Select` pattern: `useCombobox({ onDropdownOpen: () => combobox.updateSelectedOptionIndex('active', { scrollIntoView: true }), onDropdownClose: … })`. Options already carry `active={value === opt.value}` (`:244`). With no value, the list still opens at the top. No new visual value. | P1 | AC11 |
+| **R13** | **`MantineCombobox` mobile sheet:** when the sheet opens, the option button whose value equals `value` is scrolled into view (`scrollIntoView({ block: 'center' })` on a ref to that button, run when the sheet has opened). With no value, the sheet opens at the top. No new visual value, no `style`. | P1 | AC11 |
+| **R14** | **No range or cap changes.** `computeYearOptions`, every `maxDate` consumer (§17.2) and the month dropdown stay as they are. The desktop year trigger's missing `aria-label` (measured: the month trigger has `Muaj`, the year trigger `null` at 1440; the mobile one has `Viti`) is fixed by passing `triggerAriaLabel={t('period_year')}` to the desktop year `MantineCombobox` (`RangeDatePicker.tsx:529-538`), the same key the mobile header uses (`:720`). | P2 | AC12 |
+| **R15** | **Tests** in `src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`, new `describe('scroll to the selected option (Task 893 R12/R13)')`:<br>• **T-C1** desktop, 16 options, `value` = the 12th: open → the 12th option has `data-combobox-selected`, and `Element.prototype.scrollIntoView` (stubbed with `vi.fn`, restored after) was called with that option as `this`;<br>• **T-C2** mobile (the file's existing mobile harness, or `matchMedia` mocked to `(max-width: 40em)`): open the sheet → `scrollIntoView` was called on the button of the selected option;<br>• **T-C3** no `value`: open → `scrollIntoView` is not called for any option.<br>Every existing test in the file passes unchanged. | P1 | AC11 |
+| **R16** | **Plants**, two-armed, Node I/O, hash witnesses (§10.3 rules): **P7** remove R12's `onDropdownOpen` → T-C1 fails (`r1-plant-p7.txt`); **P8** remove R13's scroll effect → T-C2 fails (`r1-plant-p8.txt`). | P1 | AC11 |
+
+Write set for revision 1: `src/design-system/mantine/patterns/MantineCombobox.tsx`,
+`src/design-system/mantine/patterns/RangeDatePicker.tsx` (R14's one prop),
+`src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`, the session log, `docs/backlog.md`
+(893 cell only), and `docs/sessions/evidence/task893/r1-*`. **No Story file changes:** `Mantine/Primitives/Combobox`
+(`Default`) and `Mantine/Primitives/RangeDatePicker` already render the real component. Both are
+`MantineStoryShell` primitives (GR-3d: n/a).
+
+### 17.4 Acceptance criteria (revision 1)
+
+- **AC11 [R12, R13, R15, R16]** T-C1–T-C3 pass. Every existing `MantineCombobox`, `RangeDatePicker`,
+  `filtersRangeDatePicker`, `PhoneField` and `AdminUserProfile` test passes. P7 and P8 each fail their test and pass
+  after the restore, with equal hashes. **Rendered proof** (Playwright on a fresh `storybook-static`, `sq`), recorded in
+  `r1-year-reach.txt`:
+  - `Mantine/Primitives/RangeDatePicker--single-date` at **1440**: open the year dropdown. `2026` lies inside the
+    list's visible box, and the list can still scroll to `2036`.
+  - Same Story at **390**: open the year sheet. `2026` is inside the sheet's visible area.
+  - `Mantine/Primitives/Combobox--default` at 1440: open with a value, and the selected option is visible.
+- **AC12 [R14]** At 1440 the desktop year trigger's `aria-label` equals `common.period_year` in the active locale.
+  `git diff` shows no change to `computeYearOptions` or to any `maxDate` consumer.
+- **AC13 [all]** `typecheck`, `lint` (0 errors), `check:story-coverage`, `check:rendered-scope`,
+  `check:surface-census:changed`, `check:design-tokens`, `check:enrolled-tailwind`, `check:file-integrity`,
+  `check:mojibake`, `build-storybook` and `npm run build` exit 0 on the final tree. `22-hash-object` is re-captured as
+  `r1-hash-object.txt`.
+
+`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+
+### 17.5 Final gate block (revision 1)
+
+```powershell
+$ev = "docs\sessions\evidence\task893"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r1-platform.txt"
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx src/components/shared/__tests__/PhoneField.smoke.test.tsx src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx *>&1 | Tee-Object "$ev\r1-tests.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r1-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\r1-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\r1-story-coverage.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\r1-rendered-scope.txt"
+npm.cmd run check:surface-census:changed *>&1 | Tee-Object "$ev\r1-census-changed.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\r1-design-tokens.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\r1-enrolled-tailwind.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r1-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r1-mojibake.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r1-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r1-build.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r1-status-after.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command. Normalise the `Tee-Object` files to UTF-8 without BOM through Node,
+and stop any dev server before either build. Run the plants and `r1-year-reach.txt` after `build-storybook`, on that
+build.
+
+### 17.6 Owner matrix owed after revision 1 (O84-2, remainder)
+
+| Story | States | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Mantine/Primitives/RangeDatePicker` | `SingleDate`, `SingleDateSelected` (open the year list) | `sq`, `en` | 390, 1440 | 8 |
+| `Mantine/Primitives/Combobox` | `Default` (blast radius: open with a value) | `sq` | 390, 1440 | 2 |
+
+GR-3d: both are `MantineStoryShell` primitives (n/a). The §16.2 decision (O84-8) is still open. If the owner picks
+**A** before this revision runs, T10 and P6 from §16.2 join this revision, and their test lines join §17.5.
 
 ---
 

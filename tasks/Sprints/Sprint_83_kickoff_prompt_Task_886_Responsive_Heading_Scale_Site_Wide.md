@@ -1308,3 +1308,202 @@ Append `## Revision 4` to the session log. It contains:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` or `BLOCKED`. Update the 886 cell of `docs/backlog.md` (concise
 state). No mutating git. The owner matrix (§18.9, minus the accepted save button) goes to the owner after review 6.
+
+### 19.8 Review 6, 2026-09-30 — `PARTIALLY VERIFIED`, awaiting O83-1 and O83-5
+
+Revision 4 is verified on the final tree.
+- **Hashes and I0.** All 41 `rev4/hash-object.log` hashes equal the tree, and `rev4/i0.log` holds the five §19.5
+  hashes.
+- **Gates.** Every rev4 gate log ends `EXIT_CODE=0`. `storybook-static` (18:43) and `.next/BUILD_ID` (18:45) are newer
+  than the last Story write (18:42). The §19.5 grep, re-run by the reviewer, prints nothing.
+- **Reviewer's native probe** (`win32`, Node v22.22.3), at 320/390/768/1024/1440:
+  - every measured Story has an edge gap of 16/16/24/32/32 and no overflow;
+  - `rail-no-overflow` shows 0 scroll controls from 768 and 1 at 320/390;
+  - `listingcardpattern--default` shows 2 placeholders that fill their frames, 10 `<img>` and 0 broken;
+  - the headings follow §4.1, for example `h4` 18/18/24/24/24.
+- **R29 deviation, accepted.** The list card uses `listing-thumb`, as production `ListingCard.tsx`'s horizontal
+  `thumbImage` does. §19.3's plain `listing` was a kickoff imprecision.
+
+**Next.** The owner runs O83-1, which is §18.9 without the already accepted save button, and decides O83-5 (§19.4).
+- If every tuple is accepted and O83-5 is decided, the next review approves and closes 886.
+- If the owner returns a tuple, the next review writes Revision 5.
+
+---
+
+## 20. Revision 5 — review 7, 2026-09-30 (`NEEDS REVISION`, owner returned O83-1)
+
+This section overrides every earlier section it names. Revisions 1–4 are **kept**. Review 6 verified them (§19.8).
+
+### 20.1 Owner result for O83-1 (§18.9 matrix, 2026-09-30, verbatim)
+
+| §18.9 row | Owner verdict |
+|---|---|
+| 1 `ListingDetailPattern` | *"неприймаю. Колір кнопки чату треба зробити іншого кольору, бо наразі вона зливається з кнопкою Call. Все інше ок."* |
+| 2 `ListingDetailView` → `Public Listing` | *"не приймаю, заблоковані Storybook breakpoints."* |
+| 3 `ListingContactPattern` | *"все ок, але кнопка чату має бути всюди однакового кольору. Та сама проблема як і в Patterns/Mantine/ListingDetailPattern."* |
+| 4 `SaveToCollectionButton` → `Closed` | **accepted** earlier (§19.1) |
+| 5 `AppImage` → `Default`, `Placeholder` | *"не приймаю, там якийсь глюк з фоном на першій картинці. Перевірив у двох браузерах - проблема в коді."* (screenshot at 378px) |
+| 6 gutter re-look | `ListingCardPattern`: *"не приймаю. Тут не потрібен функціонал додавання оголошення у свою папку. Прибрати його. Цей функціонал доступний лише на стоірнці деталей оголошення. Необхідно це виконати у цій задачі!"* The other six rows are **accepted**: `ListingCardTrack`, `ListingGalleryPattern`, `AgentStatisticsView`, `ListingsShellView`, `HomepageListingGrids`, `PopularLocationsView`. |
+
+**O83-5 — DECIDED 2026-09-30, owner verbatim: *"Я обираю варіант (а)."*** The reviewer applied the rule text to
+`docs/golden-rules.md` (GR-3d page-level View exemption, condition 1): a View root that renders the canonical
+`.container-wide` page container now qualifies. `PopularLocationsView`'s receipt, `n/a: View carries the page gutter
+(MantineHomeSection.tsx:51)`, therefore stands. No code changes.
+
+### 20.2 Findings (review 7, reviewer-reproduced on the rev4 `storybook-static`, native Playwright, `win32`)
+
+| # | Severity | Evidence | Req |
+|---|---|---|---|
+| F15 | **P1** owner return | `AppImage.stories.tsx` `Placeholder`, the standalone section: `<AspectRatio ratio={16 / 9}><MediaPlaceholder …/></AspectRatio>`. `MediaPlaceholder` is `pos="absolute" inset={0}` ("fills its positioned parent"). Mantine's `AspectRatio` is not positioned, so the placeholder escapes to the page's top edge. At 378px it paints a full-width 16:9 grey field with the 48px glyph over the first `listing` frame (the owner's screenshot; reproduced in `.artifacts/ai886-378.png`). Every placeholder inside `AppImage` is correct, because `.frame` is `position: relative` (reviewer's measure: each placeholder's box equals its frame's box). Review 5's probe sampled only the first three placeholders, which is how it missed this. | R31 |
+| F16 | **P1** owner return | The send-message ("chat") trigger has the same filled `brand` colour as Call: production `ListingContact.tsx:202` `<Button type="button" fullWidth leftSection=…>` has no variant, and so does `ListingDetailPattern.stories.tsx:104` `DemoInquiryTrigger`. `ListingContactPattern.stories.tsx:47`'s stand-in is `variant="outline"`, which the owner accepted as a look but which diverges from production. | R32 |
+| F17 | **P1** owner return, GR-3b | `ListingDetailView.stories.tsx:178/190/202/217`: four `globals: { viewport: { value: 'desktop1280' … } }` pins lock the toolbar. The Story is unchanged by 886 and reached the matrix as a blast-radius row, and earlier reviews did not open it. | R33 |
+| F18 | **P1** owner return (instruction: *"Необхідно це виконати у цій задачі!"*) | Save-to-collection must not appear on listing cards; it belongs only on the listing-detail page. Card use today:<br>• production `FavoritesShell.tsx:214` `imageActions={<SaveToCollectionButton …/>}`, through `ListingCard.tsx` `imageActions` → `MantineListingCardPattern.tsx` `imageActions` slot (`:94`, `:156`, `:330-334`, CSS `.imageActions` in `MantineListingCardPattern.module.css`);<br>• Stories `ListingCardPattern.stories.tsx` (`withImageActions`, play assertion `:291-312`) and `Mantine/Primitives/ListingCard` (`:142-176`);<br>• tests `ListingCard.smoke.test.tsx:281+` and `MantineListingCardPattern.smoke.test.tsx:120+`.<br>After the removal, `SaveToCollectionButton`'s icon shape (`variant="icon"`, the default) has no consumer. The only live caller is `ListingContact.tsx:228` (`variant="default"`). | R34, R35 |
+
+### 20.3 Canonical UI decision record (GR-0) — Revision 5
+
+| Artifact | Disposition | Owner and token path |
+|---|---|---|
+| Send-message trigger | **REUSE** Mantine `Button` | `variant="outline"` with the theme's primary `brand`, and `leftSection` `theme.other.iconSize.standard` (the production icon size). This is the shape the owner accepted in `ListingContactPattern`, distinct from Call (filled `brand`) and WhatsApp (filled `green`). One shape in production and in both Story stand-ins. |
+| Standalone placeholder frame (Story) | **REUSE** Mantine `AspectRatio` | Add `pos="relative"` (a Mantine style prop, not a `style` object), which gives the placeholder its positioned parent. |
+| Card save control | **DELETE** | The `imageActions` slot, its CSS and its consumers are removed. `SaveToCollectionButton` keeps one shape, the owner-accepted default (§19.1). |
+
+`new hardcoded visual values: NONE`.
+
+### 20.4 Revision requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R31** | `AppImage.stories.tsx` `Placeholder`: the standalone `<AspectRatio ratio={16 / 9}>` gains `pos="relative"`, plus a comment: `MediaPlaceholder` fills its positioned parent, as `AppImage`'s `.frame` provides. Nothing else changes. | P1 | AC24 |
+| **R32** | The send-message trigger is `variant="outline"` with `leftSection={<MessageCircle size={theme.other.iconSize.standard} />}` in:<br>• production `ListingContact.tsx:202` (the `ListingInquiryDialog` trigger);<br>• `ListingDetailPattern.stories.tsx:104` `DemoInquiryTrigger`;<br>• `ListingContactPattern.stories.tsx:47` `DemoInquiryTrigger` (icon size `standard`; the variant is already `outline`).<br>The disabled branch (`ListingContact.tsx:183-194`, `variant="light" color="gray"`) is unchanged. | P1 | AC25 |
+| **R33** | `ListingDetailView.stories.tsx`: delete all four `globals` viewport pins (`:178/190/202/217`), and rewrite or delete any comment that explains them. Then check the file against GR-3b (fixed-width or max-width containers, `style`, raw px/rem) and fix anything found. It stays `n/a: default canvas` for GR-3d. | P1 | AC26 |
+| **R34** | Remove save-to-collection from listing cards:<br>• `FavoritesShell.tsx`: drop the `imageActions` prop at `:214`, and the `SaveToCollectionButton` import if it becomes unused;<br>• `ListingCard.tsx`: delete the `imageActions` prop, its JSDoc and its pass-through;<br>• `MantineListingCardPattern.tsx`: delete the `imageActions` prop, its JSDoc and its render block;<br>• `MantineListingCardPattern.module.css`: delete the `.imageActions` rules (`.imageActions`, `.cardGrid:hover .imageActions`, `.cardGrid:focus-within .imageActions`) and their comment block;<br>• Stories: `ListingCardPattern.stories.tsx` (delete `withImageActions`, the `SaveToCollectionButton` import and the play-function block that measures the badge/save intersection, keeping the rest of `play`) and `Mantine/Primitives/ListingCard` (delete the `imageActions` usage and its comments; if an export exists only for that slot, delete the export);<br>• tests: delete the `imageActions` suites in `ListingCard.smoke.test.tsx` (`:281+`) and `MantineListingCardPattern.smoke.test.tsx` (`:120+`), plus any mocks and imports that become unused;<br>• **regression (critical flow, `docs/critical-flow-registry.md` "Listing card rendering"):** add one `ListingCard.smoke.test.tsx` test asserting that a vertical grid card renders **no** "Save to collection" control (`queryByRole('button', { name: 'Save to collection' })` is null). Prove it two-armed: temporarily render `<SaveToCollectionButton listingId=…/>` inside `ListingCard.tsx`'s vertical `image` node → the test **fails**; restore → it **passes**. Record a `git hash-object` before and after, and read and write through Node;<br>• `git grep -n "imageActions" -- src` prints nothing afterwards. | P1 | AC27 |
+| **R35** | `SaveToCollectionButton.tsx` keeps one shape, the owner-accepted default:<br>• delete the icon branch (`ActionIcon`, its `radius` marker), the `variant` prop and the `className` prop if nothing passes it any more;<br>• delete every `SaveToCollectionButton.module.css` rule only the icon shape uses. If the file is then empty, delete it and its import;<br>• drop `variant="default"` from its callers `ListingContact.tsx:228` and `ListingDetailPattern.stories.tsx:186`;<br>• `SaveToCollectionButton.stories.tsx` keeps its three exports, now rendering the default shape; fix any `play` selector that relied on the icon's `aria-label`;<br>• remove any `collections.*` message key that becomes unreferenced from all four `messages/*.json` files, and report the result of the grep. | P1 | AC27 |
+
+**Owner clarification, 2026-09-30, verbatim:** *"Прибрати треба кнопку "Зберегти у колекцію", а не Favorites!"*
+R34/R35 remove **only** the "Save to collection" button from cards. These stay exactly as they are:
+- `FavoriteButton` (the heart) on every card, in every Story, and its `favorite` slot;
+- the `/favorites` page (`FavoritesShell`, its list of saved listings);
+- `CollectionsSection`.
+
+The only `FavoritesShell.tsx` edit is dropping `imageActions` at `:214`. A diff that touches `FavoriteButton`, the
+`favorite` slot or any favorites behaviour is out of scope, and the executor stops.
+
+**Out of scope:** no other production file.
+
+### 20.5 Verification plan — re-entry `remediation`
+
+Order: I0-R5 → R31 → R32 → R33 → R35 → R34 (with its plant) → gate block → measurement → grep. Evidence goes to
+`docs/sessions/evidence/task886/rev5/`. Do not overwrite earlier folders. Append `## Revision 5` to the session log.
+
+**I0-R5**, before any write:
+
+```powershell
+$ev = "docs\sessions\evidence\task886\rev5"
+New-Item -ItemType Directory -Force $ev
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\i0.log"
+git --no-optional-locks hash-object src/stories/mantine/primitives/AppImage.stories.tsx src/modules/listings/components/ListingContact.tsx src/stories/patterns/mantine/ListingDetailPattern.stories.tsx src/stories/patterns/mantine/ListingContactPattern.stories.tsx src/stories/patterns/mantine/ListingDetailView.stories.tsx src/modules/listings/components/FavoritesShell.tsx src/modules/listings/components/ListingCard.tsx src/design-system/mantine/patterns/MantineListingCardPattern.tsx src/design-system/mantine/patterns/MantineListingCardPattern.module.css src/modules/listings/components/SaveToCollectionButton.tsx src/modules/listings/components/SaveToCollectionButton.module.css src/stories/patterns/mantine/ListingCardPattern.stories.tsx | Tee-Object -Append "$ev\i0.log"
+```
+
+Expected: `win32`, then, in order:
+1. `78bfca2413e53c82266d310f2e03d9f0c51fa414` AppImage.stories
+2. `d92df5557fb9030917732e108e0f1db1722a2b59` ListingContact
+3. `571e69c91788c25d5fa4c47d2f0200d039d6100b` ListingDetailPattern.stories
+4. `f2b18336042bd8accf58e5429789cb5ca320828d` ListingContactPattern.stories
+5. `ab65ebb33ef184dbcb23245489f7176b3b1a2564` ListingDetailView.stories
+6. `087c45c5886c2d46645aef11f9ece4fe14a4a3f0` FavoritesShell
+7. `41f5d338a00570e9a6233c77057afc39ed033d57` ListingCard
+8. `6e4dc7a25497a079ca5242127986165d5077bef1` MantineListingCardPattern
+9. `898bf775a1e4525cce4a82f7e5c5b1d47b299bc0` its module.css
+10. `e7490d42fd2695265c5cab8a145859adf1f86d73` SaveToCollectionButton
+11. `7cc488fe30485f0e9d67a07a3c95fbf05a6eea35` its module.css
+12. `69350507f85a27b1df776592a31784b50c50127b` ListingCardPattern.stories
+
+A different hash is `TASK SPECIFICATION CONTRADICTION`: stop.
+
+**Gate block:** §18.5's final gate block, with `$ev = "docs\sessions\evidence\task886\rev5"`.
+- **`$files`:** add `FavoritesShell.tsx`, `MantineListingCardPattern.tsx` and `.module.css`,
+  `SaveToCollectionButton.module.css` (if it still exists), `ListingDetailView.stories.tsx`,
+  `SaveToCollectionButton.stories.tsx`, `src/stories/mantine/primitives/ListingCard.stories.tsx`,
+  `MantineListingCardPattern.smoke.test.tsx`, and every `messages/*.json` that R35 changes.
+- **Smoke-test step:** add `src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx`.
+- **Census:** also run `node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\FavoritesShell.tsx` into `$ev\census-favorites.log`.
+
+If `check:rendered-scope` or `check:surface-census:changed` reports a **stale** baseline entry because an edge was
+removed, update that baseline through the gate's own documented update path. Record the command and the before and
+after lines. A **new** block is a stop.
+
+**Measurement**, against the rebuilt `storybook-static`, with a throwaway probe under `.artifacts/`, into
+`$ev\story-measure.log`, at 320/378/390/1024/1440 in `en`:
+1. `mantine-primitives-appimage--placeholder`, for **every** `[data-testid="media-placeholder"]`: its box, its
+   `offsetParent`'s box and whether they are equal (±1), and the count of placeholders whose top is above the first
+   frame's top.
+2. `listingdetailpattern--default`, `listingcontactpattern--default` and `listingdetailview--public-listing`
+   (`en`, `uk`):
+   - the send-message button's computed `background-color`, `color` and `border-color`, against Call's and
+     WhatsApp's;
+   - every CTA's line count;
+   - edge gap and overflow.
+3. `listingdetailview--public-listing`, `--staff-preview-unpublished`, `--staff-preview-published` and
+   `--archived-listing`: the rendered width equals the requested viewport (proving the pin is gone), edge gap
+   16/16/32/48, and no overflow.
+4. `listingcardpattern--default`, `mantine-primitives-listingcard--*` and `mantine-primitives-favoritesshell--*`: the
+   count of "Save to collection" buttons (**0**), edge gap and overflow.
+5. `mantine-primitives-savetocollectionbutton--{closed,dialog-open,saving}`: renders, with no console error.
+
+**Grep**, into `$ev\story-grep.log`:
+
+```powershell
+git --no-optional-locks grep -n -E "imageActions|variant=.icon.|globals: \{ viewport" -- src
+```
+
+Expected: no line.
+
+### 20.6 Type scale (GR-3c)
+
+No production text changes size. The send-message label keeps the theme `Button` size. Every changed Story gets a
+GR-3c receipt at 320/390/768/1440.
+
+### 20.7 Acceptance criteria
+
+`GR-4 AC AUDIT — 4 revision criteria; each states an observable property; absolutes: none.`
+
+- **AC24 [R31].** In `story-measure.log`, every placeholder in `appimage--placeholder` equals its `offsetParent`'s box
+  (±1) at every width, and no placeholder sits above the first frame.
+- **AC25 [R32].** In the three detail/contact Stories, in `en` and `uk`, at every width:
+  - the send-message button's `background-color` differs from Call's;
+  - it equals the same button's value in the other two Stories;
+  - its label is 1 line wherever the card is in the sidebar.
+- **AC26 [R33].** `story-grep.log` has no `globals: { viewport` line. In all four `ListingDetailView` exports the
+  rendered width equals each requested width, with no overflow.
+- **AC27 [R34, R35].**
+  - `story-grep.log` has no `imageActions` or `variant="icon"` line.
+  - Every card Story renders 0 "Save to collection" buttons.
+  - The new regression test's plant log shows **fail → pass**, with the hash witness.
+  - The smoke tests, the census logs and every rev5 gate log end `EXIT_CODE=0`, `build.log` included.
+  - The session log has GR-0, GR-1 (`FavoritesShell` surface), GR-3, GR-3b, GR-3c and GR-3d receipts for every
+    changed Story.
+- AC1–AC23 stand as amended.
+
+### 20.8 OWNER VISUAL QA REQUIRED — O83-1, Revision 5
+
+The owner reviews these, and records **accepted** or **returned** with a concrete defect for each:
+1. `Patterns/Mantine/ListingDetailPattern` × `en`/`uk` × 320/1024/1440: the send-message colour against Call and
+   WhatsApp.
+2. `Patterns/Mantine/ListingDetailView` → all four exports × `en`/`uk` × 320/1024/1440, with the toolbar now free: the
+   photo placeholder, the contact card and the balance.
+3. `Patterns/Mantine/ListingContactPattern` × `en` × 320/1440: the same send-message colour.
+4. `Mantine/Primitives/AppImage` → `Default`, `Placeholder` × `en` × 320/378/1440.
+5. `Patterns/Mantine/ListingCardPattern`, `Mantine/Primitives/ListingCard` and `Mantine/Primitives/FavoritesShell`
+   × `en` × 320/1440: no save-to-collection control on any card.
+
+### 20.9 Completion report for Revision 5
+
+Append `## Revision 5` to the session log. It contains:
+- the Files Changed table;
+- R31–R35 with their evidence paths;
+- every §20.5 command with its exit code, including the plant log;
+- a `story-measure.log` summary;
+- the receipts listed in AC27.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. Update the 886 cells of
+`docs/backlog.md`. No mutating git.

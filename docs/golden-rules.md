@@ -269,8 +269,11 @@ the conflict found on `Patterns/Mantine/ResetPasswordView`, whose production Vie
 `Center mih="60vh" p="md"`: wrapping it in the profile doubles the phone gutter to 32px. A `skipCanvas` Story needs
 no `StoryPageGutter` only when **all** of the following are true:
 
-1. The Story renders a production page-level View, and the View's own root sets the page gutter with Mantine
-   spacing props in the production source. The Story adds no wrapper, padding, `container-*` class or `style` object.
+1. The Story renders a production page-level View, and the View's own root sets the page gutter in the production
+   source, either with Mantine spacing props or by rendering the canonical `.container-wide` page container
+   (`src/app/globals.css:714-724`, the ladder `StoryPageGutter` copies). The second form was added by owner decision
+   O83-5, 2026-09-30, Task 886 review 7, verbatim: *"Я обираю варіант (а)."* The Story adds no wrapper, padding,
+   `container-*` class or `style` object.
 2. The measured edge gap is 16 at 320 and 390, and at least 24 at 1024 and 1440 (widened from 32 by owner decision O83-4, 2026-09-30, Task 886 review 4). More than 32 is allowed only when
    the View centres narrower content.
 3. The receipt names the production source line of the gutter.

@@ -2,8 +2,8 @@
 
 **Sprint 78** (hosted by discovery, not goal fit; the owner may move it) · **P2** · **Q4** (RLS / write-path
 security) · Track B (non-UI) · filed 2026-09-21 by Task 850's owner-native closure · kickoff written 2026-09-27 ·
-owner action **O78-8** · **Status: `PARTIALLY VERIFIED` (review 1, 2026-09-30, §16) — stage 2 inspected; awaiting
-O78-8 steps 2–9; R6 moved to the Opus closure review**
+owner action **O78-8** · **Status: `NEEDS REVISION` (review 2, 2026-09-30) — executor: do §17.4 only; the close
+script is NOT applied yet; R6 is the Opus closure review's (§16.3)**
 
 Executor: run this file through the `execute-task` workflow. Your strongest permitted completion status is
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. You never approve, and you never emit or run a mutating Git command.
@@ -474,6 +474,91 @@ edit to Opus at closure; no executor revision is needed.
      last cell → `Task 269 (rationale comment) · closed by Task 865`. The ⚠️ falsified warning is removed.
 4. Then the normal approved-review closure: archive row, kickoff to `tasks/Archive/`, sprint row, O78-8 removed from
    the plan's open owner items, commit + push handoff.
+
+## 17. Revision 1 — review 2, 2026-09-30 — `NEEDS REVISION`
+
+**Supersedes** R5, AC5, §10.5 PART (c), §13.3 step 9 and §16.3 step 1's evidence-file map wherever they differ.
+
+### 17.1 Owner results so far (O78-8 BEFORE; nothing applied)
+
+Saved verbatim: `evidence/task865/30-verify-before.txt`, `31-probe-before.txt`.
+
+| Run | Result | Against expectation |
+|---|---|---|
+| verify (a) | `TASK865_A result=refused sqlstate=23503` (FK `listing_views_listing_id_fkey`) | as expected: the hole is open, so checkpoint 4 passes |
+| verify (b) | `TASK865_B result=refused sqlstate=23503` | as expected |
+| verify (c) | `ERROR 22P02: invalid input syntax for type boolean: ""`, `line 13 at assignment` | **failed**: F2 |
+| probe before | P1 `409 / 23503 / other`, P2 `204 / none`, P3 `204 / none` | as expected |
+
+The 22P02 error aborts the transaction, so nothing from PART (c) persisted.
+
+### 17.2 Finding F2 — P1 — task-design defect (Opus): `record_listing_view` returns `void`, not `boolean`
+
+- **FACT.** Assigning the function's result to a `boolean` failed on the empty string, which is how `void` renders as
+  text.
+- **FACT (history).** The only definition this repository ever held, `supabase/migrations/20260511_record_listing_view.sql`
+  (`git show dad9b863a:…`; the directory was deleted in `19bcb9cfa`), declares `RETURNS void`. Its dedup branch is a
+  bare `RETURN`, so no value distinguishes a recorded view from a suppressed one.
+- R5/AC5 and §10.5 (c) asserted `recorded=true`. The executor had flagged this as an assumption, and the kickoff
+  should not have made it.
+- **Second consequence, INFERENCE from the same fact.** In `src/app/api/listings/[slug]/view/route.ts:60-71`, `recorded`
+  comes from a void RPC, so `recorded === true` can never hold. The route therefore always answers
+  `{"ok":true,"recorded":false}`, and step 9's expected `recorded:true` was unreachable: it would have triggered a
+  wrong rollback. This defect is pre-existing and outside 865's owner-locked scope (`src/`), so it is filed as **899**
+  (`docs/backlog-reserved.md`).
+
+### 17.3 Revised requirement and criterion
+
+- **R5′ (P0).** View tracking still records.
+  - AFTER, verify PART (c), run as `service_role` inside a rolled-back transaction, adds exactly one `listing_views`
+    row for the chosen listing: `after = before + 1`. The return value is not read.
+  - After one real guest page view on production, PART (d) lists a row for that listing's slug with `guest = true`,
+    viewed within the last 30 minutes.
+- **AC5′ [R5′].** PART (c) prints `TASK865_C before=N after=N+1`, both BEFORE and AFTER. PART (d), run AFTER the guest
+  view, returns a row with the opened slug and `guest = true`. The route's `recorded` field is **not** evidence (899).
+
+### 17.4 Executor work (Sonnet) — the whole of revision 1
+
+Write set:
+- `scripts/task-865-verify.sql`;
+- a new "Revision 1" section in the session log;
+- the 865 text in the `docs/backlog.md` registry row.
+
+Nothing else. The close, rollback, audit and probe files stay byte-identical.
+
+1. **PART (c).**
+   - Delete `v_recorded` and its assignment.
+   - Call `perform public.record_listing_view(v_listing, null, 'task865-probe');`.
+   - Raise `TASK865_C before=% after=%`.
+   - Update the header comment for (c): the function returns `void`, and the expectation is `after = before + 1`.
+2. **PART (d)**, appended after PART (c). It is read-only and returns one grid: no `begin`, no `set role`, pure SQL plus
+   `--` comments. The header says it runs AFTER the guest page view.
+   ```sql
+   select l.slug, v.viewed_at, (v.user_id is null) as guest
+   from public.listing_views v
+   join public.listings l on l.id = v.listing_id
+   where v.viewed_at > now() - interval '30 minutes'
+   order by v.viewed_at desc
+   limit 10;
+   ```
+3. **PARTs (a) and (b)** stay byte-identical: their BEFORE results are recorded evidence.
+4. **Gate block** (Windows PowerShell, from the project root; transcripts go to `evidence/task865/40-…`):
+   - `node.exe -p "process.platform + ' ' + process.version"`;
+   - `npm.cmd run check:file-integrity`;
+   - `npm.cmd run check:mojibake`;
+   - `npm.cmd run build`;
+   - `git hash-object scripts\task-865-verify.sql scripts\task-865-close-anon-insert.sql scripts\task-865-rollback.sql scripts\task-865-anon-probe.mjs scripts\task-865-listing-views-audit.sql`.
+
+   Expected: `win32`, every exit 0, and only the verify hash changed from §16.1.
+5. **Report.** Give the new line ranges of PARTs (a)–(d); the owner copies them by line number. Status:
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 17.5 Owner re-entry after revision 1
+
+- Keep the BEFORE results of verify (a), verify (b) and the probe; never re-run them (§13.1).
+- Run only the new PART (c) BEFORE, then continue from the apply step (§13.3 step 4) onward.
+- The guest-view step is: open the listing, then run PART (d). The route response is not collected.
+- Opus saves the new results as `evidence/task865/32-…` onward.
 
 ## Appendix A — Evidence preflight (task design)
 

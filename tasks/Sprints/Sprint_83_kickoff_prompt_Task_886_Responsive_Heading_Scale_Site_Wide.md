@@ -751,7 +751,7 @@ git --no-optional-locks hash-object src/stories/patterns/mantine/ResetPasswordVi
 ```
 
 Expected: `win32`, and these reviewer-measured hashes:
-- `ResetPasswordView.stories.tsx` = `cae86b5a71acfdc943c30ed43d27ead61482f888` (this equals `HEAD`, so the file is not in `status`);
+- `ResetPasswordView.stories.tsx` = `14809fd64f43d97bc940177e3a30da4ecf5c0e48` (R16 already applied; **superseded by §17.7**, which replaced the original `cae86b5a…` = `HEAD` value);
 - `check-type-responsive.mjs` = `959e73ab5200d35bce8908a163a2af2389ea09b4`;
 - `AuthFormPattern.stories.tsx` = `9a3bd0c642bf81e70983c76a754a039297180747`;
 - `ListingDetailPattern.stories.tsx` = `c2c5d744d34e0c7c1f52b786bf7f4d6804c20d72`.
@@ -855,3 +855,36 @@ withdrawn with R10.
 "reverted to `HEAD` (R17); not in the final diff". The first-pass and Revision 1 tables stay as written.
 
 `GR-4 AC AUDIT — 1 addendum criterion; it states an observable property; absolutes: none.`
+
+### 17.7 Ruling on the I0-R2 block — review 2c, 2026-09-30
+
+The executor stopped at I0-R2: `ResetPasswordView.stories.tsx` hashed `14809fd6…`, not the expected `cae86b5a…`. The
+stop was correct. The defect is the orchestrator's (K2).
+
+| # | Evidence (reviewer, 2026-09-30) | Disposition |
+|---|---|---|
+| K2 | `git --no-optional-locks diff HEAD -- src/stories/patterns/mantine/ResetPasswordView.stories.tsx` shows exactly R16: the `StoryPageGutter` import and the `Loading` render wrapped, nothing else. The file's mtime is 16:17:48 and `rev2/` was created at 16:17:38. This addendum (§17.6) was committed at 16:21:45 (`8a4b2f7ef`). So an earlier Revision 2 pass applied R16 after review 2 and before §17.6, and §17.6 re-published I0-R2's `HEAD` hash without re-hashing the tree. That earlier pass ran without R17, so none of its artifacts can close AC16–AC18. | Option 1: the existing edit **is** R16. |
+
+**Amended route (overrides §17.3 and §17.6 where they differ):**
+- **I0-R2** expects `ResetPasswordView.stories.tsx` = `14809fd64f43d97bc940177e3a30da4ecf5c0e48`. Every other I0-R2 hash is
+  unchanged. In the same step, write the Story's content witness:
+
+  ```powershell
+  $ev = "docs\sessions\evidence\task886\rev2"
+  git --no-optional-locks diff HEAD -- src/stories/patterns/mantine/ResetPasswordView.stories.tsx | Tee-Object "$ev\r16-diff.log"
+  ```
+
+  Expected: only the `StoryPageGutter` import line and the `Loading` export's wrap, as AC16 describes. Any other
+  hunk is `TASK SPECIFICATION CONTRADICTION`: stop.
+- **R16 needs no write.** Do not revert the Story and re-apply it; that would produce the same bytes and add a write
+  with no evidence value.
+- **Order:** I0-R2 → R17 → the final gate block → measurement → grep.
+- **Superseded artifacts.** Every `rev2/` file from the earlier pass is superseded. Only files written in the pass that
+  starts at this I0-R2 and ends with the final gate block count as evidence. `hash-object.log` still has 23 lines. The
+  Story's line reads `14809fd6…` and `MantineDashboardStatCard.tsx`'s line reads `c19dd9fa…`.
+- **Completion report (§17.5).** The Revision 2 Files Changed table lists the Story as "R16, applied in an earlier
+  interrupted pass; content witnessed by `rev2/r16-diff.log`".
+
+AC16–AC18 stand. AC16's diff clause is proven by `rev2/r16-diff.log`.
+
+`GR-4 AC AUDIT — 0 new criteria; AC16 gains an evidence path; absolutes: none.`

@@ -1,0 +1,59 @@
+
+> lero-al@0.1.0 check:hydration
+> node scripts/check-hydration-console.mjs --with-admin
+
+
+🔍 Hydration / console-error gate
+   Target: http://localhost:3000
+   Routes: 10 (public + admin)
+   Auth:   storageState from playwright/.auth/admin-storage-state.json
+
+   Loaded storageState from playwright/.auth/admin-storage-state.json
+
+   Checking Homepage (en) … PASS ✅
+   Checking Listings list (en) … PASS ✅
+   Checking Homepage (sq/Albanian) … PASS ✅
+   Checking Homepage (uk/Ukrainian) … PASS ✅
+   Checking Listing detail — AC1 route (Task 448) … SKIP ⚠  (NOT-REAL-COVERAGE: HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing)
+   Checking Homepage authenticated (en) — header hydration (Task 599) … PASS ✅
+   Checking Homepage authenticated (uk) — header hydration (Task 599) … PASS ✅
+   Checking Admin users list (Task 434 area) … FAIL ❌  (1 violation(s))
+   Checking Admin user detail /admin/users/[id] (EXACT Task 434 hydration route) … FAIL ❌  (1 violation(s))
+   Checking Admin dashboard /admin (Task 853) … FAIL ❌  (1 violation(s))
+
+── Summary ──────────────────────────────────────────────────
+   PASS: 6  FAIL: 3  SKIP: 1
+
+❌ Hydration violations found:
+
+npm.cmd :    Route: Admin users list (Task 434 area) (http://localhost:3000/admin/users)
+At line:6 char:1
++ npm.cmd run check:hydration -- --with-admin *> "$ev\10-warmup.txt"; " ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   Route: Admin...00/admin/users):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   [1] (error) A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. 
+This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` wh
+
+   Route: Admin user detail /admin/users/[id] (EXACT Task 434 hydration route) 
+(http://localhost:3000/admin/users/a5a5bdc1-8e7e-489c-81af-3e7d9b2b85e7)
+   [1] (error) A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. 
+This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` wh
+
+   Route: Admin dashboard /admin (Task 853) (http://localhost:3000/admin)
+   [1] (error) A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. 
+This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` wh
+
+Fix the hydration mismatches before merging.
+These errors do NOT appear in tsc / lint / build — only in a running browser.
+

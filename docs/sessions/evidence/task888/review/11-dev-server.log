@@ -1,0 +1,83 @@
+
+> lero-al@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.20.252:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ○ Compiling instrumentation Node.js ...
+ ✓ Compiled instrumentation Node.js in 1683ms
+ ✓ Compiled instrumentation Edge in 510ms
+ ○ Compiling middleware ...
+ ✓ Compiled middleware in 590ms
+ ✓ Ready in 10.7s
+npm.cmd : AuthApiError: Invalid Refresh Token: Refresh Token Not Found {
+At line:1 char:487
++ ... irectory -Force (Split-Path $log) | Out-Null; npm.cmd run dev *> $log
++                                                   ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AuthApiError: I...ken Not Found {:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  __isAuthError: true,
+  status: 400,
+  code: 'refresh_token_not_found'
+}
+AuthApiError: Invalid Refresh Token: Refresh Token Not Found {
+  __isAuthError: true,
+  status: 400,
+  code: 'refresh_token_not_found'
+}
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 10.1s
+ GET /en 200 in 13672ms
+ ○ Compiling /api/exchange-rate ...
+ ✓ Compiled /api/exchange-rate in 519ms
+ ○ Compiling /[locale]/listings ...
+ GET /api/property-types?locale=en 200 in 1024ms
+ GET /api/exchange-rate 200 in 1501ms
+ ✓ Compiled /[locale]/listings in 1866ms
+ GET /en/listings 200 in 3304ms
+ GET /api/exchange-rate 200 in 307ms
+ GET /api/property-types?locale=en 200 in 313ms
+ GET /sq 200 in 413ms
+ GET /api/exchange-rate 200 in 245ms
+ GET /api/property-types?locale=sq 200 in 321ms
+ GET /uk 200 in 436ms
+ GET /api/exchange-rate 200 in 349ms
+ GET /api/property-types?locale=uk 200 in 318ms
+ GET /en 200 in 441ms
+ GET /api/property-types?locale=en 200 in 180ms
+ GET /api/exchange-rate 200 in 273ms
+ GET /uk 200 in 383ms
+ GET /api/property-types?locale=uk 200 in 168ms
+ GET /api/exchange-rate 200 in 336ms
+ ○ Compiling /admin/users ...
+ ✓ Compiled /admin/users in 1267ms
+ GET /admin/users 307 in 1544ms
+ ○ Compiling /[locale]/auth/login ...
+ ✓ Compiled /[locale]/auth/login in 1317ms
+ GET /en/auth/login?next=%2Fadmin&session=lost 200 in 2271ms
+ ○ Compiling /admin/users/[id] ...
+ ✓ Compiled /admin/users/[id] in 1410ms
+ GET /en/auth/login?next=%2Fadmin&session=lost 200 in 342ms
+ ⨯ TypeError: Cannot read properties of null (reading 'id')
+    at AdminUserProfilePage (src\app\admin\users\[id]\page.tsx:82:88)
+  80 |   const me = await getUser()
+  81 |   const supabase = await createClient()
+> 82 |   const { data: myProfile } = await supabase.from('users').select('role').eq('id', me!.id).single()
+     |                                                                                        ^
+  83 |   const isAdmin = myProfile?.role === 'admin'
+  84 |   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
+  85 | {
+  digest: '4155340251'
+}
+ GET /admin/users/a5a5bdc1-8e7e-489c-81af-3e7d9b2b85e7 307 in 2880ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1156ms
+ GET /admin 307 in 1888ms
+ GET /en/auth/login?next=%2Fadmin&session=lost 200 in 454ms

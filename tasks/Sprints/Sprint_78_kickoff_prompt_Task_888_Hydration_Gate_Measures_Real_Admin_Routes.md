@@ -1,8 +1,9 @@
 # Task 888 — `check:hydration --with-admin` measures the admin routes that exist
 
-**Sprint 78** (hosted next to 887, the other red gate 853's reviews found) · **P2** · **Q2** · Track B (non-UI) · filed
-2026-09-27 by Task 853's review 2 (F10) · kickoff written 2026-09-29 · owner action **O78-10** · **Status: 📝
-`KICKOFF FILED`**
+**Sprint 78** (hosted next to 887, the other red gate 853's reviews found) · **P2** · **Q4** (was Q2; corrected by
+review 1 — the task changes `docs/critical-flow-registry.md`) · Track B (non-UI) · filed 2026-09-27 by Task 853's
+review 2 (F10) · kickoff written 2026-09-29 · live proof **O78-10** · **Status: 🔁 `NEEDS REVISION` — review 1,
+2026-09-30. Start at §16 (Revision 1).**
 
 Executor: run this file through the `execute-task` workflow. Strongest permitted status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`. No mutating Git command, ever.
@@ -60,6 +61,32 @@ are **not** rewritten. FACT.
 
 Task 893 (in progress) holds four modified paths and one untracked evidence folder — `EXCLUDED AS UNRELATED`.
 
+### 3.5 Review 1 live measurement (2026-09-30, win32, Node v22.22.3, `next dev`)
+
+Evidence: `docs/sessions/evidence/task888/review/` (`00-env.txt`, `10-warmup.txt`, `11-dev-server.log`).
+
+- The reviewer ran `check:hydration -- --with-admin` against `next dev` with the stored
+  `playwright/.auth/admin-storage-state.json` (its access token expired 2026-09-27T01:01:48Z) and a real user id. FACT.
+- The server answered `GET /admin/users 307`, `GET /admin/users/<id> 307` and `GET /admin 307`, each followed by
+  `GET /en/auth/login?next=%2Fadmin&session=lost 200` (`11-dev-server.log`). The redirect is
+  `src/app/admin/layout.tsx:40`. FACT.
+- The gate reported all three admin rows as **measured** routes and failed them on an *attribute* hydration mismatch
+  from the **login page** (`10-warmup.txt`). No admin page rendered in that run. FACT.
+- Cause: `checkRoute` (`scripts/check-hydration-console.mjs:293-349`) calls `page.goto`, which follows redirects, and
+  judges only the final response (`response.ok()`, `:328`) and the landing page's console. It never compares the landing
+  URL with the requested one. FACT (full function read).
+- Consequence: whenever the session is stale or lacks staff rights, the three admin rows measure the login page. If the
+  login page is clean, they **PASS without rendering any admin page** — the same false-coverage class this task exists
+  to remove (the 404 was one; a redirect is the other). INFERENCE from the source above; the login page was not clean
+  in this run, so it was a FAIL, not a PASS.
+- The public routes do not redirect: `GET /en 200`, `/en/listings 200`, `/sq 200`, `/uk 200` in the same log. FACT.
+  A same-path rule therefore does not change their verdicts.
+- `.env.local` defines `HYDRATION_ADMIN_EMAIL` and `HYDRATION_ADMIN_PASSWORD` (names counted, values not read), so
+  `npm.cmd run capture:admin-session` can refresh the session without a person at the keyboard. FACT.
+- Side observations, filed and **out of scope here**: `/admin/users/[id]/page.tsx:82` dereferences `me!.id` and throws
+  `TypeError` on a lost session before the layout redirect lands → **900**; the login page's attribute hydration
+  mismatch (measured with Task 886's uncommitted `MantineAuthFormPattern.tsx` in the tree) → **901**.
+
 ## 4. Requirements
 
 | ID | Source | Observable requirement | P | Verification | Status |
@@ -70,6 +97,9 @@ Task 893 (in progress) holds four modified paths and one untracked evidence fold
 | R4 | §3.1 | `docs/critical-flow-registry.md:115`: route cell → `/admin/users`, `/admin/users/[id]`, `/admin`; the command cell unchanged except the gate still needs `--with-admin`; the status cell appends *"Task 888 (2026-MM-DD): the admin routes had 404'd since the gate's admin branch was written (admin has no locale segment since 2026-05-14); the 2026-06-17 PASS predates Task 600's non-OK failure and was a false green. Routes corrected; `/admin` added; owner-native re-proof O78-10."* The row's ✅ becomes 🟡 until O78-10 returns. | P1 | AC4 | Confirmed |
 | R5 | reserved row (two-armed plant on `/admin`) | A plant script `docs/sessions/evidence/task888/plant-admin-mismatch.mjs` with `apply` and `restore` modes, Node `fs` I/O, printing `git hash-object` before apply and after restore. `apply` creates `src/app/admin/__hydrationPlant.tsx` (`'use client'`, renders `<span>{typeof window === 'undefined' ? 'server' : 'client'}</span>`) and renders it once inside `src/app/admin/page.tsx`'s returned tree. A Server Component is never hydrated, so the differing text must come from a client component. `restore` deletes the plant file and writes `page.tsx`'s pre-apply bytes back. The executor runs `apply` then `restore` once (no server) and records equal hashes. | P1 | AC5 | Confirmed |
 | R6 | agent-contract 9 | Session log; `docs/backlog.md` 888 cell; ≤ 80 lines. | P2 | AC6 | Confirmed |
+| R7 | review 1 F1 (§3.5) | `checkRoute` records a violation `{ type: 'redirect', text: 'redirected <requested pathname> → <landing pathname>' }` whenever the landing page's pathname (`new URL(page.url()).pathname`) differs from the requested URL's pathname. The query string and one trailing slash are ignored. It applies to every navigated route, so a stale or non-staff session turns each admin row into a FAIL that names the login path, never a verdict about the login page. `runErrorPageSelfTest` gains a case `/redirect` that answers `307` with `Location: /clean`, expected **FAIL**; the existing three cases keep their expectations. | P1 | AC7 (plant P4) | Confirmed |
+| R8 | review 1 F2 (§3.5) | The live arm runs, with fresh evidence, against the **final** script: `capture:admin-session` exits 0, then one warm-up run (not counted), three clean runs, three with the P3 plant applied, one after restore — the §13.2 sequence, run by the executor. Clean and restored runs: the three admin rows PASS. Planted runs: `Admin dashboard /admin` FAILs on a hydration message (not `redirect`), and the list and detail rows PASS. | P1 | AC8 | Confirmed |
+| R9 | review 1 | The registry row's status sentence (R4) also says that `checkRoute` now fails a redirect off the requested path. The row stays 🟡; only the approving review turns it ✅. | P2 | AC4 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -86,7 +116,9 @@ header (`:1-110`) · `docs/orchestrator-procedures.md` → the 818/819 corollary
 
 ## 7. Scope — the exact allowed write set
 
-1. `scripts/check-hydration-console.mjs` — `planRoutes` and `verifyAdminConfig` only (R1–R3).
+1. `scripts/check-hydration-console.mjs` — `planRoutes` and `verifyAdminConfig` (R1–R3); **Revision 1 adds**
+   `checkRoute` and `runErrorPageSelfTest` with its test server (R7), and the file header's description of what the
+   gate fails on (one line for the redirect rule).
 2. `docs/critical-flow-registry.md` — row `:115` (R4).
 3. `docs/sessions/evidence/task888/` — new files, including `plant-admin-mismatch.mjs` (R5).
 4. `docs/sessions/2026-MM-DD-task888-hydration-admin-routes.md` (new).
@@ -97,7 +129,11 @@ Temporary, restored byte-identical and absent from the final status: `src/app/ad
 
 ## 8. Out of scope
 
-- Any product file; the non-admin routes; the error-page self-test; the capture harness (`capture:admin-session`).
+- Any product file; the non-admin routes' plan; the capture harness (`capture:admin-session`) — it is run, not edited.
+- Wiring `check:hydration:error-page` into CI: `.github/workflows/governance-pr.yml` is modified by Task 886 and is not
+  a clean write path. `GR-2 SCOPE STATED — check:hydration:error-page inspects checkRoute's verdict on four synthetic
+  pages; CI does not run it; R7 is closed by P4's transcripts here and by R8's live runs.`
+- **900** and **901** (§3.5).
 - Making the dev-mode noise floor deterministic (Task 601's harness is the authoritative proof for the header case).
 - The two historical kickoffs in §3.3.
 
@@ -109,6 +145,7 @@ Temporary, restored byte-identical and absent from the final status: `src/app/ad
 | `--with-admin`, no session | 2 admin rows SKIP | 3 admin rows SKIP |
 | `check:hydration:admin-config` (CI) | passes on the 404 paths | passes on the new paths; fails if any `/en/admin` path returns (P1) |
 | Registry row `:115` | ✅, 404 routes, a false-green PASS | corrected routes, 🟡 until O78-10 |
+| a navigated route redirects (e.g. stale session → `/en/auth/login`) | the landing page is judged as if it were the route | FAIL `redirect`, naming both paths |
 
 ## 10. Implementation requirements
 
@@ -145,6 +182,8 @@ three admin rows PASS; with the plant applied `/admin` FAILs; after restore it P
 | Old `/en/admin` path reintroduced | Yes | CI self-test FAILs | P2 |
 | Hydration mismatch on `/admin` | Yes | FAIL (owner-native) | O78-10 |
 | `next start` instead of `next dev` | Yes | false green by design — O78-10's block uses `next dev` | script header `:27-36` |
+| Stale / non-staff session → admin route redirects to login | Yes | admin rows FAIL `redirect`, never judged on the login page | AC7 (P4), §3.5 |
+| First dev compile exceeds the 15 s `goto` timeout | Yes | row SKIPs; the warm-up run absorbs it and is not counted | AC8 |
 
 ## 12. Acceptance criteria
 
@@ -158,14 +197,25 @@ three admin rows PASS; with the plant applied `/admin` FAILs; after restore it P
   other row changed.
 - **AC5 [R5]** Given P3, then both `page.tsx` hashes equal `01` and the client plant file is absent from the final status.
 - **AC6 [R6]** Given the session log, then its Files Changed table equals the real diff of §7; backlog ≤ 80 lines.
+- **AC7 [R7]** Given P4 (§16.3), when `check:hydration:error-page` runs with the R7 guard absent, then the `/redirect`
+  case reports PASS and the command exits 1; with the guard present it reports FAIL with a `redirect` violation, the
+  other three cases keep their expected results, and the command exits 0.
+- **AC8 [R8]** Given the §13.2 sequence on `next dev` against the final script hash, then each of the three clean runs
+  and the restored run lists `Admin users list`, `Admin user detail` and `Admin dashboard /admin` as PASS; each of
+  the three planted runs lists `Admin dashboard /admin` as FAIL with a hydration-text violation and no `redirect`
+  violation; and the two plant hashes of `src/app/admin/page.tsx` are equal. Rows outside the admin branch are
+  recorded as observed, not asserted.
 
-`GR-4 AC AUDIT — 6 criteria; each states an observable property; absolutes: AC1's empty grep on one named file (the declared deliverable, read with --untracked).`
+`GR-4 AC AUDIT — 8 criteria; each states an observable property; absolutes: AC1's empty grep on one named file (the declared deliverable, read with --untracked). AC8 asserts the admin rows only, because a dev-mode public row can fail for reasons outside this task.`
 
 `GR-2 SCOPE STATED — check:hydration:admin-config inspects the route plan only and cannot see a real hydration mismatch; check:hydration --with-admin sees console hydration text, non-OK status, pageerror and the dev overlay on the routes it visits, only under next dev with a staff session; the admin criteria are closed by the self-test transcripts here and by O78-10's native transcripts.`
 
 ## 13. QA profile and verification plan
 
-**Q2** — a gate route-plan fix; CI-safe plants here, the live arm owner-native.
+**Q4** — the task changes a `docs/critical-flow-registry.md` row (`docs/qa-profiles.md` Q4). Required: the regression
+baseline (I0 `02`/`03`), a changed-behavior test (the admin-config self-test, and P4's error-page case), planted-violation
+failure proof for each gate claimed (P1, P2, P4, and the P3 plant inside R8's live runs), and native evidence. Review 1
+corrected the original `Q2`, which is the standard-UI profile.
 
 ### 13.1 Final gate block (executor)
 
@@ -174,6 +224,7 @@ $ev = "docs\sessions\evidence\task888"
 node.exe -p "process.platform + ' ' + process.version"
 npm.cmd run check:hydration:admin-config *> "$ev\20-admin-config.txt"; "admin-config exit=$LASTEXITCODE"
 npm.cmd run check:hydration:verify *> "$ev\21-verify.txt"; "verify exit=$LASTEXITCODE"
+npm.cmd run check:hydration:error-page *> "$ev\27-error-page.txt"; "error-page exit=$LASTEXITCODE"
 npm.cmd run typecheck *> "$ev\22-typecheck.txt"; "typecheck exit=$LASTEXITCODE"
 npm.cmd run lint *> "$ev\23-lint.txt"; "lint exit=$LASTEXITCODE"
 npm.cmd run check:file-integrity *> "$ev\24-file-integrity.txt"; "file-integrity exit=$LASTEXITCODE"
@@ -186,13 +237,20 @@ git --no-optional-locks status --porcelain
 
 Expected: `win32`; every exit 0; the grep prints nothing; `page.tsx` hash equals `01`.
 
-### 13.2 O78-10 — owner-native live proof (after the executor reports; `next dev`, never `next start`)
+### 13.2 O78-10 — live proof (Revision 1: run by the executor as R8; `next dev`, never `next start`)
+
+Revision 1: the executor runs this block itself after the final script edit, redirecting each command into
+`docs/sessions/evidence/task888/rev1/40-…` to `48-…` through a Node UTF-8 rewrite (no BOM), and uses the staff
+user id from the fresh storage state. The first `check:hydration` line is the warm-up and is not counted. If
+`capture:admin-session` exits non-zero, stop the live arm and report `PARTIALLY IMPLEMENTED — O78-10 OWNER-NATIVE`
+with the capture transcript; the owner then runs this same block.
 
 ```powershell
 $env:BASE_URL = "http://localhost:3000"
 $env:HYDRATION_GATE_STORAGE_STATE = "playwright/.auth/admin-storage-state.json"
 $env:HYDRATION_ADMIN_USER_ID = "00000000-0000-0000-0000-000000000000"
 npm.cmd run capture:admin-session
+npm.cmd run check:hydration -- --with-admin
 npm.cmd run check:hydration -- --with-admin
 npm.cmd run check:hydration -- --with-admin
 npm.cmd run check:hydration -- --with-admin
@@ -204,17 +262,19 @@ node.exe docs\sessions\evidence\task888\plant-admin-mismatch.mjs restore
 npm.cmd run check:hydration -- --with-admin
 ```
 
-Before running: start `npm.cmd run dev` in a second window, and replace the UUID line with a real user id from
-`/admin/users` (it must be a real user, or the detail row renders an empty profile). Expected: the three clean runs show
-`Admin users list`, `Admin user detail` and `Admin dashboard /admin` as PASS; the three planted runs show
-`Admin dashboard /admin` FAIL with a hydration message; after `restore` the script prints two equal hashes and the last
-run is PASS again. Return all seven summaries and the two hashes.
+Before running: start `npm.cmd run dev` in a second window (or as a background process whose log is retained as
+`rev1/39-dev-server.log`), and replace the UUID line with a real user id from `/admin/users` (it must be a real user,
+or the detail row renders an empty profile). The first `check:hydration` line is the warm-up. Expected: the three
+counted clean runs show `Admin users list`, `Admin user detail` and `Admin dashboard /admin` as PASS; the three planted
+runs show `Admin dashboard /admin` FAIL with a hydration message and no `redirect` violation; after `restore` the script
+prints two equal hashes and the last run is PASS again. Return all eight summaries, the dev-server log lines for the
+admin requests (each must be `200`, never `307`), and the two hashes.
 
 ## 14. Completion report contract
 
-Status per `execute-task`. Include: changed files and hashes; R1–R6/AC1–AC6 with evidence paths; each command's real
-exit code; P1–P3 with hashes; O78-10 stated as owed. Update the 888 cell of `docs/backlog.md`; write the session log.
-No Git commands.
+Status per `execute-task`. Include: changed files and hashes; R1–R9/AC1–AC8 with evidence paths; each command's real
+exit code; P1–P4 with hashes; the R8 live-arm transcripts, or `O78-10 OWNER-NATIVE` with the capture transcript if
+capture failed. Update the 888 cell of `docs/backlog.md`; write the session log. No Git commands.
 
 ## 15. Task quality gate
 
@@ -223,9 +283,56 @@ No Git commands.
 | Executable without chat context | yes |
 | Every requirement has an AC | R1→AC1 · R2→AC2 · R3→AC3 · R4→AC4 · R5→AC5 · R6→AC6 |
 | Self-test can demonstrably fail | P1 before the fix, P2 after |
-| Live arm has a failing plant | R5 / O78-10 |
+| Live arm has a failing plant | R5 / R8 (O78-10) |
+| A redirect cannot stand in for the route | R7 / P4 (review 1) |
 | Historical records untouched | §3.3, §8 |
-| Owner decision needed | none; owner-native run O78-10 |
+| Owner decision needed | none; O78-10 falls back to the owner only if capture fails |
+
+## 16. Revision 1 — review 1, 2026-09-30 (`NEEDS REVISION`)
+
+### 16.1 Findings this revision answers
+
+| Finding | Severity | Requirement | Summary |
+|---|---|---|---|
+| F1 | P1 | R7 | `checkRoute` follows a redirect and judges the landing page; with a stale session all three admin rows measured `/en/auth/login` (§3.5). A clean login page would PASS them. |
+| F2 | P1 | R8 | The live arm never ran, and the stored session is dead (access token expired 2026-09-27), so O78-10 as handed over would have measured the login page three times per arm. |
+| F3 | P3 | §13 | The QA profile was `Q2` (standard UI); a registry change is `Q4`. Corrected in the header and §13. |
+
+The original pass is accepted as-is for R1–R6 (self-test P1/P2 red→green and the P3 dry run, re-verified by the
+reviewer: `check:hydration:admin-config` and `check:hydration:verify` exit 0 natively, script hash `b383308a…`,
+`page.tsx` hash `74b26361…`, plant file absent, empty `/en/admin` grep).
+
+### 16.2 Re-entry
+
+- Mode: `remediation`. Start at step 1 below. Do not re-run I0, P1, P2 or the P3 dry run, and do not overwrite any file
+  in `docs/sessions/evidence/task888/` outside `rev1/`. `review/` is the reviewer's and is read-only.
+- Write evidence to `docs/sessions/evidence/task888/rev1/`. Rewrite every PowerShell-redirected file through Node as
+  UTF-8 without BOM before `check:file-integrity` (the original pass hit this; list the files as an explicit manifest).
+- In §13.1, use `$ev = "docs\sessions\evidence\task888\rev1"`.
+
+### 16.3 Steps
+
+1. `git hash-object scripts\check-hydration-console.mjs src\app\admin\page.tsx` → `rev1/00-hash-before.txt`; expect
+   `b383308a502347ca831b68cc223b979bc15251f3` and `74b26361b0f4c90c33e45c0ed15195483fbcfc8e`. A different script hash →
+   re-read `checkRoute` and `runErrorPageSelfTest` before editing and record it.
+2. **P4 red first.** Add only the `/redirect` case to `runErrorPageSelfTest` (server answers `307`, `Location: /clean`;
+   case expects `FAIL`). Run `npm.cmd run check:hydration:error-page` → `rev1/10-P4-red.txt`: the `/redirect` case
+   reports PASS and the command exits 1.
+3. Add the R7 guard to `checkRoute`, after the `goto` succeeds and before the verdict: compare
+   `new URL(url).pathname` with `new URL(page.url()).pathname`, each with one trailing `/` removed (keep a bare `/`).
+   Update the header's fail-list line. Re-run → `rev1/11-P4-green.txt`: `/redirect` FAIL with a `redirect` violation,
+   `/500` FAIL, `/throw` FAIL, `/clean` PASS, exit 0.
+4. Re-run `check:hydration:verify` and `check:hydration:admin-config` → `rev1/12`, `rev1/13` (both exit 0).
+5. Update the registry row's status sentence (R9). One-line diff against the current row.
+6. Run §13.2 (R8) → `rev1/39`–`rev1/48`, then §13.1 → `rev1/20`–`rev1/27` plus the hash, grep and status lines.
+7. Session log: add a `## Revision 1` section (Files Changed updated) to the existing log; update the 888 backlog cell.
+
+### 16.4 Stop conditions
+
+- The fresh session still produces `307` on an admin route → `BLOCKED — STAFF SESSION`, with the capture transcript
+  and the dev-server lines. Do not change the capture harness.
+- A public route FAILs `redirect` in the live run → stop and report it with the dev-server line. Do not narrow R7 to
+  the admin rows.
 
 ## Appendix A — Evidence preflight
 

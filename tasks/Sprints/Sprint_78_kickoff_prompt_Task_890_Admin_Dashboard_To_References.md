@@ -1,7 +1,8 @@
 # Task 890 — `/admin` rebuilt to the owner's references: an accent hero, queue KPIs with mini-charts, the platform activity chart, new listings and new users, and listings by city
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
-(ADM-10, stale badge, series tooltips) · **Status: 📝 KICKOFF FILED 2026-09-27 — BLOCKED ON 889**
+(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 1, 2026-09-30. The executor starts at
+§16 (revision 1), not §10.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
@@ -79,7 +80,7 @@ The old row 4 heading (`supply_section_title`) and its `Title` are removed, sinc
 | ID | Source | Observable requirement | P | Verification | Status |
 |---|---|---|---|---|---|
 | **R1** | D78-9, §2.1 | `src/app/admin/page.tsx` accepts `searchParams`, captures `now = new Date()` once, and computes `parsePeriodParams` → `resolvePeriod`. It fetches in one `Promise.all`: `getAdminLocale()`, `getAdminDashboardData()`, `getPlatformActivitySeries(period)`, `getActivityFreshness(now)`, `getAdminTrends(period, now)` (R2) and `getVisibleListingsByCity(locale)` (R3). It passes only serializable props (791 lesson): `data`, `activity`, `freshness`, `trends`, `cities`, `locale`, `now` (ISO), `period` (selection) and `periodDays`. | P0 | AC1 | Confirmed |
-| **R2** | D78-9 Q3/Q5 | New `src/modules/admin/dashboard/trends.ts` → `getAdminTrends(period, now)`, returning `{ newListings, newUsers }` (each a `BlockResult<{ date, count }[]>` over `listDates(period)`) and `sparklines: { listings, reports, tickets }` (each a `BlockResult<{ date, count }[]>` over the last 7 completed Tirane days, `resolvePeriod({ kind: '7d' }, now)`). Each series selects only `created_at` within `periodUtcBounds`, buckets by `tiraneDateOf`, and fills missing days with 0 only after a successful read. It uses `.limit(TREND_ROW_LIMIT)` (a named constant, 10 000); **a result that reaches the limit is a block error, never a truncated count**. Admin client, as in `queries.ts`. Unit tests cover bucketing across the Tirane midnight, zero-fill, the limit → error branch, and a failed read → error. | P0 | AC2 | Confirmed |
+| **R2** | D78-9 Q3/Q5 | New `src/modules/admin/dashboard/trends.ts` → `getAdminTrends(period, now)`, returning `{ newListings, newUsers }` (each a `BlockResult<{ date, count }[]>` over `listDates(period)`) and `sparklines: { listings, reports, tickets }` (each a `BlockResult<{ date, count }[]>` over the last 7 completed Tirane days, `resolvePeriod({ kind: '7d' }, now)`). Each series selects only `created_at` within `periodUtcBounds`, buckets by `tiraneDateOf`, and fills missing days with 0 only after a successful read. It uses `.limit(TREND_ROW_LIMIT)` (a named constant, 10 000); **a result that reaches the limit is a block error, never a truncated count**. Admin client, as in `queries.ts`. Unit tests cover bucketing across the Tirane midnight, zero-fill, the limit → error branch, and a failed read → error. **Amended at review 1 (§16.1):** the reads are paged with `.range()` in 1 000-row pages up to `TREND_ROW_LIMIT`, because PostgREST caps one response at its `max-rows`; reaching the limit is still a block error. | P0 | AC2 | Confirmed |
 | **R3** | D78-9 Q3 | `getVisibleListingsByCity(locale)` in the same module selects the `location_id` of **publicly visible** listings (`applyPublicVisibility`), then `locations` (`id, type, parent_id, name_al, name_en`). It resolves each listing's location up `parent_id` to the first `type === 'city'` ancestor (itself included). Listings with no location, or with no city in the chain, go to "Other". It returns the top 5 cities by count (ties by name) plus an `other` bucket, labelled per the `PopularLocations.tsx:36` rule. Unit tests: district → city, village → city, region-only → Other, `null` → Other, cycle-safe (a guard of at most 10 hops). | P0 | AC3 | Confirmed |
 | **R4** | §2.1 row 1 | ADM-08 moves to row 1 as `variant="accent"`, keeping its tooltip line. The view renders that line's `Text` and the info `ActionIcon` in white (`c="white"`; `ActionIcon variant="transparent" c="white"`). ADM-01/02/06 get `chart={<MantineDashboardSparkline …/>}` with `color="brand.4"`, `dateLabel` = a Tirane short date, and `valueLabel` = `formatCount`. Their aria-labels are "New listings per day, last 7 days", "New reports per day, last 7 days" and "New support tickets per day, last 7 days". A sparkline `BlockResult` error renders no chart; the card's own value is unaffected. | P0 | AC4 | Confirmed |
 | **R5** | §2.1 row 2, 855 R1/R7 | The ADM-10 card: `MantineDashboardLineChart mode="multi"`, series `recordedViews`, `whatsappClicks` and `formInquiries` (colours `theme.other.chartSeries.*`; data key `formInquiries` ← `listingInquirySubmissions`), `dateLabel` = a Tirane short date, empty/error/loading states. The totals strip is `MantineDashboardStatRows` with three rows (views / WhatsApp / form) and no `href`. Series descriptions follow spec §3.1 (855 §3.1, restated in R11). | P0 | AC5 | Confirmed |
@@ -194,7 +195,9 @@ They switch to 7d, and the URL and rows 2 and 3 change.
 - **AC3 [R3]** — Given the same test file, when run, then the district, village, region-only, null and cycle cases
   pass, and the "Other" count equals the total minus the top-5 sum.
 - **AC4 [R4]** — Given `AdminDashboardView` → `Default` at 1440, when inspected, then row 1's first card computes
-  `background-color: rgb(189, 67, 57)`, and cards 2–4 each contain one sparkline with 7 bars and the aria-labels of R4.
+  `background-image: linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%)` (amended at review 1: 889 revision 2
+  replaced the flat `brand.8` with this gradient), and cards 2–4 each contain one sparkline with 7 bars and the
+  aria-labels of R4.
 - **AC5 [R5]** — Given `Default`, when inspected, then row 2 main has one area chart with 3 series and a 3-row totals
   strip. The strip has no `<a>` and no element whose text is the sum of the three totals.
 - **AC6 [R6]** — Given `Default`:
@@ -229,9 +232,11 @@ lacks a step.
 
 ### Width contract (GR-3b)
 
-The Story uses `layout: 'fullscreen'` with no decorators, as today. The view is its own page container
-(`MantineDashboardGrid`, `maw={theme.other.boxSize.dashboardContentMaxWidth}`), so the Story reproduces production
-with no wrapper.
+~~The Story uses `layout: 'fullscreen'` with no decorators, as today. The view is its own page container, so the Story
+reproduces production with no wrapper.~~ **Superseded at review 1 (§16.2, F1).** This was an orchestrator defect: in
+production `/admin` renders inside `AdminShell` (`src/app/admin/layout.tsx:7`), whose `MantineAppShellFoundation`
+has `navbarBreakpoint="lg"` (`src/components/admin/AdminShell.tsx:23`) and a fixed 240px navbar from 1024px. A bare
+Story therefore gives the view 240px more than production at every width from 1024px.
 
 ## 13. QA profile and verification plan
 
@@ -330,3 +335,147 @@ and no mutating git. Update the 890 line of `docs/backlog.md`, and write the ses
 `GR-1 CENSUS COMPLETE — AdminDashboardView surface: 16 nodes today, tier1 16 migrated+enrolled+story; after this task +2 nodes (MantineDashboardLineChart, MantineDashboardBarChart, both tier1 enrolled+storied since 845) +1 (MantineDashboardSparkline, 889) +1 (MantineDashboardPeriodControl, 846); tier2 0; tier3 0 listed and filed as none.`
 
 `GR-3 STORY PROVEN — AdminDashboardView ← src/stories/patterns/mantine/AdminDashboardView.stories.tsx; every composed pattern ← its own Patterns/Mantine/Dashboard* story (845/846/889).`
+
+## 16. Review 1 — `NEEDS REVISION` (2026-09-30) · Revision 1
+
+Reviewed: the working-tree diff (11 modified and 4 new paths), the session log
+`docs/sessions/2026-09-30-task890-admin-dashboard-to-references.md`, and `docs/sessions/evidence/task890/`. The reviewer
+also re-ran `eslint` on every changed file (exit 0) and `vitest run …/trends.test.ts` (18/18 pass) on `win32 v22.22.3`.
+
+### 16.1 Deviations accepted (no executor action)
+
+- **`MantineDashboardStatRows` `href` optional + `NoLinks` export + `StoryPageGutter`** (GR-0 EXTEND). This is in scope
+  from now on. Existing callers still pass `href`, so their output does not change.
+- **Paged reads instead of one `.limit(10000)`**: R2 is amended.
+- **AC4's value**: AC4 is amended to the 889 gradient.
+- **`getAdminLocale()` before the `Promise.all`**: R3's `getVisibleListingsByCity(locale)` needs the locale, so R1's
+  "one `Promise.all`" holds for the five data reads.
+- **First Load JS "before"**: 429 kB, from `docs/sessions/evidence/task886/rev7/build.log` (`ƒ /admin 10.5 kB 429 kB`).
+  That is the last build of the `/admin` code that is at `HEAD`. Do not re-measure it. Report "after" from the final
+  build of this revision.
+
+### 16.2 Findings to fix
+
+| ID | Sev | Finding | Correction |
+|---|---|---|---|
+| **F1** | P1 | Rows 1 and 4 go 4-up at `lg` (`MantineDashboardGridTopRow`, `cols … lg: Math.min(count, 4)`, keyed on the **viewport**). In production the `AdminShell` navbar takes 240px from 1024px. Computed from the grid's own `px`/`spacing` (24px at `md`+): a 4-up card is ≈166px at 1024, ≈230px at 1280 and ≈270px at 1440. In the Story (no shell), 226px cards already clip the row-4 work-list primary text: `probe890.out.txt`, 1024 `uk`, `p[Підтримка] 75>1`, `p[Дублікат оголошення] 88>24`. This breaks §11 "Long `uk` labels → wrap" and is a regression: before 890, rows 1 and 3 were 3-up. §12's width contract hid it (orchestrator defect, now superseded). | §16.3 steps 2–4. |
+| **F2** | P1 | §10.4 live proof and AC1's live half were not run. The reason given ("no staff credentials") is contradicted: `.env.local` sets `HYDRATION_ADMIN_EMAIL` and `HYDRATION_ADMIN_PASSWORD`, and `npm run capture:admin-session` (`scripts/capture-admin-session.mjs`, Task 888) writes `playwright/.auth/admin-storage-state.json`. | §16.3 step 5. |
+| **F3** | P2 | The final gate block is incomplete: (a) `lint.txt` is the pre-fix run (exit 1 on this task's own `react/display-name` error) and was not re-run; (b) `check:locale-leak:mantine-only` was not run (§13.2 requires the quote); (c) `check:enrolled-tailwind` exits 1 at `HEAD` on 2 stale remove-only baseline entries (`MantineListingGalleryPattern.tsx` `h-full` 3<5, `w-full` 2<4, from 886). The gate blocks CI, and agent-contract clause 9 makes a known non-zero required gate part of the task. | §16.3 step 6. |
+| **F4** | P3 | The session log's GR-1 receipt says "16 nodes (re-run on the final tree: 16)", but `census-final.txt` records **23 nodes**, all tier 1. | Rewrite the receipt from the final census artifact. |
+| **F5** | P3 | Blast radius not measured. `AgentStatisticsView` renders both changed patterns (`MantineDashboardStatRows`, and `MantineDashboardGridTopRow` after F1), and its Story is not in the probe. | §16.3 step 4. |
+
+### 16.3 Revision 1 — one route, in this order
+
+Re-entry mode: **remediation**. Keep every artifact in `evidence/task890/`. Write new artifacts to
+`evidence/task890/rev1/`. Do not touch `trends.ts`, its tests, or `page.tsx` unless a step below fails because of them.
+
+1. **I0.** Record the platform line, `git status --porcelain` → `rev1/i0-status.txt`, and hashes of every path in the
+   Files Changed table.
+2. **Extend `MantineDashboardGridTopRow`** (`src/design-system/mantine/patterns/MantineDashboardGrid.tsx`; GR-0
+   EXTEND). Add two optional props, whose defaults keep every current consumer's output unchanged:
+   - `maxColumns?: 2 | 3 | 4` (default `TOP_ROW_MAX_COLUMNS`, 4) caps the column count at every rung;
+   - `wideFrom?: 'lg' | 'xl'` (default `'lg'`) is the rung where the row reaches its maximum. With `'xl'`, the `lg`
+     rung stays at `Math.min(count, 2)`.
+
+   Only the `cols` object changes. Add no new spacing, width or style value. Extend
+   `src/stories/patterns/mantine/DashboardGrid.stories.tsx` with one export per new prop (GR-3a EXTEND, same title).
+3. **`/admin` composition** (`AdminDashboardView.tsx`):
+   - row 1 `<MantineDashboardGridTopRow wideFrom="xl">`: 2×2 from 768px to 1279px, 4-up from 1280px;
+   - row 4 `<MantineDashboardGridTopRow maxColumns={2}>`: work lists 2-up from 768px. The conditional fourth card
+     completes a 2×2; without it, the third card sits alone in the second line.
+4. **Story width = production width** (GR-3b, supersedes §12). Every `Patterns/Mantine/AdminDashboardView` export
+   renders the view inside the real production parent, `<AdminShell siteName="Lero.al">` from
+   `src/components/admin/AdminShell.tsx`, as `src/stories/patterns/mantine/AdminShell.stories.tsx` already does, with
+   `nextjs.navigation.pathname: '/admin'`. Use one shared render helper or meta decorator in the Story file.
+   - Add no `Box`, width, padding, `style` or viewport pin.
+   - The GR-3d exemption (the View carries the page gutter) still applies. Measure the gap from the `AppShell.Main`
+     content edge, not the viewport, and report both.
+   - Then run the probe at 320/390/768/1024/1280/1440 in `en` and `uk` for every `AdminDashboardView` export,
+     including `adm02-error` and `adm09-zero` under their real ids (read them from `storybook-static/index.json`).
+   - Run it once more for every `Patterns/Mantine/AgentStatisticsView`, `Patterns/Mantine/DashboardGrid` and
+     `Patterns/Mantine/DashboardStatRows` export (F5).
+
+   **Pass condition, per width:**
+   - no horizontal page overflow;
+   - no work-list primary `p` or KPI label `p` with `scrollWidth > clientWidth + 1`;
+   - row 1 card width reported;
+   - GR-3b/3c/3d receipts per Story.
+5. **Live proof** (F2, §10.4). Signed-in staff, in this order:
+
+   ```powershell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   npm.cmd run capture:admin-session
+   npm.cmd run build
+   npm.cmd run start *> docs\sessions\evidence\task890\rev1\start.log
+   ```
+
+   Run `start` in the background. Then, with Playwright and `playwright/.auth/admin-storage-state.json`, open these
+   URLs and save the listed artifacts under `rev1/live/`:
+
+   | URL | Viewport | Locale cookie | Save |
+   |---|---|---|---|
+   | `/admin` | 1024, 1280, 1440 | `en` | screenshot + measured card widths (rows 1 and 4) + clipped-text list |
+   | `/admin` | 1024 | `uk` | same |
+   | `/admin?period=7d` | 1440 | `en` | ADM-10 point count = 7, row-3 bar categories = 7; row-1 sparklines identical to `/admin` |
+   | `/admin?period=bogus` | 1440 | `en` | ADM-10 point count = 30 |
+   | `/admin` | 390 | `uk` | no horizontal scroll |
+
+   After the run, quote the full `start.log` search for `Functions cannot be passed` and `Attempted to call`
+   (expected: none). Also quote every `[AdminTrends]` line (expected: none), so the city card and the trend cards are
+   proven to read real data, not an error state.
+6. **Gates** (F3). Run the §13.2 block into `rev1/`, and add these commands:
+
+   ```powershell
+   npm.cmd run check:enrolled-tailwind:update-baseline
+   npm.cmd run check:enrolled-tailwind
+   npm.cmd run check:locale-leak:mantine-only
+   npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineDashboardStatRows.smoke.test.tsx
+   git --no-optional-locks hash-object scripts/enrolled-tailwind-baseline.json src/design-system/mantine/patterns/MantineDashboardGrid.tsx src/stories/patterns/mantine/DashboardGrid.stories.tsx src/design-system/mantine/patterns/MantineDashboardStatRows.tsx src/stories/patterns/mantine/DashboardStatRows.stories.tsx src/stories/fixtures/adminDashboard.fixtures.ts
+   ```
+
+   Expected results:
+   - `update-baseline` changes only the two stale `MantineListingGalleryPattern.tsx` entries, and only downward.
+     Quote `git diff scripts/enrolled-tailwind-baseline.json`.
+   - `check:enrolled-tailwind` exits 0.
+   - `check:locale-leak:mantine-only` shows zero findings for `patterns-mantine-admindashboardview`,
+     `patterns-mantine-dashboardgrid` and `patterns-mantine-dashboardstatrows` (the command itself is known red, Task
+     836).
+   - `npm run lint` exits 0. Warnings are allowed; quote the error count.
+7. **Records.** Correct the GR-1 receipt (F4). Add the rev1 Files Changed rows and First Load JS 429 kB → after. Set
+   the 890 backlog line to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 1)`.
+
+### 16.4 Scope added by revision 1
+
+- **Edited:**
+  - `src/design-system/mantine/patterns/MantineDashboardGrid.tsx`;
+  - `src/stories/patterns/mantine/DashboardGrid.stories.tsx`;
+  - `src/design-system/mantine/patterns/MantineDashboardStatRows.tsx` + `src/stories/patterns/mantine/DashboardStatRows.stories.tsx` (accepted, §16.1);
+  - `scripts/enrolled-tailwind-baseline.json` (remove-only, via the gate's own command).
+- **Measured, not edited:** `Patterns/Mantine/AgentStatisticsView`. If step 4 fails there, stop and report it. Do not
+  change `AgentStatisticsView.tsx`.
+
+### 16.5 Acceptance criteria added by revision 1
+
+- **AC12 [F1]** — Given every `AdminDashboardView` export in `AdminShell` and live `/admin` at 1024/1280/1440 (`en`, `uk`),
+  when measured, then no work-list primary text and no KPI label has `scrollWidth > clientWidth + 1`. Row 1 is 2-up
+  below 1280 and 4-up from 1280, and row 4 is at most 2-up.
+- **AC13 [F1, 16c]** — Given `DashboardGrid.stories.tsx`, when rendered, then the new exports show `maxColumns` and
+  `wideFrom` at 1024/1280. Every pre-existing export and the `AgentStatisticsView` Stories measure the same card widths
+  as before the change (row 1 of each probe compared).
+- **AC14 [F2]** — The §16.3 step 5 artifacts exist: `?period=7d` → 7 points, `bogus` → 30, and `start.log` contains
+  none of the two 791 strings and no `[AdminTrends]` line.
+- **AC15 [F3]** — `lint`, `check:enrolled-tailwind` and the rest of §13.2 exit 0 in `rev1/`, and the baseline diff is
+  remove-only.
+
+`GR-4 AC AUDIT — 4 added criteria; each states an observable property; absolutes: AC14's absent log lines (a correct run prints none).`
+
+### 16.6 Owner visual review — unchanged rows, added checks
+
+§13.4 stands, except that rows 1–5 now run after step 5. The owner additionally checks two things:
+- row 2 at 1440: the activity card's empty area under the totals strip, next to the donut + ADM-09 column (executor
+  note 7). If the owner rejects it, it becomes an owner decision in the next review, not an executor choice;
+- row 4 at 1024/1280 with 2-up work lists.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: dashboard row column cap / wide rung; semantic queries: "TopRow", "cols", "SimpleGrid", "dashboard grid"; inspected candidates: src/design-system/mantine/patterns/MantineDashboardGrid.tsx (TopRow/Split/Full) + Patterns/Mantine/DashboardGrid; decision: EXTEND; selected canonical owner: MantineDashboardGridTopRow; Mantine/TailAdmin token path: SimpleGrid cols + the grid's existing spacing; new hardcoded visual values: NONE; rationale: the row's column ladder is the pattern's own contract, and the production shell width needs a later wide rung.`
+
+`GR-3a STORY PREFLIGHT — MantineDashboardGridTopRow × maxColumns/wideFrom; canonical candidates: patterns-mantine-dashboardgrid; direct-import evidence: src/stories/patterns/mantine/DashboardGrid.stories.tsx; toolbar coverage: locale=toolbar, viewport=toolbar; decision: EXTEND; target: Patterns/Mantine/DashboardGrid; rationale: new props of the existing canonical pattern.`

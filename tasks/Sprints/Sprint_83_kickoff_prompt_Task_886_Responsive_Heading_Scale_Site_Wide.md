@@ -2,9 +2,8 @@
 
 Sprint 83 · P1 · QA profile **Q3** (site-wide responsive typography + a new blocking governance gate) · **after 869 is
 approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1a) · owner actions **O83-1**, **O83-2**,
-**O83-3** · **Status: `NEEDS REVISION` — review 2, 2026-09-30. Start at §17 (Revision 2), including its addendum
-§17.6 (R17); it overrides every earlier section it names. §16 (Revision 1) is implemented and kept, except R10, which
-§17.6 withdraws.**
+**O83-3** · **Status: `PARTIALLY VERIFIED` — review 3, 2026-09-30 (§17.8). Revision 2 is verified; the only open item is
+the owner visual matrix O83-1. No executor action is owed.**
 
 Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
@@ -888,3 +887,27 @@ stop was correct. The defect is the orchestrator's (K2).
 AC16–AC18 stand. AC16's diff clause is proven by `rev2/r16-diff.log`.
 
 `GR-4 AC AUDIT — 0 new criteria; AC16 gains an evidence path; absolutes: none.`
+
+### 17.8 Review 3, 2026-09-30 — `PARTIALLY VERIFIED`, awaiting O83-1
+
+Revision 2 is verified on the final tree. The only thing left is the owner matrix.
+- **Hashes.** All 23 `rev2/hash-object.log` hashes equal the current tree. Against `rev1/hash-object.log`, exactly two
+  files differ: `MantineDashboardStatCard.tsx`, now at the `HEAD` hash `c19dd9fa…` (R17), and
+  `ResetPasswordView.stories.tsx`, which is new to the list. The `rev2/r16-diff.log` content matches AC16.
+- **Gates.** Every `rev2` gate log ends `EXIT_CODE=0`. `.next/BUILD_ID` (16:29:20) and `storybook-static` (16:26:34)
+  are both newer than the last source write (R17, 16:25:36).
+- **Measurement.** The reviewer ran an independent native probe on the rev2 `storybook-static`:
+  - `resetpasswordview--loading` measures 16/16/24/32/32 at 320/390/768/1024/1440, with no overflow;
+  - the seven exempt exports measure 16 on the View box at every width, and the card sits at 16/16/184/312/520;
+  - so O83-3 condition 2 (at least 32 at 1024 and 1440) holds, which closes the executor's R2-6 item 3;
+  - `h1` measures 20/20/30/30/30.
+- **Record accuracy (P3, recorded, no action).** The session log's Revision 2 intro and executor report state an
+  order of I0-R2 → R17 → R16, with I0 hashes `cae86b5a…` and `2437603d…`. That does not match the file times:
+  - the Story's mtime is 16:17:48, so R16 was never re-applied (the §17.7 route);
+  - the retained `rev2/i0.log` was written at 16:34:38, after the gate logs. It holds the post-R17 hashes, so it is not
+    a pre-write witness.
+
+  The substance is unaffected, because the hash comparison above proves there was no drift. `rev2/i0.log` and
+  `rev2/r16-diff.log` carried a UTF-8 BOM, and the reviewer stripped it through Node (see the session log's Review 3).
+- **Next.** The owner runs O83-1 (§13.3, plus `patterns-mantine-resetpasswordview--loading`). If every tuple is
+  accepted, the next review approves and closes 886. If a tuple is returned, the next review writes Revision 3.

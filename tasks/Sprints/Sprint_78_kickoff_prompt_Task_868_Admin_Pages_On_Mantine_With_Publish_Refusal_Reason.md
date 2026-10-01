@@ -1155,6 +1155,75 @@ Open each menu by hand in every tuple. The `subtle` toolbar look is part of what
 
 After the deploy, O78-7b and O78-7c from §17.9 still apply.
 
+## 23. Review 6 — 2026-10-01 — `PARTIALLY VERIFIED` (R28–R30 verified; R31 and one owner tuple owed)
+
+Opus. Frontend task, so no review ledger (D69-3).
+
+### 23.1 What was verified
+
+- **Tree.** Every path in `r5-23-hash-object.txt` (now `hash  path`) equals the working tree. No source file is
+  newer than `storybook-static` (18:07:45). `.next/BUILD_ID` is 18:09:50.
+- **Re-run (win32, Node v22.22.3).** The §22.5 vitest command, with `Header.signOut.test.tsx`, gives 8 files and
+  **131** tests, exit 0.
+- **AC28.** The reviewer's own probe on `storybook-static` covered `default` and `with-content` × `sq`/`uk` × 320, 390,
+  639, 640, 768 and 1440 (24 rows).
+  - Every row has **5 controls in 1 row** with no overflow.
+  - The controls measure 44×44 below 640. From 640 they are 26 high and 26–28 wide (the trigger holds an icon and a
+    chevron).
+  - At 320 the names are `Formatimi i tekstit | Paragrafi | Fut | Shto lidhje | Historiku`, and in `uk`
+    `Форматування тексту | Абзац | Вставити | Додати посилання | Історія`.
+- **AC32.** In `PageEditorDialogView` `rich-content` `sq`, "Titull 2" is the topmost element at its centre: inside the
+  sheet (`role=dialog`) at 390 and inside `role=menu` at 1440. Tapping it turns a block into an `h2` (1 → 2). The
+  sheet or menu closes, and exactly one dialog stays open.
+- **AC30.** With the cursor in an `h2`, the Paragraph trigger has `data-active`, and the only active item is
+  "Titull 2", at 390 and 1440. `DropdownMenu` `WithActiveItems` (`sq`) shows "Ndrysho ✓" with no overflow at 390 and
+  1440. The `MantineDropdownMenu` diff adds only the `active` prop, its `rightSection`/`data-active` and the mobile
+  row's trailing `Check`. With `active` undefined, the `Group` gets `w={undefined}` and nothing renders differently.
+- **AC31.** The four keys exist in all four locales, and the `sq`/`uk`/`it` values are translations. The 320 names
+  above show them rendered in `sq` and `uk`.
+- **Executor deviations, all accepted.**
+  - **P11 is a kickoff defect (Opus).** §22.2 took the `default` variant's padding, but `subtle` pads 4px. The inner
+    width at 320 is therefore 278 and five separate groups (268) fit (`r5-27-plant-p11-geometry.txt`). P11b (seven
+    separate controls, 380) proves that the probe detects a wrap: 2 rows, equal hash on restore.
+  - `h` on the controls uses the same two theme keys.
+  - `AdminPagesManager.smoke.test.tsx` T12 opens the Insert menu first. That is a required consequence of R28.
+  - The `ImageUploading` play function changed for the same reason.
+
+### 23.2 Findings
+
+| # | Sev | Where | Evidence | Required change |
+|---|---|---|---|---|
+| **F7** | P3 | `src/stories/mantine/primitives/DropdownMenu.stories.tsx` `WithActiveItems` | Its caption is a literal English string: "active item — the current item carries a trailing check; the others are unchanged". The reviewer's probe read it in the `sq` render. The newest caption in the same file uses `storyT` (`dm_fullwidth_trigger_caption`, Task 852). Agent-contract 13 requires locale-backed visible strings. | R31 (a) |
+| **F8** | P3 | `MantineRichTextEditor.tsx`, the comment above the `ControlsGroup` | It still says "220px … fit the 254px inner width at 320". The real width is 278 with `subtle` (F-P11 above). | R31 (b) |
+| — | owner | §22.6 | Owner, 2026-10-01, verbatim: *"візуально тепер ок, все в один рядок"*. Recorded as acceptance of the `RichTextEditor` and `PageEditorDialogView` toolbar tuples. `DropdownMenu` `WithActiveItems` (the trailing check, 390/1440) is not named in it, so its confirmation is owed. | owner |
+
+### 23.3 R31 — two P3 corrections
+
+- **R31 (a).** Move the `WithActiveItems` caption to a new key `storybook.mantine.dm_active_items_caption` in all four
+  locales, with a translated value in `sq`/`uk`/`it`. Read it through `t(...)` as `dm_fullwidth_trigger_caption` does.
+- **R31 (b).** Rewrite that comment with the measured value: 220px of controls inside the 278px inner width at 320,
+  because `subtle` pads 4px.
+- **AC31′.** The `WithActiveItems` caption renders in `sq` without English words. `check:i18n` exits 0. `git diff` of
+  the editor file shows only that comment.
+
+**Re-entry (remediation from `r5-23-hash-object.txt`).** Prefix new evidence files with `r6-`. Write set: the Story
+file (the caption only), `messages/{sq,en,uk,it}.json` (that one key), the editor file (the comment only), the
+session log (new §15), `r6-*` and the backlog 868 cell. Do not re-run any probe or plant, and do not run
+`check:locale-leak`.
+
+```powershell
+$ev = "docs\sessions\evidence\task868"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r6-04-platform.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r6-10-typecheck.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\r6-22a-i18n.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r6-16-file-integrity.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r6-18-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r6-19-build.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command and normalise the files through Node. Write `r6-23-hash-object.txt`
+(`hash  path`) for the six write-set sources. Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

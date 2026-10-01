@@ -1,9 +1,10 @@
 # Task 868 — `/admin/pages` on canonical Mantine, and a refused publish tells the admin why
 
-Sprint 78 · **P3** · QA profile **Q3** (a legacy admin surface migrated to Mantine, with a new visible error state) ·
+Sprint 78 · **P3** · QA profile **Q3 → Q4 from revision 1** (§17: the rich-text editor changes the P1 critical flow
+"CMS page body sanitised before render" and adds an authenticated upload route) ·
 **depends on 877** (hard: 877's `MantineDataTableToCards` extension, the `AdminPageHeader` adapter and the admin page
-wrapper pattern) · owner action **O78-7** · **Status: `PARTIALLY VERIFIED` 2026-10-01 (review 1, §16): implementation verified;
-approval waits on O78-7 only**
+wrapper pattern) · owner action **O78-7** · **Status: `NEEDS REVISION` 2026-10-01 (review 2, §17): the owner returned O78-7's
+`AdminPagesView` and `PageEditorDialogView` rows; revision 1 = §17. Executor: start at §17.7.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Origin: reserved 2026-09-21 by Task 867's design. It is in Sprint 79 by origin and routed to Sprint 78 (admin Mantine)
@@ -145,7 +146,10 @@ Story (`src/components/admin/*.stories.tsx`: none), and no `.stories.tsx` import
 
 - `src/modules/admin/actions/**` (867's guard stands as is), the `pages` table, RLS and grants.
 - `AdminInput.tsx`, `AdminPageHeader.tsx` (877), every `src/components/ui/*` file, and `/admin/footer`.
-- New features: rich-text editing, preview in the dialog, pagination.
+- New features: preview in the dialog, pagination. *(Rich-text editing was listed here. Owner decision D868-1,
+  2026-10-01, moved it into this task — §17.)*
+- *Revision 1 adds to the scope: `src/modules/admin/actions/index.ts` (the empty-body guard only), the 884 sanitizer
+  and `CmsPageView` rendering. The `pages` table, RLS and grants stay out of scope. Write set: §17.6.*
 
 ## 9. Current and required behavior
 
@@ -422,7 +426,221 @@ cited line.
 4. After the deploy, as admin: publish a page with an empty Albanian body and confirm the R1 message on the field.
 
 **Open before approval:** O78-7 only. An accepted matrix is followed by the closure review (archive, then commit and
-push of the implementation). A returned tuple is followed by a revision of R3, R5 or R7.
+push of the implementation). A returned tuple is followed by a revision of R3, R5 or R7. *(Superseded by §17: the owner
+returned two of the three rows.)*
+
+## 17. Review 2 and revision 1 — 2026-10-01 — `NEEDS REVISION`
+
+### 17.1 The owner's O78-7 result, verbatim (2026-10-01)
+
+| Row | Result |
+|---|---|
+| `Patterns/Mantine/AdminPagesView` × 5 states × `sq`/`uk` × 390/1440 | **returned**: *"не приймаю. Якщо бейдж на одному рядку, а назва на іншому, то бейдж має бути на мобільних екранах ліворуч у фреймі, а не праворуч."* |
+| `Patterns/Mantine/PageEditorDialogView` × 6 states × `sq`/`uk` × 390/1440 | **returned**: *"не приймаю. Я просив додати у Content editor функції редагування тексту, колонок, параграфів і так далі, як це має бути у нормальному редакторі сторінки. Цього всього немає."* |
+| `Patterns/Mantine/AdminPagesView` `Default` × `en`/`it` × 768/1024 | **accepted**: *"`visibleFrom` breakpoints приймаю."* Not re-reviewed unless R13 changes a width ≥ 640. |
+
+*Recorded fact:* no repository artifact before this date asks for a rich-text editor. Task 326A deferred WYSIWYG
+(`Sprint_27_kickoff_prompt_Task_326A.md:283`), and this kickoff listed it out of scope in §8. The owner's 2026-10-01
+decisions below are the authority.
+
+### 17.2 Owner decisions, 2026-10-01 (asked by Opus; answers verbatim)
+
+- **D868-1 — scope:** *"Inside 868"*. The editor is part of this task, not a separate one.
+- **D868-2 — library:** *"@mantine/tiptap (Recommended)"*. This is Mantine's own `RichTextEditor` on Tiptap, with
+  theme tokens and its native toolbar chrome. That choice is also the clause 16a provenance for the toolbar, since
+  the bundled TailAdmin reference has no rich-text editor.
+- **D868-3 — features, first version:** *"Basic formatting, Layout columns, Tables, Images"*.
+  - Basic formatting: paragraphs, H2–H4, bold/italic/underline/strike, bullet/numbered lists, blockquote, link,
+    text alignment, undo/redo.
+  - Layout columns: a 2- or 3-column block that stacks to 1 column below 640px.
+  - Tables: insert, add/delete row and column, delete table, header row.
+  - Images: uploaded from the editor.
+- **D868-4 — card badge (the owner's returned row):** in the canonical admin card, when the badge sits on its own
+  line apart from the title, it aligns **left** in the card. This applies everywhere `MantineDataTableToCards` renders
+  that state, not on `/admin/pages` only. The rule belongs to the pattern (GR-0 EXTEND), so every consumer gets it.
+- **Correction to the question as asked:** the option text for Images said "Supabase Storage". The project uploads
+  images to **Cloudinary** (`src/lib/cloudinaryUpload.ts` `uploadToCloudinary`, used by
+  `src/app/api/upload-avatar/route.ts:76`), so §17.4 R18 uses Cloudinary. The decision itself (images in the first
+  version) is unchanged.
+
+### 17.3 Measured context for revision 1 (Opus, 2026-10-01)
+
+- **Badge.** The pattern sets the badge's own-row position in `MantineDataTableToCards.tsx:132-140`, state 3, with
+  `<Group justify="flex-end">`. The header comment (`:53-58`) and the `CardConfig` doc (`:182`, `:200`) say "badge
+  right". Card consumers: `AdminTable.tsx`, `AdminUsersTable.tsx`, `AdminExchangeProvidersView.tsx`,
+  `AdminCurrenciesView.tsx`, `AdminPagesView.tsx` and `AgentStatisticsView.tsx`. The executor re-greps the list at I0.
+- **Sanitizer (884, P1 critical flow).** `src/modules/cms/lib/sanitizeCmsHtml.ts`:
+  - 28 allowed tags; there is no `div`, `img` or `span`;
+  - attributes are allowed only on `a`, `th` and `td`;
+  - `style` is stripped everywhere (T1 row `sanitizeCmsHtml.test.ts:74-80`);
+  - an `<img src=x onerror>` must lose `onerror` (`:20-25`).
+- **Renderer.** `src/modules/cms/components/CmsPageView.tsx:29-32` renders `sanitizeCmsHtml(body)` inside
+  `TypographyStylesProvider`. The responsive rich-text scale is `src/design-system/mantine/typography-chrome.css`
+  (869 §19.1).
+- **The empty-body guard has a hole that an editor will hit.** `src/modules/admin/actions/index.ts:234` (create) and
+  `:273` (update) test `!body.trim()` on the raw HTML. An empty Tiptap document serialises as `<p></p>`, which is
+  non-empty, so a visually empty Albanian body would publish.
+- **Uploads.** Cloudinary through `uploadToCloudinary(bytes, mime, folder)` → `{ url: secure_url, … }`
+  (`cloudinaryUpload.ts:28-63`). The authenticated precedent is `upload-avatar/route.ts:25-27` (`getUser`, 401).
+  The permission helper is `assertPermission(key)` (`src/lib/auth/permissions.ts:49-51`; it throws `'forbidden'`).
+  Out of scope, filed as **911**: `upload-company-logo` and `upload-popular-location-photo` check no session at all.
+- **Dependency.** `npm view @mantine/tiptap@8.3.18 peerDependencies` gives `@mantine/core 8.3.18` (the repo's
+  version), `@tiptap/react >=2.1.12` and `@tiptap/extension-link >=2.1.12`. Mantine styles load in
+  `src/design-system/mantine/MantineRootProvider.tsx:23` and `.storybook/preview.tsx:11`.
+
+### 17.4 Requirements — revision 1 (R1–R10 stand, except where a row says it supersedes one)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R11** | **Card badge left (D868-4).** In `MantineDataTableToCards.tsx` state 3, the badge's own row aligns to the start of the card's content box, so the badge's left edge equals the title zone's left edge, ±1px. States 1 and 2 (badge on the title's line) are unchanged. Every comment that says "badge right / top-right" for state 3 is updated (`:53-58`, `:132`, `:182`, `:200`), and so is every doc line that describes state 3 (the executor greps `docs/` for the state-3 wording). No new `style` object or raw value: the change is the `Group` `justify` value. | P1 | AC11 |
+| **R12** | **Canonical editor pattern.** New `src/design-system/mantine/patterns/MantineRichTextEditor.tsx`, enrolled in the manifest (`check:pattern-enrolment`) with its own Story `Patterns/Mantine/RichTextEditor` (exports `Default`, `WithContent` (columns + table + image + aligned text), `WithError`, `ImageUploading`). It is controlled: props `value: string` (HTML), `onChange(html: string)`, `label`, `error`, `onUploadImage(file: File) => Promise<string>` (it returns the image URL; the pattern does no networking), `uploading`, `labels` (localized toolbar strings). It wraps `@mantine/tiptap` `RichTextEditor` in `Input.Wrapper` (label + error). It emits `''` when `editor.isEmpty`, never `<p></p>`. Tiptap is imported **only** here and in its extension file. | P1 | AC12, AC13 |
+| **R13** | **Toolbar = D868-3.** It covers the formatting set, H2–H4 (no H1: the page title is the H1), link (`@tiptap/extension-link`; `target="_blank"` allowed), and text alignment (left, center, right, justify). Columns come from a project extension `src/design-system/mantine/richtext/columnsExtension.ts`: nodes `columns` (`<div data-type="columns" data-cols="2|3">`) and `column` (`<div data-type="column">`), with insert 2 / insert 3 / remove controls. Tables: insert 3×3 with a header row, add and delete row and column, delete table. Image: a control that opens a `MantineModal` with a file input (JPEG/PNG/WEBP, ≤ 5 MB) and a required alt-text `TextInput`, then calls `onUploadImage` and inserts `<img src alt>`. Every toolbar label, tooltip, `aria-label` and dialog text comes from `admin.pages.editor.*` in all four locales; there is no English default left (`check:locale-leak`). Below 640px every toolbar control has a hit area ≥ 44px (clause 11), through the pattern's Styles API and theme tokens only (the §16.2 `styles` precedent), and the toolbar wraps with no horizontal page overflow at 320. | P1 | AC12, AC14 |
+| **R14** | **Editor in the dialog.** `PageEditorDialogView` replaces the body `Textarea` with `MantineRichTextEditor` per locale tab (label `field_body_label`). R1's error now shows as the editor's `error` on `sq`, and it clears on the next `sq` editor change (supersedes R5's `Textarea` and R1's "body `Textarea`"). The modal grows from `size="lg"` to `size="xl"` from 640px; it stays a bottom sheet below. New Story export `RichContent` (columns, table, image filled on `sq`). The other six exports stay. | P1 | AC4′, AC5′ |
+| **R15** | **Upload route.** New `src/app/api/upload-cms-image/route.ts` (POST, multipart `image`):<br>• `assertPermission('legal.manage')` first, so no permission → 403 and no upload call;<br>• MIME `image/jpeg\|png\|webp`, else 400 `invalid_type`;<br>• `size > 5 MB` → 400 `file_too_large`;<br>• empty → 400 `file_empty`;<br>• `uploadToCloudinary(bytes, mime, 'cms/pages')` → 200 `{ url }`; on a throw → 500 `upload_failed`.<br>The `PageEditorDialog` container owns the `fetch`, passes `onUploadImage`, and on failure shows a localized error toast (`admin.pages.editor.image_upload_error`). No DB write: the URL lives in the body HTML. | P0 | AC15 |
+| **R16** | **Sanitizer extended, with the 884 contract kept.** `cmsHtmlAllowlist` adds three things, and nothing else changes:<br>• `div` with only `data-type` ∈ {`columns`, `column`} and `data-cols` ∈ {`2`, `3`} (sanitize-html attribute value lists);<br>• `img` with only `src`, `alt`, `width`, `height`; `src` must be `https://res.cloudinary.com/…`, otherwise the whole `img` is dropped (`exclusiveFilter`/`transformTags`), and that covers relative, `data:`, other hosts and protocol-relative;<br>• `style` on `p`, `h2`–`h4` and `li`, restricted by `allowedStyles` to `text-align: left\|center\|right\|justify`.<br>Every existing T1/T1b/T2 row passes **unchanged**, including `:74-80` (`style="color:red"` still removed) and `:20-25`. Idempotency holds. | P0 | AC16 |
+| **R17** | **Public rendering.** `typography-chrome.css` (the canonical rich-text chrome, 869) gains three rules:<br>• `[data-type="columns"]` is a 1-column grid with `var(--mantine-spacing-xl)` gap, becoming 2 or 3 equal columns from `40em` (Mantine `sm`) per `data-cols`;<br>• `table` scrolls inside its own box (no document overflow at 320);<br>• `img` is `max-width: 100%; height: auto`.<br>Use tokens and `em` breakpoints only. `CmsPageView` itself does not change. Its Story gains an export `RichLayout` (columns 2 and 3, a table wider than 320, an image, centred text), extending `Patterns/Mantine/CmsPageView` (GR-3a EXTEND). The editor's content area uses the same Typography scale: an H2 in the editor measures the same as on `CmsPageView` at each width. | P1 | AC17 |
+| **R18** | **The empty-body guard is text-aware.** New pure helper `src/modules/cms/lib/isCmsBodyEmpty.ts`: `true` when the HTML has no non-whitespace text (after `&nbsp;` normalisation) **and** no `<img>`. `createPage` and `updatePage` use it in place of `.trim()` (`index.ts:234`, `:273`). The error code stays `sq_body_required`. | P0 | AC18 |
+| **R19** | **Existing bodies survive the editor.** One test parses every existing rich-text fixture through the editor's own extension set (`@tiptap/html` `generateJSON` → `generateHTML`): the `CmsPageView` Story fixtures, the 884 T1b fixtures and the `AdminPagesView`/`PageEditorDialogView` fixtures. It asserts equal text content and lists every tag that is lost. A lost tag is reported, not silently accepted. The live rows are checked by the owner (O78-7c). | P1 | AC19 |
+| **R20** | **The public bundle stays clean.** No `@tiptap/*` or `@mantine/tiptap` module reaches `/[locale]/[slug]`. Its First Load JS in `npm run build` must not grow compared with `docs/sessions/evidence/task868/19-build.txt`. `@mantine/tiptap/styles.css` is imported next to the core styles in `MantineRootProvider.tsx` and `.storybook/preview.tsx`. | P1 | AC20 |
+| **R21** | **Dependencies, exact.** Install `@mantine/tiptap@8.3.18` (equal to `@mantine/core`), plus one Tiptap major for every `@tiptap/*` package: `react`, `pm`, `starter-kit`, `extension-link`, `extension-text-align`, `extension-table` (and row/cell/header packages if that major splits them), `extension-image` and `html`. Record each `npm view` and the chosen versions. A peer-dependency conflict is `PREMISE DRIFT — tiptap`, with no `--force` and no `--legacy-peer-deps`. | P1 | AC20 |
+
+**GR-3c type-scale (R12–R17).**
+
+| Element | base | sm | md | lg | Source |
+|---|---|---|---|---|---|
+| Editor label / error | `sm` 14 / `xs` 12 | same | same | same | `Input.Wrapper` defaults |
+| Toolbar tooltip | `xs` 12 | same | same | same | Mantine `Tooltip` |
+| Content `p`, `li`, table cell | `md` 16 | `md` | `md` | `md` | Typography default |
+| Content H2 | `h6` 18 | `h5` 20 | `h4` 24 | `h4` 24 | `typography-chrome.css` (869 §19.1) |
+| Content H3 | `md` 16 | `h6` 18 | `h5` 20 | `h5` 20 | same |
+| Content H4 | `md` 16 | `md` 16 | `h6` 18 | `h6` 18 | same |
+
+### 17.5 Acceptance criteria — revision 1 (AC1–AC10 stand; AC4/AC5 are replaced by AC4′/AC5′)
+
+- **AC4′ [R5, R14]** Given `PageEditorDialogView`, then each tab's body is `MantineRichTextEditor`. R1's message is its
+  `error` on `sq`, and the save button is disabled on the same three conditions as today.
+- **AC5′ [R7, R12, R14, R17]** Given the Stories, each one statically imports its own component: `AdminPagesView` (5),
+  `PageEditorDialogView` (7, including `RichContent`), `RichTextEditor` (4) and `CmsPageView` (+`RichLayout`).
+  `check:story-coverage` and `check:pattern-enrolment` exit 0.
+- **AC11 [R11]** At 320 and 390, in every card Story that reaches state 3, `badge.left − titleZone.left` lies in
+  [−1, 1]. P7 (planted `flex-end`) fails the probe.
+- **AC12 [R12, R13]** Given the `RichTextEditor` Story at 320/390/768/1440 in `sq` and `uk`:
+  - every D868-3 control exists, with a localized `aria-label`;
+  - every control is ≥ 44px below 640;
+  - there is no document overflow;
+  - `check:locale-leak` on the new Stories reports no English toolbar string in `sq`/`uk`/`it`.
+- **AC13 [R12]** Given an empty editor, `onChange` receives `''` (T11).
+- **AC14 [R13]** Given the columns controls, the inserted HTML is `<div data-type="columns" data-cols="2">` with 2 or
+  3 `column` children, and it survives `sanitizeCmsHtml` byte-identical (T7).
+- **AC15 [R15]** T9 covers the route: no permission → 403 with no Cloudinary call; bad MIME → 400; > 5 MB → 400;
+  success → 200 `{ url }` from folder `cms/pages`. P6 (assertion removed) fails T9's first row.
+- **AC16 [R16]** T7's new rows and every pre-existing T1/T1b/T2 row pass. The rows:
+  - kept: columns divs, a Cloudinary `img`, and `text-align`;
+  - dropped: any other `data-*` value, `img` on another host or `data:`/relative/protocol-relative, and
+    `style="color:red"`.
+
+  P5 (any `img` host allowed) fails T7. The `docs/critical-flow-registry.md` 884 row is updated with the new rows
+  and plant.
+- **AC17 [R17]** `CmsPageView` `RichLayout` at 320/390: columns stack, the table scrolls inside its box, the image is
+  no wider than the column, and there is no document overflow. At 1024/1440 the columns sit side by side. The H2 sizes
+  match the table above at 320/390/768/1440. P8 (columns rule removed) makes the 1024 probe fail.
+- **AC18 [R18]** T8: `''`, `<p></p>`, `<p> </p><br>` and `<p>&nbsp;</p>` → empty; `<p>x</p>` and a Cloudinary image
+  alone → not empty. `pages-and-footer-validation.smoke.test.ts` gains create and update rows for `<p></p>` →
+  `sq_body_required`, and every existing row passes unchanged. P4 (guard reverted to `.trim()`) fails the new rows.
+- **AC19 [R19]** T10 passes. The session log lists every lost tag, or states "none".
+- **AC20 [R20, R21]** The build exits 0, and `/[locale]/[slug]` First Load JS is ≤ its `19-build.txt` value. The
+  versions are recorded, and `npm ls @mantine/tiptap @tiptap/react` shows no `invalid`/`UNMET`.
+
+`GR-4 AC AUDIT — 10 new or replaced criteria; each states an observable property; absolutes: none (the bundle bound is "≤ the recorded baseline", the badge bound is ±1px).`
+
+### 17.6 Write set — revision 1 (adds to §7)
+
+1. `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` (R11), and the doc lines it names
+2. `src/design-system/mantine/patterns/MantineRichTextEditor.tsx`, `src/design-system/mantine/richtext/columnsExtension.ts`,
+   `src/design-system/mantine/patterns/index.ts` (export), `scripts/mantine-migration-scope.json`
+3. `src/stories/patterns/mantine/RichTextEditor.stories.tsx` (new), `PageEditorDialogView.stories.tsx`,
+   the `CmsPageView` Story file (R17), and every card-consumer Story only if R11 needs a fixture to reach state 3
+4. `src/components/admin/PageEditorDialogView.tsx`, `AdminPagesManager.tsx` (the container's upload and empty handling)
+5. `src/app/api/upload-cms-image/route.ts` + its test
+6. `src/modules/cms/lib/sanitizeCmsHtml.ts`, `isCmsBodyEmpty.ts` (new) + tests; `src/modules/admin/actions/index.ts`
+   (the two guard lines); `pages-and-footer-validation.smoke.test.ts` (new rows only)
+7. `src/design-system/mantine/typography-chrome.css` (R17), `MantineRootProvider.tsx` and `.storybook/preview.tsx`
+   (one style import each)
+8. `package.json`, `package-lock.json` (R21 only)
+9. `messages/{sq,en,uk,it}.json` — `admin.pages.editor.*` only
+10. `docs/critical-flow-registry.md` (the 884 row), the session log and `docs/sessions/evidence/task868/r1-*`
+11. `docs/backlog.md` — the 868 cell only
+
+### 17.7 Re-entry and order
+
+**Mode: remediation** from review 1's verified tree (§16.1 hashes).
+- Keep `01`–`31` as they are, and prefix every new evidence file with `r1-`.
+- Do not re-run P1–P3. Re-run T1 (it changes with R14) and T1–T6.
+
+Order:
+1. I0: platform, status and hashes; the R11 consumer re-grep; `npm view` for R21.
+2. R21 install.
+3. R11 and its probe.
+4. R16 and R18 with T7/T8.
+5. R12/R13 pattern, its Story and T11.
+6. R15 and T9.
+7. R14 container and View, then the Stories.
+8. R17 and the `RichLayout` probe.
+9. R19 (T10) and R20.
+10. Plants P4–P8.
+11. Census and baseline (no key added; the new pattern is enrolled).
+12. The §13.2 gates, plus `check:pattern-enrolment` and `check:locale-leak`.
+13. GR-3b/3c/3d receipts for every Story in §17.9.
+14. Report.
+
+Plants (two-armed; hashes before, planted and restored, as §10.3):
+
+| Plant | Edit | Must fail |
+|---|---|---|
+| P4 | the guard back to `.trim()` | AC18's new `<p></p>` rows |
+| P5 | `img` allowed from any host | T7 "other host dropped" |
+| P6 | remove `assertPermission` from the route | T9 row 1 |
+| P7 | state-3 `justify="flex-end"` | the AC11 probe |
+| P8 | remove the columns rule | the AC17 1024 probe |
+
+### 17.8 Negative flows added
+
+| Branch | Expected | Evidence |
+|---|---|---|
+| Publish with an empty editor (`<p></p>`) | `sq_body_required`, R1 message | T8, AC18 rows, T1 |
+| Upload without `legal.manage` | 403, nothing uploaded | T9 |
+| Upload fails (Cloudinary throws) | 500; the editor keeps its content; error toast | T9, container test row |
+| Hostile HTML pasted into the editor | Tiptap drops unknown nodes; the sanitizer strips the rest on render | T7, T1/T2 unchanged |
+| Image from a foreign host pasted as HTML | dropped at render | T7 |
+| Legacy (non-`sq`-keyed) content | editing disabled, as R3 | T5 unchanged |
+| Wide table / 3 columns at 320 | no document overflow | AC17 |
+
+### 17.9 Owner matrix O78-7 — revision 1 (replaces §13.3 rows 1–2; row 3 stays accepted)
+
+| Story | States | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Patterns/Mantine/AdminPagesView` | 5 | `sq`, `uk` | 390, 1440 | 20 |
+| `Patterns/Mantine/PageEditorDialogView` | 7 (+`RichContent`) | `sq`, `uk` | 390, 1440 | 28 |
+| `Patterns/Mantine/RichTextEditor` | 4 | `sq`, `uk` | 390, 1440 | 16 |
+| `Patterns/Mantine/CmsPageView` `RichLayout` | 1 | `sq`, `uk` | 390, 1024, 1440 | 6 |
+| R11 blast radius: every card Story that reaches state 3 (the executor lists them, each with a GR-3d line) | the state-3 export | `sq` | 390 | n |
+
+After the deploy, as admin:
+- **O78-7b:** create a page with 2 columns, a table and an image; publish it; open it on a phone. Then publish one
+  with an empty editor and confirm the R1 message.
+- **O78-7c:** open every live page in the editor and compare it with the public page **before** saving. A difference
+  is reported, not saved.
+
+GR-3d for the new and extended Stories:
+- `RichTextEditor`: no own gutter → `StoryPageGutter all`.
+- `CmsPageView`: its own `px="md"`, `py` (`CmsPageView.tsx:23`) → answered per side as in 869's Story.
+- `PageEditorDialogView`: overlay-only.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: rich-text editor, columns block, image insert, card badge state 3; semantic queries: rich text, editor, wysiwyg, tiptap, toolbar, columns, upload, image insert, card badge; inspected candidates: none in src for an editor (Grep: no tiptap/RichTextEditor), @mantine/tiptap RichTextEditor (owner D868-2), MantineModal (image dialog), upload-avatar route (auth precedent), MantineDataTableToCards.tsx:132-140 (badge); decision: CREATE MantineRichTextEditor pattern on @mantine/tiptap + EXTEND MantineDataTableToCards state 3 + EXTEND typography-chrome.css + EXTEND sanitizeCmsHtml; selected canonical owner: src/design-system/mantine/patterns/; Mantine/TailAdmin token path: theme.ts + typography-chrome.css; new hardcoded visual values: NONE; rationale: no editor exists in the repo, and the owner chose Mantine's native one.`
+
+`GR-3a STORY PREFLIGHT — MantineRichTextEditor × Default/WithContent/WithError/ImageUploading; canonical candidates: NONE (new pattern); direct-import evidence: NONE; toolbar coverage: locale=Storybook locale toolbar, viewport=Storybook viewport toolbar; decision: CREATE; target: Patterns/Mantine/RichTextEditor; rationale: a new canonical pattern needs its own Story (GR-3). CmsPageView × RichLayout → EXTEND Patterns/Mantine/CmsPageView. PageEditorDialogView × RichContent → EXTEND Patterns/Mantine/PageEditorDialogView.`
+
+`GR-1 CENSUS (design, revision 1) — surface src/app/admin/pages/page.tsx gains MantineRichTextEditor (tier 1, new, manifest + own Story in this task); the public surface src/app/[locale]/[slug]/page.tsx is unchanged in its node set (CmsPageView only); tier 3: none; filed: 911 (unauthenticated upload routes, outside this surface).`
 
 ---
 

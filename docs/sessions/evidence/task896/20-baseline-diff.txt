@@ -1,0 +1,14 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index 12e2ccfde..b0f7ceeae 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -637,9 +637,6 @@
+     "src/app/admin/users/page.tsx :: src/app/admin/users/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/users/page.tsx :: src/components/admin/AdminUsersTable.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/global-error.tsx :: src/app/global-error.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },

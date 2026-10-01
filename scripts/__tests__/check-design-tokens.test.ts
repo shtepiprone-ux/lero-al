@@ -11,7 +11,7 @@
  * Run: npx vitest run scripts/__tests__/check-design-tokens.test.ts
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import {
   scanContent,
@@ -24,6 +24,16 @@ import {
   isMantineScopeFile,
   filterFilesForScope,
 } from '../check-design-tokens.mjs'
+
+// Task 896 (R4): the real enrolment map is empty (the only entry, `Admin/AdminUsersTable`, was retired), so the
+// Task 827 title-enrolled arms inject a fixture title. The real prefix logic is kept; arm (g) reads the real module.
+vi.mock('../lib/mantine-story-scope.mjs', async (importOriginal) => {
+  const real = await importOriginal<typeof import('../lib/mantine-story-scope.mjs')>()
+  return {
+    ...real,
+    isCanonicalMantineTitle: (title: string) => real.isCanonicalMantineTitle(title) || title === 'Fixture/EnrolledTitle',
+  }
+})
 
 // Task 718: the REAL src/app/globals.css definitions, read once — used as the
 // default globalsDefinedProps for the shared CSS helpers below so that
@@ -1075,7 +1085,7 @@ describe('canonical Mantine stories — title-enrolled membership (Task 827, R5/
   // under src/stories/mantine/ or src/stories/patterns/mantine/, so the path rule alone would miss
   // arms (a) and (c) — only the title arm brings them into scope.
   const enrolledTitleContent = `
-const meta = { title: 'Admin/AdminUsersTable' }
+const meta = { title: 'Fixture/EnrolledTitle' }
 export default meta
 export const Default = () => <Icon className="px-4" />
 `
@@ -1118,7 +1128,7 @@ export const Default = () => <Icon className="px-4" />
   it('(d) an enrolled meta.title is found even when a fixture title: literal precedes it', () => {
     const content = `
 const FIXTURE = { title: 'Apartament 2+1' }
-const meta = { title: 'Admin/AdminUsersTable' }
+const meta = { title: 'Fixture/EnrolledTitle' }
 export default meta
 export const Default = () => <Icon className="px-4" />
 `
@@ -1133,7 +1143,7 @@ export const Default = () => <Icon className="px-4" />
 
   it('(e) a non-enrolled meta.title is NOT flagged even when a fixture title: literal for an enrolled title precedes it (fails closed both ways)', () => {
     const content = `
-const FIXTURE = { title: 'Admin/AdminUsersTable' }
+const FIXTURE = { title: 'Fixture/EnrolledTitle' }
 const meta = { title: 'System/Containers' }
 export default meta
 export const Default = () => <Icon className="px-4" />
@@ -1162,6 +1172,15 @@ export const Default = () => <Icon className="px-4" />
       'src/stories/__fixture-no-default-export__.stories.tsx',
       {},
     )).toHaveLength(0)
+  })
+
+  it('(g) with the real (empty) enrolment map the retired title is not canonical and every prefix title is (Task 896, R4)', async () => {
+    const real = await vi.importActual<typeof import('../lib/mantine-story-scope.mjs')>('../lib/mantine-story-scope.mjs')
+    expect(real.MANTINE_STORY_ENROLLED_TITLES).toEqual({})
+    expect(real.isCanonicalMantineTitle('Admin/AdminUsersTable')).toBe(false)
+    for (const prefix of real.MANTINE_STORY_TITLE_PREFIXES) {
+      expect(real.isCanonicalMantineTitle(prefix + 'Anything')).toBe(true)
+    }
   })
 })
 
@@ -1195,7 +1214,7 @@ describe('§K — --scope=mantine membership (Task 784, R1/§3.2/§3.3)', () => 
   })
 
   it('excludes a representative legacy source not in any of the three §3.2 kinds', () => {
-    expect(isMantineScopeFile('src/components/admin/AdminUsersTable.tsx', manifest)).toBe(false)
+    expect(isMantineScopeFile('src/components/admin/AdminListingsTable.tsx', manifest)).toBe(false)
     expect(isMantineScopeFile('src/lib/imageDelivery.ts', manifest)).toBe(false)
     expect(isMantineScopeFile('src/stories/legacy/__fixture__.stories.tsx', manifest)).toBe(false)
   })
@@ -1223,7 +1242,7 @@ describe('§K — --scope=mantine membership (Task 784, R1/§3.2/§3.3)', () => 
 
   it('filterFilesForScope applies exact §3.2 membership when scopeMantine is true', () => {
     const files = [
-      'src/components/admin/AdminUsersTable.tsx',          // excluded — legacy
+      'src/components/admin/AdminListingsTable.tsx',        // excluded — legacy (Task 896: AdminUsersTable.tsx is now enrolled)
       'src/components/layout/HeaderView.tsx',               // included — manifest
       'src/design-system/mantine/theme.ts',                 // included — design-system root
       'src/stories/mantine/primitives/HeaderView.stories.tsx', // included — canonical story

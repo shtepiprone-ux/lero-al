@@ -1,0 +1,147 @@
+[
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 320,
+  "compW": 256,
+  "vw": 320,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 24,
+  "overflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14,
+    16
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ]
+  }
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 390,
+  "compW": 326,
+  "vw": 390,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 24,
+  "overflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14,
+    16
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ]
+  }
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 768,
+  "compW": 688,
+  "vw": 768,
+  "top": 24,
+  "left": 40,
+  "right": 40,
+  "bottom": 277,
+  "overflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14,
+    16
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ]
+  }
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1024,
+  "compW": 928,
+  "vw": 1024,
+  "top": 24,
+  "left": 48,
+  "right": 48,
+  "bottom": 277,
+  "overflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14,
+    16
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ]
+  }
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1440,
+  "compW": 1344,
+  "vw": 1440,
+  "top": 24,
+  "left": 48,
+  "right": 48,
+  "bottom": 277,
+  "overflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14,
+    16
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ]
+  }
+ }
+]

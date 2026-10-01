@@ -159,7 +159,7 @@ const ASSERT_STORIES = [
   { id: 'admin-adminsupportmanager--default',      label: 'AdminSupportManager/Default',      anchors: [{ type: 'testid', value: 'admin-support-manager', label: 'support' }] },
   { id: 'admin-adminemailtemplatesmanager--default', label: 'AdminEmailTemplatesManager/Default', anchors: [{ type: 'testid', value: 'admin-email-templates-manager', label: 'email-tpl' }] },
   { id: 'admin-adminlistingstable--default',       label: 'AdminListingsTable/Default',       anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
-  { id: 'admin-adminuserstable--default',          label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },
+  { id: 'patterns-mantine-adminuserstable--default', label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },
   { id: 'patterns-mantine-adminuserprofileview--view', label: 'AdminUserProfileView/View',       anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
   // ── Layout (0) — FilterBar/PageHeader/PageShell/Section deleted (Task 788, 2026-09-05):
   // zero production consumers, stories removed with the components ──

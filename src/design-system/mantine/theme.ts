@@ -280,6 +280,9 @@ declare module '@mantine/core' {
       // Task 868 (R6) — `/admin/pages`'s page wrapper `max-w-4xl` (56rem, 896px), the narrower list wrapper;
       // same value type and read helper as `adminPageMaxWidth`.
       adminPageNarrowMaxWidth: string
+      // Task 896 (R5) — `/admin/users`'s page wrapper `max-w-10xl` / `.container-admin` (112rem, 1792px), the
+      // widest list wrapper; same value type and read helper as `adminPageMaxWidth`. Task 857 reuses this key.
+      adminPageShellMaxWidth: string
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -841,6 +844,7 @@ export const theme = createTheme({
       adminPageMaxWidth: '64rem', // 1024px — Task 877: admin page wrapper (legacy `max-w-5xl`)
       adminPageFormMaxWidth: '48rem', // 768px — Task 893: admin form page wrapper (legacy `max-w-3xl`)
       adminPageNarrowMaxWidth: '56rem', // 896px — Task 868: /admin/pages page wrapper (legacy `max-w-4xl`)
+      adminPageShellMaxWidth: '112rem', // 1792px — Task 896: admin list-page wrapper (legacy max-w-10xl / .container-admin cap)
     },
     overlay: {
       dragHandle: {

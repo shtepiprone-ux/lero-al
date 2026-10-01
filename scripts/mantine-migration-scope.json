@@ -122,6 +122,7 @@
   "src/components/admin/PageEditorDialogView.tsx",
   "src/components/admin/AdminReportsView.tsx",
   "src/components/admin/ReportDetailDialogView.tsx",
+  "src/components/admin/AdminUsersTable.tsx",
   "src/design-system/mantine/patterns/MantineRichTextEditor.tsx",
   "src/components/admin/AdminUserProfileView.tsx",
   "src/components/admin/AdminUserProfileDialogsView.tsx",

@@ -1,7 +1,7 @@
 # Task 896 — `/admin/users` list page on canonical Mantine; `AdminUsersTable` gets a canonical Story and a manifest entry
 
 Sprint 84 · **P3** · QA profile **Q3** · no task dependency (877's `AdminPageHeader` adapter has landed) · blocks
-**885** · owner action **O84-4** · **Status: `KICKOFF FILED` 2026-09-29**
+**885** · owner action **O84-4** · **Status: ✅ `APPROVED WITH NOTES` 2026-10-01, review 2 (§17); archived**
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under **D84-1**; the reserved row moves into Appendix D. Precedent, read-only: **877**
@@ -311,3 +311,59 @@ Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-re
 - The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
 
 Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*
+
+---
+
+## 16. Review 1 — 2026-10-01 — `PARTIALLY VERIFIED`
+
+Code, gates and Story measurements are verified against the working tree. Every changed file's `git hash-object` equals
+`docs/sessions/evidence/task896/22-hash-object.txt`. The only owed item is the owner matrix **O84-4** (§13.3). The
+visual criterion stays `NOT VERIFIABLE` until the owner records it. No executor rework is owed.
+
+### 16.1 Reviewer re-runs (win32, Node v22.22.3)
+
+- vitest (`check-design-tokens.test.ts` + `AdminUsersTable.smoke.test.tsx`): 176/176, exit 0.
+- `check:story-coverage`, `check:type-responsive` and `check:rendered-scope`: all exit 0.
+- AC5 reference grep: empty.
+- Census `11-census-after.txt` has 5 nodes. The new nodes are `AdminPageHeader` and `MantineDashboardHeader`, both
+  manifest + story, `className:0`. The only FAIL is the root `page.tsx` at `className:0`.
+- `19b-build.txt` ends with `EXIT_CODE=0`. `storybook-static/index.json` (20:11:55) is newer than the Story file (20:11:14).
+
+### 16.2 Story measurements (reviewer, Chromium on `storybook-static`, `uk`)
+
+All four exports at 320/390/1024/1440 measure t/r/b/l 24/16/24/16 at 320 and 390, and 24/32/24/32 at 1024 and 1440.
+The bottom is measured to the `StoryPageGutter` box, not to the viewport. There is no document overflow, no headings,
+and text is 12–16px. Blast radius: the `Patterns/Mantine/AdminPageHeader` `h1` is 20px at 320 and 24px at 1440.
+
+### 16.3 Accepted deviations
+
+1. **`scripts/__tests__/check-design-tokens.test.ts` §K (Task 784).** The "legacy, excluded" example moved from
+   `AdminUsersTable.tsx` to `AdminListingsTable.tsx`, which is outside "R4 arms only". Enrolment (R3) forced it.
+   `AdminListingsTable.tsx` has no manifest hit (FACT), so the arms still exercise exclusion. If Task 857 enrols that
+   file, the same two arms fail and must move again; the test failure surfaces that by itself.
+2. **`check:surface-census:changed` and its `:update-baseline` ran with `--base HEAD`.** This is the same deviation 858
+   recorded. The baseline diff removes only `AdminUsersTable`'s key.
+3. **P1 ran on `Default` only.** That matches §10.3, which names `Default`.
+4. **Process.** The kickoff was opened one tool call before GR-0 and 16b–16c were read. No write preceded those reads.
+
+### 16.4 Notes (P3, non-blocking)
+
+- **N1. The page-header action group has no Story of its own.** The group is `Group wrap="nowrap"`: the count plus the
+  `Button component={Link}`. §11 mapped "Mobile < 640" to the GR-3b receipts, but the `AdminUsersTable` Story does not
+  render the header.
+  - Reviewer measurement, synthetic, on `AdminPageHeader` `WithAction`: in `uk` the count is 82–89px, the gap 12px and
+    the button with its icon 187px. That needs 281–288px. At 320 the production slot is 272px (`AdminShell` padding 0,
+    `Box p="xl"`).
+  - INFERENCE: the count `Text` shrinks and wraps to two lines next to the button. The document does not overflow. `sq`,
+    `en` and `it` fit.
+  - The owner's post-deploy phone-width read of `/admin/users` (O84-4) is the check.
+
+## 17. Review 2 — 2026-10-01 — ✅ `APPROVED WITH NOTES`
+
+- **O84-4 matrix accepted.** The owner accepted all 12 tuples of §13.3 (`Default`, `VerifiedTab`, `LocationFilter` ×
+  `sq`, `uk` × 390, 1440). Owner, verbatim: *"ghbqvf."* (typed in the wrong keyboard layout), then *"приймаю"*.
+- **Implementation unchanged since review 1.** The re-hashed `page.tsx`, the Story and `mantine-story-scope.mjs` equal
+  `22-hash-object.txt`, so §16's verification stands.
+- **Note carried.** P3 N1 (§16.4) stays a note.
+- **Still owed after the deploy.** The live phone/desktop read of `/admin/users` is a separate owner action. It is
+  recorded as the remainder of O84-4 in the Sprint 84 plan, and it does not keep this task open.

@@ -1,0 +1,15 @@
+P2 planted hash ceb2fe259607997f70023abfb21084c711623a25
+     × (g) with the real (empty) enrolment map the retired title is not canonical and every prefix title is (Task 896, R4) 9ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 154 passed (155)
+P2 hash before ed51c0a081c0c8a52082492342b4ee010129bdaf after ed51c0a081c0c8a52082492342b4ee010129bdaf
+P3 planted hash 892d6f471e55f8b8257650d3bd4becc20ba67e2b
+    src/app/admin/users/page.tsx  tier:tier1  manifest:no  story:no  className:1  ui-imports:0  parent:(root surface)
+P3 hash before 7b1ac9ea123c18c16563c5b700093a9f30d1dc60 after 7b1ac9ea123c18c16563c5b700093a9f30d1dc60
+P1 planted hash eefba08622a693a2d8088424d7412f866ae7c56f
+P1 planted storybook build exit 0
+default 320 comp 256/320 t/r/b/l 24/32/24/32 overflow false {"button":[14],"span":[12,14,16],"input":[14,16],"p":[12,14]}
+default 390 comp 326/390 t/r/b/l 24/32/24/32 overflow false {"button":[14],"span":[12,14,16],"input":[14,16],"p":[12,14]}
+default 1024 comp 928/1024 t/r/b/l 24/48/277/48 overflow false {"button":[14],"span":[12,14,16],"input":[14,16],"p":[12,14]}
+default 1440 comp 1344/1440 t/r/b/l 24/48/277/48 overflow false {"button":[14],"span":[12,14,16],"input":[14,16],"p":[12,14]}
+P1 hash before c9374b6edce22baa7695fcc4533a5cae099f702b after c9374b6edce22baa7695fcc4533a5cae099f702b

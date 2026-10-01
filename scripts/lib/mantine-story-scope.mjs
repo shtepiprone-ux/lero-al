@@ -31,14 +31,8 @@ export const MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Ma
  *
  * @type {Record<string, string>}
  */
-export const MANTINE_STORY_ENROLLED_TITLES = {
-  'Admin/AdminUsersTable':
-    'Task 678/687 — the only migrated component among 21 `Admin/*` stories (measured 2026-08-08): ' +
-    'imports Avatar, Badge, Button, Group, Stack, Tabs, Text, TextInput, ActionIcon, Loader, ' +
-    'SegmentedControl, ScrollArea from @mantine/core, plus the canonical MantineDataTableToCards ' +
-    'pattern. Its 20 `Admin/*` siblings are still shadcn and must stay out of scope — do not widen ' +
-    'this to an `Admin/` prefix.',
-};
+export const MANTINE_STORY_ENROLLED_TITLES = {};
+// Emptied by Task 896 (2026-10-01): the only entry's Story moved to Patterns/Mantine/AdminUsersTable.
 
 /** @param {string} title @returns {boolean} */
 export function isCanonicalMantineTitle(title) {

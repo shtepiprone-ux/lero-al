@@ -1,13 +1,19 @@
 import Link from 'next/link'
+import { Box, Button, Group, Text } from '@mantine/core'
 import { UserPlus } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
+import { theme } from '@/design-system/mantine/theme'
 
 export const metadata = { title: 'Users — Admin' }
+
+// Server Component: tokens are read straight from the theme object (precedent `src/app/admin/reports/page.tsx`);
+// `!` because `createTheme()`'s return type is deep-partial.
+const layout = theme.other!.layout!
+const iconSize = theme.other!.iconSize!
 
 export default async function AdminUsersPage({
   searchParams,
@@ -78,25 +84,23 @@ export default async function AdminUsersPage({
   }
 
   return (
-    <div className="p-6 max-w-10xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">{t('users_title')}</h1>
-          {locationRequest && (
-            <p className="text-sm text-status-warning mt-0.5">{t('users_location_filter')}</p>
-          )}
-        </div>
-        <div className="flex items-center gap-3">
-          {tab === 'all' && <span className="text-sm text-muted-foreground">{t('users_total', { count })}</span>}
-          <Link
-            href="/admin/users/new"
-            className={cn(buttonVariants({ size: 'lg' }), 'max-sm:w-auto')}
-          >
-            <UserPlus className="h-4 w-4" />
-            {t('users_new_btn')}
-          </Link>
-        </div>
-      </div>
+    <Box p="xl" maw={layout.adminPageShellMaxWidth} mx="auto">
+      <AdminPageHeader
+        title={t('users_title')}
+        subtitle={locationRequest ? t('users_location_filter') : undefined}
+        action={
+          <Group gap="sm" wrap="nowrap">
+            {tab === 'all' && (
+              <Text size="sm" c="dimmed">
+                {t('users_total', { count })}
+              </Text>
+            )}
+            <Button component={Link} href="/admin/users/new" leftSection={<UserPlus size={iconSize.standard} />}>
+              {t('users_new_btn')}
+            </Button>
+          </Group>
+        }
+      />
       <AdminUsersTable
         users={users}
         total={count}
@@ -109,6 +113,6 @@ export default async function AdminUsersPage({
         activeTab={tab}
         verifiedAgents={verifiedAgents}
       />
-    </div>
+    </Box>
   )
 }

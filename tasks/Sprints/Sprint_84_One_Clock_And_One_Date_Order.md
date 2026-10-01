@@ -1,6 +1,6 @@
 # Sprint 84 — one clock and one date order, on screens that have left Tailwind
 
-**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (893 · 896) · **Kickoffs filed:** 6 (885 · 892 · 893 · 894 · 895 · 896) · **Reserved:** 0
+**Opened:** 2026-09-27 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (893 · 896) · **Kickoffs filed:** 7 (885 · 892 · 893 · 894 · 895 · 896 · 914) · **Reserved:** 0
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -58,6 +58,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 | **894** | `/admin/inquiries/{sales,support}` on canonical Mantine: `AdminInquiriesManager` (42), `StatusChangeControl` (12), `StatusChangeHistory` (15). `StatusChangeControl` is also rendered by `ListingFormShellView` | `KICKOFF FILED` 2026-09-29 → [`…Task_894…`](Sprint_84_kickoff_prompt_Task_894_Admin_Inquiries_On_Mantine.md) — new canonical `StatusChangeSelect`; the legacy control stays for the listing form until 796; owner matrix **O84-5** |
 | **895** | `/{locale}/cabinet` on canonical Mantine: `CabinetShell` (17), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection`, `RecentlyViewedGrid`, `ClearRecentlyViewedButton` (enrolment) | `KICKOFF FILED` 2026-09-29 → [`…Task_895…`](Sprint_84_kickoff_prompt_Task_895_Cabinet_On_Mantine.md) — one task (16d; no per-tab split); needs 893, runs after Sprint 83's 886; subsumes Sprint 70's **789** (fold pending **O84-7**); owner matrix **O84-6** |
 | **896** | `/admin/users` list: `page.tsx` (8 `className`) and `AdminUsersTable` enrolled in the manifest (it already has a Story) | ✅ `APPROVED WITH NOTES` 2026-10-01, review 2 (kickoff §17); owner accepted the O84-4 matrix; archived → [`…Task_896…`](../Archive/Sprint_84_kickoff_prompt_Task_896_Admin_Users_List_Page_On_Mantine.md) — Story at `Patterns/Mantine/AdminUsersTable`, the exact-title hatch emptied |
+| **914** | `/admin/users/new` and `/[id]`: the `AdminUserProfileView` header card stacks the avatar and title into rows below 640 (`Group wrap="nowrap"` → responsive `Flex`). Owner return on 893's surface, 2026-10-01; the owner rule is now GR-3b "Sections stack into rows on a phone" | `KICKOFF FILED` 2026-10-01, **P2**, Q3 → [`…Task_914…`](Sprint_84_kickoff_prompt_Task_914_Admin_User_Profile_Header_Stacks_On_Phone.md) — owner matrix **O84-9** |
 
 External dependencies (Sprint 78, not moved): **877** makes `AdminTable` and `AdminPageHeader` adapters over
 canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportManager` under 16d. Both surfaces
@@ -84,10 +85,11 @@ canonical patterns and deletes `AdminCardList`. **859** migrates `AdminSupportMa
 | **O84-2** | Task 893's visual matrix: **accepted in full 2026-09-30** (64 tuples, then the 12 `RangeDatePicker` tuples of kickoff §20.5; 893 archived). **Still owed,** one live check after the deploy: block a user with an end date, unblock them with the status select alone and save, and create one test user. | none (893 archived; post-deploy check) |
 | **O84-1** | After 885 deploys: in `en` and `sq`, open `/admin/permissions` (audit log), `/admin/users/<id>` (change log) and `/cabinet` (`Member since`), and read one email-change security notice. Every time reads `HH:MM` in 24 hours, and every `en` numeric date is day-first. | 885 closure |
 | **O84-3** | Task 892's `OWNER VISUAL QA REQUIRED` matrix (kickoff §13.3, 14 tuples); after the deploy, toggle one permission and read the audit log. | 892 approval |
-| **O84-4** | Task 896's matrix: **accepted in full 2026-10-01** (12 tuples; 896 archived). **Still owed,** one live check after the deploy: read `/admin/users` at phone and desktop width; at 320 in `uk` judge whether the count wrapped to two lines beside "New user" is acceptable (896 kickoff §16.4 N1); open "New user". | none (896 archived; post-deploy check) |
+| **O84-4** | Task 896's matrix: **accepted in full 2026-10-01** (12 tuples; 896 archived). Phone read done 2026-10-01: at 320 `uk` the count and "New user" share one row; opening "New user" surfaced Task 914. **Still owed:** read `/admin/users` at desktop width. | none (896 archived; post-deploy check) |
 | **O84-5** | Task 894's matrix (kickoff §13.3, 30 tuples); after the deploy, reply to and close one test inquiry. | 894 approval |
 | **O84-6** | Task 895's matrix (kickoff §13.3, 64 tuples); after the deploy, the live checks on a **test** account listed there (never the self-delete on a real account). | 895 approval |
 | **O84-8** | **Answered 2026-09-30, option A** (owner verbatim: *"O84-8: варіант A, виправляємо в 893"*): the status-only save fix is kickoff §17.3 R17, in 893 revision 1. | none (carried by 893 revision 1) |
+| **O84-9** | Task 914's matrix (kickoff §13.3, 18 tuples); after the deploy, read `/admin/users/new` and one `/admin/users/<id>` at 320 and at desktop width. | 914 approval |
 | **O84-7** | Decision: confirm that Sprint 70's reserved **789** (the cabinet listings filter bar) is folded into **895** and never re-issued. 895 migrates that bar either way (clause 16d). | registry bookkeeping only |
 
 ## Exit criteria

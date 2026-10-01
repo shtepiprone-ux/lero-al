@@ -1,8 +1,8 @@
 # Task 890 — `/admin` rebuilt to the owner's references: an accent hero, queue KPIs with mini-charts, the platform activity chart, new listings and new users, and listings by city
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
-(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 3, 2026-10-01. The executor starts at
-§18 (revision 3), not §10, §16 or §17.**
+(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 4, 2026-10-01. The executor starts at
+§19 (revision 4), not §10 or §16–§18.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
@@ -683,3 +683,87 @@ Re-entry mode: **remediation**. Keep `evidence/task890/`, `rev1/` and `rev2/`, a
 §13.4 and §16.6 stand. Add two checks:
 - `Patterns/Mantine/DashboardGrid` → `Default` at 1234 (the owner's screenshot width), with a gap on all four sides;
 - live `/cabinet/statistics` at 1280, where the page title now has a top gap.
+
+## 19. Review 4 — `NEEDS REVISION` (2026-10-01) · Revision 4
+
+Reviewed: revision 3 (`MantineDashboardGrid.tsx` 57cd9902, matching `rev3/final-hash.txt`; `evidence/task890/rev3/`).
+
+### 19.1 Verified — no executor action
+
+- **G3 / AC18.** The root `Box` sets `p={{ base: 'md', md: 'xl' }}` and no other padding prop, and the doc comment cites
+  `docs/tailadmin-style-reference.md:531-536`.
+- **AC19.** `rev3/four-sides.txt` covers 28 exports × 320/390/1024/1440, and no side is at 0.
+- **AC20.** `rev3/live/live-gap.out.txt` gives `/admin` gaps of 16 at 390 and 24 at 1280. `live-gap-cabinet.out.txt`
+  gives `/en/cabinet/statistics` (AGENT1 session) 16 and 24. The admin-session cabinet rows were redirected to
+  `/en/cabinet` and are correctly discarded. `rev3/start.log` has none of the three strings. All 10 gates exit 0.
+- **Owner visual review.** The owner, verbatim (2026-10-01, after revision 3): *"Візуально підтверджую, що тепер все
+  ок."* This records §13.4, §16.6 and §18.6 as **accepted**.
+
+### 19.2 Finding to fix
+
+| ID | Sev | Finding | Correction |
+|---|---|---|---|
+| **G4** | P2 | `src/stories/patterns/mantine/DashboardCard.stories.tsx` renders the changed grid (`Fill`, `:93`), so GR-3d puts the whole Story in this task's scope. Its other three exports write their own gutter: `Default` `<SimpleGrid … p="md">` (`:24`), and `Loading` (`:71`) and `Error` (`:132`) `<Box p="md" maw={theme.other!.boxSize!.emptyState}>`. They measure 16 at every width instead of the profile's 24/32, and `maw` is a fixed-width container (GR-3b), with the right side at 46px at 390 (`rev3/four-sides.txt:52`). §18.4 wrongly said "measured, not edited". That was an orchestrator defect; the executor followed it and flagged the problem. The Task 909 gate would not catch this, because 16 is its floor. | §19.3 step 2. |
+
+### 19.3 Revision 4 — one route, in this order
+
+Re-entry mode: **remediation**. Write new artifacts to `evidence/task890/rev4/`. The only file you edit is
+`DashboardCard.stories.tsx`, plus the session log and the 890 backlog line.
+
+1. **I0.** Record the platform line, `git status --porcelain` → `rev4/i0-status.txt`, and the hash of
+   `DashboardCard.stories.tsx`.
+2. **G4.** `MantineDashboardCard` has no page gutter of its own (a card's padding is not a page gutter), so the
+   Story adds the full profile:
+   - `Default`: wrap the `SimpleGrid` in `<StoryPageGutter>` and delete its `p="md"`;
+   - `Loading` and `Error`: replace `<Box p="md" maw={…emptyState}>` with `<StoryPageGutter>`;
+   - leave `Fill` unchanged, because the grid carries its own four sides;
+   - drop `Box` and `theme` from the imports if nothing else uses them, and import `StoryPageGutter` from
+     `@/stories/_StoryPageGutter`.
+   Add no other padding, width, `style` or viewport pin.
+3. **Probe.** `npm.cmd run build-storybook`, then run `rev3/four-sides-probe.mjs` (or
+   `docs/sessions/evidence/task890/review3/edge-audit-v2.mjs` with the four ids) for the four `DashboardCard` exports at
+   320/390/1024/1440 `en` → `rev4/four-sides.txt`. Pass condition:
+   - `Default`, `Loading`, `Error`: top 24; left/right 16/16/32/32; no side under 16;
+   - `Fill`: unchanged from `rev3/four-sides.txt`.
+4. **Receipts.** One four-side `GR-3d STORY GUTTER CHECK`, plus `GR-3b` and `GR-3c`, per `DashboardCard` export.
+5. **Gates**, into `rev4/` with exit codes. Write evidence without a BOM (Node, or
+   `[IO.File]::WriteAllText` with `UTF8Encoding $false`). Do not use PowerShell 5.1 `>` or `Out-File`.
+
+   ```powershell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   node.exe -p "process.platform + ' ' + process.version"
+   npx.cmd eslint src/stories/patterns/mantine/DashboardCard.stories.tsx
+   npm.cmd run typecheck
+   npm.cmd run check:stories
+   npm.cmd run check:story-coverage
+   npm.cmd run check:design-tokens:strict
+   npm.cmd run build-storybook
+   npm.cmd run build
+   npm.cmd run check:file-integrity
+   npm.cmd run check:mojibake
+   git --no-optional-locks grep -n -E "<Box|maw=|[^a-zA-Z](p|px|py)=" -- src/stories/patterns/mantine/DashboardCard.stories.tsx
+   git --no-optional-locks hash-object src/stories/patterns/mantine/DashboardCard.stories.tsx
+   ```
+
+   Expected: every command exits 0, except the `git grep`, which prints nothing (and so exits 1).
+6. **Records.** Add a revision 4 section and a Files Changed row to the session log. Set the 890 backlog line to
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 4)`.
+
+### 19.4 Acceptance criteria added by revision 4
+
+- **AC21 [G4]** — Given `DashboardCard.stories.tsx`, when the §19.3 step 5 `git grep` runs, then it prints nothing;
+  and `rev4/four-sides.txt` shows `Default`/`Loading`/`Error` at top 24 and left/right 16/16/32/32, with `Fill`
+  unchanged.
+
+`GR-4 AC AUDIT — 1 added criterion; it states an observable property; absolutes: the empty grep on one named file (a correct Story writes no padding or width).`
+
+### 19.5 Evidence the reviewer owns
+
+`check:locale-leak:mantine-only` was started by the reviewer on 2026-10-01 →
+`docs/sessions/evidence/task890/review4-locale-leak.txt`. Revision 4 adds no visible text, so that run covers it. The
+executor does not run it.
+
+### 19.6 Owner visual review
+
+Only `Patterns/Mantine/DashboardCard` → `Default`, `Loading` and `Error`, at 390 and 1234 `en`: a gap on all four sides
+and the cards at full width of the page column.

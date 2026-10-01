@@ -1,8 +1,8 @@
 # Task 890 — `/admin` rebuilt to the owner's references: an accent hero, queue KPIs with mini-charts, the platform activity chart, new listings and new users, and listings by city
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
-(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 1, 2026-09-30. The executor starts at
-§16 (revision 1), not §10.**
+(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 2, 2026-10-01. The executor starts at
+§17 (revision 2), not §10 or §16.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
@@ -479,3 +479,101 @@ Re-entry mode: **remediation**. Keep every artifact in `evidence/task890/`. Writ
 `GR-0 CANONICAL REUSE PREFLIGHT — request: dashboard row column cap / wide rung; semantic queries: "TopRow", "cols", "SimpleGrid", "dashboard grid"; inspected candidates: src/design-system/mantine/patterns/MantineDashboardGrid.tsx (TopRow/Split/Full) + Patterns/Mantine/DashboardGrid; decision: EXTEND; selected canonical owner: MantineDashboardGridTopRow; Mantine/TailAdmin token path: SimpleGrid cols + the grid's existing spacing; new hardcoded visual values: NONE; rationale: the row's column ladder is the pattern's own contract, and the production shell width needs a later wide rung.`
 
 `GR-3a STORY PREFLIGHT — MantineDashboardGridTopRow × maxColumns/wideFrom; canonical candidates: patterns-mantine-dashboardgrid; direct-import evidence: src/stories/patterns/mantine/DashboardGrid.stories.tsx; toolbar coverage: locale=toolbar, viewport=toolbar; decision: EXTEND; target: Patterns/Mantine/DashboardGrid; rationale: new props of the existing canonical pattern.`
+
+## 17. Review 2 — `NEEDS REVISION` (2026-10-01) · Revision 2
+
+Reviewed: the working-tree diff (14 modified and 4 new paths), the session log's revision 1 section, and
+`docs/sessions/evidence/task890/rev1/`. Every file hash in `rev1/final-hashes.txt` equals the working tree (plus
+`scripts/check-locale-leak.mjs` 4f1f3438), and `rev1/build.txt` and the probes postdate the last source edit.
+
+### 17.1 Verified — no executor action
+
+- **F1 / AC12.** Row 1 has `wideFrom="xl"` (`AdminDashboardView.tsx:306`), and row 4 has `maxColumns={2}` (`:529`). The
+  Story probe gives 356×2 at 1024, 230×4 at 1280 and 270×4 at 1440, with no clipped work-list or KPI text in any of
+  the 10 exports × 6 widths × `en`/`uk` (`rev1/after-admindashboard.txt`). Live `/admin` gives the same widths, with an
+  empty clipped list at 1024/1280/1440 `en`, 1024 `uk` and 390 `uk` (`rev1/live/live-probe.out.txt`).
+- **F2 / AC14.** `?period=7d` has 7 activity and 7 trend labels, and `bogus` has 30. The row-1 sparklines are identical
+  across periods (`live/sparkline-compare.txt`). `rev1/start.log` contains neither 791 string and no `[AdminTrends]`.
+- **F3 / AC15**, except the locale-leak quote (§17.3). Lint has 0 errors. `check:enrolled-tailwind` exits 0, and the
+  baseline diff is remove-only (`h-full` 5→3, `w-full` 4→2). Every other §13.2 command exits 0.
+- **F4.** `census-final.txt` has 23 nodes, all tier 1. **F5 / AC13:** the blast-radius rows are unchanged.
+- **First Load JS:** 429 kB → 469 kB (`rev1/build.txt:116`).
+
+### 17.2 Deviations accepted (no executor action)
+
+- **`scripts/check-locale-leak.mjs`**, which adds `'patterns-mantine-admindashboardview': ['Footer']`. It is a direct
+  consequence of §16.3 step 4 (the Story renders inside `AdminShell`). It is the same key and reasoning as the
+  existing `adminshell` and `adminsidebar` entries, and `messages/{sq,it}.json:777` `item_footer` = `"Footer"`.
+  `isPerStoryAllowlisted` (`:232`) prefix-matches the story id. This file is now in scope.
+- **`MantineDashboardStatRows` count `Group` `flex="0 0 auto"`.** The blast-radius comparison shows no change in other
+  consumers.
+- **The stale-caption `Badge` clips 8px at 320 `en`** (`MantineDashboardCard.tsx:101-106`; also on the approved
+  `AgentStatisticsView`). This predates 890 and is a pattern visual decision, so it is **filed as 908** (P3,
+  `docs/backlog-reserved.md`). Do not touch `MantineDashboardCard` in this task.
+
+### 17.3 Findings to fix
+
+| ID | Sev | Finding | Correction |
+|---|---|---|---|
+| **G1** | P2 | `src/stories/patterns/mantine/DashboardGrid.stories.tsx` is changed by this task, and all three of its exports write a gutter in the Story: `<Box py="md">` at `:44` (`Default`), `:113` (`MaxColumns`) and `:132` (`DeferredFourUp`). GR-3d forbids `py` on a `Box` in `render` for any new or changed Story. Owner decision **D78-10** (2026-10-01, `docs/golden-rules.md` GR-3d → "Dashboard page container") exempts the grid from `StoryPageGutter`, because its own root carries the gutter (`MantineDashboardGrid.tsx:56`). The `Box` must still go. | §17.4 step 2. |
+| **G2** | P2 | §16.3 step 4 required GR-3b/3c/3d receipts **per Story**. The session log gives them only for `AdminDashboardView`. None exist for the two changed Story files (`DashboardGrid`, `DashboardStatRows`) or for the blast-radius `AgentStatisticsView`, although `rev1/after-blast.txt` holds most of the measurements. | §17.4 step 4. |
+
+The `check:locale-leak:mantine-only` re-run (about 2 hours) is owed by the **owner**, not the executor. It is listed in
+the review's owner actions. Revision 2 adds no visible text, so that run covers this revision.
+
+### 17.4 Revision 2 — one route, in this order
+
+Re-entry mode: **remediation**. Keep `evidence/task890/` and `rev1/`, and write new artifacts to
+`evidence/task890/rev2/`. Do not touch any file except `DashboardGrid.stories.tsx`, the session log and the 890 backlog
+line.
+
+1. **I0.** Record the platform line, `git status --porcelain` → `rev2/i0-status.txt`, and the hash of
+   `DashboardGrid.stories.tsx`.
+2. **G1.** In `DashboardGrid.stories.tsx`, remove the `<Box py="md">` wrapper and its closing tag from `Default`,
+   `MaxColumns` and `DeferredFourUp`, so each `render` returns `<MantineDashboardGrid>` directly. Drop `Box` from the
+   `@mantine/core` import if nothing else uses it. Add no `StoryPageGutter`, padding, width, `style` or viewport pin.
+   Update the file's GR-3d comment, or add one, to cite D78-10 and `MantineDashboardGrid.tsx:56`.
+3. **Probe.** `npm.cmd run build-storybook`. Then reuse `rev1/probe-rev1.mjs`'s method for the three `DashboardGrid`
+   exports at 320/390/768/1024/1280/1440, in `en` and `uk`, into `rev2/after-dashboardgrid.txt`. Pass condition: no page
+   overflow; the edge gap is 16/16/24/24 at 320/390/1024/1440; the row-1 widths equal `rev1/after-blast.txt` for the
+   same id and width in `en`.
+4. **Receipts (G2)**, in the session log, one line per Story **id**:
+   - `GR-3b`, `GR-3c` and `GR-3d` for each `DashboardGrid` export, from `rev2/after-dashboardgrid.txt`. The GR-3d line
+     reads `n/a: View carries the page gutter (MantineDashboardGrid.tsx:56, D78-10)`.
+   - `GR-3b`, `GR-3c` and `GR-3d` for each `DashboardStatRows` export (`StoryPageGutter yes`) and each
+     `AgentStatisticsView` export (its View-gutter exemption, citing the line that sets it). Take these from
+     `rev1/after-blast.txt`; neither file changes in this revision.
+5. **Gates**, into `rev2/` with exit codes:
+
+   ```powershell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   node.exe -p "process.platform + ' ' + process.version"
+   npm.cmd run typecheck
+   npx.cmd eslint src/stories/patterns/mantine/DashboardGrid.stories.tsx
+   npm.cmd run check:stories
+   npm.cmd run check:story-coverage
+   npm.cmd run check:design-tokens:strict
+   npm.cmd run build-storybook
+   npm.cmd run build
+   npm.cmd run check:file-integrity
+   npm.cmd run check:mojibake
+   git --no-optional-locks grep -n -E "<Box|[^a-zA-Z](p|px|py)=" -- src/stories/patterns/mantine/DashboardGrid.stories.tsx
+   git --no-optional-locks hash-object src/stories/patterns/mantine/DashboardGrid.stories.tsx
+   ```
+
+   Expected: every command exits 0, except the `git grep`, which prints nothing (and so exits 1).
+6. **Records.** Add a revision 2 section and a Files Changed row to the session log. Set the 890 backlog line to
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 2)`.
+
+### 17.5 Acceptance criteria added by revision 2
+
+- **AC16 [G1]** — Given `DashboardGrid.stories.tsx`, when the §17.4 step 5 `git grep` runs, then it prints nothing; and
+  the three exports measure a 16/16/24/24 edge gap with row-1 widths equal to `rev1/after-blast.txt`.
+- **AC17 [G2]** — Given the session log, when read, then it has a GR-3b, GR-3c and GR-3d receipt for every
+  `DashboardGrid`, `DashboardStatRows` and `AgentStatisticsView` Story id, each citing its probe file.
+
+`GR-4 AC AUDIT — 2 added criteria; each states an observable property; absolutes: AC16's empty grep on one named file (a correct Story writes no Box padding).`
+
+### 17.6 Owner visual review
+
+§13.4 and §16.6 stand. They are handed to the owner after the revision 2 review, together with the locale-leak quote.

@@ -281,6 +281,14 @@ no `StoryPageGutter` only when **all** of the following are true:
 A View that fails any condition is not exempt, and it is wrapped as usual. The exemption never allows a gutter to be
 written in a Story.
 
+**Dashboard page container. Owner decision 2026-10-01 (Task 890 review 2, Sprint 78 D78-10), verbatim option chosen:**
+*"Виняток для Grid (Recommended)"* — the option was: *"Видалити `Box py="md"` з усіх трьох експортів. Grid — це
+кореневий контейнер сторінки обох dashboard View, тому на нього поширюється виняток O83-3 «View carries the page
+gutter» з receipt на MantineDashboardGrid.tsx:56."* So a Story that renders `MantineDashboardGrid`
+(`src/design-system/mantine/patterns/MantineDashboardGrid.tsx`, root `Box px={{ base: 'md', md: 'xl' }}`) as its page
+content counts as condition 1's page-level View. Conditions 2 and 3 still apply, and the Story still adds no wrapper,
+padding or `style` object. The receipt reads `n/a: View carries the page gutter (MantineDashboardGrid.tsx:56, D78-10)`.
+
 **Forbidden in any new or changed Story:**
 - page content with no edge gutter (full bleed);
 - a gutter written in the Story itself: `p`, `px` or `py` on a `Box`/`Stack`/`Group` in `decorators` or `render`, a

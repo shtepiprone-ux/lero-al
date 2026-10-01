@@ -1,0 +1,93 @@
+PLANT P3 file=src/components/admin/ReportDetailDialogView.tsx
+hash before=d30c5bd530c6489d29a9a921a3166879825731af
+hash planted=0b5346db320123057521e99d3536033d8a2e718c
+hash after restore=d30c5bd530c6489d29a9a921a3166879825731af
+EXIT_CODE=1
+----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx (14 tests | 1 failed) 1485ms
+     × both caps false → no status Select, no Reopen, no Delete 77ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  19:41:43
+   Duration  5.55s (transform 608ms, setup 85ms, import 3.07s, tests 1.49s, environment 692ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx > AdminReportsManager — Task 463 capability controls > both caps false → no status Select, no Reopen, no Delete
+AssertionError: expected <button …(7)>…(1)</button> to be falsy
+
+- Expected:
+false
+
++ Received:
+<button
+  class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root __m__-_r_kt_"
+  data-size="sm"
+  data-testid="delete-btn"
+  data-variant="subtle"
+  data-with-left-section="true"
+  style="min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: transparent; --button-hover: var(--mantine-color-red-light-hover); --button-color: var(--mantine-color-red-light-color); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+  type="button"
+>
+  <span
+    class="m_80f1301b mantine-Button-inner"
+    style="width: 100%; height: auto;"
+  >
+    <span
+      class="m_a74036a mantine-Button-section"
+      data-position="left"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-trash2 lucide-trash-2"
+        fill="none"
+        height="14"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 11v6"
+        />
+        <path
+          d="M14 11v6"
+        />
+        <path
+          d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+        />
+        <path
+          d="M3 6h18"
+        />
+        <path
+          d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+        />
+      </svg>
+    </span>
+    <span
+      class="m_811560b9 mantine-Button-label"
+      style="white-space: normal; overflow: visible; word-break: normal; overflow-wrap: break-word;"
+    >
+      Delete
+    </span>
+  </span>
+</button>
+
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx:238:56
+    236|     expect(within(dialog).queryByTestId('status-override-section')).to…
+    237|     expect(within(dialog).queryByTestId('reopen-btn')).toBeFalsy()
+    238|     expect(within(dialog).queryByTestId('delete-btn')).toBeFalsy()
+       |                                                        ^
+    239|   })
+    240|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

@@ -120,6 +120,8 @@
   "src/components/admin/AdminCurrencyTabs.tsx",
   "src/components/admin/AdminPagesView.tsx",
   "src/components/admin/PageEditorDialogView.tsx",
+  "src/components/admin/AdminReportsView.tsx",
+  "src/components/admin/ReportDetailDialogView.tsx",
   "src/design-system/mantine/patterns/MantineRichTextEditor.tsx",
   "src/components/admin/AdminUserProfileView.tsx",
   "src/components/admin/AdminUserProfileDialogsView.tsx",

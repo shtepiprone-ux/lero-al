@@ -1,0 +1,32 @@
+PLANT P2 file=src/components/admin/AdminReportsManager.tsx
+hash before=5e7997087c1e4e02495abb4c52b730f695188a45
+hash planted=35420fd5dc2ac77a7e6cc6216124fd0780f07ba7
+hash after restore=5e7997087c1e4e02495abb4c52b730f695188a45
+EXIT_CODE=1
+----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx (14 tests | 1 failed) 1929ms
+     × T2 — clicking the Reviewed tab calls router.replace with status=reviewed and keeps other params 48ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  18:55:28
+   Duration  7.01s (transform 794ms, setup 96ms, import 3.93s, tests 1.93s, environment 789ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx > AdminReportsManager — Task 858 URL filter > T2 — clicking the Reviewed tab calls router.replace with status=reviewed and keeps other params
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx:342:31
+    340|     await clickTab(/^Reviewed/)
+    341|
+    342|     expect(mockRouterReplace).toHaveBeenCalledTimes(1)
+       |                               ^
+    343|     const [url, options] = mockRouterReplace.mock.calls[0]
+    344|     const parsed = new URL(url as string, 'http://localhost')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

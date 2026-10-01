@@ -1,17 +1,39 @@
+/**
+ * AdminReportsManager — RTL smoke test (migrated by Task 858; originals Task 461/462/463)
+ *
+ * Renders the REAL container (`AdminReportsManager` → `AdminReportsView` / `ReportDetailDialog` →
+ * `ReportDetailDialogView`) on `MantineProvider` + the project theme with the real `en` messages. Only the
+ * server actions, the toast and `next/navigation` are mocked — there are no `@/components/ui/*` stand-ins.
+ *
+ * The 11 original assertions keep their names and expectations:
+ *   owner row ×4 · capability controls ×5 (caps true, caps false, delete confirm, cancel, Esc) · forbidden toasts ×2.
+ * Task 858 adds the URL filter:
+ *   T1 — `initialFilter="resolved"` shows only resolved rows with the Resolved tab selected.
+ *   T2 — clicking the Reviewed tab calls `router.replace` with `status=reviewed` and keeps another param.
+ *   T3 — `parseReportStatusParam` maps bogus / undefined / array values to `pending`, each valid value to itself.
+ *
+ * Planted-violation proofs (transcripts in docs/sessions/evidence/task858/):
+ *   P1 — the container ignores `initialFilter` → T1 fails.
+ *   P2 — a tab change uses `setFilter` only → T2 fails.
+ *   P3 — the View renders Delete without `canDeleteReports` → "both caps false → no status Select, no Reopen, no Delete" fails.
+ */
+
 import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, fireEvent, act } from '@testing-library/react'
-import type { ReportRow } from '../AdminReportsManager'
+import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react'
+import { NextIntlClientProvider } from 'next-intl'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import messages from '../../../../messages/en.json'
+import type { ReportStatusFilter } from '../reportStatusFilter'
+import { parseReportStatusParam } from '../reportStatusFilter'
+import { AdminReportsManager, type ReportRow } from '../AdminReportsManager'
 
 const mockUpdateReportStatus = vi.fn()
 const mockDeleteReport = vi.fn()
 vi.mock('@/modules/listings/actions/reportListing', () => ({
   updateReportStatusAction: (...args: unknown[]) => mockUpdateReportStatus(...args),
   deleteReportAction: (...args: unknown[]) => mockDeleteReport(...args),
-}))
-
-vi.mock('next-intl', () => ({
-  useTranslations: () => (key: string) => key,
 }))
 
 const mockToastSuccess = vi.fn()
@@ -23,84 +45,47 @@ vi.mock('@/lib/toast', () => ({
   },
 }))
 
-vi.mock('lucide-react', () => ({
-  ExternalLink: () => React.createElement('span', null, 'ext'),
-  Loader2: () => React.createElement('span', null, 'loading'),
-  Flag: () => React.createElement('span', null, 'flag'),
-  Trash2: () => React.createElement('span', null, 'trash'),
-  RotateCcw: () => React.createElement('span', null, 'reopen'),
-}))
-
-vi.mock('@/lib/utils', () => ({
-  cn: (...classes: unknown[]) => classes.filter(Boolean).join(' '),
-}))
-
-vi.mock('@/components/ui/dialog', () => ({
-  Dialog: ({ open, children }: { open: boolean; children: React.ReactNode }) =>
-    open ? React.createElement('div', { 'data-testid': 'report-dialog' }, children) : null,
-  DialogContent: ({ children, ...props }: { children: React.ReactNode; [k: string]: unknown }) =>
-    React.createElement('div', props, children),
-  DialogHeader: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', null, children),
-  DialogTitle: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', null, children),
-  DialogDescription: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('p', null, children),
-  DialogFooter: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', { 'data-testid': 'dialog-footer' }, children),
-}))
-
-vi.mock('@/components/ui/select', () => ({
-  Select: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', { 'data-testid': 'status-select' }, children),
-  SelectContent: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', null, children),
-  SelectItem: ({ children, value }: { children: React.ReactNode; value: string }) =>
-    React.createElement('option', { value }, children),
-  SelectTrigger: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('div', null, children),
-  SelectValue: () => React.createElement('span', null, 'value'),
-}))
-
-vi.mock('@/components/ui/button', () => ({
-  Button: ({ onClick, children, disabled, ...rest }: { onClick?: () => void; children?: React.ReactNode; disabled?: boolean; [k: string]: unknown }) =>
-    React.createElement('button', { onClick, disabled, ...rest }, children),
-}))
-
-vi.mock('@/components/ui/badge', () => ({
-  Badge: ({ children }: { children?: React.ReactNode }) =>
-    React.createElement('span', { 'data-testid': 'badge' }, children),
-}))
-
-vi.mock('@/components/ui/label', () => ({
-  Label: ({ children }: { children: React.ReactNode }) =>
-    React.createElement('label', null, children),
-}))
-
-vi.mock('@/components/ui/textarea', () => ({
-  Textarea: (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) =>
-    React.createElement('textarea', props),
-}))
-
-vi.mock('@/components/shared/RelativeTime', () => ({
-  RelativeTime: ({ date }: { date: string }) =>
-    React.createElement('span', null, date),
-}))
-
-vi.mock('next/link', () => ({
-  default: ({ href, children, ...props }: { href: string; children: React.ReactNode; [k: string]: unknown }) =>
-    React.createElement('a', { href, ...props }, children),
-}))
-
 const mockRouterRefresh = vi.fn()
+const mockRouterReplace = vi.fn()
+let mockSearchParams = new URLSearchParams()
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ refresh: mockRouterRefresh, push: vi.fn(), replace: vi.fn(), back: vi.fn(), forward: vi.fn(), prefetch: vi.fn() }),
+  useRouter: () => ({ refresh: mockRouterRefresh, push: vi.fn(), replace: mockRouterReplace, back: vi.fn(), forward: vi.fn(), prefetch: vi.fn() }),
   usePathname: () => '/admin/reports',
-  useSearchParams: () => new URLSearchParams(),
+  useSearchParams: () => mockSearchParams,
 }))
 
-beforeEach(() => { vi.clearAllMocks(); mockUpdateReportStatus.mockResolvedValue({}); mockDeleteReport.mockResolvedValue({}) })
+const t = messages.admin.reports
+const tc = messages.common
 
+beforeEach(() => {
+  vi.clearAllMocks()
+  mockSearchParams = new URLSearchParams()
+  mockUpdateReportStatus.mockResolvedValue({})
+  mockDeleteReport.mockResolvedValue({})
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  )
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  )
+})
+
+// Fixture data (labelled).
 const BASE_REPORT: ReportRow = {
   id: 'r-1',
   listing_id: 'l-1',
@@ -118,37 +103,61 @@ const BASE_REPORT: ReportRow = {
   reporter: { id: 'u-reporter', name: 'Reporter Person' },
 }
 
+interface ManagerProps {
+  reports: ReportRow[]
+  canOverrideReportStatus?: boolean
+  canDeleteReports?: boolean
+  initialFilter?: ReportStatusFilter
+}
+
+function renderManager({ reports, canOverrideReportStatus = false, canDeleteReports = false, initialFilter }: ManagerProps) {
+  return render(
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminReportsManager
+          reports={reports}
+          locale="uk"
+          canOverrideReportStatus={canOverrideReportStatus}
+          canDeleteReports={canDeleteReports}
+          initialFilter={initialFilter}
+        />
+      </MantineProvider>
+    </NextIntlClientProvider>,
+  )
+}
+
+const rows = (container: HTMLElement) => container.querySelectorAll('tbody tr')
+
+async function openFirstRow(container: HTMLElement) {
+  await act(async () => { fireEvent.click(rows(container)[0]) })
+  return screen.findByRole('dialog', { name: t.detail_title })
+}
+
+async function clickTab(name: RegExp) {
+  await act(async () => { fireEvent.click(screen.getByRole('tab', { name })) })
+}
+
 describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge removal)', () => {
   it('owner present → shows owner name + profile link, no badge/profile_types text', async () => {
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, { reports: [BASE_REPORT], locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false }),
-    )
+    const { container } = renderManager({ reports: [BASE_REPORT] })
 
-    const rows = container.querySelectorAll('tbody tr')
-    expect(rows.length).toBeGreaterThan(0)
-    await act(async () => { fireEvent.click(rows[0]) })
-
-    const dialog = container.querySelector('[data-testid="report-dialog"]')
-    expect(dialog).not.toBeNull()
-    const text = dialog!.textContent ?? ''
+    expect(rows(container).length).toBeGreaterThan(0)
+    const dialog = await openFirstRow(container)
+    const text = dialog.textContent ?? ''
 
     expect(text).toContain('Owner Person')
-    expect(text).toContain('col_owner')
-    expect(text).toContain('open_profile')
+    expect(text).toContain(t.col_owner)
+    expect(text).toContain(t.open_profile)
 
-    const profileLink = Array.from(dialog!.querySelectorAll('a')).find(
-      a => a.textContent?.includes('open_profile'),
-    )
-    expect(profileLink).toBeTruthy()
-    expect(profileLink!.getAttribute('href')).toBe('/admin/users/u-owner')
+    const profileLink = within(dialog).getByRole('link', { name: t.open_profile })
+    expect(profileLink.getAttribute('href')).toBe('/admin/users/u-owner')
 
     // Task 462: no profile_types raw key anywhere in the dialog
     expect(text).not.toMatch(/profile_types/)
 
     // Reporter row still distinct
     expect(text).toContain('Reporter Person')
-    expect(text).toContain('col_reporter')
+    expect(text).toContain(t.col_reporter)
   })
 
   it('owner with unknown user_type → no crash, no raw key, profile link present', async () => {
@@ -161,23 +170,15 @@ describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge rem
         owner: { id: 'u-owner', name: 'Mystery User', user_type: 'bogus_value' },
       },
     }
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, { reports: [report], locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false }),
-    )
+    const { container } = renderManager({ reports: [report] })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
-    const text = dialog.textContent ?? ''
+    const dialog = await openFirstRow(container)
 
     // No raw profile_types key for any user_type
-    expect(text).not.toMatch(/profile_types/)
+    expect(dialog.textContent).not.toMatch(/profile_types/)
 
-    const profileLink = Array.from(dialog.querySelectorAll('a')).find(
-      a => a.textContent?.includes('open_profile'),
-    )
-    expect(profileLink).toBeTruthy()
-    expect(profileLink!.getAttribute('href')).toBe('/admin/users/u-owner')
+    const profileLink = within(dialog).getByRole('link', { name: t.open_profile })
+    expect(profileLink.getAttribute('href')).toBe('/admin/users/u-owner')
   })
 
   it('owner null (deleted) → shows owner_not_found fallback, no profile link', async () => {
@@ -185,32 +186,20 @@ describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge rem
       ...BASE_REPORT,
       listing: { id: 'l-1', title: 'Test', slug: 'test', owner: null },
     }
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, { reports: [report], locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false }),
-    )
+    const { container } = renderManager({ reports: [report] })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
-    const text = dialog.textContent ?? ''
+    const dialog = await openFirstRow(container)
 
-    expect(text).toContain('owner_not_found')
-    const profileLink = Array.from(dialog.querySelectorAll('a')).find(
-      a => a.textContent?.includes('open_profile'),
-    )
-    expect(profileLink).toBeFalsy()
+    expect(dialog.textContent).toContain(t.owner_not_found)
+    expect(within(dialog).queryByRole('link', { name: t.open_profile })).toBeNull()
   })
 
   it('listing null → shows owner fallback, no crash', async () => {
     const report: ReportRow = { ...BASE_REPORT, listing: null }
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, { reports: [report], locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false }),
-    )
+    const { container } = renderManager({ reports: [report] })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
-    expect(dialog.textContent).toContain('owner_not_found')
+    const dialog = await openFirstRow(container)
+    expect(dialog.textContent).toContain(t.owner_not_found)
   })
 })
 
@@ -219,70 +208,48 @@ describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge rem
 const RESOLVED_REPORT: ReportRow = { ...BASE_REPORT, status: 'resolved' as const }
 
 describe('AdminReportsManager — Task 463 capability controls', () => {
-  function clickFilterTab(container: HTMLElement, filterKey: string) {
-    const tabs = Array.from(container.querySelectorAll('button'))
-    const tab = tabs.find(b => b.textContent?.includes(filterKey))
-    if (tab) fireEvent.click(tab)
-  }
-
   it('both caps true → status Select + Reopen + Delete render', async () => {
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [RESOLVED_REPORT], locale: 'uk',
-        canOverrideReportStatus: true, canDeleteReports: true,
-      }),
-    )
+    const { container } = renderManager({
+      reports: [RESOLVED_REPORT],
+      canOverrideReportStatus: true,
+      canDeleteReports: true,
+    })
 
-    await act(async () => { clickFilterTab(container, 'filter_resolved') })
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
+    await clickTab(/^Resolved/)
+    const dialog = await openFirstRow(container)
 
-    expect(dialog.querySelector('[data-testid="status-override-section"]')).toBeTruthy()
-    expect(dialog.querySelector('[data-testid="reopen-btn"]')).toBeTruthy()
-    expect(dialog.querySelector('[data-testid="delete-btn"]')).toBeTruthy()
+    expect(within(dialog).queryByTestId('status-override-section')).toBeTruthy()
+    expect(within(dialog).queryByTestId('reopen-btn')).toBeTruthy()
+    expect(within(dialog).queryByTestId('delete-btn')).toBeTruthy()
   })
 
   it('both caps false → no status Select, no Reopen, no Delete', async () => {
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [RESOLVED_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: false,
-      }),
-    )
+    const { container } = renderManager({
+      reports: [RESOLVED_REPORT],
+      canOverrideReportStatus: false,
+      canDeleteReports: false,
+    })
 
-    await act(async () => { clickFilterTab(container, 'filter_resolved') })
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
+    await clickTab(/^Resolved/)
+    const dialog = await openFirstRow(container)
 
-    expect(dialog.querySelector('[data-testid="status-override-section"]')).toBeFalsy()
-    expect(dialog.querySelector('[data-testid="reopen-btn"]')).toBeFalsy()
-    expect(dialog.querySelector('[data-testid="delete-btn"]')).toBeFalsy()
+    expect(within(dialog).queryByTestId('status-override-section')).toBeFalsy()
+    expect(within(dialog).queryByTestId('reopen-btn')).toBeFalsy()
+    expect(within(dialog).queryByTestId('delete-btn')).toBeFalsy()
   })
 
   it('delete confirm dialog gates delete; confirm removes report from list without full reload', async () => {
-    mockRouterRefresh.mockClear()
+    const { container } = renderManager({ reports: [BASE_REPORT], canDeleteReports: true })
 
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [BASE_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: true,
-      }),
-    )
+    const dialog = await openFirstRow(container)
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
-    const dialog = container.querySelector('[data-testid="report-dialog"]')!
-
-    const deleteBtn = dialog.querySelector('[data-testid="delete-btn"]') as HTMLButtonElement
+    const deleteBtn = within(dialog).getByTestId('delete-btn')
     expect(deleteBtn).toBeTruthy()
     await act(async () => { fireEvent.click(deleteBtn) })
 
-    const confirmDialog = container.querySelector('[data-testid="delete-confirm-dialog"]')
-    expect(confirmDialog).toBeTruthy()
-
-    const confirmBtn = confirmDialog!.querySelector('[data-testid="confirm-delete-btn"]') as HTMLButtonElement
+    await screen.findByTestId('delete-confirm-dialog')
+    const confirmModal = await screen.findByRole('dialog', { name: t.confirm_delete_title })
+    const confirmBtn = within(confirmModal).getByTestId('confirm-delete-btn')
     expect(confirmBtn).toBeTruthy()
     await act(async () => { fireEvent.click(confirmBtn) })
 
@@ -292,114 +259,105 @@ describe('AdminReportsManager — Task 463 capability controls', () => {
     expect(mockRouterRefresh).not.toHaveBeenCalled()
 
     // Report removed from list via local state
-    expect(container.querySelectorAll('tbody tr').length).toBe(0)
+    await waitFor(() => expect(rows(container).length).toBe(0))
   })
 
   it('delete confirm cancel → report still present', async () => {
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [BASE_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: true,
-      }),
-    )
+    const { container } = renderManager({ reports: [BASE_REPORT], canDeleteReports: true })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
+    const dialog = await openFirstRow(container)
+    await act(async () => { fireEvent.click(within(dialog).getByTestId('delete-btn')) })
 
-    const deleteBtn = container.querySelector('[data-testid="delete-btn"]') as HTMLButtonElement
-    await act(async () => { fireEvent.click(deleteBtn) })
+    await screen.findByTestId('delete-confirm-dialog')
+    const confirmModal = await screen.findByRole('dialog', { name: t.confirm_delete_title })
+    await act(async () => { fireEvent.click(within(confirmModal).getByRole('button', { name: tc.cancel })) })
 
-    const confirmDialog = container.querySelector('[data-testid="delete-confirm-dialog"]')
-    expect(confirmDialog).toBeTruthy()
-
-    // Find the cancel button (non-destructive button in the footer)
-    const footer = confirmDialog!.querySelector('[data-testid="dialog-footer"]')!
-    const cancelBtn = Array.from(footer.querySelectorAll('button')).find(
-      b => b.textContent?.includes('cancel'),
-    )
-    expect(cancelBtn).toBeTruthy()
-    await act(async () => { fireEvent.click(cancelBtn!) })
-
+    await waitFor(() => expect(screen.queryByTestId('delete-confirm-dialog')).toBeNull())
     expect(mockDeleteReport).not.toHaveBeenCalled()
-    expect(container.querySelectorAll('tbody tr').length).toBe(1)
+    expect(rows(container).length).toBe(1)
   })
 
   it('delete confirm Esc / backdrop close → report still present, no delete', async () => {
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [BASE_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: true,
-      }),
-    )
+    const { container } = renderManager({ reports: [BASE_REPORT], canDeleteReports: true })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
+    const dialog = await openFirstRow(container)
+    await act(async () => { fireEvent.click(within(dialog).getByTestId('delete-btn')) })
 
-    const deleteBtn = container.querySelector('[data-testid="delete-btn"]') as HTMLButtonElement
-    await act(async () => { fireEvent.click(deleteBtn) })
+    const confirmDialog = await screen.findByTestId('delete-confirm-dialog')
+    // Mantine closes the modal on Escape from inside its content.
+    await act(async () => { fireEvent.keyDown(confirmDialog, { key: 'Escape' }) })
 
-    const confirmDialog = container.querySelector('[data-testid="delete-confirm-dialog"]')
-    expect(confirmDialog).toBeTruthy()
-
-    // Simulate Dialog onOpenChange(false) — Esc/backdrop triggers this
-    const dialogRoot = confirmDialog!.closest('[data-testid="report-dialog"]')
-    expect(dialogRoot).toBeTruthy()
-
-    // The inner Dialog's onOpenChange={open => { if (!open) setShowDeleteConfirm(false) }}
-    // fires when user presses Esc or clicks backdrop. Simulate by directly triggering
-    // the cancel (which uses the same handler) since jsdom doesn't fire real Esc events.
-    const footer = confirmDialog!.querySelector('[data-testid="dialog-footer"]')!
-    const cancelBtn = Array.from(footer.querySelectorAll('button')).find(
-      b => b.textContent?.includes('cancel'),
-    )
-    await act(async () => { fireEvent.click(cancelBtn!) })
-
+    await waitFor(() => expect(screen.queryByTestId('delete-confirm-dialog')).toBeNull())
     expect(mockDeleteReport).not.toHaveBeenCalled()
-    expect(container.querySelectorAll('tbody tr').length).toBe(1)
+    expect(rows(container).length).toBe(1)
   })
 
   // R13: typed error toasts — status update forbidden → error_forbidden
   it('status update forbidden → error_forbidden toast', async () => {
     mockUpdateReportStatus.mockResolvedValue({ error: 'forbidden' })
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [BASE_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: false,
-      }),
-    )
+    const { container } = renderManager({ reports: [BASE_REPORT] })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
+    const dialog = await openFirstRow(container)
 
     // Click the resolve quick-action button (calls handleAction('resolved'))
-    const resolveBtn = Array.from(container.querySelectorAll('button')).find(
-      b => b.textContent?.includes('action_resolve'),
-    )
-    expect(resolveBtn).toBeTruthy()
-    await act(async () => { fireEvent.click(resolveBtn!) })
+    await act(async () => { fireEvent.click(within(dialog).getByRole('button', { name: t.action_resolve })) })
 
-    expect(mockToastError).toHaveBeenCalledWith('error_forbidden')
+    expect(mockToastError).toHaveBeenCalledWith(t.error_forbidden)
   })
 
   // R13: typed error toasts — delete forbidden → error_forbidden
   it('delete forbidden → error_forbidden toast', async () => {
     mockDeleteReport.mockResolvedValue({ error: 'forbidden' })
-    const { AdminReportsManager } = await import('../AdminReportsManager')
-    const { container } = render(
-      React.createElement(AdminReportsManager, {
-        reports: [BASE_REPORT], locale: 'uk',
-        canOverrideReportStatus: false, canDeleteReports: true,
-      }),
-    )
+    const { container } = renderManager({ reports: [BASE_REPORT], canDeleteReports: true })
 
-    await act(async () => { fireEvent.click(container.querySelectorAll('tbody tr')[0]) })
+    const dialog = await openFirstRow(container)
+    await act(async () => { fireEvent.click(within(dialog).getByTestId('delete-btn')) })
 
-    const deleteBtn = container.querySelector('[data-testid="delete-btn"]') as HTMLButtonElement
-    await act(async () => { fireEvent.click(deleteBtn) })
+    await screen.findByTestId('delete-confirm-dialog')
+    const confirmModal = await screen.findByRole('dialog', { name: t.confirm_delete_title })
+    await act(async () => { fireEvent.click(within(confirmModal).getByTestId('confirm-delete-btn')) })
 
-    const confirmBtn = container.querySelector('[data-testid="confirm-delete-btn"]') as HTMLButtonElement
-    await act(async () => { fireEvent.click(confirmBtn) })
+    expect(mockToastError).toHaveBeenCalledWith(t.error_forbidden)
+  })
+})
 
-    expect(mockToastError).toHaveBeenCalledWith('error_forbidden')
+// ── Task 858 — `?status=` URL filter (T1–T3) ────────────────────────────────
+
+describe('AdminReportsManager — Task 858 URL filter', () => {
+  const PENDING: ReportRow = { ...BASE_REPORT, id: 'r-pending' }
+  const RESOLVED: ReportRow = { ...BASE_REPORT, id: 'r-resolved', status: 'resolved' }
+
+  it('T1 — initialFilter="resolved" shows only resolved rows with the Resolved tab selected', () => {
+    const { container } = renderManager({ reports: [PENDING, RESOLVED], initialFilter: 'resolved' })
+
+    expect(screen.getByRole('tab', { name: /^Resolved/ }).getAttribute('aria-selected')).toBe('true')
+    expect(screen.getByRole('tab', { name: /^Pending/ }).getAttribute('aria-selected')).toBe('false')
+    expect(rows(container).length).toBe(1)
+    expect(within(rows(container)[0] as HTMLElement).getByText(t.status_resolved)).toBeTruthy()
+  })
+
+  it('T2 — clicking the Reviewed tab calls router.replace with status=reviewed and keeps other params', async () => {
+    mockSearchParams = new URLSearchParams('foo=bar&status=pending')
+    renderManager({ reports: [PENDING, RESOLVED] })
+
+    await clickTab(/^Reviewed/)
+
+    expect(mockRouterReplace).toHaveBeenCalledTimes(1)
+    const [url, options] = mockRouterReplace.mock.calls[0]
+    const parsed = new URL(url as string, 'http://localhost')
+    expect(parsed.pathname).toBe('/admin/reports')
+    expect(parsed.searchParams.get('status')).toBe('reviewed')
+    expect(parsed.searchParams.get('foo')).toBe('bar')
+    expect(options).toEqual({ scroll: false })
+  })
+
+  it('T3 — parseReportStatusParam: unknown / missing / array → pending, each valid value → itself', () => {
+    expect(parseReportStatusParam('bogus')).toBe('pending')
+    expect(parseReportStatusParam(undefined)).toBe('pending')
+    expect(parseReportStatusParam(['a', 'b'])).toBe('pending')
+    expect(parseReportStatusParam(['resolved', 'all'])).toBe('pending')
+    for (const v of ['all', 'pending', 'reviewed', 'resolved', 'dismissed'] as const) {
+      expect(parseReportStatusParam(v)).toBe(v)
+    }
   })
 })

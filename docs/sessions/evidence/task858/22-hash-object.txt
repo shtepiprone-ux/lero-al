@@ -1,0 +1,16 @@
+e42a071e25aecb3af7bf8cc98657add92da5483b  src/app/admin/reports/page.tsx
+5e7997087c1e4e02495abb4c52b730f695188a45  src/components/admin/AdminReportsManager.tsx
+dcebc16113bc085df49da32697a017d738c47946  src/components/admin/ReportDetailDialog.tsx
+995c91ae32c9c92c684256257411bb157b600f6e  src/components/admin/AdminReportsView.tsx
+af86f8e2f80be77b553d5ed63c3485af8118f1d5  src/components/admin/ReportDetailDialogView.tsx
+454481642c3d34a19869f39678342269e9cf89df  src/components/admin/reportStatusFilter.ts
+4d5d127e3253a89e25f38a931a09fbb8af1ed75b  src/stories/patterns/mantine/AdminReportsView.stories.tsx
+c574e15dbbc11cc43712fb14123964501c2a076f  src/stories/patterns/mantine/ReportDetailDialogView.stories.tsx
+7273025083eb53cda023cad9db3d0a3d3e692207  src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx
+3fdf0d6a7d5270c53af667c2a41a679aa92bf133  scripts/mantine-migration-scope.json
+25779ec7d729d8b45fdcd54b4b902db47870211a  scripts/story-coverage-exempt.json
+12e2ccfdebb47cc43aa556e18a0f7e99d1cfea3a  scripts/surface-census-baseline.json
+a400f247956dae9fce63a8537e17d8a72d66c359  scripts/check-stories-rendered.mjs
+9e468264d76e9e86e2d611df92f3b5c9fd8f748c  scripts/i18n-dynamic-manifest.json
+e72cedfe1fb1922a3e658afa68a7690e2ac178df  docs/critical-flow-registry.md
+2b34d92029a0a10f6b1900779ebc92f0b0f6ae00  docs/backlog.md

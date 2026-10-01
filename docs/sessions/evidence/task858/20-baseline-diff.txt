@@ -1,0 +1,30 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index 56422a924..12e2ccfde 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -565,23 +565,8 @@
+     "src/app/admin/reports/page.tsx :: src/components/admin/AdminReportsManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/select.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/reports/page.tsx :: src/components/ui/textarea.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
++    "src/app/admin/reports/page.tsx :: src/components/admin/ReportDetailDialog.tsx :: tier1-unenrolled-or-unstoried": {
++      "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/admin/settings/page.tsx :: src/app/admin/settings/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"

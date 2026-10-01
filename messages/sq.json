@@ -1222,7 +1222,9 @@
       "confirm_delete_body": "Ky raport dhe historiku i auditimit do të fshihen përgjithmonë. Ky veprim nuk mund të kthehet.",
       "col_owner": "Pronari i njoftimit",
       "owner_not_found": "Pronari nuk u gjet",
-      "open_profile": "Hap profilin"
+      "open_profile": "Hap profilin",
+      "comment_label": "Komenti i raportuesit",
+      "section_moderation": "Moderimi"
     },
     "companies": {
       "add_title": "Shto kompani",

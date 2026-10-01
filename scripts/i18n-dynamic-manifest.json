@@ -75,14 +75,21 @@
     },
     {
       "id": "admin-reports-status",
-      "site": "src/components/admin/AdminReportsManager.tsx:96",
+      "site": "src/components/admin/AdminReportsView.tsx:34",
       "namespace": "admin.reports",
       "keys": ["status_pending", "status_reviewed", "status_resolved", "status_dismissed"],
-      "note": "ReportStatus — audit §2 sites #13, 15."
+      "note": "ReportStatus — audit §2 sites #13, 15 (list badge). Task 858: moved to the View; the dialog's own badge and select are the admin-reports-status-dialog entry."
+    },
+    {
+      "id": "admin-reports-status-dialog",
+      "site": "src/components/admin/ReportDetailDialogView.tsx:93",
+      "namespace": "admin.reports",
+      "keys": ["status_pending", "status_reviewed", "status_resolved", "status_dismissed"],
+      "note": "ReportStatus — status override select items and the dialog badge (:195) (Task 858)."
     },
     {
       "id": "admin-reports-filter",
-      "site": "src/components/admin/AdminReportsManager.tsx:253",
+      "site": "src/components/admin/AdminReportsView.tsx:88",
       "namespace": "admin.reports",
       "keys": ["filter_pending", "filter_reviewed", "filter_resolved", "filter_dismissed"],
       "note": "FILTERS — audit §2 site #14; 'all' branch uses static filter_all (deliberately excluded)."

@@ -1,0 +1,8 @@
+d30c5bd530c6489d29a9a921a3166879825731af  src/components/admin/ReportDetailDialogView.tsx
+b6d12bb8e0439bcbef05e6710f46f83ecc050b98  src/stories/patterns/mantine/ReportDetailDialogView.stories.tsx
+6af72f66bf9609d078bc2b3fd1567debabade692  messages/en.json
+0374c14fc5e60c5e9bb7144b5e0e42bf2fedba8e  messages/uk.json
+8cbfb47652dfd4652c7e6b8888973b8d848cdb15  messages/sq.json
+7b45bb3e58d1fff495b88f43d19afb3fa56b997b  messages/it.json
+285e3b54bd4a13fb9badfa9dee521198af6da3da  scripts/i18n-dynamic-manifest.json
+3ad4326d27ab48c34e97d519292dce6f344ad4ab  src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx

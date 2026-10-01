@@ -1222,7 +1222,9 @@
       "confirm_delete_body": "Questa segnalazione e il suo registro di audit verranno eliminati definitivamente. Questa azione non può essere annullata.",
       "col_owner": "Proprietario dell'annuncio",
       "owner_not_found": "Proprietario non trovato",
-      "open_profile": "Apri profilo"
+      "open_profile": "Apri profilo",
+      "comment_label": "Commento del segnalatore",
+      "section_moderation": "Moderazione"
     },
     "companies": {
       "add_title": "Aggiungi azienda",

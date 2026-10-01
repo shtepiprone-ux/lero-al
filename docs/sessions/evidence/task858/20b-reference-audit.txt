@@ -1,0 +1,25 @@
+docs/reviews/artifacts/2026-08-12-task691R/transcripts/build-storybook-round3.txt:7759:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/Admin
+docs/reviews/artifacts/2026-08-13-task695/step9-after-storybook-build.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsM
+docs/reviews/artifacts/2026-08-14-task741/REVISION1-build-storybook-FINAL.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminRepo
+docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/iframe-BWqC60Cj.js:1:const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./AdminC
+docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/iframe-BWqC60Cj.js:1011:  `,document.head.appendChild(a),(l=(s=o.querySelector(".sb-nav
+docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/index.json:1:{"v":5,"entries":{"admin-admincardlist--docs":{"id":"admin-admincardlist--docs","
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-A.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsManag
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-B.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsManag
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-POST-PLANT-B-clean.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminR
+tasks/Epics/Epic_BB_kickoff_prompt_Task_461_AdminReportOwnerVisibility.md:323:`AdminReportsManager.stories.tsx:76,82,88` use `globals: { locale: 'uk', … }`. T
+tasks/Epics/Epic_BB_kickoff_prompt_Task_461_AdminReportOwnerVisibility.md:347:### 🟢 Nit — unused `canvas` in `openDialog` (`AdminReportsManager.stories.tsx
+tasks/Epics/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md:29:- `src/components/admin/AdminReportsManager.stories.tsx`
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:23:> rows for `admin-adminreportsmanager--full-management/terminal-reopen/delete-confir
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:153:**Required stories — `src/components/admin/AdminReportsManager.stories.tsx`** (`t
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:157:| `FullManagement_Mobile320/375/390` | `admin-adminreportsmanager--full-management-
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:158:| `TerminalReopen_Mobile320/375/390` | `admin-adminreportsmanager--terminal-reopen-
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:159:| `DeleteConfirm_Mobile320/375/390` | `admin-adminreportsmanager--delete-confirm-mo
+tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md:182:**Allowed:** `src/components/admin/AdminReportsManager.tsx`; `src/modules/listings/
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_858_Admin_Reports_Status_Landing_On_Mantine.md:75:- Legacy Story `src/components/admin/AdminReportsManager.stories.t
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_858_Admin_Reports_Status_Landing_On_Mantine.md:77:- `scripts/check-stories-rendered.mjs:213-218` — five entries `a
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_858_Admin_Reports_Status_Landing_On_Mantine.md:131:3. new `src/stories/patterns/mantine/AdminReportsView.stories.tsx
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_858_Admin_Reports_Status_Landing_On_Mantine.md:202:- **AC5 [R8]** Given the tree, then the legacy Story is gone and 
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_858_Admin_Reports_Status_Landing_On_Mantine.md:255:git --no-optional-locks grep --untracked -n -E "admin-adminreport
+tasks/kickoff_prompt_Task_468_StorybookStoryDedup_CanonicalGrouping_BlockingGate.md:149:8. Task 463 RM behavior preserved — diff shows only `*.stories.{ts,tsx
+EXIT_CODE=0

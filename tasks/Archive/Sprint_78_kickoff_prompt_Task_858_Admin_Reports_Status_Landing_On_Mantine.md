@@ -2,10 +2,9 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Report listing") · no task dependency (877's adapters have landed; 858 does not render `AdminTable` today) · owner
-action **O78-11** · **Status: 🔁 `NEEDS REVISION` 2026-10-01 — owner returned `ReportDetailDialogView` at O78-11;
-revision 1 = §17 (the executor starts there). `AdminReportsView` accepted at 390/1440.**
+action **O78-11** · **Status: ✅ `APPROVED WITH NOTES` 2026-10-01, review 3 — owner accepted every O78-11 tuple (§19); archived.**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6). Precedents, read-only: **877** (container/View split, `AdminTable` and `AdminPageHeader`
 adapters, page wrapper) and **868** (`MantineModal` confirms).
 
@@ -495,8 +494,8 @@ No body text may render at 16px or above (the title is not body).
   - cells 1–2 share a top, and cells 3–4 share a top (±1px);
   - the two column widths are equal (±1px);
   - each value's left edge equals its caption's left edge (±1px).
-- **AC10 [R15]** In those three stories plus `OwnerMissing`, every visible `button` other than the modal close and
-  the `MantineSelect` input is a descendant of `[data-testid="report-dialog-footer"]`. At 1440, the end group's last
+- **AC10 [R15]** In those three stories plus `OwnerMissing`, every visible `button` other than the modal close, the
+  `MantineSelect` input and R14's `action_apply` inside `status-override-section` (corrected by review 2, §18) is a descendant of `[data-testid="report-dialog-footer"]`. At 1440, the end group's last
   button's right edge and the footer's right edge are equal (±1px). At 390, every footer button's width equals the
   footer width (±1px), and the first button in visual order is resolve (`Pending`) or reopen (`TerminalReopen`).
 - **AC11 [R11–R13, 17.4]** At 320, 390 and 1440, `getComputedStyle().fontSize` of every body text node is 12 or 14,
@@ -561,6 +560,56 @@ command exits 0. Then:
 | ~~`Patterns/Mantine/AdminReportsView` `Default` × `en`, `it` × 1024~~ | accepted by the owner 2026-10-01 (§17.1) | — | — | 0 |
 
 The reviewer measures AC9–AC12 and GR-3b/3c before handing this matrix to the owner.
+
+## 18. Review 2 — revision 1 — 2026-10-01 — `PARTIALLY VERIFIED`
+
+Opus inspected `ReportDetailDialogView.tsx` (hash `d30c5bd5…`, equal to `rev1/21-hash-object.txt`), the four
+`messages/*.json` diffs (two keys each), the Story fixture date (`2026-01-15`) and the `rev1/` gate transcripts. The
+gates are all exit 0 except the census, which shows the three calibration FAIL lines. The builds ran after the last
+source edit. Plant P3 ran on the final hash and was restored to an equal hash. The independent native re-run gave
+tests 52/52, and AC13's grep finds `report_comment_label` 0 times and `comment_label` once.
+
+The reviewer's Chromium measurement covered `Pending`, `FullManagement`, `TerminalReopen`, `OwnerMissing`,
+`DeleteConfirm` and `Saving` at 320/1024 (en) and 390/1440 (sq, uk), 36 runs in all:
+- **AC9 true in all 36 runs.**
+- **AC10:** no action outside the footer, with Apply excepted per R14. The last button is right-aligned at every
+  width. Below 640, every button is footer-wide, with Resolve or Reopen first. Every button is 44px tall, including
+  the owner's "open profile".
+- **AC11:** body text is 12 or 14 only, and the date is 14. The title is 16 on desktop and 14 in the bottom sheet,
+  per the `MantineModal` contract.
+- **AC12:** one `Divider`, the labelled one.
+- No page overflow and no horizontal scroll inside the dialog. The dialog is 320/390 full-width below 640 and 440px
+  from 1024. GR-3d: overlay-only.
+
+**Kickoff defect corrected:** AC10 required every button except the close and the Select input to sit in the footer,
+which contradicted R14 (Apply stays beside the Select). AC10 now excludes R14's Apply. The executor kept R14
+correctly.
+
+**Accepted:** three delete-confirm tests now find the confirm's buttons through
+`findByRole('dialog', { name: 'Delete report?' })`. AC14 allows this because the buttons moved to the modal footer,
+outside `delete-confirm-dialog`. Test names are unchanged.
+
+**Open:** O78-11 revision-1 matrix (§17.8), 16 tuples:
+`ReportDetailDialogView` `Pending`, `FullManagement`, `TerminalReopen`, `DeleteConfirm` × sq/uk × 390/1440.
+If the owner accepts, Opus approves and archives. If the owner returns any tuple, that is a revision.
+
+## 19. Review 3 — 2026-10-01 — ✅ `APPROVED WITH NOTES`
+
+The owner accepted the O78-11 revision-1 matrix on 2026-10-01, verbatim: `ReportDetailDialogView` `Pending`,
+`FullManagement`, `TerminalReopen`, `DeleteConfirm` × sq/uk × 390/1440 — *"приймаю"*. With §17.1, every O78-11 tuple
+is accepted:
+- `AdminReportsView`: 14 tuples;
+- `ReportDetailDialogView`: 16 tuples.
+
+The evidence is unchanged since review 2: the `ReportDetailDialogView.tsx` hash is still `d30c5bd5…`.
+
+**Notes (non-blocking):**
+- Each tab click re-runs the server page (`router.replace`, R2): one 200-row query per click.
+- The census counts a Story's `import type` as a Story import, which is why `AdminReportsManager` shows
+  `story:yes`. The census still FAILs it on `manifest:no`.
+
+**Open, outside this task:** the after-deploy half of O78-11 stays an open Sprint 78 owner item: the ADM-02 card lands
+on `?status=pending`, and resolving one test report works.
 
 ## Appendix D — the reserved-registry row, moved verbatim (2026-09-29)
 

@@ -1,0 +1,36 @@
+PLANT P1 file=src/components/admin/AdminReportsManager.tsx
+hash before=5e7997087c1e4e02495abb4c52b730f695188a45
+hash planted=f97ee1420c2b9f7cea2e42c4dc08681c8c320d62
+hash after restore=5e7997087c1e4e02495abb4c52b730f695188a45
+EXIT_CODE=1
+----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx (14 tests | 1 failed) 1922ms
+     × T1 — initialFilter="resolved" shows only resolved rows with the Resolved tab selected 40ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  18:55:20
+   Duration  6.98s (transform 783ms, setup 96ms, import 3.89s, tests 1.92s, environment 805ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx > AdminReportsManager — Task 858 URL filter > T1 — initialFilter="resolved" shows only resolved rows with the Resolved tab selected
+AssertionError: expected 'false' to be 'true' // Object.is equality
+
+Expected: "true"
+Received: "false"
+
+ ❯ src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx:330:90
+    328|     const { container } = renderManager({ reports: [PENDING, RESOLVED]…
+    329|
+    330|     expect(screen.getByRole('tab', { name: /^Resolved/ }).getAttribute…
+       |                                                                                          ^
+    331|     expect(screen.getByRole('tab', { name: /^Pending/ }).getAttribute(…
+    332|     expect(rows(container).length).toBe(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

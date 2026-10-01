@@ -1,0 +1,1256 @@
+[
+ {
+  "id": "pending",
+  "w": 320,
+  "locale": "en",
+  "vw": 320,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 320,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Resolve"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "pending",
+  "w": 390,
+  "locale": "sq",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Zgjidh"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "pending",
+  "w": 390,
+  "locale": "uk",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Вирішити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "pending",
+  "w": 1024,
+  "locale": "en",
+  "vw": 1024,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Mark as reviewing"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "pending",
+  "w": 1440,
+  "locale": "sq",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Shëno si në shqyrtim"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "pending",
+  "w": 1440,
+  "locale": "uk",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Взяти на розгляд"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 320,
+  "locale": "en",
+  "vw": 320,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 320,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apply"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Resolve"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 390,
+  "locale": "sq",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apliko"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Zgjidh"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 390,
+  "locale": "uk",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Застосувати"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Вирішити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 1024,
+  "locale": "en",
+  "vw": 1024,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apply"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Delete"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 1440,
+  "locale": "sq",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apliko"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Fshi"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "full-management",
+  "w": 1440,
+  "locale": "uk",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Застосувати"
+   ],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Видалити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 320,
+  "locale": "en",
+  "vw": 320,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 320,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apply"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": "outline",
+    "testid": "reopen-btn",
+    "text": "Reopen"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 390,
+  "locale": "sq",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apliko"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": "outline",
+    "testid": "reopen-btn",
+    "text": "Rihap"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 390,
+  "locale": "uk",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Застосувати"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": "outline",
+    "testid": "reopen-btn",
+    "text": "Повторно відкрити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 1024,
+  "locale": "en",
+  "vw": 1024,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apply"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Delete"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 1440,
+  "locale": "sq",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Apliko"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Fshi"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "terminal-reopen",
+  "w": 1440,
+  "locale": "uk",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [
+    "Застосувати"
+   ],
+   "footerButtons": 2,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Видалити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 320,
+  "locale": "en",
+  "vw": 320,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 320,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Resolve"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 390,
+  "locale": "sq",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Zgjidh"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 390,
+  "locale": "uk",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Вирішити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 1024,
+  "locale": "en",
+  "vw": 1024,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Mark as reviewing"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 1440,
+  "locale": "sq",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Shëno si në shqyrtim"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "owner-missing",
+  "w": 1440,
+  "locale": "uk",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 1,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 3,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "default",
+    "testid": null,
+    "text": "Взяти на розгляд"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 320,
+  "locale": "en",
+  "vw": 320,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 320,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Resolve"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 390,
+  "locale": "sq",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Zgjidh"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 390,
+  "locale": "uk",
+  "vw": 390,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 390,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": true,
+   "firstVisual": {
+    "variant": null,
+    "testid": null,
+    "text": "Вирішити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 1024,
+  "locale": "en",
+  "vw": 1024,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Delete"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 1440,
+  "locale": "sq",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Fshi"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ },
+ {
+  "id": "delete-confirm",
+  "w": 1440,
+  "locale": "uk",
+  "vw": 1440,
+  "pageOverflow": false,
+  "dialogs": 2,
+  "dialogW": 440,
+  "dialogOverflow": false,
+  "ac9": {
+   "cells": 4,
+   "rowTop12": true,
+   "rowTop34": true,
+   "equalCols": true,
+   "valueLeftEqCaption": true
+  },
+  "ac10": {
+   "buttonsOutsideFooter": [],
+   "footerButtons": 4,
+   "lastRightEdgeDelta": 0,
+   "allFullWidth": false,
+   "firstVisual": {
+    "variant": "subtle",
+    "testid": "delete-btn",
+    "text": "Видалити"
+   }
+  },
+  "title": 16,
+  "bodySizes": [
+   12,
+   14
+  ],
+  "dateValue": 14,
+  "ac12": {
+   "lastIsModeration": true,
+   "lastIsComment": false,
+   "dividers": 1,
+   "labelledDividers": 1,
+   "dividerLabelSize": 12
+  }
+ }
+]

@@ -1222,7 +1222,9 @@
       "confirm_delete_body": "This report and its audit history will be permanently deleted. This action cannot be undone.",
       "col_owner": "Listing owner",
       "owner_not_found": "Owner not found",
-      "open_profile": "Open profile"
+      "open_profile": "Open profile",
+      "comment_label": "Reporter's comment",
+      "section_moderation": "Moderation"
     },
     "companies": {
       "add_title": "Add company",

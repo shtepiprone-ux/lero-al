@@ -210,12 +210,12 @@ const ASSERT_STORIES = [
   { id: 'auth-verifiedpage--error-state',          label: 'VerifiedPage/ErrorState',          anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
   { id: 'auth-verifiedpage--sync-fail',            label: 'VerifiedPage/SyncFail',            anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
   { id: 'auth-verifiedpage--locale-stress',        label: 'VerifiedPage/LocaleStress',        anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
-  // ── Task 468 — AdminReportsManager canonical scenarios (5, dedup: 9→5) ──
-  { id: 'admin-adminreportsmanager--default',         label: 'AdminReportsManager/Default',       anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }] },
-  { id: 'admin-adminreportsmanager--dialog-owner-row', label: 'AdminReportsManager/DialogOwnerRow', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'slot', value: 'dialog-content', label: 'dialog-open' }, { type: 'selector', value: 'a[href*="u-owner"]', label: 'owner-link' }] },
-  { id: 'admin-adminreportsmanager--full-management', label: 'AdminReportsManager/FullManagement', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'status-override-section', label: 'status-override' }] },
-  { id: 'admin-adminreportsmanager--terminal-reopen', label: 'AdminReportsManager/TerminalReopen', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
-  { id: 'admin-adminreportsmanager--delete-confirm',  label: 'AdminReportsManager/DeleteConfirm',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
+  // ── Task 468/858 — /admin/reports Views (AdminReportsView + ReportDetailDialogView, 5) ──
+  { id: 'patterns-mantine-adminreportsview--default', label: 'AdminReportsView/Default', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }] },
+  { id: 'patterns-mantine-reportdetaildialogview--pending', label: 'ReportDetailDialogView/Pending', anchors: [{ type: 'selector', value: 'a[href*="u-owner"]', label: 'owner-link' }] },
+  { id: 'patterns-mantine-reportdetaildialogview--full-management', label: 'ReportDetailDialogView/FullManagement', anchors: [{ type: 'testid', value: 'status-override-section', label: 'status-override' }] },
+  { id: 'patterns-mantine-reportdetaildialogview--terminal-reopen', label: 'ReportDetailDialogView/TerminalReopen', anchors: [{ type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
+  { id: 'patterns-mantine-reportdetaildialogview--delete-confirm', label: 'ReportDetailDialogView/DeleteConfirm', anchors: [{ type: 'testid', value: 'delete-confirm-dialog', label: 'delete-confirm' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
   // ── Task 464/468 — AdminPermissionsManager (1, dedup: 4→1) ──
   { id: 'admin-adminpermissionsmanager--default',     label: 'AdminPermissionsManager/Default',    anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
   // ── Planted visual violations (14 — Task 467 + R1/R2 + C2/R4 + Task 569 clip-awareness) ──

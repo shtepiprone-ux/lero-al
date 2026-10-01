@@ -9,7 +9,6 @@
   "src/components/admin/AdminPagesManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminPermissionsManager.tsx": "complex admin manager; requires live Supabase role/permission data + auth session; no safe mock",
   "src/components/admin/AdminPopularLocationsManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
-  "src/components/admin/AdminReportsManager.tsx": "complex admin manager; requires live Supabase analytics data + auth session; no safe mock",
   "src/components/admin/AdminSearchInput.tsx": "thin admin-scoped search Input; one-off wrapper used only in AdminTable toolbar; no standalone reuse",
   "src/components/admin/AdminShell.tsx": "top-level admin layout shell; requires auth session + router — one-off page wrapper with no reuse potential",
   "src/components/admin/AdminUserCreate.tsx": "complex admin form; requires live Supabase mutation + auth session; no safe mock",

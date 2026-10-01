@@ -1,0 +1,18 @@
+ M docs/backlog.md
+ M docs/critical-flow-registry.md
+ M scripts/check-stories-rendered.mjs
+ M scripts/i18n-dynamic-manifest.json
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/reports/page.tsx
+ D src/components/admin/AdminReportsManager.stories.tsx
+ M src/components/admin/AdminReportsManager.tsx
+ M src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx
+?? docs/sessions/evidence/task858/
+?? src/components/admin/AdminReportsView.tsx
+?? src/components/admin/ReportDetailDialog.tsx
+?? src/components/admin/ReportDetailDialogView.tsx
+?? src/components/admin/reportStatusFilter.ts
+?? src/stories/patterns/mantine/AdminReportsView.stories.tsx
+?? src/stories/patterns/mantine/ReportDetailDialogView.stories.tsx

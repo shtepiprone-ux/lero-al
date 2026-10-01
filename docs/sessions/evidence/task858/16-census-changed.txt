@@ -1,0 +1,32 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 96a63538b8d168c4d860f43cb49fe4aea700fef3
+    Changed paths seen: 9
+    Excluded (7):
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/i18n-dynamic-manifest.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/story-coverage-exempt.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx  [story-or-test-file]
+      src/components/admin/AdminReportsManager.stories.tsx  [deleted]
+    Included surfaces (1):
+      src/app/admin/reports/page.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 1
+    Blocks baselined (recorded debt, does not fail): 3
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 367
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

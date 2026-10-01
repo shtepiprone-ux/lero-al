@@ -1,13 +1,26 @@
 import { getTranslations } from 'next-intl/server'
+import { Box } from '@mantine/core'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { hasPermission } from '@/lib/auth/permissions'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminReportsManager, type ReportRow } from '@/components/admin/AdminReportsManager'
+import { parseReportStatusParam } from '@/components/admin/reportStatusFilter'
+import { theme } from '@/design-system/mantine/theme'
 
 export const metadata = { title: 'Reports — Admin' }
 
-export default async function AdminReportsPage() {
+// Server Component: the width token is read straight from the theme object (same precedent as
+// `src/app/admin/currency/page.tsx`); `!` because `createTheme()`'s return type is deep-partial.
+const layout = theme.other!.layout!
+
+export default async function AdminReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  const sp = await searchParams
+  const initialFilter = parseReportStatusParam(sp.status)
   const locale = await getAdminLocale()
   const t = await getTranslations('admin.pages')
 
@@ -28,7 +41,7 @@ export default async function AdminReportsPage() {
     .limit(200)
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <Box p={{ base: 'xl', lg: '2xl' }} maw={layout.adminPageMaxWidth} mx="auto">
       <AdminPageHeader
         title={t('reports_title')}
         subtitle={t('reports_subtitle', { count: count ?? 0 })}
@@ -38,7 +51,8 @@ export default async function AdminReportsPage() {
         locale={locale}
         canOverrideReportStatus={canOverrideReportStatus}
         canDeleteReports={canDeleteReports}
+        initialFilter={initialFilter}
       />
-    </div>
+    </Box>
   )
 }

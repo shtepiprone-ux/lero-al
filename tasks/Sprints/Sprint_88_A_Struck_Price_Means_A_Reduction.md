@@ -27,13 +27,14 @@ Two price renderers strike a price through for a reason other than a reduction:
 ## Goal
 
 A price is struck through on any listing surface **only** when the owner's previous price is strictly higher than
-the current price. The converted-currency disclosure is a plain informational line.
+the current price, and the contact card shows that struck old price too (D88-1). The converted-currency disclosure is a
+plain informational line.
 
 ## Decisions
 
 | ID | Question | Owner answer (verbatim) | Binding consequence |
 |---|---|---|---|
-| **D88-1** | (2026-10-01) Should the contact card show the reduced old price? Changing it needs `ListingDetailView.tsx` and `ListingContact.tsx`, whose censuses carry unmigrated nodes (clause 16d). | *"так, має показувати стару ціну, якщо вона була вищою за актуальну."* · layout: *"є актуальна ціна (червоним кольором, основна ціна), а нижче маленьким шрифтом має показуватись стара ціна, якщо вона була вищою. Оригінальну ціну треба показувати на насутпному рядку після зниженої ціни(оригінальна ціна - це ціна, у валюті якої було створено оголошення!)!"* · routing: *"так додай ці зміни у саму останню задачу у лланцюжку змін картки контактів"* | The contact card's three-line price block (current · struck old price only when `price_old > price` · original-currency price, plain) goes to **795**, the last open task in the contact-card chain (Sprint 71 order 793 → 795). Recorded on 795's row in `docs/backlog-reserved.md` and in Sprint 71's Tasks table. **912** keeps only the wrong-strikethrough removal and the `ListingCard` predicate. |
+| **D88-1** | (2026-10-01) Should the contact card show the reduced old price? Changing it needs `ListingDetailView.tsx` and `ListingContact.tsx`, whose censuses carry unmigrated nodes (clause 16d). | *"так, має показувати стару ціну, якщо вона була вищою за актуальну."* · layout: *"є актуальна ціна (червоним кольором, основна ціна), а нижче маленьким шрифтом має показуватись стара ціна, якщо вона була вищою. Оригінальну ціну треба показувати на насутпному рядку після зниженої ціни(оригінальна ціна - це ціна, у валюті якої було створено оголошення!)!"* · routing: *"так додай ці зміни у саму останню задачу у лланцюжку змін картки контактів"* | The contact card's three-line price block — current price (brand, main) · old price small and struck, **only when `price_old > price`** · original-currency price on the next line, plain — is built in **912**, the latest task in the contact-card chain. *Corrected 2026-10-01:* the first recording routed it to 795 (commit `5c9a9119f`); the owner rejected that reading the same day (*"Я сказав, що стара ціна має бути перечеркнута, якщо вона була вищою за актуальну"*). **Clause 16d scope of the routing instruction:** it was given in answer to the explanation that the pass-through edits to `ListingDetailView.tsx` and `ListingContact.tsx` reach 13 unmigrated nodes owned by other tasks. 912 therefore adds one prop to each file and migrates none of those nodes. Each node is listed in 912 §3.1 with its owner; the five with no open owner are filed as **913**. |
 
 ## Goal-fit (why no open sprint takes this)
 
@@ -50,7 +51,7 @@ The Tasks table is the single state source.
 
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through`; `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `KICKOFF FILED` → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
+| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `KICKOFF FILED` → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
 
 ## Execution order
 

@@ -126,5 +126,6 @@
   "src/design-system/mantine/patterns/MantineRichTextEditor.tsx",
   "src/components/admin/AdminUserProfileView.tsx",
   "src/components/admin/AdminUserProfileDialogsView.tsx",
-  "src/components/admin/AdminUserAvatarFieldView.tsx"
+  "src/components/admin/AdminUserAvatarFieldView.tsx",
+  "src/components/admin/AdminPermissionsView.tsx"
 ]

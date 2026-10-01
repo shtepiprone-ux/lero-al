@@ -1,0 +1,50 @@
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/app/admin/permissions/page.tsx
+    Nodes visited: 4
+    Local import edges resolved (from tier-1 nodes): 12
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 9
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 0
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as RENDERED, non-type-only import bindings in that node's own file resolving
+    under src/components/ui/* (a co-located .module.css or hook sibling is never a rendered JSX tag).
+    story:yes means a canonical Mantine story imports the node directly OR through a single-hop index.ts(x)
+    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).
+    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): 0
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Task 831 R11: a .ts root is not a component; a .ts module that renders through createElement or
+    re-exports a component under a non-barrel name is not walked.
+    Canonical Mantine story files consulted: 145 (of 177 total *.stories.ts(x)).
+
+NODES (4):
+    src/app/admin/permissions/page.tsx  tier:tier1  manifest:no  story:no  className:0  ui-imports:0  parent:(root surface)
+    src/components/admin/AdminPermissionsManager.tsx  tier:tier1  manifest:no  story:no  className:44  ui-imports:2  parent:src/app/admin/permissions/page.tsx
+    src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminPermissionsManager.tsx
+    src/components/ui/switch.tsx  tier:tier2  manifest:no  story:no  className:2  ui-imports:0  parent:src/components/admin/AdminPermissionsManager.tsx
+
+node.exe : FAIL  src/app/admin/permissions/page.tsx  [tier1-unenrolled-or-unstoried]
+At line:1 char:516
++ ... oding utf8; node.exe scripts\check-surface-census.mjs --surface src\a ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  src/app/a...d-or-unstoried]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/admin/AdminPermissionsManager.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+FAIL  src/components/ui/switch.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+
+GR-1 CENSUS BLOCKED — src/app/admin/permissions/page.tsx, src/components/admin/AdminPermissionsManager.tsx, 
+src/components/ui/badge.tsx, src/components/ui/switch.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.

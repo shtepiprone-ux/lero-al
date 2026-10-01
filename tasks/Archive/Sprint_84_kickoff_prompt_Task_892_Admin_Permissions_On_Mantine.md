@@ -1,7 +1,8 @@
 # Task 892 — `/admin/permissions` on canonical Mantine
 
 Sprint 84 · **P3** · QA profile **Q3** (legacy admin surface → Mantine) · **depends on 893** (hard: `MantineFormSection`,
-extracted by 893 R1) · blocks **885** · owner action **O84-3** · **Status: `KICKOFF FILED` 2026-09-29**
+extracted by 893 R1) · blocks **885** · owner action **O84-3** · **Status: ✅ `APPROVED WITH NOTES` 2026-10-01, review 2 — owner accepted every
+O84-3 tuple; archived (§17)**
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row moves into Appendix D.
@@ -303,6 +304,67 @@ cell of `docs/backlog.md`; session log with "Files Changed". No Git.
 `GR-3a STORY PREFLIGHT — AdminPermissionsView × Default/AllAllowed/Saving/AuditEmpty/AuditUnavailable; canonical candidates: NONE (Admin/AdminPermissionsManager renders the legacy component, pins a viewport and is not canonical); direct-import evidence: NONE; toolbar coverage: locale=toolbar, viewport=toolbar; decision: CREATE; target: NONE; rationale: new View.`
 
 `GR-1 CENSUS COMPLETE — 4 nodes today; after: tier1 1 View migrated+enrolled+story + 1 container-exempt (AdminPermissionsManager); tier2 2 imports removed (ui/badge, ui/switch); tier3 none — filed as none.`
+
+## 16. Review 1 — 2026-10-01 — `PARTIALLY VERIFIED`
+
+Opus reviewed the diff, every new or changed file, the plant transcripts and the gate transcripts. Every file's current
+`git hash-object` equals `evidence/task892/22-hash-object.txt`. The last source write was at 21:38:56, and
+`build-storybook` (21:41) and `build` (21:42, exit 0) both ran after it. Independent native re-runs (win32, v22.22.3)
+gave these results:
+- T1–T5: 5/5;
+- census: exactly the two §3.2 calibration FAIL lines (`page.tsx` and `AdminPermissionsManager.tsx` at `className:0
+  ui-imports:0`), with `AdminPermissionsView` at `manifest:yes story:yes`;
+- `check:story-coverage`: exit 0, 129/129;
+- `check:backlog-active`: exit 0.
+
+The reviewer also ran Chromium over `storybook-static` on all five exports at 320/390/768/1024/1440, and on `AllAllowed`
+in `sq`/`uk`/`it` at 320/390. It found:
+- no page overflow, and no matrix row whose content overflows it or whose switch sits outside it;
+- sections stacked, with nothing side by side below 640;
+- text at 12/14/16px only, section titles 16px;
+- `Saving` disables only "Manage reports";
+- edges of 24/16/24/16 at 320–390 and 24/32/24/32 at 1024–1440, with nothing at 0 and nothing doubled.
+
+`Patterns/Mantine/AdminPageHeader` (blast radius) shows a top edge of 24 and a left edge of 16/16/32/32, and its title
+is 20/20/24/24.
+
+**Why not approved:** the visual criterion is `NOT VERIFIABLE` until the owner returns O84-3 (§13.3, 14 tuples).
+Nothing else blocks.
+
+**Executor deviations accepted, as kickoff defects corrected here:**
+1. §13.1 / AC8: `check:surface-census:changed` and `…:update-baseline` require `--base <ref>`. The correct local form is
+   `npm.cmd run check:surface-census:changed -- --base HEAD`, the same correction as 858 §16. Evidence `15b`/`16` used
+   it and exit 0.
+2. §13.1 / R7 / AC7: the grep's exclusion list omitted `docs/reviews/**` (build logs and static snapshots) and other
+   kickoffs. Its 17 hits are all history: eight review artifacts, the closed Epic BB Task 463 kickoff and this kickoff.
+   The reviewer re-ran it and found no live-path hit. AC7 is satisfied in intent; read the grep as additionally
+   excluding `docs/reviews/**` and `tasks/**`.
+3. R1: removing the container's now-unused `useFormatter` binding is accepted. The container no longer formats, and
+   lines `:21-48` are otherwise unchanged in the diff.
+4. P2 restore: the first restore was corrupt (`equal=NO`). It was repaired with Node to the pre-plant hash
+   `3593a01f…`, and P3, the final tests and both builds then ran on that hash.
+
+**P3 notes (no executor action):**
+- N1: the matrix rows no longer have the legacy `hover:bg-muted/20` tint, because R3 did not ask for it. The owner
+  judges it at O84-3.
+- N2: §12.2 named `AdminPageHeader` as a blast-radius re-measure, but §13.3 left it out of the matrix and the session
+  log carries no receipt for it. The reviewer's measurement above closes it.
+
+**Next:** the owner returns O84-3. If every tuple is accepted, review 2 approves and archives. If any is returned,
+the review becomes `NEEDS REVISION` with a revision section here.
+
+## 17. Review 2 — 2026-10-01 — `APPROVED WITH NOTES`
+
+On 2026-10-01 the owner accepted O84-3: all 14 tuples of §13.3, plus N1 (the matrix rows have no hover tint). The
+owner's words: *"Приймаю."* The implementation is unchanged since review 1: the `git hash-object` of all 11 changed
+files still equals `evidence/task892/22-hash-object.txt`. The build and Storybook build of §16 therefore still apply to
+this diff.
+
+Notes carried, no executor action:
+- §16 N2, the `AdminPageHeader` receipt, was closed by the reviewer's own measurement.
+- The kickoff command corrections of §16 items 1–2 stand.
+- O84-3's after-deploy remainder stays an owner action in the sprint plan: toggle one permission on
+  `/admin/permissions` and back, then read the audit log.
 
 ## Appendix A — Evidence preflight
 

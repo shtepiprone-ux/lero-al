@@ -61,14 +61,14 @@
     },
     {
       "id": "admin-permissions-keys",
-      "site": "src/components/admin/AdminPermissionsManager.tsx:104",
+      "site": "src/components/admin/AdminPermissionsView.tsx:87",
       "namespace": "admin.permissions.keys",
       "keys": ["listings_delete", "listings_set_premium", "users_create", "users_change_role", "users_soft_delete", "users_hard_delete", "locations_manage", "settings_manage", "legal_manage", "reports_manage"],
       "note": "PERMISSION_KEYS (10) — audit §2 sites #9-12."
     },
     {
       "id": "admin-permissions-descriptions",
-      "site": "src/components/admin/AdminPermissionsManager.tsx:107",
+      "site": "src/components/admin/AdminPermissionsView.tsx:90",
       "namespace": "admin.permissions.descriptions",
       "keys": ["listings_delete", "listings_set_premium", "users_create", "users_change_role", "users_soft_delete", "users_hard_delete", "locations_manage", "settings_manage", "legal_manage", "reports_manage"],
       "note": "PERMISSION_KEYS (10) — audit §2 sites #9-12, identical set."

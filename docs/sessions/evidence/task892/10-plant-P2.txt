@@ -1,0 +1,2894 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx (5 tests | 4 failed) 1608ms
+     × T1: toggling users.create saves, checks the switch and toasts success; switch is disabled while pending 586ms
+     × T2: a no-op result shows the info toast and leaves the switch unchanged 328ms
+     × T3: a forbidden result shows the forbidden error toast 299ms
+     × T4: every permission switch is reachable by its accessible name 301ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx > AdminPermissionsManager — toggle (Task 892) > T1: toggling users.create saves, checks the switch and toasts success; switch is disabled while pending
+TestingLibraryElementError: Unable to find an accessible element with the role "switch" and name "Create users"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Administrator":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Permission":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Recent permission changes":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-weight: 600;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  switch:
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-hsb7s54hu"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-ikv8xrlsl"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-rpwkpr9ex"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-kij3w7ex6"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-4fsdtqsp5"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-7tw4zulwy"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-jaag6tsxg"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-zgqzb9r1h"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-q1gwa9j7i"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-4iqlyjkh8"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-h7rzq2gan"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-puzhmtsqu"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-5wayb588t"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mdata-testid[39m=[32m"admin-permissions-manager"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-xl); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+          [33mdata-with-left-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_91fdda9b mantine-Badge-section"[39m
+            [33mdata-position[39m=[32m"left"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"12"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"12"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+          [36m>[39m
+            [0m0 of 13 allowed[0m
+          [36m</span>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root __m__-_r_5_"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+            [33mdata-order[39m=[32m"2"[39m
+            [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+          [36m>[39m
+            [0mAdministrator[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"__m__-_r_8_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+            [36m>[39m
+              [0mFull access (not configurable)[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx:90:23
+     88|     renderManager()
+     89|
+     90|     const sw = screen.getByRole('switch', { name: keyLabel('users.crea…
+       |                       ^
+     91|     expect(sw.checked).toBe(false)
+     92|     fireEvent.click(sw)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx > AdminPermissionsManager — toggle (Task 892) > T2: a no-op result shows the info toast and leaves the switch unchanged
+TestingLibraryElementError: Unable to find an accessible element with the role "switch" and name "Create users"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Administrator":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Permission":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Recent permission changes":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-weight: 600;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  switch:
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-d6974fhov"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-u7ytrpfc1"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-xbj7h1cxr"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-etfkzyqx9"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-eot0yg9vy"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-3mqjpzw36"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-okymy5pbw"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-kukhr7tag"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-1g0bnsue6"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-a3j6k13y7"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-bbr5g5bzg"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-apjkty1ex"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-5gwu2sh7q"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mdata-testid[39m=[32m"admin-permissions-manager"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-xl); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+          [33mdata-with-left-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_91fdda9b mantine-Badge-section"[39m
+            [33mdata-position[39m=[32m"left"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"12"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"12"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+          [36m>[39m
+            [0m0 of 13 allowed[0m
+          [36m</span>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root __m__-_r_67_"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+            [33mdata-order[39m=[32m"2"[39m
+            [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+          [36m>[39m
+            [0mAdministrator[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"__m__-_r_6a_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+            [36m>[39m
+              [0mFull access (not configurable)[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx:107:23
+    105|     renderManager()
+    106|
+    107|     const sw = screen.getByRole('switch', { name: keyLabel('users.crea…
+       |                       ^
+    108|     fireEvent.click(sw)
+    109|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx > AdminPermissionsManager — toggle (Task 892) > T3: a forbidden result shows the forbidden error toast
+TestingLibraryElementError: Unable to find an accessible element with the role "switch" and name "Create users"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Administrator":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Permission":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Recent permission changes":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-weight: 600;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  switch:
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-c39zzhqw3"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-6lv2rkrwv"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-i4j6tmfe0"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-iwcbpgrgo"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-seftagkyd"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-jkdfyfdz3"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-jz5kkhe1u"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-2ekx69eh1"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-xykwyu164"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-aewa4ouvs"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-msntejtlj"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-15mcevm77"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-06be6004a"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mdata-testid[39m=[32m"admin-permissions-manager"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-xl); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+          [33mdata-with-left-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_91fdda9b mantine-Badge-section"[39m
+            [33mdata-position[39m=[32m"left"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"12"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"12"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+          [36m>[39m
+            [0m0 of 13 allowed[0m
+          [36m</span>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root __m__-_r_c9_"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+            [33mdata-order[39m=[32m"2"[39m
+            [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+          [36m>[39m
+            [0mAdministrator[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"__m__-_r_cc_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+            [36m>[39m
+              [0mFull access (not configurable)[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx:119:28
+    117|     renderManager()
+    118|
+    119|     fireEvent.click(screen.getByRole('switch', { name: keyLabel('users…
+       |                            ^
+    120|
+    121|     await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(t.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx > AdminPermissionsManager — view states (Task 892) > T4: every permission switch is reachable by its accessible name
+TestingLibraryElementError: Unable to find an accessible element with the role "switch" and name "Delete listings"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Administrator":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Permission":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "Recent permission changes":
+  [36m<h2[39m
+    [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+    [33mdata-order[39m=[32m"2"[39m
+    [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  separator:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+    [33mdata-orientation[39m=[32m"horizontal"[39m
+    [33mrole[39m=[32m"separator"[39m
+    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-weight: 600;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 500;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed); font-family: var(--mantine-font-family-monospace);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"sm"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+    [33mdata-size[39m=[32m"xs"[39m
+    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  switch:
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-ui25wviq0"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-gafdzgj6n"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-s5926cb39"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-5aakoj8gv"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-l0uj004qg"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-ej8u0e1gj"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-r7hgzch6o"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-qv19rgcox"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-1b7mpclx4"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-t2b6x08uh"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-zmlfngx6f"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-908cfgkxd"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<input[39m
+    [33mclass[39m=[32m"m_926b4011 mantine-Switch-input"[39m
+    [33mdata-checked[39m=[32m"false"[39m
+    [33mid[39m=[32m"mantine-f8z5tgfd5"[39m
+    [33mrole[39m=[32m"switch"[39m
+    [33mtype[39m=[32m"checkbox"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mdata-testid[39m=[32m"admin-permissions-manager"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-xl); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+          [33mdata-size[39m=[32m"sm"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+          [33mdata-with-left-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_91fdda9b mantine-Badge-section"[39m
+            [33mdata-position[39m=[32m"left"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"12"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"12"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+          [36m>[39m
+            [0m0 of 13 allowed[0m
+          [36m</span>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root __m__-_r_ib_"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+            [33mdata-order[39m=[32m"2"[39m
+            [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+          [36m>[39m
+            [0mAdministrator[0m
+          [36m</h2>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"__m__-_r_ie_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m""[39m
+              [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+            [36m>[39m
+              [0mFull access (not configurable)[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx:130:21
+    128|     renderManager()
+    129|     for (const key of PERMISSION_KEYS) {
+    130|       expect(screen.getByRole('switch', { name: keyLabel(key) })).toBe…
+       |                     ^
+    131|     }
+    132|     expect(screen.getAllByRole('switch')).toHaveLength(PERMISSION_KEYS…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed (5)
+   Start at  21:38:22
+   Duration  5.57s (transform 702ms, setup 101ms, import 2.88s, tests 1.61s, environment 821ms)
+
+EXIT_CODE=1

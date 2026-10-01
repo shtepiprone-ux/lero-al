@@ -1,0 +1,15 @@
+ M docs/backlog.md
+ M scripts/check-stories-rendered.mjs
+ M scripts/i18n-dynamic-manifest.json
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/permissions/page.tsx
+ D src/components/admin/AdminPermissionsManager.stories.tsx
+ M src/components/admin/AdminPermissionsManager.tsx
+ M src/design-system/mantine/theme.ts
+?? docs/sessions/2026-10-01-task892-admin-permissions-mantine.md
+?? docs/sessions/evidence/task892/
+?? src/components/admin/AdminPermissionsView.tsx
+?? src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx
+?? src/stories/patterns/mantine/AdminPermissionsView.stories.tsx

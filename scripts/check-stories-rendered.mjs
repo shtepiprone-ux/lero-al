@@ -216,8 +216,8 @@ const ASSERT_STORIES = [
   { id: 'patterns-mantine-reportdetaildialogview--full-management', label: 'ReportDetailDialogView/FullManagement', anchors: [{ type: 'testid', value: 'status-override-section', label: 'status-override' }] },
   { id: 'patterns-mantine-reportdetaildialogview--terminal-reopen', label: 'ReportDetailDialogView/TerminalReopen', anchors: [{ type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
   { id: 'patterns-mantine-reportdetaildialogview--delete-confirm', label: 'ReportDetailDialogView/DeleteConfirm', anchors: [{ type: 'testid', value: 'delete-confirm-dialog', label: 'delete-confirm' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
-  // ── Task 464/468 — AdminPermissionsManager (1, dedup: 4→1) ──
-  { id: 'admin-adminpermissionsmanager--default',     label: 'AdminPermissionsManager/Default',    anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
+  // ── Task 464/468/892 — AdminPermissionsView (1, dedup: 4→1) ──
+  { id: 'patterns-mantine-adminpermissionsview--default', label: 'AdminPermissionsView/Default',       anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
   // ── Planted visual violations (14 — Task 467 + R1/R2 + C2/R4 + Task 569 clip-awareness) ──
   { id: 'planted-visualviolations--clipped-button-text',  label: 'Planted/ClippedButtonText',  anchors: [{ type: 'testid', value: 'planted-clipped-btn', label: 'clipped-btn' }] },
   { id: 'planted-visualviolations--overlapping-actions',  label: 'Planted/OverlappingActions',  anchors: [{ type: 'testid', value: 'planted-overlap-a', label: 'overlap-a' }] },

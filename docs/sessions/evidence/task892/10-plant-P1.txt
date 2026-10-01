@@ -1,0 +1,164 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx (5 tests | 1 failed) 2022ms
+     × T1: toggling users.create saves, checks the switch and toasts success; switch is disabled while pending 1403ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx > AdminPermissionsManager — toggle (Task 892) > T1: toggling users.create saves, checks the switch and toasts success; switch is disabled while pending
+AssertionError: expected false to be true // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mdata-testid[39m=[32m"admin-permissions-manager"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-xl); --stack-align: stretch; --stack-justify: flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-variant[39m=[32m"outline"[39m
+            [33mdata-with-left-section[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: transparent; --badge-color: var(--mantine-color-gray-outline); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-outline);"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_91fdda9b mantine-Badge-section"[39m
+              [33mdata-position[39m=[32m"left"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m""[39m
+                [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"12"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"12"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+            [36m>[39m
+              [0m0 of 13 allowed[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root"[39m
+          [33mdata-with-border[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root __m__-_r_5_"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap;"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root"[39m
+              [33mdata-order[39m=[32m"2"[39m
+              [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); font-size: var(--mantine-font-size-md); font-weight: 500;"[39m
+            [36m>[39m
+              [0mAdministrator[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+            [33mdata-orientation[39m=[32m"horizontal"[39m
+            [33mrole[39m=[32m"separator"[39m
+            [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"__m__-_r_8_"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m""[39m
+                [33mstyle[39m=[32m"color: var(--mantine-color-green-text); display: flex;"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-shield-check"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"16"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"16"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+              [36m>[39m
+                [0mFull access (not configurable)[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+       ...
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx:95:45
+     93|
+     94|     expect(mockSetPermission).toHaveBeenCalledWith('users.create', tru…
+     95|     await waitFor(() => expect(sw.disabled).toBe(true))
+       |                                             ^
+     96|
+     97|     resolveAction({})
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  21:38:14
+   Duration  6.01s (transform 714ms, setup 100ms, import 2.83s, tests 2.02s, environment 801ms)
+
+EXIT_CODE=1

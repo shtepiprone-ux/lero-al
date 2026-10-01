@@ -1,0 +1,17 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index b0f7ceeae..7000cf4c6 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -508,12 +508,6 @@
+     "src/app/admin/permissions/page.tsx :: src/components/admin/AdminPermissionsManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/permissions/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/permissions/page.tsx :: src/components/ui/switch.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/popular-locations/page.tsx :: src/app/admin/popular-locations/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },

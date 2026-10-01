@@ -1,0 +1,11 @@
+18cd5927b1e7eb4d450351676b2cef3454a396a6  src/app/admin/permissions/page.tsx
+ff5b85562124660807b1fa6122807b8c0a9008a3  src/components/admin/AdminPermissionsManager.tsx
+3593a01ff0c28040ba93c2ba2c28913baf497ff5  src/components/admin/AdminPermissionsView.tsx
+da919e8665c507589f0b808e37a2073b9265fb58  src/design-system/mantine/theme.ts
+d05271a4f1a2edd493d3caa7170400c25b4f7e1a  src/stories/patterns/mantine/AdminPermissionsView.stories.tsx
+2260aba0e1e3b0b66698ccd482ea3509564448ef  src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx
+f7bbf5aa910ae428f2c3c9b71e057e5d72778c44  scripts/mantine-migration-scope.json
+cff42ed3d84ccf745417c028301f6759e6e0e749  scripts/story-coverage-exempt.json
+7000cf4c6e4318b3e709f75f27c172f1a2a6a9a9  scripts/surface-census-baseline.json
+c0608ef143b7e80eeda1e61a590b97c2a1026035  scripts/check-stories-rendered.mjs
+76a5bab66844b03710fd4921241cc16bd98bec71  scripts/i18n-dynamic-manifest.json

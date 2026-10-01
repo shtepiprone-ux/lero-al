@@ -54,7 +54,7 @@ function measureTextWidth(text: string, fontSource: HTMLElement): number {
  *   State 2 — they don't fit                → surname wraps to the next line, badge stays
  *                                             right of the first name (float).
  *   State 3 — the wrapped surname would fill ≥70% of the text zone (or the first name
- *             can't even sit beside the badge) → badge gets its own row (top-right) and
+ *             can't even sit beside the badge) → badge gets its own row (start-aligned, Task 868 D868-4) and
  *             avatar + name drop below it, so the badge never overlaps the name.
  *
  * The decision is taken from real rendered widths (a ResizeObserver re-measures on
@@ -104,7 +104,8 @@ function CardPrimaryRow({
       }
       const badgeWidth = badgeWrap.getBoundingClientRect().width
       // Real horizontal gap between name and badge (token-driven margin).
-      const gap = parseFloat(getComputedStyle(badgeWrap).marginLeft) || 0
+      const badgeStyle = getComputedStyle(badgeWrap)
+      const gap = parseFloat(badgeStyle.marginLeft) || parseFloat(badgeStyle.marginRight) || 0
 
       const fullWidth = measureTextWidth(name, fontSource)
       // State 1: whole name + gap + badge fit on one line.
@@ -129,14 +130,15 @@ function CardPrimaryRow({
     return () => ro.disconnect()
   }, [badge, title, subtitle])
 
-  // State 3: badge on its own row (top-right), avatar + name below — no overlap.
+  // State 3: badge on its own row (start-aligned: its left edge is the start of the card's content box, Task 868
+  // D868-4), avatar + name below — no overlap.
   if (badgeOwnRow && badge != null) {
     return (
       <Stack gap="xs">
-        <Group justify="flex-end" wrap="nowrap">
-          {/* marginLeft token has no visual effect in a flex-end row; it only keeps
+        <Group justify="flex-start" wrap="nowrap">
+          {/* marginRight token has no visual effect on the only child of a start-aligned row; it only keeps
               the measured name↔badge gap identical to the inline layout (no oscillation). */}
-          <div ref={badgeRef} style={{ marginLeft: 'var(--mantine-spacing-xs)' }}>{badge}</div>
+          <div ref={badgeRef} style={{ marginRight: 'var(--mantine-spacing-xs)' }}>{badge}</div>
         </Group>
         <Group gap="sm" wrap="nowrap" align="flex-start">
           {avatar}
@@ -179,7 +181,8 @@ function CardPrimaryRow({
  * When provided as `card` prop, mobile renders the designed card hierarchy:
  *   - Header: id (muted xs, left) | actions (right, ≥44px targets)
  *   - Divider
- *   - Primary row: badge (right, own row) then avatar + title (fw=500) + subtitle (dimmed) below
+ *   - Primary row: badge beside the title on one line, or, when it does not fit, on its own row above the
+ *     avatar + title, aligned to the start of the card's content box (Task 868 D868-4); title (fw=500) + subtitle (dimmed)
  *   - Divider (ONE, above meta — no per-field dividers)
  *   - Meta: edge-anchored `Group justify="space-between"` rows (label left / value right)
  *
@@ -197,7 +200,7 @@ export interface CardConfig<R> {
   title: (row: R) => ReactNode
   /** Primary row under title — muted secondary line (company, email). */
   subtitle?: (row: R) => ReactNode
-  /** Status badge — rendered right-aligned on its own row above the avatar+title row. */
+  /** Status badge — beside the title on one line; when it needs its own row it sits above the avatar+title row, start-aligned (Task 868 D868-4). */
   badge?: (row: R) => ReactNode
   /** Compact meta rows below ONE divider. Null/undefined returns are skipped. */
   meta?: { label: string; value: (row: R) => ReactNode }[]

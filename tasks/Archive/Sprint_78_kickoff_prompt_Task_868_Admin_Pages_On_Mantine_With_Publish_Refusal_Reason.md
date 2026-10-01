@@ -1224,6 +1224,24 @@ npm.cmd run build *>&1 | Tee-Object "$ev\r6-19-build.txt"
 Record `EXIT_CODE=$LASTEXITCODE` after each command and normalise the files through Node. Write `r6-23-hash-object.txt`
 (`hash  path`) for the six write-set sources. Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
+
+## 24. Review 7 — 2026-10-01 — `APPROVED WITH NOTES`
+
+Opus. Frontend task, so no review ledger (D69-3).
+
+- **R31 / AC31′.** The Story file, the editor file and the four message files equal `r6-23-hash-object.txt`. Every
+  other revision-5 path equals `r5-23-hash-object.txt`.
+  - `DropdownMenu.stories.tsx:147` reads `t('dm_active_items_caption')`. The key is at `messages/*.json:2455`, with
+    translated `sq`/`uk`/`it` values; each begins with the prop name, as `dm_fullwidth_trigger_caption` does.
+  - The editor comment (`:342`) now reads 220px inside 278px.
+  - typecheck, `check:i18n`, file-integrity, `build-storybook` and `build` exit 0 (`r6-*`). No source file is newer
+    than `storybook-static` (18:40:56). `.next/BUILD_ID` is 18:44:05.
+- **Owner, 2026-10-01**, asked by Opus about `Mantine/Primitives/DropdownMenu` `WithActiveItems` (`sq`, 390/1440, the
+  check by the current item): *"Приймаю"*. With §20.1 and §23.2, every O78-7 tuple is now accepted.
+- **Notes (carried, not blocking):**
+  - O78-7b/7c, after the deploy (§17.9). They are an active owner item in the Sprint 78 plan and the backlog.
+  - 910 and 911 stay reserved in Sprint 78.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

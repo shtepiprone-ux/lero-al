@@ -1,0 +1,1 @@
+{"tbW":286,"padL":"4px","padR":"4px","gap":"0px 12px","wrap":"wrap","groups":5,"groupLeft/Right":[[21,65],[77,121],[133,177],[189,233],[245,289]],"top":58}

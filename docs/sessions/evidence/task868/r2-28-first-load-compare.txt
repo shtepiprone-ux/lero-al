@@ -1,0 +1,7 @@
+routes compared 57 | over +3 kB: 1
+/admin/pages 604 -> 763
+/[locale] 663 -> 666
+/[locale]/listings 673 -> 676
+/[locale]/[slug] 362 -> 362
+/admin/users 529 -> 531
+/admin/pages 604 -> 763

@@ -256,3 +256,75 @@ describe('sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a)', () => {
     }
   })
 })
+
+// ── Task 868 (R16, T7) — the allowlist grows by exactly columns, Cloudinary images and text-align ───────
+const CLD = 'https://res.cloudinary.com/demo/image/upload/v1/cms/pages/a.jpg'
+const COLUMNS_2 =
+  '<div data-type="columns" data-cols="2"><div data-type="column"><p>left</p></div><div data-type="column"><p>right</p></div></div>'
+const COLUMNS_3 =
+  '<div data-type="columns" data-cols="3"><div data-type="column"><p>a</p></div><div data-type="column"><p>b</p></div><div data-type="column"><p>c</p></div></div>'
+
+describe('sanitizeCmsHtml — Task 868 additions kept (T7)', () => {
+  it.each([
+    ['a 2-column block', COLUMNS_2],
+    ['a 3-column block', COLUMNS_3],
+    ['a Cloudinary image with alt', `<p>x</p><img src="${CLD}" alt="Fasada" />`],
+    ['a Cloudinary image with width and height', `<img src="${CLD}" alt="x" width="640" height="480" />`],
+    ['centred text', '<p style="text-align:center">x</p>'],
+    ['justified H2 text', '<h2 style="text-align:justify">x</h2>'],
+    ['right-aligned list item', '<ul><li style="text-align:right">x</li></ul>'],
+  ])('keeps %s byte-identical', (_name, html) => {
+    expect(sanitizeCmsHtml(html)).toBe(html)
+  })
+
+  it('is idempotent over the kept rows', () => {
+    for (const html of [COLUMNS_2, COLUMNS_3, `<img src="${CLD}" alt="x" />`, '<p style="text-align:center">x</p>']) {
+      expect(sanitizeCmsHtml(sanitizeCmsHtml(html))).toBe(sanitizeCmsHtml(html))
+    }
+  })
+})
+
+describe('sanitizeCmsHtml — Task 868 additions dropped (T7)', () => {
+  it('drops an img from another host', () => {
+    expect(sanitizeCmsHtml('<p>t</p><img src="https://evil.example/a.jpg" alt="x">')).toBe('<p>t</p>')
+  })
+
+  it('drops an img whose host only starts with the Cloudinary host', () => {
+    expect(sanitizeCmsHtml('<img src="https://res.cloudinary.com.evil.example/a.jpg">')).toBe('')
+    expect(sanitizeCmsHtml('<img src="https://res.cloudinary.com@evil.example/a.jpg">')).toBe('')
+  })
+
+  it.each([
+    ['a data: URI', '<img src="data:image/png;base64,AAAA" alt="x">'],
+    ['a relative path', '<img src="/uploads/a.jpg" alt="x">'],
+    ['a protocol-relative URL', '<img src="//res.cloudinary.com/a.jpg" alt="x">'],
+    ['an http (not https) Cloudinary URL', '<img src="http://res.cloudinary.com/a.jpg" alt="x">'],
+    ['a javascript: URI', '<img src="javascript:alert(1)">'],
+    ['an img with no src', '<img alt="x">'],
+  ])('drops an img with %s', (_name, html) => {
+    expect(sanitizeCmsHtml(html)).toBe('')
+  })
+
+  it('strips onerror and other attributes from a kept Cloudinary img', () => {
+    const out = sanitizeCmsHtml(`<img src="${CLD}" alt="x" onerror="alert(1)" class="a" style="width:1px">`)
+    expect(out).not.toContain('onerror')
+    expect(out).not.toContain('class')
+    expect(out).not.toContain('style')
+    expect(out).toContain(`src="${CLD}"`)
+  })
+
+  it('drops any other data-* value or attribute on a div', () => {
+    expect(sanitizeCmsHtml('<div data-type="evil"><p>x</p></div>')).toBe('<div><p>x</p></div>')
+    expect(sanitizeCmsHtml('<div data-type="columns" data-cols="9"><p>x</p></div>')).toBe(
+      '<div data-type="columns"><p>x</p></div>',
+    )
+    expect(sanitizeCmsHtml('<div data-x="1" class="c" onclick="x"><p>x</p></div>')).toBe('<div><p>x</p></div>')
+  })
+
+  it('still removes style="color:red" (884 contract) and any style other than text-align', () => {
+    expect(sanitizeCmsHtml('<p style="color:red">x</p>')).toBe('<p>x</p>')
+    expect(sanitizeCmsHtml('<p style="text-align:center;color:red">x</p>')).toBe('<p style="text-align:center">x</p>')
+    expect(sanitizeCmsHtml('<p style="text-align:expression(alert(1))">x</p>')).toBe('<p>x</p>')
+    expect(sanitizeCmsHtml('<div style="text-align:center"><p>x</p></div>')).toBe('<div><p>x</p></div>')
+  })
+})

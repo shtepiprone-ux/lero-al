@@ -1,0 +1,18 @@
+P11 plant: five controls in five separate ControlsGroups in src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+hash before plant: bf32f7373133af3ad0f7bbc13389da23c33564af
+hash planted: 29bd7949904408eb7fa2bc97347a84eaee71d46e
+plant storybook build EXIT_CODE=0
+EDITOR default@320@sq: overflow=false root=288/320 controls=5 groups=5 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true
+hash restored: bf32f7373133af3ad0f7bbc13389da23c33564af (before: bf32f7373133af3ad0f7bbc13389da23c33564af)
+assertion: AC28 requires rows=1 at 320; the planted tree must show rows=2
+
+PREMISE DRIFT — P11 (kickoff §22.2/§22.4): with the five controls in five separate ControlsGroups the planted tree
+still measured rows=1 at 320 (line above). Measured geometry (r5-27-plant-p11-geometry.txt): the subtle variant's toolbar
+padding is 4px (not "xs md" 10/16 of the default variant), so the inner width at 320 is 286 - 8 = 278px, and five separate
+groups take 5 x 44 + 4 x 12 = 268px, which fits. P11 as written therefore cannot fail AC28; no value was changed to force it.
+
+P11b (supplementary, executor's): the same five groups plus two extra separate Link controls (7 x 44 + 6 x 12 = 380px > 278px).
+P11b hash planted: 040152619584d8a0179669f3e0df36ce73e121a0
+P11b storybook build EXIT_CODE=0
+P11b planted: EDITOR default@320@sq: overflow=false root=288/320 controls=7 groups=7 unnamed=0 rows=2 minW=44 minH=44 maxH=44 fits=true
+P11b hash restored: bf32f7373133af3ad0f7bbc13389da23c33564af (before: bf32f7373133af3ad0f7bbc13389da23c33564af)

@@ -1,0 +1,11 @@
+src/components/admin/AdminCurrenciesView.tsx
+src/components/admin/AdminExchangeProvidersView.tsx
+src/components/admin/AdminPagesView.tsx
+src/components/admin/AdminTable.tsx
+src/components/admin/AdminUsersTable.tsx
+src/components/admin/__tests__/AdminTable.adapter.test.tsx
+src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx
+src/design-system/mantine/patterns/MantineCountButton.tsx
+src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+src/modules/cabinet/statistics/components/AgentStatisticsView.tsx

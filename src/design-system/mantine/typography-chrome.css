@@ -69,3 +69,49 @@
     line-height: var(--mantine-h6-line-height);
   }
 }
+
+/* Task 868 (R17) — the layout the rich-text editor writes, for the public page and the editor's own
+   content area (both are `.mantine-Typography-root`). Tokens and `em` breakpoints only, the same
+   `40em` step as the heading scale above.
+   - A columns block (`<div data-type="columns" data-cols="2|3">`, allowed by `sanitizeCmsHtml`) is one
+     column below 640px and 2 or 3 equal columns from it. `minmax(0, 1fr)` and `min-width: 0` let a wide
+     child (a table) shrink and scroll inside its own box instead of widening the page.
+   - A table scrolls sideways inside its own box, so no wide table can overflow the document at 320px.
+   - An image never exceeds its container. */
+.mantine-Typography-root [data-type="columns"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mantine-spacing-xl);
+  margin-block: var(--mantine-spacing-md);
+}
+
+.mantine-Typography-root [data-type="column"] {
+  min-width: 0;
+}
+
+@media (min-width: 40em) {
+  .mantine-Typography-root [data-type="columns"][data-cols="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mantine-Typography-root [data-type="columns"][data-cols="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mantine-Typography-root table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.mantine-Typography-root img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Task 868 (R17): table cells break at word boundaries only, so a wide table scrolls inside its own box
+   (above) instead of the page-wide `overflow-wrap: anywhere` splitting words mid-letter to make it fit. */
+.mantine-Typography-root :where(th, td) {
+  overflow-wrap: normal;
+}

@@ -1,0 +1,10 @@
+P7: state-3 badge row justify="flex-start" -> "flex-end" (the pre-D868-4 behaviour)
+  file: src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+  hash before=5834d9426435a2d486299844acd9b3e2669fdfe2 planted=455ed878e7d40186c54e1948f41c259afd482efb restored=5834d9426435a2d486299844acd9b3e2669fdfe2 HASH_EQUAL
+  planted tree (build exit 0): state-3 cards measured: 154; badge.left - cardStart outside [-1,1]: 154 (e.g. 165.5, 235.5, 136.8 px)
+  restored tree (build exit 0): state-3 cards measured: 154; badge.left - cardStart outside [-1,1]: 0
+P8: columns rule removed: the 2- and 3-column grids from 40em collapse back to one column
+  file: src/design-system/mantine/typography-chrome.css
+  hash before=0e79e7dac0534f07f9b6d0e24f1e6da91b9da411 planted=f90b800d8b16f6fceadfe55bc8a085ab895ad2f1 restored=0e79e7dac0534f07f9b6d0e24f1e6da91b9da411 HASH_EQUAL
+  planted tree (build exit 0): 1024/1440 rows: 6; with every columns block side by side: 0
+  restored tree (build exit 0): 1024/1440 rows: 6; with every columns block side by side: 6

@@ -1,0 +1,16 @@
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/mantine-migration-scope.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/pages/page.tsx
+ M src/components/admin/AdminPagesManager.tsx
+ M src/design-system/mantine/theme.ts
+?? docs/sessions/evidence/task868/
+?? src/components/admin/AdminPagesView.tsx
+?? src/components/admin/PageEditorDialogView.tsx
+?? src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx
+?? src/components/admin/adminPagesContent.ts
+?? src/stories/patterns/mantine/AdminPagesView.stories.tsx
+?? src/stories/patterns/mantine/PageEditorDialogView.stories.tsx

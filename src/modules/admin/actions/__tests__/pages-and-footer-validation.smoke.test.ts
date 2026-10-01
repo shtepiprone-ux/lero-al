@@ -339,6 +339,18 @@ describe('createPage — sq_body_required (R5)', () => {
     expect(mockPageInsert).not.toHaveBeenCalled()
   })
 
+  it('Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no insert', async () => {
+    const { createPage } = await import('../index')
+    const result = await createPage({
+      title: 'Privacy', slug: 'privacy-policy',
+      content: { ...CONTENT_EMPTY_BODY, sq: { title: 'Title', body: '<p></p>' } },
+      is_published: true,
+    })
+
+    expect(result).toEqual({ error: 'sq_body_required' })
+    expect(mockPageInsert).not.toHaveBeenCalled()
+  })
+
   it('publish with a non-empty sq body → succeeds', async () => {
     const { createPage } = await import('../index')
     const result = await createPage({
@@ -375,6 +387,17 @@ describe('updatePage — sq_body_required (R5)', () => {
   it('publish with content supplied and an empty sq body → sq_body_required, no update', async () => {
     const { updatePage } = await import('../index')
     const result = await updatePage(1, { content: CONTENT_EMPTY_BODY, is_published: true })
+
+    expect(result).toEqual({ error: 'sq_body_required' })
+    expect(mockPageUpdateEq).not.toHaveBeenCalled()
+  })
+
+  it('Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no update', async () => {
+    const { updatePage } = await import('../index')
+    const result = await updatePage(1, {
+      content: { ...CONTENT_EMPTY_BODY, sq: { title: 'Title', body: '<p></p>' } },
+      is_published: true,
+    })
 
     expect(result).toEqual({ error: 'sq_body_required' })
     expect(mockPageUpdateEq).not.toHaveBeenCalled()

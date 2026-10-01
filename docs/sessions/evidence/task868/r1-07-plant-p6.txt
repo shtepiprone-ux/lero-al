@@ -1,0 +1,13 @@
+P6 (R15): assertPermission removed from the route
+file: src/app/api/upload-cms-image/route.ts
+hash before=59f5d38e7b0b850fc1ee6753998c7f8de01b3f30 planted=1652ffaa4080343f5cf524c9d4a831cdfd97d3b0 restored=59f5d38e7b0b850fc1ee6753998c7f8de01b3f30
+HASH_EQUAL
+planted run exit=1
+     × row 1 — without legal.manage: 403 and no Cloudinary call 16ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/app/api/upload-cms-image/__tests__/route.test.ts > POST /api/upload-cms-image (T9) > row 1 — without legal.manage: 403 and no Cloudinary call
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+--- after restore: exit=0
+ Test Files  1 passed (1)
+      Tests  7 passed (7)

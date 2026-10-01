@@ -1,0 +1,11 @@
+P2 plant: delete action calls deletePage without opening the confirm (src/components/admin/AdminPagesManager.tsx)
+hash before=7759257541d3ceba3523a9680b6d87a5d4d08d3e planted=53490698fd652c0e1b6546d4f9374392d4b0a351 restored=7759257541d3ceba3523a9680b6d87a5d4d08d3e
+HASH_EQUAL
+     × T4 — delete: confirm opens; confirming deletes and removes the row; cancelling calls nothing 1125ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T4 — delete: confirm opens; confirming deletes and removes the row; cancelling calls nothing
+      Tests  1 failed | 5 passed (6)
+PLANT_EXIT=1
+--- after restore ---
+ Test Files  1 passed (1)
+      Tests  6 passed (6)

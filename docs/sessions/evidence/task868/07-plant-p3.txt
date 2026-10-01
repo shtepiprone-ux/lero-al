@@ -1,0 +1,7 @@
+P3 plant: re-add the legacy ui/badge import and render it in AdminPagesView (src/components/admin/AdminPagesView.tsx)
+hash before=a0c687814064d1557a160d530c9d6fc939c13876 planted=947493d154b21e2f0c738c227f258117dc84050f restored=a0c687814064d1557a160d530c9d6fc939c13876
+HASH_EQUAL
+    src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminPagesView.tsx
+FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]
+GR-1 CENSUS BLOCKED — src/app/admin/pages/page.tsx, src/components/admin/AdminPagesManager.tsx, src/components/ui/badge.tsx
+PLANT_EXIT=1

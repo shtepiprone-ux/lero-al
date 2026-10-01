@@ -1,0 +1,15 @@
+e4a2302971da4a66437aa0e6bb80ddc7da2975af  messages/en.json
+5224d3ae431690cfcc8c24dba46ebeb3e8c1b9c8  messages/it.json
+f67c75b147d4cb3aeb5459c719123544618ac13b  messages/sq.json
+22441e8afe56a692aac6ee57cc172b0d05d8a23b  messages/uk.json
+eb60f8c6efcf24d8fd408b782d1a6315c79ea936  scripts/mantine-migration-scope.json
+56422a9242dbd1d9c685e1e02f25cff714dc5e8f  scripts/surface-census-baseline.json
+d9089abee3aa3d4efa451f4948d0522165587ed8  src/app/admin/pages/page.tsx
+7759257541d3ceba3523a9680b6d87a5d4d08d3e  src/components/admin/AdminPagesManager.tsx
+2100ee45277691daefe1c0daa116584733e1d5d1  src/design-system/mantine/theme.ts
+a0c687814064d1557a160d530c9d6fc939c13876  src/components/admin/AdminPagesView.tsx
+d9710ce7376806a4f253ad239b2091ae36c75ecf  src/components/admin/PageEditorDialogView.tsx
+6bcc9098aa45ad1669b7fe9acb7d91b5e927bc87  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx
+bfac77bcba74f8ea3d21b6050ac3cc44192fc19d  src/components/admin/adminPagesContent.ts
+4a9b574cc1dcac885ac447aee6a8d2fd98c06d59  src/stories/patterns/mantine/AdminPagesView.stories.tsx
+1f928754de840801a107ec8c5e9124874c2ce8dd  src/stories/patterns/mantine/PageEditorDialogView.stories.tsx

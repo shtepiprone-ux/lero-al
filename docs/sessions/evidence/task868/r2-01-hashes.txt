@@ -1,0 +1,8 @@
+1c60253b22c97f16b6df8782de1c704cc124bb00  src/design-system/mantine/patterns/index.ts
+0e3478ac4c1f8617cdcaa2098e797f7ee074989b  src/components/admin/PageEditorDialogView.tsx
+e5b43acec4b3a6a56f31c3abd9988f34b302f2ad  src/stories/patterns/mantine/CmsPageView.stories.tsx
+2100ee45277691daefe1c0daa116584733e1d5d1  src/design-system/mantine/theme.ts
+c4cf0f2772d608bebcf70c7f9f8d328d37b5b262  src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+5834d9426435a2d486299844acd9b3e2669fdfe2  src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+e7292743219ccac375bfc6479875a13930ced70e  messages/sq.json
+5a1c03f212046a53c1089f49dbb2259ad74e0b7b  docs/backlog.md

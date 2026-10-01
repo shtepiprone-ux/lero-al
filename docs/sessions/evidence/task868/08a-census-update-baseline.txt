@@ -1,0 +1,28 @@
+
+> lero-al@0.1.0 check:surface-census:changed:update-baseline
+> node scripts/check-surface-census-changed.mjs --update-baseline --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: d5454c6d7e07a5fc40cd5e759b9506098351f3dc
+    Changed paths seen: 8
+    Excluded (5):
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+    Included surfaces (2):
+      src/app/admin/pages/page.tsx
+      src/design-system/mantine/theme.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+Baseline updated -> scripts\surface-census-baseline.json
+    version: 1
+    entries written: 375 (carried-forward entries for the 383-entry prior baseline's un-censused surfaces are preserved, not deleted)
+PASS  check:surface-census:changed:update-baseline — baseline written, no tier-2 refusals.

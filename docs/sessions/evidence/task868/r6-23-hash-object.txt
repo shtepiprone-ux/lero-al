@@ -1,0 +1,6 @@
+393a623d1427d631d7172c2d5d86ebd135e9682c  src/stories/mantine/primitives/DropdownMenu.stories.tsx
+3b0106c5bbe571dc03f46caae73f1aaf85b4f2d7  src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+8d84a7ae17735b2d0f91383d9c5fea194b78d650  messages/sq.json
+853ff8f108b88e07ec160682d843e04f04635ea5  messages/en.json
+80eb0f27257e0ff5d850354ed2be6d3891d5bf45  messages/uk.json
+428fd4a283bcd0a74e9f1e662cf3297f89e44292  messages/it.json

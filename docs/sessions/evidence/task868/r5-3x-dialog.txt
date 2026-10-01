@@ -1,0 +1,6 @@
+DIALOG rich-content@390@sq: overflow=false controls=5 groups=1 rows=1 minW=44 minH=44 maxH=44 fits=true errs=0
+  sheet: {"found":true,"rowH":44,"hitInsideRow":true,"dialogs":2,"rowText":"Titull 2"} before: {"h2":1,"paragraphText":"Gjithçka që ju nevojitet për t","dialogs":1}
+  after H2: {"h2":2,"h2Texts":["Shërbimet tona","Gjithçka që ju nevojitet për t"],"h2Row":false,"editorDialogOpen":true,"dialogs":1}
+DIALOG rich-content@1440@sq: overflow=false controls=5 groups=1 rows=1 minW=26 minH=26 maxH=26 fits=true errs=0
+DIALOG PROBE DONE
+EXIT_CODE=0

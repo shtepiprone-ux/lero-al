@@ -10,6 +10,7 @@ import { ModalsProvider } from '@mantine/modals';
 // Tailwind's @layer base/utilities), so coexistence is clean.
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/tiptap/styles.css';
 import '../src/design-system/mantine/input-chrome.css';
 import '../src/design-system/mantine/pagination-chrome.css';
 import '../src/design-system/mantine/skeleton-chrome.css';

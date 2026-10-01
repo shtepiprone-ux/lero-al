@@ -1,0 +1,8 @@
+P10 plant: sm -> theme.other.touchTarget in src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+hash before plant: ca395eba3e7ff302511003fd4d59458f1fb9524e
+hash planted: 3c43768b345b96ca924443e4c424548cd79e19c7
+plant storybook build EXIT_CODE=0
+EDITOR default@1440@sq: overflow=false root=1376/1440 controls=30 unnamed=0 minHit=44,44 maxHit=44,44 rows=2 fits=true content=16 label=14
+EDITOR with-content@1440@sq: overflow=false root=1376/1440 controls=30 unnamed=0 minHit=44,44 maxHit=44,44 rows=2 fits=true content=16 label=14
+hash restored: ca395eba3e7ff302511003fd4d59458f1fb9524e (before: ca395eba3e7ff302511003fd4d59458f1fb9524e)
+assertion at 1440: minHit/maxHit must be 26,26 (AC27); planted tree measured 44,44 -> FAIL as required; restored tree re-measured in r4-3x-toolbar.txt arm after final storybook build

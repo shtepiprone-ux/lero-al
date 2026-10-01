@@ -1,0 +1,12 @@
+done patterns-mantine-adminpagesview--default
+done patterns-mantine-adminpagesview--empty
+done patterns-mantine-adminpagesview--migration-pending
+done patterns-mantine-adminpagesview--deleting
+done patterns-mantine-adminpagesview--delete-confirm
+done patterns-mantine-pageeditordialogview--new
+done patterns-mantine-pageeditordialogview--edit-published
+done patterns-mantine-pageeditordialogview--empty-locale-warning
+done patterns-mantine-pageeditordialogview--slug-error
+done patterns-mantine-pageeditordialogview--publish-body-required
+done patterns-mantine-pageeditordialogview--saving
+WROTE docs/sessions/evidence/task868/30-measurements.json 99

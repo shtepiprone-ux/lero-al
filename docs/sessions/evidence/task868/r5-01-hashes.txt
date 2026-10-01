@@ -1,0 +1,10 @@
+ca395eba3e7ff302511003fd4d59458f1fb9524e  src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+94c5dc06ebaac9238a650a3d725f7f557b99304a  src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+26c17c97fd057fecfda03c31854799624dad9153  src/stories/mantine/primitives/DropdownMenu.stories.tsx
+2e337ff324bfd18abd4077c5888cb7d9aa3e2213  src/stories/patterns/mantine/RichTextEditor.stories.tsx
+8836c2845a7ba1e488c7850b13aa668526a7f40f  src/components/admin/PageEditorDialogView.tsx
+45446117f0e744c96170cfdb4aea543845a0e561  src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx
+aa3baa93989b7f3b4ad62a5078acbf154bc2a70b  messages/sq.json
+b11c47220880034d7807f4550bc10011cf0833fa  messages/en.json
+8e82548388c796c23e37cb0692dfc1fbe0c24528  messages/uk.json
+bf54abb0a55b0b1383b9c775cdbdfd6dcab9d033  messages/it.json

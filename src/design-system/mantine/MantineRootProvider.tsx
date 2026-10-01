@@ -1,6 +1,8 @@
 'use client'
 
 import { MantineProvider } from '@mantine/core'
+// Task 868 (R20): the rich-text editor's own chrome. CSS only — no Tiptap module reaches this bundle.
+import '@mantine/tiptap/styles.css'
 import { Notifications } from '@mantine/notifications'
 import { ModalsProvider } from '@mantine/modals'
 import { theme } from './theme'

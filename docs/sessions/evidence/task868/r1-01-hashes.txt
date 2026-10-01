@@ -1,0 +1,5 @@
+7759257541d3ceba3523a9680b6d87a5d4d08d3e src/components/admin/AdminPagesManager.tsx
+a0c687814064d1557a160d530c9d6fc939c13876 src/components/admin/AdminPagesView.tsx
+d9710ce7376806a4f253ad239b2091ae36c75ecf src/components/admin/PageEditorDialogView.tsx
+bfac77bcba74f8ea3d21b6050ac3cc44192fc19d src/components/admin/adminPagesContent.ts
+2100ee45277691daefe1c0daa116584733e1d5d1 src/design-system/mantine/theme.ts

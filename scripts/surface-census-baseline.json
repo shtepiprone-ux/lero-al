@@ -499,32 +499,8 @@
     "src/app/admin/pages/page.tsx :: src/app/admin/pages/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
     },
-    "src/app/admin/pages/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
-      "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
     "src/app/admin/pages/page.tsx :: src/components/admin/AdminPagesManager.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/tabs.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
-    },
-    "src/app/admin/pages/page.tsx :: src/components/ui/textarea.tsx :: tier2-legacy-primitive": {
-      "reasonCode": "tier2-legacy-primitive"
     },
     "src/app/admin/permissions/page.tsx :: src/app/admin/permissions/page.tsx :: tier1-unenrolled-or-unstoried": {
       "reasonCode": "tier1-unenrolled-or-unstoried"

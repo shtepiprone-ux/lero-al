@@ -1,0 +1,22 @@
+P9 (R22): the MantineRichTextEditor export re-added to the patterns barrel
+file: src/design-system/mantine/patterns/index.ts
+hash before=c51d75aae6ced693e5358257941962e6764d4184 planted=0357a9e45c24dba8d56b8523fbee09f2ebe5d6ea restored=c51d75aae6ced693e5358257941962e6764d4184 HASH_EQUAL
+planted build exit 0; routes with Tiptap/ProseMirror:
+/[locale]/auth/reset-password/page
+/[locale]/cabinet/page
+/[locale]/favorites/page
+/[locale]/layout
+/[locale]/listings/[slug]/page
+/[locale]/listings/page
+/[locale]/page
+/admin/currency/page
+/admin/layout
+/admin/listings/[id]/preview/page
+/admin/pages/page
+/admin/users/[id]/page
+/admin/users/new/page
+/admin/users/page
+COUNT 14 of 64 pages
+restored build exit 0; routes with Tiptap/ProseMirror:
+/admin/pages/page
+COUNT 1 of 64 pages

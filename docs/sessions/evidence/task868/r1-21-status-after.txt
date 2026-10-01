@@ -1,0 +1,40 @@
+ M .storybook/preview.tsx
+ M docs/backlog.md
+ M docs/critical-flow-registry.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package-lock.json
+ M package.json
+ M scripts/mantine-migration-scope.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/pages/page.tsx
+ M src/components/admin/AdminPagesManager.tsx
+ M src/design-system/mantine/MantineRootProvider.tsx
+ M src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/design-system/mantine/theme.ts
+ M src/design-system/mantine/typography-chrome.css
+ M src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+ M src/modules/admin/actions/index.ts
+ M src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts
+ M src/modules/cms/lib/sanitizeCmsHtml.ts
+ M src/stories/patterns/mantine/CmsPageView.stories.tsx
+?? docs/sessions/2026-10-01-task868-admin-pages-mantine.md
+?? docs/sessions/evidence/task868/
+?? src/app/api/upload-cms-image/
+?? src/components/admin/AdminPagesView.tsx
+?? src/components/admin/PageEditorDialogView.tsx
+?? src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx
+?? src/components/admin/adminPagesContent.ts
+?? src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+?? src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx
+?? src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts
+?? src/design-system/mantine/richtext/
+?? src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts
+?? src/modules/cms/lib/isCmsBodyEmpty.ts
+?? src/stories/fixtures/richContent.fixtures.ts
+?? src/stories/patterns/mantine/AdminPagesView.stories.tsx
+?? src/stories/patterns/mantine/PageEditorDialogView.stories.tsx
+?? src/stories/patterns/mantine/RichTextEditor.stories.tsx

@@ -125,3 +125,34 @@ export const Default: Story = {
     )
   },
 }
+
+// Task 868 R29 — `active` marks the current item with a trailing check (and `data-active`). Items without it
+// render as in `Default`. Open the trigger at ≥640 (anchored menu) and <640 (bottom sheet) with the toolbar.
+export const WithActiveItems: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+
+    const items: DropdownMenuItemDef[] = [
+      { label: t('dm_item_view'), onClick: () => {} },
+      { label: t('dm_item_edit'), onClick: () => {}, active: true },
+      { label: t('dm_item_archive'), onClick: () => {}, active: false },
+      { label: t('dm_item_delete'), onClick: () => {}, color: 'red', separator: true },
+    ]
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {t('dm_active_items_caption')}
+          </Text>
+          <MantineDropdownMenu
+            trigger={<Button variant="default">{t('dm_trigger')}</Button>}
+            title={t('dm_title')}
+            items={items}
+          />
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+}

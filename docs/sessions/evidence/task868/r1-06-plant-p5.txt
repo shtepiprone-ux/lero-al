@@ -1,0 +1,20 @@
+P5 (R16): img allowed from any host
+file: src/modules/cms/lib/sanitizeCmsHtml.ts
+hash before=af6b4ca47d57bede562a3f53d9b1cbe7f602c327 planted=7d4c27077480b5a08cb7a8469f971c581156cbd1 restored=af6b4ca47d57bede562a3f53d9b1cbe7f602c327
+HASH_EQUAL
+planted run exit=1
+     × drops an img from another host 5ms
+     × drops an img whose host only starts with the Cloudinary host 1ms
+     × drops an img with a data: URI 0ms
+     × drops an img with a relative path 0ms
+     × drops an img with a protocol-relative URL 0ms
+     × drops an img with an http (not https) Cloudinary URL 0ms
+     × drops an img with a javascript: URI 0ms
+     × drops an img with an img with no src 0ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img from another host
+ FAIL  src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img whose host only starts with the Cloudinary host
+ FAIL  src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with a data: URI
+--- after restore: exit=0
+ Test Files  1 passed (1)
+      Tests  50 passed (50)

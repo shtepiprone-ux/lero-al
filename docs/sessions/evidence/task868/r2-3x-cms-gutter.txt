@@ -1,0 +1,8 @@
+GR-3d default: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+GR-3d title-only: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+GR-3d body-only: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+GR-3d long-title-wrap: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+GR-3d rich-body: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+GR-3d rich-layout: 320: T32 R16 B32 L16 (expect L/R 16) · 390: T32 R16 B32 L16 (expect L/R 16) · 1024: T48 R144 B48 L144 (expect L/R 144) · 1440: T48 R352 B48 L352 (expect L/R 352)
+AC24 editor content @390: {"minHeight":"240px","height":240,"lineHeight":"24px","fontSize":"16px"}
+AC24 editor content @1440: {"minHeight":"240px","height":240,"lineHeight":"24px","fontSize":"16px"}

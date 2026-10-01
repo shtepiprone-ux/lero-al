@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { CmsPageView } from '@/modules/cms/components/CmsPageView'
+import { RICH_LAYOUT_BODIES, RICH_LAYOUT_TITLES, richFixtureLocale } from '@/stories/fixtures/richContent.fixtures'
 
 // ── Fixture content — not translated UI chrome ────────────────────────────────
 // Task 869 (R8): CmsPageView renders plain CMS data (page title/body), never UI copy of its own.
@@ -113,6 +114,8 @@ const meta: Meta<typeof CmsPageView> = {
   component: CmsPageView,
   tags: ['autodocs'],
   parameters: {
+    // The component has its own gutter on all four sides (`CmsPageView.tsx`), so the Story adds none (GR-3d).
+    skipCanvas: true,
     docs: {
       description: {
         component:
@@ -157,5 +160,15 @@ export const RichBody: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const fixture = FIXTURES[locale] ?? FIXTURES.en
     return <CmsPageView title={fixture.pageTitle} body={fixture.richBody} />
+  },
+}
+
+// Task 868 (R17) — a body that uses the editor's layout features: 2- and 3-column blocks (stacked below
+// 640px, side by side from it), a table wider than 320px (scrolls inside its own box), an image and
+// centred text. The fixture is shared with the editor's Stories (`richContent.fixtures.ts`).
+export const RichLayout: Story = {
+  render: (_args, context) => {
+    const locale = richFixtureLocale(context?.globals?.locale)
+    return <CmsPageView title={RICH_LAYOUT_TITLES[locale]} body={RICH_LAYOUT_BODIES[locale]} />
   },
 }

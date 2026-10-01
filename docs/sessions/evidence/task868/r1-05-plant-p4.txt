@@ -1,0 +1,15 @@
+P4 (R18): the empty-body guard back to .trim()
+file: src/modules/admin/actions/index.ts
+hash before=cbc5e086e5feab0c8ece3c75f23f400e0ec4b5f6 planted=b4513ea923db575cee5b401ad9df0720388f5328 restored=cbc5e086e5feab0c8ece3c75f23f400e0ec4b5f6
+HASH_EQUAL
+planted run exit=1
+     × Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no insert 6ms
+     × Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no update 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > createPage — sq_body_required (R5) > Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no insert
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > updatePage — sq_body_required (R5) > Task 868 (R18) — publish with an empty rich-text body <p></p> → sq_body_required, no update
+ Test Files  1 failed (1)
+      Tests  2 failed | 21 passed (23)
+--- after restore: exit=0
+ Test Files  1 passed (1)
+      Tests  23 passed (23)

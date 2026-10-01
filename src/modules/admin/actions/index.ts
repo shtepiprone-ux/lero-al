@@ -10,6 +10,7 @@ import { applyListingTransitionByStatus } from '@/modules/listings/actions/apply
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
 import { createNotification } from '@/modules/notifications/lib/mutations'
+import { isCmsBodyEmpty } from '@/modules/cms/lib/isCmsBodyEmpty'
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
@@ -231,7 +232,7 @@ export async function createPage(data: {
   if (!slugResult.ok) return { error: slugResult.reason }
   // R5: a page cannot publish with an empty Albanian body. `data.content` is required on
   // create, so the effective content is always the supplied one — no stored-row read needed.
-  if (data.is_published === true && !data.content.sq.body.trim()) {
+  if (data.is_published === true && isCmsBodyEmpty(data.content.sq.body)) {
     return { error: 'sq_body_required' }
   }
   const db = createAdminClient()
@@ -271,7 +272,7 @@ export async function updatePage(
       const existingContent = existingRow?.content as PageContent | undefined
       sqBody = existingContent?.sq?.body
     }
-    if (!sqBody || !sqBody.trim()) {
+    if (isCmsBodyEmpty(sqBody)) {
       return { error: 'sq_body_required' }
     }
   }

@@ -1,0 +1,26 @@
+EDITOR default@320@sq: overflow=false root=288/320 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@390@sq: overflow=false root=358/390 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@639@sq: overflow=false root=607/639 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@640@sq: overflow=false root=592/640 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR default@768@sq: overflow=false root=720/768 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR default@1440@sq: overflow=false root=1376/1440 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR default@320@uk: overflow=false root=288/320 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@390@uk: overflow=false root=358/390 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@639@uk: overflow=false root=607/639 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR default@640@uk: overflow=false root=592/640 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR default@768@uk: overflow=false root=720/768 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR default@1440@uk: overflow=false root=1376/1440 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@320@sq: overflow=false root=288/320 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@390@sq: overflow=false root=358/390 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@639@sq: overflow=false root=607/639 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@640@sq: overflow=false root=592/640 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@768@sq: overflow=false root=720/768 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@1440@sq: overflow=false root=1376/1440 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@320@uk: overflow=false root=288/320 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@390@uk: overflow=false root=358/390 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@639@uk: overflow=false root=607/639 controls=5 groups=1 unnamed=0 rows=1 minW=44 minH=44 maxH=44 fits=true content=16 label=14 errs=0
+EDITOR with-content@640@uk: overflow=false root=592/640 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@768@uk: overflow=false root=720/768 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR with-content@1440@uk: overflow=false root=1376/1440 controls=5 groups=1 unnamed=0 rows=1 minW=26 minH=26 maxH=26 fits=true content=16 label=14 errs=0
+EDITOR PROBE DONE
+EXIT_CODE=0

@@ -1,0 +1,4645 @@
+{
+ "patterns-mantine-adminpagesview--default@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 288,
+  "parentWidth": 320,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 142,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 24,
+   "bottom": 624,
+   "left": 24
+  },
+  "rootWidth": 720,
+  "parentWidth": 768,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 960,
+  "parentWidth": 1024,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Заголовок",
+   "Slug",
+   "Статус",
+   "Оновлено",
+   "Дії"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--default@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Titulli",
+   "Slug",
+   "Statusi",
+   "Përditësuar",
+   "Veprime"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 688,
+   "left": 16
+  },
+  "rootWidth": 288,
+  "parentWidth": 320,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 688,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 24,
+   "bottom": 688,
+   "left": 24
+  },
+  "rootWidth": 720,
+  "parentWidth": 768,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 688,
+   "left": 32
+  },
+  "rootWidth": 960,
+  "parentWidth": 1024,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 688,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 688,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 688,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 688,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--empty@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 688,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 0,
+  "actionMin": null,
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   14,
+   16
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootWidth": 288,
+  "parentWidth": 320,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 24,
+   "bottom": 504,
+   "left": 24
+  },
+  "rootWidth": 720,
+  "parentWidth": 768,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Actions"
+  ],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 504,
+   "left": 32
+  },
+  "rootWidth": 960,
+  "parentWidth": 1024,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 504,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 504,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Заголовок",
+   "Slug",
+   "Статус",
+   "Оновлено",
+   "Дії"
+  ],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--migration-pending@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 504,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Titulli",
+   "Slug",
+   "Statusi",
+   "Përditësuar",
+   "Veprime"
+  ],
+  "actionCount": 10,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": true,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 288,
+  "parentWidth": 320,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 142,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 24,
+   "bottom": 624,
+   "left": 24
+  },
+  "rootWidth": 720,
+  "parentWidth": 768,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 960,
+  "parentWidth": 1024,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Заголовок",
+   "Slug",
+   "Статус",
+   "Оновлено",
+   "Дії"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--deleting@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Titulli",
+   "Slug",
+   "Statusi",
+   "Përditësuar",
+   "Veprime"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 288,
+  "parentWidth": 320,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 142,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 24,
+   "bottom": 624,
+   "left": 24
+  },
+  "rootWidth": 720,
+  "parentWidth": 768,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 440,
+   "left": 164,
+   "right": 164,
+   "bottomAnchored": 372
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 960,
+  "parentWidth": 1024,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 440,
+   "left": 292,
+   "right": 292,
+   "bottomAnchored": 372
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Title",
+   "Slug",
+   "Status",
+   "Updated",
+   "Actions"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 440,
+   "left": 500,
+   "right": 500,
+   "bottomAnchored": 372
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Заголовок",
+   "Slug",
+   "Статус",
+   "Оновлено",
+   "Дії"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 440,
+   "left": 500,
+   "right": 500,
+   "bottomAnchored": 372
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 16,
+   "bottom": 108,
+   "left": 16
+  },
+  "rootWidth": 358,
+  "parentWidth": 390,
+  "tableVisible": false,
+  "headers": [],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 44,
+   "h": 44
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-adminpagesview--delete-confirm@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "gutter": {
+   "top": 24,
+   "right": 32,
+   "bottom": 624,
+   "left": 32
+  },
+  "rootWidth": 1376,
+  "parentWidth": 1440,
+  "tableVisible": true,
+  "headers": [
+   "Titulli",
+   "Slug",
+   "Statusi",
+   "Përditësuar",
+   "Veprime"
+  ],
+  "actionCount": 8,
+  "actionMin": {
+   "w": 22,
+   "h": 22
+  },
+  "actionNamesMissing": 0,
+  "alert": false,
+  "fontSizes": [
+   12,
+   14
+  ],
+  "headingSizes": [],
+  "dialog": {
+   "w": 440,
+   "left": 500,
+   "right": 500,
+   "bottomAnchored": 372
+  },
+  "dialogTitleSize": 16,
+  "dialogBodySizes": [
+   14
+  ],
+  "dialogButtonMinH": 44,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": false,
+    "w": 82.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": false,
+    "w": 82.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 82.4
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 82.4
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 97.5
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": false,
+    "w": 82.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 97.5
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": false,
+    "w": 82.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 97.5
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": false,
+    "w": 82.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": false,
+    "w": 97.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Чернетка",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 97.5
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": false,
+    "w": 97.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Чернетка",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": false,
+    "w": 81.1
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 81.1
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 81.1
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Projektim",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--new@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 97.5
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": false,
+    "w": 61.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 77.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Projektim",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--edit-published@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": false,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": true,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": false,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": true,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 53.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": false,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": true,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 53.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": false,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": true,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 53.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": false,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": true,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": false,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": true,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 53.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": false,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": true,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": false,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": true,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--empty-locale-warning@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 53.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": false,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": true,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 1,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugReserved slug — cannot be used",
+   "Reserved slug — cannot be used"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.4
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 71.4
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugReserved slug — cannot be used",
+   "Reserved slug — cannot be used"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugReserved slug — cannot be used",
+   "Reserved slug — cannot be used"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugReserved slug — cannot be used",
+   "Reserved slug — cannot be used"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugReserved slug — cannot be used",
+   "Reserved slug — cannot be used"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Draft",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugЗарезервований slug — не можна використати",
+   "Зарезервований slug — не можна використати"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Чернетка",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugЗарезервований slug — не можна використати",
+   "Зарезервований slug — не можна використати"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Чернетка",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 79.9
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 79.9
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugSlug i rezervuar — nuk mund të përdoret",
+   "Slug i rezervuar — nuk mund të përdoret"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Projektim",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--slug-error@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 77.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "SlugSlug i rezervuar — nuk mund të përdoret",
+   "Slug i rezervuar — nuk mund të përdoret"
+  ],
+  "alertCount": 0,
+  "switchLabel": "Projektim",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "ContentA published page needs Albanian content. Fill in the Albanian body or save it as a draft.",
+   "A published page needs Albanian content. Fill in the Albanian body or save it as a draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.4
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 71.4
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "ContentA published page needs Albanian content. Fill in the Albanian body or save it as a draft.",
+   "A published page needs Albanian content. Fill in the Albanian body or save it as a draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "ContentA published page needs Albanian content. Fill in the Albanian body or save it as a draft.",
+   "A published page needs Albanian content. Fill in the Albanian body or save it as a draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "ContentA published page needs Albanian content. Fill in the Albanian body or save it as a draft.",
+   "A published page needs Albanian content. Fill in the Albanian body or save it as a draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": false,
+    "w": 71.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "ContentA published page needs Albanian content. Fill in the Albanian body or save it as a draft.",
+   "A published page needs Albanian content. Fill in the Albanian body or save it as a draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "КонтентОпублікована сторінка потребує вмісту албанською. Заповніть текст албанською або збережіть як чернетку.",
+   "Опублікована сторінка потребує вмісту албанською. Заповніть текст албанською або збережіть як чернетку."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 81.1
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": false,
+    "w": 100.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "КонтентОпублікована сторінка потребує вмісту албанською. Заповніть текст албанською або збережіть як чернетку.",
+   "Опублікована сторінка потребує вмісту албанською. Заповніть текст албанською або збережіть як чернетку."
+  ],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 79.9
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 79.9
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "PërmbajtjaNjë faqe e publikuar ka nevojë për përmbajtje në shqip. Plotësoni tekstin në shqip ose ruajeni si draft.",
+   "Një faqe e publikuar ka nevojë për përmbajtje në shqip. Plotësoni tekstin në shqip ose ruajeni si draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--publish-body-required@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": false,
+    "w": 77.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [
+   "PërmbajtjaNjë faqe e publikuar ka nevojë për përmbajtje në shqip. Plotësoni tekstin në shqip ose ruajeni si draft.",
+   "Një faqe e publikuar ka nevojë për përmbajtje në shqip. Plotësoni tekstin në shqip ose ruajeni si draft."
+  ],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": false,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@320@en": {
+  "vw": 320,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 320,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 3,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@390@en": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 1,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@768@en": {
+  "vw": 768,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 74,
+   "right": 74,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@1024@en": {
+  "vw": 1024,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 202,
+   "right": 202,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 2,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@1440@en": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Albanian",
+    "selected": true,
+    "check": true,
+    "w": 104.5
+   },
+   {
+    "name": "English",
+    "selected": false,
+    "check": true,
+    "w": 93.1
+   },
+   {
+    "name": "Ukrainian",
+    "selected": false,
+    "check": false,
+    "w": 88.7
+   },
+   {
+    "name": "Italian",
+    "selected": false,
+    "check": false,
+    "w": 65.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Published",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 0,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@390@uk": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 3,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@1440@uk": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Албанська",
+    "selected": true,
+    "check": true,
+    "w": 119.4
+   },
+   {
+    "name": "Англійська",
+    "selected": false,
+    "check": true,
+    "w": 122.1
+   },
+   {
+    "name": "Українська",
+    "selected": false,
+    "check": false,
+    "w": 100.4
+   },
+   {
+    "name": "Італійська",
+    "selected": false,
+    "check": false,
+    "w": 94.8
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "Опубліковано",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 2,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@390@sq": {
+  "vw": 390,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 390,
+   "left": 0,
+   "right": 0,
+   "bottomAnchored": 0
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": true,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 3,
+  "errors": []
+ },
+ "patterns-mantine-pageeditordialogview--saving@1440@sq": {
+  "vw": 1440,
+  "docOverflowX": false,
+  "dialog": {
+   "w": 620,
+   "left": 410,
+   "right": 410,
+   "bottomAnchored": 88.3
+  },
+  "dialogTitleSize": 16,
+  "headingSizes": [
+   16
+  ],
+  "labelSizes": [
+   14,
+   16
+  ],
+  "inputSizes": [
+   14
+  ],
+  "tabs": [
+   {
+    "name": "Shqip",
+    "selected": true,
+    "check": true,
+    "w": 83.4
+   },
+   {
+    "name": "Anglisht",
+    "selected": false,
+    "check": true,
+    "w": 99.7
+   },
+   {
+    "name": "Ukrainisht",
+    "selected": false,
+    "check": false,
+    "w": 92.8
+   },
+   {
+    "name": "Italisht",
+    "selected": false,
+    "check": false,
+    "w": 69.5
+   }
+  ],
+  "tabListFitsDialog": true,
+  "tabsSwipe": false,
+  "textareaFont": "ui-monospace",
+  "textareaRows": 232,
+  "slugFont": "ui-monospace",
+  "errorTexts": [],
+  "alertCount": 0,
+  "switchLabel": "I publikuar",
+  "saveDisabled": true,
+  "footerButtonMinH": 44,
+  "contentOverflowingEls": 2,
+  "errors": []
+ }
+}

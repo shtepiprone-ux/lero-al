@@ -123,6 +123,10 @@ declare module '@mantine/core' {
                                   // a fixed height.
       | 'galleryNavDemoWidth'  // 480px — the same two Stories' demo backdrop width
       | 'prose'           // 576px — homepage hero subtitle max-width
+      | 'richTextControlSize' // 26px — Task 868 R27 (D868-5): the CMS rich-text editor toolbar control size from
+                              // `sm`; Mantine's own `@mantine/tiptap/styles.css` `.m_c2207da6[data-variant='default']` size
+      | 'richTextContentMinHeight' // 10lh — Task 868 R24: the CMS rich-text editor's content min height; the
+                                   // legacy body `Textarea` `minRows={10}` (§3.3), ten lines of the content's own line height
       | 'ctaSection'       // 672px — homepage CTA box max-width
       | 'content'        // 768px — homepage hero title / HowItWorksSteps grid / HeroSearchFallback max-width
       | 'dashboardContentMaxWidth' // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1,
@@ -273,6 +277,9 @@ declare module '@mantine/core' {
       // Task 893 (R8) — `/admin/users/new`'s page wrapper `max-w-3xl` (48rem, 768px), the narrower form
       // wrapper; same value type and read helper as `adminPageMaxWidth`.
       adminPageFormMaxWidth: string
+      // Task 868 (R6) — `/admin/pages`'s page wrapper `max-w-4xl` (56rem, 896px), the narrower list wrapper;
+      // same value type and read helper as `adminPageMaxWidth`.
+      adminPageNarrowMaxWidth: string
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -772,6 +779,8 @@ export const theme = createTheme({
       dashboardChartMinHeight: '24rem', // 384px — Task 845: line chart / donut chart area min height (spec v3.3 §17.2 ADM-10)
       galleryNavDemoWidth: '30rem', // 480px — Task 824 R17 revision, D824-4/AC17 audit
       prose: '36rem',            // 576px
+      richTextControlSize: '1.625rem', // 26px — Task 868 R27, D868-5: Mantine's own RichTextEditor control size (@mantine/tiptap/styles.css .m_c2207da6[data-variant='default'])
+      richTextContentMinHeight: '10lh', // Task 868 R24: ten lines, as the legacy `Textarea` `minRows={10}`
       ctaSection: '42rem',       // 672px
       content: '48rem',          // 768px
       dashboardContentMaxWidth: '90rem', // 1440px — Task 846: dashboard content cap (spec v3.3 §17.1)
@@ -831,6 +840,7 @@ export const theme = createTheme({
       adminTopBarHeight: 72,      // Task 852: AdminShell's own top-bar height (spec §17.1, all widths)
       adminPageMaxWidth: '64rem', // 1024px — Task 877: admin page wrapper (legacy `max-w-5xl`)
       adminPageFormMaxWidth: '48rem', // 768px — Task 893: admin form page wrapper (legacy `max-w-3xl`)
+      adminPageNarrowMaxWidth: '56rem', // 896px — Task 868: /admin/pages page wrapper (legacy `max-w-4xl`)
     },
     overlay: {
       dragHandle: {

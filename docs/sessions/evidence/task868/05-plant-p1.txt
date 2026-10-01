@@ -1,0 +1,11 @@
+P1 plant: remove the sq_body_required branch from the PageEditorDialog container (src/components/admin/AdminPagesManager.tsx; the container moved into AdminPagesManager.tsx, see session log deviation D1)
+hash before=7759257541d3ceba3523a9680b6d87a5d4d08d3e planted=b3628870af09c08cc55aa8d8c3b5258805ffd00f restored=7759257541d3ceba3523a9680b6d87a5d4d08d3e
+HASH_EQUAL
+     × T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it 2059ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it
+      Tests  1 failed | 5 passed (6)
+PLANT_EXIT=1
+--- after restore ---
+ Test Files  1 passed (1)
+      Tests  6 passed (6)

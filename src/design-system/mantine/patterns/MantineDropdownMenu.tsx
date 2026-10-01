@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
+import { Check } from 'lucide-react'
 import { Menu, Box, Stack, Group, Text, UnstyledButton, Divider, useMantineTheme } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
 
@@ -15,6 +16,11 @@ export interface DropdownMenuItemDef {
   disabled?: boolean
   /** Render a Divider/separator BEFORE this item */
   separator?: boolean
+  /**
+   * Task 868 R29 — marks the item as the current one: a trailing check at `iconSize.compact` and a
+   * `data-active` attribute. `undefined` (the default) renders exactly as before, so no existing consumer changes.
+   */
+  active?: boolean
 }
 
 export interface MantineDropdownMenuProps {
@@ -109,6 +115,8 @@ export function MantineDropdownMenu({
                   {item.separator && <Menu.Divider />}
                   <Menu.Item
                     leftSection={item.icon}
+                    rightSection={item.active ? <Check size={theme.other.iconSize.compact} aria-hidden /> : undefined}
+                    data-active={item.active || undefined}
                     color={item.color}
                     disabled={item.disabled}
                     onClick={item.onClick}
@@ -132,6 +140,8 @@ export function MantineDropdownMenu({
                   {item.separator && <Menu.Divider />}
                   <Menu.Item
                     leftSection={item.icon}
+                    rightSection={item.active ? <Check size={theme.other.iconSize.compact} aria-hidden /> : undefined}
+                    data-active={item.active || undefined}
                     color={item.color}
                     disabled={item.disabled}
                     onClick={item.onClick}
@@ -169,13 +179,14 @@ export function MantineDropdownMenu({
                       }
                     }}
                     disabled={item.disabled}
+                    data-active={item.active || undefined}
                     w="100%"
                     mih={theme.other.touchTarget}
                     py="sm"
                     px="md"
                     style={{ opacity: item.disabled ? 0.5 : 1 }}
                   >
-                    <Group gap="sm" align="center" wrap="nowrap">
+                    <Group gap="sm" align="center" wrap="nowrap" w={item.active === undefined ? undefined : '100%'}>
                       {item.icon && (
                         <Box
                           style={{
@@ -195,6 +206,11 @@ export function MantineDropdownMenu({
                       >
                         {item.label}
                       </Text>
+                      {item.active && (
+                        <Box ms="auto" flex="0 0 auto">
+                          <Check size={theme.other.iconSize.compact} aria-hidden />
+                        </Box>
+                      )}
                     </Group>
                   </UnstyledButton>
                 </Fragment>

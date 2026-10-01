@@ -1,0 +1,46 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 30b381243215c5c66414c808ef9d984c3541b157
+    Changed paths seen: 23
+    Excluded (15):
+      .storybook/preview.tsx  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      package-lock.json  [outside-src]
+      package.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      src/design-system/mantine/typography-chrome.css  [not-ts-tsx]
+      src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts  [story-or-test-file]
+      src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts  [story-or-test-file]
+      src/stories/mantine/primitives/DropdownMenu.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/CmsPageView.stories.tsx  [story-or-test-file]
+    Included surfaces (7):
+      src/app/admin/pages/page.tsx
+      src/app/layout.tsx
+      src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+      src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+      src/design-system/mantine/theme.ts
+      src/modules/admin/actions/index.ts
+      src/modules/cms/lib/sanitizeCmsHtml.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 7
+    Blocks baselined (recorded debt, does not fail): 4
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 371
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

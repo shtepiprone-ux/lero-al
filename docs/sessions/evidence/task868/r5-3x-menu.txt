@@ -1,0 +1,10 @@
+MENU with-active-items@320@sq: before={"vw":320,"overflow":false,"btnW":288,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[16,14],"checkAtEnd":16,"overflow":false,"menuItems":1} errs=0
+MENU with-active-items@390@sq: before={"vw":390,"overflow":false,"btnW":358,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[16,14],"checkAtEnd":16,"overflow":false,"menuItems":1} errs=0
+MENU with-active-items@768@sq: before={"vw":768,"overflow":false,"btnW":95,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[14],"checkAtEnd":12,"overflow":false,"menuItems":4} errs=0
+MENU with-active-items@1440@sq: before={"vw":1440,"overflow":false,"btnW":95,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[14],"checkAtEnd":12,"overflow":false,"menuItems":4} errs=0
+MENU with-active-items@320@uk: before={"vw":320,"overflow":false,"btnW":288,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[16,14],"checkAtEnd":16,"overflow":false,"menuItems":1} errs=0
+MENU with-active-items@390@uk: before={"vw":390,"overflow":false,"btnW":358,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[16,14],"checkAtEnd":16,"overflow":false,"menuItems":1} errs=0
+MENU with-active-items@768@uk: before={"vw":768,"overflow":false,"btnW":51,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[14],"checkAtEnd":12,"overflow":false,"menuItems":4} errs=0
+MENU with-active-items@1440@uk: before={"vw":1440,"overflow":false,"btnW":51,"captionFont":12} opened={"checks":1,"activeAttr":1,"itemFonts":[14],"checkAtEnd":12,"overflow":false,"menuItems":4} errs=0
+MENU PROBE DONE
+EXIT_CODE=0

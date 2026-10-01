@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Text, Box, Stack } from '@mantine/core';
+import { SimpleGrid, Text, Stack } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
+import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 import { MantineDashboardCard } from '@/design-system/mantine/patterns/MantineDashboardCard';
 import { MantineDashboardGrid, MantineDashboardGridSplit } from '@/design-system/mantine/patterns/MantineDashboardGrid';
-import { theme } from '@/design-system/mantine/theme';
 
 const meta: Meta<typeof MantineDashboardCard> = {
   title: 'Patterns/Mantine/DashboardCard',
@@ -17,49 +17,53 @@ const meta: Meta<typeof MantineDashboardCard> = {
 export default meta;
 type Story = StoryObj<typeof MantineDashboardCard>;
 
+// GR-3d (owner 2026-10-01): a card's padding is not a page gutter, so `Default`, `Loading` and `Error` wrap
+// their content in `StoryPageGutter`. `Fill` renders `MantineDashboardGrid`, which carries its own four sides.
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} p="md">
-        <MantineDashboardCard
-          title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-          scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-          state="ready"
-        >
-          <Text size="sm" c="gray.7">
-            {storyT(l, 'storybook.mantine.dashboard_card_body')}
-          </Text>
-        </MantineDashboardCard>
+      <StoryPageGutter>
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }}>
+          <MantineDashboardCard
+            title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+            scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+            state="ready"
+          >
+            <Text size="sm" c="gray.7">
+              {storyT(l, 'storybook.mantine.dashboard_card_body')}
+            </Text>
+          </MantineDashboardCard>
 
-        <MantineDashboardCard
-          title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-          scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-          state="loading"
-          loadingAriaLabel={storyT(l, 'dashboard.common.loading_label')}
-        />
+          <MantineDashboardCard
+            title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+            scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+            state="loading"
+            loadingAriaLabel={storyT(l, 'dashboard.common.loading_label')}
+          />
 
-        <MantineDashboardCard
-          title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-          scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-          state="error"
-          errorMessage={storyT(l, 'storybook.mantine.dashboard_card_error')}
-          retryLabel={storyT(l, 'dashboard.common.retry')}
-          onRetry={() => {}}
-        />
+          <MantineDashboardCard
+            title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+            scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+            state="error"
+            errorMessage={storyT(l, 'storybook.mantine.dashboard_card_error')}
+            retryLabel={storyT(l, 'dashboard.common.retry')}
+            onRetry={() => {}}
+          />
 
-        <MantineDashboardCard
-          title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-          scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-          state="stale"
-          staleLabel={storyT(l, 'dashboard.common.updated_at_prefix')}
-          staleTime="14:32"
-        >
-          <Text size="sm" c="gray.7">
-            {storyT(l, 'storybook.mantine.dashboard_card_body')}
-          </Text>
-        </MantineDashboardCard>
-      </SimpleGrid>
+          <MantineDashboardCard
+            title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+            scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+            state="stale"
+            staleLabel={storyT(l, 'dashboard.common.updated_at_prefix')}
+            staleTime="14:32"
+          >
+            <Text size="sm" c="gray.7">
+              {storyT(l, 'storybook.mantine.dashboard_card_body')}
+            </Text>
+          </MantineDashboardCard>
+        </SimpleGrid>
+      </StoryPageGutter>
     );
   },
 };
@@ -68,14 +72,14 @@ export const Loading: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Box p="md" maw={theme.other!.boxSize!.emptyState}>
+      <StoryPageGutter>
         <MantineDashboardCard
           title={storyT(l, 'storybook.mantine.dashboard_card_title')}
           scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
           state="loading"
           loadingAriaLabel={storyT(l, 'dashboard.common.loading_label')}
         />
-      </Box>
+      </StoryPageGutter>
     );
   },
 };
@@ -129,7 +133,7 @@ export const Error: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Box p="md" maw={theme.other!.boxSize!.emptyState}>
+      <StoryPageGutter>
         <MantineDashboardCard
           title={storyT(l, 'storybook.mantine.dashboard_card_title')}
           scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
@@ -138,7 +142,7 @@ export const Error: Story = {
           retryLabel={storyT(l, 'dashboard.common.retry')}
           onRetry={() => {}}
         />
-      </Box>
+      </StoryPageGutter>
     );
   },
 };

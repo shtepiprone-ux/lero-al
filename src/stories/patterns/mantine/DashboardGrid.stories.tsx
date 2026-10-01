@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Eye, Heart, Home, MessageSquare } from 'lucide-react';
-import { Box, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 import {
   MantineDashboardGrid,
@@ -34,6 +34,8 @@ function statCards(l: string) {
   ];
 }
 
+// GR-3d (owner 2026-10-01): MantineDashboardGrid carries its own page gutter (MantineDashboardGrid.tsx:56), so no
+// export adds a Box, StoryPageGutter or padding around it.
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
@@ -41,54 +43,29 @@ export const Default: Story = {
     // A missing (unrendered) 4th card is passed as `false`, exactly as a consumer's `{cond && <Card />}`.
     const showFourth = false;
     return (
-      <Box py="md">
-        <MantineDashboardGrid>
-          <MantineDashboardGridTopRow>
-            {cards.map((c) => (
-              <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
-            ))}
-          </MantineDashboardGridTopRow>
+      <MantineDashboardGrid>
+        <MantineDashboardGridTopRow>
+          {cards.map((c) => (
+            <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
+          ))}
+        </MantineDashboardGridTopRow>
 
-          <MantineDashboardGridTopRow>
-            {cards.slice(0, 3).map((c) => (
-              <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
-            ))}
-            {showFourth && (
-              <MantineDashboardStatCard
-                icon={cards[3].icon}
-                label={cards[3].label}
-                value={cards[3].value}
-                state="ready"
-              />
-            )}
-          </MantineDashboardGridTopRow>
+        <MantineDashboardGridTopRow>
+          {cards.slice(0, 3).map((c) => (
+            <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
+          ))}
+          {showFourth && (
+            <MantineDashboardStatCard
+              icon={cards[3].icon}
+              label={cards[3].label}
+              value={cards[3].value}
+              state="ready"
+            />
+          )}
+        </MantineDashboardGridTopRow>
 
-          <MantineDashboardGridSplit
-            main={
-              <MantineDashboardCard
-                title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-                scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-                state="ready"
-              >
-                <Text size="sm" c="gray.7">
-                  {storyT(l, 'storybook.mantine.dashboard_card_body')}
-                </Text>
-              </MantineDashboardCard>
-            }
-            side={
-              <MantineDashboardCard
-                title={storyT(l, 'storybook.mantine.dashboard_card_title')}
-                scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
-                state="ready"
-              >
-                <Text size="sm" c="gray.7">
-                  {storyT(l, 'storybook.mantine.dashboard_card_body')}
-                </Text>
-              </MantineDashboardCard>
-            }
-          />
-
-          <MantineDashboardGridFull>
+        <MantineDashboardGridSplit
+          main={
             <MantineDashboardCard
               title={storyT(l, 'storybook.mantine.dashboard_card_title')}
               scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
@@ -98,9 +75,65 @@ export const Default: Story = {
                 {storyT(l, 'storybook.mantine.dashboard_card_body')}
               </Text>
             </MantineDashboardCard>
-          </MantineDashboardGridFull>
-        </MantineDashboardGrid>
-      </Box>
+          }
+          side={
+            <MantineDashboardCard
+              title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+              scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+              state="ready"
+            >
+              <Text size="sm" c="gray.7">
+                {storyT(l, 'storybook.mantine.dashboard_card_body')}
+              </Text>
+            </MantineDashboardCard>
+          }
+        />
+
+        <MantineDashboardGridFull>
+          <MantineDashboardCard
+            title={storyT(l, 'storybook.mantine.dashboard_card_title')}
+            scopeLabel={storyT(l, 'storybook.mantine.dashboard_card_scope_now')}
+            state="ready"
+          >
+            <Text size="sm" c="gray.7">
+              {storyT(l, 'storybook.mantine.dashboard_card_body')}
+            </Text>
+          </MantineDashboardCard>
+        </MantineDashboardGridFull>
+      </MantineDashboardGrid>
+    );
+  },
+};
+
+/** Task 890 (F1) — `maxColumns={2}`: four cards stay 2 × 2 at every width from `md`, never 4-up. */
+export const MaxColumns: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <MantineDashboardGrid>
+        <MantineDashboardGridTopRow maxColumns={2}>
+          {statCards(l).map((c) => (
+            <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
+          ))}
+        </MantineDashboardGridTopRow>
+      </MantineDashboardGrid>
+    );
+  },
+};
+
+/** Task 890 (F1) — `wideFrom="xl"`: four cards are 2 × 2 from `md` and 4-up only from `xl` (1280px), so the
+ *  `lg` rung (1024–1279px) stays 2-up — the width a page has beside a fixed navbar. */
+export const DeferredFourUp: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <MantineDashboardGrid>
+        <MantineDashboardGridTopRow wideFrom="xl">
+          {statCards(l).map((c) => (
+            <MantineDashboardStatCard key={c.key} icon={c.icon} label={c.label} value={c.value} state="ready" />
+          ))}
+        </MantineDashboardGridTopRow>
+      </MantineDashboardGrid>
     );
   },
 };

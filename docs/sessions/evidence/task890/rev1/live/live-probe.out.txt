@@ -1,0 +1,14 @@
+a /admin 1024 en: status 200 overflow false cards 13 title Dashboard row1 ["Visible now=356","On moderation=356"] row4 ["Moderation queue=356","Complaints=356","Support queue=356"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}
+a /admin 1280 en: status 200 overflow false cards 13 title Dashboard row1 ["Visible now=230","On moderation=230","Complaints in progress=230","Unassigned tickets=230"] row4 ["Moderation queue=484","Complaints=484","Support queue=484"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}
+a /admin 1440 en: status 200 overflow false cards 13 title Dashboard row1 ["Visible now=270","On moderation=270","Complaints in progress=270","Unassigned tickets=270"] row4 ["Moderation queue=564","Complaints=564","Support queue=564"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}
+b /admin 1024 uk: status 200 overflow false cards 13 title Dashboard row1 ["Видимі зараз=356","На модерації=356"] row4 ["Скарги=356"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}
+c /admin?period=7d 1440 en: status 200 overflow false cards 13 title Dashboard row1 ["Visible now=270","On moderation=270","Complaints in progress=270","Unassigned tickets=270"] row4 ["Moderation queue=564","Complaints=564","Support queue=564"] spark-bars [0,7,7,7] activity-xlabels 7 trend-xlabels 7 clipped []
+   chart-instances {"instances":0,"series":[]}
+d /admin?period=bogus 1440 en: status 200 overflow false cards 13 title Dashboard row1 ["Visible now=270","On moderation=270","Complaints in progress=270","Unassigned tickets=270"] row4 ["Moderation queue=564","Complaints=564","Support queue=564"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}
+e /admin 390 uk: status 200 overflow false cards 13 title Dashboard row1 ["Видимі зараз=358"] row4 ["Скарги=358"] spark-bars [0,7,7,7] activity-xlabels 30 trend-xlabels 30 clipped []
+   chart-instances {"instances":0,"series":[]}

@@ -1,0 +1,4 @@
+admin /admin 390: status 200 {"url":"/admin","title":"Dashboard","headerBottom":72,"titleTop":88,"gap":16,"titleLeftFromNavbar":16,"navbar":390}
+admin /admin 1280: status 200 {"url":"/admin","title":"Dashboard","headerBottom":72,"titleTop":96,"gap":24,"titleLeftFromNavbar":24,"navbar":240}
+cabinet /en/cabinet/statistics 390: status 200 {"url":"/en/cabinet","title":"Rouse","headerBottom":65,"titleTop":206,"gap":141,"titleLeftFromNavbar":null,"navbar":null}
+cabinet /en/cabinet/statistics 1280: status 200 {"url":"/en/cabinet","title":"Rouse","headerBottom":65,"titleTop":122,"gap":57,"titleLeftFromNavbar":null,"navbar":null}

@@ -1,8 +1,7 @@
 # Task 890 — `/admin` rebuilt to the owner's references: an accent hero, queue KPIs with mini-charts, the platform activity chart, new listings and new users, and listings by city
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
-(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 4, 2026-10-01. The executor starts at
-§19 (revision 4), not §10 or §16–§18.**
+(ADM-10, stale badge, series tooltips) · **Status: ✅ APPROVED WITH NOTES — review 6, 2026-10-01 (§21). Archived.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
@@ -767,3 +766,31 @@ executor does not run it.
 
 Only `Patterns/Mantine/DashboardCard` → `Default`, `Loading` and `Error`, at 390 and 1234 `en`: a gap on all four sides
 and the cards at full width of the page column.
+
+## 20. Review 5 — `PARTIALLY VERIFIED` (2026-10-01)
+
+- **Revision 4 verified (AC21).** `DashboardCard.stories.tsx` is 34f2775d (`rev4/final-hash.txt`), has no BOM, and the
+  `git grep` prints nothing (`rev4/grep.txt`, exit 1 as expected). In `rev4/four-sides.txt`, `Default`, `Loading` and
+  `Error` measure top 24 and left/right 16/16/32/32, and `Fill` matches rev3. The other 9 gates exit 0.
+- **Still owed before approval — not executor work:**
+  - the reviewer's `check:locale-leak:mantine-only` run (§19.5), which was still in progress at this review. Zero
+    findings are required for `patterns-mantine-admindashboardview`, `-dashboardgrid` and `-dashboardstatrows`.
+  - the owner's §19.6 check of `DashboardCard` → `Default`/`Loading`/`Error` at 390 and 1234.
+- When both are in, the next review closes the task. Re-open this kickoff only for a defect either of them finds.
+
+## 21. Review 6 — `APPROVED WITH NOTES` (2026-10-01)
+
+- **Owner §19.6**, verbatim (2026-10-01): *"Приймаю."* That covers `DashboardCard` `Default`/`Loading`/`Error` at 390/1234.
+  §13.4, §16.6 and §18.6 were accepted earlier the same day (§19.1).
+- **Locale leak (§19.5).** The gate's own detector was run on only the three Stories its quote names:
+  - script: `docs/sessions/evidence/task890/review6/locale-leak-scoped.mjs`, a copy of `scripts/check-locale-leak.mjs`
+    with three edits (an absolute import, an absolute ROOT, a three-title filter);
+  - result: `review6/locale-leak-scoped.txt`, **zero leaks across 17 stories × sq/uk/it × 3 viewports**, exit 0.
+
+  The full two-hour run was stopped after the owner asked, verbatim: *"2 години заради 10 знахідок? Можливо швидше
+  буде візуально це перевірити?"* The full command still exits 1 on other Stories (known red, Task 836); the scoped
+  run does not measure those.
+- **Notes, carried elsewhere:**
+  - **908** (P3): the stale-caption badge clips at 320.
+  - **909** (Sprint 87): the four-side gate; its day-one list no longer includes the dashboard Stories.
+  - First Load JS of `/admin` went from 429 kB to 469 kB, because the page now imports the ApexCharts patterns.

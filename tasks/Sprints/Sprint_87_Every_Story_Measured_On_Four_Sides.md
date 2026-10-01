@@ -41,7 +41,7 @@ The Tasks table is the single state source.
 
 | Step | Task | Gate |
 |---|---|---|
-| 1 | **890** revision 3 (Sprint 78) | `MantineDashboardGrid` carries all four sides; without it, 909 would wrap the grid Stories in the Story instead of fixing the real page. |
+| 1 | ~~**890** revision 3 (Sprint 78)~~ ✅ landed 2026-10-01 | `MantineDashboardGrid` carries all four sides; without it, 909 would wrap the grid Stories in the Story instead of fixing the real page. |
 | 2 | **909** | — |
 
 ## Preconditions

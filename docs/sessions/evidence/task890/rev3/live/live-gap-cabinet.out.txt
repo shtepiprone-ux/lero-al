@@ -1,0 +1,2 @@
+cabinet-agent1 /en/cabinet/statistics 390: status 200 {"url":"/en/cabinet/statistics","title":"My dashboard","headerBottom":65,"titleTop":81,"gap":16,"titleLeftFromNavbar":null,"navbar":null}
+cabinet-agent1 /en/cabinet/statistics 1280: status 200 {"url":"/en/cabinet/statistics","title":"My dashboard","headerBottom":65,"titleTop":89,"gap":24,"titleLeftFromNavbar":null,"navbar":null}

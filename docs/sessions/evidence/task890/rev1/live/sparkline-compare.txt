@@ -1,0 +1,3 @@
+/admin           bar values (val attr) per KPI card: [[],[0,0,0,2,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
+/admin?period=7d bar values (val attr) per KPI card: [[],[0,0,0,2,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
+identical: true

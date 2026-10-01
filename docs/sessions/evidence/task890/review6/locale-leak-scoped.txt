@@ -1,0 +1,12 @@
+win32 v22.22.3
+🔍  Locale leak detector — full mode (mantine-only)
+Mantine selected: 17; non-Mantine excluded: 462
+    Stories: 17 scanned (0 multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: 3
+    Output: .screenshots/locale-leak/2026-10-01T08-18/
+
+.........................................................................................................................................................
+
+✅  Locale leak detector: ZERO leaks across 17 stories × sq/uk/it.
+    Report: .screenshots/locale-leak/2026-10-01T08-18/report.json
+
+EXIT_CODE=0

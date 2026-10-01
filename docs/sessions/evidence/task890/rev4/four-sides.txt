@@ -1,0 +1,17 @@
+# 4 stories; columns: id width top/left/right/bottom (px from viewport edge; bottom only when content ends above the fold)
+patterns-mantine-dashboardcard--default 320 top/left/right/bottom 24/16/16/142 bottomToDocEnd 142 shell false
+patterns-mantine-dashboardcard--loading 320 top/left/right/bottom 24/16/16/698 bottomToDocEnd 698 shell false
+patterns-mantine-dashboardcard--fill 320 top/left/right/bottom 16/16/16/520 bottomToDocEnd 520 shell false
+patterns-mantine-dashboardcard--error 320 top/left/right/bottom 24/16/16/660 bottomToDocEnd 660 shell false
+patterns-mantine-dashboardcard--default 390 top/left/right/bottom 24/16/16/142 bottomToDocEnd 142 shell false
+patterns-mantine-dashboardcard--loading 390 top/left/right/bottom 24/16/16/698 bottomToDocEnd 698 shell false
+patterns-mantine-dashboardcard--fill 390 top/left/right/bottom 16/16/16/520 bottomToDocEnd 520 shell false
+patterns-mantine-dashboardcard--error 390 top/left/right/bottom 24/16/16/660 bottomToDocEnd 660 shell false
+patterns-mantine-dashboardcard--default 1024 top/left/right/bottom 24/32/32/640 bottomToDocEnd 640 shell false
+patterns-mantine-dashboardcard--loading 1024 top/left/right/bottom 24/32/32/698 bottomToDocEnd 698 shell false
+patterns-mantine-dashboardcard--fill 1024 top/left/right/bottom 24/24/24/654 bottomToDocEnd 654 shell false
+patterns-mantine-dashboardcard--error 1024 top/left/right/bottom 24/32/32/660 bottomToDocEnd 660 shell false
+patterns-mantine-dashboardcard--default 1440 top/left/right/bottom 24/32/32/660 bottomToDocEnd 660 shell false
+patterns-mantine-dashboardcard--loading 1440 top/left/right/bottom 24/32/32/698 bottomToDocEnd 698 shell false
+patterns-mantine-dashboardcard--fill 1440 top/left/right/bottom 24/24/24/654 bottomToDocEnd 654 shell false
+patterns-mantine-dashboardcard--error 1440 top/left/right/bottom 24/32/32/660 bottomToDocEnd 660 shell false

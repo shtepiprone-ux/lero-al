@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { Stack, Group, Text, Badge, Skeleton, Button, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { Box, Stack, Group, Text, Badge, Skeleton, Button, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { ChevronRight } from 'lucide-react'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
 
@@ -16,7 +16,9 @@ export interface DashboardStatRow {
   /** Locale-formatted count for display, when it differs from the raw number (formatting stays
    * with the caller). Falls back to `count` when omitted. */
   displayCount?: ReactNode
-  href: string
+  /** The row's drill-down target. Omitted (Task 890, R5: the activity totals strip), the row is
+   * plain text — no anchor and no chevron, because a total that links nowhere must not look like a link. */
+  href?: string
   tone?: DashboardStatRowTone
 }
 
@@ -51,6 +53,8 @@ const TONE_COLOR: Record<DashboardStatRowTone, string> = {
  * `allZeroState` replaces the rows only when the caller passes it AND every row's `count` is
  * actually `0` (Revision 1, F1) — this pattern evaluates that condition itself from `count`, so a
  * caller that always passes `allZeroState` can never hide a real non-zero action count.
+ *
+ * A row without `href` (Task 890) renders as plain text in a `Box` — no anchor, no chevron.
  *
  * Production consumers: 853, 854 (not wired in this task).
  */
@@ -109,19 +113,15 @@ export function MantineDashboardStatRows({
 
   return (
     <Stack gap="xs">
-      {rows.map((row) => (
-        <UnstyledButton
-          key={row.href}
-          component={Link}
-          href={row.href}
-          mih={theme.other.touchTarget}
-          display="block"
-        >
+      {rows.map((row) => {
+        const content = (
           <Group justify="space-between" wrap="nowrap" gap="sm" mih={theme.other.touchTarget}>
             <Text size="sm" c="gray.8" lineClamp={2}>
               {row.label}
             </Text>
-            <Group gap="xs" wrap="nowrap">
+            {/* `flex="0 0 auto"` (Task 890 rev 1): the count never shrinks, so a long label wraps instead of
+                clipping the badge in a narrow card. */}
+            <Group gap="xs" wrap="nowrap" flex="0 0 auto">
               {row.tone && (
                 <Badge color={TONE_COLOR[row.tone]} variant="light" size="sm">
                   {row.displayCount ?? row.count}
@@ -132,11 +132,20 @@ export function MantineDashboardStatRows({
                   {row.displayCount ?? row.count}
                 </Text>
               )}
-              <ChevronRight size={theme.other.iconSize.compact} aria-hidden="true" />
+              {row.href && <ChevronRight size={theme.other.iconSize.compact} aria-hidden="true" />}
             </Group>
           </Group>
-        </UnstyledButton>
-      ))}
+        )
+        return row.href ? (
+          <UnstyledButton key={row.href} component={Link} href={row.href} mih={theme.other.touchTarget} display="block">
+            {content}
+          </UnstyledButton>
+        ) : (
+          <Box key={row.label} mih={theme.other.touchTarget}>
+            {content}
+          </Box>
+        )
+      })}
     </Stack>
   )
 }

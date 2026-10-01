@@ -1,0 +1,14 @@
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M src/app/admin/page.tsx
+ M src/design-system/mantine/patterns/MantineDashboardStatRows.tsx
+ M src/modules/admin/dashboard/components/AdminDashboardView.tsx
+ M src/stories/fixtures/adminDashboard.fixtures.ts
+ M src/stories/patterns/mantine/AdminDashboardView.stories.tsx
+ M src/stories/patterns/mantine/DashboardStatRows.stories.tsx
+?? docs/sessions/2026-09-30-task890-admin-dashboard-to-references.md
+?? docs/sessions/evidence/task890/
+?? src/modules/admin/dashboard/__tests__/trends.test.ts
+?? src/modules/admin/dashboard/trends.ts

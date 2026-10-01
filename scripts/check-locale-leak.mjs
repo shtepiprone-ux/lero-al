@@ -223,6 +223,10 @@ const PER_STORY_TOKENS = {
   // listed here.
   'patterns-mantine-adminshell': ['Footer'],
   'patterns-mantine-adminsidebar': ['Footer'],
+  // AdminDashboardView (Task 890 rev 1, F1): every export renders inside the real `AdminShell` (the
+  // production parent), so the same sidebar loanword "Footer" appears in sq/it — the same key and
+  // reasoning as the two entries above.
+  'patterns-mantine-admindashboardview': ['Footer'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

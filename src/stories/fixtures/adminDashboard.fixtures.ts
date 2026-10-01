@@ -11,7 +11,7 @@
  * — real Albanian names/places that are never translated, so no per-story leak entry is needed.
  */
 import { storyT } from '@/stories/_storyI18n'
-import { blockFail, blockOk } from '@/lib/dashboard/blockResult'
+import { blockFail, blockOk, type BlockResult } from '@/lib/dashboard/blockResult'
 import type {
   AdminDashboardData,
   Adm01Row,
@@ -20,6 +20,7 @@ import type {
   LocationRequestRow,
   RecentListingRow,
 } from '@/modules/admin/dashboard/types'
+import type { AdminTrends, TrendPoint, VisibleListingsByCity } from '@/modules/admin/dashboard/trends'
 
 export const ADMIN_DASHBOARD_FIXTURE_ANCHOR = new Date('2026-07-30T00:00:00.000Z')
 
@@ -106,4 +107,60 @@ export function adminDashboardAdm09Zero(locale: string): AdminDashboardData {
 /** R7 state 5 — no location requests: the row-3 card does not render. */
 export function adminDashboardNoLocationRequests(locale: string): AdminDashboardData {
   return { ...adminDashboardAllOk(locale), locationRequests: blockOk({ count: 0, rows: [] }) }
+}
+
+// ── Task 890: trends, sparklines and cities ─────────────────────────────────────────────────────
+// Dates end on 2026-09-17, the last completed Tirane day as of `DASHBOARD_PERIOD_NOW`
+// (`dashboardPeriod.fixture.ts`) — the `now` every story passes the view — so the charts read as a
+// real "last N days" window. Counts are a fixed arithmetic shape (no random, no wall clock).
+
+const LAST_COMPLETED_DAY_MS = Date.UTC(2026, 8, 17)
+
+function fixtureDates(days: number): string[] {
+  return Array.from({ length: days }, (_, i) => new Date(LAST_COMPLETED_DAY_MS - (days - 1 - i) * 86_400_000).toISOString().slice(0, 10))
+}
+
+function trendSeries(days: number, base: number, step: number, mod: number): BlockResult<TrendPoint[]> {
+  return blockOk(fixtureDates(days).map((date, i) => ({ date, count: base + ((i * step) % mod) })))
+}
+
+/** The default trends: 30 days of new listings and new users, three 7-day queue sparklines. */
+export function adminTrendsAllOk(days = 30): AdminTrends {
+  return {
+    newListings: trendSeries(days, 4, 7, 9),
+    newUsers: trendSeries(days, 2, 5, 6),
+    sparklines: {
+      listings: trendSeries(7, 3, 5, 7),
+      reports: trendSeries(7, 0, 3, 4),
+      tickets: trendSeries(7, 1, 2, 5),
+    },
+  }
+}
+
+/** Every trend read failed (or hit the row limit): the bar card and the three sparklines error. */
+export function adminTrendsError(): AdminTrends {
+  return {
+    newListings: blockFail('query_failed'),
+    newUsers: blockFail('query_failed'),
+    sparklines: { listings: blockFail('query_failed'), reports: blockFail('query_failed'), tickets: blockFail('query_failed') },
+  }
+}
+
+/** Top five cities plus Other; the names are proper nouns that never translate (locale-leak allowlist). */
+export function adminCitiesAllOk(): BlockResult<VisibleListingsByCity> {
+  return blockOk({
+    cities: [
+      { key: '2', name: 'Tirana', count: 412 },
+      { key: '5', name: 'Durrës', count: 188 },
+      { key: '6', name: 'Vlorë', count: 96 },
+      { key: '7', name: 'Shkodër', count: 64 },
+      { key: '8', name: 'Berat', count: 41 },
+    ],
+    other: 99,
+  })
+}
+
+/** No listing resolves to a city: one "Other" bar. */
+export function adminCitiesOnlyOther(): BlockResult<VisibleListingsByCity> {
+  return blockOk({ cities: [], other: 900 })
 }

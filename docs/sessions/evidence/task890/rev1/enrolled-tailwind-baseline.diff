@@ -1,0 +1,22 @@
+diff --git a/scripts/enrolled-tailwind-baseline.json b/scripts/enrolled-tailwind-baseline.json
+index 7d1cd6512..1ea7c5560 100644
+--- a/scripts/enrolled-tailwind-baseline.json
++++ b/scripts/enrolled-tailwind-baseline.json
+@@ -37,7 +37,7 @@
+       "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+     },
+     "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: h-full": {
+-      "count": 5,
++      "count": 3,
+       "owner": "794",
+       "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+     },
+@@ -127,7 +127,7 @@
+       "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+     },
+     "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx :: w-full": {
+-      "count": 4,
++      "count": 2,
+       "owner": "794",
+       "reason": "Gallery LCP static-frame/interactive-shell mechanism (docs/backlog-reserved.md:18, Sprint 71 Task 794) — remove-only baseline, owner decision 2026-09-17 (Task 829 kickoff §5.1)."
+     },

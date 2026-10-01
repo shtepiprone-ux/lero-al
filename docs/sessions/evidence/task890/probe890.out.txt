@@ -1,0 +1,81 @@
+
+===== patterns-mantine-admindashboardview--default locale=en =====
+320: vw 320 docScroll 320 overflowX false edge L/R 16/16 grid 288 h1 Dashboard:20 maxFont 20 scrollers [] errors 0
+   titles: H2:Platform activity · last 30 :20 | H2:Listing status:20 | H2:New listings and new users ·:20 | H2:Visible listings by city:20 | H2:Moderation queue:20 | H2:Complaints:20 | H2:Support queue:20 | H2:Location requests:20 | H2:Recent listings:20
+390: vw 390 docScroll 390 overflowX false edge L/R 16/16 grid 358 h1 Dashboard:20 maxFont 20 scrollers [] errors 0
+   titles: H2:Platform activity · last 30 :20 | H2:Listing status:20 | H2:New listings and new users ·:20 | H2:Visible listings by city:20 | H2:Moderation queue:20 | H2:Complaints:20 | H2:Support queue:20 | H2:Location requests:20 | H2:Recent listings:20
+768: vw 768 docScroll 768 overflowX false edge L/R 24/24 grid 348 h1 Dashboard:24 maxFont 30 scrollers [] errors 0
+   titles: H2:Platform activity · last 30 :20 | H2:Listing status:20 | H2:New listings and new users ·:20 | H2:Visible listings by city:20 | H2:Moderation queue:20 | H2:Complaints:20 | H2:Support queue:20 | H2:Location requests:20 | H2:Recent listings:20
+1024: vw 1024 docScroll 1024 overflowX false edge L/R 24/24 grid 226 h1 Dashboard:24 maxFont 30 scrollers ["p[Duplicate listing] 64>44","p[Complaint] 70>26"] errors 0
+   titles: H2:Platform activity · last 30 :20 | H2:Listing status:20 | H2:New listings and new users ·:20 | H2:Visible listings by city:20 | H2:Moderation queue:20 | H2:Complaints:20 | H2:Support queue:20 | H2:Location requests:20 | H2:Recent listings:20
+1440: vw 1440 docScroll 1440 overflowX false edge L/R 24/24 grid 330 h1 Dashboard:24 maxFont 30 scrollers [] errors 0
+   titles: H2:Platform activity · last 30 :20 | H2:Listing status:20 | H2:New listings and new users ·:20 | H2:Visible listings by city:20 | H2:Moderation queue:20 | H2:Complaints:20 | H2:Support queue:20 | H2:Location requests:20 | H2:Recent listings:20
+
+===== patterns-mantine-admindashboardview--default locale=uk =====
+320: vw 320 docScroll 320 overflowX false edge L/R 16/16 grid 288 h1 Dashboard:20 maxFont 20 scrollers [] errors 0
+390: vw 390 docScroll 390 overflowX false edge L/R 16/16 grid 358 h1 Dashboard:20 maxFont 20 scrollers [] errors 0
+768: vw 768 docScroll 768 overflowX false edge L/R 24/24 grid 348 h1 Dashboard:24 maxFont 30 scrollers [] errors 0
+1024: vw 1024 docScroll 1024 overflowX false edge L/R 24/24 grid 226 h1 Dashboard:24 maxFont 30 scrollers ["p[Апартаменти в центрі Тир] 114>100","p[Спам] 37>24","p[Дублікат оголошення] 88>24","p[Підтримка] 75>1","p[Скарга] 48>13"] errors 0
+1440: vw 1440 docScroll 1440 overflowX false edge L/R 24/24 grid 330 h1 Dashboard:24 maxFont 30 scrollers [] errors 0
+
+===== Default @1440 cards (DOM order) =====
+0: top 104 left 24 330x343 bg rgba(0, 0, 0, 0) img linear-gradient(rgb(236, 84, 71) 0%, rgb(142, 50, 43) 100%) bars 0 <a> 0 series 0 "Visible now /  / 900" aria ["About visible listings"]
+1: top 104 left 378 330x343 bg rgb(255, 255, 255) img none bars 7 <a> 0 series 0 "On moderation /  / 12" aria ["New listings per day, last 7 days","bar chart with 1 data series: New listings per day, last 7 days"]
+2: top 104 left 732 330x343 bg rgb(255, 255, 255) img none bars 7 <a> 0 series 0 "Complaints in progress /  / 3" aria ["New reports per day, last 7 days","bar chart with 1 data series: New reports per day, last 7 days"]
+3: top 104 left 1086 330x343 bg rgb(255, 255, 255) img none bars 7 <a> 0 series 0 "Unassigned tickets /  / 4" aria ["New support tickets per day, last 7 days","bar chart with 1 data series: New support tickets per day, last 7 days"]
+4: top 471 left 24 920x1066 bg rgb(255, 255, 255) img none bars 0 <a> 0 series 3 "Platform activity · last 30 days" aria ["About the activity series","Platform activity · last 30 days","Platform activity · last 30 days"]
+5: top 471 left 968 448x758 bg rgb(255, 255, 255) img none bars 0 <a> 0 series 0 "Listing status" aria []
+6: top 1253 left 968 448x284 bg rgb(255, 255, 255) img none bars 0 <a> 2 series 0 "Needs a visibility check /  / 40" aria []
+7: top 1561 left 24 920x530 bg rgb(255, 255, 255) img none bars 60 <a> 0 series 0 "New listings and new users · last 30 day" aria ["New listings and new users · last 30 days","bar chart with 2 data series: New listings, New users","New listings and new users · last 30 days"]
+8: top 1561 left 968 448x530 bg rgb(255, 255, 255) img none bars 6 <a> 0 series 0 "Visible listings by city" aria ["Visible listings by city","bar chart with 1 data series: Visible listings"]
+9: top 2115 left 24 330x395 bg rgb(255, 255, 255) img none bars 0 <a> 4 series 0 "Moderation queue" aria []
+10: top 2115 left 378 330x395 bg rgb(255, 255, 255) img none bars 0 <a> 3 series 0 "Complaints" aria []
+11: top 2115 left 732 330x395 bg rgb(255, 255, 255) img none bars 0 <a> 3 series 0 "Support queue" aria []
+12: top 2115 left 1086 330x395 bg rgb(255, 255, 255) img none bars 0 <a> 2 series 0 "Location requests" aria []
+13: top 2534 left 24 1392x300 bg rgb(255, 255, 255) img none bars 0 <a> 1 series 0 "Recent listings" aria []
+activity-stale@1440: overflowX false edge 24/24 stale-caption true retry-buttons 0 bars 87 header ["Updated at 09/16/2026, 10:00 AM","Data updated at 09/16/2026, 10:00 AM"] errors 0
+activity-stale@390: overflowX false edge 16/16 stale-caption true retry-buttons 0 bars 87 header ["Updated at 09/16/2026, 10:00 AM","Data updated at 09/16/2026, 10:00 AM"] errors 0
+activity-error@1440: overflowX false edge 24/24 stale-caption false retry-buttons 1 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+activity-error@390: overflowX false edge 16/16 stale-caption false retry-buttons 1 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+activity-empty-period@1440: overflowX false edge 24/24 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+activity-empty-period@390: overflowX false edge 16/16 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+trends-error@1440: overflowX false edge 24/24 stale-caption false retry-buttons 1 bars 6 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+trends-error@390: overflowX false edge 16/16 stale-caption false retry-buttons 1 bars 6 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+cities-only-other@1440: overflowX false edge 24/24 stale-caption false retry-buttons 0 bars 82 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+cities-only-other@390: overflowX false edge 16/16 stale-caption false retry-buttons 0 bars 82 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+adm02-error@1440: overflowX false edge null/null stale-caption false retry-buttons 0 bars 0 header [] errors 1
+   ERR SB_PREVIEW_API_0009 (NoStoryMatchError): Couldn't find story matching 'patterns-mantine-admindashboardview--adm02-error'.
+
+- Are you sure a story with that id e
+adm02-error@390: overflowX false edge null/null stale-caption false retry-buttons 0 bars 0 header [] errors 1
+   ERR SB_PREVIEW_API_0009 (NoStoryMatchError): Couldn't find story matching 'patterns-mantine-admindashboardview--adm02-error'.
+
+- Are you sure a story with that id e
+all-queues-zero@1440: overflowX false edge 24/24 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+all-queues-zero@390: overflowX false edge 16/16 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+adm09-zero@1440: overflowX false edge null/null stale-caption false retry-buttons 0 bars 0 header [] errors 1
+   ERR SB_PREVIEW_API_0009 (NoStoryMatchError): Couldn't find story matching 'patterns-mantine-admindashboardview--adm09-zero'.
+
+- Are you sure a story with that id ex
+adm09-zero@390: overflowX false edge null/null stale-caption false retry-buttons 0 bars 0 header [] errors 1
+   ERR SB_PREVIEW_API_0009 (NoStoryMatchError): Couldn't find story matching 'patterns-mantine-admindashboardview--adm09-zero'.
+
+- Are you sure a story with that id ex
+no-location-requests@1440: overflowX false edge 24/24 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+no-location-requests@390: overflowX false edge 16/16 stale-caption false retry-buttons 0 bars 87 header ["Updated at 07/30/2026, 02:00 AM"] errors 0
+patterns-mantine-dashboardstatrows--default@320: edge-left 16 (root 0) overflow false <a> 3 svg 4 fonts [16,14,12] errors 0
+patterns-mantine-dashboardstatrows--default@390: edge-left 16 (root 0) overflow false <a> 3 svg 4 fonts [16,14,12] errors 0
+patterns-mantine-dashboardstatrows--default@1024: edge-left 32 (root 0) overflow false <a> 3 svg 4 fonts [16,14,12] errors 0
+patterns-mantine-dashboardstatrows--default@1440: edge-left 32 (root 0) overflow false <a> 3 svg 4 fonts [16,14,12] errors 0
+patterns-mantine-dashboardstatrows--no-links@320: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--no-links@390: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--no-links@1024: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--no-links@1440: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--loading@320: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [] errors 0
+patterns-mantine-dashboardstatrows--loading@390: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [] errors 0
+patterns-mantine-dashboardstatrows--loading@1024: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [] errors 0
+patterns-mantine-dashboardstatrows--loading@1440: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [] errors 0
+patterns-mantine-dashboardstatrows--error@320: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--error@390: edge-left 16 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--error@1024: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0
+patterns-mantine-dashboardstatrows--error@1440: edge-left 32 (root 0) overflow false <a> 0 svg 0 fonts [14] errors 0

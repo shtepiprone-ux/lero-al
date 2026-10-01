@@ -1,0 +1,48 @@
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-locale-leak.mjs
+ M scripts/enrolled-tailwind-baseline.json
+ M src/app/admin/page.tsx
+ M src/design-system/mantine/patterns/MantineDashboardGrid.tsx
+ M src/design-system/mantine/patterns/MantineDashboardStatRows.tsx
+ M src/modules/admin/dashboard/components/AdminDashboardView.tsx
+ M src/stories/fixtures/adminDashboard.fixtures.ts
+ M src/stories/patterns/mantine/AdminDashboardView.stories.tsx
+ M src/stories/patterns/mantine/DashboardGrid.stories.tsx
+ M src/stories/patterns/mantine/DashboardStatRows.stories.tsx
+?? docs/sessions/2026-09-30-task890-admin-dashboard-to-references.md
+?? docs/sessions/evidence/task890/build-storybook.txt
+?? docs/sessions/evidence/task890/build.txt
+?? docs/sessions/evidence/task890/census-changed.txt
+?? docs/sessions/evidence/task890/census-final.txt
+?? docs/sessions/evidence/task890/check-design-tokens-strict.txt
+?? docs/sessions/evidence/task890/check-enrolled-tailwind.txt
+?? docs/sessions/evidence/task890/check-file-integrity.txt
+?? docs/sessions/evidence/task890/check-i18n.txt
+?? docs/sessions/evidence/task890/check-listing-visibility.txt
+?? docs/sessions/evidence/task890/check-mojibake.txt
+?? docs/sessions/evidence/task890/check-pattern-enrolment.txt
+?? docs/sessions/evidence/task890/check-rendered-scope.txt
+?? docs/sessions/evidence/task890/check-stories.txt
+?? docs/sessions/evidence/task890/check-story-coverage.txt
+?? docs/sessions/evidence/task890/i0-census.txt
+?? docs/sessions/evidence/task890/i0-hashes.txt
+?? docs/sessions/evidence/task890/i0-status.txt
+?? docs/sessions/evidence/task890/lint.txt
+?? docs/sessions/evidence/task890/platform.txt
+?? docs/sessions/evidence/task890/probe890.console.txt
+?? docs/sessions/evidence/task890/probe890.mjs
+?? docs/sessions/evidence/task890/probe890.out.txt
+?? docs/sessions/evidence/task890/rev1/
+?? docs/sessions/evidence/task890/rev2/
+?? docs/sessions/evidence/task890/rev3/
+?? docs/sessions/evidence/task890/rev4/
+?? docs/sessions/evidence/task890/shots/
+?? docs/sessions/evidence/task890/tests-admin-dashboard.txt
+?? docs/sessions/evidence/task890/tests-statrows.txt
+?? docs/sessions/evidence/task890/typecheck.txt
+?? docs/sessions/evidence/task890/visibility-test.txt
+?? src/modules/admin/dashboard/__tests__/trends.test.ts
+?? src/modules/admin/dashboard/trends.ts

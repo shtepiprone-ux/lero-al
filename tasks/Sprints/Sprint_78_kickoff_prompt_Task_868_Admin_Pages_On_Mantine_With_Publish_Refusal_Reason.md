@@ -775,6 +775,74 @@ It goes to the owner after review 4, together with these points: the 44px toolba
 2 at 1440), the badge over the avatar on `AgentStatisticsView` state-3 cards (E1), the table scrolling at 320, and the
 `"Slug"` field label, which is the same in every locale (§18.3).
 
+## 19. Review 4 — 2026-10-01 — `PARTIALLY VERIFIED` (revision 2 verified; O78-7 owed)
+
+Opus. Frontend task, so no review ledger (D69-3). Approval waits on the owner's O78-7 matrix (§17.9, with the §18.8
+points) and on R26 below.
+
+### 19.1 What was verified
+
+- **Tree.** Every source path in `r2-23-hash-object.txt` equals the working tree (`git hash-object`). Only the session
+  log and `docs/backlog.md` changed after it, which is expected. The last source write was 15:35:26 (the P9 restore of
+  `patterns/index.ts`, equal to `HEAD`). The final build (`.next/BUILD_ID` 15:36:58) and `storybook-static`
+  (15:37:50–15:38:33) are both newer.
+- **R22 / AC22.** The reviewer re-ran `r2-routes.mjs` on the final `.next`: `/admin/pages/page`, 1 of 64 pages. The
+  only importers of the pattern are `PageEditorDialogView.tsx:8`, its Story, and two tests. `r2-27-plant-p9.txt` shows 14
+  pages with the plant (including `/[locale]/page` and `/[locale]/layout`) and equal hashes after the restore. The
+  reviewer's own parse of `19-build.txt` against `r2-19-build.txt` covered 56 common routes (`/api/upload-cms-image` is
+  new). Only `/admin/pages` is over +3 kB (604 → 763). The largest other delta is exactly +3.0 kB (`/[locale]`,
+  `/[locale]/listings`, `/[locale]/auth/reset-password`, two admin inquiry routes). The session log says that +3 kB
+  comes from messages and CSS. That cause is `INFERENCE`; it was not measured, and it is within the AC bound.
+- **R23 / AC23.** The reviewer ran its own probe on `storybook-static` (`sq`; union of the text and image/table boxes,
+  clipped to `overflow` ancestors). For all six exports, top/left is 31–32/16 at 320 and 390, and 46–47/144 at 1024 and
+  352 at 1440. The 1–2 px under 32/48 is the text line box inside the padding. `RichLayout` right/bottom: 16/34 at 320 and
+  390, 144/50 at 1024, and 352/50 at 1440. No side is 0, nothing is doubled, and there is no overflow. Before this
+  revision the values were 56/32. The executor's probe read `bottom` as the CSS `padding-bottom` rather than a measured
+  distance; this review's measurement replaces it.
+- **R24 / AC24.** The definition is at `theme.ts:780` (`richTextContentMinHeight: '10lh'`) and the type line at
+  `:126`. `MantineRichTextEditor.tsx:390` reads it. Measured min-height is 240 px at 390 and 1440. The state-3 comment
+  (`MantineDataTableToCards.tsx:133-134`) no longer names the title zone.
+- **R25 / AC25.** `messages/sq.json` `admin.pages.status_draft` = `"Projektim"`. On all 5 `AdminPagesView` exports at
+  `sq` 390 and 1440, the rendered text has no `Draft`; `Projektim` appears where a draft row exists. The reviewer's
+  `check:i18n` run exits 0.
+- **Re-runs (win32, Node v22.22.3).** The vitest command in §18.7 gives 7 files and 120 tests, exit 0.
+- **GR-1.** `check-surface-census.mjs --surface src/app/admin/pages/page.tsx` finds 12 nodes:
+  - 10 tier-1 nodes that are migrated, enrolled and have their own Story;
+  - 2 container-exempt nodes (`page.tsx`, `AdminPagesManager.tsx`: 0 `className`, 0 `ui` imports, baselined);
+  - no tier-2 and no tier-3 nodes.
+
+### 19.2 Findings
+
+| # | Sev | Where | Evidence | Required change |
+|---|---|---|---|---|
+| **F6** | P3 | `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:184` (`CardConfig` doc block) | It still reads `Primary row: badge (right, own row) then avatar + title …`. R11 named this line (`:182` at `HEAD`) as one of the "badge right" comments to update. Revision 1 missed it, and reviews 2 and 3 did not catch it. | R26 |
+| — | owner | O78-7 | The visual criterion stays `NOT VERIFIABLE` until the owner records every tuple. | §18.8 |
+
+### 19.3 R26 / AC26 — the last "badge right" comment
+
+- **R26 (P3).** In `MantineDataTableToCards.tsx:184`, the primary-row line describes the badge as on the title's
+  line, or on its own row above the avatar and title, aligned to the start of the card's content box (D868-4). This
+  is a comment-only change.
+- **AC26.** Run `Select-String -Path src\design-system\mantine\patterns\MantineDataTableToCards.tsx -Pattern 'badge \(right, own row\)'`.
+  It returns no line. `git diff` of the file shows a change to that comment only, compared with its
+  `r2-23-hash-object.txt` content.
+
+**Re-entry (remediation from `r2-23-hash-object.txt`).** Keep every earlier evidence file. Prefix new evidence files
+with `r3-`, and do not re-run any plant. Write set: that file (the comment only), the session log (a new §12), the
+`r3-*` evidence and the backlog 868 cell. Then run, from the project root:
+
+```powershell
+$ev = "docs\sessions\evidence\task868"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r3-04-platform.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r3-10-typecheck.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r3-16-file-integrity.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r3-19-build.txt"
+git hash-object src\design-system\mantine\patterns\MantineDataTableToCards.tsx | Tee-Object "$ev\r3-23-hash-object.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command, and normalise the `Tee-Object` files to UTF-8 without BOM through
+Node, as §18.7 does. Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Nothing rendered changes, so the O78-7 matrix can run at the same time.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

@@ -515,7 +515,7 @@ Reviewed: the working-tree diff (14 modified and 4 new paths), the session log's
 
 | ID | Sev | Finding | Correction |
 |---|---|---|---|
-| **G1** | P2 | `src/stories/patterns/mantine/DashboardGrid.stories.tsx` is changed by this task, and all three of its exports write a gutter in the Story: `<Box py="md">` at `:44` (`Default`), `:113` (`MaxColumns`) and `:132` (`DeferredFourUp`). GR-3d forbids `py` on a `Box` in `render` for any new or changed Story. Owner decision **D78-10** (2026-10-01, `docs/golden-rules.md` GR-3d → "Dashboard page container") exempts the grid from `StoryPageGutter`, because its own root carries the gutter (`MantineDashboardGrid.tsx:56`). The `Box` must still go. | §17.4 step 2. |
+| **G1** | P2 | `src/stories/patterns/mantine/DashboardGrid.stories.tsx` is changed by this task, and all three of its exports write a gutter in the Story: `<Box py="md">` at `:44` (`Default`), `:113` (`MaxColumns`) and `:132` (`DeferredFourUp`). GR-3d (clarified by the owner 2026-10-01: content with its own gutter gets nothing added by the Story) forbids it: the grid already carries its own gutter (`MantineDashboardGrid.tsx:56`), so the Story adds no `StoryPageGutter` and no padding. The `Box` goes. | §17.4 step 2. |
 | **G2** | P2 | §16.3 step 4 required GR-3b/3c/3d receipts **per Story**. The session log gives them only for `AdminDashboardView`. None exist for the two changed Story files (`DashboardGrid`, `DashboardStatRows`) or for the blast-radius `AgentStatisticsView`, although `rev1/after-blast.txt` holds most of the measurements. | §17.4 step 4. |
 
 The `check:locale-leak:mantine-only` re-run (about 2 hours) is owed by the **owner**, not the executor. It is listed in
@@ -532,16 +532,16 @@ line.
 2. **G1.** In `DashboardGrid.stories.tsx`, remove the `<Box py="md">` wrapper and its closing tag from `Default`,
    `MaxColumns` and `DeferredFourUp`, so each `render` returns `<MantineDashboardGrid>` directly. Drop `Box` from the
    `@mantine/core` import if nothing else uses it. Add no `StoryPageGutter`, padding, width, `style` or viewport pin.
-   Update the file's GR-3d comment, or add one, to cite D78-10 and `MantineDashboardGrid.tsx:56`.
+   Update the file's GR-3d comment, or add one, to say the grid carries its own gutter (`MantineDashboardGrid.tsx:56`).
 3. **Probe.** `npm.cmd run build-storybook`. Then reuse `rev1/probe-rev1.mjs`'s method for the three `DashboardGrid`
    exports at 320/390/768/1024/1280/1440, in `en` and `uk`, into `rev2/after-dashboardgrid.txt`. Pass condition: no page
    overflow; the edge gap is 16/16/24/24 at 320/390/1024/1440; the row-1 widths equal `rev1/after-blast.txt` for the
    same id and width in `en`.
 4. **Receipts (G2)**, in the session log, one line per Story **id**:
    - `GR-3b`, `GR-3c` and `GR-3d` for each `DashboardGrid` export, from `rev2/after-dashboardgrid.txt`. The GR-3d line
-     reads `n/a: View carries the page gutter (MantineDashboardGrid.tsx:56, D78-10)`.
-   - `GR-3b`, `GR-3c` and `GR-3d` for each `DashboardStatRows` export (`StoryPageGutter yes`) and each
-     `AgentStatisticsView` export (its View-gutter exemption, citing the line that sets it). Take these from
+     reads `gutter n/a: own gutter (MantineDashboardGrid.tsx:56)`.
+   - `GR-3b`, `GR-3c` and `GR-3d` for each `DashboardStatRows` export (`StoryPageGutter yes`, since the pattern has no gutter of its own) and each
+     `AgentStatisticsView` export (`own gutter`, citing the line that sets it). Take these from
      `rev1/after-blast.txt`; neither file changes in this revision.
 5. **Gates**, into `rev2/` with exit codes:
 

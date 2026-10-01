@@ -169,18 +169,22 @@ For every changed user-visible UI component, work from the lowest visible unit u
    If the kickoff has no type-scale table for text you change, stop with `BLOCKED — GR-3c`; do not pick sizes.
    Measure `getComputedStyle(el).fontSize` for every heading and the body text of every changed Story at
    320/390/768/1440. Emit one `GR-3c TYPE RESPONSIVE CHECK` receipt per Story.
-7. **GR-3d, blocking (owner rule 2026-09-29, hardened the same day).** Every Story has the same edge gutter, from the
-   one shared profile `StoryPageGutter` (`src/stories/_StoryPageGutter.tsx`: 16px, 24px from 640px, 32px from
-   1024px). The scope is every Story you create, change, render a changed component in, **or that the kickoff lists
-   in the owner visual matrix, including blast-radius rows**.
-   - A `skipCanvas` Story in that scope without the profile is yours to fix in this task. Wrap its page content in
-     `<StoryPageGutter>`; you need no kickoff permission. "Not changed by this task" is not an exemption.
+7. **GR-3d, blocking (owner rule 2026-09-29, clarified 2026-10-01).** A Story shows the component at the same
+   distance from the screen edge as on the real page. The scope is every Story you create, change, render a changed
+   component in, **or that the kickoff lists in the owner visual matrix, including blast-radius rows**. For each one,
+   answer one question: does the rendered content already set its own page gutter in production source (its root's
+   Mantine spacing props, `.container-wide`, or a production parent the Story renders)?
+   - **Yes:** the Story adds nothing. `StoryPageGutter` or any padding around it doubles the gutter and is forbidden;
+     remove it if you find it.
+   - **No:** a `skipCanvas` Story wraps the page content in `<StoryPageGutter>` (`src/stories/_StoryPageGutter.tsx`)
+     in every export.
+   - You fix an in-scope Story that breaks this in this task, with no kickoff permission needed. "Not changed by this
+     task" is not an exemption.
    - Never write a gutter in a Story (`p`/`px`/`py` on a wrapper, a `container-*` class, a `style` object).
-   - Exempt: overlay-only Stories, default-canvas Stories, `Mantine/Primitives/*` on `MantineStoryShell`, and a
-     page-level View whose own production root sets the page gutter (owner O83-3, 2026-09-30; all three conditions in
-     `docs/golden-rules.md` GR-3d must hold).
-   - Measure the edge gap at 320/390/1024/1440 (expected 16/16/32/32) and emit one `GR-3d STORY GUTTER CHECK`
-     receipt per Story (`docs/golden-rules.md`). A missing receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
+   - Overlay-only Stories and `Mantine/Primitives/*` on `MantineStoryShell` need nothing.
+   - Measure the edge gap at 320/390/1024/1440. Expect 16/16/32/32 with the profile, or the component's own
+     production values. Emit one `GR-3d STORY GUTTER CHECK` receipt per Story (`docs/golden-rules.md`). A missing
+     receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
 native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local

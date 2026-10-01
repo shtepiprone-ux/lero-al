@@ -221,76 +221,55 @@ With no receipt, or with any listed violation, the executor returns `BLOCKED —
 `NEEDS REVISION`. No automated gate reads computed font sizes. `check:design-tokens` only sees raw literals, so a
 theme key used statically (`size="h3"`) passes it (GR-2).
 
-## GR-3d — Every Story has the same edge gutter: one shared profile
+## GR-3d — A Story shows the component at its real distance from the screen edge
 
 **Owner rule, 2026-09-29.** Task 877: the owner returned O78-6 and wrote, verbatim: *"Також, необхідно занести в
 правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна
-проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* The same day the owner fixed
-the form of the rule, verbatim: *"насправді не треба окрема задача для відступів у Story, достатньо буде зробити один
-і той самий профіль для всіх Story, щоб вони завжди мали однаковий відступ від країв екрану. Тому запиши це у
-правило"*.
+проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* The same day: *"достатньо буде
+зробити один і той самий профіль для всіх Story, щоб вони завжди мали однаковий відступ від країв екрану"*. Hardened
+the same day, verbatim: *"Необхідно жорстко впровадити правило, щоб Sonnet не мала прапва це ігнорувати!"*
 
-The cause was structural. A `skipCanvas` Story drops the `.container-wide` canvas and then picks its own padding.
-Measured 2026-09-29: the values ranged from no gutter to a fixed `p="md"`, and
-`docs/mantine-responsive-design-system.md` §8.1 named three different "canonical" gutters.
+**Clarified by the owner, 2026-10-01 (Task 890 review 2), verbatim:** *"Я просив, щоб був уніфікований відступ у сторі
+для того, щоб я розумів, як цей компонент буде виглядати на реальній сторінці. Якщо у компонента вже є свій рідний
+відступ, то не треба додавати відступ у Story."* The earlier text of this rule made `StoryPageGutter` the default and
+then carved out narrow exemptions (O83-3, O83-4, O83-5, D78-10) one component at a time. Wrapping a component that
+already has its own gutter doubled the gutter. This version replaces all of that with one question.
 
-**The profile.** There is one Story gutter profile, `StoryPageGutter` (`src/stories/_StoryPageGutter.tsx`). It takes
-no props and renders:
+**Purpose.** The owner reads a Story to see how the component will look on the real page. So the content sits at the
+same distance from the screen edge as in production: never full bleed, never doubled.
 
-```tsx
-<Box px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl">
-```
+**One question per Story: does the rendered content already set its own page gutter in production source?** "Own
+gutter" means one of these sets the horizontal page padding:
+- the component's root, with Mantine spacing props (for example `MantineDashboardGrid.tsx:56`
+  `px={{ base: 'md', md: 'xl' }}`, or `ResetPasswordView`'s `Center p="md"`);
+- the canonical `.container-wide` page container (`src/app/globals.css:714-724`);
+- a production parent that the Story renders under GR-3b (for example the real `AdminShell`).
 
-That is 16px, then 24px from 640px, then 32px from 1024px, with 24px top and bottom. Its source is the default
-Storybook canvas, the `.container-wide` horizontal ladder (`src/app/globals.css:714-724`) with `py-6`
-(`.storybook/preview.tsx` `withCanvas`). So a Story that keeps the default canvas and a `skipCanvas` Story in the
-profile sit at the same distance from the screen edge. The one exception is at 1536px and above, where
-`.container-wide` has a 48px rung and Mantine has no breakpoint for it.
+A card's or paper's internal padding is not a page gutter.
 
-**Hardened by the owner, 2026-09-29, verbatim:** *"Sonnet схоже все ж таки ігнорує правило. Необхідно жорстко
-впровадити правило, щоб Sonnet не мала прапва це ігнорувати!"* The trigger was `AdminExchangeProvidersView`, which
-reached the owner's matrix with no gutter. It was a blast-radius row, and the rule then covered only Stories a task
-created or changed.
+| Answer | What the Story does | Receipt value |
+|---|---|---|
+| **Yes, it has its own gutter** | Adds nothing: no `StoryPageGutter`, no padding, no wrapper. | `n/a: own gutter (<path:line>)` |
+| **No gutter of its own** | A `skipCanvas` Story wraps the page content in `<StoryPageGutter>` in every export, or keeps the default canvas. | `StoryPageGutter yes` / `n/a: default canvas` |
+| Overlay only (modal, drawer or bottom sheet in a portal) | Nothing. A Story with page content **and** an open overlay answers the question for the page content. | `n/a: overlay-only` |
+| `Mantine/Primitives/*` on `MantineStoryShell` | Nothing (known exception below). | `n/a: MantineStoryShell primitive` |
+
+**The profile.** `StoryPageGutter` (`src/stories/_StoryPageGutter.tsx`) is the one gutter a Story may add. It takes no
+props and renders `<Box px={{ base: 'md', sm: 'xl', lg: '2xl' }} py="xl">`: 16px, then 24px from 640px, then 32px from
+1024px, with 24px top and bottom. That copies the default Storybook canvas (the `.container-wide` ladder with `py-6`,
+`.storybook/preview.tsx` `withCanvas`), so wrapped and default-canvas Stories sit at the same distance. Above 1536px,
+`.container-wide` has a 48px rung that Mantine cannot express.
 
 **Scope, with no exceptions:** every Story a task **creates**, **changes**, **renders a changed component in**, or
-**lists in its owner visual matrix**, including blast-radius rows. A `skipCanvas` Story in that scope without the
-profile is **in scope to fix in the same task**. The executor needs no kickoff permission to add the wrapper, may
-not hand off around it, and may not report it as "not changed by this task".
+**lists in its owner visual matrix**, including blast-radius rows. A Story in that scope that breaks this rule is fixed
+in the same task. The executor needs no kickoff permission, may not hand off around it, and may not report it as "not
+changed by this task". A kickoff's GR-3d line written before 2026-10-01 is still answered against the question above.
+Where the content turns out to carry its own gutter, this rule wins over a `wrap in this task` line, and the executor
+records the deviation.
 
-**Required in every in-scope Story:**
-- If the Story sets `skipCanvas: true`, it wraps its page content in `<StoryPageGutter>`, in every export.
-- A Story that renders **only** an overlay (a modal, drawer or bottom sheet in a portal) needs no wrapper. A Story
-  that renders page content **and** an open overlay wraps the page content.
-- `StoryPageGutter` is the only place a Story gutter value is written.
-
-**Page-level View exemption. Owner decision 2026-09-30 (Task 886 review 1, O83-3), verbatim option chosen:**
-*"Моє рішення (b)"* — (b) was: *"record a GR-3d exemption for a View that carries its own page gutter"*. It resolves
-the conflict found on `Patterns/Mantine/ResetPasswordView`, whose production View renders
-`Center mih="60vh" p="md"`: wrapping it in the profile doubles the phone gutter to 32px. A `skipCanvas` Story needs
-no `StoryPageGutter` only when **all** of the following are true:
-
-1. The Story renders a production page-level View, and the View's own root sets the page gutter in the production
-   source, either with Mantine spacing props or by rendering the canonical `.container-wide` page container
-   (`src/app/globals.css:714-724`, the ladder `StoryPageGutter` copies). The second form was added by owner decision
-   O83-5, 2026-09-30, Task 886 review 7, verbatim: *"Я обираю варіант (а)."* The Story adds no wrapper, padding,
-   `container-*` class or `style` object.
-2. The measured edge gap is 16 at 320 and 390, and at least 24 at 1024 and 1440 (widened from 32 by owner decision O83-4, 2026-09-30, Task 886 review 4). More than 32 is allowed only when
-   the View centres narrower content.
-3. The receipt names the production source line of the gutter.
-
-A View that fails any condition is not exempt, and it is wrapped as usual. The exemption never allows a gutter to be
-written in a Story.
-
-**Dashboard page container. Owner decision 2026-10-01 (Task 890 review 2, Sprint 78 D78-10), verbatim option chosen:**
-*"Виняток для Grid (Recommended)"* — the option was: *"Видалити `Box py="md"` з усіх трьох експортів. Grid — це
-кореневий контейнер сторінки обох dashboard View, тому на нього поширюється виняток O83-3 «View carries the page
-gutter» з receipt на MantineDashboardGrid.tsx:56."* So a Story that renders `MantineDashboardGrid`
-(`src/design-system/mantine/patterns/MantineDashboardGrid.tsx`, root `Box px={{ base: 'md', md: 'xl' }}`) as its page
-content counts as condition 1's page-level View. Conditions 2 and 3 still apply, and the Story still adds no wrapper,
-padding or `style` object. The receipt reads `n/a: View carries the page gutter (MantineDashboardGrid.tsx:56, D78-10)`.
-
-**Forbidden in any new or changed Story:**
-- page content with no edge gutter (full bleed);
+**Forbidden in any in-scope Story:**
+- page content with no edge gutter at all (full bleed);
+- **a doubled gutter**: `StoryPageGutter`, or any padding, around content that has its own gutter;
 - a gutter written in the Story itself: `p`, `px` or `py` on a `Box`/`Stack`/`Group` in `decorators` or `render`, a
   `container-*` class, or a `style` object;
 - a second gutter helper, or a variant of the profile.
@@ -300,23 +279,27 @@ then 24px from 768px. Its padding steps are load-bearing for `check:card-track-m
 header). Moving it onto the profile needs that gate re-proved, so it is not done as a side effect of another task.
 
 **Check, before handoff and at review:** at **320, 390, 1024 and 1440**, measure the left and right distance from the
-viewport edge to the Story's first page-content box. The expected values are 16 / 16 / 32 / 32.
+screen edge to the first content box. When the Story renders a production parent with a navbar, measure from the
+parent's content edge and report both values. Expected values:
+- **16 / 16 / 32 / 32** for `StoryPageGutter` or the default canvas;
+- **the component's own production gutter** when it has one (for example 16 / 16 / 24 / 24 for `MantineDashboardGrid`).
+  A value larger than that source gives is a doubled gutter.
 
-**Receipt — execution and review alike, one per changed Story:**
+**Receipt — execution and review alike, one per in-scope Story:**
 
-`GR-3d STORY GUTTER CHECK — <story id>: StoryPageGutter <yes | n/a: overlay-only | n/a: default canvas | n/a: MantineStoryShell primitive | n/a: View carries the page gutter (<path:line>)>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected 16/16/32/32); gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — <story id>: gutter <StoryPageGutter yes | n/a: own gutter (<path:line>) | n/a: default canvas | n/a: overlay-only | n/a: MantineStoryShell primitive>; edge gap 320 <px> · 390 <px> · 1024 <px> · 1440 <px> (expected <16/16/32/32 | the own-gutter values>); doubled gutter: NONE; gutter written in the Story: NONE.`
 
 **Who checks what:**
-- **Task design (`create-task`).** Every Story in the owner matrix, including blast-radius rows, gets a GR-3d line in
-  the kickoff: `profile present` or `wrap in this task`. A matrix row without one makes the kickoff unpublishable.
-- **Execution (`execute-task`).** Before handoff, the executor opens every in-scope Story, wraps any that lacks the
-  profile, measures it, and emits one receipt per Story. A missing receipt for any Story in the owner matrix is
-  `BLOCKED — GR-3d`.
+- **Task design (`create-task`).** Every Story in the owner matrix, blast-radius rows included, gets a GR-3d line in
+  the kickoff: `profile present`, `own gutter (<path:line>)`, `wrap in this task`, or `remove the Story's padding in
+  this task`. A matrix row without one makes the kickoff unpublishable.
+- **Execution (`execute-task`).** Before handoff, the executor answers the question for every in-scope Story, removes
+  any doubled or Story-written gutter, wraps any gutterless content, measures, and emits one receipt per Story. A
+  missing receipt for any Story in the owner matrix is `BLOCKED — GR-3d`.
 - **Review (`review-task`).** The reviewer measures every Story in the owner matrix **before** handing the matrix to
-  the owner. A Story without the profile is `NEEDS REVISION`, and it never reaches the owner.
+  the owner. A full-bleed, doubled or Story-written gutter is `NEEDS REVISION`, and the Story never reaches the owner.
 
-With no receipt, or with a gutter written in a Story, the executor returns `BLOCKED — GR-3d` and the reviewer returns
-`NEEDS REVISION`. A green `check:stories` is not evidence (GR-2): it does not measure edge gaps.
+A green `check:stories` is not evidence (GR-2): it does not measure edge gaps.
 
 ## GR-4 — An acceptance criterion asserts an observable property, never an absolute
 
@@ -389,7 +372,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3a | orchestrator/executor/reviewer inspection + required receipt | **active** — automated duplicate detection is not yet implemented; an absent or invalid receipt blocks the task by rule. |
 | GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
 | GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
-| GR-3d | one profile, `StoryPageGutter`. Scope: every created, changed or owner-matrix Story. Enforced by the `create-task` kickoff line per matrix Story, the blocking `execute-task` item 7 with a receipt per Story, and the `review-task` item 8 measurement before the owner matrix | **active** — enforced by rule and receipt; there is no automated gate, and `check:stories` does not measure edge gaps. |
+| GR-3d | one question per Story: own production gutter → the Story adds nothing; none → `StoryPageGutter`. Scope: every created, changed or owner-matrix Story. Enforced by the `create-task` kickoff line per matrix Story, the blocking `execute-task` item 7 with a receipt per Story, and the `review-task` item 8 measurement before the owner matrix | **active** — enforced by rule and receipt; there is no automated gate, and `check:stories` does not measure edge gaps. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

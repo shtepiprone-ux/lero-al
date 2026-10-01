@@ -104,8 +104,10 @@ If either measures a side at 0 or a doubled gutter, GR-3d binds the executor to 
 
 ## 5. Assumptions and open questions
 
-- **A1 (labelled, reversible).** The contact card keeps showing **no** reduced old price. The legacy card before 793
-  never showed one (F5), and the detail block beside it already does (F4). Adding one is a product change, not this fix.
+- **D88-1 (owner decision 2026-10-01, quoted in the Sprint 88 plan).** The contact card **will** show the reduced old
+  price (struck, small, only when `price_old > price`), with the original-currency line on the next line — but that
+  change belongs to **795**, the last open task in the contact-card chain, not to 912. In 912 the contact card still
+  shows no old price; do **not** add one, and do not edit `ListingContact.tsx` or `ListingDetailView.tsx`.
 - **A2.** `price_old` stays a free owner-entered field. Whether the edit flow should set or clear it automatically is a
   product question outside this bug (F8); this task makes the display truthful whatever is stored.
 - Open owner decisions: **none**.
@@ -139,7 +141,7 @@ Write paths (exact):
   container (component-rules split).
 - `StepPreview.tsx` (`steps/`, deleted by **905**).
 - Story source files, `messages/*.json` (dirty with 868's work), fixture key names such as `card_price_old_1`.
-- Whether the contact card should show a reduction (A1) and how `price_old` is written (A2).
+- The contact card's reduced old price (D88-1 → **795**) and how `price_old` is written (A2).
 
 ## 9. Current and required behavior
 

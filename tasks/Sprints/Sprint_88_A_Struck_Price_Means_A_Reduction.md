@@ -31,7 +31,9 @@ the current price. The converted-currency disclosure is a plain informational li
 
 ## Decisions
 
-None open. The owner's rule is the bug report quoted above.
+| ID | Question | Owner answer (verbatim) | Binding consequence |
+|---|---|---|---|
+| **D88-1** | (2026-10-01) Should the contact card show the reduced old price? Changing it needs `ListingDetailView.tsx` and `ListingContact.tsx`, whose censuses carry unmigrated nodes (clause 16d). | *"так, має показувати стару ціну, якщо вона була вищою за актуальну."* · layout: *"є актуальна ціна (червоним кольором, основна ціна), а нижче маленьким шрифтом має показуватись стара ціна, якщо вона була вищою. Оригінальну ціну треба показувати на насутпному рядку після зниженої ціни(оригінальна ціна - це ціна, у валюті якої було створено оголошення!)!"* · routing: *"так додай ці зміни у саму останню задачу у лланцюжку змін картки контактів"* | The contact card's three-line price block (current · struck old price only when `price_old > price` · original-currency price, plain) goes to **795**, the last open task in the contact-card chain (Sprint 71 order 793 → 795). Recorded on 795's row in `docs/backlog-reserved.md` and in Sprint 71's Tasks table. **912** keeps only the wrong-strikethrough removal and the `ListingCard` predicate. |
 
 ## Goal-fit (why no open sprint takes this)
 

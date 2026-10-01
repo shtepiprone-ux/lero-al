@@ -2,7 +2,7 @@
 
 Sprint 84 · **P2** · QA profile **Q3** (legacy admin surface → Mantine; no registered critical flow names it) · no task
 dependency (877's `AdminPageHeader` adapter has landed) · blocks **885** · owner action **O84-5** · **Status:
-`KICKOFF FILED` 2026-09-29**
+✅ `APPROVED WITH NOTES` 2026-10-02, review 1 (§16); owner accepted the O84-5 matrix; archived**
 
 Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under **D84-1** (*"Migrate first"*); the reserved row moves into Appendix D. Precedents,
@@ -338,3 +338,30 @@ hashes; limitations; O84-5 owed. Update the 894 cell of `docs/backlog.md`; sessi
 | # | State | What |
 |---|---|---|
 | **894** | reserved 2026-09-27 — **Sprint 84**, P2, filed by 885's design (D84-1); its predecessor **877** landed 2026-09-29 | **`/admin/inquiries/{sales,support}` on canonical Mantine.** Census 2026-09-27: `AdminInquiriesManager` (42 `className`, 7 `ui/*` bindings), `StatusChangeControl` (12, 2), `StatusChangeHistory` (15, 0); `Combobox` (import removed here via `MantineSelect`, as 893 does; the file stays for its other consumers) and `AdminPageHeader` (877). Tier-2: `ui/badge`, `button`, `dialog`, `textarea`. **`StatusChangeControl` is also rendered by `ListingFormShellView`**: its migration changes that surface too, so the kickoff censuses the listing form as well. Blocks **885**. |
+
+## 16. Review 1 — 2026-10-02, Opus: ✅ `APPROVED WITH NOTES`
+
+Owner, 2026-10-02, verbatim: *"візуально перевірив нові сторіси, все ок"*. That accepts **O84-5**'s matrix (§13.3). The
+post-deploy reply-and-close check stays owed on O84-5.
+
+- **R1–R9 / AC1–AC8 verified** against the final tree. The hashes in `22-hash-object.txt` equal the working tree. The
+  container's `:73-189` diff only retypes the filter state and drops the badge/icon fields from the status options.
+  `20b` equals `01` for `StatusChangeControl`, `StatusChangeHistory` and `ListingFormShellView`. `11-census-after.txt`
+  shows only `page.tsx` and `AdminInquiriesManager` (both `className:0 ui-imports:0`) failing per route. P1–P4 each
+  fail as planted and have equal restore hashes. Storybook was built at 23:05:57, after the last source edit
+  (23:05:29). `npm run build` ran at 23:12 and exited 0.
+- **Reviewer measurement.** Chromium on the built `storybook-static`, `sq` + `uk`, 320/390/768/1024/1440, all 11
+  exports. Both page Stories have gutters top/bottom 24 and left/right 16/16/24/32/32. No export overflows. The
+  largest text is 16px (the modal title). The dialog is 320/390 wide as a bottom sheet and 620 from 768. Rows stack
+  the date/count column under the text at 320/390 (every row) and sit side by side at 768/1440.
+- **Deviations accepted.**
+  1. `blueLight`: `blue` is not in `theme.ts:607` `colors`.
+  2. The row stacks below 640, per GR-3b's 2026-10-01 owner rule, which postdates R2.
+  3. The two extra i18n-dynamic sites pointed at the moved code.
+  4. Rows have no hover tint (as in 892 N1).
+  5. The visible `change_status` caption matches the other three metadata cells.
+- **Note N1 (P3, accepted with the matrix).** The Stories pass `custom_subject ?? topic` as the subject, so a `sales`
+  or `partnership` fixture row shows the raw topic code. Production shows `contact.topics.<topic>`. The fixture
+  diverges from production, and no production defect follows from it.
+- **Note N2.** The 907 reserved row said "whichever runs first migrates `StatusChangeControl`". After 894, the listing
+  form is its last consumer, so that row now points at `StatusChangeSelect`.

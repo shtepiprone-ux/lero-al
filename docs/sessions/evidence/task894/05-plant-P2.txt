@@ -1,0 +1,229 @@
+P2 src/components/admin/StatusChangeSelect.tsx
+hash before=44898610e55155ae885a22f52dd22d9ae85f442c
+hash planted=bafc764cb6ef9215654a93cb9ff95c610bbf7efc
+hash restored=44898610e55155ae885a22f52dd22d9ae85f442c
+exit=1
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/StatusChangeSelect.test.tsx (3 tests | 1 failed) 451ms
+     × a rejected onSubmit on the note path fires the error toast and keeps the note 86ms
+stderr | src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx > AdminInquiriesManager — Task 894 > T3 — a rejected updateInquiryStatus fires status_change_error and no success toast
+The current testing environment is not configured to support act(...)
+
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx (6 tests | 1 failed) 2128ms
+     × T3 — a rejected updateInquiryStatus fires status_change_error and no success toast 1155ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx > AdminInquiriesManager — Task 894 > T3 — a rejected updateInquiryStatus fires status_change_error and no success toast
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'Failed to update status' ]
+
+Number of calls: 0
+
+
+Ignored nodes: comments, script, style
+<html
+  data-mantine-color-scheme="light"
+>
+  <head />
+  <body
+    data-scroll-locked="1"
+  >
+    <div>
+      <div
+        class="m_6d731127 mantine-Stack-root"
+        data-testid="admin-inquiries-manager"
+        style="--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: flex-start;"
+      >
+        <div
+          class="m_8bffd616 mantine-Flex-root __m__-_r_99_"
+          style="gap: var(--mantine-spacing-sm); justify-content: space-between;"
+        >
+          <div
+            class="m_d57069b5 mantine-ScrollArea-root __m__-_r_9b_"
+            style="--scrollarea-scrollbar-size: 0rem; --sa-corner-width: 0px; --sa-corner-height: 0px;"
+          >
+            <div
+              class="m_c0783ff9 mantine-ScrollArea-viewport"
+              data-scrollbars="x"
+              style="overflow-x: scroll; overflow-y: hidden;"
+            >
+              <div
+                class="m_b1336c6 mantine-ScrollArea-content"
+              >
+                <div
+                  class="m_cf365364 mantine-SegmentedControl-root"
+                  data-initialized="true"
+                  data-size="sm"
+                  data-testid="inquiry-status-filter"
+                  data-with-items-borders="true"
+                  role="radiogroup"
+                  style="border: 1px solid var(--mantine-color-gray-2); --sc-radius: var(--mantine-radius-lg); --sc-shadow: var(--mantine-shadow-xs); --sc-padding: var(--sc-padding-sm); --sc-font-size: var(--mantine-font-size-sm);"
+                >
+                  <span
+                    class="m_9e182ccd mantine-SegmentedControl-indicator m_96b553a6 mantine-FloatingIndicator-root"
+                    style="--transition-duration: var(--sc-transition-duration); border-radius: var(--mantine-radius-md); width: 0px; height: 0px;"
+                  />
+                  <div
+                    class="m_69686b9b mantine-SegmentedControl-control"
+                    data-active="true"
+                  >
+                    <input
+                      checked=""
+                      class="m_1714d588 mantine-SegmentedControl-input"
+                      data-focus-ring="auto"
+                      id="mantine-5s42usqsg-all"
+                      name="mantine-5s42usqsg"
+                      type="radio"
+                      value="all"
+                    />
+                    <label
+                      class="m_1738fcb2 mantine-SegmentedControl-label"
+                      data-active="true"
+                      for="mantine-5s42usqsg-all"
+                      style="min-height: 2.75rem; display: flex; align-items: center; justify-content: center; border-radius: var(--mantine-radius-md); padding-inline: 0.75rem;"
+                    >
+                      <span
+                        class="m_78882f40 mantine-SegmentedControl-innerLabel"
+                      >
+                        All
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="m_69686b9b mantine-SegmentedControl-control"
+                  >
+                    <input
+                      class="m_1714d588 mantine-SegmentedControl-input"
+                      data-focus-ring="auto"
+                      id="mantine-5s42usqsg-new"
+                      name="mantine-5s42usqsg"
+                      type="radio"
+                      value="new"
+                    />
+                    <label
+                      class="m_1738fcb2 mantine-SegmentedControl-label"
+                      for="mantine-5s42usqsg-new"
+                      style="min-height: 2.75rem; display: flex; align-items: center; justify-content: center; border-radius: var(--mantine-radius-md); padding-inline: 0.75rem;"
+                    >
+                      <span
+                        class="m_78882f40 mantine-SegmentedControl-innerLabel"
+                      >
+                        New
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="m_69686b9b mantine-SegmentedControl-control"
+                  >
+                    <input
+                      class="m_1714d588 mantine-SegmentedControl-input"
+                      data-focus-ring="auto"
+                      id="mantine-5s42usqsg-in_progress"
+                      name="mantine-5s42usqsg"
+                      type="radio"
+                      value="in_progress"
+                    />
+                    <label
+                      class="m_1738fcb2 mantine-SegmentedControl-label"
+                      for="mantine-5s42usqsg-in_progress"
+                      style="min-height: 2.75rem; display: flex; align-items: center; justify-content: center; border-radius: var(--mantine-radius-md); padding-inline: 0.75rem;"
+                    >
+                      <span
+                        class="m_78882f40 mantine-SegmentedControl-innerLabel"
+                      >
+                        In progress
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="m_69686b9b mantine-SegmentedControl-control"
+                  >
+                    <input...
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx:183:48
+    181|     await act(async () => { fireEvent.click(await screen.findByRole('o…
+    182|
+    183|     await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(ts…
+       |                                                ^
+    184|     expect(mockToastSuccess).not.toHaveBeenCalled()
+    185|   })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/admin/__tests__/StatusChangeSelect.test.tsx > StatusChangeSelect — Task 894 > a rejected onSubmit on the note path fires the error toast and keeps the note
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'Failed to update status' ]
+
+Number of calls: 0
+
+ ❯ src/components/admin/__tests__/StatusChangeSelect.test.tsx:99:28
+     97|     await act(async () => { fireEvent.click(screen.getByRole('button',…
+     98|
+     99|     expect(mockToastError).toHaveBeenCalledWith(tc.status_change_error)
+       |                            ^
+    100|     expect(mockToastSuccess).not.toHaveBeenCalled()
+    101|     expect(note.value).toBe('keep me')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 2 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: boom
+ ❯ src/components/admin/__tests__/StatusChangeSelect.test.tsx:92:48
+     90|
+     91|   it('a rejected onSubmit on the note path fires the error toast and k…
+     92|     const onSubmit = vi.fn().mockRejectedValue(new Error('boom'))
+       |                                                ^
+     93|     renderSelect(onSubmit)
+     94|
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+ ❯ runWithCancel node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+ ❯ runWithTimeout node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+This error originated in "src/components/admin/__tests__/StatusChangeSelect.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "a rejected onSubmit on the note path fires the error toast and keeps the note". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: boom
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx:175:47
+    173|
+    174|   it('T3 — a rejected updateInquiryStatus fires status_change_error an…
+    175|     mockUpdateInquiryStatus.mockRejectedValue(new Error('boom'))
+       |                                               ^
+    176|     renderManager()
+    177|     const dialog = await openRow(0)
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+ ❯ runWithCancel node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+ ❯ runWithTimeout node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10
+ ❯ node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+This error originated in "src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "T3 — a rejected updateInquiryStatus fires status_change_error and no success toast". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 7 passed (9)
+     Errors  2 errors
+   Start at  23:01:32
+   Duration  4.92s (transform 985ms, setup 159ms, import 3.86s, tests 2.58s, environment 1.33s)
+

@@ -1,0 +1,16 @@
+9a15a70baf7e06a22598af541da1b0afc43969cc  src/components/admin/AdminInquiriesView.tsx
+b10c03608e366a59ec0a4fd83d42f2cc526405b6  src/components/admin/InquiryDetailDialogView.tsx
+44898610e55155ae885a22f52dd22d9ae85f442c  src/components/admin/StatusChangeSelect.tsx
+f938a5d14936f4a96483f80cd4ee9f68635dfe3d  src/components/admin/AdminInquiriesManager.tsx
+13ab17649df97076bfbd29f9c7044f2c17f04624  src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx
+ea90a717e23125150877e8e5c9f86a5b9f824cc8  src/components/admin/__tests__/StatusChangeSelect.test.tsx
+f04816f06a1167ce63e83c53a96d6bda5758b077  src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+5ce4b5a867208b5db4db60363623107a3fcf553a  src/stories/patterns/mantine/InquiryDetailDialogView.stories.tsx
+37d0e4c7a7b7b74c1c85ce7b5a4a4a169901747b  src/stories/patterns/mantine/StatusChangeSelect.stories.tsx
+9af5ba4833271f31d18c45e026edb38df72d73d3  src/stories/fixtures/admin.fixtures.ts
+2ecb7535d8ebc7dbae47d4d99db36262137793f2  src/app/admin/inquiries/sales/page.tsx
+89d27fcca7c08d374c1e8279bb00d9f356b56a8d  src/app/admin/inquiries/support/page.tsx
+40017118c20e546c6b2e61cc74d88a3ed4a34577  scripts/mantine-migration-scope.json
+f74253a494a52a5502cabed3a864ec2cb16b598d  scripts/surface-census-baseline.json
+5185ee80e556abda29c58ef5b9951aeac3b90216  scripts/i18n-dynamic-manifest.json
+533528c7800732ad318a1c4bba6b7bfaf591aabd  scripts/story-coverage-exempt.json

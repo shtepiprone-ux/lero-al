@@ -1,0 +1,13 @@
+platform: win32 v22.22.3
+status porcelain: (empty = clean)
+6cfea53d023edf9652ef1b20c922523e8d4ff143  src\components\admin\AdminInquiriesManager.tsx
+d694871cbd37492f4a582fcc82baa5b3654984a7  src\components\admin\StatusChangeControl.tsx
+2f443c45db9b5ccdf71d2d40b60052ad3b14a2da  src\components\admin\StatusChangeHistory.tsx
+edcb3baf980c18fa960aec2f5a6f0dccc46f19d7  src\modules\listings\components\ListingFormShellView.tsx
+1a5a5203895cf067868a7a236c951c58b53b0d66  src\app\admin\inquiries\sales\page.tsx
+965bc0f2038af56d44f31cd7306b4b3952121756  src\app\admin\inquiries\support\page.tsx
+f7bbf5aa910ae428f2c3c9b71e057e5d72778c44  scripts\mantine-migration-scope.json
+7000cf4c6e4318b3e709f75f27c172f1a2a6a9a9  scripts\surface-census-baseline.json
+76a5bab66844b03710fd4921241cc16bd98bec71  scripts\i18n-dynamic-manifest.json
+cff42ed3d84ccf745417c028301f6759e6e0e749  scripts\story-coverage-exempt.json
+a999b62cca5407d889dfbeaef640b32d041f886e  src\stories\fixtures\admin.fixtures.ts

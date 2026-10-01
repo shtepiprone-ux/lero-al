@@ -1,20 +1,11 @@
 'use client'
 
 import { useState, useTransition, useEffect } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { toast } from '@/lib/toast'
-import {
-  Circle, AlertCircle, CheckCircle2,
-  Mail, Send, ChevronRight,
-} from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import {
-  Dialog, DialogContent, DialogHeader, DialogTitle,
-} from '@/components/ui/dialog'
-import { StatusChangeControl, type StatusOption } from '@/components/admin/StatusChangeControl'
-import { formatDate } from '@/lib/formatters'
+import { AdminInquiriesView, type InquiryMailboxFilter, type InquiryStatusFilter } from '@/components/admin/AdminInquiriesView'
+import { InquiryDetailDialogView } from '@/components/admin/InquiryDetailDialogView'
+import type { StatusSelectOption } from '@/components/admin/StatusChangeSelect'
 import { updateInquiryStatus, sendInquiryReply } from '@/modules/contacts/actions'
 import type { ContactStatus } from '@/types/database'
 
@@ -43,26 +34,12 @@ export interface ReplyRow {
   replier: { name: string | null } | null
 }
 
-type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
-
-const STATUS_VARIANT: Record<ContactStatus, BadgeVariant> = {
-  new:         'warning',
-  in_progress: 'info',
-  closed:      'neutral',
-}
-
-const STATUS_ICON: Record<ContactStatus, React.ReactNode> = {
-  new:         <Circle className="h-3 w-3" />,
-  in_progress: <AlertCircle className="h-3 w-3" />,
-  closed:      <CheckCircle2 className="h-3 w-3" />,
-}
-
 const CONTACT_STATUSES: ContactStatus[] = ['new', 'in_progress', 'closed']
 
 const KNOWN_TOPICS = ['general', 'sales', 'support', 'partnership', 'press', 'other'] as const
 type KnownTopic = typeof KNOWN_TOPICS[number]
 
-// ── Main component ────────────────────────────────────────────────────────────
+// ── Container ─────────────────────────────────────────────────────────────────
 
 interface Props {
   inquiries: InquiryRow[]
@@ -74,15 +51,14 @@ interface Props {
 export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies, mailboxScope }: Props) {
   const t = useTranslations('admin.inquiries')
   const tc = useTranslations('contact.topics')
-  const locale = useLocale()
 
   const [inquiries, setInquiries] = useState(initialInquiries)
   const [allReplies, setAllReplies] = useState<ReplyRow[]>(initialReplies)
   useEffect(() => { setInquiries(initialInquiries) }, [initialInquiries])
   useEffect(() => { setAllReplies(initialReplies) }, [initialReplies])
   const [selected, setSelected]   = useState<InquiryRow | null>(null)
-  const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
-  const [mailboxFilter, setMailboxFilter] = useState<'all' | 'support' | 'sales'>('all')
+  const [statusFilter, setStatusFilter] = useState<InquiryStatusFilter>('all')
+  const [mailboxFilter, setMailboxFilter] = useState<InquiryMailboxFilter>('all')
   const [replyBody, setReplyBody] = useState('')
   const [isPending, startTransition] = useTransition()
 
@@ -182,183 +158,38 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
     })
   }
 
-  const inquiryStatusOptions: StatusOption<ContactStatus>[] = CONTACT_STATUSES.map(s => ({
+  const inquiryStatusOptions: StatusSelectOption<ContactStatus>[] = CONTACT_STATUSES.map(s => ({
     code: s,
     labelKey: `status_${s}`,
-    badgeVariant: STATUS_VARIANT[s] as StatusOption<ContactStatus>['badgeVariant'],
-    icon: STATUS_ICON[s],
   }))
 
   return (
     <>
-      {/* ── Filters ── */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {(['all', 'new', 'in_progress', 'closed'] as const).map(s => (
-          <Button
-            key={s}
-            size="lg"
-            variant={statusFilter === s ? 'default' : 'outline'}
-            onClick={() => setStatusFilter(s)}
-          >
-            {s === 'all' ? t('filter_all') : t(`filter_${s}` as 'filter_new' | 'filter_in_progress' | 'filter_closed')}
-          </Button>
-        ))}
-        {/* Mailbox filter hidden when route IS the filter (mailboxScope set — Note 21 relocation). */}
-        {!mailboxScope && (
-          <div className="ml-auto flex gap-2">
-            {(['all', 'support', 'sales'] as const).map(m => (
-              <Button
-                key={m}
-                size="lg"
-                variant={mailboxFilter === m ? 'secondary' : 'outline'}
-                onClick={() => setMailboxFilter(m)}
-              >
-                {m === 'all' ? t('filter_mailbox_all') : t(`filter_mailbox_${m}` as 'filter_mailbox_support' | 'filter_mailbox_sales')}
-              </Button>
-            ))}
-          </div>
-        )}
-      </div>
+      <AdminInquiriesView
+        inquiries={filtered}
+        statusFilter={statusFilter}
+        mailboxFilter={mailboxFilter}
+        showMailboxFilter={!mailboxScope}
+        onStatusFilterChange={setStatusFilter}
+        onMailboxFilterChange={setMailboxFilter}
+        onSelect={openDetail}
+        displaySubject={displaySubject}
+      />
 
-      {/* ── List ── */}
-      {filtered.length === 0 ? (
-        <p className="text-muted-foreground text-sm py-12 text-center">{t('no_inquiries')}</p>
-      ) : (
-        <div className="divide-y rounded-xl border overflow-hidden">
-          {filtered.map(inq => (
-            <Button
-              key={inq.id}
-              type="button"
-              variant="ghost"
-              onClick={() => openDetail(inq)}
-              className="w-full flex items-start gap-4 px-5 py-4 h-auto hover:bg-muted/40 transition-colors text-left justify-start rounded-none"
-            >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <Badge variant={STATUS_VARIANT[inq.status]} className="flex items-center gap-1">
-                    {STATUS_ICON[inq.status]}
-                    {t(`status_${inq.status}` as 'status_new' | 'status_in_progress' | 'status_closed')}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground font-mono">{inq.target_mailbox}</span>
-                </div>
-                <p className="font-medium text-sm break-words">{displaySubject(inq)}</p>
-                <p className="text-xs text-muted-foreground truncate">{inq.name} · {inq.email}</p>
-              </div>
-              <div className="flex flex-col items-end gap-1 shrink-0">
-                <span className="text-xs text-muted-foreground">{formatDate(inq.created_at, locale)}</span>
-                {inq.reply_count > 0 && (
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Mail className="h-3 w-3" />
-                    {inq.reply_count}
-                  </span>
-                )}
-              </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0 mt-1" />
-            </Button>
-          ))}
-        </div>
+      {selected && (
+        <InquiryDetailDialogView
+          inquiry={selected}
+          replies={selectedReplies}
+          subject={displaySubject(selected)}
+          statusOptions={inquiryStatusOptions}
+          replyBody={replyBody}
+          onReplyBodyChange={setReplyBody}
+          isPending={isPending}
+          onStatusSubmit={handleStatusChange}
+          onSendReply={handleSendReply}
+          onClose={closeDetail}
+        />
       )}
-
-      {/* ── Detail dialog ── */}
-      <Dialog open={!!selected} onOpenChange={open => { if (!open) closeDetail() }}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          {selected && (
-            <>
-              <DialogHeader>
-                <DialogTitle>{t('detail_title')}</DialogTitle>
-              </DialogHeader>
-
-              {/* Metadata */}
-              <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm border rounded-lg p-4 bg-muted/30">
-                <div>
-                  <span className="text-xs text-muted-foreground block">{t('from_label')}</span>
-                  <span className="font-medium">{selected.name}</span>
-                  <span className="block text-xs text-muted-foreground">{selected.email}</span>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block">{t('topic_label')}</span>
-                  <span className="font-medium">{displaySubject(selected)}</span>
-                  <span className="block text-xs font-mono text-muted-foreground">{selected.target_mailbox}</span>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block">{t('received_label')}</span>
-                  <span>{formatDate(selected.created_at, locale)}</span>
-                </div>
-                <div>
-                  <StatusChangeControl
-                    variant="select"
-                    currentStatus={selected.status}
-                    statuses={inquiryStatusOptions}
-                    onSubmit={handleStatusChange}
-                    disabled={isPending}
-                    aria-label={t('change_status')}
-                  />
-                </div>
-              </div>
-
-              {/* Original message */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-                  {t('detail_message')}
-                </p>
-                <div className="rounded-lg border bg-muted/20 p-4 text-sm whitespace-pre-line leading-relaxed">
-                  {selected.message}
-                </div>
-              </div>
-
-              {/* Reply history */}
-              {selectedReplies.length === 0 && selected.reply_count > 0 ? (
-                <div className="rounded-lg border border-status-warning/40 bg-status-warning/5 px-4 py-3 text-sm text-center text-muted-foreground">
-                  {t('reply_history_load_failed')}
-                </div>
-              ) : selectedReplies.length > 0 ? (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-                    {t('detail_replies')}
-                  </p>
-                  <div className="flex flex-col gap-3">
-                    {selectedReplies.map(r => (
-                      <div key={r.id} className="rounded-lg border bg-card p-4 text-sm">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-xs">
-                            {r.replier?.name ?? t('from_label')}
-                          </span>
-                          <span className="text-xs text-muted-foreground">{formatDate(r.created_at, locale)}</span>
-                        </div>
-                        <p className="whitespace-pre-line leading-relaxed">{r.body}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
-              {/* Reply composer */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-                  {t('reply_label')}
-                </p>
-                <Textarea
-                  rows={4}
-                  className="resize-none mb-3"
-                  placeholder={t('reply_placeholder')}
-                  value={replyBody}
-                  onChange={e => setReplyBody(e.target.value)}
-                  disabled={isPending}
-                />
-                <Button
-                  size="lg"
-                  onClick={handleSendReply}
-                  disabled={isPending || replyBody.trim().length < 5}
-                  className="flex items-center gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  {isPending ? t('sending_reply') : t('send_reply')}
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </>
   )
 }

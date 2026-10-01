@@ -1,0 +1,59 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index 7000cf4c6..f74253a49 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -331,54 +331,12 @@
+     "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/AdminInquiriesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/StatusChangeControl.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/admin/StatusChangeHistory.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/sales/page.tsx :: src/components/ui/textarea.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/inquiries/support/page.tsx :: src/app/admin/inquiries/support/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+     "src/app/admin/inquiries/support/page.tsx :: src/components/admin/AdminInquiriesManager.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/admin/StatusChangeControl.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/admin/StatusChangeHistory.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/inquiries/support/page.tsx :: src/components/ui/textarea.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/layout.tsx :: src/app/admin/layout.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },

@@ -3,7 +3,6 @@
   "src/components/admin/AdminEditLayout.tsx": "admin page layout shell; one-off wrapper with no reuse potential outside its parent route",
   "src/components/admin/AdminFooterManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminInput.tsx": "thin admin-scoped Input wrapper used only within admin forms; covered by parent component stories",
-  "src/components/admin/AdminInquiriesManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminLegalManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminLocationsManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",
   "src/components/admin/AdminPagesManager.tsx": "complex admin manager; requires live Supabase data + auth session; no safe mock — future per-area task",

@@ -27,6 +27,7 @@ import type { AdminListing } from '@/components/admin/AdminListingsTable'
 import type { AdminUser, VerifiedAgent } from '@/components/admin/AdminUsersTable'
 import type { SupportTicketRow, SupportTicketEventRow } from '@/components/admin/AdminSupportManager'
 import type { AllSettings } from '@/components/admin/AdminSettings'
+import type { InquiryRow, ReplyRow } from '@/components/admin/AdminInquiriesManager'
 
 // ── CompanyRow (internal type mirrors AdminCompaniesManager.tsx) ──────────────
 
@@ -678,3 +679,66 @@ export const FIXTURE_PROFILE_USER_LOCATION_REQUEST = {
   location: null,
   location_request: { city: 'Shkodër', region: 'Qarku i Shkodrës' },
 }
+
+// ── Inquiries (Task 894) ───────────────────────────────────────────────────────
+
+export const FIXTURE_INQUIRIES: InquiryRow[] = [
+  {
+    id: 'inq-1',
+    created_at: '2026-09-28T10:30:00Z',
+    topic: 'sales',
+    custom_subject: null,
+    name: 'Blerina Hoxha',
+    email: 'blerina.hoxha@example.com',
+    message: 'Hello,\nI would like to promote three listings in Tiranë.\nWhich package do you recommend?',
+    target_mailbox: 'sales@lero.al',
+    status: 'new',
+    reply_count: 0,
+    handled_at: null,
+  },
+  {
+    id: 'inq-2',
+    created_at: '2026-09-27T08:00:00Z',
+    topic: 'other',
+    custom_subject: 'Invoice for the October promotion package',
+    name: 'Agim Krasniqi',
+    email: 'agim.krasniqi@example.com',
+    message: 'Please send the invoice to our company address.',
+    target_mailbox: 'sales@lero.al',
+    status: 'in_progress',
+    reply_count: 2,
+    handled_at: null,
+  },
+  {
+    id: 'inq-3',
+    created_at: '2026-09-20T12:00:00Z',
+    topic: 'partnership',
+    custom_subject: null,
+    name: 'Fatmir Gashi',
+    email: 'fatmir.gashi@example.com',
+    message: 'We run a notary office and would like to partner with Lero.al.',
+    target_mailbox: 'sales@lero.al',
+    status: 'closed',
+    reply_count: 1,
+    handled_at: '2026-09-21T09:00:00Z',
+  },
+]
+
+export const FIXTURE_INQUIRY_REPLIES: ReplyRow[] = [
+  {
+    id: 'rep-1',
+    inquiry_id: 'inq-2',
+    body: 'Thank you for your message. We will prepare the invoice today.',
+    created_at: '2026-09-27T09:15:00Z',
+    replied_by: 'u-admin',
+    replier: { name: 'Elira Dervishi' },
+  },
+  {
+    id: 'rep-2',
+    inquiry_id: 'inq-2',
+    body: 'The invoice is attached.\nPlease confirm the company address.',
+    created_at: '2026-09-27T14:40:00Z',
+    replied_by: 'u-admin',
+    replier: null,
+  },
+]

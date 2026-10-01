@@ -1,0 +1,39 @@
+P1 src/components/admin/InquiryDetailDialogView.tsx
+hash before=b10c03608e366a59ec0a4fd83d42f2cc526405b6
+hash planted=c7bd9fa43235c9eedf4f625bd5e13609b4622955
+hash restored=b10c03608e366a59ec0a4fd83d42f2cc526405b6
+exit=1
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx (6 tests | 1 failed) 1691ms
+     × T2 — a 4-character reply keeps Send disabled; 5+ calls sendInquiryReply(id, body) 533ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx > AdminInquiriesManager — Task 894 > T2 — a 4-character reply keeps Send disabled; 5+ calls sendInquiryReply(id, body)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx:151:27
+    149|
+    150|     await typeReply(dialog, 'abcd')
+    151|     expect(send.disabled).toBe(true)
+       |                           ^
+    152|
+    153|     await typeReply(dialog, 'abcde')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 8 passed (9)
+   Start at  23:01:26
+   Duration  4.69s (transform 1.17s, setup 161ms, import 4.07s, tests 2.72s, environment 1.35s)
+

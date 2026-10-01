@@ -1,0 +1,17 @@
+ M scripts/i18n-dynamic-manifest.json
+ M scripts/mantine-migration-scope.json
+ M scripts/story-coverage-exempt.json
+ M scripts/surface-census-baseline.json
+ M src/app/admin/inquiries/sales/page.tsx
+ M src/app/admin/inquiries/support/page.tsx
+ M src/components/admin/AdminInquiriesManager.tsx
+ M src/stories/fixtures/admin.fixtures.ts
+?? docs/sessions/evidence/task894/
+?? src/components/admin/AdminInquiriesView.tsx
+?? src/components/admin/InquiryDetailDialogView.tsx
+?? src/components/admin/StatusChangeSelect.tsx
+?? src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx
+?? src/components/admin/__tests__/StatusChangeSelect.test.tsx
+?? src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+?? src/stories/patterns/mantine/InquiryDetailDialogView.stories.tsx
+?? src/stories/patterns/mantine/StatusChangeSelect.stories.tsx

@@ -40,21 +40,21 @@
     },
     {
       "id": "admin-inquiries-filter",
-      "site": "src/components/admin/AdminInquiriesManager.tsx:201",
+      "site": "src/components/admin/AdminInquiriesView.tsx:85",
       "namespace": "admin.inquiries",
       "keys": ["filter_new", "filter_in_progress", "filter_closed"],
       "note": "audit §2 site #6 — 'all' branch uses static filter_all (deliberately excluded, not part of the dynamic enum)."
     },
     {
       "id": "admin-inquiries-filter-mailbox",
-      "site": "src/components/admin/AdminInquiriesManager.tsx:214",
+      "site": "src/components/admin/AdminInquiriesView.tsx:97",
       "namespace": "admin.inquiries",
       "keys": ["filter_mailbox_support", "filter_mailbox_sales"],
       "note": "audit §2 site #7 — 'all' branch uses static filter_mailbox_all (deliberately excluded)."
     },
     {
       "id": "admin-inquiries-status",
-      "site": "src/components/admin/AdminInquiriesManager.tsx:238",
+      "site": "src/components/admin/AdminInquiriesView.tsx:131",
       "namespace": "admin.inquiries",
       "keys": ["status_new", "status_in_progress", "status_closed"],
       "note": "audit §2 site #8 — ContactStatus."

@@ -1,0 +1,1776 @@
+{
+  "patterns-mantine-admininquiriesview--default": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 128,
+        "w": 286
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 193,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 128,
+        "w": 356
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 193,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          24
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 718
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 633,
+        "subjLeft": 41
+      }
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 958
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 881,
+        "subjLeft": 49
+      }
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 1374
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 1297,
+        "subjLeft": 49
+      }
+    }
+  },
+  "patterns-mantine-admininquiriesview--empty": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          24
+        ]
+      ],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-admininquiriesview--unscoped": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ],
+        [
+          90,
+          144,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 128,
+        "w": 286
+      },
+      "rowSections": {
+        "subjBottom": 229,
+        "dateTop": 259,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ],
+        [
+          90,
+          144,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 128,
+        "w": 356
+      },
+      "rowSections": {
+        "subjBottom": 229,
+        "dateTop": 259,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          24
+        ],
+        [
+          24,
+          78,
+          487
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 718
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 633,
+        "subjLeft": 41
+      }
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ],
+        [
+          24,
+          78,
+          735
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 958
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 881,
+        "subjLeft": 49
+      }
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ],
+        [
+          24,
+          78,
+          1151
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 1374
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 1297,
+        "subjLeft": 49
+      }
+    }
+  },
+  "patterns-mantine-admininquiriesview--long-subject": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 188,
+        "w": 286
+      },
+      "rowSections": {
+        "subjBottom": 223,
+        "dateTop": 253,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          16
+        ]
+      ],
+      "firstRow": {
+        "h": 168,
+        "w": 356
+      },
+      "rowSections": {
+        "subjBottom": 203,
+        "dateTop": 233,
+        "dateLeft": 33,
+        "subjLeft": 33
+      }
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          24
+        ]
+      ],
+      "firstRow": {
+        "h": 122,
+        "w": 718
+      },
+      "rowSections": {
+        "subjBottom": 183,
+        "dateTop": 115,
+        "dateLeft": 633,
+        "subjLeft": 41
+      }
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": {
+        "h": 122,
+        "w": 958
+      },
+      "rowSections": {
+        "subjBottom": 183,
+        "dateTop": 115,
+        "dateLeft": 881,
+        "subjLeft": 49
+      }
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      },
+      "filters": [
+        [
+          24,
+          78,
+          32
+        ]
+      ],
+      "firstRow": {
+        "h": 102,
+        "w": 1374
+      },
+      "rowSections": {
+        "subjBottom": 163,
+        "dateTop": 115,
+        "dateLeft": 1297,
+        "subjLeft": 49
+      }
+    }
+  },
+  "patterns-mantine-statuschangeselect--default": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-statuschangeselect--with-note": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "Update status"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "Update status"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "Update status"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "Update status"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ],
+        "14px": [
+          "Update status"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-statuschangeselect--disabled": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 768,
+      "parentW": 768,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 1024,
+      "parentW": 1024,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 1440,
+      "parentW": 1440,
+      "gap": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "sizes": {
+        "16px": [
+          ":root, :host{--mantine",
+          "@media (max-width: 19."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-inquirydetaildialogview--new": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Blerina Hoxha"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "blerina.hoxha@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Blerina Hoxha"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "blerina.hoxha@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 768,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "blerina.hoxha@example."
+        ],
+        "14px": [
+          "Blerina Hoxha",
+          "sales"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1024,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "blerina.hoxha@example."
+        ],
+        "14px": [
+          "Blerina Hoxha",
+          "sales"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1440,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "blerina.hoxha@example."
+        ],
+        "14px": [
+          "Blerina Hoxha",
+          "sales"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-inquirydetaildialogview--with-replies": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 768,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1024,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1440,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-inquirydetaildialogview--replies-load-failed": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 768,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1024,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1440,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "patterns-mantine-inquirydetaildialogview--sending": {
+    "320": {
+      "innerWidth": 320,
+      "docScrollW": 320,
+      "overflowX": false,
+      "compW": 320,
+      "parentW": 320,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "390": {
+      "innerWidth": 390,
+      "docScrollW": 390,
+      "overflowX": false,
+      "compW": 390,
+      "parentW": 390,
+      "dialogOverflow": false,
+      "sizes": {
+        "14px": [
+          "Inquiry Details",
+          "Agim Krasniqi"
+        ],
+        "16px": [
+          ".__m__-_r_p_{--sg-spac",
+          ".__m__-_r_1d_{width:10"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "768": {
+      "innerWidth": 768,
+      "docScrollW": 768,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 768,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1024": {
+      "innerWidth": 1024,
+      "docScrollW": 1024,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1024,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    },
+    "1440": {
+      "innerWidth": 1440,
+      "docScrollW": 1440,
+      "overflowX": false,
+      "compW": 620,
+      "parentW": 1440,
+      "dialogOverflow": false,
+      "sizes": {
+        "16px": [
+          "Inquiry Details",
+          ".__m__-_r_k_{--sg-spac"
+        ],
+        "12px": [
+          "From",
+          "agim.krasniqi@example."
+        ],
+        "14px": [
+          "Agim Krasniqi",
+          "Invoice for the Octobe"
+        ]
+      },
+      "filters": [],
+      "firstRow": null,
+      "rowSections": null
+    }
+  },
+  "locales": {
+    "patterns-mantine-admininquiriesview--default|sq|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--default|sq|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|sq|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|sq|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|sq|320": {
+      "overflowX": false,
+      "dialogOverflow": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|sq|390": {
+      "overflowX": false,
+      "dialogOverflow": false
+    },
+    "patterns-mantine-admininquiriesview--default|uk|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--default|uk|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|uk|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|uk|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|uk|320": {
+      "overflowX": false,
+      "dialogOverflow": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|uk|390": {
+      "overflowX": false,
+      "dialogOverflow": false
+    },
+    "patterns-mantine-admininquiriesview--default|it|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--default|it|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|it|320": {
+      "overflowX": false
+    },
+    "patterns-mantine-admininquiriesview--unscoped|it|390": {
+      "overflowX": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|it|320": {
+      "overflowX": false,
+      "dialogOverflow": false
+    },
+    "patterns-mantine-inquirydetaildialogview--with-replies|it|390": {
+      "overflowX": false,
+      "dialogOverflow": false
+    }
+  }
+}

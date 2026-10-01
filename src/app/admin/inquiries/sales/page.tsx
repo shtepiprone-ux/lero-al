@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { Box } from '@mantine/core'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
@@ -7,8 +8,13 @@ import {
   type InquiryRow,
   type ReplyRow,
 } from '@/components/admin/AdminInquiriesManager'
+import { theme } from '@/design-system/mantine/theme'
 
 export const metadata = { title: 'Sales Inquiries — Admin' }
+
+// Server Component: the width token is read straight from the theme object (same precedent as
+// `src/app/admin/currency/page.tsx`); `!` because `createTheme()`'s return type is deep-partial.
+const layout = theme.other!.layout!
 
 export default async function AdminInquiriesSalesPage() {
   await getAdminLocale()
@@ -40,12 +46,12 @@ export default async function AdminInquiriesSalesPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-5xl mx-auto">
+    <Box p={{ base: 'xl', lg: '2xl' }} maw={layout.adminPageMaxWidth} mx="auto">
       <AdminPageHeader
         title={t('inquiries_sales_title')}
         subtitle={t('inquiries_subtitle', { count: count ?? 0 })}
       />
       <AdminInquiriesManager inquiries={inquiries} replies={replies} mailboxScope="sales" />
-    </div>
+    </Box>
   )
 }

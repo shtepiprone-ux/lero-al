@@ -1,0 +1,796 @@
+{
+  "patterns-mantine-admininquiriesview--default": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        394,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        414,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        492,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        492,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        492,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-admininquiriesview--empty": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        718,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        718,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        718,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        718,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        718,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-admininquiriesview--unscoped": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        328,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        348,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        492,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        492,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        492,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "New",
+          "sales@lero.al"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-admininquiriesview--long-subject": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        205,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        245,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        369,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        369,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        389,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_3_{align-i",
+          ".__m__-_r_5_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "All",
+          "New"
+        ],
+        "12px": [
+          "In progress",
+          "sales@lero.al"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-statuschangeselect--default": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        832,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        832,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        832,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        832,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        832,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-statuschangeselect--with-note": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        704,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          ".__m__-_r_g_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "Update status",
+          "<input>",
+          "<textarea>"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        704,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          ".__m__-_r_g_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "Update status",
+          "<input>",
+          "<textarea>"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        704,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          ".__m__-_r_g_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "Update status",
+          "<input>",
+          "<textarea>"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        704,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          ".__m__-_r_g_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "Update status",
+          "<input>",
+          "<textarea>"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        704,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          ".__m__-_r_g_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "Update status",
+          "<input>",
+          "<textarea>"
+        ]
+      }
+    }
+  },
+  "patterns-mantine-statuschangeselect--disabled": {
+    "320": {
+      "w": 288,
+      "parentW": 320,
+      "gap": [
+        24,
+        16,
+        832,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "390": {
+      "w": 358,
+      "parentW": 390,
+      "gap": [
+        24,
+        16,
+        832,
+        16
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "768": {
+      "w": 720,
+      "parentW": 768,
+      "gap": [
+        24,
+        24,
+        832,
+        24
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "1024": {
+      "w": 960,
+      "parentW": 1024,
+      "gap": [
+        24,
+        32,
+        832,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    },
+    "1440": {
+      "w": 1376,
+      "parentW": 1440,
+      "gap": [
+        24,
+        32,
+        832,
+        32
+      ],
+      "sizes": {
+        "16px": [
+          ".__m__-_r_7_{width:1",
+          "<input>"
+        ],
+        "14px": [
+          "<input>"
+        ]
+      }
+    }
+  }
+}

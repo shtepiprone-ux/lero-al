@@ -2,8 +2,8 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Report listing") · no task dependency (877's adapters have landed; 858 does not render `AdminTable` today) · owner
-action **O78-11** · **Status: 🔎 review 1 `PARTIALLY VERIFIED` 2026-10-01 — code and gates verified; owner matrix O78-11
-owed (§16)**
+action **O78-11** · **Status: 🔁 `NEEDS REVISION` 2026-10-01 — owner returned `ReportDetailDialogView` at O78-11;
+revision 1 = §17 (the executor starts there). `AdminReportsView` accepted at 390/1440.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6). Precedents, read-only: **877** (container/View split, `AdminTable` and `AdminPageHeader`
@@ -383,6 +383,184 @@ Nothing else blocks.
 
 **Approval path:** the owner returns O78-11 accepted and Sonnet adds the `Files Changed` table, then Opus approves
 and archives. If the owner returns any tuple, that is a revision.
+
+## 17. Revision 1 — the detail dialog gets an order (owner return at O78-11, 2026-10-01)
+
+**Executor: start here. §1–§15 stay binding unless this section replaces them. Re-entry mode: `remediation`.**
+Do not touch `AdminReportsView`, its Story, the containers, `page.tsx` or the census baseline. Do not re-run plants
+P1, P2 or P4.
+
+### 17.1 Owner decision, verbatim (2026-10-01)
+
+On `AdminReportsView` (Default, AllTab, Empty × sq/uk × 390/1440): *"приймаю."*
+On `ReportDetailDialogView` (Pending, FullManagement, TerminalReopen, DeleteConfirm × sq/uk × 390/1440): *"не приймаю.
+Це суто барахолка функціоналу, немає балансу, немає порядку."*
+The screenshot is `Pending`, uk, at about 733px.
+On `AdminReportsView` `Default` × en/it × 1024 (the remaining §13.3 row; the table scrolls 15px inside its frame at
+1024, review 1 §16): *"сама таблиця ок, приймаю."* With that, `AdminReportsView` is fully accepted: 14 of its 14
+tuples. The review 1 P3 on the table's inner scroll is closed by this decision, and no `wrap` change is made.
+
+### 17.2 What is wrong — measured on the shipped View (FACT, `ReportDetailDialogView.tsx` hash `af86f8e2…`)
+
+| # | Defect | Source |
+|---|---|---|
+| D1 | Seven facts use three layouts: right-aligned label/value rows (status, reason, listing, reporter, date), a stacked block (owner) and a captioned paper (comment). No grid, so the values do not line up. | `:107-178` |
+| D2 | Date row: the caption is `size="xs"` (12px), but `RelativeTime` is `inherit`, so the value renders at the body's 16px. It is the largest text in the body. | `:175-178` |
+| D3 | The owner link has `lh={touchTarget}`, a 44px line box, which leaves a 44px hole between "Власник" and "Скаржник". | `:142-155` |
+| D4 | The listing link wraps its `ExternalLink` icon onto its own line. | `:120-138` |
+| D5 | The comment caption reuses the public form's `listing.report_comment_label` ("Додаткові деталі (необов'язково)"). An admin reads the reporter's comment, not an optional field. | `:167` |
+| D6 | Actions are spread through the body in three places: transitions `:219-250`, reopen `:254-269`, delete/close `:271-291`. `MantineModal`'s own `footer` slot is unused. | `:97-293` |
+| D7 | A body-level `Divider` with nothing after it when the footer group is empty (Pending without delete, as in the screenshot). | `:271-272` |
+| D8 | The Story fixture date `2026-09-28` reads "за 2 місяці" (a future date) on the owner's clock. | Story `:39` |
+
+### 17.3 Required layout (R11–R15 — replace R5's body and footer; R5's testids, gating rules, `loading`/`disabled` rules and the delete confirm's behaviour stay)
+
+The body is `Stack gap="lg"` with exactly these zones, in order. One text grammar applies everywhere in the body:
+**caption** = `Text size="xs" c="dimmed"`, **value** = `Text size="sm" fw={500}`, with caption above value in
+`Stack gap="tight"` (4px).
+
+- **R11 — Facts.** `SimpleGrid cols={2} spacing="md" verticalSpacing="md"` with four cells, in reading order:
+  - status (the `Badge` as the value);
+  - reason;
+  - reporter (or `anonymous`);
+  - date (`RelativeTime` wrapped in `Text size="sm" fw={500}` so it no longer inherits 16px — D2).
+
+  Every value is start-aligned under its caption. No right-aligned values. Fixes D1 and D2.
+- **R12 — Listing card.** `Paper withBorder radius="md" p="sm"` containing a `Stack gap="sm"`:
+  1. Caption `col_listing`.
+  2. The listing `Anchor` (new tab, `size="sm" fw={500}`). Its title is `lineClamp={2}` inside
+     `Group gap="tight" wrap="nowrap" align="flex-start"`, with the `ExternalLink` icon (`iconSize.badge`) after the
+     text as a sibling, never wrapping alone. Without a listing, the value is `—`.
+  3. A `Group justify="space-between" wrap="nowrap" align="center"` with two children:
+     - left: caption `col_owner` over value owner name, or `owner_not_found` dimmed;
+     - right: when the owner exists, `Button component={Link} variant="subtle" size="compact-sm"` `open_profile`. Its
+       touch target comes from the Button theme, not `lh`.
+
+  The owner belongs to the listing, so it lives in this card. Fixes D3 and D4.
+- **R13 — Reporter's comment.** Caption: the new key `admin.reports.comment_label`. Value:
+  `Paper bg="gray.0" p="sm" radius="md"` with `Text size="sm"`, or italic dimmed `no_comment`. The View no longer reads
+  `listing.report_comment_label`. Fixes D5.
+- **R14 — Moderation section**, rendered only when `isOpen || canOverrideReportStatus`:
+  - `Divider label={t('section_moderation')} labelPosition="left"`;
+  - when `isOpen`, the notes `Textarea`, unchanged;
+  - when `canOverrideReportStatus`, `data-testid="status-override-section"`: `MantineSelect` + `action_apply`, stacked
+    below 640 and one row from `sm` (unchanged).
+
+  No body element follows this section. No body `Divider` exists anywhere else. Fixes D7.
+- **R15 — Every action in `MantineModal footer`.** The footer root is
+  `Flex data-testid="report-dialog-footer" direction={{ base: 'column-reverse', sm: 'row' }} justify="space-between" gap="sm"`.
+  - **Start side** (`sm`+ left; bottom below 640): `delete-btn`, when `canDeleteReports`, as
+    `variant="subtle" color="red"` with `Trash2`. When there is no delete, render an empty `Box` so the end group
+    stays right-aligned.
+  - **End side:** `Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm"` holding, in DOM order:
+    - when `isOpen`: review (`variant="default"`, pending only), dismiss (`variant="outline" color="red"`), resolve
+      (filled);
+    - when `isTerminal && canOverrideReportStatus`: `reopen-btn` (`variant="outline"`, `RotateCcw`);
+    - when `!isOpen && !canOverrideReportStatus`: close (`variant="default"`).
+
+    Below 640, the primary action (resolve or reopen) is therefore on top, and every button is `w="100%"`.
+  - Fixes D6.
+- **R16 — Delete confirm.** Same behaviour and testids. Its buttons move into that modal's `footer` slot, with the
+  same `column-reverse`/`row` composition and cancel as `variant="outline" color="gray"`. That matches
+  `AdminUserProfileDialogsView.tsx:44-61` `ConfirmFooter`, which is a local function, so compose it; do not import or
+  extract it. The title is `Group gap="xs" c="red.7"` with `AlertTriangle` (`iconSize.standard`) + `confirm_delete_title`.
+  `delete-confirm-dialog` stays on the body `Stack`.
+- **R17 — i18n.** `admin.reports.comment_label` and `admin.reports.section_moderation` in all four locales:
+
+  | key | en | uk | sq | it |
+  |---|---|---|---|---|
+  | `comment_label` | Reporter's comment | Коментар скаржника | Komenti i raportuesit | Commento del segnalatore |
+  | `section_moderation` | Moderation | Модерація | Moderimi | Moderazione |
+
+  Update `scripts/i18n-dynamic-manifest.json` if line numbers move.
+- **R18 — Story fixture.** In `ReportDetailDialogView.stories.tsx`, `created_at` becomes `2026-01-15T10:30:00Z`, a
+  past date on any plausible clock (D8). There are no other Story changes: exports, `useLocale()` and the no-gutter
+  overlay-only rule stay.
+
+### 17.4 Type scale (replaces §12.1's dialog rows)
+
+| Element | base | sm+ | Theme key |
+|---|---|---|---|
+| Modal title | 16 | 16 | `MantineModal` contract |
+| Captions (facts, listing, owner, comment), divider label | 12 | 12 | `size="xs"` |
+| Values, listing link, comment, notes, select, buttons | 14 | 14 | `size="sm"` |
+| Status badge | 12 | 12 | `Badge size="sm"` |
+
+No body text may render at 16px or above (the title is not body).
+
+### 17.5 Acceptance criteria (AC9–AC14; AC1–AC8 stay)
+
+- **AC9 [R11]** In `Pending`, `FullManagement` and `TerminalReopen` at 390 and 1440, the four fact cells form two
+  rows of two:
+  - cells 1–2 share a top, and cells 3–4 share a top (±1px);
+  - the two column widths are equal (±1px);
+  - each value's left edge equals its caption's left edge (±1px).
+- **AC10 [R15]** In those three stories plus `OwnerMissing`, every visible `button` other than the modal close and
+  the `MantineSelect` input is a descendant of `[data-testid="report-dialog-footer"]`. At 1440, the end group's last
+  button's right edge and the footer's right edge are equal (±1px). At 390, every footer button's width equals the
+  footer width (±1px), and the first button in visual order is resolve (`Pending`) or reopen (`TerminalReopen`).
+- **AC11 [R11–R13, 17.4]** At 320, 390 and 1440, `getComputedStyle().fontSize` of every body text node is 12 or 14,
+  and the date value is 14.
+- **AC12 [R14]** The body's last element is the moderation section, or the comment block when the section is absent.
+  The body contains no `hr`/`Divider` other than R14's labelled one.
+- **AC13 [R17, R13]** `check:i18n` exits 0. A grep finds `report_comment_label` 0 times in
+  `ReportDetailDialogView.tsx` and `comment_label` once.
+- **AC14 [R9]** The 14 tests pass with unchanged names. Plant **P3** is re-run against the final
+  `ReportDetailDialogView.tsx` hash, then restored to an equal hash. A selector may change only if the rendered role
+  or name changed; record each change.
+
+`GR-4 AC AUDIT — 6 new criteria; each states an observable property with a ±1px tolerance where geometric; absolutes: AC13's 0-count grep of a removed key in one file.`
+
+### 17.6 Write set (revision 1 only)
+
+1. `src/components/admin/ReportDetailDialogView.tsx`
+2. `src/stories/patterns/mantine/ReportDetailDialogView.stories.tsx` (fixture date only)
+3. `messages/en.json`, `messages/uk.json`, `messages/sq.json`, `messages/it.json` (two keys under `admin.reports`)
+4. `scripts/i18n-dynamic-manifest.json` (line numbers only, if moved)
+5. `src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx` (only per AC14)
+6. `docs/sessions/2026-10-01-task858-admin-reports-mantine.md`: append a `Revision 1` section **and** the `Files
+   Changed` table owed from review 1, covering every task path in `git status --short`
+7. `docs/sessions/evidence/task858/rev1/*`
+8. `docs/backlog.md`: the 858 cell only
+
+### 17.7 Gate block (revision 1)
+
+```powershell
+$ev = "docs\sessions\evidence\task858\rev1"
+New-Item -ItemType Directory -Force $ev | Out-Null
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\00-platform.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts src/modules/listings/actions/__tests__/reportListing.smoke.test.ts *>&1 | Tee-Object "$ev\01-tests.txt"
+node.exe scripts\check-surface-census.mjs --surface src\app\admin\reports\page.tsx *>&1 | Tee-Object "$ev\02-census.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\03-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\04-lint.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\05-design-tokens.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\06-enrolled-tailwind.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\07-i18n.txt"
+npm.cmd run check:i18n-dynamic *>&1 | Tee-Object "$ev\08-i18n-dynamic.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\09-story-coverage.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\10-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\11-mojibake.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\12-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\13-build.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\14-status.txt"
+```
+
+Expected: `win32`; tests 52/52; census = the same three calibration FAIL lines (exit 1, as in review 1); every other
+command exits 0. Then:
+- run the AC9–AC12 measurement in Chromium over `storybook-static` for `Pending`, `FullManagement`, `TerminalReopen`,
+  `OwnerMissing` and `DeleteConfirm` at 320/390/1024/1440 (sq and uk at 390 and 1440), into `$ev\20-layout.json`;
+- emit GR-3b and GR-3c receipts per export, and `GR-3d … n/a: overlay-only`;
+- write `git hash-object` of every revision-1 file into `$ev\21-hash-object.txt` in the same pass;
+- normalise every `Tee-Object` file to UTF-8 without BOM through Node.
+
+### 17.8 Owner re-review — O78-11 (revision 1)
+
+| Story | States | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Patterns/Mantine/ReportDetailDialogView` | `Pending`, `FullManagement`, `TerminalReopen`, `DeleteConfirm` | `sq`, `uk` | 390, 1440 | 16 |
+| ~~`Patterns/Mantine/AdminReportsView` `Default` × `en`, `it` × 1024~~ | accepted by the owner 2026-10-01 (§17.1) | — | — | 0 |
+
+The reviewer measures AC9–AC12 and GR-3b/3c before handing this matrix to the owner.
 
 ## Appendix D — the reserved-registry row, moved verbatim (2026-09-29)
 

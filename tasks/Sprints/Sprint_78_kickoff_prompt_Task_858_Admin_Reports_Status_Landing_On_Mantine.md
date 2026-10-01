@@ -2,7 +2,8 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Report listing") · no task dependency (877's adapters have landed; 858 does not render `AdminTable` today) · owner
-action **O78-11** · **Status: 📝 `KICKOFF FILED` 2026-09-29**
+action **O78-11** · **Status: 🔎 review 1 `PARTIALLY VERIFIED` 2026-10-01 — code and gates verified; owner matrix O78-11
+owed (§16)**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6). Precedents, read-only: **877** (container/View split, `AdminTable` and `AdminPageHeader`
@@ -127,7 +128,7 @@ right tab **by accident** and every other value is ignored. FACT (both files rea
 ## 7. Scope — the exact allowed write set
 
 1. `src/app/admin/reports/page.tsx`
-2. `src/components/admin/AdminReportsManager.tsx`; new `ReportDetailDialog.tsx`, `AdminReportsView.tsx`, `ReportDetailDialogView.tsx` (all in `src/components/admin/`)
+2. `src/components/admin/AdminReportsManager.tsx`; new `ReportDetailDialog.tsx`, `AdminReportsView.tsx`, `ReportDetailDialogView.tsx`, `reportStatusFilter.ts` (added by review 1, §16) (all in `src/components/admin/`)
 3. new `src/stories/patterns/mantine/AdminReportsView.stories.tsx`, `ReportDetailDialogView.stories.tsx`; deleted `src/components/admin/AdminReportsManager.stories.tsx`
 4. `src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx` (migrated)
 5. `scripts/mantine-migration-scope.json`, `scripts/story-coverage-exempt.json`, `scripts/surface-census-baseline.json`,
@@ -339,6 +340,49 @@ tests now selects its element; limitations; O78-11 owed. Update the 858 cell of 
 | 3 | Plants | a plant passes → test defect |
 | 4 | Gates | non-zero → `PARTIALLY IMPLEMENTED` |
 | 5 | O78-11 | returned → revision |
+
+## 16. Review 1 — 2026-10-01 — `PARTIALLY VERIFIED`
+
+Opus reviewed the diff, every new or changed file, the plants and the gate transcripts. The final build and Storybook
+build ran after the last source edit, and the current `git hash-object` of every file equals
+`evidence/task858/22-hash-object.txt`. Independent native re-runs (win32, v22.22.3) gave: tests 52/52 · census = the
+three §3.1 calibration FAIL lines · `check:story-coverage` exit 0. The reviewer's Chromium measurement over
+`storybook-static`, all nine exports at 320/390/768/1024/1440, shows no page overflow, text ≤ 16px, dialog buttons
+≥ 44px, a full-width bottom sheet below 640 and a 440px centred modal from 768. `AdminReportsView` edges are
+24/16/·/16 at 320–390, 24/24/·/24 at 768 and 24/32/·/32 at 1024–1440, with nothing at 0.
+
+**Why not approved:** the visual criterion is `NOT VERIFIABLE` until the owner returns O78-11 (§13.3, 30 tuples).
+Nothing else blocks.
+
+**Executor deviations accepted, as kickoff defects corrected here:**
+- R9/T3: Next forbids extra exports from a page file. `parseReportStatusParam` therefore lives in
+  `src/components/admin/reportStatusFilter.ts`, which joins the §7 write set.
+- R10: "no key added" contradicted §3.1, which names `ReportDetailDialog.tsx` as a calibration FAIL. The one added
+  baseline key `page.tsx :: ReportDetailDialog.tsx` is the correct result.
+- §7 / R10: the `check:surface-census:changed:update-baseline` npm alias needs a base. The executor ran
+  `node scripts/check-surface-census-changed.mjs --base HEAD --update-baseline`.
+- AC5: the grep's remaining hits are historical paths only (`docs/reviews/artifacts/**`, old Epic and Sprint
+  kickoffs). It has no hits in `src`, `scripts`, `.github`, `.storybook` or `package.json`.
+
+**Notes (P3 / NOTE, none blocking):**
+- **P3 — table scrolls sideways inside its frame at 768 (833 vs 718px) and 1024 (973 vs 958px).** `AdminTable` cells
+  are `nowrap` by default and the listing title is long. From 1280 nothing scrolls. The O78-11 1024 tuple will show
+  this. If the owner returns it, the fix is `wrap: true` on the `listing` column (Task 891's `TableColumn.wrap` API),
+  with no new value.
+- **P3 — the session log has no `Files Changed` table.** `22-hash-object.txt` lists 16 paths but omits the deleted
+  legacy Story, the session log and the evidence folder. Add the table before approval.
+- **NOTE —** plant P3 ran against `ReportDetailDialogView` hash `6245a9ea…`. The shipped hash is `af86f8e2…`, edited
+  after the plant. The asserting test is unchanged and passes on the shipped file, so the plant result holds as
+  INFERENCE.
+- **NOTE —** each tab click is a `router.replace` (R2). It re-runs the server page: the 200-row query and two
+  permission reads. The `useEffect` then replaces local rows with fresh ones. The behaviour is correct, but it costs
+  one query per click (INFERENCE from App Router semantics for a dynamic page).
+- **NOTE (census blind spot, not this task's):** `AdminReportsManager` reports `story:yes` only because both Stories
+  `import type { ReportRow }` from it. A type-only import counts as a Story import. The census still FAILs it on
+  `manifest:no`, so nothing is hidden here.
+
+**Approval path:** the owner returns O78-11 accepted and Sonnet adds the `Files Changed` table, then Opus approves
+and archives. If the owner returns any tuple, that is a revision.
 
 ## Appendix D — the reserved-registry row, moved verbatim (2026-09-29)
 

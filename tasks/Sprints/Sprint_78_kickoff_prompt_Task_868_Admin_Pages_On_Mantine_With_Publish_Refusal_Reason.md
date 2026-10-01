@@ -951,6 +951,210 @@ Only the toolbar is re-reviewed. Every other O78-7 row is accepted (§20.1).
 
 After the deploy, O78-7b and O78-7c from §17.9 still apply.
 
+## 21. Review 5 — 2026-10-01 — `PARTIALLY VERIFIED` (R26 and R27 verified; the §20.6 toolbar tuples owed)
+
+Opus. Frontend task, so no review ledger (D69-3).
+
+- **Tree.** The blob hashes of `theme.ts` (`1978f1ed…`), `MantineRichTextEditor.tsx` (`ca395eba…`) and
+  `MantineDataTableToCards.tsx` (`8716ca65…`) equal `r4-23-hash-object.txt`. The last source write was 17:18:05
+  (the P10 restore). `storybook-static` (17:19) and `.next/BUILD_ID` (17:23:30) are newer. The status after the
+  revision equals the status before it, apart from `docs/backlog.md`.
+- **R26 / AC26.** `badge (right, own row)` occurs 0 times. The hash equals `r3-23`.
+- **R27 / AC27.**
+  - The key is defined at `theme.ts:782` (`richTextControlSize: '1.625rem'`) with its type line at `:126`.
+    `MantineRichTextEditor.tsx:199` uses `{ base: touchTarget, sm: boxSize.richTextControlSize }` for `miw` and
+    `mih`. There is no `style` and no raw value, and `check:design-tokens` exits 0.
+  - The reviewer's own probe ran on `storybook-static`, with `default` and `with-content` × `sq`/`uk`. All 30
+    controls measured **44×44** at 320, 390 and 639, giving 8, 6 and 3 rows. They measured **26×26** at 640, 768 and
+    1440, giving 2, 2 and 1 rows. The icon was 16 everywhere, with no overflow.
+  - `PageEditorDialogView` `rich-content` at `sq` measured 44 and 6 rows at 390, and 26 and 2 rows at 1440.
+  - P10 (`r4-27-plant-p10.txt`) measured 44,44 and 2 rows at 1440 while planted. The hash was equal after the restore.
+- **Notes, none blocking.**
+  - `r4-01` and `r4-23` list hashes without paths. The file order is the write set plus `MantineDataTableToCards.tsx`.
+  - `probe868-r4.mjs:41` adds one lint warning (`r1` unused): 132 warnings against 131, with 0 errors.
+  - The executor reports that it opened the kickoff before the gate files, then re-based on them before writing.
+- **Owner, 2026-10-01, verbatim:** *"але я не бачу компактного тулбару"*, with a screenshot of `PageEditorDialogView`
+  `New` at **Mobile 480px**. At 480 the controls are 44 px by D868-5, because 480 is below 640. That is not a return.
+  The §20.6 tuples (390, 768 and 1440) are still owed.
+
+## 22. Owner return and revision 5 — 2026-10-01 — `NEEDS REVISION`
+
+### 22.1 The owner's result and decisions, verbatim (2026-10-01)
+
+**§20.6, returned:** *"я не приймаю такий компактний вид. Компактний вид має бути щось накшталт combobox або dropbox і
+кнопка "B", де по кліку випадає меню. А ось це не можна назвати компактним виглядом у 3-4 рядки."* The owner attached
+a screenshot of `RichTextEditor` `Default` at 480px: 5 rows of 44px buttons.
+
+**D868-6 (asked by Opus).** The question: should the menu toolbar (menu buttons that open a list, through the project's
+`MantineDropdownMenu`) apply at every width? Option chosen, verbatim: *"На всіх ширинах (Recommended)"*. This
+replaces D868-5's row of 30 buttons; D868-5's control **size** (44px below 640, 26px from 640) still holds.
+
+**D868-7 (asked by Opus, a correction to D868-6's mock-up).** Opus's mock-up showed 8 buttons and said "one row". At
+44px that is false below about 430px, because the toolbar's inner width is about 254px at 320 and 324px at 390. Option
+chosen, verbatim: *"5 кнопок — завжди 1 ряд (Recommended)"*. The preview text it selected:
+
+```
+320 px і ширше:
+│ [B▾] [¶▾] [+▾] [🔗] [↶▾]     │
+¶▾  Заголовок 2 / 3 / 4
+    ───
+    Маркований / Нумерований / Цитата
+    ───
+    Ліворуч / Центр / Праворуч / По ширині
+↶▾  Відмінити / Повторити
+```
+
+The option text: «B» holds formatting and remove-link; «¶» holds headings, lists, quote and alignment, with dividers;
+«+» holds columns, table and image; 🔗 is the link; ↶▾ is one "history" menu with undo and redo.
+
+### 22.2 Measured context (Opus, 2026-10-01)
+
+- **Toolbar geometry** (`@mantine/tiptap/styles.css`):
+  - `.m_4574a3c4` (toolbar): `flex-wrap: wrap`, `gap: var(--mantine-spacing-sm)` (12px) between its children, and
+    padding `xs md` (10/16) in the `default` variant.
+  - `.m_2ab47ef2` (`ControlsGroup`): `display: flex` with no gap.
+  - The inner width at 320 is 288 − 2 − 32 = **254px**. Five 44px controls in **one** `ControlsGroup` take 220px and
+    fit. As five separate toolbar children they take 220 + 4 × 12 = 268px, which wraps. That fact is plant P11.
+- **The canonical menu is `src/design-system/mantine/patterns/MantineDropdownMenu.tsx`** (GR-0 REUSE). It renders a
+  Mantine `Menu` from 640 and a `ResponsiveBottomSheet` below. Items are
+  `{ label, onClick, icon?, color?, disabled?, separator? }`, and `iconOnlyTrigger` keeps an icon trigger compact below
+  640. Its own Story is `Mantine/Primitives/DropdownMenu` (`src/stories/mantine/primitives/DropdownMenu.stories.tsx`).
+  There is **no active-item state**. Consumers: `HeaderView`, `UserMenu`, `LocaleSwitcher` and `MantineNavigationMenu`
+  (the executor re-greps them at I0).
+- **Joined-group chrome.** `MantineDropdownMenu` wraps each trigger in a `Box` (desktop) or a `span` (mobile). Inside
+  one `ControlsGroup`, the `default` variant's joined border rules
+  (`:where([data-rich-text-editor-control]):where(:first-of-type / :last-of-type / :not(:last-of-type))`) therefore
+  treat every control as both first and last. Each gets its own border and radius, and borders double where controls
+  touch. The `subtle` variant (`.m_c2207da6[data-variant='subtle']`) has no control borders, so the group needs no
+  joining. **Opus choice, shown to the owner in §22.6:** `variant="subtle"`.
+- **Re-rendering.** The editor is created with `shouldRerenderOnTransaction: true` (`MantineRichTextEditor.tsx:150`),
+  so active and disabled flags computed in render follow the selection.
+- **Labels.** `RichTextEditorLabels` (`MantineRichTextEditor.tsx:~40-80`) is filled in `PageEditorDialogView.tsx:~50-80`
+  and in `RichTextEditor.stories.tsx:47` from `admin.pages.editor.*`. The smoke test's `LABELS`
+  (`MantineRichTextEditor.smoke.test.tsx:17`) lists every key, and `:85-91` expects every control as a toolbar
+  `button`. Those rows change.
+
+### 22.3 Requirements — revision 5 (R27's control size stands; its 30-button row is replaced)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R28** | **Five toolbar controls in one `ControlsGroup` (D868-6, D868-7).** `RichTextEditor` gets `variant="subtle"`. The toolbar holds exactly one `RichTextEditor.ControlsGroup` with, in this order:<br>① **Format** (`MantineDropdownMenu`, trigger = `RichTextEditor.Control` with the lucide `Bold` icon and a `ChevronDown`): bold, italic, underline, strike, clear formatting, then a divider and remove link (disabled when the selection has no link).<br>② **Paragraph** (`Pilcrow`): H2, H3, H4 \| bullet list, numbered list, quote \| left, centre, right, justify. The `\|` marks are `separator` dividers.<br>③ **Insert** (`Plus`): 2 columns, 3 columns, remove columns \| insert table, add row, delete row, add column, delete column, header row, delete table \| image (it opens the existing image `MantineModal`).<br>④ **Link**: the existing `RichTextEditor.Link` (its own popover), unchanged.<br>⑤ **History** (`Undo2`): undo, redo.<br>Every item calls the same `editor.chain().focus()…run()` command that today's control calls. It keeps today's `disabled` condition (`MantineRichTextEditor.tsx:276-355`: columns remove, the table row/column/header/delete operations, plus undo/redo through `editor.can()`). It uses today's localized label. Item icons are today's lucide icons at `theme.other.iconSize.standard`. Triggers spread `touch` (D868-5: 44px below 640, `richTextControlSize` from 640). Triggers use `iconOnlyTrigger`, an `aria-label` and a `title` from four new keys, and the bottom-sheet `title` is the same label. The chevron uses an `iconSize` key. A trigger is `active` when any item in its menu is active. No `style` object, no raw value and no CSS rule are added. If the five controls do not fit one row at 320, report `PREMISE DRIFT — toolbar width` with the measurement; do not shrink anything to force it. | P1 | AC28, AC29 |
+| **R29** | **Active item (GR-0 EXTEND `MantineDropdownMenu`).** `DropdownMenuItemDef` gains an optional `active?: boolean`. When it is true, the item shows a lucide `Check` at `iconSize.compact` at its end: `rightSection` on the desktop `Menu.Item`, and the row's end on the mobile sheet. It also sets `data-active`. When it is `undefined`, nothing renders differently, so existing consumers do not change. The Story `Mantine/Primitives/DropdownMenu` gains the export `WithActiveItems`. The editor sets `active` from `editor.isActive(…)` (bold, italic, underline, strike, H2–H4, the lists, quote) and from `editor.isActive({ textAlign })` for alignment. | P2 | AC30 |
+| **R30** | **Labels.** Add four keys in all four locales, under `admin.pages.editor.`: `menu_format`, `menu_paragraph`, `menu_insert` and `menu_history`. Add them to `RichTextEditorLabels` (`menuFormat`, `menuParagraph`, `menuInsert`, `menuHistory`) and fill them in `PageEditorDialogView.tsx`, `RichTextEditor.stories.tsx` and the test `LABELS`. The four `sq`/`uk`/`it` values are translations, not English. | P1 | AC31 |
+
+### 22.4 Acceptance criteria — revision 5
+
+- **AC28 [R28]** Run an `r5-` copy of `probe868-r4.mjs` on a fresh `storybook-static`. Cover `RichTextEditor` `default`
+  and `with-content` at `sq`/`uk`, at 320, 390, 639, 640, 768 and 1440, plus `PageEditorDialogView` `rich-content` at
+  `sq` 390 and 1440.
+  - The toolbar has **5** controls in **1** row.
+  - Each control is ≥ 44px wide and 44px high below 640, and 26 ± 1px high from 640.
+  - There is no document overflow.
+  - **P11:** put the five controls in five separate `ControlsGroup`s. The 320 probe must then measure 2 rows. Restore
+    with equal hashes.
+- **AC29 [R28]** Rewrite the smoke test's control-list row so that it opens each menu (desktop path) and finds every
+  D868-3 function by its existing localized name:
+  - 5 + 1 items in Format, 10 in Paragraph, 11 in Insert and 2 in History;
+  - Link as a toolbar button.
+
+  Keep the existing columns, table and image rows, each opening the Insert menu first. Add these rows:
+  - bold applied through the Format menu wraps the selected text in `<strong>`, and the selection survives the menu;
+  - H2 through the Paragraph menu gives `<h2>`;
+  - "align centre" sets `text-align: center`;
+  - with no link in the selection, "remove link" is disabled;
+  - undo through the History menu reverts the last change.
+
+  Report the new total test count; it must not drop below 120.
+- **AC30 [R29]** In a unit row (or the smoke test), with the cursor in bold text, the Format trigger has `data-active`
+  and the Bold item renders the `Check`. `DropdownMenu` `WithActiveItems` renders it at 390 and 1440. The existing
+  `Default` export and `src/components/layout/__tests__/Header.signOut.test.tsx` pass unchanged.
+- **AC31 [R30]** `check:i18n` exits 0 with the four keys in every locale. No English trigger label appears in `sq`,
+  `uk` or `it` (the reviewer runs a scoped `check:locale-leak`).
+- **AC32 [R28, mobile in a dialog]** At 390 in `PageEditorDialogView` `rich-content` `sq`:
+  - tapping Paragraph opens the bottom sheet above the dialog (`elementFromPoint` at the "H2" row's centre lies inside
+    the sheet);
+  - tapping "H2" turns the current block into an `h2`;
+  - the sheet closes, and the dialog stays open.
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none (sizes ±1px; "1 row" with a drift report instead of a forced fit; test count is a floor).`
+
+**GR-3c.** The new visible text is the menu item labels: Mantine `Menu.Item` `sm`, 14px, and the sheet rows' `Text
+size="sm"`, 14px, at every width. Neither has text of 24px or more.
+
+**GR-3d.**
+- `RichTextEditor`: `StoryPageGutter all`, unchanged (§18.1).
+- `PageEditorDialogView`: overlay-only.
+- `DropdownMenu`: `n/a: MantineStoryShell primitive`.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: editor toolbar as menus; semantic queries: menu, dropdown, combobox, popover, action menu, bottom sheet; inspected candidates: MantineDropdownMenu.tsx (Mantine/Primitives/DropdownMenu), MantineCombobox.tsx (a value picker, not commands), MantinePopover.tsx (one panel, no items), MantineNavigationMenu.tsx (navigation links); decision: REUSE MantineDropdownMenu + EXTEND it with active; selected canonical owner: src/design-system/mantine/patterns/MantineDropdownMenu.tsx; Mantine/TailAdmin token path: theme.ts touchTarget, boxSize.richTextControlSize, iconSize.*; Mantine variant "subtle"; new hardcoded visual values: NONE; rationale: the project's command menu already has the <640 bottom sheet and the ≥640 anchored menu.`
+
+`GR-3a STORY PREFLIGHT — MantineDropdownMenu × active item; canonical candidates: Mantine/Primitives/DropdownMenu; direct-import evidence: src/stories/mantine/primitives/DropdownMenu.stories.tsx; toolbar coverage: locale=Storybook toolbar, viewport=Storybook toolbar; decision: EXTEND; target: Mantine/Primitives/DropdownMenu (WithActiveItems); rationale: a new state of an existing canonical pattern. MantineRichTextEditor × menu toolbar → REUSE Patterns/Mantine/RichTextEditor (the existing exports render it).`
+
+### 22.5 Write set, re-entry and gates — revision 5
+
+Write set:
+1. `src/design-system/mantine/patterns/MantineRichTextEditor.tsx` (the toolbar, labels type, `variant`).
+2. `src/design-system/mantine/patterns/MantineDropdownMenu.tsx` (`active` only).
+3. `src/stories/mantine/primitives/DropdownMenu.stories.tsx` (`WithActiveItems`).
+4. `src/stories/patterns/mantine/RichTextEditor.stories.tsx` and `src/components/admin/PageEditorDialogView.tsx` (the
+   four labels only).
+5. `src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx`.
+6. `messages/{sq,en,uk,it}.json` (four keys each).
+7. The session log (new §14), `docs/sessions/evidence/task868/r5-*`, and the backlog 868 cell.
+
+**Re-entry (remediation from `r4-23-hash-object.txt`).** Keep every earlier evidence file. Prefix new files with
+`r5-`, and write every hash file as `hash  path`. Re-run no earlier plant.
+
+Order:
+1. I0: platform, status, the R29 consumer re-grep, and hashes → `r5-01-hashes.txt`.
+2. R29 and its Story.
+3. R30.
+4. R28.
+5. Tests (AC29, AC30).
+6. `build-storybook`, then AC28 and AC32 → `r5-3x-toolbar.txt`.
+7. P11 → `r5-27-plant-p11.txt`.
+8. Run the gates below.
+
+```powershell
+$ev = "docs\sessions\evidence\task868"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r5-04-platform.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts src/modules/cms/lib/__tests__ src/app/api/upload-cms-image/__tests__/route.test.ts src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts src/components/layout/__tests__/Header.signOut.test.tsx *>&1 | Tee-Object "$ev\r5-09-tests.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r5-10-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\r5-11-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\r5-12-story-coverage.txt"
+npm.cmd run check:pattern-enrolment *>&1 | Tee-Object "$ev\r5-12b-pattern-enrolment.txt"
+npm.cmd run check:surface-census:changed -- --base HEAD *>&1 | Tee-Object "$ev\r5-14-census-changed.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\r5-15-design-tokens.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\r5-22a-i18n.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r5-16-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r5-17-mojibake.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r5-18-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r5-19-build.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r5-21-status-after.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command. Normalise the files to UTF-8 without BOM through Node, and
+capture `r5-23-hash-object.txt` (every write-set source, `hash  path`) in the same pass. Every command exits 0. Keep the
+evidence probe free of lint warnings.
+
+Emit these receipts:
+- `GR-3b` and `GR-3c` for `RichTextEditor` `Default` and `DropdownMenu` `WithActiveItems` at 320/390/768/1440;
+- `GR-3d` per §22.4.
+
+Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 22.6 Owner matrix — revision 5
+
+Open each menu by hand in every tuple. The `subtle` toolbar look is part of what the owner judges.
+
+| Story | State | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Patterns/Mantine/RichTextEditor` | `Default`, `WithContent` | `sq`, `uk` | 390, 1440 | 8 |
+| `Patterns/Mantine/PageEditorDialogView` | `RichContent` | `sq` | 390, 1440 | 2 |
+| `Mantine/Primitives/DropdownMenu` | `WithActiveItems` | `sq` | 390, 1440 | 2 |
+
+After the deploy, O78-7b and O78-7c from §17.9 still apply.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

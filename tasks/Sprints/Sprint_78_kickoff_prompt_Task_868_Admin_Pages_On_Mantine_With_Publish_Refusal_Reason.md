@@ -2,7 +2,8 @@
 
 Sprint 78 · **P3** · QA profile **Q3** (a legacy admin surface migrated to Mantine, with a new visible error state) ·
 **depends on 877** (hard: 877's `MantineDataTableToCards` extension, the `AdminPageHeader` adapter and the admin page
-wrapper pattern) · owner action **O78-7** · **Status: `KICKOFF FILED` 2026-09-25**
+wrapper pattern) · owner action **O78-7** · **Status: `PARTIALLY VERIFIED` 2026-10-01 (review 1, §16): implementation verified;
+approval waits on O78-7 only**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Origin: reserved 2026-09-21 by Task 867's design. It is in Sprint 79 by origin and routed to Sprint 78 (admin Mantine)
@@ -215,7 +216,9 @@ appears in the list as published with a working preview link. They edit it, save
   active tab is `sq`, the `sq` body shows `admin.pages.sq_body_required`, no toast fires, and editing the body clears
   the error (T1).
 - **AC2 [R1, R10]** Given `messages/*.json`, then `admin.pages.sq_body_required` exists in all four locales with the
-  R1 texts, and `check:i18n`, `check:i18n-hardcode` and `check:i18n-dynamic` exit 0 (`22a`–`22c`).
+  R1 texts; `check:i18n` and `check:i18n-dynamic` exit 0 (`22a`, `22c`); and `check:i18n-hardcode` (`22b`) reports
+  no finding in any file this task changes. *(Corrected by review 1, §16.2: the whole-repo exit code is owned by
+  **910**.)*
 - **AC3 [R2, R3, R4]** Given the two containers, then each renders only its View and has 0 `className` and 0
   `@/components/ui/*` imports. Given the two Views, then neither contains `className`, a `ui/*` import, `window.confirm`
   or a raw colour/px/rem literal (`check:design-tokens` and `check:enrolled-tailwind` exit 0).
@@ -294,7 +297,7 @@ Open each tuple using the toolbar's locale and viewport. Record **accepted**, or
 | Story | States | Locales | Viewports | Tuples |
 |---|---|---|---|---|
 | `Patterns/Mantine/AdminPagesView` | `Default`, `Empty`, `MigrationPending`, `Deleting`, `DeleteConfirm` | `sq`, `uk` | 390, 1440 | 20 |
-| `Patterns/Mantine/PageEditorDialogView` | `New`, `EditPublished`, `EmptyLocaleWarning`, `SlugError`, `SqBodyRequired`, `Saving` | `sq`, `uk` | 390, 1440 | 24 |
+| `Patterns/Mantine/PageEditorDialogView` | `New`, `EditPublished`, `EmptyLocaleWarning`, `SlugError`, `PublishBodyRequired` (R7's `SqBodyRequired`, renamed — §16.2), `Saving` | `sq`, `uk` | 390, 1440 | 24 |
 | `Patterns/Mantine/AdminPagesView` `Default` | — | `en`, `it` | 768, 1024 (the `visibleFrom` breakpoints) | 4 |
 
 48 tuples. After the deploy, as admin, open `/admin/pages`, publish a page with an empty Albanian body, and confirm
@@ -349,6 +352,77 @@ Sonnet updates the 868 cell of the `docs/backlog.md` registry row (state only). 
 `GR-3a STORY PREFLIGHT — AdminPagesView / PageEditorDialogView × the R7 states; canonical candidates: NONE (no Story imports AdminPagesManager or either new View; src/components/admin/*.stories.tsx has none for this surface); direct-import evidence: NONE; toolbar coverage: locale=Storybook locale toolbar, viewport=Storybook viewport toolbar; decision: CREATE; target: Patterns/Mantine/AdminPagesView, Patterns/Mantine/PageEditorDialogView; rationale: new presentational Views from the container split, each needs its own Story (GR-3).`
 
 `GR-1 CENSUS COMPLETE — 14 nodes; tier1 2 migrated+enrolled+story (AdminPagesView, PageEditorDialogView — new) + 2 container-exempt (AdminPagesManager, PageEditorDialog); page.tsx route root baselined; RelativeTime/MantineTooltip/responsiveBottomSheet already migrated; AdminInput import removed; tier2 7 imports removed; tier3 1 (AdminPageHeader, owned and filed as 877).`
+
+## 16. Review 1 — 2026-10-01 — `PARTIALLY VERIFIED` (implementation verified; O78-7 owed)
+
+Opus. Frontend task, so no review ledger (D69-3).
+
+### 16.1 Record
+
+- **Tree.** `git hash-object` of all 11 changed source, Story, test and script files equals the session log's §8 table
+  (`AdminPagesManager.tsx` `77592575`, `AdminPagesView.tsx` `a0c68781`, `PageEditorDialogView.tsx` `d9710ce7`,
+  `adminPagesContent.ts` `bfac77bc`, both Stories, the test, `page.tsx`, `theme.ts`, both scripts). `storybook-static`
+  (11:31:48) is newer than the last source write (11:31:32).
+- **Diff vs §3.3.** The save handler, the slug logic and the 5 helpers are byte-equivalent to `HEAD`. The helpers are now
+  in `adminPagesContent.ts`. The only new branch is R1's (`AdminPagesManager.tsx:88-90`, cleared at `:51`). The token
+  definition is `theme.ts:837` `adminPageNarrowMaxWidth: '56rem'`, with its type line at `:278`. `messages/*` change
+  the R1 and R8 keys only.
+- **Re-run by the reviewer (win32, Node v22.22.3).** The census is 11 nodes, has no tier-2 row and no `AdminInput`,
+  and both Views read `manifest:yes story:yes`. It exits 1 only on the two baselined keys. Vitest is 27/27, exit 0.
+  The plants are `05`–`07`, with hashes equal before and after restore. The baseline diff (`20`) has 8 removals, all
+  `admin/pages`, and 0 additions.
+- **Rendered, by the reviewer** (`storybook-static`, Chromium, `sq` and `uk`, 320/390/768/1024/1440, all 11 Stories):
+  - No document overflow anywhere, no console error, and no text at 24px or more.
+  - `AdminPagesView`, all four sides: top 24, bottom 24 where the content overflows, left/right 16/16/24/32/32. That
+    is the `StoryPageGutter` profile, as in 874/877.
+  - Row actions measure 44px on the cards and 22px in the table.
+  - Both dialogs are bottom sheets below 640px (full width, gap 0). From 640px they are centred: 440px for the delete
+    confirm and 620px for the editor.
+  - Body and slug text render in `ui-monospace`. `PublishBodyRequired` shows the R1 text on the `sq` body with the
+    `sq` tab active.
+  - The tab strip overflows inside its `ScrollArea` with no visible scrollbar: `uk`@320 459/288, `uk`@390 459/358,
+    `sq`@320 367/288.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: /admin/pages list, editor dialog, delete confirm, page wrapper; semantic queries: as §15.1 + monospace input, tab strip overflow; inspected candidates: §15.1 set, MantineCombobox.tsx:368 (styles.input slot precedent), MantineDashboardPeriodControl (ScrollArea strip); decision: COMPOSE (+ EXTEND theme.other.layout by one key); selected canonical owner: those patterns and primitives; Mantine/TailAdmin token path: src/design-system/mantine/theme.ts (:625 fontFamilyMonospace, :837 adminPageNarrowMaxWidth); new hardcoded visual values: NONE; rationale: the monospace face is the theme token through Mantine's Styles API slot, because ff reaches only the wrapper.`
+
+`GR-1 CENSUS COMPLETE — 11 nodes; tier1 2 migrated+enrolled+story (AdminPagesView, PageEditorDialogView) + 1 container-exempt (AdminPagesManager, which also holds the PageEditorDialog container, as 874's ProviderFormDialog) + page.tsx route root baselined; 7 already-migrated nodes; tier2 0 (7 imports removed); tier3 0.`
+
+`GR-2 SCOPE STATED — check:story-coverage inspects enrolled files only and check:surface-census:changed only diff-mapped surfaces; neither sees the containers' wiring; the criterion is closed by T1–T6, plants P1–P3 and the reviewer's own census run.`
+
+`GR-3 STORY PROVEN — AdminPagesView ← src/stories/patterns/mantine/AdminPagesView.stories.tsx; PageEditorDialogView ← src/stories/patterns/mantine/PageEditorDialogView.stories.tsx.`
+
+`GR-3b STORY RESPONSIVE CHECK — patterns-mantine-adminpagesview--{default,empty,migration-pending,deleting,delete-confirm}: 320 288/320 · 390 358/390 · 1024 960/1024 · 1440 1376/1440; patterns-mantine-pageeditordialogview--{new,edit-published,empty-locale-warning,slug-error,publish-body-required,saving}: sheet 320/320 · 390/390, modal 620 at 1024/1440; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE.`
+
+`GR-3c TYPE RESPONSIVE CHECK — all 11 Stories: largest text 16px (modal title, labels) at 320 · 390 · 768 · 1440; body 14px, meta 12px; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+
+`GR-3d STORY GUTTER CHECK — AdminPagesView × 5: gutter StoryPageGutter all; top/right/bottom/left 320 24/16/24/16 · 390 24/16/24/16 · 1024 24/32/24/32 · 1440 24/32/24/32 (expected the profile); PageEditorDialogView × 6: n/a: overlay-only; side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+
+### 16.2 Kickoff corrections — the executor's deviations, accepted
+
+These are task-design defects in this kickoff. Each executor resolution below is the binding text, and it supersedes the
+cited line.
+
+| Cited text | Defect | Binding text |
+|---|---|---|
+| R4, §7.3 — `PageEditorDialog.tsx` as a new file | contradicts R9/AC8: the census cannot see the container split (GR-1 container exemption), so a new container file is a new baseline key | `PageEditorDialog` stays in `AdminPagesManager.tsx`, as 874 kept `ProviderFormDialog` in `AdminExchangeProvidersManager.tsx:27` |
+| R3 — "all are disabled while migration is pending" | contradicts §3.3 and §9 ("the same three controls") | "new", edit and delete are disabled; the preview link stays enabled, as today |
+| R5 — `withAsterisk` on `sq` | `theme.ts:1110` hides the asterisk globally | no `withAsterisk`; the `sq` title stays required for saving |
+| R5 — `ff="monospace"` | `ff` styles the input wrapper, not the text | `styles={{ input: { fontFamily: theme.fontFamilyMonospace } }}` (token `theme.ts:625`) |
+| R7 — export `SqBodyRequired` | `check:stories` rejects a locale-code export segment (`scripts/check-stories.mjs:240-246`) | export `PublishBodyRequired` |
+| R7 — `EmptyLocaleWarning` "an empty `en` tab" | the edit fixture fills `en` | the empty `uk` tab is active |
+| AC2 — `check:i18n-hardcode` exits 0 | an absolute on a whole-repo gate (GR-4; corollary 724 ①). `22b` fails only on `AdminHeader.tsx:53` and `AdminSidebar.tsx:93` (`>Admin<` badge), which have been in `main` since `b9c8c09fe` (Task 852, 2026-09-26) and are outside §7 | AC2 as amended in §12; the exit code is owned by **910** |
+| §13.2 `check:surface-census:changed` | the gate needs `--base` | `npm.cmd run check:surface-census:changed -- --base HEAD` |
+
+### 16.3 Owner matrix O78-7 (§13.3, 48 tuples), plus these points
+
+1. Check the `Check` glyph on a filled locale tab (assumption 2).
+2. The tab strip swipes with no visible scrollbar. At 320, and at `uk`@390, the last tabs sit off-screen with no cue.
+   Look at `EmptyLocaleWarning` `uk`@320, where the active tab is the third. Return the tuple if a cue is needed.
+3. Desktop row actions are 22px (`ActionIcon size="sm"`, the 874 table precedent), while the cards use 44px.
+4. After the deploy, as admin: publish a page with an empty Albanian body and confirm the R1 message on the field.
+
+**Open before approval:** O78-7 only. An accepted matrix is followed by the closure review (archive, then commit and
+push of the implementation). A returned tuple is followed by a revision of R3, R5 or R7.
 
 ---
 

@@ -843,6 +843,114 @@ git hash-object src\design-system\mantine\patterns\MantineDataTableToCards.tsx |
 Record `EXIT_CODE=$LASTEXITCODE` after each command, and normalise the `Tee-Object` files to UTF-8 without BOM through
 Node, as §18.7 does. Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Nothing rendered changes, so the O78-7 matrix can run at the same time.
 
+## 20. O78-7 result and revision 4 — 2026-10-01 — `NEEDS REVISION`
+
+### 20.1 The owner's O78-7 result, verbatim (2026-10-01)
+
+| Row (§17.9 / §18.8) | Result |
+|---|---|
+| `AdminPagesView` × 5 × `sq`/`uk` × 390/1440 | *"приймаю."* |
+| `PageEditorDialogView` × 7 × `sq`/`uk` × 390/1440 | *"приймаю."* |
+| `RichTextEditor` × 4 × `sq`/`uk` × 390/1440 | *"приймаю."* |
+| `CmsPageView` `RichLayout` × `sq`/`uk` × 390/1024/1440 | *"приймаю."* |
+| `AgentStatisticsView` state 3 × `sq` × 390 | *"приймаю."* |
+| §18.8: the badge above the avatar (E1) | *"приймаю."* |
+| §18.8: the table scrolling at 320 | *"приймаю."* |
+| §18.8: the `"Slug"` label in every locale | *"приймаю."* |
+| §18.8: the 44px toolbar at every width (E2) | *"не зрозумів що це за тулбар такий?"* Opus explained it, then asked. Decision **D868-5** below. |
+
+**D868-5 (2026-10-01).** The question listed 30 controls at 44×44 px at every width, against Mantine's own 26 px. That
+gives 8 rows (about 350 px) at 320, 6 at 390, 3 at 768 and 2 at 1440. Option chosen, verbatim: *"Компактно від 640
+px"*. Option text: *"44 px лише на телефоні (вимога clause 11), від 640 px — компактні кнопки Mantine (~26 px): на 1440
+буде 1 ряд. Потрібен новий theme-токен; ревізія 3."* This file numbers it **revision 4**, because session log §12 already calls the R26 change revision 3.
+
+**R26 (§19.3).** The executor reported it in session log §12. The file's hash `8716ca65…` equals `r3-23-hash-object.txt`,
+and `badge (right, own row)` occurs 0 times. Review 5 reviews it together with R27.
+
+### 20.2 Measured context (Opus, 2026-10-01)
+
+- `MantineRichTextEditor.tsx:198-203` builds `touch = { miw: theme.other.touchTarget, mih: theme.other.touchTarget }`
+  (`theme.ts:718`, `'2.75rem'`, 44px). Every toolbar control spreads it. The comment at `:198-199` gives the reason
+  for every width: restoring Mantine's own size from `sm` "cannot be done without a raw value" (E2, where an
+  unset value measured 17px).
+- Mantine's own size: `node_modules/@mantine/tiptap/styles.css`, `.m_c2207da6:where([data-variant='default'])` sets
+  `min-width: calc(1.625rem * var(--mantine-scale)); height: calc(1.625rem * var(--mantine-scale))`, which is **26px**.
+  The `subtle` variant is `2rem`. The editor uses `default`. The icon is `theme.other.iconSize.standard` = 16
+  (`theme.ts:734`), which equals Mantine's `--control-icon-size` default of 16px.
+- `theme.other.boxSize` has no 26px key. A new key, with the stylesheet line above as its provenance, closes E2's
+  "raw value" objection.
+- No test asserts the control size (`MantineRichTextEditor.smoke.test.tsx`). The row and hit-area probe already
+  exists: `docs/sessions/evidence/task868/probe868-r1.mjs:96-107` (`toolbarRows`, `minHit`).
+
+### 20.3 Requirements — revision 4
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R27** | **Compact toolbar from 640px (D868-5).**<br>(a) Add `theme.other.boxSize.richTextControlSize: '1.625rem'` with its type line and a provenance comment: 26px, Mantine's own `RichTextEditor` control size in `@mantine/tiptap/styles.css` `.m_c2207da6[data-variant='default']`, D868-5. Quote the definition line.<br>(b) In `MantineRichTextEditor.tsx`, `touch` becomes `miw={{ base: theme.other.touchTarget, sm: theme.other.boxSize.richTextControlSize }}`, with the same object for `mih`.<br>(c) Rewrite the `:198-199` comment to say: 44px below 640 (clause 11), then Mantine's own 26px from `sm` through the theme key (D868-5).<br>Below 640 nothing changes. The icon size stays `iconSize.standard`. Add no `style` object, no raw value and no CSS rule. | P1 | AC27 |
+
+### 20.4 Acceptance criteria — revision 4
+
+- **AC27 [R27]** Run `probe868-r1.mjs` (or an `r4-` copy of it), extended with 639 and 640, on a fresh
+  `storybook-static`. Use `patterns-mantine-richtexteditor--default` and `--with-content` at `sq` and `uk`, at 320, 390,
+  639, 640, 768 and 1440.
+  - At 320, 390 and 639, `minHit` is 44,44, and `toolbarRows` equals revision 1 (8 at 320, 6 at 390).
+  - At 640, 768 and 1440, every control's box is 26 ± 1 px in width and height, and there is no document overflow.
+  - `toolbarRows` at 768 and 1440 is lower than revision 1's 3 and 2. Record the values.
+  - If 1440 is not 1 row, report `PREMISE DRIFT — toolbar rows` with the measurement. Do not add a value to force it.
+  - **P10** (two-armed): set `sm` back to `theme.other.touchTarget`. The 1440 hit-area assertion must then fail.
+    Restore it with equal hashes.
+  - `PageEditorDialogView` `RichContent` at `sq` 1440 shows the same compact toolbar. `check:design-tokens` exits 0.
+
+`GR-4 AC AUDIT — 1 criterion; each states an observable property; absolutes: none (sizes ±1px; the 1440 row count is a recorded expectation with a drift report, not a pass condition).`
+
+### 20.5 Write set, re-entry and gates — revision 4
+
+Write set:
+1. `src/design-system/mantine/theme.ts`: one key and its type line.
+2. `src/design-system/mantine/patterns/MantineRichTextEditor.tsx`: the `touch` object and its comment only.
+3. The session log (new §13), `docs/sessions/evidence/task868/r4-*` and the backlog 868 cell.
+
+**Re-entry (remediation from `r3-23-hash-object.txt` and `r2-23-hash-object.txt`).** Keep every earlier evidence
+file. Prefix new files with `r4-`. Re-run no plant except P10.
+
+Order:
+1. I0: platform, status, and the hashes of both write-set source files → `r4-01-hashes.txt`.
+2. R27.
+3. `build-storybook`, then the AC27 probe → `r4-3x-toolbar.txt`.
+4. P10 → `r4-27-plant-p10.txt`.
+5. Run the gates below.
+
+```powershell
+$ev = "docs\sessions\evidence\task868"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r4-04-platform.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts src/modules/cms/lib/__tests__ src/app/api/upload-cms-image/__tests__/route.test.ts src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts *>&1 | Tee-Object "$ev\r4-09-tests.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r4-10-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\r4-11-lint.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\r4-15-design-tokens.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r4-16-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r4-17-mojibake.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r4-18-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r4-19-build.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r4-21-status-after.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command. Normalise the files to UTF-8 without BOM through Node, and
+capture `r4-23-hash-object.txt` (both write-set sources and `MantineDataTableToCards.tsx`) in the same pass. Every
+command exits 0, and the test count is 120. Emit `GR-3b` and `GR-3c` receipts for `RichTextEditor` `Default` at
+320/390/768/1440. Its gutter does not change, so `GR-3d` is carried from §18.1. Then report
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 20.6 Owner matrix — revision 4
+
+Only the toolbar is re-reviewed. Every other O78-7 row is accepted (§20.1).
+
+| Story | State | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Patterns/Mantine/RichTextEditor` | `Default` | `sq` | 390, 768, 1440 | 3 |
+| `Patterns/Mantine/PageEditorDialogView` | `RichContent` | `sq` | 1440 | 1 |
+
+After the deploy, O78-7b and O78-7c from §17.9 still apply.
+
 ---
 
 ## Appendix A — Evidence preflight (task design)

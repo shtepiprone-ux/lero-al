@@ -3,8 +3,9 @@
 Sprint 78 · **P3** · QA profile **Q3 → Q4 from revision 1** (§17: the rich-text editor changes the P1 critical flow
 "CMS page body sanitised before render" and adds an authenticated upload route) ·
 **depends on 877** (hard: 877's `MantineDataTableToCards` extension, the `AdminPageHeader` adapter and the admin page
-wrapper pattern) · owner action **O78-7** · **Status: `NEEDS REVISION` 2026-10-01 (review 2, §17): the owner returned O78-7's
-`AdminPagesView` and `PageEditorDialogView` rows; revision 1 = §17. Executor: start at §17.7.**
+wrapper pattern) · owner action **O78-7** · **Status: `NEEDS REVISION` 2026-10-01 (review 3, §18): revision 1 (§17)
+is implemented, but Tiptap ships on every public page that imports the patterns barrel (homepage +158 kB), and the
+`CmsPageView` Story doubles its gutter. Revision 2 = §18. Executor: start at §18.4.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Origin: reserved 2026-09-21 by Task 867's design. It is in Sprint 79 by origin and routed to Sprint 78 (admin Mantine)
@@ -641,6 +642,138 @@ GR-3d for the new and extended Stories:
 `GR-3a STORY PREFLIGHT — MantineRichTextEditor × Default/WithContent/WithError/ImageUploading; canonical candidates: NONE (new pattern); direct-import evidence: NONE; toolbar coverage: locale=Storybook locale toolbar, viewport=Storybook viewport toolbar; decision: CREATE; target: Patterns/Mantine/RichTextEditor; rationale: a new canonical pattern needs its own Story (GR-3). CmsPageView × RichLayout → EXTEND Patterns/Mantine/CmsPageView. PageEditorDialogView × RichContent → EXTEND Patterns/Mantine/PageEditorDialogView.`
 
 `GR-1 CENSUS (design, revision 1) — surface src/app/admin/pages/page.tsx gains MantineRichTextEditor (tier 1, new, manifest + own Story in this task); the public surface src/app/[locale]/[slug]/page.tsx is unchanged in its node set (CmsPageView only); tier 3: none; filed: 911 (unauthenticated upload routes, outside this surface).`
+
+## 18. Review 3 and revision 2 — 2026-10-01 — `NEEDS REVISION`
+
+Opus. Frontend task, so no review ledger (D69-3). The record is in the session log (§11, added by the executor at
+revision 2 from this section).
+
+### 18.1 What was verified (revision 1 stands, except §18.2)
+
+- The tree equals the session log's `r1-23-hash-object.txt` for every source file. `storybook-static` (13:51) and
+  `.next` (13:55) are newer than the last source write (13:50).
+- The reviewer re-ran the six test files natively (win32, Node v22.22.3): 7 files, **120** tests, exit 0. The session
+  log says 122; its own per-file counts add up to 120. Correct the total in §11.
+- These were read and accepted: the route (`legal.manage` = the permission of `createPage`/`updatePage`/`deletePage`,
+  `actions/index.ts:230,256,288`), the sanitizer, `isCmsBodyEmpty` (E4) and the container's upload/toast flow.
+- **R11 / AC11 — the executor's reading (E1) is accepted as a kickoff correction.** The badge's left edge equals the
+  **card's content-box start**, ±1px. R11's "title zone" clause was a design defect: on an avatar card the title zone
+  starts 52px further right. The owner rules on the avatar case in the matrix (§18.5).
+- **GR-3d, the reviewer's own four-side measurement** (`sq`, 320/390/1024/1440, content union clipped to `overflow`
+  ancestors):
+  - `RichTextEditor` × 4: top 26 (24 + label inset), left/right 16/16/32/32, bottom 24 where the content is longer
+    than the canvas. Pass.
+  - `AgentStatisticsView` × 8: 16 on all sides at 320/390, 24 from 1024, which is its own grid gutter. Pass.
+  - `AdminPagesView` × 4: as review 1. Pass.
+  - **`CmsPageView` fails** (§18.2 F2).
+
+### 18.2 Findings
+
+| # | Sev | Where | Evidence | Required change |
+|---|---|---|---|---|
+| **F1** | **P1** | `src/design-system/mantine/patterns/index.ts:87-88` | The barrel now exports `MantineRichTextEditor`. Every route that imports `@/design-system/mantine/patterns` therefore loads three Tiptap/ProseMirror chunks (`.next/static/chunks/1452-…`, `54a60aa6-…`, `70e0d97a-…`; 512 kB raw). `.next/app-build-manifest.json` lists them for `/[locale]/layout`, `/[locale]/page`, `/[locale]/listings`, `/[locale]/listings/[slug]`, `/[locale]/favorites`, `/[locale]/cabinet`, `/[locale]/auth/reset-password` and six admin routes. First Load JS, `19-build.txt` → `r1-19-build.txt`: `/[locale]` 663 → **821 kB**, `/[locale]/listings` 673 → 831, `/[locale]/listings/[slug]` 703 → 860, `/[locale]/favorites` 596 → 759, `/[locale]/cabinet` 808 → 970, `/[locale]/auth/reset-password` 579 → 742, `/admin/users` 529 → 692, `/admin/currency` 607 → 764. AC20 measured only `/[locale]/[slug]`, which does not import the barrel, so it passed. R20's intent ("no `@tiptap/*` module reaches a public page") is broken site-wide. | R22 |
+| **F2** | **P2** | `src/stories/patterns/mantine/CmsPageView.stories.tsx` `meta.parameters` (no `skipCanvas`) | `CmsPageView` has its own gutter on all four sides (`CmsPageView.tsx:23`: `px="md"`, `py={{ base: '2xl', md: '3xl' }}`). Its production parent (`[locale]/layout.tsx` `<Box component="main">`) adds none. The Story still runs on the default canvas (`.container-wide py-6`), so the gutter is doubled. Measured `RichLayout` / `RichBody`: 320 → top 56 (own 32), left/right 32 (own 16); 1024 → top 72 (own 48). GR-3d: a doubled gutter in an owner-matrix Story is `NEEDS REVISION`, and the Story does not reach the owner. The session log's receipt ("own px/py, default canvas") states the doubling as compliant. | R23 |
+| **F3** | **P3** | `MantineRichTextEditor.tsx` `<RichTextEditor.Content mih="10lh" />` | A raw CSS length in a canonical pattern (GR-0: "new hardcoded visual values: NONE"). `check:design-tokens` does not read `lh`. | R24 |
+| **F4** | **P3** | `MantineDataTableToCards.tsx` state-3 comment (`:133-134`) | It says "its left edge is the title zone's left edge". That is false on avatar cards (E1, §18.1). | R24 |
+| **F5** | evidence | AC12 `check:locale-leak` | Not completed by the executor (session log §10.5). The reviewer ran the real detector, scoped to this task's 22 Stories (§18.3). | — |
+
+### 18.3 Reviewer's scoped locale-leak run (closes F5)
+
+`scripts/check-locale-leak.mjs --mantine-only` has no per-Story filter. The reviewer ran an unmodified copy, with only
+the Story list narrowed to `^patterns-mantine-(richtexteditor|pageeditordialogview|cmspageview|adminpagesview)--`.
+That is 22 Stories × `en`/`sq`/`uk`/`it` × 320/375/1280, run on the 13:51 `storybook-static`. Result: exit 1, 37
+findings, all outside the editor:
+- **`RichTextEditor` × 4 and `CmsPageView` × 6: 0 leaks.** AC12's locale-leak clause is verified.
+- `"Draft"` in `sq` on 4 `AdminPagesView` exports. The cause is `admin.pages.status_draft` = `"Draft"` in
+  `messages/sq.json`, unchanged since `HEAD`. Albanian already has `admin.legal.status_draft` = `"Projektim"`. Fixed by
+  R25.
+- `"Slug"` in `sq`/`uk`/`it` on 7 `PageEditorDialogView` exports. The cause is `admin.legal.field_slug_label`, which is
+  `"Slug"` in all four locales by Task 397's choice (`3ddf47ce0`, 2026-06-06). It is unchanged by 868 and not in
+  868's write set. The owner sees it in the O78-7 matrix; it is a terminology choice, not an executor item.
+
+The executor re-runs nothing here. R25 changes one `sq` value, and the reviewer checks it at review 4.
+
+### 18.4 Requirements — revision 2 (R1–R21 stand; R20/AC20 are widened by R22/AC22)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R22** | **Tiptap reaches `/admin/pages` only.** Remove the `MantineRichTextEditor` value export and its type exports from `patterns/index.ts`. `PageEditorDialogView.tsx` imports `MantineRichTextEditor` and `RichTextEditorLabels` from `@/design-system/mantine/patterns/MantineRichTextEditor`, the way the Story already does (E10). No other file imports the pattern. `check:pattern-enrolment` reads the directory, not the barrel, so it stays green; if it does not, stop and report it. Do not add `next/dynamic`, and do not change `next.config`. | P1 | AC22 |
+| **R23** | **`CmsPageView` Stories add no gutter.** In `CmsPageView.stories.tsx` `meta.parameters`, add `skipCanvas: true`. Add no `StoryPageGutter` and no padding: the component has its own gutter on all four sides. Every export of the file is in scope, not only `RichLayout`. | P2 | AC23 |
+| **R24** | **Two P3 corrections.** (a) Add `theme.other.boxSize.richTextContentMinHeight` with value `'10lh'`, its type line and a provenance comment (the legacy body `Textarea` `minRows={10}`, §3.3). `RichTextEditor.Content` reads it. Quote the definition line. (b) The state-3 comment in `MantineDataTableToCards.tsx` says "start of the card's content box" instead of "the title zone's left edge". | P3 | AC24 |
+| **R25** | **Albanian draft label.** `messages/sq.json` `admin.pages.status_draft`: `"Draft"` → `"Projektim"`, the existing `admin.legal.status_draft` value. No other key changes. | P3 | AC25 |
+
+### 18.5 Acceptance criteria — revision 2
+
+- **AC22 [R22]** Given a fresh `npm.cmd run build`, then `r2-26-tiptap-routes.txt` lists every
+  `.next/app-build-manifest.json` page whose chunks contain `@tiptap` or `ProseMirror`, and that list is exactly
+  `/admin/pages/page`. Every route's First Load JS in `r2-19-build.txt` is ≤ its `19-build.txt` value + 3 kB, except
+  `/admin/pages`. **P9** (re-add the barrel export) makes the route list include `/[locale]/page`; it is restored with
+  equal hashes.
+- **AC23 [R23]** All six `CmsPageView` exports at 320/390/1024/1440 measure top/bottom 32/32/48/48, and left/right 16
+  at 320/390. At 1024 and 1440 they measure the centring of `maw="var(--width-content)"`: (viewport − 768)/2 + 16. No
+  side is 0, and no side is larger than the component's own value.
+- **AC24 [R24]** `mih` in `MantineRichTextEditor.tsx` reads the theme key, and the rendered content min-height is
+  unchanged at 390 and 1440. The comment no longer names the title zone.
+- **AC25 [R25]** `git diff -- messages/sq.json` changes only `admin.pages.status_draft` in revision 2.
+  `check:i18n` exits 0.
+
+`GR-4 AC AUDIT — 4 new criteria; each states an observable property; absolutes: none (the bundle bound is "≤ baseline + 3 kB", the route list is a measured set).`
+
+### 18.6 Write set — revision 2
+
+1. `src/design-system/mantine/patterns/index.ts` (remove the two lines), `src/components/admin/PageEditorDialogView.tsx`
+   (the import path only)
+2. `src/stories/patterns/mantine/CmsPageView.stories.tsx` (`skipCanvas` only)
+3. `src/design-system/mantine/theme.ts` (one key + its type line), `MantineRichTextEditor.tsx` (`mih` only),
+   `MantineDataTableToCards.tsx` (the comment only)
+3a. `messages/sq.json` (`admin.pages.status_draft` only)
+4. The session log (new §11, and the §10.5 total corrected) and `docs/sessions/evidence/task868/r2-*`
+5. `docs/backlog.md` — the 868 cell only
+
+### 18.7 Re-entry and order
+
+**Mode: remediation** from revision 1's tree (`r1-23-hash-object.txt`). Keep every `01`–`31` and `r1-*` file, and
+prefix new files with `r2-`. Do not re-run P1–P8.
+
+1. I0: platform, status, and the hash of every §18.6 path before the first write → `r2-01-hashes.txt`.
+2. R22, then `npm.cmd run build` → `r2-19-build.txt`. Then a Node script that reads `.next/app-build-manifest.json` and
+   the chunk files, and lists the matching routes → `r2-26-tiptap-routes.txt`.
+3. P9: re-add the barrel export, rebuild, re-run the script, restore (hashes before, planted, restored) →
+   `r2-27-plant-p9.txt`. Then rebuild once more on the restored tree, and keep that as the final `r2-19-build.txt`.
+4. R23, R24 and R25, then `build-storybook`. Measure AC23 on all four sides for every `CmsPageView` export, and AC24 →
+   `r2-3x-cms-gutter.txt`.
+5. Gates (Windows PowerShell, project root):
+
+```powershell
+$ev = "docs\sessions\evidence\task868"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\r2-04-platform.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts src/modules/cms/lib/__tests__ src/app/api/upload-cms-image/__tests__/route.test.ts src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts *>&1 | Tee-Object "$ev\r2-09-tests.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\r2-10-typecheck.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\r2-11-lint.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\r2-12-story-coverage.txt"
+npm.cmd run check:pattern-enrolment *>&1 | Tee-Object "$ev\r2-12b-pattern-enrolment.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\r2-13-rendered-scope.txt"
+npm.cmd run check:surface-census:changed -- --base HEAD *>&1 | Tee-Object "$ev\r2-14-census-changed.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\r2-15-design-tokens.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\r2-22a-i18n.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\r2-16-file-integrity.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\r2-17-mojibake.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\r2-18-storybook-build.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\r2-19-build.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\r2-21-status-after.txt"
+```
+
+Record `EXIT_CODE=$LASTEXITCODE` after each command. Normalise the `Tee-Object` files to UTF-8 without BOM through Node,
+and capture `r2-23-hash-object.txt` in the same pass. Every command exits 0. The test count is 120.
+
+6. Receipts: GR-3d for every `CmsPageView` export, with all four sides measured; GR-3b and GR-3c for `CmsPageView`
+   `RichLayout`. Then report `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+### 18.8 Owner matrix O78-7 — unchanged from §17.9
+
+It goes to the owner after review 4, together with these points: the 44px toolbar at every width (E2: 8 rows at 320,
+2 at 1440), the badge over the avatar on `AgentStatisticsView` state-3 cards (E1), the table scrolling at 320, and the
+`"Slug"` field label, which is the same in every locale (§18.3).
 
 ---
 

@@ -172,18 +172,21 @@ For every changed user-visible UI component, work from the lowest visible unit u
 7. **GR-3d, blocking (owner rule 2026-09-29, clarified 2026-10-01).** A Story shows the component at the same
    distance from the screen edge as on the real page. The scope is every Story you create, change, render a changed
    component in, **or that the kickoff lists in the owner visual matrix, including blast-radius rows**. For each one,
-   answer one question: does the rendered content already set its own page gutter in production source (its root's
-   Mantine spacing props, `.container-wide`, or a production parent the Story renders)?
-   - **Yes:** the Story adds nothing. `StoryPageGutter` or any padding around it doubles the gutter and is forbidden;
-     remove it if you find it.
-   - **No:** a `skipCanvas` Story wraps the page content in `<StoryPageGutter>` (`src/stories/_StoryPageGutter.tsx`)
+   answer one question **per side (top, right, bottom, left)**: does the rendered content already set its own page
+   gutter on that side in production source (its root's Mantine spacing props, `.container-wide`, or a production
+   parent the Story renders)?
+   - **Every side yes:** the Story adds nothing. `StoryPageGutter` or any padding there doubles the gutter and is
+     forbidden; remove it if you find it.
+   - **No side:** a `skipCanvas` Story wraps the page content in `<StoryPageGutter>` (`src/stories/_StoryPageGutter.tsx`)
      in every export.
+   - **Some sides:** add the profile on the missing axis only (`<StoryPageGutter sides="y">` or `sides="x"`). If the
+     Story renders the page container itself and the real page lacks the same side, fix the side in the component.
    - You fix an in-scope Story that breaks this in this task, with no kickoff permission needed. "Not changed by this
      task" is not an exemption.
    - Never write a gutter in a Story (`p`/`px`/`py` on a wrapper, a `container-*` class, a `style` object).
    - Overlay-only Stories and `Mantine/Primitives/*` on `MantineStoryShell` need nothing.
-   - Measure the edge gap at 320/390/1024/1440. Expect 16/16/32/32 with the profile, or the component's own
-     production values. Emit one `GR-3d STORY GUTTER CHECK` receipt per Story (`docs/golden-rules.md`). A missing
+   - Measure **all four** edge gaps at 320/390/1024/1440. Expect the profile's values (top/bottom 24, left/right
+     16/16/32/32) or the component's own production values. A side at 0 fails, whatever the other three measure. Emit one `GR-3d STORY GUTTER CHECK` receipt per Story (`docs/golden-rules.md`). A missing
      receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the

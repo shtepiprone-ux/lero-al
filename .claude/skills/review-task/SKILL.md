@@ -219,10 +219,11 @@ evidence that a child component has a canonical visual contract.
    So is a heading above 20px below 640 (non-hero), and a child heading larger than the page title. Check the
    executor's `GR-3c TYPE RESPONSIVE CHECK` receipts against your own `getComputedStyle` measurement at 320 and 1440.
 8. **GR-3d (owner rule 2026-09-29, clarified 2026-10-01).** Before handing the matrix to the owner, measure the edge
-   gap of **every Story in it**, blast-radius rows included, at 320/390/1024/1440. Content with its own production
-   gutter must show exactly that gutter, with nothing added by the Story. Gutterless content must show the shared
-   `StoryPageGutter` (16/16/32/32). Each of these is `NEEDS REVISION`, and that Story never reaches the owner:
-   - a full-bleed Story;
+   gap of **every Story in it**, blast-radius rows included, on **all four sides** at 320/390/1024/1440. On each side,
+   content with its own production gutter must show exactly that gutter, with nothing added by the Story. A side
+   without one must show the shared `StoryPageGutter` value (top/bottom 24, left/right 16/16/32/32). Each of these is
+   `NEEDS REVISION`, and that Story never reaches the owner:
+   - any side at 0 (content touching an edge);
    - a doubled gutter (`StoryPageGutter` or padding around content that has its own);
    - a gutter written in the Story. `AdminExchangeProvidersView` reached the owner without a gutter in Task 877, and that is how this rule was
    hardened.

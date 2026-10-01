@@ -1,8 +1,8 @@
 # Task 890 — `/admin` rebuilt to the owner's references: an accent hero, queue KPIs with mini-charts, the platform activity chart, new listings and new users, and listings by city
 
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
-(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 2, 2026-10-01. The executor starts at
-§17 (revision 2), not §10 or §16.**
+(ADM-10, stale badge, series tooltips) · **Status: 🔁 NEEDS REVISION — review 3, 2026-10-01. The executor starts at
+§18 (revision 3), not §10, §16 or §17.**
 
 Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
@@ -577,3 +577,109 @@ line.
 ### 17.6 Owner visual review
 
 §13.4 and §16.6 stand. They are handed to the owner after the revision 2 review, together with the locale-leak quote.
+
+## 18. Review 3 — `NEEDS REVISION` (2026-10-01) · Revision 3
+
+Reviewed: revision 2 (`DashboardGrid.stories.tsx` d64078ea; `evidence/task890/rev2/`). G1 and G2 are done as
+specified: the `git grep` is empty, the file has no BOM, and the session log has 15 receipts.
+
+### 18.1 What the owner found, and why every check passed
+
+The owner opened `Patterns/Mantine/DashboardGrid` → `Default` at 1234px. The cards touch the **top** edge of the canvas.
+Every probe and every GR-3d receipt so far measured only left and right, so they all passed. The owner, verbatim
+(2026-10-01): *"треба щоб тест вимірював всі 4 сторони, і якщо немає відступу - додавати"*. GR-3d now measures all four
+sides (`docs/golden-rules.md` GR-3d → "Four sides").
+
+**The defect is in production, not only in the Story (FACT).**
+- `MantineDashboardGrid`'s root is `<Box w="100%" maw={…dashboardContentMaxWidth} mx="auto" px={{ base: 'md', md: 'xl' }}>`
+  (`src/design-system/mantine/patterns/MantineDashboardGrid.tsx:56`), so it has horizontal padding only.
+- Its source is TailAdmin's content-column wrapper, `mx-auto max-w-(--breakpoint-2xl) p-4 … md:p-6`
+  (`docs/tailadmin-style-reference.md:531-536`): 16px below 768px and 24px from 768px **on all four sides**. The grid
+  copied the horizontal half and dropped the vertical half.
+- Nothing above the grid pads vertically. `AdminShell` passes `padding={0}` to `AppShell.Main`
+  (`src/components/admin/AdminShell.tsx:29`), and the site `<main>` (`src/app/[locale]/layout.tsx:53`) has no padding.
+  So on live `/admin` the "Dashboard" title sits directly under the header line (`rev1/live/a-1280-en.png`), and
+  `/cabinet/statistics` renders the same grid under the site `<main>`.
+
+### 18.2 Finding to fix
+
+| ID | Sev | Finding | Correction |
+|---|---|---|---|
+| **G3** | P2 | The dashboard page container has no top or bottom gutter, in production and in every Story that renders it (`DashboardGrid`, `DashboardCard`, `AdminDashboardRecentListings`, `AdminDashboardView`, `AgentStatisticsView`). The cause is the missing vertical half of the TailAdmin `p-4 md:p-6` wrapper. | §18.3 step 2: the grid takes all four sides of its source. |
+
+### 18.3 Revision 3 — one route, in this order
+
+Re-entry mode: **remediation**. Keep `evidence/task890/`, `rev1/` and `rev2/`, and write new artifacts to
+`evidence/task890/rev3/`.
+
+1. **I0.** Record the platform line, `git status --porcelain` → `rev3/i0-status.txt`, and the hash of
+   `MantineDashboardGrid.tsx`.
+2. **G3 (GR-0 EXTEND).** In `MantineDashboardGrid`'s root `Box`, replace `px={{ base: 'md', md: 'xl' }}` with
+   `p={{ base: 'md', md: 'xl' }}`. Change nothing else, and add no new value: these are the same two theme keys, now
+   on all four sides, as TailAdmin's `p-4 md:p-6`. Update the component's doc comment to cite
+   `docs/tailadmin-style-reference.md:531-536`. Do not add `pb-20`: that line itself marks it as dashboard-specific
+   and not required.
+3. **Stories.** None of the five Stories in §18.2 may add a gutter of its own for this, because the grid now carries
+   all four sides. Confirm that each one adds no `StoryPageGutter`, padding or wrapper around the grid. Do not edit them
+   unless one does.
+4. **Probe, all four sides** (GR-3d as amended). `npm.cmd run build-storybook`. Then, for every export of the five
+   Stories in §18.2, at 320/390/1024/1440 in `en`, measure top/right/bottom/left from the screen edge to the visible
+   content. For `AdminDashboardView` (rendered inside `AdminShell`), measure from the shell's main content edge. Write
+   the results to `rev3/four-sides.txt`. The method is `docs/sessions/evidence/task890/review3/edge-audit-v2.mjs` (its
+   third argument takes a comma-separated id list); the first `edge-audit.mjs` is superseded and must not be used. Pass condition, per side:
+   - grid Stories: top and left/right are 16 at 320/390 and 24 at 1024/1440;
+   - bottom is the same wherever the content ends above the fold;
+   - no side is at 0.
+5. **Live** (the server, the session and the method of `rev1/live-probe.mjs`). On `/admin` at 390 and 1280 `en`, and on
+   `/en/cabinet/statistics` at 390 and 1280 with an agent session if `.env.local` has one (otherwise record that it
+   was not run, with the reason), measure the gap between the header's bottom edge and the page title's box. Expected:
+   16 at 390 and 24 at 1280. Save screenshots to `rev3/live/`.
+6. **Receipts.** Write a `GR-3d STORY GUTTER CHECK` per Story id in the amended four-side form, plus GR-3b and GR-3c
+   lines for `DashboardGrid` and `DashboardCard`.
+7. **Gates**, into `rev3/` with exit codes:
+
+   ```powershell
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   node.exe -p "process.platform + ' ' + process.version"
+   npm.cmd run typecheck
+   npx.cmd eslint src/design-system/mantine/patterns/MantineDashboardGrid.tsx
+   npm.cmd run check:stories
+   npm.cmd run check:story-coverage
+   npm.cmd run check:design-tokens:strict
+   npm.cmd run check:pattern-enrolment
+   npm.cmd run build-storybook
+   npm.cmd run build
+   npm.cmd run check:file-integrity
+   npm.cmd run check:mojibake
+   git --no-optional-locks hash-object src/design-system/mantine/patterns/MantineDashboardGrid.tsx
+   ```
+
+   Expected: every command exits 0. Write evidence files through Node or `Out-File -Encoding utf8` without a BOM. The
+   rev2 BOM failure came from PowerShell 5.1's `>`.
+8. **Records.** Add a revision 3 section and Files Changed row to the session log. Set the 890 backlog line to
+   `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 3)`.
+
+### 18.4 Scope added by revision 3
+
+- **Edited:** `src/design-system/mantine/patterns/MantineDashboardGrid.tsx` (the root `Box` padding prop and its doc
+  comment only).
+- **Measured, not edited:** the `DashboardCard`, `AdminDashboardRecentListings` and `AgentStatisticsView` Stories, and
+  live `/cabinet/statistics` (891's surface; this change gives it the same top gutter).
+
+### 18.5 Acceptance criteria added by revision 3
+
+- **AC18 [G3]** — Given `MantineDashboardGrid.tsx`, when read, then the root `Box` sets `p={{ base: 'md', md: 'xl' }}`
+  and no other padding prop.
+- **AC19 [G3, GR-3d]** — Given `rev3/four-sides.txt`, when read, then no export of the five Stories has a side at 0.
+  Top/left/right are 16 at 320/390 and 24 at 1024/1440 for the grid Stories, measured from the shell's content edge
+  where a shell is rendered.
+- **AC20 [G3]** — Given the live probe, when read, then the title of `/admin` sits 16px below the header at 390 and
+  24px below it at 1280.
+
+`GR-4 AC AUDIT — 3 added criteria; each states an observable property; absolutes: AC19's "no side at 0" (a correct grid has four non-zero sides).`
+
+### 18.6 Owner visual review
+
+§13.4 and §16.6 stand. Add two checks:
+- `Patterns/Mantine/DashboardGrid` → `Default` at 1234 (the owner's screenshot width), with a gap on all four sides;
+- live `/cabinet/statistics` at 1280, where the page title now has a top gap.

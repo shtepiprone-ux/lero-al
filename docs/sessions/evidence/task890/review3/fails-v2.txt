@@ -1,0 +1,72 @@
+patterns-mantine-additempanel--default 320 0/0/0/700 top left right 
+patterns-mantine-admindashboardrecentlistings--default 320 0/16/16/484 top 
+patterns-mantine-admindashboardrecentlistings--modal-open 320 0/16/16/484 top 
+patterns-mantine-admindashboardrecentlistings--empty 320 0/16/16/614 top 
+patterns-mantine-adminheader--default 320 1/54/16/875 top 
+patterns-mantine-adminheader--unknown-path 320 1/54/16/875 top 
+patterns-mantine-adminheader--drawer-open 320 1/54/16/875 top 
+patterns-mantine-adminlocaleswitcher--idle 320 12/12/12/818 top left right 
+patterns-mantine-adminlocaleswitcher--pending 320 12/12/12/818 top left right 
+patterns-mantine-adminshell--default 320 72/0/0/756 left right 
+patterns-mantine-adminshell--drawer-open 320 72/0/0/756 left right 
+patterns-mantine-adminsidebar--default 320 12/12/12/36 top left right 
+patterns-mantine-adminsidebar--management-active 320 12/12/12/36 top left right 
+patterns-mantine-adminsidebar--content-active 320 12/12/12/36 top left right 
+patterns-mantine-adminsidebar--system-active 320 12/12/12/36 top left right 
+patterns-mantine-agentstatisticsview--default 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--agt-01-all-zero 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--agt-10-empty 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--activity-stale 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--activity-error 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--no-activity 320 0/16/16/- top 
+patterns-mantine-agentstatisticsview--sorted-by-views 320 0/16/16/- top 
+patterns-mantine-dashboardcard--fill 320 0/16/16/536 top 
+patterns-mantine-dashboardgrid--default 320 0/16/16/- top 
+patterns-mantine-dashboardgrid--max-columns 320 0/16/16/156 top 
+patterns-mantine-dashboardgrid--deferred-four-up 320 0/16/16/156 top 
+patterns-mantine-dashboardsparkline--default 320 13/16/16/789 top 
+patterns-mantine-dashboardsparkline--all-zero 320 13/16/16/789 top 
+patterns-mantine-dashboardsparkline--thirty-days 320 13/16/16/789 top 
+patterns-mantine-dialogdrawerpattern--default 320 0/0/0/856 top left right 
+patterns-mantine-listingsfilterbar--default 320 12/16/16/524 top 
+patterns-mantine-listingsfilterbar--one-active-filter 320 12/16/16/472 top 
+patterns-mantine-listingsfilterbar--many-active-filters 320 12/16/16/472 top 
+patterns-mantine-listingspagination--default 320 16/16/16/9 bottom 
+patterns-mantine-notificationpattern--default 320 0/0/0/744 top left right 
+patterns-mantine-additempanel--default 1234 0/0/0/752 top left right 
+patterns-mantine-admindashboardrecentlistings--default 1234 0/24/24/620 top 
+patterns-mantine-admindashboardrecentlistings--modal-open 1234 0/24/24/620 top 
+patterns-mantine-admindashboardrecentlistings--empty 1234 0/24/24/614 top 
+patterns-mantine-adminheader--default 1234 0/1168/16/880 top 
+patterns-mantine-adminheader--unknown-path 1234 0/1175/16/880 top 
+patterns-mantine-adminheader--drawer-open 1234 0/1145/16/880 top 
+patterns-mantine-adminlocaleswitcher--idle 1234 12/12/1006/818 top left 
+patterns-mantine-adminlocaleswitcher--pending 1234 12/12/1006/818 top left 
+patterns-mantine-adminshell--default 1234 72/240/0/756 right 
+patterns-mantine-adminshell--drawer-open 1234 72/240/0/756 right 
+patterns-mantine-adminsidebar--default 1234 12/12/1006/36 top left 
+patterns-mantine-adminsidebar--management-active 1234 12/12/1006/36 top left 
+patterns-mantine-adminsidebar--content-active 1234 12/12/1006/36 top left 
+patterns-mantine-adminsidebar--system-active 1234 12/12/1006/36 top left 
+patterns-mantine-agentstatisticsview--default 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--agt-01-all-zero 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--agt-10-empty 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--activity-stale 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--activity-error 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--no-activity 1234 0/24/24/- top 
+patterns-mantine-agentstatisticsview--sorted-by-views 1234 0/24/24/- top 
+patterns-mantine-authformpattern--default 1234 24/417/417/1 bottom 
+patterns-mantine-dashboardcard--fill 1234 0/24/24/678 top 
+patterns-mantine-dashboardgrid--default 1234 0/24/24/212 top 
+patterns-mantine-dashboardgrid--max-columns 1234 0/24/24/512 top 
+patterns-mantine-dashboardgrid--deferred-four-up 1234 0/24/24/512 top 
+patterns-mantine-dashboardsparkline--default 1234 13/16/929/789 top 
+patterns-mantine-dashboardsparkline--all-zero 1234 13/16/929/789 top 
+patterns-mantine-dashboardsparkline--thirty-days 1234 13/16/929/789 top 
+patterns-mantine-dialogdrawerpattern--default 1234 0/0/1175/856 top left 
+patterns-mantine-listingsfilterbar--default 1234 12/32/32/844 top 
+patterns-mantine-listingsfilterbar--one-active-filter 1234 12/32/32/792 top 
+patterns-mantine-listingsfilterbar--many-active-filters 1234 12/32/32/792 top 
+patterns-mantine-notificationpattern--default 1234 0/0/855/856 top left 

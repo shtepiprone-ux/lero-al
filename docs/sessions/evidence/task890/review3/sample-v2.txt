@@ -1,0 +1,21 @@
+# 10 stories; columns: id width top/left/right/bottom (px from viewport edge; bottom only when content ends above the fold)
+patterns-mantine-admindashboardview--default 320 72/16/16/-
+patterns-mantine-admintable--default 320 24/16/16/456
+patterns-mantine-agentstatisticsview--default 320 0/16/16/-
+patterns-mantine-cmspageview--default 320 24/16/16/-
+patterns-mantine-dashboardcard--default 320 16/16/16/150
+patterns-mantine-dashboardgrid--default 320 0/16/16/-
+patterns-mantine-dashboardstatrows--default 320 34/16/16/366
+patterns-mantine-listingcardpattern--default 320 24/16/16/-
+patterns-mantine-listingcardtrack--rail 320 24/16/16/530
+patterns-mantine-resetpasswordview--loading 320 overlay-or-empty
+patterns-mantine-admindashboardview--default 1234 72/264/24/-
+patterns-mantine-admintable--default 1234 24/32/32/684
+patterns-mantine-agentstatisticsview--default 1234 0/24/24/-
+patterns-mantine-cmspageview--default 1234 24/32/32/-
+patterns-mantine-dashboardcard--default 1234 16/16/16/668
+patterns-mantine-dashboardgrid--default 1234 0/24/24/212
+patterns-mantine-dashboardstatrows--default 1234 24/32/32/720
+patterns-mantine-listingcardpattern--default 1234 24/32/32/-
+patterns-mantine-listingcardtrack--rail 1234 24/32/32/489
+patterns-mantine-resetpasswordview--loading 1234 overlay-or-empty

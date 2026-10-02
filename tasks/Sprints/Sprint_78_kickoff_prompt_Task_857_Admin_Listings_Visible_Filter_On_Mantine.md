@@ -3,8 +3,9 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`NEEDS REVISION` — review 3, 2026-10-02. Revisions 1 (§16) and 2 (§17) are verified except AC12. Execute §18
-(Revision 3) only: every Mantine table fits its production container (owner rule §7.3, 2026-10-02), and every admin page View Story renders inside the real `AdminShell` + the new `AdminPageFrame`. §18 supersedes R15's `AdminListingsView` part and AC12.**
+`NEEDS REVISION` — review 4, 2026-10-02. Revisions 1–3 (§16–§18) are verified except R31. Execute §19
+(Revision 4) only: `AgentStatisticsView` shows cards below 1024 and merges its two date columns (owner decision §19.1),
+`MantineDataTableToCards` gains `cardsBelow="lg"`, and the receipts owed from Revision 3.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -834,3 +835,135 @@ The 38 tuples of §17.8 stay. Added rows:
 | `AdminListingsView` `Default` × uk × 1024 (the production card at its narrowest) | 1 |
 
 **68 tuples.** Opus re-measures every Story in the matrix (GR-3b/3c/3d and §7.3) before the owner sees it.
+
+---
+
+## 19. Review 4 — `NEEDS REVISION`, 2026-10-02 → Revision 4 (R31 only: `AgentStatisticsView` cards to 1024, dates merged)
+
+Opus inspected the real diff, the `-r3` evidence and the session log's "Revision 3" section, and re-measured
+independently. Script and raw output: `docs/sessions/evidence/task857/91-opus-review4-measure.{mjs,json}`, `win32`
+v22.22.3, the current `storybook-static` (no source file is newer than the build), uk + sq.
+- **R19–R30 are verified.** All six admin tables and `WrappedTitleColumn` fit at 768/1024/1280/1440, at the
+  production card width: listings 720/720/976/1136, users 720/736/992/1152, the four `page`/`narrow` Views 720/720/960
+  (832)/960 (832). The navbar is 240 from 1024. The ten `page.tsx` diffs only swap `Box` for `AdminPageFrame` with
+  the R23 props. The `calc(` and percentage-width greps print nothing, and no R25 Story file names `StoryPageGutter`.
+- **`npm run test`: 4 failures, none from this task.** `css-var-resolvability` (`--width-content`, Task 869) and
+  `appimage-config-class-assertions` are already listed under **790**. `mantine-story-scope.test.ts:20` has been red
+  since Task 896 emptied the exact-title hatch at `HEAD`; it is added to 790's row. `globals.css`, `appImageConfig`
+  and the hatch are not in this diff.
+- **R31 is `NOT IMPLEMENTED`. The table still scrolls**, which confirms the executor's `BLOCKED — R31 BUDGET`. Overflow
+  at 768 is +283…+395 and at 1024 is +27…+139, with the card at 678/934.
+
+**Do not touch anything outside the §19.5 write set.** R13–R30, the dialogs, every R25 Story and their evidence stay
+as they are.
+
+### 19.1 Owner decision, 2026-10-02 (verbatim option chosen)
+
+Opus asked: *"Which layout should it use?"* The owner chose *"Cards to 1024 + dates merged (Recommended)"*. Its full
+text:
+- this table shows cards below 1024 instead of 768, an exception to §7.3 rule 2 for this table only;
+- expiry and last activity stack in one cell;
+- no data is hidden at any width.
+
+Opus recorded the exception in `docs/mantine-responsive-design-system.md` §7.3 rule 2 (named list: `AgentStatisticsView`).
+
+### 19.2 Measured basis (Opus simulation, `91-opus-review4-measure.json` → `agt`)
+
+Columns were hidden in the live DOM, and the table was re-measured.
+
+| Width | Locale | All six columns | Without last activity | Without expires | Without both dates |
+|---|---|---|---|---|---|
+| 768 (client 676) | sq / en / uk / it | +363 / +283 / +395 / +330 | +151 / +90 / +196 / +129 | +177 / +93 / +208 / +129 | fit / fit / **+9** / fit |
+| 1024 (client 932) | sq / en / uk / it | +107 / +27 / +139 / +74 | fit ×4 | fit ×4 | fit ×4 |
+
+- At 768, no layout that shows every value fits, hence the owner's cards-to-1024 decision.
+- At 1024, five columns fit in every locale. Natural widths, uk, the tightest: title 212 + status 144 + one date 199 +
+  counts 181 + actions 149 = 885, against 932. The merged cell adds an icon (≈20px), so the INFERENCE is that it fits
+  with about 27px to spare. Measure it; do not assume.
+
+### 19.3 New requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R32** | **`MantineDataTableToCards` (EXTEND, `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`).** `cardsBelow` gains `'lg'`. It uses the same CSS switch as `'md'`: `<Box hiddenFrom="lg">{cardsMarkup}</Box><Box visibleFrom="lg">{tableMarkup}</Box>`, with no `useMediaQuery`. Update the prop's JSDoc and the component header comment. `'sm'` and `'md'` output must not change. **Story:** add `CardsBelowLg` to `Mantine/Primitives/Table` (`src/stories/mantine/primitives/Table.stories.tsx`), modelled on `CardsBelowMd` (`:164-195`), with the same fixture and `cardsBelow="lg"`. | P1 | AC20 |
+| **R33** | **`AgentStatisticsView` (`src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`).** <br>1. `MantineDataTableToCards` takes `cardsBelow="lg"` (§19.1). <br>2. The `expires` and `activity` columns are replaced by one column. Key `dates`, header `t('agt10_col_dates')`, a new key in sq/en/uk/it: sq `Datat`, en `Dates`, uk `Дати`, it `Date`. Its cell is `Stack gap="tight" align="flex-start"` with two lines: <br>• `Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_expires')}`, holding `CalendarClock` at `theme.other.iconSize.badge` (`aria-hidden="true"`) and then `expiresCell(row)`; <br>• the same with `aria-label={t('agt10_col_activity')}`, `Activity` and `lastActivityCell(row)`. <br>No `width`, and no `wrap`: each line stays on one row. <br>3. The three `Group`s of the `counts` cell gain `role="group"`. Without a role, ARIA ignores an `aria-label` on a generic `div`, so screen readers never announced it. <br>4. Columns, in order: title · status (+ visibility) · dates · counts · actions. The title column (token width, `wrap`) and the status/visibility stack do not change. <br>5. The card (`card` config, `:383-396`) does not change. It keeps every value separately labelled. <br>6. Remove the R31 comment that calls the counts cell a "fallback". Write one comment that cites §7.3 (b) and the §19.1 decision. | P1 | AC20 |
+| **R34** | **`AdminTable.tsx` JSDoc.** The `width` doc example `'40%'` contradicts §7.3 rule 6. Replace it with `theme.other.layout.tableTitleColumnWidth`. This is a comment-only change. | P3 | AC20 |
+| **R35** | **Receipts owed from Revision 3 (§18.7).** Write GR-3b, GR-3c and GR-3d receipts for `AgentStatisticsView` `Default` and `AdminTable` `WrappedTitleColumn` at 320/390/1024/1440 (type also at 768), and a GR-3b/3d receipt for `Mantine/Primitives/Table` `CardsBelowLg`. Rewrite the `AgentStatisticsView` `TABLE FIT CHECK` line from the new measurement. The Revision 3 line (`89-receipts-r3.txt:127`) claimed "clipped: NONE; first/last inset 24/24" while its own numbers showed last insets of −339…−3. A receipt must state what its numbers show. | P2 | AC20 |
+
+### 19.4 Acceptance (Revision 4)
+
+- **AC20 [R32–R35].**
+  - **`AgentStatisticsView` `Default`, at 1024, 1280 and 1440 × sq/en/uk/it.** The `TABLE FIT CHECK` (§7.3) passes at
+    cards of 934/1190/1350 (±1px): no scroll, nothing clipped, first and last inset 24. The headers in order are title ·
+    status · dates · counts · actions.
+  - **The same Story at 390 and 768 (sq/uk).** No visible `<table>`, and cards render with every labelled value.
+  - **`Mantine/Primitives/Table`, at 1000 and 1024 (sq).** `CardsBelowLg` shows cards at 1000 and the table at 1024.
+    `CardsBelowMd` and `Default` at 700 and 1024 behave as before the change (cards/table at the same widths).
+  - **In the rendered `dates` and `counts` cells,** every `[aria-label]` element has `role="group"` (Playwright).
+  - **Greps.** A grep for `'expires'` and `'activity'` as column `key`s in `AgentStatisticsView.tsx` prints nothing. A
+    grep for `'40%'` in `AdminTable.tsx` prints nothing.
+  - **`check:i18n`** exits 0 with `agt10_col_dates` in all four locales.
+  - **R35:** the receipts exist in `99-receipts-r4.txt`.
+
+**Negative branch.** If the `dates` column overflows at 1024 in any locale, stop with `BLOCKED — R33 BUDGET` and the
+per-column widths per locale. Do not hide a column, shrink a font or add a width.
+
+### 19.5 Re-entry: `remediation` (Revision 4)
+
+- **Start step:** platform line `92-platform-r4.txt`, then R32 → R33 → R34. Then rebuild Storybook, take the
+  measurements (write `98-measure-r4.mjs` and `98-measurements-r4.json`), run the §19.6 gate block, and write the receipts.
+- **Do not re-run or overwrite:** evidence `01`–`91` and every `plant-*` file. Opus's `90-*` and `91-*` files are
+  read-only.
+- **Write set:**
+  - `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` (R32, the `'lg'` branch and its comments only);
+  - `src/stories/mantine/primitives/Table.stories.tsx` (R32, the `CardsBelowLg` export only);
+  - `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx` (R33);
+  - `messages/{sq,en,uk,it}.json` (R33, `agt10_col_dates` only). Leave `agt10_col_activity_counts` alone; it stays in use;
+  - `src/components/admin/AdminTable.tsx` (R34, one comment);
+  - tests that select the removed `expires`/`activity` columns, if any. List each one;
+  - `docs/component-catalog.md` (the `MantineDataTableToCards` `cardsBelow` row);
+  - the session log ("Revision 4" section), evidence `92`+ with the `-r4` suffix, and the 857 cell of `docs/backlog.md`.
+- **Forbidden:** every other file, including every R19–R30 file, every R25 Story, the dialogs, the legacy managers, and
+  any `docs/*rule*.md`, `docs/golden-rules.md` or `docs/mantine-responsive-design-system.md`.
+
+### 19.6 Gate block (Revision 4)
+
+```powershell
+$ev = "docs\sessions\evidence\task857"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\92-platform-r4.txt"
+node.exe scripts\check-surface-census.mjs --surface src\app\admin\listings\page.tsx *>&1 | Tee-Object "$ev\93-census-r4.txt"
+npm.cmd run test *>&1 | Tee-Object "$ev\94-tests-r4.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\95-typecheck-r4.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\95b-lint-r4.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\95c-story-coverage-r4.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\95d-rendered-scope-r4.txt"
+npm.cmd run check:surface-census:changed -- --base HEAD *>&1 | Tee-Object "$ev\95e-census-changed-r4.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\95f-design-tokens-r4.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\95g-enrolled-tailwind-r4.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\95h-i18n-r4.txt"
+npm.cmd run check:type-responsive *>&1 | Tee-Object "$ev\95i-type-responsive-r4.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\95j-file-integrity-r4.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\95k-mojibake-r4.txt"
+npm.cmd run check:listing-visibility *>&1 | Tee-Object "$ev\95l-listing-visibility-r4.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\96-storybook-build-r4.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\96b-build-r4.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\97-status-after-r4.txt"
+```
+
+- Record every exit code. Normalise the transcripts to UTF-8 without BOM through Node.
+- In the same pass, write `git hash-object` of every Revision 4 file to `97b-hash-object-r4.txt`.
+- **Expected:** `win32`; the four calibration FAIL lines; every other gate exits 0.
+- **`npm.cmd run test`:** expect the same 4 failures in the three files named at the top of §19 and no others. If any
+  other test fails, report it with its first failing line, and run the touched test files alone.
+
+### 19.7 Owner matrix after Revision 4 (O78-12, re-issued)
+
+The 68 tuples of §18.8 stay. In the `AgentStatisticsView` rows, the 1024/1440 table is now the merged-dates layout.
+Added rows:
+
+| Rows | Tuples |
+|---|---|
+| `AgentStatisticsView` `Default` × uk × 768 (cards, the new range) | 1 |
+| `Mantine/Primitives/Table` `CardsBelowLg` × sq × 1024 | 1 |
+
+**70 tuples.** Opus re-measures every Story in the matrix (GR-3b/3c/3d and §7.3) before the owner sees it.

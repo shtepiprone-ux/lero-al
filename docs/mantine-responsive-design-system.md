@@ -331,6 +331,10 @@ migrated table.
    `scrollWidth ≤ clientWidth` at the **production** container width, in every locale. A horizontal scroll is never
    the way to fit a table.
 2. **Cards below `md`.** A table renders as cards below 768px (`cardsBelow="md"`). From 768 it must fit.
+   **Named exception, owner decision 2026-10-02 (Task 857 review 4), verbatim option chosen:** *"Cards to 1024 + dates
+   merged (Recommended)"*. The table uses `cardsBelow="lg"` (cards below 1024) and must fit from 1024. The list
+   currently holds one table: `AgentStatisticsView`. At a 678px card, no layout of that table that shows every value
+   fits. Only the owner adds a table to this list.
 3. **The production container is the measure.** For an admin page, the card width is:
    - the viewport, minus the `AdminShell` navbar from `lg` (`appShellNavbarWidth`, 240px);
    - minus the page frame's gutter on each side;

@@ -1,0 +1,2047 @@
+{
+ "platform": "win32 v22.22.3",
+ "fit": [
+  {
+   "id": "adminlistingsview--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Оголошення=200",
+      "Ціна=146",
+      "Статус=302",
+      "=70"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Njoftim=200",
+      "Çmimi=162",
+      "Statusi=279",
+      "=77"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Оголошення=200",
+      "Ціна=146",
+      "Статус=302",
+      "=70"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Njoftim=200",
+      "Çmimi=162",
+      "Statusi=279",
+      "=77"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 976,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 974,
+     "scroll": 974,
+     "cols": [
+      "Оголошення=200",
+      "Ціна=170",
+      "Статус=352",
+      "Дата=170",
+      "=81"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 976,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 974,
+     "scroll": 974,
+     "cols": [
+      "Njoftim=200",
+      "Çmimi=182",
+      "Statusi=315",
+      "Data=190",
+      "=87"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1136,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 1134,
+     "scroll": 1134,
+     "cols": [
+      "ID=120",
+      "Оголошення=200",
+      "Ціна=179",
+      "Статус=371",
+      "Дата=179",
+      "=85"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1136,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 1134,
+     "scroll": 1134,
+     "cols": [
+      "ID=128",
+      "Njoftim=200",
+      "Çmimi=190",
+      "Statusi=328",
+      "Data=198",
+      "=90"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Користувач=276",
+      "Статус=267",
+      "=175"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Përdorues=276",
+      "Statusi=247",
+      "=195"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 736,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 734,
+     "scroll": 734,
+     "cols": [
+      "Користувач=276",
+      "Статус=277",
+      "=181"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 736,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 734,
+     "scroll": 734,
+     "cols": [
+      "Përdorues=276",
+      "Statusi=256",
+      "=202"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 992,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 990,
+     "scroll": 990,
+     "cols": [
+      "Користувач=276",
+      "Статус=263",
+      "Дата=278",
+      "=173"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 992,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 990,
+     "scroll": 990,
+     "cols": [
+      "Përdorues=276",
+      "Statusi=239",
+      "Data=287",
+      "=188"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1152,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 1150,
+     "scroll": 1150,
+     "cols": [
+      "Користувач=276",
+      "Статус=322",
+      "Дата=340",
+      "=211"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1152,
+     "cardLeft": 264,
+     "navW": 240,
+     "client": 1150,
+     "scroll": 1150,
+     "cols": [
+      "Përdorues=276",
+      "Statusi=293",
+      "Data=351",
+      "=230"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Назва постачальник=332",
+      "Пріоритет=114",
+      "Режим=136",
+      "=137"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Emri i ofruesit=332",
+      "Prioriteti=107",
+      "Mënyra=137",
+      "=142"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Назва постачальник=332",
+      "Пріоритет=114",
+      "Режим=136",
+      "=137"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Emri i ofruesit=332",
+      "Prioriteti=107",
+      "Mënyra=137",
+      "=142"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Назва постачальник=332",
+      "Пріоритет=144",
+      "Режим=171",
+      "Примітки=139",
+      "=172"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Emri i ofruesit=332",
+      "Prioriteti=136",
+      "Mënyra=174",
+      "Shënime=136",
+      "=180"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Назва постачальник=332",
+      "Пріоритет=144",
+      "Режим=171",
+      "Примітки=139",
+      "=172"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Emri i ofruesit=332",
+      "Prioriteti=136",
+      "Mënyra=174",
+      "Shënime=136",
+      "=180"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Заголовок=200",
+      "Статус=277",
+      "Дії=241"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Titulli=200",
+      "Statusi=250",
+      "Veprime=268"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Заголовок=200",
+      "Статус=162",
+      "Оновлено=215",
+      "Дії=141"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Titulli=200",
+      "Statusi=157",
+      "Përditësuar=193",
+      "Veprime=168"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 832,
+     "cardLeft": 344,
+     "navW": 240,
+     "client": 830,
+     "scroll": 830,
+     "cols": [
+      "Заголовок=200",
+      "Статус=197",
+      "Оновлено=261",
+      "Дії=172"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 832,
+     "cardLeft": 344,
+     "navW": 240,
+     "client": 830,
+     "scroll": 830,
+     "cols": [
+      "Titulli=200",
+      "Statusi=191",
+      "Përditësuar=235",
+      "Veprime=205"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 832,
+     "cardLeft": 424,
+     "navW": 240,
+     "client": 830,
+     "scroll": 830,
+     "cols": [
+      "Заголовок=200",
+      "Статус=197",
+      "Оновлено=261",
+      "Дії=172"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 832,
+     "cardLeft": 424,
+     "navW": 240,
+     "client": 830,
+     "scroll": 830,
+     "cols": [
+      "Titulli=200",
+      "Statusi=191",
+      "Përditësuar=235",
+      "Veprime=205"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Причина=244",
+      "Оголошення=200",
+      "Статус=203",
+      "=71"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Arsye=265",
+      "Njoftimi=200",
+      "Statusi=173",
+      "=80"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Причина=244",
+      "Оголошення=200",
+      "Статус=203",
+      "=71"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Arsye=265",
+      "Njoftimi=200",
+      "Statusi=173",
+      "=80"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Причина=357",
+      "Оголошення=200",
+      "Статус=297",
+      "=105"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Arsye=387",
+      "Njoftimi=200",
+      "Statusi=254",
+      "=117"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Причина=357",
+      "Оголошення=200",
+      "Статус=297",
+      "=105"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adminreportsview--all-tab",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Arsye=387",
+      "Njoftimi=200",
+      "Statusi=254",
+      "=117"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Код=122",
+      "Назва (Англійська)=223",
+      "Активна=287",
+      "=87"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": 768,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Kodi=130",
+      "Emri (Anglisht)=196",
+      "Aktive=299",
+      "=93"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Код=97",
+      "Назва (Англійська)=177",
+      "Активна=229",
+      "Оновлено=145",
+      "=69"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 272,
+     "navW": 240,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Kodi=101",
+      "Emri (Anglisht)=153",
+      "Aktive=233",
+      "Përditësuar=158",
+      "=72"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Код=129",
+      "Назва (Англійська)=237",
+      "Активна=306",
+      "Оновлено=194",
+      "=92"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 280,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Kodi=135",
+      "Emri (Anglisht)=204",
+      "Aktive=311",
+      "Përditësuar=211",
+      "=96"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Код=129",
+      "Назва (Англійська)=237",
+      "Активна=306",
+      "Оновлено=194",
+      "=92"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 360,
+     "navW": 240,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Kodi=135",
+      "Emri (Anglisht)=204",
+      "Aktive=311",
+      "Përditësuar=211",
+      "=96"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 678,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 676,
+     "scroll": 1071,
+     "cols": [
+      "Оголошення=212",
+      "Статус=144",
+      "Спливає=187",
+      "Показники активнос=181",
+      "Остання активність=199",
+      "Дії=149"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 678,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 676,
+     "scroll": 1039,
+     "cols": [
+      "Njoftimi=200",
+      "Statusi=150",
+      "Skadon=186",
+      "Numrat e aktivitet=159",
+      "Aktiviteti i fundi=211",
+      "Veprime=132"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 934,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 932,
+     "scroll": 1071,
+     "cols": [
+      "Оголошення=212",
+      "Статус=144",
+      "Спливає=187",
+      "Показники активнос=181",
+      "Остання активність=199",
+      "Дії=149"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 934,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 932,
+     "scroll": 1039,
+     "cols": [
+      "Njoftimi=200",
+      "Statusi=150",
+      "Skadon=186",
+      "Numrat e aktivitet=159",
+      "Aktiviteti i fundi=211",
+      "Veprime=132"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1190,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 1188,
+     "scroll": 1188,
+     "cols": [
+      "Оголошення=212",
+      "Статус=163",
+      "Спливає=212",
+      "Показники активнос=205",
+      "Остання активність=226",
+      "Дії=170"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1190,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 1188,
+     "scroll": 1188,
+     "cols": [
+      "Njoftimi=200",
+      "Statusi=177",
+      "Skadon=219",
+      "Numrat e aktivitet=188",
+      "Aktiviteti i fundi=249",
+      "Veprime=156"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1350,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 1348,
+     "scroll": 1348,
+     "cols": [
+      "Оголошення=212",
+      "Статус=190",
+      "Спливає=247",
+      "Показники активнос=239",
+      "Остання активність=263",
+      "Дії=197"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1350,
+     "cardLeft": 45,
+     "navW": null,
+     "client": 1348,
+     "scroll": 1348,
+     "cols": [
+      "Njoftimi=200",
+      "Statusi=206",
+      "Skadon=254",
+      "Numrat e aktivitet=218",
+      "Aktiviteti i fundi=289",
+      "Veprime=181"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 768,
+   "l": "uk",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": null,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Оголошення=200",
+      "Статус=362",
+      "=156"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 768,
+   "l": "sq",
+   "t": [
+    {
+     "card": 720,
+     "cardLeft": 24,
+     "navW": null,
+     "client": 718,
+     "scroll": 718,
+     "cols": [
+      "Njoftim=200",
+      "Statusi=362",
+      "=156"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "uk",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Оголошення=200",
+      "Статус=311",
+      "Агент=312",
+      "=134"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "sq",
+   "t": [
+    {
+     "card": 960,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 958,
+     "scroll": 958,
+     "cols": [
+      "Njoftim=200",
+      "Statusi=311",
+      "Agjent=312",
+      "=134"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1216,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 1214,
+     "scroll": 1214,
+     "cols": [
+      "Оголошення=200",
+      "Статус=417",
+      "Агент=418",
+      "=180"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1216,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 1214,
+     "scroll": 1214,
+     "cols": [
+      "Njoftim=200",
+      "Statusi=417",
+      "Agjent=418",
+      "=180"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "uk",
+   "t": [
+    {
+     "card": 1376,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 1374,
+     "scroll": 1374,
+     "cols": [
+      "Оголошення=200",
+      "Статус=482",
+      "Агент=483",
+      "=208"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "sq",
+   "t": [
+    {
+     "card": 1376,
+     "cardLeft": 32,
+     "navW": null,
+     "client": 1374,
+     "scroll": 1374,
+     "cols": [
+      "Njoftim=200",
+      "Statusi=482",
+      "Agjent=483",
+      "=208"
+     ]
+    }
+   ]
+  }
+ ],
+ "agt": [
+  {
+   "w": 768,
+   "l": "sq",
+   "name": "none",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 676,
+   "scroll": 1039,
+   "cols": [
+    200,
+    150,
+    186,
+    159,
+    211,
+    132
+   ]
+  },
+  {
+   "w": 768,
+   "l": "sq",
+   "name": "hideActivity",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 676,
+   "scroll": 827,
+   "cols": [
+    200,
+    150,
+    186,
+    159,
+    0,
+    132
+   ]
+  },
+  {
+   "w": 768,
+   "l": "sq",
+   "name": "hideExpires",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 676,
+   "scroll": 853,
+   "cols": [
+    200,
+    150,
+    0,
+    159,
+    211,
+    132
+   ]
+  },
+  {
+   "w": 768,
+   "l": "sq",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 676,
+   "scroll": 676,
+   "cols": [
+    200,
+    162,
+    0,
+    172,
+    0,
+    142
+   ]
+  },
+  {
+   "w": 768,
+   "l": "en",
+   "name": "none",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 676,
+   "scroll": 959,
+   "cols": [
+    200,
+    142,
+    189,
+    131,
+    192,
+    104
+   ]
+  },
+  {
+   "w": 768,
+   "l": "en",
+   "name": "hideActivity",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 676,
+   "scroll": 766,
+   "cols": [
+    200,
+    142,
+    189,
+    131,
+    0,
+    104
+   ]
+  },
+  {
+   "w": 768,
+   "l": "en",
+   "name": "hideExpires",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 676,
+   "scroll": 769,
+   "cols": [
+    200,
+    142,
+    0,
+    131,
+    192,
+    104
+   ]
+  },
+  {
+   "w": 768,
+   "l": "en",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 676,
+   "scroll": 676,
+   "cols": [
+    200,
+    180,
+    0,
+    165,
+    0,
+    131
+   ]
+  },
+  {
+   "w": 768,
+   "l": "uk",
+   "name": "none",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 676,
+   "scroll": 1071,
+   "cols": [
+    212,
+    144,
+    187,
+    181,
+    199,
+    149
+   ]
+  },
+  {
+   "w": 768,
+   "l": "uk",
+   "name": "hideActivity",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 676,
+   "scroll": 872,
+   "cols": [
+    212,
+    144,
+    187,
+    181,
+    0,
+    149
+   ]
+  },
+  {
+   "w": 768,
+   "l": "uk",
+   "name": "hideExpires",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 676,
+   "scroll": 884,
+   "cols": [
+    212,
+    144,
+    0,
+    181,
+    199,
+    149
+   ]
+  },
+  {
+   "w": 768,
+   "l": "uk",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 676,
+   "scroll": 685,
+   "cols": [
+    212,
+    144,
+    0,
+    181,
+    0,
+    149
+   ]
+  },
+  {
+   "w": 768,
+   "l": "it",
+   "name": "none",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 676,
+   "scroll": 1006,
+   "cols": [
+    200,
+    132,
+    201,
+    141,
+    201,
+    131
+   ]
+  },
+  {
+   "w": 768,
+   "l": "it",
+   "name": "hideActivity",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 676,
+   "scroll": 805,
+   "cols": [
+    200,
+    132,
+    201,
+    141,
+    0,
+    131
+   ]
+  },
+  {
+   "w": 768,
+   "l": "it",
+   "name": "hideExpires",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 676,
+   "scroll": 805,
+   "cols": [
+    200,
+    132,
+    0,
+    141,
+    201,
+    131
+   ]
+  },
+  {
+   "w": 768,
+   "l": "it",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 676,
+   "scroll": 676,
+   "cols": [
+    200,
+    156,
+    0,
+    166,
+    0,
+    154
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "sq",
+   "name": "none",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 932,
+   "scroll": 1039,
+   "cols": [
+    200,
+    150,
+    186,
+    159,
+    211,
+    132
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "sq",
+   "name": "hideActivity",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    175,
+    217,
+    186,
+    0,
+    154
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "sq",
+   "name": "hideExpires",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    168,
+    0,
+    179,
+    237,
+    148
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "sq",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Njoftimi",
+    "Statusi",
+    "Skadon",
+    "Numrat e aktivitetit",
+    "Aktiviteti i fundit",
+    "Veprime"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    249,
+    0,
+    264,
+    0,
+    219
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "en",
+   "name": "none",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 932,
+   "scroll": 959,
+   "cols": [
+    200,
+    142,
+    189,
+    131,
+    192,
+    104
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "en",
+   "name": "hideActivity",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    184,
+    245,
+    169,
+    0,
+    134
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "en",
+   "name": "hideExpires",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    183,
+    0,
+    168,
+    247,
+    133
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "en",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Listing",
+    "Status",
+    "Expires",
+    "Activity counts",
+    "Last activity",
+    "Actions"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    276,
+    0,
+    254,
+    0,
+    201
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "uk",
+   "name": "none",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 932,
+   "scroll": 1071,
+   "cols": [
+    212,
+    144,
+    187,
+    181,
+    199,
+    149
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "uk",
+   "name": "hideActivity",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    212,
+    157,
+    204,
+    197,
+    0,
+    163
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "uk",
+   "name": "hideExpires",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    212,
+    154,
+    0,
+    193,
+    213,
+    160
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "uk",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Оголошення",
+    "Статус",
+    "Спливає",
+    "Показники активності",
+    "Остання активність",
+    "Дії"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    212,
+    218,
+    0,
+    275,
+    0,
+    227
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "it",
+   "name": "none",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 932,
+   "scroll": 1006,
+   "cols": [
+    200,
+    132,
+    201,
+    141,
+    201,
+    131
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "it",
+   "name": "hideActivity",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    160,
+    243,
+    171,
+    0,
+    158
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "it",
+   "name": "hideExpires",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    160,
+    0,
+    171,
+    243,
+    158
+   ]
+  },
+  {
+   "w": 1024,
+   "l": "it",
+   "name": "hideExpiresAndActivity",
+   "labels": [
+    "Annuncio",
+    "Stato",
+    "Scade",
+    "Conteggi attività",
+    "Ultima attività",
+    "Azioni"
+   ],
+   "client": 932,
+   "scroll": 932,
+   "cols": [
+    200,
+    239,
+    0,
+    255,
+    0,
+    237
+   ]
+  }
+ ]
+}

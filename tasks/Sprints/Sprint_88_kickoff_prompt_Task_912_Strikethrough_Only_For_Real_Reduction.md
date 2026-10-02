@@ -5,6 +5,11 @@
 `.claude/skills/execute-task/SKILL.md` · **Required final status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. Never self-approval.
 
+> **Amended 2026-10-03 before execution (owner decision D89-9, Sprint 89 plan):** *"Зверху всюди (Recommended)"*. The
+> contact card's struck old price sits **above** the current price, not below it. Every order statement below already
+> reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) is **918**'s, not this
+> task's: keep the main price's colour unchanged here.
+
 ## 1. Mode and task type
 
 `TASK DESIGN` → bug fix (regression) on current Mantine UI, plus a latent instance of the same rule in the listing
@@ -18,8 +23,8 @@ The owner's rule, verbatim (2026-10-01): *"Перекреслена ціна м�
 
 1. Every listing surface strikes a price through **only** when `price_old > price`.
 2. The contact card's price block reads, top to bottom:
-   - the current price (brand, main);
-   - the old price in small struck text, **only** when `price_old > price`;
+   - the old price in small struck text, **only** when `price_old > price` (D89-9: above the current price);
+   - the current price (main);
    - on the next line, the original price in the listing's own currency, plain, only when the price is converted.
 
 ## 3. Verified context
@@ -92,7 +97,7 @@ All facts below were read in this session (2026-10-01) from the working tree. Re
 | Element | Role | base | sm | md | lg | Theme key | Provenance |
 |---|---|---|---|---|---|---|---|
 | Contact card main price | price | 20px | 20px | 20px | 20px | `xl` | unchanged (`:153`) |
-| Contact card old price (new) | meta, struck | 12px | 12px | 12px | 12px | `xs` | `theme.ts:685`; owner: *"нижче маленьким шрифтом"* |
+| Contact card old price (new) | meta, struck | 12px | 12px | 12px | 12px | `xs` | `theme.ts:685`; owner: *"маленьким шрифтом"* (D88-1), position above the price (D89-9) |
 | Contact card converted-currency line | meta | 12px | 12px | 12px | 12px | `xs` | unchanged size |
 
 The executor confirms `xl` = 20px from `theme.ts` `fontSizes` at I0. No changed text is 24px or larger.
@@ -125,9 +130,9 @@ If any of these measures a side at 0 or a doubled gutter, GR-3d binds the execut
 | R4 | Preserve | A real reduction still shows the struck old price and the badge on the card (both branches, converted when conversion is active). The detail block is unchanged. | P1 | AC4 | Confirmed |
 | R5 | Clause 15 | Both critical-flow regression commands keep their baseline. The new tests are recorded under rows `:62`/`:63`. | P1 | AC7; §10.6 | Confirmed |
 | R6 | Q4 | A planted violation proves each new test can fail. | P1 | AC5 | Confirmed |
-| R7 | D88-1 | When `price_old > price`, the contact card shows the old price in **`xs` struck `dimmed`** text directly under the current price. It is formatted in the **same currency as the displayed current price** (the converted `displayPriceOld` when conversion is active). | P1 | AC8, AC9 | Confirmed |
+| R7 | D88-1 | When `price_old > price`, the contact card shows the old price in **`xs` struck `dimmed`** text directly **above** the current price (D89-9). It is formatted in the **same currency as the displayed current price** (the converted `displayPriceOld` when conversion is active). | P1 | AC8, AC9 | Confirmed |
 | R8 | D88-1 | When `price_old` is null or `<= price`, the contact card shows no old price. | P1 | AC8, AC9 | Confirmed |
-| R9 | D88-1 | Order inside the card: current price → old price (if any) → converted-currency line (if any). | P1 | AC8 (DOM order), AC6 | Confirmed |
+| R9 | D88-1, D89-9 | Order inside the card: old price (if any) → current price → converted-currency line (if any). | P1 | AC8 (DOM order), AC6 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -184,8 +189,8 @@ Write paths (exact):
 | Case | Today | Required |
 |---|---|---|
 | Converted, no reduction | Contact card: "Original price: 120 000 EUR" **struck** | Current price, then "Original price: …" plain |
-| Converted, `price_old > price` | Contact card: struck "Original price", no old price | Current price · struck old price (converted) · "Original price: …" plain |
-| Not converted, `price_old > price` | Contact card: current price only | Current price · struck old price |
+| Converted, `price_old > price` | Contact card: struck "Original price", no old price | Struck old price (converted) · current price · "Original price: …" plain |
+| Not converted, `price_old > price` | Contact card: current price only | Struck old price · current price |
 | `price_old` null or `<= price` | Contact card: current price (+ struck disclosure if converted) | Current price (+ plain disclosure if converted) |
 | Card, `price_old > price` | Struck old price + badge | Unchanged |
 | Card, `price_old <= price` | Struck `price_old`, no badge | No struck price, no badge |
@@ -195,8 +200,8 @@ Write paths (exact):
 
 1. **Pattern.** In `MantineListingContactPriceInfo` add `priceOld?: string`. Inside the existing `<Stack gap="micro">`,
    render in this order:
-   - the main price, unchanged;
    - `{price.priceOld && <Text size="xs" c="dimmed" td="line-through">{price.priceOld}</Text>}`;
+   - the main price, unchanged;
    - the disclosure, with `td="line-through"` deleted and `size="xs" c="dimmed"` kept.
 
    No other change.
@@ -272,8 +277,8 @@ Write paths (exact):
   - all four GR-3d sides are non-zero.
 - **AC7 [R5]** Given the two critical-flow commands, run before and after, their pass/fail sets are equal apart from
   the new tests, which pass.
-- **AC8 [R7, R8, R9]** Given the pattern test (a)/(b), the old price is struck, sits between the main price and the
-  disclosure, and is absent when `priceOld` is not passed.
+- **AC8 [R7, R8, R9]** Given the pattern test (a)/(b), the old price is struck, comes before the main price in DOM
+  order and sits above it, the disclosure follows the main price, and is absent when `priceOld` is not passed.
 - **AC9 [R7, R8]** Given `ListingDetailView` source, `LazyListingContact` receives `priceOld` only under
   `isPriceReduced`. Given `Patterns/Mantine/ListingDetailView` → `PublicListing` (`isPriceReduced: true`,
   `displayPriceOld: 138000`), the contact card shows a struck "€138,000" under "€125,000".

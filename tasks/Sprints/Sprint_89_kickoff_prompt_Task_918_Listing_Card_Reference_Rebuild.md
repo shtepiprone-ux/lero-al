@@ -6,6 +6,12 @@
 > **Start gate.** Do not start until **912** (Sprint 88), **741 Revision 2** (Sprint 46) and **857** (Sprint 78) are
 > `APPROVED` and committed. All three edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
 > in `docs/backlog-archive.md`. If any is not archived as approved, return `BLOCKED — START GATE` and make no write.
+>
+> **Amended 2026-10-03 (917 review):** owner decision **D89-9**: the struck old price sits **above** the current price
+> everywhere, on the card, the listing-page price block, the contact card and the admin, through one shared
+> `MantineListingPrice`. **857 Revision 8** (R56) removed the listing card and the price from `ListingPreviewDialogView`,
+> so that dialog is no longer in this task. 857 stays a start gate because this task edits its `AdminListingsView` and
+> its listings route.
 > After the gate, re-read every line reference below against the tree. Where the tree differs, the tree wins; record
 > the difference.
 
@@ -34,16 +40,16 @@ No information or capability is lost (D89-1). The price colour rule applies on t
 |---|---|---|---|
 | F1 | FACT | `MantineListingCardPattern` (406 lines) owns both layouts. Grid: photo section with badges (top-left), overlay, photo count (bottom-right) and favorite slot (`:310-339`), then a `Stack p="sm"` with type label `xs dimmed`, title `h3 fw 600 size sm`, location with `MapPin`, the bordered feature row, the price (`fw 700 md brand`, old price `xs dimmed line-through` beside it), the original-price / per-m² row, and `footerActions` (`:341-389`). There is an optional `onContact` CTA section (`:391-403`). List: photo left with badges and photo count (`:183-205`); info column with a type label + inline favorite row, title, price block, features and a location + footer row (`:207-292`). | `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` |
 | F2 | FACT | `ListingCard` maps data in both branches: badges via `getBadges` (`:70-102`, closed statuses return early with only a status badge), conversion and `displayPriceOld` (`:117-130`), type label `` `${t(listing_type)} · ${t(property_type_*)}` `` (`:207`, `:296`), features via `getCardFeatures` + `ListingFeatureIcon` (`:162-165`, `:254-257`), per-m² string (`:167`, `:259`), and footer ID copy + date (`:174-186`, `:264-276`). | `src/modules/listings/components/ListingCard.tsx` |
-| F3 | FACT | `ListingFeatureIcon` maps `PresentationIcon` (`home, bed-double, bath, area, building, layers, calendar`) to `lucide-react` components. Consumers: `ListingCard`, `MantineListingCardPattern` (doc only), `ListingDetailView`, `ListingPreviewDialogView` (857), and its own Story. | `src/modules/listings/components/ListingFeatureIcon.tsx:1-12`; whole-`src` search for `ListingFeatureIcon` |
-| F4 | FACT | `ListingCard` consumers: `ListingsShellView.tsx:131` (grid) and `:148` (list), `FeaturedListingsView.tsx:94`, `LatestListingsView.tsx:66`, `RecentlyViewedGridView.tsx:70`, `SimilarListingsView.tsx:62`, `FavoritesShell.tsx:205`. `MantineListingCardPattern` is also rendered directly by `ListingPreviewDialogView` (857, `layout="list"`). | whole-`src` search for `<ListingCard` and `MantineListingCardPattern` |
+| F3 | FACT | `ListingFeatureIcon` maps `PresentationIcon` (`home, bed-double, bath, area, building, layers, calendar`) to `lucide-react` components. Consumers: `ListingCard`, `MantineListingCardPattern` (doc only), `ListingDetailView`, and its own Story (857 Revision 8 removed it from `ListingPreviewDialogView`; re-verify at I0). | `src/modules/listings/components/ListingFeatureIcon.tsx:1-12`; whole-`src` search for `ListingFeatureIcon` |
+| F4 | FACT | `ListingCard` consumers: `ListingsShellView.tsx:131` (grid) and `:148` (list), `FeaturedListingsView.tsx:94`, `LatestListingsView.tsx:66`, `RecentlyViewedGridView.tsx:70`, `SimilarListingsView.tsx:62`, `FavoritesShell.tsx:205`. No other file renders `MantineListingCardPattern` once 857 Revision 8 lands (R56 removes it from `ListingPreviewDialogView`; re-verify at I0). | whole-`src` search for `<ListingCard` and `MantineListingCardPattern` |
 | F5 | FACT | Theme keys used by this design exist: spacing `xs 8 · sm 12 · md 16 · lg 20` (`theme.ts:654-670`); fontSizes `xs 12 · sm 14 · md 16 · lg 18 · xl 20` (`:698-706`); radius `sm 4 · md 6` (`:674-679`); shadow `xs` (`:720`); colours `green`, `orange`, `sale`, `blueLight`, `purple`, `yellow`, `gray` (gray.0 `#f9fafb`, gray.1 `#f2f4f7`) (`colors:` line); `theme.other.iconSize` `standard 16 · decorative 24` (`:48-62`); Badge theme entry (`:1230+`, default `size sm` 12px/500, radius pill, variant light). | `src/design-system/mantine/theme.ts` |
 | F6 | FACT | `AppImage variant="listing"` frames at 4:3 (`AppImage.module.css:85-87`). The reference is 3:2. **Kept at 4:3** (preserve; LCP `sizes` hints and Sprint 74 width contracts depend on it). | that file |
 | F7 | FACT | The card CSS module carries Task 734's reserved N1 hits (4 `transition`, 8 hover `box-shadow`) and `.card { box-shadow: none }` (`MantineListingCardPattern.module.css:36-38, 85-92`). | that file |
 | F8 | FACT | `@solar-icons/react` 2.3.2: MIT, `"sideEffects": false`, peer `react >= 16.8`, per-style subpath imports (`@solar-icons/react/broken`, `/bold-duotone`, …), component names end in `Icon` (README). | `npm view @solar-icons/react` |
 | F9 | FACT | `MantineTooltip` opens as a bottom sheet below 640px through an `onClick={openDrawer}` wrapper around its children (`MantineTooltip.tsx:53-70`). Interactive nodes inside the card link stop navigation with `e.preventDefault(); e.stopPropagation()` (`FavoriteButton.tsx:72-73`, `MantineCopyIdButton.tsx:32-33`). | those files |
-| F10 | FACT | Stories rendering the card: `Patterns/Mantine/ListingCardPattern` (direct import, `skipCanvas` + `StoryPageGutter`, `:9,14,22,212`), `Mantine/Primitives/ListingCard` (`MantineStoryShell`, `:9,26`), `Patterns/Mantine/ListingCardTrack` (`StoryPageGutter`, `:7`), `Patterns/Mantine/ListingPreviewDialogView` (857, modal). `Mantine/Primitives/ListingFeatureIcon` (`MantineStoryShell`). `Mantine/Primitives/Badge` (`MantineStoryShell`; carries a `style` object at `:79`). `Patterns/Mantine/ListingDetailView` (default canvas; renders feature icons). | those files |
+| F10 | FACT | Stories rendering the card: `Patterns/Mantine/ListingCardPattern` (direct import, `skipCanvas` + `StoryPageGutter`, `:9,14,22,212`), `Mantine/Primitives/ListingCard` (`MantineStoryShell`, `:9,26`), `Patterns/Mantine/ListingCardTrack` (`StoryPageGutter`, `:7`). `Mantine/Primitives/ListingFeatureIcon` (`MantineStoryShell`). `Mantine/Primitives/Badge` (`MantineStoryShell`; carries a `style` object at `:79`). `Patterns/Mantine/ListingDetailView` (default canvas; renders feature icons). | those files |
 | F12 | FACT | The listing page renders the price in `brand` unconditionally twice: the detail block `<Text fw={700} size="xl" c="brand">` (`MantineListingDetailPattern.tsx:204`), which shows the struck `priceOld` beside it only when the view passes it (`ListingDetailView.tsx:289`, gated on `isPriceReduced`), and the contact card `<Text fw={700} size="xl" c="brand">` (`MantineListingContactPattern.tsx:153`), to which **912** adds `priceOld` below the price (D88-1 layout). Their Stories: `Patterns/Mantine/ListingDetailPattern` (`StoryPageGutter`, `:5, :268`) and `Patterns/Mantine/ListingContactPattern` (`StoryPageGutter`, `:9, :84`). Both patterns are `manifest:yes story:yes`. Their surface census (13 unmigrated nodes in `ListingDetailView`/`ListingContact`, owners listed, five filed as **913**) is in 912 §3.1. This task edits only the two pattern files, not those surfaces. | those files; 912 kickoff F4, F12, §3.1 |
-| F13 | FACT | Admin price surfaces, none of which reads `price_old`: `AdminListingsView.tsx:159` (table cell, `Text size="sm" fw={500}`) and `:292` (phone card), data from `src/app/admin/listings/page.tsx:60-61` (select without `price_old`); `ListingPreviewDialogView.tsx:143-148` (`MantineListingCardPattern layout="list"`, `data` without `priceOld`); `AdminDashboardRecentListings.tsx:146-148` (row, `Text size="sm" fw={500} c="gray.8"`) and `:213-215` (dialog), data from `src/modules/admin/dashboard/queries.ts:254` (select without `price_old`), `:368` (mapper) and `types.ts:86` (`RecentListingRow`). `/admin/listings/[id]/preview` computes `isPriceReduced` (`preview/page.tsx:77`) and renders `ListingDetailView`, so it is covered by the detail-pattern change. `AdminDashboardRecentListings` has 0 `className`, a manifest entry (`mantine-migration-scope.json:117`) and its own Story `Patterns/Mantine/AdminDashboardRecentListings`. `AdminListingsView`, `ListingPreviewDialogView` and the listings route are 857's uncommitted work at design time. | those files; `git status` |
+| F13 | FACT | Admin price surfaces, none of which reads `price_old`: `AdminListingsView.tsx:159` (table cell, `Text size="sm" fw={500}`) and `:292` (phone card), data from `src/app/admin/listings/page.tsx:60-61` (select without `price_old`); (`ListingPreviewDialogView` showed a price through the card pattern at design time; 857 Revision 8, R56, removes it, so it is not a price surface); `AdminDashboardRecentListings.tsx:146-148` (row, `Text size="sm" fw={500} c="gray.8"`) and `:213-215` (dialog), data from `src/modules/admin/dashboard/queries.ts:254` (select without `price_old`), `:368` (mapper) and `types.ts:86` (`RecentListingRow`). `/admin/listings/[id]/preview` computes `isPriceReduced` (`preview/page.tsx:77`) and renders `ListingDetailView`, so it is covered by the detail-pattern change. `AdminDashboardRecentListings` has 0 `className`, a manifest entry (`mantine-migration-scope.json:117`) and its own Story `Patterns/Mantine/AdminDashboardRecentListings`. `AdminListingsView`, `ListingPreviewDialogView` and the listings route are 857's uncommitted work at design time. | those files; `git status` |
 | F11 | FACT | No new i18n key is needed: the deal type uses `listing.sale` / `listing.rent` (existing `t(listing.listing_type)`), the tile label uses the existing `listing.property_type_*`, ID/date/per-m² keys already exist. `messages/*.json` are dirty with 857's work; **this task must not edit them**. If the executor finds a string is needed, return `BLOCKED — I18N` rather than edit a dirty locale file. | `ListingCard.tsx:207, 296`; `git status` |
 
 ### 3.2 GR-1 census (run at design time, re-run at I0)
@@ -61,14 +67,13 @@ components (library). Re-run the census after the change; every node must stay `
 **Admin and listing-page surfaces (R17, R18).** These files are edited only for the price colour / price block. After the start gate, run the census on each:
 
 ```powershell
-node.exe scriptscheck-surface-census.mjs --surface srccomponentsadminAdminListingsView.tsx
-node.exe scriptscheck-surface-census.mjs --surface srccomponentsadminListingPreviewDialogView.tsx
-node.exe scriptscheck-surface-census.mjs --surface srccomponentsadminAdminDashboardRecentListings.tsx
-node.exe scriptscheck-surface-census.mjs --surface srcdesign-systemmantinepatternsMantineListingDetailPattern.tsx
-node.exe scriptscheck-surface-census.mjs --surface srcdesign-systemmantinepatternsMantineListingContactPattern.tsx
+node.exe scripts\check-surface-census.mjs --surface src\components\admin\AdminListingsView.tsx
+node.exe scripts\check-surface-census.mjs --surface src\components\admin\AdminDashboardRecentListings.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineListingDetailPattern.tsx
+node.exe scripts\check-surface-census.mjs --surface src\design-system\mantine\patterns\MantineListingContactPattern.tsx
 ```
 
-At design time, `AdminDashboardRecentListings` is `manifest:yes` (`mantine-migration-scope.json:117`) with 0 `className` and its own Story. `AdminListingsView` and `ListingPreviewDialogView` are 857's, which enrols them with their own Stories. The two patterns are `manifest:yes story:yes` (912 §3.1). Paste each census into the session log and emit one `GR-1 CENSUS COMPLETE` receipt per surface. **If any node is unmigrated (no manifest entry and no Story of its own), return `BLOCKED — CLAUSE 16d` with the node list and make no write to that surface.**
+At design time, `AdminDashboardRecentListings` is `manifest:yes` (`mantine-migration-scope.json:117`) with 0 `className` and its own Story. `AdminListingsView` is 857's, which enrols it with its own Story. The two patterns are `manifest:yes story:yes` (912 §3.1). Paste each census into the session log and emit one `GR-1 CENSUS COMPLETE` receipt per surface. **If any node is unmigrated (no manifest entry and no Story of its own), return `BLOCKED — CLAUSE 16d` with the node list and make no write to that surface.**
 
 ### 3.3 Visual source map
 
@@ -96,7 +101,7 @@ At design time, `AdminDashboardRecentListings` is `manifest:yes` (`mantine-migra
 | Property-type tile | `ThemeIcon` theme entry (`theme.ts:1191-1220`), Mantine ThemeIcon | Mantine `ThemeIcon` (native) | **compose**: `ThemeIcon variant="filled" color="gray.1" c="brand.6" size="xl" radius="md"`, inside `MantineTooltip` | theme ThemeIcon `xl`, `iconSize.decorative` |
 | Tooltip on the tile | `MantineTooltip.tsx`, its Story | `Patterns/Mantine/MantineTooltip` (verify the exact title at I0) | **reuse**; **extend** only if §10.5's touch behaviour needs a prop, with its Story | — |
 | Feature icons | `ListingFeatureIcon.tsx` + Story | `Mantine/Primitives/ListingFeatureIcon` | **extend**: the same single map moves to Solar `broken` (D89-4, §26) | `iconSize.standard` |
-| Price block (card footer, admin cells) | card price markup (F1), `AdminListingsView.tsx:159,292`, `AdminDashboardRecentListings.tsx:146,213`, the detail and contact patterns (F12) | none: the same price/old-price markup is written separately in each place | **create canonical** `MantineListingPrice` (`src/design-system/mantine/patterns/MantineListingPrice.tsx`), the single owner of the D89-7 colour rule: props `price: string`, `priceOld?: string`, `size: 'sm' \| 'lg'`. Renders `Stack gap={0}`: [old price `fz="xs"` `c="dimmed"` `td="line-through"`] above the current price `fw={700}` `fz={size}`, `c="brand"` when `priceOld` is present, default text colour otherwise. Own Story `Patterns/Mantine/ListingPrice` with both states at both sizes; enrolled in `scripts/mantine-migration-scope.json`. Consumed by the card footer and the four admin sites. The detail and contact patterns keep their owner-decided layouts (old price beside / below, D88-1) and apply the same predicate to their price colour (R17). | theme `brand`, `fontSizes.sm/lg/xs` |
+| Price block (card footer, admin cells) | card price markup (F1), `AdminListingsView.tsx:159,292`, `AdminDashboardRecentListings.tsx:146,213`, the detail and contact patterns (F12) | none: the same price/old-price markup is written separately in each place | **create canonical** `MantineListingPrice` (`src/design-system/mantine/patterns/MantineListingPrice.tsx`), the single owner of the D89-7 colour rule: props `price: string`, `priceOld?: string`, `size: 'sm' \| 'lg' \| 'xl'`, `trailing?: ReactNode`. Renders `Stack gap={0}`: [old price `fz="xs"` `c="dimmed"` `td="line-through"`] above a `Group gap="sm" align="baseline" wrap="wrap"` holding the current price `fw={700}` `fz={size}` (`c="brand"` when `priceOld` is present, default text colour otherwise) and `trailing` (for example the detail page's per-m² text). Own Story `Patterns/Mantine/ListingPrice` with both states at all three sizes and one `trailing` row; enrolled in `scripts/mantine-migration-scope.json`. Consumed by the card footer (`lg`), the listing-page price block and the contact card (`xl`, D89-9), and the four admin sites (`sm`). | theme `brand`, `fontSizes.sm/lg/xs` |
 | Tile icons per property type | — (no map exists) | `ListingFeatureIcon`'s file | **extend**: add a `PropertyTypeIcon` export in the same file (one owner for listing icons), Solar `bold-duotone`, keyed by the `property_type` enum | `iconSize.decorative`; Story row added to `ListingFeatureIcon.stories.tsx` |
 
 `GR-0 CANONICAL REUSE PREFLIGHT — request: listing card restyle (both layouts) + feature chips + property-type tile + Solar icons + one price block for card and admin (MantineListingPrice, CREATE after the search found the same markup written separately in five places and no shared owner); semantic queries: listing card, feature row, chip, badge variant, icon tile, ThemeIcon, tooltip, icon map; inspected candidates: MantineListingCardPattern.tsx + patterns-mantine-listingcardpattern--default, ListingCard.tsx + mantine-primitives-listingcard--default, ListingCardTrack.stories.tsx, Badge.stories.tsx + theme Badge entry, theme ThemeIcon entry, MantineTooltip.tsx, ListingFeatureIcon.tsx + mantine-primitives-listingfeatureicon--default; decision: EXTEND (+ CREATE for the price block only); selected canonical owner: src/design-system/mantine/patterns/MantineListingCardPattern.tsx (+ ListingFeatureIcon.tsx for icons, Badge Story for the chip state, new MantineListingPrice for the price block); Mantine/TailAdmin token path: src/design-system/mantine/theme.ts keys in §3.5, docs/tailadmin-style-reference.md §6w; new hardcoded visual values: NONE; rationale: every part maps to an existing theme key or native Mantine prop, and each owner already has its canonical Story.`
@@ -115,7 +120,9 @@ No row reaches 24px, so no breakpoint step is required. Each value is the same a
 | Address | label | 14 | 14 | 14 | 14 | `fz="sm"` `c="dimmed"` | §6w 14/400 |
 | Feature chip text | label | 12 | 12 | 12 | 12 | theme Badge `sm` | §6w 12; theme Badge entry |
 | Photo badges | label | 12 | 12 | 12 | 12 | theme Badge `sm` | theme Badge entry |
-| Current price | emphasized body | 18 | 18 | 18 | 18 | `fz="lg"` `fw={700}` | D89-3 (large bold) |
+| Current price (card footer) | emphasized body | 18 | 18 | 18 | 18 | `MantineListingPrice size="lg"` → `fz="lg"` `fw={700}` | D89-3 (large bold) |
+| Current price (listing page block, contact card) | emphasized body | 20 | 20 | 20 | 20 | `MantineListingPrice size="xl"` → `fz="xl"` `fw={700}` | unchanged from today (`MantineListingDetailPattern.tsx:204`, `MantineListingContactPattern.tsx:153`) |
+| Current price (admin cells) | body | 14 | 14 | 14 | 14 | `MantineListingPrice size="sm"` → `fz="sm"` `fw={700}` | admin cell body size today (`AdminListingsView.tsx:159`) |
 | Old price (struck) | label | 12 | 12 | 12 | 12 | `fz="xs"` `c="dimmed"` `td="line-through"` | D89-3 (small grey) |
 | Per-m² / original price | label | 12 | 12 | 12 | 12 | `fz="xs"` `c="dimmed"` | current card |
 | ID / date | label | 12 | 12 | 12 | 12 | `fz="xs"` `c="dimmed"` | current card |
@@ -148,8 +155,8 @@ pin.
 | R13 | GR-3a, 16c | The Stories in §3.4 are extended with every state in §13.3. The only new Story file is `ListingPrice.stories.tsx` for the new pattern. The Badge Story's `style` object (`:79`) is replaced with Mantine props, because the Story is changed (GR-3b). | P0 | Story diff; GR receipts | Confirmed |
 | R14 | GR-0 | No new raw px/rem/hex, inline `style`, or new CSS rule with a literal value. Rules the restyle makes dead in `MantineListingCardPattern.module.css` (and `ListingCard.module.css` `.featureIcon`, if unused) are deleted. Task 734's reserved hits in that file that this task deletes are listed in the session log; they are not re-added elsewhere. | P0 | `check:design-tokens` + diff | Confirmed |
 | R15 | Q4, critical flow | `ListingCard.smoke.test.tsx` and `MantineListingCardPattern.smoke.test.tsx` assert the new structure: deal badge, tile `aria-label`, chips, price block both states, ID/date, and every R12 item. Both are red against the pre-change tree first (two-armed). | P0 | vitest transcripts | Confirmed |
-| R17 | D89-7 | On the listing page, the price in `MantineListingDetailPattern` and `MantineListingContactPattern` uses `c="brand"` only when the pattern receives `priceOld` (the reduced case), and the default text colour otherwise. Sizes, layouts and every other line are unchanged. | P0 | computed colour in both Stories, both states; smoke assertion | Confirmed |
-| R18 | D89-8 | Admin: `src/app/admin/listings/page.tsx` and `src/modules/admin/dashboard/queries.ts:254` select `price_old`; `RecentListingRow` and the listings row type carry `price_old: number \| null`. `AdminListingsView` (cell and phone card) and `AdminDashboardRecentListings` (row and dialog) render `MantineListingPrice size="sm"`; `ListingPreviewDialogView` passes `priceOld` to the card pattern. `priceOld` is passed only when `isPriceReduced(price, price_old)` holds. | P0 | Stories + smoke assertions | Confirmed |
+| R17 | D89-7, D89-9 | On the listing page, `MantineListingDetailPattern` (`:203-217`) and `MantineListingContactPattern` (`:152-160`, after 912) render their price through `MantineListingPrice size="xl"`: the struck old price above, the current price dark or coral. The detail page passes its per-m² text as `trailing`. The original-currency line stays below the price in both. Nothing else in either pattern changes. | P0 | computed colour + box order in both Stories, both states; smoke assertion | Confirmed |
+| R18 | D89-8 | Admin: `src/app/admin/listings/page.tsx` and `src/modules/admin/dashboard/queries.ts:254` select `price_old`; `RecentListingRow` and the listings row type carry `price_old: number \| null`. `AdminListingsView` (cell and phone card) and `AdminDashboardRecentListings` (row and dialog) render `MantineListingPrice size="sm"` (`ListingPreviewDialogView` shows no price after 857 Revision 8). `priceOld` is passed only when `isPriceReduced(price, price_old)` holds. | P0 | Stories + smoke assertions | Confirmed |
 | R19 | GR-0 | One predicate: `isPriceReduced(price, priceOld)` (`price_old != null && price < price_old`) is exported from `src/modules/listings/domain/listingSemanticHelpers.ts` with a unit test. `ListingCard`, `[slug]/page.tsx:221`, `preview/page.tsx:77` and the admin mappers use it. Inline copies of the predicate are removed. | P1 | grep + unit test | Confirmed |
 | R16 | §10.5 | Tapping the tile below 640px opens the tooltip sheet and does not navigate. At or above 640px, hover/focus shows the tooltip and a click on the tile does not navigate. | P1 | rendered check at 390 and 1440 | Confirmed |
 
@@ -193,8 +200,8 @@ pin.
 - Tests: `src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx`, `MantineListingCardPattern.smoke.test.tsx`
   (locate it at I0)
 - `src/design-system/mantine/patterns/MantineListingPrice.tsx` (new) + `src/stories/patterns/mantine/ListingPrice.stories.tsx` (new) + `scripts/mantine-migration-scope.json` entry + `patterns/index.ts` export
-- `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` and `MantineListingContactPattern.tsx`: the price `Text` colour only (R17); their Stories show a reduced and a non-reduced price (extend if a state is missing after 912)
-- Admin (R18): `src/app/admin/listings/page.tsx`, `src/components/admin/AdminListingsView.tsx`, `src/components/admin/ListingPreviewDialogView.tsx`, `src/components/admin/AdminDashboardRecentListings.tsx`, `src/modules/admin/dashboard/queries.ts`, `src/modules/admin/dashboard/types.ts`, and the Stories `AdminListingsView.stories.tsx`, `ListingPreviewDialogView.stories.tsx`, `AdminDashboardRecentListings.stories.tsx` (a reduced fixture row in each)
+- `src/design-system/mantine/patterns/MantineListingDetailPattern.tsx` and `MantineListingContactPattern.tsx`: the price block only, now `MantineListingPrice size="xl"` (R17); their Stories show a reduced and a non-reduced price (extend if a state is missing after 912)
+- Admin (R18): `src/app/admin/listings/page.tsx`, `src/components/admin/AdminListingsView.tsx`, `src/components/admin/AdminDashboardRecentListings.tsx`, `src/modules/admin/dashboard/queries.ts`, `src/modules/admin/dashboard/types.ts`, and the Stories `AdminListingsView.stories.tsx`, `AdminDashboardRecentListings.stories.tsx` (a reduced fixture row in each)
 - `src/modules/listings/domain/listingSemanticHelpers.ts` (+ its test), `src/app/[locale]/listings/[slug]/page.tsx:221` and `src/app/admin/listings/[id]/preview/page.tsx:77` (predicate only, R19)
 - `docs/component-catalog.md` row for the card if it describes the old anatomy
 - `docs/backlog.md` (state line) and the session log
@@ -217,7 +224,7 @@ pin.
 | List row | type text + favorite row; price above features; location + ID/date row | badges on the photo; head row tile + title/address + inline favorite; chips; footer row (price block left, ID/date right) |
 | Icons | lucide | Solar (`broken` features, `bold-duotone` tile; photo-count camera Solar too) |
 | Detail page / admin preview feature icons | lucide | Solar (same map) |
-| Listing page price (detail block, contact card) | always `brand` | dark when not reduced, `brand` when reduced (D89-7) |
+| Listing page price (detail block, contact card) | always `brand`; detail: old price beside, contact: old price below (912) | `MantineListingPrice size="xl"`: old price above, dark when not reduced, `brand` when reduced (D89-7, D89-9) |
 | Admin prices (table, phone card, preview dialog, dashboard row and dialog) | dark `fw 500`, `price_old` not loaded | `MantineListingPrice size="sm"`: dark, or coral with the struck old price above (D89-8) |
 | Closed / archived / expired | status badge + overlay; dimming | unchanged |
 
@@ -248,8 +255,8 @@ pin.
    `scripts/mantine-migration-scope.json`; `isPriceReduced` + its unit test in `listingSemanticHelpers.ts` (R19).
 4. `Badge.stories.tsx`: add the chip state and the `white` variant row; replace the `:79` `style` object with Mantine
    props.
-5. `MantineListingCardPattern`: rebuild both layouts per §3.3/§3.4/§3.5. New props, all optional so that 857's dialog
-   keeps compiling:
+5. `MantineListingCardPattern`: rebuild both layouts per §3.3/§3.4/§3.5. New props, all optional so that existing
+   callers keep compiling:
    - `dealBadge?: MantineListingCardBadge` (or the deal badge as the first entry of `badges` — pick one and document
      it);
    - `typeTile?: { icon: ReactNode; label: string }`;
@@ -263,9 +270,9 @@ pin.
 7. `ListingCard.tsx`: map the new props. Deal badge: `t(listing.listing_type)`, `sale` → `orange`, `rent` → `green`,
    only for open listings. Tile: `PropertyTypeIcon` + `t(property_type_*)`. Leave the price predicate exactly as 912
    left it.
-8. Listing page (R17): the price colour in `MantineListingDetailPattern` and `MantineListingContactPattern`; their
-   Stories show both states.
-9. Admin (R18): queries and types first, then `AdminListingsView`, `ListingPreviewDialogView`,
+8. Listing page (R17): `MantineListingDetailPattern` and `MantineListingContactPattern` render `MantineListingPrice
+   size="xl"` (old price above, D89-9); their Stories show both states.
+9. Admin (R18): queries and types first, then `AdminListingsView` and
    `AdminDashboardRecentListings` and their Stories (a reduced fixture row each).
 10. Tests (R15, plus an `isPriceReduced` unit test and an admin smoke assertion for a reduced row), two-armed.
 
@@ -352,8 +359,9 @@ same parts in a row. Clicking the card body opens the listing.
   current price's computed colour equals the theme primary `brand` shade (shade 7, `theme.ts:608`). Given no reduction, no struck element exists and the price colour
   is the default text colour.
 - **AC13 [R17]** Given the `ListingDetailPattern` and `ListingContactPattern` Stories, when a state passes `priceOld`,
-  then the main price's computed colour equals the theme primary `brand` shade; when it does not, the colour is the
-  default text colour and differs from it.
+  then the struck old price's box sits above the main price's box and the main price's computed colour equals the theme
+  primary `brand` shade; when it does not, no struck element exists and the colour is the default text colour. The
+  original-currency line, when present, sits below the main price.
 - **AC14 [R18]** Given a listing with `price_old > price`, when the admin listings table, its phone card, the preview
   dialog and the dashboard's recent-listings row and dialog render it, then each shows the struck old price above a
   coral current price; given `price_old` null, each shows a dark price and no struck element.
@@ -421,7 +429,6 @@ owner matrix.`
 | `Mantine/Primitives/ListingFeatureIcon` → `Default` | every feature icon + 10 tile icons | `n/a: MantineStoryShell primitive` |
 | `Mantine/Primitives/Badge` → `Default` | + chip state, + white variant | `n/a: MantineStoryShell primitive` |
 | `Patterns/Mantine/ListingDetailView` → `PublicListing` (blast radius: icons) | unchanged states | `n/a: default canvas` (View root has no page gutter, `ListingDetailView.tsx:57`) |
-| `Patterns/Mantine/ListingPreviewDialogView` → `Active` (blast radius: list card + icons) | unchanged states | `n/a: overlay-only` |
 | `Patterns/Mantine/ListingPrice` → `Default` (new) | sm and lg × reduced and not reduced | `n/a: default canvas` unless the file uses `skipCanvas`; then `StoryPageGutter all` |
 | `Patterns/Mantine/ListingDetailPattern` → `Default` (R17) | reduced + non-reduced price | **profile present** (`ListingDetailPattern.stories.tsx:268`) |
 | `Patterns/Mantine/ListingContactPattern` → `Default` (R17) | reduced + non-reduced price | **profile present** (`ListingContactPattern.stories.tsx:84`) |
@@ -431,7 +438,7 @@ owner matrix.`
 
 Receipts per changed or matrix Story:
 - **GR-3, GR-3b, GR-3c, GR-3d** for every row above;
-- **GR-3e** for `ListingPreviewDialogView` (popup);
+- **GR-3e** for the `AdminDashboardRecentListings` dialog (popup);
 - **GR-3f**: not applicable unless a circular element changes. The favorite button is unchanged; the tile is a rounded
   square. If the photo-count or another circle changes, emit GR-3f.
 
@@ -446,9 +453,8 @@ Receipts per changed or matrix Story:
 | O89-5 | `ListingFeatureIcon` → `Default` | uk | 1440 |
 | O89-6 | `Badge` → `Default` | uk | 390, 1440 |
 | O89-7 | `ListingDetailView` → `PublicListing` | uk | 390, 1440 |
-| O89-8 | `ListingPreviewDialogView` → `Active` | uk | 390, 1440 |
 | O89-10 | `ListingPrice` → `Default`; `ListingDetailPattern` → `Default`; `ListingContactPattern` → `Default` | uk | 390, 1440 |
-| O89-11 | `AdminListingsView`, `AdminDashboardRecentListings` (reduced row + dialog), `ListingPreviewDialogView` → `Active` with a reduced listing | uk | 390, 1440 |
+| O89-11 | `AdminListingsView`, `AdminDashboardRecentListings` (reduced row + dialog) | uk | 390, 1440 |
 | O89-9 | live `/uk/listings` grid and list (after deploy) | uk | 390, 1440 |
 
 The owner records each tuple accepted or returned. `screenshots:assert` is not used.

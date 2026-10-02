@@ -3,9 +3,8 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`NEEDS REVISION` — review 4, 2026-10-02. Revisions 1–3 (§16–§18) are verified except R31. Execute §19
-(Revision 4) only: `AgentStatisticsView` shows cards below 1024 and merges its two date columns (owner decision §19.1),
-`MantineDataTableToCards` gains `cardsBelow="lg"`, and the receipts owed from Revision 3.**
+`PARTIALLY VERIFIED` — review 5, 2026-10-02 (§20). Revisions 1–4 are verified in source and by Opus measurement. No
+executor work remains; the owner's visual review of O78-12 (§19.7, 70 tuples) is owed before approval.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -967,3 +966,35 @@ Added rows:
 | `Mantine/Primitives/Table` `CardsBelowLg` × sq × 1024 | 1 |
 
 **70 tuples.** Opus re-measures every Story in the matrix (GR-3b/3c/3d and §7.3) before the owner sees it.
+
+---
+
+## 20. Review 5 — `PARTIALLY VERIFIED`, 2026-10-02: implementation verified, owner matrix O78-12 owed
+
+No executor work remains. The only open criterion is the owner's visual review of O78-12 (§19.7, 70 tuples).
+
+**Verified by Opus:**
+- **Source.** R32 adds a `'lg'` branch that is the same CSS switch as `'md'`; `'sm'` and `'md'` are untouched. R33's
+  columns are title · status · dates · counts · actions, with `cardsBelow="lg"` and five `role="group"` labels, and
+  the card config is unchanged. R34 is a comment-only change. `agt10_col_dates` is in all four locales. No live
+  caller remains for any of the 15 removed `admin.listings.*` keys.
+- **Gates.** Every `-r4` gate exits 0, except the census with its four calibration FAIL lines.
+  - `npm run test` timed out on an overloaded machine: an unrelated `node.exe`, PID 39052, has run since 30.09.
+  - The sequential full run, `94c`, shows exactly the 4 known failures (790).
+- **Independent measurement.** `100-opus-review5-matrix.{mjs,json}` and `100-opus-review5-summary.txt`, `win32`
+  v22.22.3, `storybook-static` built after the last source change. It covers every matrix Story at
+  320/390/768/1024/1440 × sq/uk, plus `AgentStatisticsView` at 1024/1280/1440 in en/it, plus the Table primitive at
+  700/1000/1023. Results:
+  - **Fit.** No document overflow and no table scroll in any of the 247 cells.
+  - **`AgentStatisticsView`.** It shows cards below 1024. From 1024 the table sits on the production card (934/1190/1350) with 24/24 insets in all four locales.
+  - **Table primitive.** `CardsBelowLg` shows cards to 1023 and the table at 1024. `CardsBelowMd` and `Default` are unchanged.
+  - **Admin frame (GR-3d).** Every admin Story's frame gutter is 24/24/24/24, or 32 on all sides from 1024 for
+    `responsive`. Content sits flush inside the frame, and the navbar is 240 from 1024.
+  - **Headings (GR-3c).** No heading exceeds 20px below 640.
+  - **Dialogs.** The four dialog sources and Stories are byte-identical to their `58-hash-object-r2.txt` hashes,
+    measured in review 2.
+- **NOTE (no action).** AC20's "every `[aria-label]` has `role=group`" was over-broad wording by Opus. The
+  `<time aria-label>` of the shared `RelativeTime` maps to the ARIA `time` role, which allows an author name.
+
+**Next:** the owner reviews the 70 tuples of §19.7. On acceptance, Opus approves 857 and archives it. On a return,
+Opus writes the next revision section.

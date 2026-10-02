@@ -1,0 +1,9242 @@
+{
+ "platform": "win32 v22.22.3",
+ "rows": [
+  {
+   "id": "adminlistingsview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--visible-filter",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 1,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--hidden-eligible",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 5,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminlistingsview--paginated",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1136,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--active",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--sold-status-actions",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--delete-confirm",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 164,
+    "r": 164,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 292,
+    "r": 292,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "listingpreviewdialogview--premium",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 440,
+    "l": 500,
+    "r": 500,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--not-premium",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--premium",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 320,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 390,
+    "l": 0,
+    "r": 0,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 194,
+    "r": 194,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 322,
+    "r": 322,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "premiumdialogview--custom-date",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 0,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "dlg": {
+    "w": 380,
+    "l": 530,
+    "r": 530,
+    "overflow": false
+   },
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Përdorues",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Користувач",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 736,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Përdorues",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 736,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Користувач",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1152,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Përdorues",
+      "Statusi",
+      "Data",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserstable--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1152,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Користувач",
+      "Статус",
+      "Дата",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri i ofruesi",
+      "Prioriteti",
+      "Mënyra",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Назва постачал",
+      "Пріоритет",
+      "Режим",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri i ofruesi",
+      "Prioriteti",
+      "Mënyra",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Назва постачал",
+      "Пріоритет",
+      "Режим",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri i ofruesi",
+      "Prioriteti",
+      "Mënyra",
+      "Shënime",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Назва постачал",
+      "Пріоритет",
+      "Режим",
+      "Примітки",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Titulli",
+      "Statusi",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Заголовок",
+      "Статус",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Titulli",
+      "Statusi",
+      "Përditësuar",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Заголовок",
+      "Статус",
+      "Оновлено",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     152,
+     null,
+     392
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 832,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Titulli",
+      "Statusi",
+      "Përditësuar",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpagesview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     152,
+     null,
+     392
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 832,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Заголовок",
+      "Статус",
+      "Оновлено",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "a:-",
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminreportsview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      "Оновлено",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrenciesview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      "Оновлено",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:20"
+   ],
+   "big": [
+    "H1:20:Paneli im",
+    "P:20:103",
+    "P:20:9",
+    "P:20:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:20:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     16,
+     16,
+     37,
+     16
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:20"
+   ],
+   "big": [
+    "H1:20:Моя панель",
+    "P:20:103",
+    "P:20:9",
+    "P:20:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:20:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     16,
+     16,
+     37,
+     16
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:20"
+   ],
+   "big": [
+    "H1:20:Paneli im",
+    "P:20:103",
+    "P:20:9",
+    "P:20:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:20:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     16,
+     16,
+     37,
+     16
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:20"
+   ],
+   "big": [
+    "H1:20:Моя панель",
+    "P:20:103",
+    "P:20:9",
+    "P:20:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:20:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     16,
+     16,
+     37,
+     16
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Paneli im",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Моя панель",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 19,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Paneli im",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 934,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktiv",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Моя панель",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 934,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники акти",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Paneli im",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1350,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktiv",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Моя панель",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1350,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники акти",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admininquiriesview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     96,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     96,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     112,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     112,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     528,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpermissionsview--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [
+    "H2:16"
+   ],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     528,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminuserprofileview--view",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20",
+    "H2:16"
+   ],
+   "big": [
+    "H1:20:Arben Krasniqi"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 3,
+   "aria": []
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 720,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      "Оновлено",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Kodi",
+      "Emri (Anglisht",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "admincurrencytabs--default",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     88,
+     null,
+     328
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 960,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Код",
+      "Назва (Англійс",
+      "Активна",
+      "Оновлено",
+      ""
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": [
+    "button:-"
+   ]
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20"
+   ],
+   "big": [
+    "H1:20:Menaxhimi i Valutave"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20"
+   ],
+   "big": [
+    "H1:20:Menaxhimi i Valutave"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20"
+   ],
+   "big": [
+    "H1:20:Управління валютами"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 320,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 20,
+   "headings": [
+    "H1:20"
+   ],
+   "big": [
+    "H1:20:Управління валютами"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 390,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Menaxhimi i Valutave"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Управління валютами"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 768,
+    "mainLeft": 0,
+    "pad": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "contentFromFrame": [
+     24,
+     24,
+     24,
+     24
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     0
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Menaxhimi i Valutave"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Menaxhimi i Valutave"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Управління валютами"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "adminpageframe--shell",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 24,
+   "headings": [
+    "H1:24"
+   ],
+   "big": [
+    "H1:24:Управління валютами"
+   ],
+   "gutter": {
+    "kind": "shell",
+    "navW": 240,
+    "mainLeft": 0,
+    "pad": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "contentFromFrame": [
+     32,
+     32,
+     32,
+     32
+    ],
+    "frameFromMain": [
+     72,
+     0,
+     null,
+     240
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 320,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     50,
+     37,
+     37,
+     37
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 320,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     50,
+     37,
+     37,
+     37
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 390,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     50,
+     37,
+     37,
+     37
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 390,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     50,
+     37,
+     37,
+     37
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 768,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     83,
+     70,
+     70,
+     70
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 768,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     83,
+     70,
+     70,
+     70
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1024,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 926,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1024,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 926,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Назва",
+      "Статус",
+      "Роль",
+      "Дата реєстраці"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1440,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1342,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1440,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1342,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Назва",
+      "Статус",
+      "Роль",
+      "Дата реєстраці"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Paneli im",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Aktiviteti · 30 ditët e fundit",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1190,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktiv",
+      "Veprime"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "en",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:My dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Activity · last 30 days",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1190,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity count",
+      "Actions"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "uk",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:Моя панель",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Активність · останніх 30 днів",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1190,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники акти",
+      "Дії"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1280,
+   "l": "it",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:La mia dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Attività · ultimi 30 giorni",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1190,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attiv",
+      "Azioni"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "en",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:My dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Activity · last 30 days",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 934,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity count",
+      "Actions"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "en",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:My dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Activity · last 30 days",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1350,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity count",
+      "Actions"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1024,
+   "l": "it",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:La mia dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Attività · ultimi 30 giorni",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 934,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attiv",
+      "Azioni"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "agentstatisticsview--default",
+   "w": 1440,
+   "l": "it",
+   "overflowX": false,
+   "maxFs": 30,
+   "headings": [
+    "H1:24",
+    "H2:20"
+   ],
+   "big": [
+    "H1:24:La mia dashboard",
+    "P:30:103",
+    "P:30:9",
+    "P:30:3",
+    "H2:20:Attività · ultimi 30 giorni",
+    "P:30:12"
+   ],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     24,
+     24,
+     45,
+     24
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 1350,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attiv",
+      "Azioni"
+     ]
+    }
+   ],
+   "cardsVisible": 9,
+   "aria": [
+    "div:img",
+    "div:group",
+    "time:-"
+   ]
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1000,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     83,
+     70,
+     70,
+     70
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 700,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     82,
+     53,
+     69,
+     53
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1023,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     83,
+     70,
+     70,
+     70
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 700,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 16,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     82,
+     53,
+     69,
+     53
+    ]
+   },
+   "dlg": null,
+   "tables": [],
+   "cardsVisible": 4,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 1000,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 902,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 1023,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 925,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 700,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     62,
+     57,
+     626,
+     57
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 636,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 1000,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 902,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  },
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 1023,
+   "l": "sq",
+   "overflowX": false,
+   "maxFs": 14,
+   "headings": [],
+   "big": [],
+   "gutter": {
+    "kind": "noshell",
+    "trbl": [
+     63,
+     74,
+     625,
+     74
+    ]
+   },
+   "dlg": null,
+   "tables": [
+    {
+     "card": 925,
+     "scroll": 0,
+     "insL": 24,
+     "insR": 24,
+     "heads": [
+      "Emri",
+      "Statusi",
+      "Roli",
+      "Regjistruar"
+     ]
+    }
+   ],
+   "cardsVisible": 0,
+   "aria": []
+  }
+ ]
+}

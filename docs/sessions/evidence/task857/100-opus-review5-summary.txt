@@ -1,0 +1,247 @@
+adminlistingsview--default                  390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards5 
+adminlistingsview--default                  320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards5 
+adminlistingsview--default                  320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards5 
+adminlistingsview--default                  390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards5 
+adminlistingsview--default                  768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--default                  768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--default                 1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--default                 1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--default                 1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--default                 1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--visible-filter           320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards1 
+adminlistingsview--visible-filter           320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards1 
+adminlistingsview--visible-filter           390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards1 
+adminlistingsview--visible-filter           768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--visible-filter           390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards1 
+adminlistingsview--visible-filter           768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--visible-filter          1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--visible-filter          1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--visible-filter          1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--visible-filter          1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--hidden-eligible          320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards1 
+adminlistingsview--hidden-eligible          320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards1 
+adminlistingsview--hidden-eligible          390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards1 
+adminlistingsview--hidden-eligible          390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards1 
+adminlistingsview--hidden-eligible          768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--hidden-eligible          768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--hidden-eligible         1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--hidden-eligible         1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--hidden-eligible         1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--hidden-eligible         1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--paginated                320 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards5 
+adminlistingsview--paginated                320 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards5 
+adminlistingsview--paginated                390 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards5 
+adminlistingsview--paginated                390 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards5 
+adminlistingsview--paginated                768 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--paginated                768 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminlistingsview--paginated               1024 sq max16 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--paginated               1024 uk max16 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminlistingsview--paginated               1440 sq max16 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+adminlistingsview--paginated               1440 uk max16 H[] pad 32/32/32/32 c32/32/32/32 nav240 T1136 in24/24  cards0 aria button:-
+listingpreviewdialogview--active            320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--active            320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--active            390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--active            390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--active            768 sq max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--active            768 uk max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--active           1024 sq max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--active           1024 uk max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--active           1440 sq max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--active           1440 uk max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--sold-status-actions  320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--sold-status-actions  320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--sold-status-actions  390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--sold-status-actions  390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--sold-status-actions  768 sq max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--sold-status-actions  768 uk max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--sold-status-actions 1024 sq max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--sold-status-actions 1024 uk max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--sold-status-actions 1440 sq max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--sold-status-actions 1440 uk max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--delete-confirm    320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--delete-confirm    320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--delete-confirm    390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--delete-confirm    390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--delete-confirm    768 sq max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--delete-confirm    768 uk max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--delete-confirm   1024 sq max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--delete-confirm   1024 uk max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--delete-confirm   1440 sq max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--delete-confirm   1440 uk max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--premium           320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--premium           320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+listingpreviewdialogview--premium           390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--premium           390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+listingpreviewdialogview--premium           768 sq max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--premium           768 uk max0 H[] trbl 0/0/0/0  D440 l164 r164 cards0 
+listingpreviewdialogview--premium          1024 sq max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--premium          1024 uk max0 H[] trbl 0/0/0/0  D440 l292 r292 cards0 
+listingpreviewdialogview--premium          1440 sq max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+listingpreviewdialogview--premium          1440 uk max0 H[] trbl 0/0/0/0  D440 l500 r500 cards0 
+premiumdialogview--not-premium              320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--not-premium              320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--not-premium              390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--not-premium              390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--not-premium              768 sq max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--not-premium              768 uk max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--not-premium             1024 sq max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--not-premium             1024 uk max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--not-premium             1440 sq max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+premiumdialogview--not-premium             1440 uk max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+premiumdialogview--premium                  320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--premium                  320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--premium                  390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--premium                  390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--premium                  768 sq max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--premium                  768 uk max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--premium                 1024 sq max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--premium                 1024 uk max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--premium                 1440 sq max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+premiumdialogview--premium                 1440 uk max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+premiumdialogview--custom-date              320 sq max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--custom-date              320 uk max0 H[] trbl 0/0/0/0  D320 l0 r0 cards0 
+premiumdialogview--custom-date              390 sq max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--custom-date              390 uk max0 H[] trbl 0/0/0/0  D390 l0 r0 cards0 
+premiumdialogview--custom-date              768 sq max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--custom-date              768 uk max0 H[] trbl 0/0/0/0  D380 l194 r194 cards0 
+premiumdialogview--custom-date             1024 sq max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--custom-date             1024 uk max0 H[] trbl 0/0/0/0  D380 l322 r322 cards0 
+premiumdialogview--custom-date             1440 sq max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+premiumdialogview--custom-date             1440 uk max0 H[] trbl 0/0/0/0  D380 l530 r530 cards0 
+adminuserstable--default                    320 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards4 
+adminuserstable--default                    320 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards4 
+adminuserstable--default                    390 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards4 
+adminuserstable--default                    390 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards4 
+adminuserstable--default                    768 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminuserstable--default                    768 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminuserstable--default                   1024 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav240 T736 in24/24  cards0 
+adminuserstable--default                   1024 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav240 T736 in24/24  cards0 
+adminuserstable--default                   1440 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav240 T1152 in24/24  cards0 
+adminuserstable--default                   1440 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav240 T1152 in24/24  cards0 
+adminexchangeprovidersview--default         320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminexchangeprovidersview--default         320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminexchangeprovidersview--default         390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminexchangeprovidersview--default         390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminexchangeprovidersview--default         768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+adminexchangeprovidersview--default         768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+adminexchangeprovidersview--default        1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+adminexchangeprovidersview--default        1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+adminexchangeprovidersview--default        1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+adminexchangeprovidersview--default        1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+adminpagesview--default                     320 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminpagesview--default                     320 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminpagesview--default                     390 sq max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminpagesview--default                     390 uk max16 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminpagesview--default                     768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria a:-,button:-
+adminpagesview--default                     768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria a:-,button:-
+adminpagesview--default                    1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria a:-,button:-
+adminpagesview--default                    1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria a:-,button:-
+adminpagesview--default                    1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T832 in24/24  cards0 aria a:-,button:-
+adminpagesview--default                    1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T832 in24/24  cards0 aria a:-,button:-
+adminreportsview--default                   320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminreportsview--default                   320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+adminreportsview--default                   390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminreportsview--default                   390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+adminreportsview--default                   768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminreportsview--default                   768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 
+adminreportsview--default                  1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminreportsview--default                  1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 
+adminreportsview--default                  1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 
+adminreportsview--default                  1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 
+admincurrenciesview--default                320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+admincurrenciesview--default                320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+admincurrenciesview--default                390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+admincurrenciesview--default                390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+admincurrenciesview--default                768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+admincurrenciesview--default                768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+admincurrenciesview--default               1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+admincurrenciesview--default               1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+admincurrenciesview--default               1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+admincurrenciesview--default               1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+agentstatisticsview--default                320 sq max20 H[H1:20,H2:20] trbl 16/16/37/16   cards19 
+agentstatisticsview--default                320 uk max20 H[H1:20,H2:20] trbl 16/16/37/16   cards19 
+agentstatisticsview--default                390 sq max20 H[H1:20,H2:20] trbl 16/16/37/16   cards19 
+agentstatisticsview--default                390 uk max20 H[H1:20,H2:20] trbl 16/16/37/16   cards19 
+agentstatisticsview--default                768 sq max30 H[H1:24,H2:20] trbl 24/24/45/24   cards19 
+agentstatisticsview--default                768 uk max30 H[H1:24,H2:20] trbl 24/24/45/24   cards19 
+agentstatisticsview--default               1024 sq max30 H[H1:24,H2:20] trbl 24/24/45/24 T934 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1024 uk max30 H[H1:24,H2:20] trbl 24/24/45/24 T934 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1440 sq max30 H[H1:24,H2:20] trbl 24/24/45/24 T1350 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1440 uk max30 H[H1:24,H2:20] trbl 24/24/45/24 T1350 in24/24  cards9 aria div:img,div:group,time:-
+admininquiriesview--default                 320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+admininquiriesview--default                 320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+admininquiriesview--default                 390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+admininquiriesview--default                 390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+admininquiriesview--default                 768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+admininquiriesview--default                 768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+admininquiriesview--default                1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+admininquiriesview--default                1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+admininquiriesview--default                1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+admininquiriesview--default                1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminpermissionsview--default               320 sq max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminpermissionsview--default               320 uk max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminpermissionsview--default               390 sq max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminpermissionsview--default               390 uk max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminpermissionsview--default               768 sq max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminpermissionsview--default               768 uk max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminpermissionsview--default              1024 sq max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav240   cards0 
+adminpermissionsview--default              1024 uk max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav240   cards0 
+adminpermissionsview--default              1440 sq max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav240   cards0 
+adminpermissionsview--default              1440 uk max16 H[H2:16] pad 24/24/24/24 c24/24/24/24 nav240   cards0 
+adminuserprofileview--view                  320 sq max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminuserprofileview--view                  320 uk max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminuserprofileview--view                  390 sq max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminuserprofileview--view                  390 uk max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminuserprofileview--view                  768 sq max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminuserprofileview--view                  768 uk max20 H[H1:20,H2:16] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminuserprofileview--view                 1024 sq max20 H[H1:20,H2:16] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminuserprofileview--view                 1024 uk max20 H[H1:20,H2:16] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminuserprofileview--view                 1440 sq max20 H[H1:20,H2:16] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminuserprofileview--view                 1440 uk max20 H[H1:20,H2:16] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+admincurrencytabs--default                  320 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+admincurrencytabs--default                  320 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav320   cards3 
+admincurrencytabs--default                  390 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+admincurrencytabs--default                  390 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav390   cards3 
+admincurrencytabs--default                  768 sq max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+admincurrencytabs--default                  768 uk max14 H[] pad 24/24/24/24 c24/24/24/24 nav768 T720 in24/24  cards0 aria button:-
+admincurrencytabs--default                 1024 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+admincurrencytabs--default                 1024 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T720 in24/24  cards0 aria button:-
+admincurrencytabs--default                 1440 sq max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+admincurrencytabs--default                 1440 uk max14 H[] pad 32/32/32/32 c32/32/32/32 nav240 T960 in24/24  cards0 aria button:-
+adminpageframe--shell                       320 sq max20 H[H1:20] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminpageframe--shell                       390 sq max20 H[H1:20] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminpageframe--shell                       320 uk max20 H[H1:20] pad 24/24/24/24 c24/24/24/24 nav320   cards0 
+adminpageframe--shell                       390 uk max20 H[H1:20] pad 24/24/24/24 c24/24/24/24 nav390   cards0 
+adminpageframe--shell                       768 sq max24 H[H1:24] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminpageframe--shell                       768 uk max24 H[H1:24] pad 24/24/24/24 c24/24/24/24 nav768   cards0 
+adminpageframe--shell                      1024 sq max24 H[H1:24] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminpageframe--shell                      1440 sq max24 H[H1:24] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminpageframe--shell                      1024 uk max24 H[H1:24] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+adminpageframe--shell                      1440 uk max24 H[H1:24] pad 32/32/32/32 c32/32/32/32 nav240   cards0 
+mantine-primitives-table--cards-below-lg    320 sq max16 H[] trbl 50/37/37/37   cards4 
+mantine-primitives-table--cards-below-lg    320 uk max16 H[] trbl 50/37/37/37   cards4 
+mantine-primitives-table--cards-below-lg    390 sq max16 H[] trbl 50/37/37/37   cards4 
+mantine-primitives-table--cards-below-lg    390 uk max16 H[] trbl 50/37/37/37   cards4 
+mantine-primitives-table--cards-below-lg    768 sq max16 H[] trbl 83/70/70/70   cards4 
+mantine-primitives-table--cards-below-lg    768 uk max16 H[] trbl 83/70/70/70   cards4 
+mantine-primitives-table--cards-below-lg   1024 sq max14 H[] trbl 63/74/625/74 T926 in24/24  cards0 
+mantine-primitives-table--cards-below-lg   1024 uk max14 H[] trbl 63/74/625/74 T926 in24/24  cards0 
+mantine-primitives-table--cards-below-lg   1440 sq max14 H[] trbl 63/74/625/74 T1342 in24/24  cards0 
+mantine-primitives-table--cards-below-lg   1440 uk max14 H[] trbl 63/74/625/74 T1342 in24/24  cards0 
+agentstatisticsview--default               1280 sq max30 H[H1:24,H2:20] trbl 24/24/45/24 T1190 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1280 en max30 H[H1:24,H2:20] trbl 24/24/45/24 T1190 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1280 uk max30 H[H1:24,H2:20] trbl 24/24/45/24 T1190 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1280 it max30 H[H1:24,H2:20] trbl 24/24/45/24 T1190 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1024 en max30 H[H1:24,H2:20] trbl 24/24/45/24 T934 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1440 en max30 H[H1:24,H2:20] trbl 24/24/45/24 T1350 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1024 it max30 H[H1:24,H2:20] trbl 24/24/45/24 T934 in24/24  cards9 aria div:img,div:group,time:-
+agentstatisticsview--default               1440 it max30 H[H1:24,H2:20] trbl 24/24/45/24 T1350 in24/24  cards9 aria div:img,div:group,time:-
+mantine-primitives-table--cards-below-lg   1000 sq max16 H[] trbl 83/70/70/70   cards4 
+mantine-primitives-table--cards-below-lg    700 sq max16 H[] trbl 82/53/69/53   cards4 
+mantine-primitives-table--cards-below-lg   1023 sq max16 H[] trbl 83/70/70/70   cards4 
+mantine-primitives-table--cards-below-md    700 sq max16 H[] trbl 82/53/69/53   cards4 
+mantine-primitives-table--cards-below-md   1000 sq max14 H[] trbl 63/74/625/74 T902 in24/24  cards0 
+mantine-primitives-table--cards-below-md   1023 sq max14 H[] trbl 63/74/625/74 T925 in24/24  cards0 
+mantine-primitives-table--default           700 sq max14 H[] trbl 62/57/626/57 T636 in24/24  cards0 
+mantine-primitives-table--default          1000 sq max14 H[] trbl 63/74/625/74 T902 in24/24  cards0 
+mantine-primitives-table--default          1023 sq max14 H[] trbl 63/74/625/74 T925 in24/24  cards0 

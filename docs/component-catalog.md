@@ -108,12 +108,12 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminInput` | APPROVED | — | — | —  |
 | `AdminInquiriesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminLegalManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
-| `AdminListingsTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminListingsTable` | MIGRATED (Task 857: containers + `AdminListingsView` / `ListingPreviewDialogView` / `PremiumDialogView`) | ✅ | 🌐 | — |
 | `AdminLocaleSwitcher` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
 | `AdminHeader` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `AdminPageFrame` | MIGRATED (Task 857 R23: the shared admin page wrapper; `Patterns/Mantine/AdminPageFrame`) | ✅ | — | — |
 | `AdminPageHeader` | MIGRATED (Task 877: adapter over `MantineDashboardHeader`) | ✅ | — | — |
-| `AdminPageShell` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `AdminPagesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminPermissionsManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminPopularLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
@@ -124,7 +124,7 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminShell` | APPROVED | ✅ | — | —  |
 | `AdminSidebar` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminSupportManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `AdminTable` | MANUAL_REVIEW (Task 857 R20: `visibility` gains `'xxl'`; `cardsBelow="md"`) | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminUserAvatar` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminUserCreate` | NEEDS_STORY | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `AdminUserProfile` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |

@@ -228,6 +228,16 @@ evidence that a child component has a canonical visual contract.
    - a gutter written in the Story. `AdminExchangeProvidersView` reached the owner without a gutter in Task 877, and that is how this rule was
    hardened.
    Task 869 reached the owner with a 30px title and a 36px body heading at 320px, which is how this rule was born.
+9. **GR-3e (owner rule 2026-10-02).** Before handing the matrix to the owner, list every visible text button in every
+   matrix Story at 390 and 1440. Any two that share a row is `NEEDS REVISION`. Task 857 reached the owner with "View
+   listing" and "Open public page" side by side, which is how this rule was born.
+10. **GR-3f (owner rule 2026-10-02).** Before handing the matrix to the owner, take a device-scale-1 crop of every
+    changed circular control or indicator, scale it 10× with `image-rendering: pixelated`, and look at it. Any of these is
+    `NEEDS REVISION`:
+    - facets or a squared inner dot;
+    - a circle sized in one consumer instead of its canonical entry.
+    A computed `border-radius` proves nothing about the pixels. Task 857's 16px radio had a CSS-perfect radius and
+    reached the owner as a polygon.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
 composition consumes the proven source, return a non-approved decision. The correction is never a request for a

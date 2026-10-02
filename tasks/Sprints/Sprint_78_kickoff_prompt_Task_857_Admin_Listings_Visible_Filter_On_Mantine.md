@@ -3,8 +3,9 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`PARTIALLY VERIFIED` — review 5, 2026-10-02 (§20). Revisions 1–4 are verified in source and by Opus measurement. No
-executor work remains; the owner's visual review of O78-12 (§19.7, 70 tuples) is owed before approval.**
+`NEEDS REVISION` — owner return on O78-12, 2026-10-02 (§21). Revisions 1–4 are verified (§20). Execute §21
+(Revision 5) only: the dialog's text buttons stack one per row (new GR-3e), and the canonical radio becomes a 20px circle
+with a 10px dot in its theme entry (new GR-3f).**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -998,3 +999,125 @@ No executor work remains. The only open criterion is the owner's visual review o
 
 **Next:** the owner reviews the 70 tuples of §19.7. On acceptance, Opus approves 857 and archives it. On a return,
 Opus writes the next revision section.
+
+---
+
+## 21. Owner return on O78-12, 2026-10-02 → `NEEDS REVISION`, Revision 5 (text buttons stack; the canonical radio is round)
+
+The owner reviewed part of the §19.7 matrix and returned two rows. Every other row is still open: the owner has not yet
+accepted it.
+
+### 21.1 Owner returns and decisions, 2026-10-02 (verbatim)
+
+1. **`ListingPreviewDialogView`, all states:** *"я неодноразово вже казав, що текстові кнопки мають бути у стовпчик (
+   кожна у своєму рядку). Наразі я бачу. що другорядні текстові кнопки стоять … в одному рядку. Я маю на увазі кнопки
+   "View listing" і "Open public page". … Зроби … золоте правило!"* Opus asked about scope, and the owner chose *"Yes,
+   exactly that (Recommended)"*: a group of text buttons is a column, and a lone destructive text button in the footer
+   stays where §23.6 puts it.
+2. **`PremiumDialogView`, the radios:** *"Коло має бути колом … Наразі візуально я бачу багатокутник, а не коло."*
+   Then: *"radio buttons мають мати коло у компоненті, ніякого хардкоду лише в одному попапі, це має бути глобально
+   пофікшено"*. Opus asked about size, and the owner chose *"20px circle, 10px dot (Recommended)"*.
+
+**New rules (written by Opus, 2026-10-02):**
+- `docs/golden-rules.md` **GR-3e** "Text buttons stack" and **GR-3f** "A circle renders as a circle";
+- `docs/mantine-responsive-design-system.md` §23.6 (the text-button bullet);
+- `docs/tailadmin-style-reference.md` §6g (20px circle, 10px dot);
+- the three skills (`create-task`, `execute-task` items 8–9, `review-task` items 9–10).
+
+### 21.2 Measured causes (Opus)
+
+- **Text buttons.** `ListingPreviewDialogView.tsx` renders "View listing" and "Open public page" in
+  `<Group gap="xs" wrap="wrap">` (the `showDeleteConfirm ? … : (…)` branch near the end of the body), so they share a
+  row whenever they fit.
+- **Radio.** The `Radio` theme entry (`theme.ts`, `components.Radio`) pins `size: 'xs'`, which gives a 16px circle and,
+  through Mantine `--radio-icon-size-xs`, a **6px** dot. Opus's `deviceScaleFactor: 1` crops at 10× are in
+  `docs/sessions/evidence/task857/101-radio-variants.png` (script `101-radio-variants.mjs`; border variants in
+  `101b-radio-variants-borders.png`):
+  - the 16px ring with its 1px `gray-3` border shows facets;
+  - the 6px dot, and an 8px one, render as rounded squares;
+  - only 20px with a 10px dot reads as a circle.
+
+  The CSS is a perfect circle (`border-radius` 16px on a 16px box). Rasterisation is the problem. No other production file
+  renders a Mantine `Radio`, and the legacy `radio-group.tsx` has no consumer.
+
+### 21.3 New requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R36** | **`ListingPreviewDialogView` (GR-3e).** Replace the tertiary `<Group gap="xs" wrap="wrap">` with `<Stack gap="xs" align="flex-start">`. "View listing" comes first and "Open public page" second, one per row at every width. Both buttons keep their props and the `isListingHidden` condition. The footer's resting destructive Delete does not change (§23.6). Drop `Group` from the import if it is no longer used. | P1 | AC21 |
+| **R37** | **The canonical radio (GR-3f, EXTEND the `Radio` theme entry in `src/design-system/mantine/theme.ts`).** <br>• `defaultProps: { size: 'sm' }`: the 20px circle. <br>• Add `vars: () => ({ root: { '--radio-icon-size': '0.625rem' } })`: the 10px dot. Follow the existing `vars` precedent in the same file (`Button`, `:969`). <br>• Rewrite the entry's comment. It cites the owner decision of 2026-10-02 (*"20px circle, 10px dot (Recommended)"*), GR-3f and §6g, and drops the "16px / too large" wording. <br>• `body` (44px row) and `label` (14px gray-7) do not change. Leave `input-chrome.css` alone unless the crop shows a state that needs it; report any change. <br>• No consumer and no Story may set `size`, `--radio-size` or `--radio-icon-size` on a `Radio`. | P1 | AC22 |
+| **R38** | **`Mantine/Primitives/Radio` (`src/stories/mantine/primitives/Radio.stories.tsx`).** Update the state captions that say "16px circle" and "8px center dot" to 20px and 10px. Change nothing else. | P2 | AC22 |
+| **R39** | **Receipts.** <br>• One `GR-3e TEXT BUTTONS STACKED` per `ListingPreviewDialogView` and `PremiumDialogView` export. <br>• One `GR-3f CIRCLE CHECK` for the radio, unchecked and checked, in `Mantine/Primitives/Radio` `Default` and `PremiumDialogView` `NotPremium`. Each crop is taken at `deviceScaleFactor: 1`, scaled 10× pixelated, and saved as `103-radio-crops-r5.png`. <br>• GR-3b/3c/3d for `Mantine/Primitives/Radio` `Default`. Its gutter answer is `n/a: MantineStoryShell primitive`. | P1 | AC21, AC22 |
+
+### 21.4 Acceptance (Revision 5)
+
+- **AC21 [R36, R39].** In every `ListingPreviewDialogView` export with both buttons, at 390 and 1440 × sq/uk, the "Open
+  public page" button's top is at or below the "View listing" button's bottom, and both left edges are equal (±1px). No
+  two text buttons share a row in any export of the two dialog Stories.
+- **AC22 [R37–R39].**
+  - In `Mantine/Primitives/Radio` `Default` and `PremiumDialogView` `NotPremium` at 1440 (sq), `.mantine-Radio-radio`
+    measures 20×20 and the checked `.mantine-Radio-icon` measures 10×10 (±0.5px).
+  - The device-scale-1 crops in `103-radio-crops-r5.png` show a round ring and a round dot. Opus confirms this by
+    looking at them before the owner matrix.
+  - A grep over `src` for `--radio-size`, `--radio-icon-size` and a `size=` prop on `<Radio` prints only the theme entry.
+  - Every other state in `Mantine/Primitives/Radio` (focus, error, disabled) still renders as before. The receipts
+    state this.
+
+### 21.5 Re-entry: `remediation` (Revision 5)
+
+- **Start step:** platform line `102-platform-r5.txt`, then R36 → R37 → R38. Then rebuild Storybook, take the
+  measurements and crops (write `103-measure-r5.mjs`, `103-measurements-r5.json` and `103-radio-crops-r5.png`), run the
+  §21.6 gate block, and write the receipts to `104-receipts-r5.txt`.
+- **Do not re-run or overwrite:** evidence `01`–`101` and every `plant-*` file. Opus's `90-*`, `91-*`, `100-*` and
+  `101*` files are read-only.
+- **Write set:**
+  - `src/components/admin/ListingPreviewDialogView.tsx` (R36 only);
+  - `src/design-system/mantine/theme.ts` (R37, the `Radio` entry only);
+  - `src/stories/mantine/primitives/Radio.stories.tsx` (R38, captions only);
+  - `src/design-system/mantine/input-chrome.css`, only if R37's crop shows it is needed, and say so;
+  - tests that assert the old radio size or the old `Group`, if any. List each one;
+  - the session log ("Revision 5" section), evidence `102`+ with the `-r5` suffix, and the 857 cell of `docs/backlog.md`.
+- **Forbidden:** every other file. That includes `PremiumDialogView.tsx` (it inherits the theme), every R13–R35 file,
+  and every `docs/*rule*.md`, `docs/golden-rules.md`, `docs/mantine-responsive-design-system.md` and
+  `docs/tailadmin-style-reference.md`.
+- **Negative branch:** if the theme `vars` cannot set the dot to 10px, stop with `BLOCKED — R37 DOT` and the measured
+  dot size. Do not set it in a consumer or a Story.
+
+### 21.6 Gate block (Revision 5)
+
+```powershell
+$ev = "docs\sessions\evidence\task857"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\102-platform-r5.txt"
+node.exe scripts\check-surface-census.mjs --surface src\app\admin\listings\page.tsx *>&1 | Tee-Object "$ev\102b-census-r5.txt"
+npx.cmd vitest run --testTimeout=60000 --no-file-parallelism *>&1 | Tee-Object "$ev\102c-tests-r5.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\102d-typecheck-r5.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\102e-lint-r5.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\102f-story-coverage-r5.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\102g-rendered-scope-r5.txt"
+npm.cmd run check:surface-census:changed -- --base HEAD *>&1 | Tee-Object "$ev\102h-census-changed-r5.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\102i-design-tokens-r5.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\102j-enrolled-tailwind-r5.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\102k-i18n-r5.txt"
+npm.cmd run check:type-responsive *>&1 | Tee-Object "$ev\102l-type-responsive-r5.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\102m-file-integrity-r5.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\102n-mojibake-r5.txt"
+npm.cmd run check:listing-visibility *>&1 | Tee-Object "$ev\102o-listing-visibility-r5.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\102p-storybook-build-r5.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\102q-build-r5.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\102r-status-after-r5.txt"
+```
+
+- Record every exit code. Normalise the transcripts to UTF-8 without BOM through Node.
+- In the same pass, write `git hash-object` of every Revision 5 file to `102s-hash-object-r5.txt`.
+- **Expected:** `win32`; the four calibration FAIL lines; tests with exactly the 4 known failures (790); every other gate
+  exits 0.
+- **Why the test line differs:** the test line is sequential with a 60s timeout because Revision 4 measured timeouts
+  under load (`94c`).
+
+### 21.7 Owner matrix after Revision 5 (O78-12, re-issued)
+
+- The §19.7 matrix stays, 70 tuples. The two returned groups, `ListingPreviewDialogView` (14) and `PremiumDialogView`
+  (6), are re-issued with the fix.
+- Added rows: `Mantine/Primitives/Radio` `Default` × sq × 390, 1440 (2).
+- **72 tuples.** Before the owner sees them, Opus re-measures every Story in the matrix: GR-3b/3c/3d/3e, §7.3, and
+  GR-3f by looking at the crops.

@@ -188,6 +188,17 @@ For every changed user-visible UI component, work from the lowest visible unit u
    - Measure **all four** edge gaps at 320/390/1024/1440. Expect the profile's values (top/bottom 24, left/right
      16/16/32/32) or the component's own production values. A side at 0 fails, whatever the other three measure. Emit one `GR-3d STORY GUTTER CHECK` receipt per Story (`docs/golden-rules.md`). A missing
      receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
+8. **GR-3e, blocking (owner rule 2026-10-02).** Two or more text buttons (a labelled `Button` with `variant="subtle"` or
+   `"transparent"`, or an `Anchor` used as an action) never share a row, at any width. Put them in a
+   `Stack gap="xs" align="flex-start"`, one per row. A lone text button may stay where §23.6 places it beside non-text
+   buttons. Check every changed Story at 390/1440 and emit one `GR-3e TEXT BUTTONS STACKED` receipt per Story.
+9. **GR-3f, blocking (owner rule 2026-10-02).** A circle must render as a circle. For every changed circular control
+   or indicator (radio, status or count dot, avatar placeholder, circular icon chrome):
+   - take a `deviceScaleFactor: 1` Playwright crop of each state;
+   - scale it 10× with `image-rendering: pixelated`, save it as evidence, and look at it;
+   - make any fix in the canonical component or theme entry, never in one consumer;
+   - the canonical radio is 20px with a 10px dot (`Radio` theme entry).
+   Emit one `GR-3f CIRCLE CHECK` receipt per element. A computed `border-radius` is not evidence.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
 native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local

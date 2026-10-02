@@ -354,6 +354,78 @@ A side at **0** is a failure, whatever the other three sides measure.
 **Automated gate: Task 909 (filed 2026-10-01).** Until it lands, GR-3d is enforced by measurement and receipt only. A
 green `check:stories` is not evidence (GR-2): it does not measure edge gaps.
 
+## GR-3e — Text buttons stack: each text button has its own row
+
+**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words, verbatim: *"я неодноразово вже казав,
+що текстові кнопки мають бути у стовпчик ( кожна у своєму рядку). Наразі я бачу. що другорядні текстові кнопки стоять
+… в одному рядку. … Зроби … золоте правило!"* The trigger: `ListingPreviewDialogView` put "View listing" and "Open
+public page" side by side in a `Group`. The owner then confirmed the scope (option chosen verbatim): *"Yes, exactly that
+(Recommended)"*. That means a group of text buttons is a column, and a lone destructive text button in a footer stays where
+§23.6 puts it.
+
+A **text button** is a `Button` with a visible label and `variant="subtle"` or `variant="transparent"` (usually with a
+`leftSection` icon), or an `Anchor` styled as an action. An icon-only `ActionIcon` is not a text button.
+
+**Forbidden in new or migrated UI, at every width:**
+- two or more text buttons in one row: a `Group`, a `Flex` with a row direction, or `wrap="wrap"`, which still shares a
+  row wherever the buttons fit.
+
+**Required:**
+- a group of two or more text buttons is a column: `Stack gap="xs" align="flex-start"`, one button per row, in reading
+  order;
+- a lone text button may sit in a row with non-text buttons where `docs/mantine-responsive-design-system.md` §23.6
+  places it, for example the resting destructive action at the left of a dialog footer.
+
+**Scope:** every Story a task creates, changes or lists in its owner matrix, and every surface it changes. An existing
+violation inside that scope is fixed in the same task. Existing dialogs outside it are **Task 915**.
+
+**Check, before handoff and at review:** at 390 and 1440, list every visible text button. For every pair, confirm that the
+second one's top is at or below the first one's bottom.
+
+**Receipt — execution and review alike, one per changed Story:**
+
+`GR-3e TEXT BUTTONS STACKED — <story id>: text buttons <n>; groups of ≥2: <n>; pairs sharing a row at 390/1440: NONE.`
+
+With no receipt, or with a pair sharing a row, the executor returns `BLOCKED — GR-3e` and the reviewer returns
+`NEEDS REVISION`. No gate measures this yet (GR-2).
+
+## GR-3f — A circle renders as a circle
+
+**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words, verbatim: *"я неодноразово повторював
+щодо іконок. Коло має бути колом … Наразі візуально я бачу багатокутник, а не коло. І можеш мені не брехати, я своїм
+очам більше вірю."* Then: *"radio buttons мають мати коло у компоненті, ніякого хардкоду лише в одному попапі, це має
+бути глобально пофікшено"*.
+
+The trigger: the `PremiumDialogView` radios. Their CSS was a circle (`border-radius` equal to the 16px box). Opus's
+pixel crop at device scale 1 (`docs/sessions/evidence/task857/101-radio-variants.png`) showed what the owner saw:
+- the 1px pale ring at 16px rasterised as facets;
+- the 6px checked dot (Mantine `xs`) rasterised as a rounded square.
+
+A computed `border-radius` is not evidence of a round shape. Only the rendered pixels are.
+
+**Canonical radio, owner decision 2026-10-02 (option chosen verbatim):** *"20px circle, 10px dot (Recommended)"*. It
+replaces `docs/tailadmin-style-reference.md` §6g's 16px circle and 8px dot. It is set once in the `Radio` theme entry
+(`src/design-system/mantine/theme.ts`) and proven by `Mantine/Primitives/Radio`. A size, dot or border override in a
+consumer or a Story is forbidden.
+
+**Applies to:** every circular control or indicator in new or migrated UI: radio, status dot, count dot, avatar
+placeholder, and circular icon chrome.
+
+**Forbidden:**
+- shipping a circular element whose device-scale-1 crop shows facets or a squared inner shape;
+- fixing that in one consumer instead of its canonical component or theme entry.
+
+**Check, before handoff and at review:** take a Playwright screenshot at `deviceScaleFactor: 1` of each changed circular
+element, in both states where it has two. Scale the crop 10× with `image-rendering: pixelated`, save the image as evidence,
+and look at it. The ring and any inner dot must read as circles.
+
+**Receipt — execution and review alike, one per changed circular element:**
+
+`GR-3f CIRCLE CHECK — <component/state>: outer <px>, inner <px | none>; DPR-1 crop <evidence path>; reads as a circle: yes.`
+
+With no receipt, or with a faceted crop, the executor returns `BLOCKED — GR-3f` and the reviewer returns
+`NEEDS REVISION`. No gate measures this (GR-2): `check:design-tokens` and computed styles cannot see rasterisation.
+
 ## GR-4 — An acceptance criterion asserts an observable property, never an absolute
 
 **Forbidden:** "byte-unchanged", "within N px", "zero hits" and similar, when a correct implementation can violate
@@ -426,6 +498,8 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3b | executor + reviewer measurement at 320/390/1024/1440 + required receipt | **active** — no automated gate yet; `check:stories` does not inspect decorators or widths. |
 | GR-3c | kickoff type-scale table (`create-task`) + executor/reviewer computed-font-size measurement at 320/390/768/1440 + required receipt | **active** — no automated gate yet; `check:design-tokens` cannot see a static theme heading key. |
 | GR-3d | one question per side, all four sides measured: own production gutter → the Story adds nothing on that side; none → `StoryPageGutter` (per axis once Task 909 adds `sides`). Automated gate `check:story-gutters` filed as Task 909 (Sprint 87). Scope: every created, changed or owner-matrix Story. Enforced by the `create-task` kickoff line per matrix Story, the blocking `execute-task` item 7 with a receipt per Story, and the `review-task` item 8 measurement before the owner matrix | **active** — enforced by rule and receipt; there is no automated gate, and `check:stories` does not measure edge gaps. |
+| GR-3e | executor + reviewer check at 390/1440 (no two text buttons share a row) + required receipt | **active** — no automated gate yet. |
+| GR-3f | executor + reviewer device-scale-1 pixel crop at 10×, saved as evidence + required receipt; canonical radio 20px / 10px dot in the `Radio` theme entry | **active** — no automated gate; computed styles cannot see rasterisation. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

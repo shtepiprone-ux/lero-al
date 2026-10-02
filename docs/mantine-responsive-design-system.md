@@ -1322,6 +1322,7 @@ Rules that apply in every state:
 - **A choice is a control, not a row of buttons.** Mutually exclusive options (a status, a duration, a period) use `MantineSelect` / `StatusChangeSelect` / `SegmentedControl` / `Radio`. A button means "do this now".
 - **No accent colour on a button.** Colour on a button means primary or destructive only. Semantic or brand-adjacent colours, such as `--badge-premium` or a status colour per action, belong to `Badge`s and icons.
 - **Placement, from 640px:** footer row. Destructive on the left. Secondary and primary on the right, with primary rightmost. Tertiary text buttons go in the body, next to the content they act on, or at the left of the footer.
+- **Text buttons stack (GR-3e, owner rule 2026-10-02).** Two or more text buttons never share a row, at any width. They form a `Stack gap="xs" align="flex-start"`, one per row. A lone resting destructive text button stays at the left of the footer.
 - **Placement, below 640px:** stacked and full-width, at least 44px tall: primary first, then secondary, then destructive. Tertiary buttons stay text buttons.
 - **Labels are verbs from i18n.** No literal "OK".
 

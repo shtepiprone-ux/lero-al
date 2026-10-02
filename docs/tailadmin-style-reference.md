@@ -252,14 +252,17 @@ are source literals; `rounded-[4px]` maps to `radius='sm'` (4px), no raw px in C
 > source carries `disabled:opacity-50` on the circle AND `peer-disabled:opacity-50` on the label.
 > Verifying only the circle is a review failure.
 
-**Circle geometry:** `size-4` = **16px circle**, `rounded-full` = **full radius**, center dot `size-2` = **8px white**. Mantine
-`size='sm'` ≈ 20px — confirm at runtime which Mantine `size` yields the **16px** circle (likely `size='xs'`, same as Checkbox);
-pin it in `theme.ts` `Radio.defaultProps` and document.
+**Circle geometry — superseded by owner decision 2026-10-02 (Task 857, GR-3f), option chosen verbatim: *"20px circle,
+10px dot (Recommended)"*.** The canonical radio is a **20px circle** (Mantine `size="sm"`) with a **10px white centre dot**,
+pinned once in the `Radio` theme entry (`src/design-system/mantine/theme.ts`). Why: at device scale 1, the legacy 16px
+circle with an 8px (or Mantine `xs` 6px) dot rasterised as a polygon with a squared dot
+(`docs/sessions/evidence/task857/101-radio-variants.png`). The legacy source was `size-4` = 16px, `rounded-full`, dot
+`size-2` = 8px; it no longer governs Mantine UI. Every colour, state and disabled rule below is unchanged.
 
 | State | Circle | Dot | Label | Source-of-truth class |
 |---|---|---|---|---|
-| **unchecked (resting)** | border `gray-3` (#d0d5dd) · transparent bg · 16px · `rounded-full` | none | `text-sm` `gray-7` (#344054), wraps, ≥44px tap row | `border border-input` |
-| **checked** | bg `brand-7` (#EC5447) · border `brand-7` · 8px white center dot | `bg-primary-foreground` white 8px | unchanged | `data-checked:bg-primary data-checked:border-primary data-checked:text-primary-foreground` |
+| **unchecked (resting)** | border `gray-3` (#d0d5dd) · transparent bg · 20px (GR-3f) · `rounded-full` | none | `text-sm` `gray-7` (#344054), wraps, ≥44px tap row | `border border-input` |
+| **checked** | bg `brand-7` (#EC5447) · border `brand-7` · 10px white center dot (GR-3f) | `bg-primary-foreground` white 10px | unchanged | `data-checked:bg-primary data-checked:border-primary data-checked:text-primary-foreground` |
 | **focus** | keyboard-visible brand ring + brand border (not on mouse) | — | unchanged | `focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring` |
 | **error** | border `red-6` (#d92d20) + ring; **checked+error keeps brand border** | — | unchanged | `aria-invalid:border-destructive aria-invalid:ring-destructive/20` · `aria-invalid:aria-checked:border-primary` |
 | **disabled** | **opacity 0.5** · `cursor: not-allowed` · no focus ring | dims with circle | **opacity 0.5** (dims with circle) | `disabled:opacity-50`; label `peer-disabled:opacity-50` |

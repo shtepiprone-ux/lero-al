@@ -1237,6 +1237,37 @@ At `≥640px`:
 
 NavigationMenu triggers are always text (section labels) — **no `iconOnlyTrigger` prop** exists on `MantineNavigationMenu`; unlike `MantinePopover`/`MantineDropdownMenu` there is no real icon-only nav-trigger case to exempt. Proof: `src/stories/mantine/primitives/NavigationMenu.stories.tsx` — two sections: `resting` · `disabled section`.
 
+### §23.6 — Dialog action hierarchy (owner rule, 2026-10-02)
+
+**Owner, verbatim (Task 857, O78-12 return):** *"Це суцільний хаос однакових по ієрархії кнопок. Необхідно у цьому
+попапі розробити ієрархію основних і допоміжних кнопок. Це можуть бути текстові кнопки з іконками та звичайні основні
+кнопки. Необхідно розрробити цей попап та і взагалі всі інші попапи мають притримуватись UI/UX best practices 2026
+року."* On the premium dialog's preset buttons: *"Звідки взявся цей жовтий колір … Кнопки мають бути стандартні з
+ієрархією!"*
+
+The trigger: `ListingPreviewDialogView` showed eleven outline buttons of equal weight, seven of them status changes in
+seven colours. `PremiumDialogView` showed four presets as outline buttons in the premium accent colour.
+
+Every `MantineModal` / `MantineDrawer` consumer, and every new or migrated popup, follows these rules.
+
+| Role | Mantine form | Rule |
+|---|---|---|
+| **Primary** | `Button` (filled, theme primary colour) | **At most one per dialog state.** It is the action the dialog exists for. |
+| **Secondary** | `Button variant="default"` | Cancel, or a second real action. At most two. |
+| **Tertiary / navigation** | `Button variant="subtle"` + `leftSection` icon | Text buttons for links and minor actions: view, open, edit elsewhere. |
+| **Destructive (resting)** | `Button variant="subtle" color="red"` + icon | Never filled while it is not the step's purpose. |
+| **Destructive (confirm step)** | filled `Button color="red"` as that step's primary, `variant="default"` Cancel | The confirm step replaces the footer. |
+
+Rules that apply in every state:
+
+- **A choice is a control, not a row of buttons.** Mutually exclusive options (a status, a duration, a period) use `MantineSelect` / `StatusChangeSelect` / `SegmentedControl` / `Radio`. A button means "do this now".
+- **No accent colour on a button.** Colour on a button means primary or destructive only. Semantic or brand-adjacent colours, such as `--badge-premium` or a status colour per action, belong to `Badge`s and icons.
+- **Placement, from 640px:** footer row. Destructive on the left. Secondary and primary on the right, with primary rightmost. Tertiary text buttons go in the body, next to the content they act on, or at the left of the footer.
+- **Placement, below 640px:** stacked and full-width, at least 44px tall: primary first, then secondary, then destructive. Tertiary buttons stay text buttons.
+- **Labels are verbs from i18n.** No literal "OK".
+
+**Existing dialogs.** Bringing every `MantineModal` consumer that predates this rule into line is **Task 915**. Until it lands, a review applies this section to every dialog a task creates or changes.
+
 ---
 
 ## §24 — Canonical responsive Drawer: `MantineDrawer` (Task 523)

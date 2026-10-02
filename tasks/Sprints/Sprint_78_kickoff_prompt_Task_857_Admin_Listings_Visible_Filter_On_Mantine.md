@@ -3,8 +3,8 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`NEEDS REVISION` — review 1, 2026-10-02. Execute §16 (Revision 1) only; it supersedes §10.3 P2, R10's grep clause,
-R12's "no key added" and AC6/AC7 where they differ.**
+`NEEDS REVISION` — review 2, 2026-10-02. Revision 1 (§16) is verified and stays. Execute §17 (Revision 2) only: the
+owner returned every O78-12 row. §17 supersedes R4/R5/R6/R9 and T4/T6 where they differ.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -494,3 +494,105 @@ Status per `execute-task` (strongest: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIE
 
 - **O78-12** (§13.3, 34 tuples) can be reviewed now. Revision 1 changes no visible artifact, and Opus's measurements (§16 preface) are clean.
 - **Opus at approval closure:** the §16.4 live references, the archive, and the kickoff move to `tasks/Archive/`.
+
+---
+
+## 17. Review 2 — `NEEDS REVISION`, 2026-10-02 → Revision 2 (owner returned O78-12)
+
+**Revision 1 is verified.** Opus re-ran these natively: `check:listing-visibility:verify` (34 passed, 0 failed),
+`check:listing-visibility` (0 violations) and the smoke file (16/16). The R13 heuristic and the decision to treat a
+destructured declaration as data, not a builder, are accepted. **Do not touch R13/R14 or their evidence.**
+
+### 17.1 Owner returns, 2026-10-02 (verbatim)
+
+1. `AdminListingsView` (`Default`, `VisibleFilter`, `HiddenEligible`, `Paginated` × sq/uk × 390/1440, and `Default` × en/it × 1024): *"не приймаю, не витримані горизонтальні відступи всередині таблиці на всіх breakpoints."*
+2. `ListingPreviewDialogView`: *"не приймаю. Це суцільний хаос однакових по ієрархії кнопок. Необхідно у цьому попапі розробити ієрархію основних і допоміжних кнопок. Це можуть бути текстові кнопки з іконками та звичайні основні кнопки. Необхідно розрробити цей попап та і взагалі всі інші попапи мають притримуватись UI/UX best practices 2026 року. Наразі це повне лайно."*
+3. `PremiumDialogView`: *"не приймаю. Звідки взявся цей жовтий колір ще й гімняного відтінку. … Кнопки мають бути стандартні з ієрархією!"*
+4. The visibility segment that scrolls out of view at 320: the owner left this to Opus. Decision: fix it (R18).
+
+The dialog rule the owner asked for is now `docs/mantine-responsive-design-system.md` **§23.6 "Dialog action
+hierarchy"**. R16 and R17 implement it. The other existing dialogs are reserved **Task 915**.
+
+### 17.2 Measured causes (Opus, 2026-10-02, `storybook-static` screenshots)
+
+- **Table (return 1).** At 1024 and 1440 the desktop table is wider than its card, so it scrolls inside `MantineDataTableToCards`'s `ScrollArea`. The listing title column has no width and inherits the pattern's `nowrap` and `miw="max-content"`. A long title therefore sets the table width. The right-hand columns (status, visibility, agent, date, row chevron) are clipped at the card border with no right inset. At 1024 the status badge touches the border, and visibility, agent and the chevron are off-canvas. The legacy table capped the title (`truncate max-w-50`). `AdminTable` does not forward `TableColumn.width` / `wrap`: its own comment says *"widths belong to `TableColumn.width` in each manager's migration"*, and that migration was never done.
+- **Audit panel.** `auditButton` wraps its label in `Text size="sm" inherit`. `inherit` overrides `size`, so the links render at 16px, not 14px.
+- **Preview dialog (return 2).** It has eleven outline buttons of equal weight, including seven status actions in seven colours, plus a yellow `--badge-premium` Premium button.
+- **Premium dialog (return 3).** Its four presets are outline buttons in `--badge-premium` yellow, there is a literal "OK", and no button is clearly primary.
+
+### 17.3 New and replacing requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R15** | **`AdminTable` (canonical owner, EXTEND):** `AdminTableColumn` gains optional `width?: string \| number` and `wrap?: boolean`, forwarded unchanged to `TableColumn.width` / `TableColumn.wrap`. Omitted → today's output, so the other consumers do not change. Update the `@deprecated className` comment. `Patterns/Mantine/AdminTable` gains one export, `WrappedTitleColumn`: a fixture with one long title, a `wrap: true` + `width` title column and `onRowClick`, in `StoryPageGutter`. **`AdminListingsView`:** the listing column passes `wrap: true` and a percentage `width`, and its title becomes `Text size="sm" fw={500} lineClamp={2}`. Every other column stays `nowrap`. The `auditButton` label drops `inherit`. | P1 | AC12 |
+| **R16** | **`ListingPreviewDialogView` per §23.6.** **Title:** the listing title (`lineClamp={2}`), plus a `Badge variant="light" color="gray"` with the new key `admin.listings.premium_badge` (sq/en/it "Premium", uk "Преміум") when premium. There is no yellow star. **Body:** the details `SimpleGrid`. Its **Status** cell is the canonical `StatusChangeSelect` (Task 894), with `currentStatus` = the listing status and `statuses` = the current status plus `getPrivilegedTargetStatuses(status)`, labelled with `statusLabels`; it replaces the status badge and every status-action button. Under the grid, a `Group gap="xs"` of tertiary `Button variant="subtle" color="gray"` text buttons with icons: View listing (`Eye`) and Open public page (`ExternalLink`, absent when hidden). **Footer, resting:** Delete `variant="subtle" color="red"` + `Trash2` on the left. On the right, Premium set/change as `variant="default"` + `Star` (neutral colour), then the **primary** filled Edit (`Pencil`, `component={Link}`, new tab), rightmost. **Footer, delete confirm:** Cancel `variant="default"` + Delete filled `color="red"` (`loading` while deleting). The confirm text stays in the body. **Below 640:** the footer stacks full-width, ≥ 44px, in the order Edit, Premium, Delete (confirm step: Delete, Cancel). **Container:** `usePreviewStatusActions` becomes `usePreviewStatusOptions` (`StatusSelectOption[]`); `ACTION_DEFS` and the `changingStatus` state are deleted. `handleStatusChange` throws when `result.error` is set and calls `onStatusChanged` on success. **It does not toast:** `StatusChangeSelect` owns the success and error toasts (`admin.common.status_control.status_change_success` / `_error`). `onStatusChanged` behaves as today. | P1 | AC13 |
+| **R17** | **`PremiumDialogView` per §23.6.** **Body:** the listing title (`Text size="sm" c="dimmed" lineClamp={2}`), then a `Radio.Group` (label `premium_quick_label`) with five `Radio`s: `preset_1m`, `preset_3m`, `preset_6m`, `preset_1y` and `premium_custom_date`. Choosing the custom option reveals the `RangeDatePicker selectionMode="single" disablePastDates` below it. **Footer:** `premium_remove` as `variant="subtle" color="red"` on the left, only when premium. On the right, Cancel (`common.cancel`, `variant="default"`, closes) and **Save** (`common.save`, filled primary, `loading` while saving, disabled until a preset is chosen, or until the custom option has a date). **No `--badge-premium` and no literal "OK".** **Container:** `apply()` runs on Save with the chosen preset's days, or with the custom date's ISO as today; the error and success toasts are unchanged. **Changed flow:** a preset no longer applies on click; Save applies it. | P1 | AC14 |
+| **R18** | **Visibility filter below 640.** Below `theme.other.mobileGate`, the `AdminListingsView` visibility filter is a full-width `MantineSelect` with the same three options and `aria-label` `visibility_label`. Choose it with `useMediaQuery(\`(max-width: ${theme.other.mobileGate})\`)`, the pattern's own query. From 640 it stays the `SegmentedControl`. No label is clipped at 320 in any locale. | P2 | AC15 |
+| **R9 (amended)** | `ListingPreviewDialogView` exports: `Active`, `SoldStatusActions` (the id is kept; `responsive-screenshots.mjs` uses it), `Hidden`, `DeleteConfirm`, `Premium` (new: a premium listing, so the title shows the badge and the footer shows "change premium"). `ChangingStatus` is deleted, because that state no longer exists in the View. `PremiumDialogView` exports: `NotPremium`, `Premium`, `CustomDate` (new: the custom option with a date), `Saving`. | P1 | AC5 |
+| **T4 / T6 (amended)** | **T4:** choosing a status in the dialog's `StatusChangeSelect` calls `updateListingStatus(id, to)` and patches the row badge; an error result raises the `status_change_error` toast. **T6:** choosing "1 month" and clicking Save calls `setListingPremium(id, true, <ISO ≈ now+30d>)`; clicking a preset alone calls nothing; `db_missing_column` → `premium_error_db_schema`. **T8 (new):** the resting preview footer has exactly one filled button (Edit). **P6 (new plant):** make Premium filled → T8 fails. | P0 | AC16 |
+
+### 17.4 Acceptance (Revision 2)
+
+- **AC12 [R15]** In `AdminListingsView` `Default` and `Paginated` at 640/768/1024/1280/1440 × sq/en/uk/it, the table's `ScrollArea` viewport has `scrollWidth ≤ clientWidth`, so nothing scrolls or clips. The first cell's left inset and the last cell's right inset are both the pattern's 24px (chevron cell included) from the card border. No text is clipped. Below 640, every card's left and right content inset are equal. `Patterns/Mantine/AdminTable` `WrappedTitleColumn` passes the same scroll check at 1024/1440. The other `AdminTable` exports are visually unchanged (before/after screenshots at 1440). The audit links compute to 14px.
+- **AC13 [R16]** In every `ListingPreviewDialogView` export at 390/1440 × sq/uk: one filled button per state; no colour on a non-destructive, non-primary button; no `--badge-premium` in the file; `StatusChangeSelect` is the only status control; at 390 the footer is stacked, full-width and ≥ 44px.
+- **AC14 [R17]** In every `PremiumDialogView` export: no `--badge-premium` and no literal `OK` (grep of the file prints nothing); Save is the only filled button; Save is disabled with no choice; at 390 the footer is stacked, full-width and ≥ 44px.
+- **AC15 [R18]** At 320 and 390 × all four locales, the visibility filter is a select whose width equals the filter column and whose label is fully visible. At 640 and above the `SegmentedControl` renders; T2 still passes.
+- **AC16** T1–T8 and T1b pass; P6 fails T8 and passes after restore with equal hashes. P1–P5 and P2a–P2c are not re-run.
+- **AC9 (re-run)** Every §17.6 gate exits 0.
+
+### 17.5 Re-entry: `remediation` (Revision 2)
+
+- **Start step:** platform line `40-platform-r2.txt`. Then R15 → R18 → R16 → R17 → Stories → tests → P6 → the §17.6 gate block → receipts.
+- **Do not re-run or overwrite:** evidence `01`–`36` and every `plant-*` file.
+- **Write set:**
+  - `src/components/admin/AdminTable.tsx` (R15, additive only);
+  - `src/stories/patterns/mantine/AdminTable.stories.tsx` (one new export);
+  - `src/components/admin/AdminListingsView.tsx`, `ListingPreviewDialog.tsx`, `ListingPreviewDialogView.tsx`, `PremiumDialog.tsx`, `PremiumDialogView.tsx`;
+  - the three 857 Story files;
+  - `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx`;
+  - `messages/{sq,en,uk,it}.json` (`admin.listings.premium_badge` only; remove a key only if a grep shows it is now unused, e.g. the `btn_*` status-action labels, and list each removal);
+  - `scripts/i18n-dynamic-manifest.json`, only if the `btn_*` labels were registered there;
+  - session log, evidence with an `-r2` suffix, and the 857 cell of `docs/backlog.md`.
+- **Forbidden:** `MantineDataTableToCards.tsx`, `StatusChangeSelect.tsx`, `MantineModal.tsx` and every other `AdminTable` consumer. If R15 cannot reach AC12 without changing the pattern, stop: `BLOCKED — R15 PATTERN`.
+- **Census:** the containers and Views stay as they are, and `StatusChangeSelect` becomes a new tier-1 node under the dialog (`manifest:yes story:yes` since 894). Re-run the census; the FAIL lines must still be exactly the four §3.1 lines.
+
+### 17.6 Gate block (Revision 2)
+
+```powershell
+$ev = "docs\sessions\evidence\task857"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\40-platform-r2.txt"
+node.exe scripts\check-surface-census.mjs --surface src\app\admin\listings\page.tsx *>&1 | Tee-Object "$ev\41-census-r2.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx src/modules/listings/lib/__tests__/visibility.test.ts *>&1 | Tee-Object "$ev\42-tests-r2.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\43-typecheck-r2.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\44-lint-r2.txt"
+npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\45-story-coverage-r2.txt"
+npm.cmd run check:rendered-scope *>&1 | Tee-Object "$ev\46-rendered-scope-r2.txt"
+npm.cmd run check:surface-census:changed *>&1 | Tee-Object "$ev\47-census-changed-r2.txt"
+npm.cmd run check:design-tokens *>&1 | Tee-Object "$ev\48-design-tokens-r2.txt"
+npm.cmd run check:enrolled-tailwind *>&1 | Tee-Object "$ev\49-enrolled-tailwind-r2.txt"
+npm.cmd run check:i18n *>&1 | Tee-Object "$ev\50-i18n-r2.txt"
+npm.cmd run check:i18n-dynamic *>&1 | Tee-Object "$ev\51-i18n-dynamic-r2.txt"
+npm.cmd run check:type-responsive *>&1 | Tee-Object "$ev\52-type-responsive-r2.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\53-file-integrity-r2.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\54-mojibake-r2.txt"
+npm.cmd run build-storybook *>&1 | Tee-Object "$ev\55-storybook-build-r2.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\56-build-r2.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\57-status-after-r2.txt"
+```
+
+Record every exit code. Normalise the transcripts to UTF-8 without BOM through Node, and write
+`git hash-object` of every Revision 2 file to `58-hash-object-r2.txt` in the same pass.
+
+**Expected:** `win32`; four calibration FAIL lines; every other exit 0.
+
+### 17.7 Receipts and measurements (Revision 2)
+
+- **AC12 and AC15:** Playwright against the rebuilt `storybook-static`. Write the numbers to `59-measurements-r2.json` and the before/after screenshots of the `AdminTable` exports to `60-*`.
+- **GR-3b, GR-3c and GR-3d:** one receipt per changed Story (the three 857 Stories and `AdminTable`), at 320/390/1024/1440 (type at 768/1440 too).
+- **GR-0 and GR-3a:** for `WrappedTitleColumn` (`EXTEND`) and for `StatusChangeSelect` (`REUSE`).
+- **§23.6:** one line per dialog state: the primary, the secondary, the tertiary and the destructive button.
+
+### 17.8 Owner matrix after Revision 2 (O78-12, re-issued)
+
+The tuples are the same as in §13.3, plus `ListingPreviewDialogView` `Premium` and `PremiumDialogView` `CustomDate`
+(sq, 390/1440): **38 tuples**. Opus re-measures every Story before the owner sees it.

@@ -1,0 +1,479 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-917 — the server records the previous price when the owner lowers it",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "93f67764f446c60fa8184ed1aaadfecad22881a0",
+    "reviewedRevision": "uncommitted worktree on top of 93f67764f446c60fa8184ed1aaadfecad22881a0 (main). Blobs: priceOld.ts 65067fd5, priceOld.test.ts f81741cf, updateListing.ts 2a4cbe66, createListing.ts 29ae7da8, updateListing.smoke.test.ts 1ae1b2d6, createListing.smoke.test.ts 231c5a83, domain-rules.md fe210292. Build exit 0 in 20-review-gates.txt supersedes the executor 07-build.txt (exit 1 from a concurrent Task 857 edit of ListingPreviewDialogView.tsx at 00:15:07, inside the executor build window 00:13:49-00:15:16).",
+    "reviewedPaths": [
+      "src/modules/listings/domain/priceOld.ts",
+      "src/modules/listings/domain/priceOld.test.ts",
+      "src/modules/listings/actions/updateListing.ts",
+      "src/modules/listings/actions/createListing.ts",
+      "src/modules/listings/actions/__tests__/updateListing.smoke.test.ts",
+      "src/modules/listings/actions/__tests__/createListing.smoke.test.ts",
+      "docs/domain-rules.md",
+      "docs/sessions/2026-10-03-task917-server-records-previous-price.md",
+      "docs/sessions/evidence/task917"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 7,
+      "verified": 7,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-10-03-task917-server-records-previous-price.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1 R4 R5 R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/domain/priceOld.ts",
+        "symbol": "computeNextPriceOld",
+        "diffHunks": [
+          "src/modules/listings/domain/priceOld.ts:1-20"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "all 11 rows of kickoff §10.2"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "npx.cmd vitest run src/modules/listings/domain/priceOld.test.ts (+ both smoke suites)",
+          "observable": "3 files, 24 tests passed, exit 0; priceOld.test.ts carries the 11 §10.2 rows as it.each.",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "all 11 rows of kickoff §10.2"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "src/modules/listings/domain/priceOld.ts",
+          "command": "reviewer read of the final file",
+          "observable": "Currency change returns null; ceiling = max(prev.price, prev.priceOld ?? 0); returns ceiling when next.price < ceiling, else null — exactly §10.1.",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "all 11 rows of kickoff §10.2"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The rule could keep a stale price_old at or below the current price.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "result": "REFUTED: row 10 (prev 100000, priceOld 80000, next 100000) expects null and passes; row 11 (stale equal) expects 100000 on a reduction and passes."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/actions/updateListing.ts",
+        "symbol": "updateListing",
+        "diffHunks": [
+          "src/modules/listings/actions/updateListing.ts:34",
+          "src/modules/listings/actions/updateListing.ts:61-70"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "stored 100000/null, payload price 90000 → update carries price_old 100000"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "npx.cmd vitest run …updateListing.smoke.test.ts",
+          "observable": "case (a) passes: update called with objectContaining({ price: 90000, price_old: 100000 }).",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "stored 100000/null, payload price 90000 → update carries price_old 100000"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new case could pass against the unchanged action.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task917/01-red.txt",
+          "result": "REFUTED: against the pre-change actions the 4 new cases fail and the 9 existing pass."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/actions/updateListing.ts",
+        "symbol": "updateListing",
+        "diffHunks": [
+          "src/modules/listings/actions/updateListing.ts:61-70"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "payload price_old 5 with unchanged price → update carries price_old null",
+          "currency change → price_old null"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "npx.cmd vitest run …updateListing.smoke.test.ts",
+          "observable": "cases (b) and (c) pass: update called with objectContaining({ price_old: null }).",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "payload price_old 5 with unchanged price → update carries price_old null",
+              "currency change → price_old null"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "parsed.data could overwrite the computed value through spread order.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/actions/updateListing.ts",
+          "result": "REFUTED: price_old is written after ...parsed.data in the update object (diff :63-69), and case (b) proves the client value 5 is replaced by null."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/actions/createListing.ts",
+        "symbol": "createListing",
+        "diffHunks": [
+          "src/modules/listings/actions/createListing.ts:49"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "create payload price_old 123456 → insert carries price_old null"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "npx.cmd vitest run …createListing.smoke.test.ts",
+          "observable": "new case passes: insert called with objectContaining({ price_old: null }).",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "create payload price_old 123456 → insert carries price_old null"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The override could sit before the spread and lose.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/actions/createListing.ts",
+          "result": "REFUTED: price_old: null follows ...data (diff :48-49); the create case fails in 01-red.txt and passes in 02-green.txt."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/modules/listings/actions/__tests__/updateListing.smoke.test.ts",
+        "symbol": "existing smoke cases",
+        "diffHunks": [
+          "src/modules/listings/actions/__tests__/updateListing.smoke.test.ts",
+          "src/modules/listings/actions/__tests__/createListing.smoke.test.ts"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "every pre-existing assertion of both suites unchanged and passing"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "npx.cmd vitest run (both smoke suites)",
+          "observable": "all pre-existing cases pass; the diff of both test files is additions only (no removed or edited assertion lines).",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "every pre-existing assertion of both suites unchanged and passing"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An existing assertion could have been weakened to pass.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/actions/__tests__/updateListing.smoke.test.ts",
+          "result": "REFUTED: git diff of both test files shows only + lines."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / R2 R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task917/01-red.txt",
+        "symbol": "two-armed proof",
+        "diffHunks": [
+          "docs/sessions/evidence/task917/01-red.txt",
+          "docs/sessions/evidence/task917/02-green.txt"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "new cases red against the pre-change actions, green after"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task917/01-red.txt",
+          "command": "executor red arm",
+          "observable": "4 new smoke cases fail, 9 existing pass against the unchanged actions.",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new cases red against the pre-change actions, green after"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task917/20-review-gates.txt",
+          "command": "reviewer green re-run",
+          "observable": "all 24 pass on the final worktree.",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "new cases red against the pre-change actions, green after"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The red arm could be an infra failure rather than an assertion failure.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task917/01-red.txt",
+          "result": "REFUTED: the 9 existing cases pass in the same run, so the suite loaded; only the 4 new assertions fail."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC7 / R7",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/domain-rules.md",
+        "symbol": "Listing Features",
+        "diffHunks": [
+          "docs/domain-rules.md:173"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "server-owned rule stated with a pointer to priceOld.ts"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Server action and pure domain function; no UI artifact or story changed.",
+          "locales": "No user-facing string added or changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "The input cases are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/domain-rules.md",
+          "command": "reviewer read of the diff",
+          "observable": "One added line states the server-owned rule, the highest-earlier-price behaviour, null on raise/currency change/create, and points to src/modules/listings/domain/priceOld.ts.",
+          "freshness": "reviewer native re-run 2026-10-03 win32 v22.22.3 on the final worktree; blob hashes in 20-review-gates.txt equal the executor 08-hashes.txt",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "server-owned rule stated with a pointer to priceOld.ts"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The doc line could contradict the code.",
+          "kind": "EXECUTED",
+          "path": "src/modules/listings/domain/priceOld.ts",
+          "result": "REFUTED: each clause of the line matches a branch of computeNextPriceOld and the createListing override."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "TypeScript server logic; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC7 / R7",
+    "reviewer": "Opus"
+  }
+}

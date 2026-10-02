@@ -46,6 +46,7 @@ export async function createListing(
     .from('listings')
     .insert({
       ...data,
+      price_old: null, // server-owned (Sprint 88 D88-2): the payload cannot set it
       slug,
       user_id: user.id,
       status: 'pending',

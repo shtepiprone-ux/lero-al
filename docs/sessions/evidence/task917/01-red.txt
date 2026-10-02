@@ -1,0 +1,153 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts (5 tests | 1 failed) 37ms
+     × price_old is server-owned: payload price_old 123456 → inserted price_old null (Task 917) 5ms
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts (8 tests | 3 failed) 40ms
+     × (a) lowered price: stored 100000/null → price 90000 writes price_old 100000 5ms
+     × (b) client price_old is ignored: unchanged price + payload price_old 5 writes null 1ms
+     × (c) currency change writes price_old null 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > price_old is server-owned: payload price_old 123456 → inserted price_old null (Task 917)
+AssertionError: expected "vi.fn()" to be called with arguments: [ Array(1) ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   ObjectContaining {
+-     "price_old": null,
++   {
++     "currency": "EUR",
++     "expires_at": "2026-11-01T22:13:11.302Z",
++     "listing_type": "sale",
++     "price": 95000,
++     "price_old": 123456,
++     "property_type": "apartment",
++     "slug": "test-apartment-tirana-murirocm",
++     "status": "pending",
++     "title": "Test apartment Tirana",
++     "user_id": "user-create-1",
++     "views_count": 0,
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts:106:32
+    104|     await createListing({ ...PARSED_DATA, price_old: 123456, images: […
+    105|
+    106|     expect(mockListingsInsert).toHaveBeenCalledWith(expect.objectConta…
+       |                                ^
+    107|   })
+    108|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (a) lowered price: stored 100000/null → price 90000 writes price_old 100000
+AssertionError: expected "vi.fn()" to be called with arguments: [ ObjectContaining{…} ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   ObjectContaining {
++   {
++     "currency": "EUR",
++     "listing_type": "sale",
+      "price": 90000,
+-     "price_old": 100000,
++     "property_type": "apartment",
++     "title": "My apartment",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:215:24
+    213|     await updateListing(LISTING_ID, { ...PARSED_DATA, price: 90000, im…
+    214|
+    215|     expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ …
+       |                        ^
+    216|   })
+    217|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (b) client price_old is ignored: unchanged price + payload price_old 5 writes null
+AssertionError: expected "vi.fn()" to be called with arguments: [ Array(1) ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   ObjectContaining {
+-     "price_old": null,
++   {
++     "currency": "EUR",
++     "listing_type": "sale",
++     "price": 80000,
++     "price_old": 5,
++     "property_type": "apartment",
++     "title": "My apartment",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:228:24
+    226|     await updateListing(LISTING_ID, { ...PARSED_DATA, price_old: 5, im…
+    227|
+    228|     expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ …
+       |                        ^
+    229|   })
+    230|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (c) currency change writes price_old null
+AssertionError: expected "vi.fn()" to be called with arguments: [ Array(1) ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   ObjectContaining {
+-     "price_old": null,
++   {
++     "currency": "EUR",
++     "listing_type": "sale",
++     "price": 80000,
++     "property_type": "apartment",
++     "title": "My apartment",
+    },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:241:24
+    239|     await updateListing(LISTING_ID, { ...PARSED_DATA, price: 80000, cu…
+    240|
+    241|     expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ …
+       |                        ^
+    242|   })
+    243| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 9 passed (13)
+   Start at  00:13:10
+   Duration  1.10s (transform 136ms, setup 178ms, import 76ms, tests 76ms, environment 1.42s)
+

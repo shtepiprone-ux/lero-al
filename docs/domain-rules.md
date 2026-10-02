@@ -170,6 +170,7 @@ Track this as a follow-up task in `docs/backlog.md §Follow-ups`.
 ## Listing Features
 - Badges: New (`created_at > now() - interval '7 days'`), Premium (`is_premium = true`), Price reduced (`price_old IS NOT NULL AND price < price_old`), Archived (`status IN ('sold', 'rented', 'archived')`).
 - Price: always show the current price; if `price_old IS NOT NULL` and `price < price_old`, also show the old price as struck through; display prices in ALL and EUR.
+- `price_old` is server-owned. `updateListing` sets it with `computeNextPriceOld` (`src/modules/listings/domain/priceOld.ts`): the highest earlier price while the current price is below it, null after a raise to or above it or a currency change; create stores null; a client value is ignored (Sprint 88 D88-2/D88-3, Task 917).
 - Currency: ALL (default) and EUR; exchange rate is fetched from iliria98.com daily.
 - Full text search via Postgres tsvector (GIN index).
 - Unique views tracking via ip_hash (privacy-safe).

@@ -97,6 +97,15 @@ describe('createListing — smoke tests (Task 442)', () => {
     )
   })
 
+  it('price_old is server-owned: payload price_old 123456 → inserted price_old null (Task 917)', async () => {
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA, price_old: 123456 } })
+
+    const { createListing } = await import('../createListing')
+    await createListing({ ...PARSED_DATA, price_old: 123456, images: [] } as unknown as Parameters<typeof createListing>[0])
+
+    expect(mockListingsInsert).toHaveBeenCalledWith(expect.objectContaining({ price_old: null }))
+  })
+
   it('validation_failed: schema rejects payload → { error: "validation_failed" }', async () => {
     mockSafeParse.mockReturnValue({ success: false, error: { issues: [] } })
 

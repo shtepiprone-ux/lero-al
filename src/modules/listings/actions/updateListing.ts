@@ -8,6 +8,7 @@ import { listingSchema } from '@/modules/listings/validations'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
 import type { ListingInput } from '@/modules/listings/validations'
 import { checkEditPermission } from '@/modules/listings/domain/listingPermissions'
+import { computeNextPriceOld } from '@/modules/listings/domain/priceOld'
 import type { ListingStatus } from '@/types/database'
 import { routing } from '@/i18n/routing'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
@@ -30,7 +31,7 @@ export async function updateListing(
 
   const { data: existing } = await supabase
     .from('listings')
-    .select('id, slug, user_id, status')
+    .select('id, slug, user_id, status, price, price_old, currency')
     .eq('id', listingId)
     .single()
 
@@ -59,7 +60,14 @@ export async function updateListing(
 
   const { error: updateError } = await supabase
     .from('listings')
-    .update(parsed.data)
+    .update({
+      ...parsed.data,
+      // price_old is server-owned (Sprint 88 D88-2/D88-3): a client value never reaches the DB.
+      price_old: computeNextPriceOld({
+        prev: { price: existing.price, priceOld: existing.price_old, currency: existing.currency },
+        next: { price: parsed.data.price, currency: parsed.data.currency },
+      }),
+    })
     .eq('id', listingId)
 
   if (updateError) {

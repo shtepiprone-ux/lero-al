@@ -1,0 +1,33 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 1: prev 100000 / old null → next 90000 (currency change false) = 100000 1ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 2: prev 90000 / old 100000 → next 80000 (currency change false) = 100000 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 3: prev 100000 / old 120000 → next 90000 (currency change false) = 120000 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 4: prev 90000 / old 100000 → next 95000 (currency change false) = 100000 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 5: prev 90000 / old 100000 → next 100000 (currency change false) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 6: prev 90000 / old 100000 → next 110000 (currency change false) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 7: prev 90000 / old 100000 → next 80000 (currency change true) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 8: prev 100000 / old null → next 100000 (currency change false) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 9: prev 100000 / old null → next 110000 (currency change false) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 10: prev 100000 / old 80000 → next 100000 (currency change false) = null 0ms
+ ✓ src/modules/listings/domain/priceOld.test.ts > computeNextPriceOld — Task 917 rule table > row 11: prev 100000 / old 100000 → next 90000 (currency change false) = 100000 0ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > happy path: valid payload → { slug }, status:pending inserted, user_id pinned 37ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > price_old is server-owned: payload price_old 123456 → inserted price_old null (Task 917) 1ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > validation_failed: schema rejects payload → { error: "validation_failed" } 0ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > unauthenticated: no session → { error: "unauthenticated" } 0ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4) 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > happy path: owner edit → { slug, status } returned, update called once 36ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > not_found: listing does not exist → { error: "not_found" }, no DB update 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > validation_failed: schema rejects payload → { error: "validation_failed" } 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > unauthenticated: no session → { error: "unauthenticated" } 0ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > update DB error → { error: message } + console.error logged (Guard 4) 2ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (a) lowered price: stored 100000/null → price 90000 writes price_old 100000 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (b) client price_old is ignored: unchanged price + payload price_old 5 writes null 0ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (c) currency change writes price_old null 0ms
+
+ Test Files  3 passed (3)
+      Tests  24 passed (24)
+   Start at  00:13:26
+   Duration  1.06s (transform 215ms, setup 261ms, import 136ms, tests 87ms, environment 2.24s)
+

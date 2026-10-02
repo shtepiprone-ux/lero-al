@@ -179,3 +179,65 @@ describe('updateListing — smoke tests (Task 442)', () => {
     consoleSpy.mockRestore()
   })
 })
+
+describe('updateListing — server-owned price_old (Task 917)', () => {
+  function capturedUpdate() {
+    const updateMock = vi.fn().mockReturnValue({ eq: mockListingsUpdateEq })
+    mockFrom.mockImplementation((table: string) => {
+      if (table === 'listings') {
+        return {
+          select: vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ single: mockListingsSingle }) }),
+          update: updateMock,
+        }
+      }
+      if (table === 'listing_images') {
+        return {
+          select: vi.fn().mockReturnValue({ eq: mockImagesSelectEq }),
+          delete: vi.fn().mockReturnValue({ eq: mockImagesDeleteEq }),
+          insert: mockImagesInsert,
+        }
+      }
+      return {}
+    })
+    return updateMock
+  }
+
+  it('(a) lowered price: stored 100000/null → price 90000 writes price_old 100000', async () => {
+    mockListingsSingle.mockResolvedValue({
+      data: { ...EXISTING_LISTING, price: 100000, price_old: null, currency: 'EUR' },
+    })
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA, price: 90000 } })
+    const updateMock = capturedUpdate()
+
+    const { updateListing } = await import('../updateListing')
+    await updateListing(LISTING_ID, { ...PARSED_DATA, price: 90000, images: [] } as unknown as Parameters<typeof updateListing>[1])
+
+    expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ price: 90000, price_old: 100000 }))
+  })
+
+  it('(b) client price_old is ignored: unchanged price + payload price_old 5 writes null', async () => {
+    mockListingsSingle.mockResolvedValue({
+      data: { ...EXISTING_LISTING, price: 80000, price_old: null, currency: 'EUR' },
+    })
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA, price_old: 5 } })
+    const updateMock = capturedUpdate()
+
+    const { updateListing } = await import('../updateListing')
+    await updateListing(LISTING_ID, { ...PARSED_DATA, price_old: 5, images: [] } as unknown as Parameters<typeof updateListing>[1])
+
+    expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ price_old: null }))
+  })
+
+  it('(c) currency change writes price_old null', async () => {
+    mockListingsSingle.mockResolvedValue({
+      data: { ...EXISTING_LISTING, price: 100000, price_old: 120000, currency: 'ALL' },
+    })
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA, price: 80000, currency: 'EUR' } })
+    const updateMock = capturedUpdate()
+
+    const { updateListing } = await import('../updateListing')
+    await updateListing(LISTING_ID, { ...PARSED_DATA, price: 80000, currency: 'EUR', images: [] } as unknown as Parameters<typeof updateListing>[1])
+
+    expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ price_old: null }))
+  })
+})

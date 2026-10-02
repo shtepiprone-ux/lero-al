@@ -229,7 +229,7 @@ evidence that a child component has a canonical visual contract.
    hardened.
    Task 869 reached the owner with a 30px title and a 36px body heading at 320px, which is how this rule was born.
 9. **GR-3e (owner rule 2026-10-02).** Before handing the matrix to the owner, list every visible text button in every
-   matrix Story at 390 and 1440. Any two that share a row is `NEEDS REVISION`. Task 857 reached the owner with "View
+   popup of every matrix Story at 390 and 1440 (popups only, owner clarification 2026-10-02). Any two that share a row is `NEEDS REVISION`. Task 857 reached the owner with "View
    listing" and "Open public page" side by side, which is how this rule was born.
 10. **GR-3f (owner rule 2026-10-02).** Before handing the matrix to the owner, take a device-scale-1 crop of every
     changed circular control or indicator, scale it 10× with `image-rendering: pixelated`, and look at it. Any of these is

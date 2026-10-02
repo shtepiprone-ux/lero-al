@@ -1,0 +1,1497 @@
+{
+  "platform": "win32 v22.22.3",
+  "cells": [
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--visible-filter",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminlistingsview--paginated",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminreportsview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrenciesview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Shikime të regjistruara",
+          "top": 1503,
+          "bottom": 1547,
+          "left": 37
+        },
+        {
+          "label": "Klikime WhatsApp",
+          "top": 1555,
+          "bottom": 1599,
+          "left": 37
+        },
+        {
+          "label": "Kërkesa nga formulari",
+          "top": 1607,
+          "bottom": 1651,
+          "left": 37
+        },
+        {
+          "label": "Të dukshme · 12",
+          "top": 3072,
+          "bottom": 3116,
+          "left": 37
+        },
+        {
+          "label": "Kërkojnë veprim · 4",
+          "top": 3124,
+          "bottom": 3168,
+          "left": 37
+        },
+        {
+          "label": "Jo të dukshme · 6",
+          "top": 3176,
+          "bottom": 3220,
+          "left": 37
+        },
+        {
+          "label": "Modifiko",
+          "top": 3571,
+          "bottom": 3615,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 3959,
+          "bottom": 4003,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 4347,
+          "bottom": 4391,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 4736,
+          "bottom": 4780,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 5090,
+          "bottom": 5134,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 5444,
+          "bottom": 5488,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 5798,
+          "bottom": 5842,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 6152,
+          "bottom": 6196,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 6506,
+          "bottom": 6550,
+          "left": 248
+        },
+        {
+          "label": "Modifiko",
+          "top": 6860,
+          "bottom": 6904,
+          "left": 248
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [
+        {
+          "label": "Shikime të regjistruara",
+          "top": 928,
+          "bottom": 972,
+          "left": 45
+        },
+        {
+          "label": "Klikime WhatsApp",
+          "top": 928,
+          "bottom": 972,
+          "left": 254
+        },
+        {
+          "label": "Kërkesa nga formulari",
+          "top": 928,
+          "bottom": 972,
+          "left": 433
+        },
+        {
+          "label": "Të dukshme · 12",
+          "top": 1362,
+          "bottom": 1406,
+          "left": 712
+        },
+        {
+          "label": "Kërkojnë veprim · 4",
+          "top": 1414,
+          "bottom": 1458,
+          "left": 712
+        },
+        {
+          "label": "Jo të dukshme · 6",
+          "top": 1466,
+          "bottom": 1510,
+          "left": 712
+        },
+        {
+          "label": "Modifiko",
+          "top": 1749,
+          "bottom": 1793,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 1842,
+          "bottom": 1886,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 1935,
+          "bottom": 1979,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2028,
+          "bottom": 2072,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2121,
+          "bottom": 2165,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2215,
+          "bottom": 2259,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2308,
+          "bottom": 2352,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2401,
+          "bottom": 2445,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2494,
+          "bottom": 2538,
+          "left": 870
+        },
+        {
+          "label": "Modifiko",
+          "top": 2587,
+          "bottom": 2631,
+          "left": 870
+        }
+      ],
+      "shared": [
+        [
+          "Shikime të regjistruara",
+          "Klikime WhatsApp"
+        ],
+        [
+          "Shikime të regjistruara",
+          "Kërkesa nga formulari"
+        ],
+        [
+          "Klikime WhatsApp",
+          "Kërkesa nga formulari"
+        ]
+      ],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Shikime të regjistruara",
+          "top": 908,
+          "bottom": 952,
+          "left": 45
+        },
+        {
+          "label": "Klikime WhatsApp",
+          "top": 908,
+          "bottom": 952,
+          "left": 254
+        },
+        {
+          "label": "Kërkesa nga formulari",
+          "top": 908,
+          "bottom": 952,
+          "left": 433
+        },
+        {
+          "label": "Të dukshme · 12",
+          "top": 1324,
+          "bottom": 1368,
+          "left": 989
+        },
+        {
+          "label": "Kërkojnë veprim · 4",
+          "top": 1376,
+          "bottom": 1420,
+          "left": 989
+        },
+        {
+          "label": "Jo të dukshme · 6",
+          "top": 1428,
+          "bottom": 1472,
+          "left": 989
+        },
+        {
+          "label": "Modifiko",
+          "top": 1711,
+          "bottom": 1755,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 1804,
+          "bottom": 1848,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 1897,
+          "bottom": 1941,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 1990,
+          "bottom": 2034,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2083,
+          "bottom": 2127,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2177,
+          "bottom": 2221,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2270,
+          "bottom": 2314,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2363,
+          "bottom": 2407,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2456,
+          "bottom": 2500,
+          "left": 1286
+        },
+        {
+          "label": "Modifiko",
+          "top": 2549,
+          "bottom": 2593,
+          "left": 1286
+        }
+      ],
+      "shared": [
+        [
+          "Shikime të regjistruara",
+          "Klikime WhatsApp"
+        ],
+        [
+          "Shikime të regjistruara",
+          "Kërkesa nga formulari"
+        ],
+        [
+          "Klikime WhatsApp",
+          "Kërkesa nga formulari"
+        ]
+      ],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Зафіксовані перегляди",
+          "top": 1503,
+          "bottom": 1547,
+          "left": 37
+        },
+        {
+          "label": "Кліки WhatsApp",
+          "top": 1555,
+          "bottom": 1599,
+          "left": 37
+        },
+        {
+          "label": "Запити з форми",
+          "top": 1607,
+          "bottom": 1651,
+          "left": 37
+        },
+        {
+          "label": "Видимі · 12",
+          "top": 3072,
+          "bottom": 3116,
+          "left": 37
+        },
+        {
+          "label": "Потребують дій · 4",
+          "top": 3124,
+          "bottom": 3168,
+          "left": 37
+        },
+        {
+          "label": "Не видимі · 6",
+          "top": 3176,
+          "bottom": 3220,
+          "left": 37
+        },
+        {
+          "label": "Редагувати",
+          "top": 3571,
+          "bottom": 3615,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 3979,
+          "bottom": 4023,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 4368,
+          "bottom": 4412,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 4756,
+          "bottom": 4800,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 5144,
+          "bottom": 5188,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 5518,
+          "bottom": 5562,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 5872,
+          "bottom": 5916,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 6260,
+          "bottom": 6304,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 6614,
+          "bottom": 6658,
+          "left": 231
+        },
+        {
+          "label": "Редагувати",
+          "top": 6968,
+          "bottom": 7012,
+          "left": 231
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [
+        {
+          "label": "Зафіксовані перегляди",
+          "top": 928,
+          "bottom": 972,
+          "left": 45
+        },
+        {
+          "label": "Кліки WhatsApp",
+          "top": 928,
+          "bottom": 972,
+          "left": 263
+        },
+        {
+          "label": "Запити з форми",
+          "top": 928,
+          "bottom": 972,
+          "left": 431
+        },
+        {
+          "label": "Видимі · 12",
+          "top": 1362,
+          "bottom": 1406,
+          "left": 712
+        },
+        {
+          "label": "Потребують дій · 4",
+          "top": 1414,
+          "bottom": 1458,
+          "left": 712
+        },
+        {
+          "label": "Не видимі · 6",
+          "top": 1466,
+          "bottom": 1510,
+          "left": 712
+        },
+        {
+          "label": "Редагувати",
+          "top": 1749,
+          "bottom": 1793,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 1842,
+          "bottom": 1886,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 1935,
+          "bottom": 1979,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2028,
+          "bottom": 2072,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2121,
+          "bottom": 2165,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2215,
+          "bottom": 2259,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2308,
+          "bottom": 2352,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2401,
+          "bottom": 2445,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2494,
+          "bottom": 2538,
+          "left": 853
+        },
+        {
+          "label": "Редагувати",
+          "top": 2587,
+          "bottom": 2631,
+          "left": 853
+        }
+      ],
+      "shared": [
+        [
+          "Зафіксовані перегляди",
+          "Кліки WhatsApp"
+        ],
+        [
+          "Зафіксовані перегляди",
+          "Запити з форми"
+        ],
+        [
+          "Кліки WhatsApp",
+          "Запити з форми"
+        ]
+      ],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-agentstatisticsview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Зафіксовані перегляди",
+          "top": 908,
+          "bottom": 952,
+          "left": 45
+        },
+        {
+          "label": "Кліки WhatsApp",
+          "top": 908,
+          "bottom": 952,
+          "left": 263
+        },
+        {
+          "label": "Запити з форми",
+          "top": 908,
+          "bottom": 952,
+          "left": 431
+        },
+        {
+          "label": "Видимі · 12",
+          "top": 1324,
+          "bottom": 1368,
+          "left": 989
+        },
+        {
+          "label": "Потребують дій · 4",
+          "top": 1376,
+          "bottom": 1420,
+          "left": 989
+        },
+        {
+          "label": "Не видимі · 6",
+          "top": 1428,
+          "bottom": 1472,
+          "left": 989
+        },
+        {
+          "label": "Редагувати",
+          "top": 1711,
+          "bottom": 1755,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 1804,
+          "bottom": 1848,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 1897,
+          "bottom": 1941,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 1990,
+          "bottom": 2034,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2083,
+          "bottom": 2127,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2177,
+          "bottom": 2221,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2270,
+          "bottom": 2314,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2363,
+          "bottom": 2407,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2456,
+          "bottom": 2500,
+          "left": 1269
+        },
+        {
+          "label": "Редагувати",
+          "top": 2549,
+          "bottom": 2593,
+          "left": 1269
+        }
+      ],
+      "shared": [
+        [
+          "Зафіксовані перегляди",
+          "Кліки WhatsApp"
+        ],
+        [
+          "Зафіксовані перегляди",
+          "Запити з форми"
+        ],
+        [
+          "Кліки WhatsApp",
+          "Запити з форми"
+        ]
+      ],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admininquiriesview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpermissionsview--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-admincurrencytabs--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Përdoruesit",
+          "top": 96,
+          "bottom": 140,
+          "left": 24
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [
+        {
+          "label": "Përdoruesit",
+          "top": 104,
+          "bottom": 148,
+          "left": 272
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Përdoruesit",
+          "top": 104,
+          "bottom": 148,
+          "left": 360
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Користувачі",
+          "top": 96,
+          "bottom": 140,
+          "left": 24
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [
+        {
+          "label": "Користувачі",
+          "top": 104,
+          "bottom": 148,
+          "left": 272
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Користувачі",
+          "top": 104,
+          "bottom": 148,
+          "left": 360
+        }
+      ],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "patterns-mantine-adminpageframe--shell",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-table--cards-below-lg",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "sq",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "uk",
+      "w": 1024,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "shared": [],
+      "overflowX": false
+    }
+  ]
+}

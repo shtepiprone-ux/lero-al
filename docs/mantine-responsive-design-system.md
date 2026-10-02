@@ -1321,12 +1321,45 @@ Rules that apply in every state:
 
 - **A choice is a control, not a row of buttons.** Mutually exclusive options (a status, a duration, a period) use `MantineSelect` / `StatusChangeSelect` / `SegmentedControl` / `Radio`. A button means "do this now".
 - **No accent colour on a button.** Colour on a button means primary or destructive only. Semantic or brand-adjacent colours, such as `--badge-premium` or a status colour per action, belong to `Badge`s and icons.
-- **Placement, from 640px:** footer row. Destructive on the left. Secondary and primary on the right, with primary rightmost. Tertiary text buttons go in the body, next to the content they act on, or at the left of the footer.
+- **Placement (superseded 2026-10-02 by §23.7 for every dialog on the canonical anatomy):** the footer is `MantineDialogFooter`, an equal-width pair at every width, with the secondary on the left and the primary on the right. Navigation goes in the body as `MantineNavRowList` rows, not as text buttons. Until Task 915 migrates a dialog, the old placement below still describes it: from 640px a footer row, destructive left, primary rightmost.
 - **Text buttons stack (GR-3e, owner rule 2026-10-02).** Two or more text buttons never share a row, at any width. They form a `Stack gap="xs" align="flex-start"`, one per row. A lone resting destructive text button stays at the left of the footer.
 - **Placement, below 640px:** stacked and full-width, at least 44px tall: primary first, then secondary, then destructive. Tertiary buttons stay text buttons.
 - **Labels are verbs from i18n.** No literal "OK".
 
 **Existing dialogs.** Bringing every `MantineModal` consumer that predates this rule into line is **Task 915**. Until it lands, a review applies this section to every dialog a task creates or changes.
+
+### §23.7 — Dialog anatomy (owner rule, 2026-10-02)
+
+**Owner, verbatim (Task 857, O78-12 return):** *"мені всеодно не подобається хаос у попапі … Немає чіткої ієрархії, немає
+чіткого UX"*, then *"я хочу, щоб ти зробив UI/UX такий, як на прикладах, які я тобі надав!"*. The references are kept in
+`docs/sessions/evidence/task857/110-*`:
+- `110-ref-timeline-sharing.png`, `110-ref-payment-share.png` and `110-ref-truefi-set.png` (dialog sets);
+- `110-ref-tailadmin-modal-1440.png` and `-390.png` (demo.tailadmin.com/modals);
+- `110-ref-lahomes-grid.png` and `-details.png` (the Lahomes real-estate admin).
+
+The root cause was structural. `MantineModal` offered only title, body and footer, with no header description, no
+dividers, no sections and no detail block, so every dialog improvised its own layout.
+
+Every dialog on the anatomy is built only from these parts, top to bottom:
+
+| Part | Canonical source | What the references show |
+|---|---|---|
+| **Header** | `MantineModal` with `structured` | Optional icon tile (`ThemeIcon variant="light"`, 40px, radius md). Title 18px/600 (`fz="lg"`), clamped to 2 lines. Optional description 14px dimmed (`fz="sm"`). A round gray close button top-right (`ActionIcon variant="light" color="gray" radius="xl"`). A full-bleed divider below. |
+| **Sections** | `MantineDialogSections` / `MantineDialogSection` | Each section has an optional title (16px/500) and description (14px dimmed), then its content. Full-bleed dividers separate the sections. |
+| **Summary of an entity** | the entity's own canonical pattern | A listing is `MantineListingCardPattern layout="list"`: photo, badges, title, features and price (Lahomes). |
+| **Facts** | `MantineDetailList` | A tinted panel (gray-0, radius md). One row per fact, with the label on the left (14px dimmed) and the value on the right (14px/500). |
+| **Navigation** | `MantineNavRowList` | Full-width rows in one bordered list: icon tile, label, optional description, and a trailing chevron (or an external-link arrow). Each row is at least 56px tall. Each row has its own line, so GR-3e is met by construction. |
+| **A choice** | `Radio.Card` (theme `RadioCard` + `RadioIndicator` entries) | Bordered cards, each with a title and an optional description. The checked card has a brand border and a brand-0 tint. The indicator is the canonical 20px circle with a 10px dot (GR-3f). |
+| **Footer** | `MantineDialogFooter` | A full-bleed divider above. Then at most two buttons of equal width, **at every width** (TailAdmin 390): the secondary (`variant="default"`) on the left and the primary (filled) on the right, at least 44px tall. A single button spans the full width. A resting destructive action in the secondary slot is `variant="default"` with a red icon and label (`c="red.7"`). It is never outline or filled red, because the brand colour is red too. The confirm step's destructive primary is filled `color="red"`. |
+
+Rules:
+- **Nothing outside these parts.** No caption-over-value grids, no floating text buttons in the body, and no third footer
+  button. A third action is a `MantineNavRowList` row.
+- **Below 640px** the dialog is still the `ResponsiveBottomSheet` (§23.4). The same parts render in the same order, and
+  the footer keeps its equal-width pair.
+- `MantineModal`'s `structured` prop opts a dialog into the anatomy. Task 915 moves every other consumer onto it, then
+  makes it the default and deletes the prop.
+- Proof: `Mantine/Primitives/Modal` `Structured`, plus the Stories of each part (Task 857 Revision 7).
 
 ---
 

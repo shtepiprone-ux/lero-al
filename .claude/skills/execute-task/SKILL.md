@@ -189,7 +189,8 @@ For every changed user-visible UI component, work from the lowest visible unit u
      16/16/32/32) or the component's own production values. A side at 0 fails, whatever the other three measure. Emit one `GR-3d STORY GUTTER CHECK` receipt per Story (`docs/golden-rules.md`). A missing
      receipt for any owner-matrix Story is `BLOCKED — GR-3d`.
 8. **GR-3e, blocking (owner rule 2026-10-02).** Two or more text buttons (a labelled `Button` with `variant="subtle"` or
-   `"transparent"`, or an `Anchor` used as an action) never share a row, at any width. Put them in a
+   `"transparent"`, or an `Anchor` used as an action) inside a popup (modal, drawer, bottom sheet, popover, menu; owner
+   clarification 2026-10-02) never share a row, at any width. Put them in a
    `Stack gap="xs" align="flex-start"`, one per row. A lone text button may stay where §23.6 places it beside non-text
    buttons. Check every changed Story at 390/1440 and emit one `GR-3e TEXT BUTTONS STACKED` receipt per Story.
 9. **GR-3f, blocking (owner rule 2026-10-02).** A circle must render as a circle. For every changed circular control

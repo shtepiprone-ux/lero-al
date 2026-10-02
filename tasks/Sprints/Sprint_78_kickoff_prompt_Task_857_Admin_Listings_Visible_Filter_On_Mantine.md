@@ -1215,3 +1215,255 @@ Write the hash-object line of every Revision 6 file to `106s-hash-object-r6.txt`
 The §21.7 matrix stays, at 72 tuples, plus `PremiumDialogView` `Saving` × sq × 390 and 1440 if it is not already a row.
 Before the owner sees it, Opus re-measures GR-3b/3c/3d/3e and §7.3 for every Story in the matrix, and looks at
 `107-radio-states-r6.png` for GR-3f.
+
+---
+
+## 23. Review 7 — `PARTIALLY VERIFIED`, 2026-10-02: Revision 6 verified, owner matrix O78-12 owed
+
+No executor work remains. The only open criterion is the owner's visual review of O78-12 (§23.2, 74 tuples).
+
+### 23.1 Verified by Opus
+
+- **Source.** The only Revision 6 change is the Radio block of `input-chrome.css` (R40: a (0,5,0) focus rule that
+  excludes `[data-error]`; R41: four disabled rules on theme variables). It has no `!important`. The shipped hashes equal
+  `106s-hash-object-r6.txt`. `theme.ts`, `Radio.stories.tsx` and `ListingPreviewDialogView.tsx` are unchanged from
+  their Revision 5 hashes. `storybook-static` was built after the CSS write.
+- **AC23.** Opus measured it independently in `109-opus-review7.{mjs,json}` (`win32` v22.22.3, 1440 sq):
+  - keyboard focus on radio 3: border `rgb(236, 84, 71)` plus the ring;
+  - keyboard focus on the error radio 4: border `rgb(217, 45, 32)` plus the red ring;
+  - mouse focus: no ring;
+  - disabled checked (`Default` 7 and `Saving` 1): bg and border brand-7, dot 10×10, white, opacity 1, root 0.5;
+  - disabled unchecked: white with a gray-3 border, root 0.5;
+  - radios 1, 2, 5 and 8 are identical to `105b`.
+- **GR-3f.** `107-radio-states-r6.png` reads as circles in all 13 crops.
+- **Gates.** The `106*-r6` exit codes are as expected: four calibration census lines, the four 790 tests, and 0 for the
+  rest.
+- **GR-3e over the whole matrix.** Measured in `109b-opus-matrix-gr3e.{mjs,json}`: 17 non-dialog Stories × sq/uk ×
+  390/1024/1440, with the dialogs in `105-opus-review6.json`. No popup has two text buttons in one row.
+  - The only shared row is the chart legend in `AgentStatisticsView` (`MantineDashboardChartLegend`) at 1024/1440.
+  - That legend is page content, not a popup. The owner clarified on 2026-10-02, verbatim: *"я тобі писав про кнопки у
+    попапах"*. GR-3e and the three skills now say "popups only".
+- **GR-3b/3c/3d and §7.3.** Review 5's 247-cell measurement (`100-opus-review5-*`) still holds for every Story in the
+  matrix. Revisions 5 and 6 changed only the two dialogs and the radio. Opus re-measured those in `105-*` and `109-*`:
+  no overflow, and the modal titles are 16px.
+
+### 23.2 Owner matrix O78-12 — the complete list (74 tuples)
+
+| Story | States | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `Patterns/Mantine/AdminListingsView` | `Default`, `VisibleFilter`, `HiddenEligible`, `Paginated` | sq, uk | 390, 1440 | 16 |
+| `Patterns/Mantine/AdminListingsView` `Default` | — | en, it | 1024 | 2 |
+| `Patterns/Mantine/AdminListingsView` `Default` | — | uk | 1024 | 1 |
+| `Patterns/Mantine/ListingPreviewDialogView` | `Active`, `SoldStatusActions`, `DeleteConfirm`, `Premium` | sq, uk (`Premium`: sq) | 390, 1440 | 14 |
+| `Patterns/Mantine/PremiumDialogView` | `NotPremium`, `Premium`, `CustomDate`, `Saving` | sq | 390, 1440 | 8 |
+| `AdminUsersTable`, `AdminExchangeProvidersView`, `AdminPagesView`, `AdminReportsView`, `AdminCurrenciesView`, `AgentStatisticsView` | `Default` | sq, uk | 1024, 1440 | 24 |
+| `AgentStatisticsView` `Default` | — | uk | 768 | 1 |
+| `AdminInquiriesView`, `AdminPermissionsView`, `AdminUserProfileView` (`View`), `AdminCurrencyTabs`, `AdminPageFrame` (`Shell`) | `Default` / named | sq | 1440 | 5 |
+| `Mantine/Primitives/Table` `CardsBelowLg` | — | sq | 1024 | 1 |
+| `Mantine/Primitives/Radio` `Default` | — | sq | 390, 1440 | 2 |
+
+**On acceptance:** Opus approves 857, archives it, and emits the commit and push handoff. **On a return:** Opus writes
+the next revision section.
+
+---
+
+## 24. Owner return on O78-12, 2026-10-02 → `NEEDS REVISION`, Revision 7 (the dialogs on the canonical dialog anatomy)
+
+### 24.1 Owner return and decision (verbatim)
+
+- On `ListingPreviewDialogView` (`110-owner-return-current-dialog.png`): *"мені всеодно не подобається хаос у попапі.
+  … Немає чіткої ієрархії, немає чіткого UX … Подивись … як взагалі має бути з нормальним UI/UX!"*. The owner sent
+  references (`110-ref-timeline-sharing.png`, `110-ref-payment-share.png`, `110-ref-truefi-set.png`), then
+  https://demo.tailadmin.com/ and https://techzaa.in/lahomes/admin/property-grid.html. Opus captured the latter two as
+  `110-ref-tailadmin-modal-{1440,390}.png` and `110-ref-lahomes-{grid,details}.png` (scripts `110-ref-capture.mjs`
+  and `110b-ref-capture.mjs`).
+- Decision: *"я хочу, щоб ти зробив UI/UX такий, як на прикладах, які я тобі надав!"*.
+- Opus turned the references into the binding rule `docs/mantine-responsive-design-system.md` **§23.7 "Dialog
+  anatomy"**, and amended §23.6's placement bullet to point at it. **§23.7 is the visual source of this revision.**
+  Its parts table names every value. Do not take a value from anywhere else.
+- Scope, chosen by Opus under the owner's instruction (reversible): 857 builds the anatomy and moves its own two dialogs
+  onto it. Task 915 moves the other `MantineModal` consumers (its reserved row is updated in the same edit).
+
+### 24.2 Measured causes (Opus)
+
+- **Structural.** `MantineModal.tsx` accepts only `title`, `children` and `footer`. The repository has no dialog
+  header description, no dialog divider, no dialog section, no detail list and no navigation row. Searched
+  `src/design-system/mantine/patterns/` (63 files) and `src/stories`. Every dialog therefore improvises:
+  `ReportDetailDialogView.tsx:189-253` repeats the same caption-over-value grid as `ListingPreviewDialogView.tsx:133-167`.
+- **`ListingPreviewDialogView` today (`110-owner-return-current-dialog.png`, 1340px):**
+  - an editable control (the status select) sits inside a grid of read-only facts;
+  - six facts are small captions over values, with no grouping;
+  - two text buttons float in the body with 44px rows and no container;
+  - three footer buttons have three different weights;
+  - the listing itself (photo, place, features) is absent. The admin query selects no image, address or features
+    (`src/app/admin/listings/page.tsx:60-63`).
+- **`PremiumDialogView` today:** the listing title is plain dimmed text, the durations are bare radios with no card or
+  description, and the footer holds three buttons of different weights.
+- **References:**
+  - every dialog has a header with an optional icon tile, a title and a muted description, then a divider;
+  - sections are separated by dividers;
+  - facts are label-left / value-right rows on a tinted panel (`110-ref-truefi-set.png` "Withdraw");
+  - navigation is full-width rows with an arrow (`110-ref-truefi-set.png` "Metamask →");
+  - a choice is a bordered radio card with a description, and the checked card is tinted (`110-ref-payment-share.png`);
+  - the footer is an equal-width `[secondary][primary]` pair, even at 390 (`110-ref-tailadmin-modal-390.png`);
+  - a listing is shown by photo, badge, title, place, feature chips and price (`110-ref-lahomes-*.png`).
+
+### 24.3 Canonical UI decision record (GR-0)
+
+| Visible artifact | Searched / inspected | Disposition | Canonical owner and Story |
+|---|---|---|---|
+| Dialog header (icon tile, title, description, round close) and the header and footer dividers | `MantineModal.tsx`; `responsiveBottomSheet.tsx:127-172`; theme `Modal` entry (`theme.ts:1271-1276`); `Modal.stories.tsx` | **EXTEND** | `MantineModal`: new optional props `structured?: boolean`, `description?: ReactNode`, `icon?: ReactNode`. `ResponsiveBottomSheet`: new optional `header?: ReactNode`, which replaces its 14px title `Text` when given and keeps the existing divider and drag handle. Story: `Mantine/Primitives/Modal`, new export `Structured`. |
+| Dialog sections | no section primitive exists; `MantineFormSection` (`MantineFormSectionStack.tsx:20-33`) is a bordered page card, not a dialog section | **CREATE** | `src/design-system/mantine/patterns/MantineDialogSections.tsx` (`MantineDialogSections`, `MantineDialogSection`). Story: `Patterns/Mantine/DialogSections`. |
+| Facts panel | `MantineDataTableToCards.tsx:386-399` meta rows (label left / value right inside a table card, with no panel) | **CREATE**, reusing that row rhythm | `MantineDetailList.tsx`. Story: `Patterns/Mantine/DetailList`. |
+| Navigation rows | none in the patterns; `MantineDashboardWorkList` is a dashboard card list | **CREATE** | `MantineNavRowList.tsx`. Story: `Patterns/Mantine/NavRowList`. |
+| Radio cards | Mantine 8 ships `Radio.Card` and `Radio.Indicator` (`node_modules/@mantine/core/esm/components/Radio/RadioCard`, `RadioIndicator`); the theme has no entry for either | **EXTEND** the theme | `theme.ts` `RadioCard` and `RadioIndicator` entries. The indicator is 20px with a 10px dot, like the `Radio` entry (GR-3f). Story: `Mantine/Primitives/Radio`, new export `Card`. |
+| Dialog footer | `MantineResponsiveActionFooter` (a sticky page footer with an inline `style`, not a dialog footer) | **CREATE** | `MantineDialogFooter.tsx`. Story: `Patterns/Mantine/DialogFooter`. |
+| Listing summary in the dialog | `MantineListingCardPattern` `layout="list"` (`:61-113`); `getCardFeatures` (`presentationEngine.ts:93`); `ListingCard.tsx:137-210` (the list-row mapper); `AppImage` `listing-thumb` | **REUSE** | No new chrome. The dialog passes `image`, `badges`, `features`, `data` and `isPremium`, with no `onClick`, `favorite` or `footerActions`. |
+
+`new hardcoded visual values: NONE`. Every value in §23.7 is a theme key (`fz`, `c`, `radius`, `variant`) or an existing
+token. Write the GR-0 and GR-3a receipts for each row above.
+
+### 24.4 Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R44** | **`MantineModal` `structured` (§23.7 Header and Footer).** <br>• From 640px, the header renders as follows. The optional `icon` sits in a `ThemeIcon variant="light" size="xl" radius="md"` tile. Next to it the title (`fz="lg"`, `fw={600}`, `lineClamp={2}`) and the optional `description` (`fz="sm"`, `c="dimmed"`, `lineClamp={2}`) stack. The close button is `ActionIcon variant="light" color="gray" radius="xl"` with an `X` icon, top-right, and an i18n `aria-label`. Below the header is a full-bleed `Divider`. <br>• The body has the modal's padding. <br>• When `footer` is given, a full-bleed `Divider` comes before it. <br>• Below 640px the same header block (icon, title, description) goes to `ResponsiveBottomSheet` through its new `header` prop. The sheet stays as §23.4 defines it: drag handle, pinned header with divider, scrolling body, and no close button. <br>• Without `structured`, every current consumer renders byte-for-byte as before. Prove this with the Modal `Default` Story and one untouched consumer Story, `ReportDetailDialogView` `Default`: DOM snapshot hashes before and after. | P1 | AC24 |
+| **R45** | **`MantineDialogSections` / `MantineDialogSection`.** <br>• A section has an optional `title` (`fz="md"`, `fw={500}`), an optional `description` (`fz="sm"`, `c="dimmed"`), and `children`, with `gap="sm"`. <br>• `MantineDialogSections` stacks its child sections with a full-bleed `Divider` between them and `py="lg"` inside each. It renders no divider before the first section or after the last. <br>• The dividers run edge to edge inside the structured modal body. The body pads with Mantine's `--mb-padding` (`ModalBase.css:13,50`), so the dividers bleed with `mx="calc(var(--mb-padding, var(--mantine-spacing-md)) * -1)"`. In the sheet they bleed by the `SheetContent` gutter in the same way, through its theme spacing key. A raw px value is not allowed; if neither form works, stop with `BLOCKED — R45 BLEED`. The same rule applies to R44's header and footer dividers. | P1 | AC25 |
+| **R46** | **`MantineDetailList`.** <br>• Props: `items: { label: string; value: ReactNode }[]`. <br>• Renders a `Paper bg="gray.0" radius="md" p="md"` holding a `Stack gap="sm"`. Each row is a `Group justify="space-between" align="flex-start" wrap="nowrap" gap="md"`: the label (`fz="sm"`, `c="dimmed"`) and the value (`fz="sm"`, `fw={500}`, `ta="right"`, allowed to wrap). <br>• At 320px a long value wraps under its own column and never overflows. | P1 | AC25 |
+| **R47** | **`MantineNavRowList`.** <br>• Props: `items: { key; icon: ReactNode; label: string; description?: string; href?: string; external?: boolean; onClick?: () => void }[]`. <br>• Renders one `Paper withBorder radius="md"`, with a `Divider` between rows. <br>• Each row is a full-width `UnstyledButton`. With `href` it renders as `next/link` (`target="_blank"` and `rel="noopener noreferrer"` when `external`). It is at least 56px tall, with `px="md" py="sm"` and a `gray.0` hover background through the theme. <br>• A row contains a `ThemeIcon variant="light" color="gray" size="lg" radius="md"`, the label (`fz="sm"`, `fw={500}`), the optional description (`fz="xs"`, `c="dimmed"`), and a trailing `ChevronRight` (or `ArrowUpRight` when `external`) in `c="dimmed"`. <br>• Each row has a visible focus ring. | P1 | AC25 |
+| **R48** | **`MantineDialogFooter`.** <br>• Props: `primary: ReactNode`, `secondary?: ReactNode`. <br>• With both, renders `SimpleGrid cols={2} spacing="sm"` at every width, secondary first (left). With one, renders it at full width. <br>• The buttons are the caller's, but this footer forces `fullWidth` and `mih` = `theme.other.touchTarget` (44px) through its own wrapper, so a caller cannot break the pair. | P1 | AC25 |
+| **R49** | **Radio cards (theme).** <br>• `RadioCard`: `radius: 'md'`, `withBorder`, `p="md"`. When checked: `border-color` brand-7 and `background` brand-0, in `input-chrome.css`'s Radio block, using theme variables. <br>• `RadioIndicator`: `size: 'sm'` (20px) and `--radio-icon-size: 0.625rem` (10px), with the §6g colours, focus and disabled behaviour of R40/R41. <br>• `Mantine/Primitives/Radio` gets a `Card` export showing three cards (one checked, one with a description, one disabled) under the same caption style. | P1 | AC26 |
+| **R50** | **Listing data for the dialog.** <br>• `src/app/admin/listings/page.tsx`'s select adds `premium_until, address, rooms, bedrooms, bathrooms, area_gross, area_net, floor, total_floors, location:locations(name_al), images:listing_images(url, is_cover, "order")`, following the precedent in `src/modules/cabinet/lib/queries.ts:30`. <br>• `AdminListing` gains the matching optional fields. <br>• The table's columns, filters, counts and pagination do not change. <br>• Add one test to `AdminListingsTable.smoke.test.tsx` (or the page's existing test) that asserts the select string contains `images:listing_images`. | P1 | AC27 |
+| **R51** | **`ListingPreviewDialogView` on the anatomy** (container `ListingPreviewDialog.tsx` maps the data; the View stays presentational). <br>• `MantineModal structured size="lg"`. Title: the listing title. Description: `{typeLabel}` (no icon). <br>• `MantineDialogSections`, in this order: <br>&nbsp;&nbsp;1. **(no title)** `MantineListingCardPattern layout="list"`. `image` is `AppImage variant="listing-thumb"` with the cover (the `is_cover` image, else the first). `data` is title, location (`location.name_al`, else `address`, else empty) and the formatted price. `badges` is the status badge (the existing status label) plus Premium when `is_premium`. `features` come from `getCardFeatures`, mapped with `ListingFeatureIcon` exactly as `ListingCard.tsx:254-257` does. `isPremium` is set. There is no `onClick`, `favorite` or `footerActions`. <br>&nbsp;&nbsp;2. **`t('col_status')`**: `StatusChangeSelect` at full width (`w="100%"`). <br>&nbsp;&nbsp;3. **`t('preview_section_details')`**: `MantineDetailList`. Rows: visibility (the existing green/red `Badge`), agent, created (`RelativeTime`), and Premium (`t('premium_active_until', { date })` from `premium_until`, else `t('premium_inactive')`). <br>&nbsp;&nbsp;4. **(no title)** `MantineNavRowList`. Rows: `Eye` "View listing" (`btn_view`, the admin preview `href`); `ExternalLink` "Open public page" (`btn_open_public`, `external`, only when `!isListingHidden`); `Star` "Manage premium" (`premium_manage`, description = the same Premium state string, `onClick={onPremium}`). <br>• **Footer:** `MantineDialogFooter`. The secondary is Delete: `variant="default"`, `leftSection` `Trash2`, `c="red.7"`, opens the confirm step. The primary is Edit: filled, `Pencil`, the existing edit `href`. <br>• **Confirm step:** the sections become one section, `t('delete_confirm')` with `t('delete_dialog_body')` as its description. The footer becomes `[Cancel (default)][Delete (filled color="red", loading=deleting)]`. The status select is not rendered in this step. <br>• All current behaviour stays: status change and its toasts, premium opening `PremiumDialog`, delete and cancel, the hidden-listing rule, and `target="_blank"` on Edit. | P1 | AC28 |
+| **R52** | **`PremiumDialogView` on the anatomy.** <br>• `MantineModal structured size="md"`, `icon` = `Star` in the tile, title `t('premium_dialog_title')`, description = the listing title. <br>• Sections: <br>&nbsp;&nbsp;1. When `isPremium`: `MantineDetailList` with one row, the Premium state (`premium_active_until`). <br>&nbsp;&nbsp;2. **`t('premium_quick_label')`**: `Radio.Group` of `Radio.Card`s, one per preset plus the custom card (`premium_custom_date`). Each card shows the label. When the custom card is checked, `RangeDatePicker` (unchanged props) renders below the cards. <br>&nbsp;&nbsp;3. When `isPremium`: a section with a lone `Button variant="subtle" color="red"` + `Trash2` "Remove premium" (§23.6, lone destructive text button). <br>• **Footer:** `[Cancel (default)][Save (filled, loading=saving, disabled until a choice)]`. <br>• `saving` disables every card. The disabled checked card shows the §6g disabled look (R41). <br>• The View gains a `premiumUntil: string \| null` prop, which the container passes. | P1 | AC29 |
+| **R53** | **i18n**, under `admin.listings` in all four locales: `preview_section_details` (en "Details", uk "Деталі"), `premium_manage` (en "Manage premium", uk "Керувати Premium"), `premium_active_until` (en "Active until {date}", uk "Активний до {date}"), `premium_inactive` (en "Not premium", uk "Не Premium"). Also add `common.close` if it is missing (for the close button's `aria-label`). Translate sq and it naturally, and the owner reviews them in the matrix. Delete no key that has a live caller. | P1 | AC28, AC29 |
+| **R54** | **Stories.** <br>• Each new pattern gets its own Story file importing it by name (GR-3), with every state listed in R45–R48. Enrol each new `.tsx` in `scripts/mantine-migration-scope.json` (`check:pattern-enrolment`). <br>• `ListingPreviewDialogView.stories.tsx` and `PremiumDialogView.stories.tsx` keep their exports. Their fixtures gain a cover image (an existing Storybook fixture image; reuse the one `ListingCardPattern.stories.tsx` uses), `address`/`location`, the features fields, and `premium_until` in `Premium`. They gain one export each: `NoPhotoNoFeatures` (the listing has no images and no feature fields) and `PremiumActive`. | P1 | AC30 |
+| **R55** | **Receipts:** GR-0, GR-1, GR-2, GR-3, GR-3a, GR-3b, GR-3c, GR-3d, GR-3e and GR-3f, one per changed or new Story, in `116-receipts-r7.txt`. | P1 | AC30 |
+
+### 24.5 Type-scale table (GR-3c)
+
+| Element | Role | base | sm | md | lg | Theme key | Provenance |
+|---|---|---|---|---|---|---|---|
+| Dialog title | dialog heading | 18 | 18 | 18 | 18 | `fz="lg"` | §23.7 (TailAdmin title, reduced to the 20px phone cap) |
+| Dialog description | body | 14 | 14 | 14 | 14 | `fz="sm"` | §23.7 |
+| Section title | section heading | 16 | 16 | 16 | 16 | `fz="md"` | §23.7 (`110-ref-timeline-sharing.png` "Roles") |
+| Section description, detail label | body | 14 | 14 | 14 | 14 | `fz="sm"` | §23.7 |
+| Detail value, nav label | body | 14 | 14 | 14 | 14 | `fz="sm"` | §23.7 |
+| Nav description | meta | 12 | 12 | 12 | 12 | `fz="xs"` | §23.7 |
+| Listing card in the dialog | — | — | — | — | — | the pattern's own scale | `MantineListingCardPattern` (unchanged) |
+
+Nothing reaches 24px, and no child heading is larger than the 18px dialog title.
+
+### 24.6 GR-3b / 3d / 3e / 3f lines
+
+- **GR-3b.** The dialogs and the Modal `Structured` export are overlays. The new pattern Stories have fluid containers,
+  with no `w`/`maw`/`style` and no viewport pin.
+- **GR-3d:**
+  - the two dialog Stories and Modal `Structured`: `n/a: overlay-only`;
+  - `DialogSections`, `DetailList`, `NavRowList` and `DialogFooter`: `StoryPageGutter all` (no own gutter), wrap in this
+    task;
+  - `Mantine/Primitives/Radio` `Card`: `n/a: MantineStoryShell primitive`.
+- **GR-3e.** The only text button left in a popup is the lone "Remove premium". The navigation lives in
+  `MantineNavRowList`, which has no text buttons. Receipt per dialog export.
+- **GR-3f.** The `RadioIndicator` in the radio cards: 20px with a 10px dot, unchecked, checked, disabled checked and
+  keyboard focus. The `ThemeIcon` tiles are radius `md` squares, not circles. The round close button
+  (`ActionIcon radius="xl"`) gets a DPR-1 crop. Write the crops to `115-circles-r7.png`.
+
+### 24.7 Acceptance (Revision 7)
+
+- **AC24 [R44].** At 1440 sq, Modal `Structured` measures: title 18px/600, description 14px; a header divider and a
+  footer divider each span the modal's full inner width (±1px); the close button is round, 36px or more, top-right. At
+  390 the same header renders inside the sheet under the drag handle, and the sheet's own 14px title is absent. The
+  DOM hashes of Modal `Default` and `ReportDetailDialogView` `Default` are identical before and after
+  (`113-unstructured-hash-r7.json`).
+- **AC25 [R45–R48].** Every Story state renders at 320/390/1024/1440 with no overflow:
+  - DetailList: a long uk value wraps at 320;
+  - NavRowList: each row is 56px or more, the external row's link has `rel="noopener noreferrer"`, and the focus ring
+    is visible on Tab;
+  - DialogFooter: two buttons of equal width (±1px) at 320 and 1440, each 44px or more; a single button spans the full
+    width;
+  - DialogSections: a full-bleed divider between sections, and none before the first.
+- **AC26 [R49].** In Radio `Card`, the checked card has border brand-7 and bg brand-0, the indicator is 20×20 and the
+  dot 10×10, and the disabled checked card shows the R41 look. The DPR-1 crops read as circles.
+- **AC27 [R50].** The new test passes, `npm run typecheck` and `npm run build` exit 0, and the `AdminListingsView`
+  Stories render the same rows, columns and pagination as in `100-opus-review5-matrix.json` (re-measure their row
+  count and column headers at 1440 sq).
+- **AC28 [R51, R53].** In `ListingPreviewDialogView` `Active`, `Premium`, `Hidden`, `SoldStatusActions`,
+  `NoPhotoNoFeatures` and `DeleteConfirm`, at 390/1440 × sq/uk:
+  - the sections are in the R51 order;
+  - the listing card shows a photo (or the `AppImage` placeholder in `NoPhotoNoFeatures`), the badges and the features;
+  - `Hidden` has no "Open public page" row;
+  - the footer is an equal-width `[Delete][Edit]` pair, and `[Cancel][Delete]` in `DeleteConfirm`;
+  - nothing overflows;
+  - the body has no text button.
+- **AC29 [R52, R53].** In `PremiumDialogView` `NotPremium`, `Premium`, `PremiumActive`, `CustomDate` and `Saving`, at
+  390/1440 × sq/uk:
+  - the radio cards are in place, and the custom card reveals the picker;
+  - "Remove premium" appears only when premium;
+  - the footer is an equal-width `[Cancel][Save]` pair;
+  - in `Saving`, every card is disabled and the checked one keeps its brand fill under the fade.
+- **AC30 [R54, R55].** The Stories exist and import their components by name. The patterns are enrolled. All receipts
+  are present. `check:story-coverage`, `check:pattern-enrolment` and `check:rendered-scope` exit 0.
+
+### 24.8 Positive and negative flows (Revision 7)
+
+| Branch | Applies | Handling |
+|---|---|---|
+| Positive: open the preview, change the status, open premium, save, delete | Yes | R51/R52, with current behaviour kept |
+| Listing with no photo or no feature fields | Yes | `NoPhotoNoFeatures`; `AppImage` placeholder; empty features render nothing |
+| Hidden listing | Yes | no public-page row (`isListingHidden`) |
+| Premium with no `premium_until` | Yes | Show `premium_inactive` when `premium_until` is null even if `is_premium`. Count it in the census as a data quirk and do not invent a date. |
+| Long uk title or values at 320 | Yes | title clamped to 2 lines; detail values wrap |
+| Status change fails | Yes | unchanged (the `StatusChangeSelect` error toast) |
+| Delete in flight | Yes | `loading` on Delete, Cancel disabled (unchanged) |
+| Keyboard | Yes | the close button, nav rows and radio cards are reachable by Tab with a visible ring |
+| RLS / auth | No | the admin route's existing guard and client are unchanged; the select only adds columns of the same rows (the cabinet precedent) |
+
+### 24.9 Re-entry: `remediation` (Revision 7)
+
+- **Start step:** platform line `111-platform-r7.txt`; then the DOM hashes of Modal `Default` and `ReportDetailDialogView`
+  `Default` on the current `storybook-static` (`113-unstructured-hash-r7.json`, "before"). Then R49 → R44 → R45–R48
+  (each with its Story) → R50 → R51 → R52 → R53 → R54.
+- **Do not re-run or overwrite:** evidence `01`–`110` and every `plant-*` file. Opus's `100*`, `101*`, `105*`, `109*`
+  and `110*` are read-only.
+- **Write set:**
+  - `src/design-system/mantine/patterns/MantineModal.tsx` and `responsiveBottomSheet.tsx` (the `header` prop only);
+  - new `MantineDialogSections.tsx`, `MantineDetailList.tsx`, `MantineNavRowList.tsx` and `MantineDialogFooter.tsx`,
+    plus `patterns/index.ts` if the patterns export from it;
+  - `theme.ts` (the `RadioCard` and `RadioIndicator` entries only) and `input-chrome.css` (the Radio block, card
+    checked state);
+  - the Stories: `Modal.stories.tsx` (`Structured`), `Radio.stories.tsx` (`Card`), four new pattern Stories,
+    `ListingPreviewDialogView.stories.tsx` and `PremiumDialogView.stories.tsx`;
+  - `ListingPreviewDialogView.tsx`, `ListingPreviewDialog.tsx`, `PremiumDialogView.tsx`, `PremiumDialog.tsx`,
+    `AdminListingsTable.tsx` (the type and the mapping only) and `src/app/admin/listings/page.tsx` (the select only);
+  - `messages/{sq,en,uk,it}.json` (R53 keys only) and `scripts/mantine-migration-scope.json`;
+  - the tests that assert the old dialog layout. List each one;
+  - the session log ("Revision 7" section), evidence `111`+ with the `-r7` suffix, and the 857 cell of `docs/backlog.md`.
+- **Forbidden:** every other file. That includes the other `MantineModal` consumers (Task 915), every R13–R43 file not
+  listed above, and every rule document.
+- **Negative branches:**
+  - if a §23.7 value cannot be expressed with a theme key, stop with `BLOCKED — R<n> TOKEN` and name the value;
+  - if `structured=false` changes any existing consumer's DOM hash, stop with `BLOCKED — R44 BLAST`.
+
+### 24.10 Gate block (Revision 7)
+
+The §21.6 block, renamed `112*-r7` (`112-platform-r7.txt` … `112r-status-after-r7.txt`), with these additions:
+`npm.cmd run check:pattern-enrolment *>&1 | Tee-Object "$ev\112t-pattern-enrolment-r7.txt"`, and the hash-object line
+of every Revision 7 file to `112s-hash-object-r7.txt`. The expected results are unchanged: `win32`; the four
+calibration FAIL lines; tests with exactly the 4 known failures (790) plus none new; every other gate exits 0.
+
+### 24.11 Owner matrix after Revision 7 (O78-12)
+
+The §23.2 matrix stays (74 tuples). Its `ListingPreviewDialogView` (14) and `PremiumDialogView` (8) rows are re-issued
+on the new anatomy, plus these rows:
+
+| Story | States | Locales | Viewports | Tuples |
+|---|---|---|---|---|
+| `ListingPreviewDialogView` | `NoPhotoNoFeatures`, `Hidden` | sq, uk | 390, 1440 | 8 |
+| `PremiumDialogView` | `PremiumActive` | sq, uk | 390, 1440 | 4 |
+| `Mantine/Primitives/Modal` `Structured` | — | sq | 390, 1440 | 2 |
+| `Mantine/Primitives/Radio` `Card` | — | sq | 390, 1440 | 2 |
+| `DialogSections`, `DetailList`, `NavRowList`, `DialogFooter` | `Default` | uk | 320, 1440 | 8 |
+
+**98 tuples.** Before the owner sees them, Opus re-measures GR-3b/3c/3d/3e/3f and §7.3 for every Story in the matrix,
+and compares the two dialogs side by side with `110-ref-*`.

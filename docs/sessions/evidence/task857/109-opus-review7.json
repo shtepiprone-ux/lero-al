@@ -1,0 +1,316 @@
+{
+  "platform": "win32 v22.22.3",
+  "defaultRest": [
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": true,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(236, 84, 71)",
+      "border": "rgb(236, 84, 71)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "1",
+      "iconWH": [
+        10,
+        10
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": true,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(217, 45, 32)",
+      "shadow": "color(srgb 0.85098 0.176471 0.12549 / 0.1) 0px 0px 0px 3px",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": true,
+      "disabled": false,
+      "error": true,
+      "focusVisible": false,
+      "bg": "rgb(236, 84, 71)",
+      "border": "rgb(236, 84, 71)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "1",
+      "iconWH": [
+        10,
+        10
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": true,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(236, 84, 71)",
+      "border": "rgb(236, 84, 71)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "1",
+      "iconWH": [
+        10,
+        10
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    }
+  ],
+  "focusPlain": {
+    "radioIndex": 2,
+    "focusVisible": true,
+    "error": false,
+    "border": "rgb(236, 84, 71)",
+    "shadow": "color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 3px"
+  },
+  "focusError": {
+    "radioIndex": 3,
+    "focusVisible": true,
+    "error": true,
+    "border": "rgb(217, 45, 32)",
+    "shadow": "color(srgb 0.85098 0.176471 0.12549 / 0.1) 0px 0px 0px 3px"
+  },
+  "mouseFocus": {
+    "focusVisible": false,
+    "border": "rgb(236, 84, 71)",
+    "shadow": "none"
+  },
+  "saving": [
+    {
+      "checked": true,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(236, 84, 71)",
+      "border": "rgb(236, 84, 71)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "1",
+      "iconWH": [
+        10,
+        10
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": false,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": false,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": false,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "0.5"
+    },
+    {
+      "checked": false,
+      "disabled": true,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "0.5"
+    }
+  ],
+  "notPremium": [
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    },
+    {
+      "checked": false,
+      "disabled": false,
+      "error": false,
+      "focusVisible": false,
+      "bg": "rgb(255, 255, 255)",
+      "border": "rgb(208, 213, 221)",
+      "shadow": "none",
+      "iconColor": "rgb(255, 255, 255)",
+      "iconOpacity": "0",
+      "iconWH": [
+        2,
+        2
+      ],
+      "rootOpacity": "1"
+    }
+  ]
+}

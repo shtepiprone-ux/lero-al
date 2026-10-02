@@ -163,8 +163,8 @@ composition. This is a project-wide rule, not a Storybook preference.
      `sides="x"`/`"y"`), `remove the Story's padding in this task` (a doubled or Story-written gutter), or `fix the
      side in the component` (the real page lacks it too). A matrix row without that line makes the kickoff
      unpublishable.
-   - **Text buttons (GR-3e, owner rule 2026-10-02).** For every changed surface, list each group of two or more text
-     buttons and require a `Stack gap="xs" align="flex-start"`, one per row, at every width. A kickoff that lays text
+   - **Text buttons (GR-3e, owner rule 2026-10-02).** For every changed popup (modal, drawer, bottom sheet, popover,
+     menu; owner clarification 2026-10-02), list each group of two or more text buttons and require a `Stack gap="xs" align="flex-start"`, one per row, at every width. A kickoff that lays text
      buttons out in a row is not publishable.
    - **Circles (GR-3f, owner rule 2026-10-02).** For every changed circular control or indicator, name its canonical
      owner (theme entry or component) and require a device-scale-1 pixel crop as evidence. The canonical radio is 20px

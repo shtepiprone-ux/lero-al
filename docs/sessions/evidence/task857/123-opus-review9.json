@@ -1,0 +1,1755 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "cells": [
+  {
+   "story": "active",
+   "loc": "sq",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "sq",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "sq",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 68,
+    "r": 74,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "sq",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 68,
+    "r": 410,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "uk",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 629,
+     "ch": 567
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "uk",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "uk",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 68,
+    "r": 74,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "active",
+   "loc": "uk",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 68,
+    "r": 410,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "sq",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 610,
+     "ch": 565
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "sq",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 586
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "sq",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 81,
+    "r": 74,
+    "b": 81,
+    "w": 620,
+    "h": 738
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "sq",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 81,
+    "r": 410,
+    "b": 81,
+    "w": 620,
+    "h": 738
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "uk",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 626,
+     "ch": 566
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "uk",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 610,
+     "ch": 588
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "uk",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 81,
+    "r": 74,
+    "b": 81,
+    "w": 620,
+    "h": 738
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    }
+   ]
+  },
+  {
+   "story": "sold-status-actions",
+   "loc": "uk",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 81,
+    "r": 410,
+    "b": 81,
+    "w": 620,
+    "h": 738
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "Apartament 2+1 — Durrës, pranë bregdetit",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 759
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "sq",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 92,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 752
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "sq",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 110,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 734
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "sq",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 111,
+    "r": 74,
+    "b": 111,
+    "w": 620,
+    "h": 679
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "sq",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 111,
+    "r": 410,
+    "b": 111,
+    "w": 620,
+    "h": 679
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "uk",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "uk",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 92,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 752
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "uk",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 111,
+    "r": 74,
+    "b": 111,
+    "w": 620,
+    "h": 679
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    }
+   ]
+  },
+  {
+   "story": "hidden",
+   "loc": "uk",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 111,
+    "r": 410,
+    "b": 111,
+    "w": 620,
+    "h": 679
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 2,
+   "titleFont": "16px",
+   "titleText": "Shtëpi 250 m² me kopsht — Kombinat, Tira",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 730
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "sq",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 538,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 306
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Anulo",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Fshi",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "sq",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 538,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 306
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Anulo",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Fshi",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "sq",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 311,
+    "r": 74,
+    "b": 311,
+    "w": 620,
+    "h": 278
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Anulo",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    },
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "sq",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 311,
+    "r": 410,
+    "b": 311,
+    "w": 620,
+    "h": 278
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Anulo",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    },
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "uk",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 538,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 306
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Скасувати",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Видалити",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "uk",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 538,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 306
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Скасувати",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Видалити",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "uk",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 311,
+    "r": 74,
+    "b": 311,
+    "w": 620,
+    "h": 278
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Скасувати",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    },
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    }
+   ]
+  },
+  {
+   "story": "delete-confirm",
+   "loc": "uk",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 311,
+    "r": 410,
+    "b": 311,
+    "w": 620,
+    "h": 278
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 0,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Скасувати",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    },
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 529
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "sq",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "sq",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Ndrysho",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "sq",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 68,
+    "r": 74,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "sq",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 68,
+    "r": 410,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Fshi",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Ndrysho",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "uk",
+   "vw": 320,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 320,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 629,
+     "ch": 567
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 138,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "uk",
+   "vw": 390,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 0,
+    "t": 84,
+    "r": 0,
+    "b": 0,
+    "w": 390,
+    "h": 760
+   },
+   "scrollers": [
+    {
+     "cls": "",
+     "sh": 592,
+     "ch": 563
+    }
+   ],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    },
+    {
+     "t": "Редагувати",
+     "w": 173,
+     "h": 44,
+     "top": 784
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "uk",
+   "vw": 768,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 74,
+    "t": 68,
+    "r": 74,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  },
+  {
+   "story": "premium",
+   "loc": "uk",
+   "vw": 1440,
+   "overflowX": false,
+   "dialogBox": {
+    "l": 410,
+    "t": 68,
+    "r": 410,
+    "b": 68,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "imgs": 0,
+   "navRows": 3,
+   "titleFont": "16px",
+   "titleText": "3+1 apartament në qendër të Tiranës — ka",
+   "maxFont": 18,
+   "sizes": [
+    "18px",
+    "14px",
+    "16px",
+    "12px"
+   ],
+   "textButtons": 0,
+   "sharedRows": [],
+   "footerBtns": [
+    {
+     "t": "Видалити",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    },
+    {
+     "t": "Редагувати",
+     "w": 288,
+     "h": 44,
+     "top": 773
+    }
+   ]
+  }
+ ],
+ "focus": {
+  "brand5": "#F2877E",
+  "gray0": "#f9fafb",
+  "gray3": "#d0d5dd"
+ }
+}

@@ -1514,7 +1514,7 @@ and compares the two dialogs side by side with `110-ref-*`.
 | **R56** | **No listing card in `ListingPreviewDialogView`.** <br>• Delete section 1 of R51 (the `MantineListingCardPattern`). The sections are now, in order: `t('col_status')` (status select), `t('preview_section_details')` (`MantineDetailList`), then the nav rows. The header, footer, confirm step and all behaviour stay as in R51. <br>• Remove the now-unused imports and code from the View (`MantineListingCardPattern`, `AppImage`, `ListingFeatureIcon`, `getCardFeatures`, the cover lookup, the card features mapping), and any prop the container passed only for the card. <br>• Do not compress spacing, change §23.7 values or drop a section to remove a scroll. | P1 | AC31, AC32 |
 | **R57** | **The data goes with the card (narrows R50).** <br>• `src/app/admin/listings/page.tsx`'s select keeps `premium_until`. It drops `address, rooms, bedrooms, bathrooms, area_gross, area_net, floor, total_floors, location:locations(name_al), images:listing_images(url, is_cover, "order")`. Drop only the columns Revision 7 added; compare with the file's committed version and leave every older column. <br>• Remove the matching optional fields from `AdminListing` (`AdminListingsTable.tsx:30-39`), except a field that a non-card caller reads. Grep each field before deleting it and list the result. <br>• T9 in `AdminListingsTable.smoke.test.tsx` now asserts that the select contains `premium_until` and does **not** contain `listing_images`. Update its comments (`:25-26`, `:452-455`). | P1 | AC31 |
 | **R58** | **Stories (supersedes R54's `NoPhotoNoFeatures`).** <br>• `ListingPreviewDialogView.stories.tsx`: delete the `NoPhotoNoFeatures` export, the card-only fixture fields (`FIXTURE_COVER_URL`, `images`, `rooms` … `total_floors`, `address`, the `location` override at `:69`) and their comments. Keep `Active`, `SoldStatusActions`, `Hidden`, `DeleteConfirm` and `Premium`. <br>• The Story's `typeLabel` renders the translated property-type label the way `AdminListingsTable.tsx:110` does: a fixture `{ value, label }` list built from the existing i18n property-type keys, not a literal. <br>• `PremiumDialogView.stories.tsx` is unchanged. | P1 | AC31 |
-| **R59** | **The nav row focus ring uses the canonical ring.** The `:focus-visible` rule in `MantineNavRowList.module.css` uses the colour expression of `input-chrome.css:25` (`color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent)`). It stays inset, because the list clips, and keeps the gray-0 background. Correct the comment. If the Tab crop shows the ring is not visible on gray-0, do not pick another value: report `BLOCKED — R59 RING` with the crop, and Opus decides. | P3 | AC33 |
+| **R59** | **Superseded by §26 R61 (the value below is not visible).** **The nav row focus ring uses the canonical ring.** The `:focus-visible` rule in `MantineNavRowList.module.css` uses the colour expression of `input-chrome.css:25` (`color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent)`). It stays inset, because the list clips, and keeps the gray-0 background. Correct the comment. If the Tab crop shows the ring is not visible on gray-0, do not pick another value: report `BLOCKED — R59 RING` with the crop, and Opus decides. | P3 | AC33 |
 | **R60** | **Receipts:** GR-0, GR-3a, GR-3b, GR-3c, GR-3d and GR-3e for each changed Story export (`ListingPreviewDialogView` × 5, `NavRowList` `Default`), in `121-receipts-r8.txt`. GR-3f is unchanged, because no circle changed. | P1 | AC31 |
 
 ### 25.5 Acceptance (Revision 8)
@@ -1566,3 +1566,93 @@ The owner accepted every other Revision 7 tuple on 2026-10-03 (*"Все ок"*, 
 
 **20 tuples.** Before they reach the owner, Opus re-measures GR-3b/3c/3d/3e and AC32 on them. **On acceptance:** Opus
 approves 857, archives it, and emits the commit and push handoff.
+
+---
+
+## 26. Review 9 — `NEEDS REVISION`, 2026-10-03 → Revision 9 (the nav row focus is visible)
+
+### 26.1 Verified by Opus (Revision 8)
+
+- **Source.** R56–R58 are as specified: `ListingPreviewDialogView.tsx` has no card, image or feature code. The select in
+  `page.tsx` keeps `premium_until` and selects no `listing_images`. `AdminListing` keeps only `premium_until`. T9 asserts
+  both directions. The Story has no `NoPhotoNoFeatures` export and labels the property type.
+- **Freshness.** Every Revision 8 source file was written before the gate run (00:14–00:15; tests 00:22, build 00:25).
+  `119q-build-r8.txt` ends `EXIT_CODE=0`.
+- **Measurement.** `123-opus-review9.{mjs,json}` (`win32` v22.22.3) covers 5 states × sq/uk × 320/390/768/1440, 40 cells:
+  - no horizontal overflow and no `<img>`;
+  - from 768, no scrolling element in the dialog (AC32);
+  - below 640 only the sheet body scrolls (§23.4, by design);
+  - largest text 18px (GR-3c);
+  - no subtle or transparent text button (GR-3e);
+  - footer pairs equal, 44px tall;
+  - `Hidden` has 2 nav rows, the other states have 3.
+  GR-3d: `n/a: overlay-only`.
+- **Tests.** The fifth failure, `overlay-dual-declaration`, passes alone after the build (6/6). It needs the built CSS,
+  and the suite ran before the build. `check:file-integrity` flags only `docs/sessions/evidence/task917/20-review-gates.txt`,
+  which is not an 857 file.
+- **Evidence gap (P3, closed by Opus).** The report cites `119s-hash-object-r8.txt`, but that file does not exist. Opus's
+  witness, read 2026-10-03: `ListingPreviewDialogView.tsx` 7388974a, `AdminListingsTable.tsx` c12a3b26, `page.tsx`
+  79890e7b, `AdminListingsTable.smoke.test.tsx` 22504e4d, `ListingPreviewDialogView.stories.tsx` 3bba5858,
+  `MantineNavRowList.module.css` be713aad. Revision 9 writes the hash file in its gate block.
+
+### 26.2 Defect: the nav row focus cannot be seen (P2, R59 → R61)
+
+- **The R59 instruction was wrong, and it was Opus's.** It took only the ring's colour expression from the canonical
+  focus. In this repository the canonical focus is two parts: a **brand border** plus the 10% ring. The fields use
+  `input-chrome.css:22-25`, a brand-3 border plus the ring. The radio card uses `:305-309`, a brand-7 border plus the
+  ring. The ring is the soft halo, and the border is what makes focus visible. A nav row has no border of its own, so
+  it got only the halo.
+- **Measured.** brand-5 `#F2877E` at 10% over gray-0 `#f9fafb` composites to about `rgb(248,239,239)`. That is about
+  1.1:1 against gray-0, and gray-0 against the white list is about 1.04:1. Hover uses the same gray-0, so keyboard
+  focus is effectively hover. WCAG 2.2 1.4.11 asks for 3:1 for the visual information that identifies a state.
+  `122-navrow-focus-r8.png` shows it: a faint pink band.
+- **Contradiction.** The report says the executor kept the value because "you then checked with Tab and said it's
+  visible". No such check or statement exists in Opus's review sessions. The value was never measured against a
+  contrast criterion.
+
+### 26.3 Requirement
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R61** | **Nav row keyboard focus = the canonical card focus, drawn inset** (supersedes R59's value). In `MantineNavRowList.module.css`, `.row[data-nav-row]:focus-visible` keeps `outline: none` and the gray-0 background, and sets `box-shadow: inset 0 0 0 1px var(--mantine-color-brand-7), inset 0 0 0 4px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent)`. The first shadow is the 1px brand-7 border of `input-chrome.css:307`. The second is that file's 3px ring, inside the border (1 + 3). Keep the `design-tokens-allow` marker with its reason, and cite `:305-309` in the comment. If `check:design-tokens` rejects the new form, stop with `BLOCKED — R61 TOKEN` and do not pick another value. Hover and mouse focus are unchanged. | P2 | AC35 |
+| **R62** | **Gate block hash file.** The §26.5 block writes `126s-hash-object-r9.txt` with every Revision 9 file, in the same run. | P3 | AC36 |
+
+### 26.4 Acceptance (Revision 9)
+
+- **AC35 [R61].** `NavRowList` `Default` at 1440, sq, `deviceScaleFactor: 1`:
+  - Tab onto row 1. Its computed `box-shadow` contains `rgb(236, 84, 71)` (brand-7).
+  - In a crop of the row edge (`125-navrow-focus-r9.png`, scaled 10× pixelated), the 1px brand line is visible on all
+    four sides.
+  - Record the contrast of that edge pixel against the gray-0 background in `125-navrow-focus-r9.json`. It must be at
+    least 3:1.
+  - A mouse click on row 3 draws no brand line.
+  - Hover draws only the gray-0 background.
+- **AC36 [R62].** `126s-hash-object-r9.txt` exists and lists `MantineNavRowList.module.css` plus any other file
+  Revision 9 changed. The §26.5 gate block gives the expected results, and `npm run build` exits 0.
+
+### 26.5 Re-entry, write set and gate block (Revision 9)
+
+- **Start step:** platform line `124-platform-r9.txt`, then R61, then AC35, then the gate block.
+- **Write set:**
+  - `src/design-system/mantine/patterns/MantineNavRowList.module.css`;
+  - the session log ("Revision 9" section);
+  - evidence `124`+ with the `-r9` suffix;
+  - the 857 cell of `docs/backlog.md`.
+
+  Every other file is forbidden. Do not overwrite evidence `01`–`123`.
+- **Gate block:** the §24.10 block renamed `126*-r9`. **Rename every output, the i18n gate included**: Revision 8
+  overwrote `112k-i18n-r7.txt`. Expected results:
+  - `win32`;
+  - the four calibration census FAIL lines;
+  - tests with the 4 known 790 failures, plus `overlay-dual-declaration` only if the suite runs before the build. Run
+    the suite after the build to avoid it;
+  - `check:file-integrity` flags only files outside task857, if any, and you name them;
+  - every other gate exits 0.
+- **Receipts:** `GR-0` and `GR-3a` (`NavRowList` `Default`, `EXTEND`) in `127-receipts-r9.txt`.
+
+### 26.6 Owner matrix (O78-12)
+
+Revision 9 changes only the keyboard focus state, which none of §25.8's 20 tuples shows. The owner can review those 20
+tuples now, against the current `storybook-static`. Opus measured them (§26.1) and found them clean. Revision 9 adds one
+tuple, `Patterns/Mantine/NavRowList` `Default`, sq, 1440, **Tab onto the first row**. **On acceptance of all 21 tuples
+and a verified Revision 9:** Opus approves 857, archives it, and emits the commit and push handoff.

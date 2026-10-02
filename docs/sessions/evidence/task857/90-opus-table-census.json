@@ -1,0 +1,1584 @@
+[
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 949,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 231,
+    "cols": [
+     240,
+     148,
+     130,
+     144,
+     225,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1013,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 295,
+    "cols": [
+     240,
+     167,
+     130,
+     144,
+     270,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1093,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 375,
+    "cols": [
+     240,
+     148,
+     130,
+     144,
+     225,
+     144,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1157,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 439,
+    "cols": [
+     240,
+     167,
+     130,
+     144,
+     270,
+     144,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1136,
+    "tableW": 1316,
+    "viewW": 1134,
+    "scrolls": true,
+    "over": 182,
+    "cols": [
+     88,
+     240,
+     148,
+     130,
+     144,
+     225,
+     144,
+     136,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 1375,
+    "viewW": 974,
+    "scrolls": true,
+    "over": 401,
+    "cols": [
+     88,
+     240,
+     167,
+     130,
+     144,
+     270,
+     144,
+     130,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 1316,
+    "viewW": 974,
+    "scrolls": true,
+    "over": 342,
+    "cols": [
+     88,
+     240,
+     148,
+     130,
+     144,
+     225,
+     144,
+     136,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1136,
+    "tableW": 1375,
+    "viewW": 1134,
+    "scrolls": true,
+    "over": 241,
+    "cols": [
+     88,
+     240,
+     167,
+     130,
+     144,
+     270,
+     144,
+     130,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1527,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 809,
+    "cols": [
+     534,
+     153,
+     153,
+     198,
+     305,
+     183
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1271,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 553,
+    "cols": [
+     445,
+     127,
+     127,
+     165,
+     254,
+     153
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1271,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 553,
+    "cols": [
+     445,
+     127,
+     127,
+     165,
+     254,
+     153
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1527,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 809,
+    "cols": [
+     534,
+     153,
+     153,
+     198,
+     305,
+     183
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 1527,
+    "viewW": 974,
+    "scrolls": true,
+    "over": 553,
+    "cols": [
+     534,
+     153,
+     153,
+     198,
+     305,
+     183
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1136,
+    "tableW": 1271,
+    "viewW": 1134,
+    "scrolls": true,
+    "over": 137,
+    "cols": [
+     445,
+     127,
+     127,
+     165,
+     254,
+     153
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 1271,
+    "viewW": 974,
+    "scrolls": true,
+    "over": 297,
+    "cols": [
+     445,
+     127,
+     127,
+     165,
+     254,
+     153
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1136,
+    "tableW": 1527,
+    "viewW": 1134,
+    "scrolls": true,
+    "over": 393,
+    "cols": [
+     534,
+     153,
+     153,
+     198,
+     305,
+     183
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     95,
+     116,
+     169,
+     258,
+     80
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     86,
+     114,
+     193,
+     249,
+     75
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     76,
+     93,
+     136,
+     207,
+     141,
+     64
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 723,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 5,
+    "cols": [
+     71,
+     94,
+     159,
+     206,
+     130,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     101,
+     125,
+     182,
+     277,
+     188,
+     86
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     94,
+     125,
+     211,
+     273,
+     173,
+     82
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     101,
+     125,
+     182,
+     277,
+     188,
+     86
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admincurrenciesview--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     94,
+     125,
+     211,
+     273,
+     173,
+     82
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1070,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 352,
+    "cols": [
+     170,
+     332,
+     98,
+     125,
+     117,
+     98,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1110,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 392,
+    "cols": [
+     177,
+     332,
+     109,
+     129,
+     129,
+     105,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1070,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 352,
+    "cols": [
+     170,
+     332,
+     98,
+     125,
+     117,
+     98,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1110,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 392,
+    "cols": [
+     177,
+     332,
+     109,
+     129,
+     129,
+     105,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1070,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 112,
+    "cols": [
+     170,
+     332,
+     98,
+     125,
+     117,
+     98,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1110,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 152,
+    "cols": [
+     177,
+     332,
+     109,
+     129,
+     129,
+     105,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1070,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 112,
+    "cols": [
+     170,
+     332,
+     98,
+     125,
+     117,
+     98,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminexchangeprovidersview--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1110,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 152,
+    "cols": [
+     177,
+     332,
+     109,
+     129,
+     129,
+     105,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 801,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 83,
+    "cols": [
+     409,
+     140,
+     121,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 892,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 174,
+    "cols": [
+     472,
+     140,
+     149,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 950,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 232,
+    "cols": [
+     409,
+     140,
+     121,
+     149,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1089,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 371,
+    "cols": [
+     472,
+     140,
+     149,
+     197,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 832,
+    "tableW": 950,
+    "viewW": 830,
+    "scrolls": true,
+    "over": 120,
+    "cols": [
+     409,
+     140,
+     121,
+     149,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 832,
+    "tableW": 950,
+    "viewW": 830,
+    "scrolls": true,
+    "over": 120,
+    "cols": [
+     409,
+     140,
+     121,
+     149,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 832,
+    "tableW": 1089,
+    "viewW": 830,
+    "scrolls": true,
+    "over": 259,
+    "cols": [
+     472,
+     140,
+     149,
+     197,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminpagesview--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 832,
+    "tableW": 1089,
+    "viewW": 830,
+    "scrolls": true,
+    "over": 259,
+    "cols": [
+     472,
+     140,
+     149,
+     197,
+     130
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 871,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 153,
+    "cols": [
+     205,
+     337,
+     117,
+     149,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 935,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 217,
+    "cols": [
+     212,
+     337,
+     127,
+     197,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1011,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 293,
+    "cols": [
+     205,
+     337,
+     140,
+     117,
+     149,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 1076,
+    "viewW": 718,
+    "scrolls": true,
+    "over": 358,
+    "cols": [
+     212,
+     337,
+     140,
+     127,
+     197,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1011,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 53,
+    "cols": [
+     205,
+     337,
+     140,
+     117,
+     149,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1011,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 53,
+    "cols": [
+     205,
+     337,
+     140,
+     117,
+     149,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1076,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 118,
+    "cols": [
+     212,
+     337,
+     140,
+     127,
+     197,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminreportsview--all-tab",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 1076,
+    "viewW": 958,
+    "scrolls": true,
+    "over": 118,
+    "cols": [
+     212,
+     337,
+     140,
+     127,
+     197,
+     62
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 678,
+    "tableW": 3291,
+    "viewW": 676,
+    "scrolls": true,
+    "over": 2615,
+    "cols": [
+     724,
+     329,
+     329,
+     461,
+     296,
+     296,
+     296,
+     395,
+     165
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 678,
+    "tableW": 4170,
+    "viewW": 676,
+    "scrolls": true,
+    "over": 3494,
+    "cols": [
+     917,
+     417,
+     417,
+     584,
+     375,
+     375,
+     375,
+     500,
+     209
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 934,
+    "tableW": 3291,
+    "viewW": 932,
+    "scrolls": true,
+    "over": 2359,
+    "cols": [
+     724,
+     329,
+     329,
+     461,
+     296,
+     296,
+     296,
+     395,
+     165
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 934,
+    "tableW": 4170,
+    "viewW": 932,
+    "scrolls": true,
+    "over": 3238,
+    "cols": [
+     917,
+     417,
+     417,
+     584,
+     375,
+     375,
+     375,
+     500,
+     209
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1190,
+    "tableW": 3291,
+    "viewW": 1188,
+    "scrolls": true,
+    "over": 2103,
+    "cols": [
+     724,
+     329,
+     329,
+     461,
+     296,
+     296,
+     296,
+     395,
+     165
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1190,
+    "tableW": 4170,
+    "viewW": 1188,
+    "scrolls": true,
+    "over": 2982,
+    "cols": [
+     917,
+     417,
+     417,
+     584,
+     375,
+     375,
+     375,
+     500,
+     209
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1350,
+    "tableW": 3291,
+    "viewW": 1348,
+    "scrolls": true,
+    "over": 1943,
+    "cols": [
+     724,
+     329,
+     329,
+     461,
+     296,
+     296,
+     296,
+     395,
+     165
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1350,
+    "tableW": 4170,
+    "viewW": 1348,
+    "scrolls": true,
+    "over": 2822,
+    "cols": [
+     917,
+     417,
+     417,
+     584,
+     375,
+     375,
+     375,
+     500,
+     209
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     287,
+     215,
+     215
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     287,
+     215,
+     215
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 974,
+    "viewW": 974,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     390,
+     292,
+     292
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 976,
+    "tableW": 974,
+    "viewW": 974,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     390,
+     292,
+     292
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1232,
+    "tableW": 1230,
+    "viewW": 1230,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     492,
+     369,
+     369
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1232,
+    "tableW": 1230,
+    "viewW": 1230,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     492,
+     369,
+     369
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1392,
+    "tableW": 1390,
+    "viewW": 1390,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     556,
+     417,
+     417
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-adminsurfacepattern--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1392,
+    "tableW": 1390,
+    "viewW": 1390,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     556,
+     417,
+     417
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 768,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     106,
+     131,
+     191,
+     290
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 768,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 720,
+    "tableW": 718,
+    "viewW": 718,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     96,
+     127,
+     216,
+     279
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1024,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     112,
+     137,
+     200,
+     305,
+     203
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1024,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 960,
+    "tableW": 958,
+    "viewW": 958,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     100,
+     132,
+     224,
+     289,
+     213
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1280,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1216,
+    "tableW": 1214,
+    "viewW": 1214,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     142,
+     174,
+     254,
+     387,
+     257
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1280,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1216,
+    "tableW": 1214,
+    "viewW": 1214,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     127,
+     167,
+     284,
+     366,
+     270
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1440,
+  "l": "sq",
+  "tables": [
+   {
+    "cardW": 1376,
+    "tableW": 1374,
+    "viewW": 1374,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     161,
+     197,
+     287,
+     438,
+     291
+    ]
+   }
+  ]
+ },
+ {
+  "id": "patterns-mantine-admintable--default",
+  "w": 1440,
+  "l": "uk",
+  "tables": [
+   {
+    "cardW": 1376,
+    "tableW": 1374,
+    "viewW": 1374,
+    "scrolls": false,
+    "over": 0,
+    "cols": [
+     143,
+     190,
+     321,
+     415,
+     305
+    ]
+   }
+  ]
+ }
+]

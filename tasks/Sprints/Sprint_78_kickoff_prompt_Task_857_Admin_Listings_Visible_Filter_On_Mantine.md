@@ -4,8 +4,7 @@
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
 `NEEDS REVISION` — review 3, 2026-10-02. Revisions 1 (§16) and 2 (§17) are verified except AC12. Execute §18
-(Revision 3) only: the table fits its production card by the owner's merged-cell layout. §18 supersedes R15's
-`AdminListingsView` part and AC12.**
+(Revision 3) only: every Mantine table fits its production container (owner rule §7.3, 2026-10-02), and every admin page View Story renders inside the real `AdminShell` + the new `AdminPageFrame`. §18 supersedes R15's `AdminListingsView` part and AC12.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -600,7 +599,7 @@ The tuples are the same as in §13.3, plus `ListingPreviewDialogView` `Premium` 
 
 ---
 
-## 18. Review 3 — `NEEDS REVISION`, 2026-10-02 → Revision 3 (the table fits its production card)
+## 18. Review 3 — `NEEDS REVISION`, 2026-10-02 → Revision 3 (every Mantine table fits its production container)
 
 Revision 2 is verified except AC12. Opus inspected the real diff and the `-r2` evidence. Results:
 - R16, R17 and R18 match §17.3 and §23.6 in source.
@@ -651,64 +650,132 @@ all data except ID and date stays visible at every width.
 5. **Untranslated Story text (clause 13, P3):** `WrappedTitleColumn` shows the raw status code (`r.status`, for example
    `active`) inside its badge.
 
+### 18.2a Owner instructions later the same day (verbatim) — scope widened
+
+1. Opus noted that every admin page View Story renders without `AdminShell` and is therefore 240px wider than the
+   real page from 1024. The owner replied: *"Це треба вирішити одразу у цій задачі, а не створювати купу
+   додаткових задач!"*
+2. *"і це стосується всіх таблиць у проекті, а не тільки в адмінці"*.
+3. Asked how far that reaches, the owner chose *"857: усі Mantine + правило (Recommended)"*. Its full text:
+   - 857 carries the rule, the shared Story frame with the real `AdminShell`, and the measurement and fix of every
+     Mantine table.
+   - The five legacy table screens get the rule when they migrate, in one task (**916**).
+   - Support is covered in **859**.
+
+**The rule is now `docs/mantine-responsive-design-system.md` §7.3 "Table fit"** (written by Opus, 2026-10-02). GR-3b
+gains "An admin page View renders inside the real `AdminShell`". §7.3 is the acceptance standard for every table
+below.
+
+**Opus measurement, 2026-10-02.**
+- Run: `win32` Node v22.22.3, `storybook-static` built 10:47 from the Revision 2 tree, Playwright, sq and uk.
+- Production geometry was reproduced with the navbar offset and each page's `maw`.
+- Script and raw output: `docs/sessions/evidence/task857/90-opus-table-census.mjs` and
+  `90-opus-table-census.json` (copied there by Opus).
+
+Each cell is `scroll overflow px` in uk, with the card width in brackets:
+
+| Table (Story) | Production card 768 / 1024 / 1280 / 1440 | uk overflow at 1024 | Columns measured at 1024 (uk, px) |
+|---|---|---|---|
+| `AdminListingsView` | 720 / 720 / 976 / 1136 | +439 | listing 240, type 167, price 130, status 144, visibility 270, agent 144, chevron 62 |
+| `AdminUsersTable` | 720 / 736 / 992 / 1152 (page `p="xl"`) | +809 | user 534 (`35%`), role 153, status 153, phone 198, date 305 (`20%`), actions 183 (`12%`) |
+| `AdminExchangeProvidersView` | 720 / 720 / 960 / 960 | +392 | name 177, endpoint 332, priority 109, mode 129, enabled 129, notes 105, actions 130 |
+| `AdminPagesView` | 720 / 720 / 832 / 832 | +371 | title 472, status 149, updated 197, actions 130 (slug from `md`) |
+| `AdminReportsView` | 720 / 720 / 960 / 960 | +358 | reason 212, listing 337, status 127, date 197, chevron 62 (reporter from `lg`) |
+| `AdminCurrenciesView` | 720 / 720 / 960 / 960 | +5 | code 71, symbol 94, name 159, active 206, chevron 62 (updated from `lg`) |
+| `AgentStatisticsView` (cabinet) | 678 / 934 / 1190 / 1350 (its own `MantineDashboardGrid`) | +3238 | nine columns with `%` widths; the `22%` wrap title inflates the table to 4170px |
+| `AdminSurfacePattern`, `AdminTable` `Default` | no production consumer / adapter | 0 | fit |
+
 ### 18.3 New and replacing requirements (supersede R15's `AdminListingsView` part and AC12)
 
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
-| **R19** | **Token (`src/design-system/mantine/theme.ts`, EXTEND).** Add `theme.other.layout.adminTableTitleColumnWidth: '12.5rem'` to the `layout` type and value blocks. Its comment gives the provenance: the legacy `AdminListingsTable.tsx:511` (`git show HEAD`) title `truncate max-w-50` (12.5rem); owner decision 2026-10-02 (§18.1). Change no other key. | P1 | AC17 |
-| **R20** | **`AdminTable` (EXTEND, additive).** `AdminTableColumn.visibility` gains `'xxl'` (the theme's 1440px breakpoint, `theme.ts:629`), forwarded through `visibleFrom()` like the others. Mantine types `MantineBreakpoint` as `… \| (string & {})`, so this typechecks. Omitted, every other consumer is unchanged. | P1 | AC17 |
-| **R21** | **`AdminListingsView` columns, in order:** <br>1. **ID**, `visibility: 'xxl'`. <br>2. **Listing** (sticky). `width: theme.other.layout.adminTableTitleColumnWidth`, `wrap: true`. Cell: the button with the premium star, title `Text size="sm" fw={500} lineClamp={2}`, and under it `Text size="xs" c="dimmed"` showing `typeLabel(l)` plus ` · <agent>` when there is an agent (the card's `meta` string, extracted to one helper both use). <br>3. **Price**, unchanged. <br>4. **Status**. Header `col_status`. Cell: `Stack gap="tight" align="flex-start"` with the status badge, then the visibility badge. <br>5. **Date**, `visibility: 'xl'`. <br>The `type`, `visibility` and `agent` columns are deleted. `stickyColumnIndex` points at Listing. `cardRow` is unchanged, apart from consuming the shared meta helper. The `calc(…)` width is gone. | P1 | AC17 |
-| **R22** | **`WrappedTitleColumn` (`AdminTable.stories.tsx`).** Its title column uses `theme.other.layout.adminTableTitleColumnWidth` (through `useMantineTheme()` in `render`) instead of the `calc(…)`. Its status badge shows the localised status label through the same helper production uses, `getListingStatusLabel(code, k => storyT(l, \`cabinet.${k}\`))` (`src/lib/i18n/listingStatusLabel.ts`; the container calls it with the `cabinet` translator at `AdminListingsTable.tsx:58`; confirm the namespace there and name it in the session log), never the raw code. | P2 | AC17 |
+| **R19** | **Token (`src/design-system/mantine/theme.ts`, EXTEND).** Add `theme.other.layout.tableTitleColumnWidth: '12.5rem'` to the `layout` type and value blocks. Its comment gives the provenance: legacy `AdminListingsTable.tsx:511` (`git show HEAD`) `truncate max-w-50`, 12.5rem; owner decision 2026-10-02; §7.3 (a). Every table in this task uses it for its title column. | P1 | AC17 |
+| **R20** | **`AdminTable` (EXTEND).** `AdminTableColumn.visibility` gains `'xxl'` (theme 1440px, `theme.ts:629`), forwarded through `visibleFrom()`. `AdminTable` passes `cardsBelow="md"` to `MantineDataTableToCards` (§7.3 rule 2). Every `AdminTable` consumer therefore shows cards below 768. That includes the legacy `AdminCompaniesManager`, `AdminPropertyTypesManager` and `AdminSupportManager`, which are not edited. Their synthesized or `cardRow` card already exists. | P1 | AC17, AC19 |
+| **R21** | **`AdminListingsView` columns, in order:** <br>1. **ID**, `visibility: 'xxl'`. <br>2. **Listing** (sticky). `width: theme.other.layout.tableTitleColumnWidth`, `wrap: true`. Cell: the button with the premium star, title `Text size="sm" fw={500} lineClamp={2}`, and under it `Text size="xs" c="dimmed"` with `typeLabel(l)` plus ` · <agent>` when there is one. That is the card's `meta` string, from one helper both use. <br>3. **Price**. <br>4. **Status**. Header `col_status`. Cell: `Stack gap="tight" align="flex-start"` with the status badge, then the visibility badge. <br>5. **Date**, `visibility: 'xl'`. <br>The `type`, `visibility` and `agent` columns are deleted, and the `calc(…)` width is gone. | P1 | AC17 |
+| **R22** | **`WrappedTitleColumn` (`AdminTable.stories.tsx`).** The title column uses `theme.other.layout.tableTitleColumnWidth` (`useMantineTheme()` in `render`), not `calc(…)`. The status badge shows `getListingStatusLabel(code, k => storyT(l, 'cabinet.' + k))` (`src/lib/i18n/listingStatusLabel.ts`; the container calls it with the `cabinet` translator at `AdminListingsTable.tsx:46,58`), never the raw code. | P2 | AC17 |
+| **R23** | **`AdminPageFrame` (CREATE, production).** Add `src/components/admin/AdminPageFrame.tsx`: `<Box p={…} maw={…} mx={…}>{children}</Box>`, the wrapper every admin `page.tsx` hand-writes today. Props: <br>• `width: 'page' \| 'shell' \| 'narrow' \| 'panel' \| 'form'`, mapping to `adminPageMaxWidth` / `adminPageShellMaxWidth` / `adminPageNarrowMaxWidth` / `adminPagePanelMaxWidth` / `adminPageFormMaxWidth`. <br>• `gutter?: 'responsive' \| 'xl'`. Default `responsive` = `{ base: 'xl', lg: '2xl' }`; `xl` is today's `p="xl"`. <br>• `centered?: boolean`, default `true` (`mx="auto"`). <br>Every route keeps its exact current values: <br>• `currency`, `inquiries/sales`, `inquiries/support`, `reports`, `users/[id]`: `page`; <br>• `listings`: `shell`; <br>• `users`: `shell` + `gutter="xl"`; <br>• `pages`: `narrow`; <br>• `permissions`: `panel` + `gutter="xl"` + `centered={false}`; <br>• `users/new`: `form`. <br>Those ten `page.tsx` files replace their `Box` with it and change nothing else. Own Story `Patterns/Mantine/AdminPageFrame` (one export per `width`, inside `withAdminShell`, an `AdminPageHeader` + `Paper` placeholder as content). Enrolled in `scripts/mantine-migration-scope.json`. | P1 | AC18 |
+| **R24** | **Shared Story frame (CREATE).** Move `withAdminShell` from `AdminDashboardView.stories.tsx:41-47` to `src/stories/_StoryAdminShell.tsx` (exported). `AdminDashboardView.stories.tsx` imports it. That is the only change to that Story. | P1 | AC18 |
+| **R25** | **Admin page View Stories render as their route does (GR-3b, §7.3).** Each Story below: <br>• uses `decorators: [withAdminShell]`, `layout: 'fullscreen'`, `skipCanvas: true` and `parameters.nextjs.navigation.pathname` = its route; <br>• wraps every page export in the route's `AdminPageFrame` props (R23); <br>• removes `StoryPageGutter`. <br>Stories and routes: <br>• `AdminListingsView` (`/admin/listings`); <br>• `AdminUsersTable` (`/admin/users`); <br>• `AdminCurrencyTabs`, `AdminCurrenciesView`, `AdminExchangeProvidersView` (`/admin/currency`); <br>• `AdminPagesView` (`/admin/pages`); <br>• `AdminReportsView` (`/admin/reports`); <br>• `AdminInquiriesView` (`/admin/inquiries/sales`); <br>• `AdminPermissionsView` (`/admin/permissions`); <br>• `AdminUserProfileView`: `Create` → `/admin/users/new` with `form`; every other export → `/admin/users/[id]` with `page`. <br>Exports that render only an open dialog stay overlay-only. The dialog View Stories (`*DialogView`) do not change. | P1 | AC18 |
+| **R26** | **`AdminUsersTable` fits (§7.3), both tables (users and verified agents).** <br>• Delete every percentage `width`. <br>• The user column takes `tableTitleColumnWidth` + `wrap: true`; the name stays as today, and phone moves to a dimmed meta line under it. <br>• Role and status stack in one cell (header `col_status`). <br>• Date from `xl`. <br>• Actions stay. <br>• `cardsBelow="md"`. <br>Apply the same order to the verified-agents table, and list its final columns in the session log. | P1 | AC19 |
+| **R27** | **`AdminExchangeProvidersView` fits.** <br>• Name takes `tableTitleColumnWidth` + `wrap: true`. Under it, the endpoint shows as `Text size="xs" c="dimmed" ff="monospace" truncate="end"`, and the endpoint column is deleted. <br>• Mode and enabled stack in one cell. <br>• Notes from `xl`; they stay in the card. <br>• Priority and actions stay. <br>• `cardsBelow="md"`. | P1 | AC19 |
+| **R28** | **`AdminPagesView` fits.** <br>• Title takes `tableTitleColumnWidth` + `wrap: true` + `lineClamp={2}`. <br>• The slug moves to a dimmed monospace meta line under it, and the slug column is deleted. <br>• Status, updated (`lg`) and actions stay. <br>• `cardsBelow="md"`. | P1 | AC19 |
+| **R29** | **`AdminReportsView` fits.** <br>• The listing column takes `tableTitleColumnWidth` + `wrap: true` + `lineClamp={2}`, with the reporter as a dimmed meta line under it. The reporter column is deleted, and the listing column shows from `always`. <br>• Status and date stack in one cell. The date column is deleted. <br>• Reason and chevron stay. | P1 | AC19 |
+| **R30** | **`AdminCurrenciesView` fits.** The symbol moves into the code cell as dimmed text after the code, and the symbol column is deleted. Everything else stays. | P2 | AC19 |
+| **R31** | **`AgentStatisticsView` (cabinet) fits.** <br>• Delete every percentage `width`. <br>• The title column takes `tableTitleColumnWidth` + `wrap: true` (thumbnail + `lineClamp={2}` link, as today). <br>• Status and visibility stack in one cell. <br>• Keep `cardsBelow="md"`. <br>Then measure. If the table still overflows at 678 (768) or 934 (1024), the views, WhatsApp and form-inquiries counts stack in one right-aligned cell, header `agt10_col_activity_counts` (new key, sq/en/uk/it). Each count is a `Group gap="tight"` with its icon (`Eye`, `MessageCircle`, `Mail`) at `iconSize.badge` and an `aria-label` from the existing column labels. If it still overflows, return `BLOCKED — R31 BUDGET` with the per-column widths. Its Story already renders at production width (full-screen, the View's own `MantineDashboardGrid` gutter). Leave the decorator unchanged. | P1 | AC19 |
 
 ### 18.4 Acceptance (Revision 3)
 
-**AC17 [R19–R22]** replaces AC12.
+**Measurement method (AC17–AC19).**
+- Playwright runs against the rebuilt `storybook-static`. The admin Stories now render inside the real `AdminShell` and
+  `AdminPageFrame`, so the script uses no synthetic offset.
+- It records the card width per cell and asserts that it equals the production card in §18.2a (±1px). A cell with
+  any other card width is invalid, not passing.
+- It runs at 768, 1024, 1280 and 1440 × sq/en/uk/it. Below 768 it checks that the cards render.
+- Write the results to `88-measurements-r3.json`, together with the script.
 
-*Measurement.* Playwright runs against the rebuilt `storybook-static` and checks `AdminListingsView` `Default` and
-`Paginated` in all four locales.
-- At 768 it uses the Story as rendered.
-- At 1024, 1280 and 1440 the script reproduces the production shell before it measures: it sets
-  `document.body.style.paddingLeft` to `theme.other.layout.appShellNavbarWidth` px (240). This is a synthetic offset
-  for evidence only. Never put it in the Story.
-- The script records the effective card width per cell and asserts that it equals the production card from §18.2
-  (720 / 720 / 976 / 1136, ±1px). A cell with any other card width is invalid, not passing.
+- **AC17 [R19–R22] replaces AC12.** For `AdminListingsView` `Default` and `Paginated`:
+  - each cell has the `TABLE FIT CHECK` of §7.3: no scroll, nothing clipped, first and last inset 24px;
+  - the title has at most two lines, and the meta line is present;
+  - the date column shows from 1280 and the ID column from 1440 only.
 
-Requirements, per cell:
-1. The table's `ScrollArea` viewport has `scrollWidth ≤ clientWidth`.
-2. The first cell's left inset and the last cell's right inset (the chevron cell) are both 24px from the card border.
-3. No badge or price is clipped (`scrollWidth ≤ clientWidth` on each).
-4. The title clamps to at most two lines, and the meta line is present.
-5. The date column is present from 1280, and the ID column from 1440 only.
-
-Also:
-- `WrappedTitleColumn` passes the same scroll check at 768/1024/1440 in all four locales.
-- Below 640 the cards are unchanged: left and right content insets are equal.
-- The audit links still compute to 14px.
-- Grepping `calc(` in `AdminListingsView.tsx` and `AdminTable.stories.tsx` prints nothing.
+  Also:
+  - `WrappedTitleColumn` fits at 768/1024/1440;
+  - the audit links compute to 14px;
+  - a grep for `calc(` in `AdminListingsView.tsx` and `AdminTable.stories.tsx` prints nothing.
+- **AC18 [R23–R25].**
+  - The ten `page.tsx` diffs only swap `Box` for `AdminPageFrame` with the R23 props.
+  - `Patterns/Mantine/AdminPageFrame` exists and is enrolled.
+  - Every R25 Story renders inside `AdminShell`: at 1440 the navbar is visible, and the content's left edge sits at
+    240px + the frame gutter.
+  - In each R25 Story at 320/390/1024/1440, the top, right and bottom gutter from the `AppShell.Main` content edge equals
+    the route's `AdminPageFrame` gutter: 24, or 32 from 1024 for `responsive`; 24 for `xl`. No side is 0 and none is
+    doubled.
+  - A grep for `StoryPageGutter` in the R25 Story files prints nothing.
+- **AC19 [R20, R26–R31].** Each of `AdminUsersTable` (`Default` and the verified tab), `AdminExchangeProvidersView`,
+  `AdminPagesView`, `AdminReportsView` (`AllTab`), `AdminCurrenciesView` and `AgentStatisticsView` `Default` gets the
+  `TABLE FIT CHECK` at its production card in all four locales. Below 768, cards render. A grep for `width: '` followed
+  by a digit and `%` in the seven table files prints nothing.
 
 ### 18.5 Re-entry: `remediation` (Revision 3)
 
-- **Start step:** platform line `70-platform-r3.txt`, then R19 → R20 → R21 → R22 → rebuild Storybook → AC17
-  measurements → the §18.6 gate block → receipts.
-- **Do not re-run or overwrite:** evidence `01`–`61` and every `plant-*` file. P1–P6 are not re-run.
+- **Start step:** platform line `70-platform-r3.txt`, then:
+  1. R19 → R20 → R23 → R24;
+  2. the ten `page.tsx` swaps;
+  3. R21 → R22 → R25;
+  4. R26 → R31;
+  5. rebuild Storybook → measurements → the §18.6 gate block → receipts.
+- **Do not re-run or overwrite:** evidence `01`–`61` and every `plant-*` file. P1–P6 are not re-run. Opus's `90-*`
+  files are read-only.
 - **Write set:**
   - `src/design-system/mantine/theme.ts` (R19, one key);
-  - `src/components/admin/AdminTable.tsx` (R20, additive);
-  - `src/components/admin/AdminListingsView.tsx` (R21);
-  - `src/stories/patterns/mantine/AdminTable.stories.tsx` (R22);
-  - `src/stories/patterns/mantine/AdminListingsView.stories.tsx`, only if a fixture needs an agent or a long title to
-    exercise the meta line;
-  - `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx`, only if a selector names a deleted column;
-  - `docs/component-catalog.md`, only if it lists `AdminTable`'s visibility values;
-  - the session log ("Revision 3" section), evidence `70`+ with an `-r3` suffix, and the 857 cell of `docs/backlog.md`.
+  - `src/components/admin/AdminTable.tsx` (R20);
+  - new `src/components/admin/AdminPageFrame.tsx` (R23);
+  - the ten `src/app/admin/**/page.tsx` files named in R23 (the `Box` swap and its imports only);
+  - `src/components/admin/AdminListingsView.tsx` (R21), `AdminUsersTable.tsx` (R26), `AdminExchangeProvidersView.tsx`
+    (R27), `AdminPagesView.tsx` (R28), `AdminReportsView.tsx` (R29), `AdminCurrenciesView.tsx` (R30);
+  - `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx` (R31);
+  - new `src/stories/_StoryAdminShell.tsx` and new `src/stories/patterns/mantine/AdminPageFrame.stories.tsx`;
+  - the Story files named in R24/R25, `AdminTable.stories.tsx` (R22), and `AgentStatisticsView.stories.tsx` (only if a
+    fixture needs a longer title);
+  - `messages/{sq,en,uk,it}.json`, only for R31's `agt10_col_activity_counts` if that branch is taken;
+  - `scripts/mantine-migration-scope.json` (enrol `AdminPageFrame`), `scripts/surface-census-baseline.json` (only lines
+    the census names for the touched surfaces), `docs/component-catalog.md` (`AdminPageFrame`, `AdminTable`
+    `visibility`/`cardsBelow`);
+  - tests that select a deleted column. List each one.
+  - the session log ("Revision 3" section), evidence `70`+ with an `-r3` suffix, and the 857 cell of
+    `docs/backlog.md`.
 - **Forbidden:**
-  - `MantineDataTableToCards.tsx` and every other `AdminTable` consumer;
-  - the dialogs, their Stories and the containers;
-  - `messages/*.json`. No key is added. `visibility_label`, `col_type` and `col_agent` stay, because the filter and
-    the dialog still use them;
-  - every R13/R14 file.
-- **Negative branch:** if AC17 fails at a production card width with R21 in place, stop and return
-  `BLOCKED — R21 BUDGET` with the per-column widths. Do not widen the scope, hide another column, or touch the pattern.
+  - `MantineDataTableToCards.tsx`;
+  - the legacy managers (`AdminCompaniesManager`, `AdminPropertyTypesManager`, `AdminSupportManager`, `AdminLegalManager`,
+    `AdminLocationsManager`, `AdminPopularLocationsManager`), which belong to 916 and 859;
+  - the dialogs and their Stories;
+  - every R13/R14 file;
+  - any `docs/*rule*.md`, `docs/golden-rules.md`, `docs/mantine-responsive-design-system.md`.
+- **Negative branches:**
+  - If a table cannot meet AC17/AC19 with its R21–R31 layout, stop for that table with
+    `BLOCKED — R<n> BUDGET` and the per-column widths. Finish the others.
+  - If an R25 Story cannot render inside `AdminShell` (a missing mock), stop with `BLOCKED — R25 SHELL <story>`. Do not
+    fall back to `StoryPageGutter`.
 
 ### 18.6 Gate block (Revision 3)
 
@@ -716,7 +783,7 @@ Also:
 $ev = "docs\sessions\evidence\task857"
 node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\70-platform-r3.txt"
 node.exe scripts\check-surface-census.mjs --surface src\app\admin\listings\page.tsx *>&1 | Tee-Object "$ev\71-census-r3.txt"
-npx.cmd vitest run src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx src/modules/listings/lib/__tests__/visibility.test.ts *>&1 | Tee-Object "$ev\72-tests-r3.txt"
+npm.cmd run test *>&1 | Tee-Object "$ev\72-tests-r3.txt"
 npm.cmd run typecheck *>&1 | Tee-Object "$ev\73-typecheck-r3.txt"
 npm.cmd run lint *>&1 | Tee-Object "$ev\74-lint-r3.txt"
 npm.cmd run check:story-coverage *>&1 | Tee-Object "$ev\75-story-coverage-r3.txt"
@@ -728,27 +795,42 @@ npm.cmd run check:i18n *>&1 | Tee-Object "$ev\80-i18n-r3.txt"
 npm.cmd run check:type-responsive *>&1 | Tee-Object "$ev\81-type-responsive-r3.txt"
 npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\82-file-integrity-r3.txt"
 npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\83-mojibake-r3.txt"
+npm.cmd run check:listing-visibility *>&1 | Tee-Object "$ev\83b-listing-visibility-r3.txt"
 npm.cmd run build-storybook *>&1 | Tee-Object "$ev\84-storybook-build-r3.txt"
 npm.cmd run build *>&1 | Tee-Object "$ev\85-build-r3.txt"
 git --no-optional-locks status --porcelain | Tee-Object "$ev\86-status-after-r3.txt"
 ```
 
 Record every exit code. Normalise the transcripts to UTF-8 without BOM through Node. Write `git hash-object` of every
-Revision 3 file to `87-hash-object-r3.txt` in the same pass. Write the AC17 numbers to `88-measurements-r3.json`,
-together with the script that produced them.
+Revision 3 file to `87-hash-object-r3.txt` in the same pass.
 
-**Expected:** `win32`; the four calibration FAIL lines; every other exit 0.
+**Expected:** `win32`; the four calibration FAIL lines; every other exit 0. If the whole `npm.cmd run test` run fails on
+a file this revision does not touch, record it with its first failing line and run the touched test files alone.
+Report both results; do not fix unrelated tests.
 
 ### 18.7 Receipts (Revision 3)
 
-- **GR-0:** one receipt each for `adminTableTitleColumnWidth` (EXTEND `theme.other.layout`) and `'xxl'` (EXTEND
-  `AdminTable`).
-- **GR-3b, GR-3c and GR-3d:** one receipt each for `AdminListingsView` `Default` / `Paginated` and for `WrappedTitleColumn`,
-  at 320/390/1024/1440 (type also at 768).
-- **GR-2:** for `check:design-tokens`, it cannot see a token arithmetic expression such as `calc(var(--…) * 5)`. AC17's
-  grep closes that.
+- **GR-0:** one each for `tableTitleColumnWidth` (EXTEND `theme.other.layout`), `AdminTable` `'xxl'` + `cardsBelow`
+  (EXTEND), `AdminPageFrame` (CREATE: the search shows ten hand-written `Box` wrappers and no shared owner), and
+  `withAdminShell` (EXTRACT from `AdminDashboardView.stories.tsx`).
+- **GR-3a:** one for `Patterns/Mantine/AdminPageFrame` (CREATE).
+- **GR-1:** the census of `src/app/admin/listings/page.tsx`; `check:surface-census:changed` covers the other nine
+  surfaces.
+- **GR-3b, GR-3c and GR-3d:** one each for every R25 Story, `AdminPageFrame`, `WrappedTitleColumn` and
+  `AgentStatisticsView` `Default`, at 320/390/1024/1440 (type also at 768).
+- **§7.3 `TABLE FIT CHECK`:** one per table export named in AC17/AC19.
+- **GR-2:**
+  - `check:design-tokens` cannot see token arithmetic or a percentage width; the AC17/AC19 greps close that.
+  - `check:story-coverage` cannot see where a Story renders; AC18's measurement closes that.
 
 ### 18.8 Owner matrix after Revision 3 (O78-12, re-issued)
 
-The 38 tuples of §17.8 are unchanged. Opus re-measures every Story before the owner sees it, and measures
-`AdminListingsView` at the production card widths of §18.2.
+The 38 tuples of §17.8 stay. Added rows:
+
+| Rows | Tuples |
+|---|---|
+| `AdminUsersTable`, `AdminExchangeProvidersView`, `AdminPagesView`, `AdminReportsView`, `AdminCurrenciesView`, `AgentStatisticsView`: `Default` × sq/uk × 1024/1440 | 24 |
+| `AdminInquiriesView`, `AdminPermissionsView`, `AdminUserProfileView` (`View`), `AdminCurrencyTabs`, `AdminPageFrame` (`shell`): `Default` × sq × 1440 | 5 |
+| `AdminListingsView` `Default` × uk × 1024 (the production card at its narrowest) | 1 |
+
+**68 tuples.** Opus re-measures every Story in the matrix (GR-3b/3c/3d and §7.3) before the owner sees it.

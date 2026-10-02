@@ -168,6 +168,16 @@ breakpoint-keyed Mantine responsive prop, and cites the parent's source line in 
 navbar child with a `navbarBreakpoint="lg"` parent gets `w={{ base: '100%', lg: theme.other.layout.appShellNavbarWidth }}`.
 Otherwise the container is fluid.
 
+**An admin page View renders inside the real `AdminShell`. Owner rule, 2026-10-02 (Task 857 review 3), verbatim:**
+*"Це треба вирішити одразу у цій задачі, а не створювати купу додаткових задач!"* The trigger: every admin page View
+Story rendered without the shell. From 1024 such a Story had 240px (the navbar) more room than the real page, so the
+owner reviewed a wider layout than users see.
+- Every Story of a View that a route under `src/app/admin/` renders as its page content uses the shared decorator
+  `withAdminShell` (`src/stories/_StoryAdminShell.tsx`).
+- Inside it, the View is wrapped in the same `AdminPageFrame` props its route uses. There is no `StoryPageGutter`
+  (GR-3d `n/a: own gutter (AdminPageFrame)`).
+- The same applies to every table Story (`docs/mantine-responsive-design-system.md` §7.3).
+
 **Sections stack into rows on a phone. Owner rule, 2026-10-01 (Task 893's `/admin/users/new` returned at 320), verbatim:**
 *"мобільна адаптація має переноситись на рядки, а не хардкодно триматись ліворуч чи праворуч від попередньої секції"*.
 The trigger was the `AdminUserProfileView` header card (`Group wrap="nowrap"`). It kept the 126px avatar block beside

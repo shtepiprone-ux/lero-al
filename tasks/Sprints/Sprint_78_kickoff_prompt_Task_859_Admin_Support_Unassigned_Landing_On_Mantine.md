@@ -1,7 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q3** (legacy admin surface → Mantine; no registered critical
-flow names it) · no task dependency (877's adapters have landed) · **blocks 885** (Sprint 84, D84-1) · owner action
+flow names it) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
 **O78-13** · **Status: 📝 `KICKOFF FILED` 2026-09-29**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -357,3 +357,30 @@ Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-re
 - The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
 
 Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*
+
+---
+
+## Addendum — Task 857 review 3, 2026-10-02 (owner rule §7.3 "Table fit")
+
+The owner ruled, verbatim: *"і це стосується всіх таблиць у проекті, а не тільки в адмінці"*. The rule is
+`docs/mantine-responsive-design-system.md` §7.3. It binds this task:
+
+1. **Run after 857 lands.** 857 adds three things this task consumes:
+   - `AdminPageFrame` (`src/components/admin/AdminPageFrame.tsx`). The `/admin/support` page wraps its content in it
+     instead of a hand-written `Box`.
+   - `withAdminShell` (`src/stories/_StoryAdminShell.tsx`).
+   - `AdminTable`'s `cardsBelow="md"`.
+
+   If 857 has not landed at I0, return `PREMISE DRIFT — 857`.
+2. **Stories render at production width.** `AdminSupportView`'s Story renders through `withAdminShell` +
+   `AdminPageFrame`, exactly as its route does, with no `StoryPageGutter`. This replaces §12.2's "wrap in this task"
+   for that Story. The GR-3d value is `n/a: own gutter (AdminPageFrame)`. The dialog Stories stay overlay-only.
+3. **The support list meets §7.3.** From 768, it has no horizontal scroll at the production card width in all four
+   locales. Fit it in the §7.3 order:
+   - the subject column wraps at `theme.other.layout.tableTitleColumnWidth`;
+   - related values merge into one cell (for example, the type badge stacked under the status, and the reporter and
+     reported links as a meta line under the subject);
+   - secondary columns appear from a breakpoint.
+
+   Emit one `TABLE FIT CHECK` receipt per list export.
+

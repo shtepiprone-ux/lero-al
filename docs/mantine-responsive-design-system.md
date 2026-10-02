@@ -312,6 +312,61 @@ Edge-anchoring rule: every card row is `Group justify="space-between"` — label
 **Story proof requirement (§16 gate):** Pattern stories that accept `card` MUST demonstrate the anatomy with
 avatar/title/subtitle/badge/meta/actions — not a minimal stub. The story is the rendered specification.
 
+### §7.3 — Table fit: a data table fits its real container (owner rule, 2026-10-02)
+
+**Owner, verbatim (Task 857, O78-12 return and review 3):**
+- *"не витримані горизонтальні відступи всередині таблиці на всіх breakpoints"*;
+- on admin Stories rendered without `AdminShell`: *"Це треба вирішити одразу у цій задачі, а не створювати купу
+  додаткових задач!"*;
+- *"і це стосується всіх таблиць у проекті, а не тільки в адмінці"*.
+
+**The trigger.** The `/admin/listings` table was wider than its card at every desktop width. It scrolled inside
+`MantineDataTableToCards`'s `ScrollArea`, and the right-hand columns were cut off at the card border. The Story hid how
+bad this was: it rendered without `AdminShell`, so from 1024 it had 240px more room than the real page.
+
+Every `MantineDataTableToCards` consumer, direct or through `AdminTable`, follows these rules. So does every new or
+migrated table.
+
+1. **No horizontal scroll.** Wherever the table renders as a table, the `ScrollArea` viewport has
+   `scrollWidth ≤ clientWidth` at the **production** container width, in every locale. A horizontal scroll is never
+   the way to fit a table.
+2. **Cards below `md`.** A table renders as cards below 768px (`cardsBelow="md"`). From 768 it must fit.
+3. **The production container is the measure.** For an admin page, the card width is:
+   - the viewport, minus the `AdminShell` navbar from `lg` (`appShellNavbarWidth`, 240px);
+   - minus the page frame's gutter on each side;
+   - capped by the page's `maw`.
+
+   For the cabinet and public pages it is the page's own container. A Story measured at any other width proves
+   nothing (GR-3b).
+4. **How to fit, in this order:**
+   - (a) **Title column.** It wraps (`wrap: true`) at `theme.other.layout.tableTitleColumnWidth` and clamps to two
+     lines.
+   - (b) **Merge related values into one cell.** Examples: status and visibility as two stacked badges; type, property
+     and agent as a dimmed meta line under the title.
+   - (c) **Show secondary columns from a breakpoint** (`visibility`). This is only for values the row also exposes
+     elsewhere, such as its card, its dialog or its detail page.
+5. **Insets.** The first and the last cell, the row chevron included, sit 24px (the pattern's `horizontalSpacing`)
+   from the card border.
+6. **Forbidden:**
+   - a percentage `width` on a `wrap` column (it inflates a `max-content` table);
+   - a width invented from a spacing token (`calc(var(--mantine-spacing-*) * n)`);
+   - a raw px/rem width;
+   - hiding the row's action or chevron to make the table fit.
+
+**Stories.** A table Story renders the table at its production width.
+- An admin page View renders inside the real `AdminShell` (`withAdminShell`, `src/stories/_StoryAdminShell.tsx`) and
+  the same `AdminPageFrame` its route uses, with no `StoryPageGutter`.
+- A cabinet or public View renders full-screen in its own production container.
+
+**Check, before handoff and at review.** Run Playwright at 768, 1024, 1280 and 1440 × sq/en/uk/it. Record the card
+width, the table's `scrollWidth`, the viewport's `clientWidth`, and the first and last insets.
+
+`TABLE FIT CHECK — <story id>: 768 <card>/<table> · 1024 … · 1280 … · 1440 …; scroll: NONE; clipped: NONE; first/last inset 24/24; card width = production: yes.`
+
+**Existing tables.** Task 857 (kickoff §18) brings every Mantine table into line. Task 859 handles
+`AdminSupportManager`. Task 916 handles the five legacy admin tables when it migrates them (Legal, Locations, Popular
+locations, Companies, Property types).
+
 ---
 
 ## §8 — Mantine Storybook proof rules

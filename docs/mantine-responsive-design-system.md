@@ -1335,7 +1335,7 @@ Rules that apply in every state:
 `docs/sessions/evidence/task857/110-*`:
 - `110-ref-timeline-sharing.png`, `110-ref-payment-share.png` and `110-ref-truefi-set.png` (dialog sets);
 - `110-ref-tailadmin-modal-1440.png` and `-390.png` (demo.tailadmin.com/modals);
-- `110-ref-lahomes-grid.png` and `-details.png` (the Lahomes real-estate admin).
+- `110-ref-lahomes-grid.png` and `-details.png` (the Lahomes real-estate admin; listing pages, not dialogs).
 
 The root cause was structural. `MantineModal` offered only title, body and footer, with no header description, no
 dividers, no sections and no detail block, so every dialog improvised its own layout.
@@ -1344,9 +1344,8 @@ Every dialog on the anatomy is built only from these parts, top to bottom:
 
 | Part | Canonical source | What the references show |
 |---|---|---|
-| **Header** | `MantineModal` with `structured` | Optional icon tile (`ThemeIcon variant="light"`, 40px, radius md). Title 18px/600 (`fz="lg"`), clamped to 2 lines. Optional description 14px dimmed (`fz="sm"`). A round gray close button top-right (`ActionIcon variant="light" color="gray" radius="xl"`). A full-bleed divider below. |
+| **Header** | `MantineModal` with `structured` | Optional icon tile (`ThemeIcon variant="light" size="xl"`, 44px, radius md). Title 18px/600 (`fz="lg"`), clamped to 2 lines. Optional description 14px dimmed (`fz="sm"`). A round gray close button top-right (`ActionIcon variant="light" color="gray" radius="xl"`). A full-bleed divider below. |
 | **Sections** | `MantineDialogSections` / `MantineDialogSection` | Each section has an optional title (16px/500) and description (14px dimmed), then its content. Full-bleed dividers separate the sections. |
-| **Summary of an entity** | the entity's own canonical pattern | A listing is `MantineListingCardPattern layout="list"`: photo, badges, title, features and price (Lahomes). |
 | **Facts** | `MantineDetailList` | A tinted panel (gray-0, radius md). One row per fact, with the label on the left (14px dimmed) and the value on the right (14px/500). |
 | **Navigation** | `MantineNavRowList` | Full-width rows in one bordered list: icon tile, label, optional description, and a trailing chevron (or an external-link arrow). Each row is at least 56px tall. Each row has its own line, so GR-3e is met by construction. |
 | **A choice** | `Radio.Card` (theme `RadioCard` + `RadioIndicator` entries) | Bordered cards, each with a title and an optional description. The checked card has a brand border and a brand-0 tint. The indicator is the canonical 20px circle with a 10px dot (GR-3f). |
@@ -1355,6 +1354,11 @@ Every dialog on the anatomy is built only from these parts, top to bottom:
 Rules:
 - **Nothing outside these parts.** No caption-over-value grids, no floating text buttons in the body, and no third footer
   button. A third action is a `MantineNavRowList` row.
+- **No summary of the subject (owner return, 2026-10-03, Task 857 Revision 8).** A dialog never repeats the record it
+  was opened for: no card, photo or summary block. The header title names the subject, and the row the user clicked
+  stays visible behind the dialog. The owner's words, verbatim: *"навіщо блок з фото та короткою інфою про оголошення в
+  модальному вікні? Саме цей блок створює скролл."* None of the dialog references shows one; the Lahomes captures are
+  listing pages, not dialogs.
 - **Below 640px** the dialog is still the `ResponsiveBottomSheet` (§23.4). The same parts render in the same order, and
   the footer keeps its equal-width pair.
 - `MantineModal`'s `structured` prop opts a dialog into the anatomy. Task 915 moves every other consumer onto it, then

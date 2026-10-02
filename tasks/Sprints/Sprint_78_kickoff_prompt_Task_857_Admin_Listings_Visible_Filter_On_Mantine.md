@@ -1121,3 +1121,97 @@ git --no-optional-locks status --porcelain | Tee-Object "$ev\102r-status-after-r
 - Added rows: `Mantine/Primitives/Radio` `Default` × sq × 390, 1440 (2).
 - **72 tuples.** Before the owner sees them, Opus re-measures every Story in the matrix: GR-3b/3c/3d/3e, §7.3, and
   GR-3f by looking at the crops.
+
+---
+
+## 22. Review 6 — `NEEDS REVISION`, 2026-10-02 → Revision 6 (the canonical radio's focus and disabled states follow §6g)
+
+### 22.1 Verdict on Revision 5
+
+R36–R39 are verified by Opus. `win32 v22.22.3`, `storybook-static` built after the last source write, and the shipped
+hashes equal `102s-hash-object-r5.txt`.
+- **R36 / AC21.** `ListingPreviewDialogView.tsx:176-202` is a `Stack gap="xs" align="flex-start"`. In
+  `105-opus-review6.json`, every export at 390/1440 × sq/uk has "Open public page" below "View listing" with equal left
+  edges, and no overflow.
+- **R37 / AC22.** The theme entry is `size: 'sm'` with `--radio-icon-size: 0.625rem`. In `Mantine/Primitives/Radio`
+  `Default` (320/390/1024/1440) and `PremiumDialogView` `NotPremium` (1440, first radio checked), every
+  `.mantine-Radio-radio` is 20×20 and every checked `.mantine-Radio-icon` is 10×10. Executor gap: `103-measurements-r5.json`
+  has `icon: null` for `PremiumDialogView`, and Opus closed that measurement. The grep prints only the theme entry.
+- **GR-3f.** `103-radio-crops-r5.png` and Opus's `105-opus-radio-crops.png` show a round ring and a round dot.
+- **Gates.** The exit codes are as expected: only the four 790 tests and the four container calibration lines fail.
+
+**Blocking: AC22's last bullet ("focus, error, disabled still render as before") was not checked.** The receipt says
+"not re-measured". Opus measured it and found that two states break §6g's authoritative state matrix
+(`docs/tailadmin-style-reference.md` §6g, "always-verify-styles gate: every state above is verified against the rendered
+Radio before approval"). Both defects predate Revision 5 and do not come from it. They are blocking anyway, for three
+reasons: this task changes the `Radio` theme entry, `Mantine/Primitives/Radio` `Default` is now an owner-matrix row, and
+`PremiumDialogView` `Saving` renders the disabled defect in production.
+
+### 22.2 Measured defects (Opus, `105b-opus-radio-disabled-focus.{mjs,json}`, `105-opus-radio-crops.png`)
+
+- **F1 — focus border.** §6g's focus row requires a "brand ring + brand border" on keyboard focus. The radio under
+  `:focus-visible` measures `border-color rgb(208, 213, 221)` (gray-3) and carries the 3px brand-5 10% ring.
+  - Cause: `input-chrome.css:233` `.mantine-Radio-radio:not(:checked):not([data-checked])` has specificity (0,3,0).
+    That beats `:238` `.mantine-Radio-radio:focus-visible` at (0,2,0), so the brand border never applies.
+- **F2 — disabled chrome stacked under the fade.** §6g's disabled row requires the whole control at opacity 0.5 and
+  nothing else, with the circle and dot dimming together. Rendered:
+  - disabled, unchecked: bg `rgb(228, 231, 236)` instead of white;
+  - disabled, checked: bg `rgb(228, 231, 236)`, border gray-3 and a dot `rgb(102, 112, 133)`. The selected option loses
+    its brand fill and white dot. This is `PremiumDialogView` `Saving` in production, where the chosen duration shows as
+    a gray dot on gray.
+  - Cause: Mantine `Radio.css:82-90`. `.m_8a3dbb89:disabled` sets `--mantine-color-disabled` bg and border, and its
+    `+ icon` sets `--radio-icon-color: var(--mantine-color-disabled-color)`. The checked rule at `:100-108` applies only
+    `:not(:disabled)`. `input-chrome.css:268-271` resets only the input's opacity.
+
+### 22.3 New requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R40** | **Focus border (F1), `src/design-system/mantine/input-chrome.css` Radio block only.** <br>• Under `:focus-visible`, an unchecked, non-error radio shows `border-color` brand-7 plus the existing 3px brand-5 10% ring. <br>• A checked radio keeps its brand border. <br>• An error unchecked radio keeps the red-6 border and red ring under focus, because error wins over focus. <br>• Mouse focus (`:focus:not(:focus-visible)`) shows no ring, as now. <br>• Achieve this by raising the focus rule's specificity above the resting rule, for example `.mantine-Radio-radio:not(:checked):not([data-checked]):focus-visible`, and keep the error rule winning by source order or specificity. No `!important`. Keep the existing comment style, and cite §6g and Task 857 R40. | P1 | AC23 |
+| **R41** | **Disabled chrome (F2), the same file and block.** A disabled radio renders exactly like its enabled state, and the root's existing `opacity: 0.5` is the only dim. <br>• Unchecked: bg as the enabled resting radio (measured `rgb(255, 255, 255)`), border gray-3. <br>• Checked: bg brand-7, border brand-7, white 10px dot. <br>• Neutralise Mantine's `:disabled` bg, border and `--radio-icon-color` on `.mantine-Radio-radio:disabled` and its `+ .mantine-Radio-icon`. For the checked case, also set the icon's `--radio-icon-opacity: 1` and `--radio-icon-transform: none`, because Mantine applies them only `:not(:disabled)`. Use theme variables only (`--mantine-color-brand-7`, `--mantine-color-gray-3`, `--mantine-color-white` or the resting value's variable). <br>• `cursor: not-allowed` stays. No focus ring when disabled, as now. | P1 | AC23 |
+| **R42** | **Story captions.** In `Mantine/Primitives/Radio` `Default`, only if a caption contradicts the new rendering, correct that caption. Change no other line. | P3 | AC23 |
+| **R43** | **Receipts.** <br>• `GR-3f CIRCLE CHECK` for each of the eight radios in `Mantine/Primitives/Radio` `Default`, with focus taken by keyboard (Tab). <br>• `GR-3f CIRCLE CHECK` for `PremiumDialogView` `Saving`, checked and unchecked. <br>• The crops go in `107-radio-states-r6.png`: DPR 1, 10× pixelated. <br>• GR-3b/3c/3e for `Default` and `Saving`. GR-3d: `n/a: MantineStoryShell primitive` and `n/a: overlay-only`. | P1 | AC23 |
+
+### 22.4 Acceptance (Revision 6)
+
+- **AC23 [R40–R43].** Computed in `storybook-static` at 1440 (sq), written to `107-measurements-r6.json`:
+  - `Default` radio 3 under keyboard `:focus-visible`: `border-color` equals the checked radio's brand-7 value, and the
+    `box-shadow` ring is present.
+  - `Default` radio 4 (error, unchecked) under keyboard focus: `border-color` is red-6 (`rgb(217, 45, 32)`).
+  - `Default` radio 7 (disabled, checked) and the checked radio in `PremiumDialogView` `Saving`: `background-color` and
+    `border-color` equal the enabled checked radio's (`rgb(236, 84, 71)`). The checked `.mantine-Radio-icon` is 10×10,
+    has opacity 1 and is white. The root opacity is 0.5.
+  - `Default` radio 6 (disabled, unchecked): `background-color` equals the enabled unchecked radio's, the border is
+    gray-3, and the root opacity is 0.5.
+  - Radios 1, 2, 5 and 8 are unchanged from `105b-opus-radio-disabled-focus.json` (bg, border, icon colour).
+  - The crops in `107-radio-states-r6.png` read as circles. Opus looks at them before the owner matrix.
+  - All of AC21 and AC22 still hold. Re-run the `103-measure-r5.mjs` logic as `107-measure-r6.mjs`, so that nothing is
+    overwritten.
+
+### 22.5 Re-entry: `remediation` (Revision 6)
+
+- **Start step:** platform line `106-platform-r6.txt`, then R40 → R41 → R42. Then rebuild Storybook, measure (`107-*`),
+  run the §22.6 gate block, and write the receipts to `108-receipts-r6.txt`.
+- **Do not re-run or overwrite:** evidence `01`–`105` and every `plant-*` file. Opus's `100-*`, `101*` and `105*`
+  files are read-only.
+- **Write set:**
+  - `src/design-system/mantine/input-chrome.css` (the Radio block only, R40/R41);
+  - `src/stories/mantine/primitives/Radio.stories.tsx` (R42 captions only, if needed);
+  - tests that assert the old radio chrome, if any. List each one;
+  - the session log ("Revision 6" section), evidence `106`+ with the `-r6` suffix, and the 857 cell of `docs/backlog.md`.
+- **Forbidden:** every other file. That includes `theme.ts` (R37 is verified), `PremiumDialogView.tsx`,
+  `ListingPreviewDialogView.tsx`, every R13–R35 file, and every rule document.
+- **Negative branch:** if any AC23 value cannot be reached from `input-chrome.css` with theme variables and without
+  `!important`, stop with `BLOCKED — R41 <state>` and the measured value. Do not set chrome in a consumer or a Story.
+
+### 22.6 Gate block (Revision 6)
+
+The §21.6 block, with every `102*-r5` output renamed `106*-r6` (`106-platform-r6.txt` … `106r-status-after-r6.txt`).
+Write the hash-object line of every Revision 6 file to `106s-hash-object-r6.txt`. The expected results are unchanged:
+`win32`; the four calibration FAIL lines; tests with exactly the 4 known failures (790); every other gate exits 0.
+
+### 22.7 Owner matrix after Revision 6 (O78-12)
+
+The §21.7 matrix stays, at 72 tuples, plus `PremiumDialogView` `Saving` × sq × 390 and 1440 if it is not already a row.
+Before the owner sees it, Opus re-measures GR-3b/3c/3d/3e and §7.3 for every Story in the matrix, and looks at
+`107-radio-states-r6.png` for GR-3f.

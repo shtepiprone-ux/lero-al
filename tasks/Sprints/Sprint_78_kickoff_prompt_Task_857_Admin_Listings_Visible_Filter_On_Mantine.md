@@ -1656,3 +1656,36 @@ Revision 9 changes only the keyboard focus state, which none of §25.8's 20 tupl
 tuples now, against the current `storybook-static`. Opus measured them (§26.1) and found them clean. Revision 9 adds one
 tuple, `Patterns/Mantine/NavRowList` `Default`, sq, 1440, **Tab onto the first row**. **On acceptance of all 21 tuples
 and a verified Revision 9:** Opus approves 857, archives it, and emits the commit and push handoff.
+
+### 26.7 Owner return, 2026-10-03 (added to Revision 9 before it ran)
+
+- **Owner, verbatim:** *"я змінив статус з Active на Sold, з'явився тост, але у combobox статус не змінився. Це баг у
+  Story чи взагалі у компоненті? Візуально по адаптації мені все подобається, приймаю."* The owner accepts the 20
+  tuples of §25.8.
+- **Cause: the Story, not the component (Opus, source read).**
+  - `StatusChangeSelect` is controlled (`value={currentStatus}`). It shows the success toast when `onSubmit` resolves,
+    and it shows a new status only when its parent passes one.
+  - In production the parent does this. `ListingPreviewDialog.tsx:69-73` calls `updateListingStatus`, then
+    `onStatusChanged`. `AdminListingsTable.tsx:111-114` patches both `items` and `previewListing.status`, so the select
+    re-renders with the new value.
+  - The Story does not. `ListingPreviewDialogView.stories.tsx:64` passes `onStatusChange={() => {}}`, and the `listing`
+    prop is a constant. So the no-op resolves, the toast fires, and the select snaps back to the old status.
+- **Test gap.** T4 (`AdminListingsTable.smoke.test.tsx:331-342`) asserts the call, the toast and the **row** badge. It
+  never asserts the dialog's select, so the production behaviour above is proven only by reading the code.
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R63** | **The Story mirrors the production status flow.** In `ListingPreviewDialogView.stories.tsx`, `DialogDemo` holds the listing in `useState` (initialised from its prop). `onStatusChange` sets `status: toStatus` on it, which is what `AdminListingsTable.tsx:113` does after the action resolves. `usePreviewStatusOptions` is then called with the updated status. No other export changes. | P2 | AC37 |
+| **R64** | **T4 also asserts the dialog.** After `chooseSold()`, the dialog's status textbox (`within(dialog).getByRole('textbox', { name: t.col_status })`) has the value `soldLabel`. Add a plant: in `AdminListingsTable.tsx`, remove the `setPreviewListing(...)` line in `onStatusChanged`. The new assertion must fail, and the row-badge assertion still passes. Record it in `128-plant-t4-dialog-r9.txt`, restore, and add a hash witness before and after. | P2 | AC37 |
+
+- **AC37 [R63, R64].**
+  - In Storybook `Active`, sq, 1440: choose Sold. The select shows "Shitur" (the sq sold label) and the success toast
+    appears. Record a Playwright check in `129-story-status-r9.json`.
+  - T4 passes with the new assertion. The plant fails only that assertion.
+- **Write set additions:**
+  - `src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx` (`DialogDemo` only);
+  - `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx` (T4 only);
+  - `AdminListingsTable.tsx` only for the temporary plant. Its final hash must equal `c12a3b26`.
+- **Receipts:** add `GR-3a` (`ListingPreviewDialogView`, `EXTEND`, no new export) to `127-receipts-r9.txt`.
+- **Owner matrix:** add one tuple, `ListingPreviewDialogView` `Active`, sq, 1440: choose Sold, and the select shows
+  Sold. With §26.6 that makes 2 tuples still owed. The other 20 are accepted.

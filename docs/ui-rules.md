@@ -38,7 +38,7 @@ These are legacy references for shadcn/Tailwind/Base UI surfaces that have not y
 |---|---|---|
 | Button | `Button` with `size` + `variant` | `@/components/ui/button` |
 | Input | `Input` | `@/components/ui/input` |
-| Icon family | lucide-react only | — |
+| Icon family | `@solar-icons/react` for every added or changed icon (owner rule 2026-10-02; lucide-react is legacy) | `docs/mantine-responsive-design-system.md` §26 |
 | Tabs | `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` | `@/components/ui/tabs` |
 | Dialog/Modal | `Dialog`, `DialogContent` etc. | `@/components/ui/dialog` |
 | Sheet/Drawer | `Sheet`, `SheetContent` etc. | `@/components/ui/sheet` |
@@ -245,7 +245,11 @@ implementation is `AdminInput` from `@/components/admin/AdminInput` — a thin w
 
 ## §5 — CANONICAL ICON GOVERNANCE
 
-**Canonical family:** lucide-react — the ONLY approved icon library.
+> **Superseded for the icon family, owner rule 2026-10-02:** every icon a task adds or changes comes from
+> `@solar-icons/react` — see `docs/mantine-responsive-design-system.md` §26. `lucide-react` is legacy: it stays only in
+> files whose icons a task does not change. The size map below remains the legacy Tailwind sizing reference only.
+
+**Canonical family (legacy, superseded):** lucide-react.
 
 ### Icon Size Map
 
@@ -263,7 +267,7 @@ implementation is `AdminInput` from `@/components/admin/AdminInput` — a thin w
 ### Icon Rules
 
 - **NEVER** use icon sizes outside the canonical size map without justification.
-- **NEVER** import from a different icon library.
+- **NEVER** add an icon from any library other than `@solar-icons/react` (owner rule 2026-10-02, design-system §26).
 - **NEVER** set `h-*` on icons inside `Button` — CVA handles sizing via `[&_svg:not([class*='size-'])]:size-4`.
 - `shrink-0` is REQUIRED on all icons in flex containers to prevent compression.
 - For icon-only buttons: use `size="icon"` (40px) on desktop, `size="icon-xl"` (44px) on mobile.
@@ -470,7 +474,7 @@ Use the semantic tokens defined in `globals.css` instead. Storybook (`*.stories.
 | Modal | shadcn `Dialog` always — never custom div overlay | §7 / component-governance.md |
 | Container | `.container-wide` on public pages — never unbounded | §6 above |
 | Listing grid | Always `2xl:grid-cols-4` — never stop at xl:3 | §6 above |
-| Icons | lucide-react only — no other library | §5 above |
+| Icons | `@solar-icons/react` for every added or changed icon; lucide-react is legacy | `docs/mantine-responsive-design-system.md` §26 |
 | Navigation | `router.push()` only — never `window.location.href` | ai-behavior.md |
 | Responsive | CSS-only breakpoints — no viewport JS | §7 above |
 | Control height | Same row → one height; reconcile at primitive level | §15 above |

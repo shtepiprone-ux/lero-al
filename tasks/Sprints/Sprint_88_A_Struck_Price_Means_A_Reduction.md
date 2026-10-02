@@ -1,6 +1,6 @@
 # Sprint 88 — a struck-through price means the owner lowered it, and nothing else
 
-**Opened:** 2026-10-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (912)
+**Opened:** 2026-10-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 2 (912, 917)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -35,6 +35,8 @@ plain informational line.
 | ID | Question | Owner answer (verbatim) | Binding consequence |
 |---|---|---|---|
 | **D88-1** | (2026-10-01) Should the contact card show the reduced old price? Changing it needs `ListingDetailView.tsx` and `ListingContact.tsx`, whose censuses carry unmigrated nodes (clause 16d). | *"так, має показувати стару ціну, якщо вона була вищою за актуальну."* · layout: *"є актуальна ціна (червоним кольором, основна ціна), а нижче маленьким шрифтом має показуватись стара ціна, якщо вона була вищою. Оригінальну ціну треба показувати на насутпному рядку після зниженої ціни(оригінальна ціна - це ціна, у валюті якої було створено оголошення!)!"* · routing: *"так додай ці зміни у саму останню задачу у лланцюжку змін картки контактів"* | The contact card's three-line price block — current price (brand, main) · old price small and struck, **only when `price_old > price`** · original-currency price on the next line, plain — is built in **912**, the latest task in the contact-card chain. *Corrected 2026-10-01:* the first recording routed it to 795 (commit `5c9a9119f`); the owner rejected that reading the same day (*"Я сказав, що стара ціна має бути перечеркнута, якщо вона була вищою за актуальну"*). **Clause 16d scope of the routing instruction:** it was given in answer to the explanation that the pass-through edits to `ListingDetailView.tsx` and `ListingContact.tsx` reach 13 unmigrated nodes owned by other tasks. 912 therefore adds one prop to each file and migrates none of those nodes. Each node is listed in 912 §3.1 with its owner; the five with no open owner are filed as **913**. |
+| **D88-2** | (2026-10-02) The owner lowered listing #22's price and saw no struck price and no badge. Measured: `price_old` is null on every public listing; nothing writes it (`updateListing.ts:62` stores the form payload, and the only form field for it lives in the unimported `steps/StepBasicInfo.tsx`). How should the old price be recorded? | Option chosen verbatim: *"Автоматично (Recommended)"*, whose text read: *"Власник зберіг нижчу ціну → сервер сам записує попередню в price_old. Якщо ціну потім піднято до старої або вище, price_old очищається, і бейдж та перекреслення зникають. У формі немає окремого поля."* | `price_old` becomes a **server-owned** field, computed in **917** from the stored row on every price save; a client-sent value is ignored. No form field is added. Supersedes 912's assumption A2 (*"`price_old` stays a free owner-entered field"*) for how the value is written; 912's display predicate is unchanged. |
+| **D88-3** | (2026-10-02) The price was lowered several times: 120 000 → 100 000 → 90 000. Which old price is struck? | Option chosen verbatim: *"Найвищу (120 000) (Recommended)"* | `price_old` keeps the **highest** earlier price while the current price stays below it (**917**). |
 
 ## Goal-fit (why no open sprint takes this)
 
@@ -51,6 +53,7 @@ The Tasks table is the single state source.
 
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
+| **917** | The server records the previous price on a reduction — `price_old` computed from the stored row in `updateListing` (D88-2, D88-3), ignored from the client, null on create | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering" read it) | — | `KICKOFF FILED` → [`…_Task_917_…`](Sprint_88_kickoff_prompt_Task_917_Server_Records_Previous_Price.md) |
 | **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `KICKOFF FILED` → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
 
 ## Execution order
@@ -58,6 +61,7 @@ The Tasks table is the single state source.
 | Step | Task | Gate |
 |---|---|---|
 | 1 | **912** | — |
+| 1 | **917** | — (independent of 912: no shared file; either may land first) |
 
 ## Preconditions
 
@@ -70,3 +74,6 @@ The Tasks table is the single state source.
   non-reduced `price_old`.
 - The owner confirms on a live listing, signed in with a preferred currency different from the listing's, that no
   struck-through price appears.
+- Lowering a listing's price in the edit form stores the previous price (D88-2, D88-3). On `/listings` the card then
+  shows the "price reduced" badge and the struck old price, and raising the price back to the old one or above removes
+  both. A unit test covers every row of 917's rule table (917).

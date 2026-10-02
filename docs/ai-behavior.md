@@ -552,7 +552,7 @@ All fixes must resolve the root architectural issue.
 
 #### Icons
 - DO NOT use icon sizes outside the canonical map (h-3, h-3.5, h-4, h-5, h-6, h-12).
-- DO NOT import from a different icon library — lucide-react only.
+- DO NOT add an icon from any library other than `@solar-icons/react` (owner rule 2026-10-02, `docs/mantine-responsive-design-system.md` §26); lucide-react is legacy.
 - DO NOT set h-* on icons inside Button — CVA handles it automatically.
 - DO NOT forget `shrink-0` on icons in flex containers.
 

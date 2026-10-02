@@ -1216,6 +1216,31 @@ line `w-full border-t border-gray-200` → 1px `rgb(228,231,236)`; label
 (390) → 8px 20px (1440), text "Or" (sentence case in the markup; no `text-transform`). lero mapping: Mantine
 `Divider label labelPosition="center"` with the §6o default colour; label text `size="sm"` `c="gray.4"`.
 
+## 6w. Public listing card — owner reference "Lahomes property grid" (live-captured 2026-10-02, Sprint 89 / Task 918)
+
+**Provenance (clause 16a).** The owner named this page as the card reference on 2026-10-02, verbatim: *"Необхідно картку
+взагалі переробити як ось тут зроблено https://techzaa.in/lahomes/admin/property-grid.html . Мені у картці референсу
+подорбається лаконічність, ієрархія, структурованість."* Opus captured it live with Playwright at 1440 and 390:
+computed styles for three cards (a plain card, the "Sold" card and the mobile card). Screenshots:
+`docs/sessions/evidence/task918/reference/ref-lahomes-grid-1440.png` and `…/ref-lahomes-card-390.png`. It is not part
+of the TailAdmin zip. For this card
+it is the visual source, together with the owner decisions D89-1…D89-6 (Sprint 89 plan).
+
+| Part | Captured value (1440, card 252px wide) | Lero.al mapping (theme key) |
+|---|---|---|
+| Card | no border; `box-shadow: 0 2px 4px rgba(0,0,0,.05)`; radius 5.6px; white | `Card shadow="xs"` (theme `0 1px 2px rgba(16,24,40,.05)`), `radius="md"` (6px), no `withBorder`. **Named exception to §5 "content cards: no shadow, flat border", for this card only, from the owner's reference.** |
+| Photo | 3:2, top corners rounded | existing `AppImage variant="listing"` frame, unchanged |
+| Photo badge, top-right | deal type; For Rent green `#5CC184`, For Sale orange `#F0934E`, Sold red `#E96767`; 13px/600, padding 3×6, radius 4 | the pattern's top-left badge stack, `Badge variant="filled"`; Оренда `green`, Продаж `orange` (D89-6); closed statuses keep their existing badge (741/886) |
+| Photo button, top-left | bookmark 36×36, orange, `solar:bookmark-broken` 20px | the existing `FavoriteButton`, top-right, unchanged |
+| Body | padding 20 | `p="lg"` (20) |
+| Head row | tile 46×48 (bg `#EEF2F7`, icon `solar:home-bold-duotone` 24px, primary colour) · gap 10 · title 16/500 `#323A46` (line-height 24) · address 14/400 `#687D92` (21) | `ThemeIcon size="xl"` (44) `radius="md"`, gray.1 fill, brand icon, Solar `bold-duotone` at `iconSize.decorative` (24) · `gap="sm"` · title `fz="md"` `fw={500}` · address `fz="sm"` `c="dimmed"` |
+| Feature chips | 1px `#EAEDF1` border, bg `#FCFCFD`, 12px/600 `#687D92`, padding 3×6, radius 4, Solar `broken` 16px icons (bed, bath, scale, double-alt-arrow-up), gap 10, 3 per row | `Badge variant="default"` `radius="sm"` (4) with a Solar `broken` icon at `iconSize.standard` (16) in `leftSection`; `Group gap="xs" wrap="wrap"` |
+| Footer | bg `#FCFCFD`, 1px top border `#EAEDF1`, padding 15×20; price 16/500 dark at left; "More Inquiry →" 14/500 primary at right | `Card.Section withBorder` `bg="gray.0"` `px="lg" py="md"`; price block at left (D89-3); ID + date at right (D89-5); no text link |
+| Struck price | appears only on the **Sold** card (the struck price there means "sold"); the reference has no reduced-price pattern | not used: the reduced-price block follows the owner's Rozetka screenshot (D89-3) |
+| Hover | none | the existing card hover is preserved |
+| Mobile 390 | same anatomy, full width, chips wrap 3 + 1 | `MantineListingCardTrack` widths (Sprint 74 D74-1…D74-3), same anatomy |
+| Font | Figtree | the theme font (Open Sans) is unchanged; a font change is site-wide and out of scope |
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

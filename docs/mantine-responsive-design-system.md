@@ -1467,3 +1467,54 @@ At `≥640px`:
 ### §25.6 — Relationship to legacy state
 
 There is no legacy `tooltip.tsx` to preserve or migrate — `MantineTooltip` is a wholly new primitive (no product consumers today, same "primitive + story slice" class as every other Batch C task). This closes out Batch C (P1.18–P1.22); the next migration wave is Batch D (Pagination, Alert, Command, Progress, Skeleton, Separator, ScrollArea, Slider, Toast).
+
+## §26 — Icon family: `@solar-icons/react` (owner rule, 2026-10-02)
+
+**Owner rule, 2026-10-02, verbatim (Sprint 89 design, Task 918):** *"@solar-icons/react - запиши це у правило, щоб завжди
+використовували іконки з цього набору"*. It came with the owner's choice for the listing card: *"Solar на картці …
+Забрати увесь набір іконок, щоб у майбутньому його використовувати!"* (decision D89-4 in
+`tasks/Sprints/Sprint_89_The_Listing_Card_Rebuilt_On_The_Owners_Reference.md`).
+
+**The rule:**
+
+- Every icon that a task **adds or changes** comes from `@solar-icons/react`. That covers product code, patterns,
+  primitives and Stories alike, in new, migrated and legacy surfaces.
+- No other icon library may be added.
+- `lucide-react` is **legacy**. An existing `lucide-react` import may stay only in a file whose icons the task does
+  not change. When a task replaces, adds or restyles an icon in a file, that file's icons for the same role move to
+  Solar in the same task. Never mix the two families inside one visual group, for example one feature row.
+
+**Import shape.** The package is tree-shakeable (`"sideEffects": false`) and ships 1,451 icons in six styles. Import
+each icon by name from its style subpath:
+
+```tsx
+import { BedIcon } from '@solar-icons/react/broken'
+import { HomeIcon } from '@solar-icons/react/bold-duotone'
+```
+
+- Never import the package root as a namespace, and never build an icon map from the whole set: that defeats
+  tree-shaking.
+- Look up icon names in the installed package (`node_modules/@solar-icons/react/dist`). Never guess a name from the
+  Iconify id (`solar:bed-broken`); the React export name can differ. The two names in the example above illustrate the
+  shape only.
+
+**Style (weight) per role.** The kickoff names the style for every icon it changes. The listing card's roles are fixed
+by D89-4:
+- inline feature/meta icons use `broken`;
+- the property-type tile uses `bold-duotone`.
+
+Other surfaces reuse these two styles for the same roles unless their kickoff records a different owner decision.
+
+**Size and colour come from the theme, never from a literal.**
+- `size` takes a `theme.other.iconSize` value (`micro` 10 · `badge` 12 · `compact` 14 · `standard` 16 · `roomy` 20 ·
+  `decorative` 24 · …). A raw number written in the component is forbidden (GR-0).
+- `color` stays `currentColor`, so the icon inherits the text colour of its Mantine parent (`c=` on `Text`,
+  `ThemeIcon color=`).
+- A `SolarProvider` default may be set once at the app root. A per-surface provider is forbidden.
+
+**Where icon-name maps live.** A domain icon map, such as `ListingFeatureIcon`'s `PresentationIcon → component`, keeps
+**one** owner. A second map for the same semantic icons is the parallel-UI defect GR-0 forbids.
+
+**Enforcement.** There is no gate yet; kickoff, executor and review check this rule. For each changed file, a
+read-only grep for `lucide-react` must return no hit for an icon role the task changed. `docs/ui-rules.md` §5 (the
+legacy "lucide-react only" rule) is superseded by this section.

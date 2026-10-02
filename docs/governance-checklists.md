@@ -48,7 +48,7 @@ CANONICAL PRIMITIVES
 [ ] Used Sheet for mobile drawers/panels — no custom div.fixed overlay
 [ ] Used Dialog for confirmation/form modals — no custom overlay
 [ ] Used Tabs from @/components/ui/tabs — no local tab button clones
-[ ] Used only lucide-react icons — no other icon library introduced
+[ ] Every added or changed icon comes from `@solar-icons/react` (design-system §26, owner rule 2026-10-02) — no other icon library introduced
 
 CANONICAL UI PROVENANCE
 [ ] Canonical UI decision record matches the real diff and rendered proof

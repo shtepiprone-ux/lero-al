@@ -2,8 +2,9 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
-**after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 📝
-`KICKOFF FILED` 2026-09-29**
+**after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
+`NEEDS REVISION` — review 1, 2026-10-02. Execute §16 (Revision 1) only; it supersedes §10.3 P2, R10's grep clause,
+R12's "no key added" and AC6/AC7 where they differ.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -128,9 +129,9 @@ future or null `expires_at`), consumed by every public list read (registry "List
 | **R7** | §3.3; 893 R3a precedent | `src/components/admin/useAdminSearchQuery.ts` (new): the state, debounce, URL write and resync of `AdminSearchInput.tsx:18-45` move into a hook returning `{ value, onChange }`; `AdminSearchInput.tsx` consumes it with its JSX byte-identical; the listings container passes the hook's pair to the View. | P1 | AC3, T3 | Confirmed |
 | **R8** | 877/896 precedent | `page.tsx` returns `<Box p={{ base: 'xl', lg: '2xl' }} maw={layout.adminPageShellMaxWidth} mx="auto">` with `<AdminPageHeader title={t('listings_title')} subtitle={t('listings_total', { count: total })} />` and the manager (`pageTitle` prop dropped or ignored). If `adminPageShellMaxWidth` is absent (896 not landed), add it exactly as 896 R5 defines it. | P2 | AC4 | Confirmed |
 | **R9** | GR-3, GR-3a, GR-3d, 16c | Stories under `src/stories/patterns/mantine/`, `skipCanvas: true`, page exports in `StoryPageGutter`: `Patterns/Mantine/AdminListingsView` — `Default`, `PremiumTab`, `FilteredPending`, `VisibleFilter`, `HiddenEligible` (audit counts, `reason=expired` active), `AuditZero`, `Empty`, `Paginated`; `Patterns/Mantine/ListingPreviewDialogView` — `Active`, `SoldStatusActions`, `Hidden` (no public link), `DeleteConfirm`, `ChangingStatus`; `Patterns/Mantine/PremiumDialogView` — `NotPremium`, `Premium`, `Saving`. Fixtures from the legacy Story; Views enrolled. The two legacy Stories are deleted. | P1 | AC5 | Confirmed |
-| **R10** | clause 9 | Delete `AdminPageShell.tsx` and `AdminPageShell.stories.tsx`; `check-stories-rendered.mjs:161` → `patterns-mantine-adminlistingsview--default` (same anchor); any `admin-adminpageshell` entry removed; `scripts/story-realmode-allowlist.json:13` (`AdminListingsTable.stories.tsx` / `FilteredPending`) and `scripts/responsive-screenshots.mjs:126` (`admin-adminlistingstable--preview-dialog-sold-status-actions`) retargeted to the new Story ids (`FilteredPending`, `patterns-mantine-listingpreviewdialogview--sold-status-actions`) or removed with the reason in the session log; `visibility.test.ts:359-403` reads the file that now calls `formatVisibility` (`AdminListingsView.tsx`; if the container also calls it, both) and keeps its three assertions; `git grep --untracked -n "AdminPageShell\|admin-adminlistingstable\|admin-adminpageshell"` prints nothing outside history paths. | P1 | AC6 | Confirmed |
+| **R10** | clause 9 | Delete `AdminPageShell.tsx` and `AdminPageShell.stories.tsx`; `check-stories-rendered.mjs:161` → `patterns-mantine-adminlistingsview--default` (same anchor); any `admin-adminpageshell` entry removed; `scripts/story-realmode-allowlist.json:13` (`AdminListingsTable.stories.tsx` / `FilteredPending`) and `scripts/responsive-screenshots.mjs:126` (`admin-adminlistingstable--preview-dialog-sold-status-actions`) retargeted to the new Story ids (`FilteredPending`, `patterns-mantine-listingpreviewdialogview--sold-status-actions`) or removed with the reason in the session log; `visibility.test.ts:359-403` reads the file that now calls `formatVisibility` (`AdminListingsView.tsx`; if the container also calls it, both) and keeps its three assertions. **The reference grep is redefined by §16.4** (history paths named; the remaining live references are Opus's at approval closure, owner decision 2026-10-02). | P1 | AC6 | Confirmed |
 | **R11** | Q4; clause 15 | `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx` (new; harness as `AdminUsersTable.smoke.test.tsx`, `next/navigation`, `@/modules/admin/actions`, `@/lib/toast` mocked): **T1** a `page.tsx` query-builder unit (export a pure `applyAdminListingsVisibility(query, visibility, reason)` from a new `src/app/admin/listings/visibilityFilter.ts` and call it from `page.tsx`) — `'visible'` calls `applyPublicVisibility`'s `eq('status','active')` + expiry chain on a capture mock, `'hidden_eligible'` the other helper, `'bogus'` nothing; **T2** choosing `visible` in the segmented control pushes `visibility=visible&page=1` and keeps `q`; **T3** typing in search pushes `q` after the debounce (fake timers) and drops `page`; **T4** a status action calls `updateListingStatus(id, to)` and patches the row's badge; **T5** delete confirm → `deleteListing(id)`, row removed; cancel → no call; **T6** premium preset "1 month" calls `setListingPremium(id, true, <ISO ≈ now+30d>)`; `db_missing_column` → `premium_error_db_schema` toast; **T7** Open public is absent for a hidden listing. | P0 | AC7 | Confirmed |
-| **R12** | GR-1 | FAIL lines after = §3.1 calibration; the three Views `manifest:yes story:yes`; no `AdminPageShell`, `AdminSearchInput`, `AdminInput`, `Combobox` or `ui/*` node; baseline regenerated; removed keys only from this surface; no key added. | P0 | AC8 | Confirmed |
+| **R12** | GR-1 | FAIL lines after = §3.1 calibration; the three Views `manifest:yes story:yes`; no `AdminPageShell`, `AdminSearchInput`, `AdminInput`, `Combobox` or `ui/*` node; baseline regenerated; removed keys only from this surface; **the only keys added are the two new containers `ListingPreviewDialog.tsx` / `PremiumDialog.tsx` (the §3.1 calibration lines; corrected by review 1 — "no key added" contradicted §3.1).** | P0 | AC8 | Confirmed |
 
 ## 5. Assumptions and open questions
 
@@ -202,7 +203,7 @@ I0 → R7 hook → R4–R6 Views → R9 Stories → R2–R3 containers → R1 + 
 | Plant | Edit | Must fail |
 |---|---|---|
 | **P1** | `visibilityFilter.ts` maps `'visible'` to nothing | T1 |
-| **P2** | write an inline `.eq('status', 'active')` into `visibilityFilter.ts` instead of the helper | `check:listing-visibility` exits 1 naming the line |
+| ~~**P2**~~ | **Superseded by §16.5 (P2a–P2c, review 1).** As written it could not fail: the gate's own scope line says it cannot see a builder passed as an argument. | — |
 | **P3** | the segmented control's `onChange` omits `page: '1'` | T2 |
 | **P4** | `ListingPreviewDialogView` shows Open public for hidden listings | T7 |
 | **P5** | re-add `import { Badge } from '@/components/ui/badge'` in `AdminListingsView` | census exits 1 naming `ui/badge` |
@@ -235,9 +236,10 @@ listing leaves the filtered list after refresh.
 - **AC5 [R9]** Given the three Story files, then each imports its View, carries R9's exports without a written gutter or
   viewport pin, and `check:story-coverage` exits 0 with the three Views enrolled.
 - **AC6 [R10]** Given the tree, then the three deleted files are gone, `visibility.test.ts` passes with its new path, and
-  the R10 grep prints nothing outside history paths.
+  the reference grep is as §16.4 defines it.
 - **AC7 [R1, R11]** Given T1–T7 and P1–P4, then all tests pass on the final tree and each plant fails as stated and passes
   after restore with equal hashes; `check:listing-visibility` exits as in `04` (0, or only 887's pre-existing line).
+  **Amended by §16.5 (review 1): P2 is replaced by P2a–P2c, and AC10/AC11 are added.**
 - **AC8 [R12]** Given `11-census-after.txt`, then the FAIL lines are exactly the four calibration lines.
 - **AC9 [all]** `npm.cmd run build` exits 0; `typecheck`, `lint`, `check:story-coverage`, `check:rendered-scope`,
   `check:surface-census:changed`, `check:i18n`, `check:i18n-dynamic`, `check:file-integrity`, `check:mojibake`,
@@ -397,3 +399,98 @@ Task 886 added the blocking `check:type-responsive` gate (`scripts/check-type-re
 - The migrated heading follows GR-3c: a breakpoint-keyed theme `fz` (`TITLE_FZ`, `src/design-system/mantine/typography.ts`), and at most 20px below 640.
 
 Owner, verbatim (O83-2, 2026-09-30): *"що це за Legacy-сайти і чи використовуємо ми їх наразі у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."*
+
+---
+
+## 16. Review 1 — `NEEDS REVISION`, 2026-10-02 → Revision 1
+
+Opus inspected the real diff, ran the census (`node.exe scripts\check-surface-census.mjs --surface src\app\admin\listings\page.tsx`: exactly the four §3.1 calibration FAIL lines), ran T1–T7 + `visibility.test.ts` natively (79/79 pass), and measured all 16 Stories at 320/390/768/1024/1440 in `sq`/`uk`. Results: no page overflow; gutter 24/16/24/16 at 320/390 and 24/32/24/32 at 1024/1440; no text ≥ 20px; filter bar stacked below 640; every touch target ≥ 44px below 640. The implementation of R1–R12 stands. **Do not touch any file outside §16.6.** Revision 1 adds the detection the owner asked for and corrects three kickoff defects.
+
+### 16.1 Owner decisions, 2026-10-02 (verbatim)
+
+- **P2 / AC7.** Opus asked whether to retire P2 and file a separate task for the gate's blind spot, or block 857 on that task. The owner answered: *"створюй тест у цій задачі!"*. The detection is therefore built **in 857** (§16.3), and no separate task is filed.
+- **AC6 live references.** Option chosen: *"Opus at approval closure (Recommended)"*. Opus rewrites the live references listed in §16.4 in the approval commit. The executor does not touch them.
+
+### 16.2 Why P2 could not fail (kickoff design defect, measured)
+
+1. **Helper shape.** `visibilityFilter.ts` receives the builder as a parameter. The gate's printed scope line says it *"CANNOT see … factories … passed as arguments"*. An inline `.eq('status','active')` + `.gte('expires_at', …)` there also keeps T1 green, because T1 checks the calls on the capture mock and the inline chain makes the same calls. So T1 does not prove that the canonical helper is used.
+2. **Route shape.** In `page.tsx`, `let query = supabase` and `.from('listings')` are on different lines. `extractListingsQueryBlocks` (`scripts/check-listing-visibility.mjs`) records a derived variable only when `const|let <name> =` and `from('listings')` share one line. Shape 1's continuation also stops at the multi-line `.select(` template. So `query = query.eq('status', 'active')` in that route is invisible. Evidence: `06b`/`06c`/`06d`, all exit 0.
+3. **Blast radius (Opus pre-measure, 2026-10-02).** Six declarations have this shape: `src/app/admin/listings/page.tsx:63`, `src/app/api/listings/route.ts:15`, `src/app/[locale]/cabinet/page.tsx:49`, `src/app/[locale]/listings/page.tsx:42`, `src/modules/listings/lib/favoritesQueries.ts:54` and `:120`. A simulation of the widened rule over `src` with the gate's own `VISIBILITY_PATTERNS` found **0** violations on today's tree. **Re-measure at execution; do not cite this count.**
+
+### 16.3 New requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R13** | `scripts/check-listing-visibility.mjs`: a derived variable is also recognised when its declaration spans lines. `const`/`let <name> = [await] <identifier>` sits on one line, `.from('listings')` starts the next line, and its later `<name>.` / `<name> = <name>.` lines are scanned exactly as shape 2 scans them today. The write-method exclusion is unchanged. `SCOPE_LINE` says derived variables include a multi-line declaration. It keeps the *passed as arguments* blind spot, because that one is still not covered. `--verify-gate` gains two BAD arms: `multi-line declaration: query = query.eq('status','active')`, whose code is a `let query = supabase` line, a `.from('listings')` line, a multi-line `.select(` template, then `query = query.eq('status', 'active')`; and `multi-line declaration: query.gte('expires_at')`. It also gains two NO-FP arms: `multi-line declaration + dynamic .eq('status', status)` and `multi-line declaration + applyPublicVisibility(query)`. | P0 | AC10 |
+| **R14** | **T1b** in `AdminListingsTable.smoke.test.tsx` mocks `@/modules/listings/lib/visibility` partially (`vi.mock` + `importActual`, with `applyPublicVisibility` and `applyPublicEligibleButHidden` wrapped in spies that call through). It asserts: `'visible'` calls `applyPublicVisibility` exactly once with the given builder and does not call `applyPublicEligibleButHidden`; `'hidden_eligible'` + `'expired'` calls `applyPublicEligibleButHidden(builder, { reason: 'expired' })` once; `'bogus'` calls neither. T1 stays unchanged. If the partial mock breaks T2–T7 in the same file, put T1b in a new file `src/app/admin/listings/__tests__/visibilityFilter.test.ts` and name it in the session log. | P0 | AC11 |
+
+### 16.4 AC6 redefined (owner decision §16.1)
+
+The R10 audit command becomes:
+
+```powershell
+git --no-optional-locks grep --untracked -n -E "AdminPageShell|admin-adminlistingstable|admin-adminpageshell" -- . ":!docs/sessions/**" ":!tasks/Archive/**" ":!tasks/Sprints/**" ":!docs/backlog-archive.md" ":!docs/governance-reports/**" ":!docs/reviews/**" ":!tasks/Epics/**" ":!docs/mantine-tailadmin-migration-tracker.md" ":!scripts/task419-qa-shell-fullwidth.mjs"
+```
+
+The added exclusions are history: weekly reports and retained review artifacts; the Epic files; the migration tracker, which is HISTORICAL by owner decision 2026-08-27 (`docs/backlog.md` → Active Epics); and the one-off Task 419 probe, which no `package.json` script or workflow runs.
+
+**Expected executor output: exactly the live lines Opus rewrites at approval closure.** Those are `docs/admin-ux-rules.md` (§14.1, §14.5), `docs/design-system.md`, `docs/storybook-governance.md`, `docs/responsive-storybook-inventory.md`, `docs/backlog-reserved.md` (734's row) and `src/app/globals.css:729` (comment). Record the output in `20c-reference-audit-r1.txt`. Any path outside that list is the executor's to fix if it is inside §16.6. Otherwise report it.
+
+### 16.5 Plants and acceptance (Revision 1)
+
+| Plant | Edit (Node I/O, hash before/after, restore) | Must fail |
+|---|---|---|
+| **P2a** | in `visibilityFilter.ts`, replace `return applyPublicVisibility(query)` with `return query.eq('status', 'active').gte('expires_at', new Date().toISOString())` | T1b (T1 may stay green — say so) |
+| **P2b** | in `page.tsx`, insert `query = query.eq('status', 'active')` on the line after `query = applyAdminListingsVisibility(…)` | `npm.cmd run check:listing-visibility` exits 1 and names `src/app/admin/listings/page.tsx:<line>` |
+| **P2c** | revert only R13's detector change (keep the new self-test arms) | `npm.cmd run check:listing-visibility:verify` exits 1 with `❌ MISSED` on both new BAD arms |
+
+- **AC10 [R13]** Given the final tree, `check:listing-visibility` exits 0 (or with any new hit reported per §16.7), `check:listing-visibility:verify` exits 0 with the four new arms printed, and P2b and P2c fail as stated, then pass after restore with equal hashes.
+- **AC11 [R14]** Given the final tree, T1b passes, and P2a fails it and passes after restore with equal hashes.
+- **AC7 (amended)** P1, P3, P4 and P5 stand on the retained `06-plants-run.txt` / `06b-plants-run.txt` and are **not re-run**. P2 is replaced by P2a–P2c.
+
+### 16.6 Re-entry: `remediation`
+
+- **Start step:** I0 platform line only (`24-platform-r1.txt`). Then R13 → R14 → plants P2a–P2c → the §16.8 gate block.
+- **Reusable, do not re-run or overwrite:** `01`–`23`, every `plant-*` file, the Story measurements and the GR-3b/3c/3d receipts. Revision 1 changes no visible artifact.
+- **Write set:**
+  - `scripts/check-listing-visibility.mjs`;
+  - `src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx`, or the new `src/app/admin/listings/__tests__/visibilityFilter.test.ts` (R14);
+  - `docs/critical-flow-registry.md` row `:70`: append *"Task 857 R13: the gate follows a multi-line `let query = supabase` / `.from('listings')` declaration; R14 T1b proves `/admin/listings?visibility=visible` calls `applyPublicVisibility`."*;
+  - `docs/sessions/2026-10-02-task857-admin-listings-mantine.md` (append a "Revision 1" section; keep the original sections);
+  - `docs/sessions/evidence/task857/` (new files with an `-r1` suffix);
+  - the 857 cell of `docs/backlog.md`.
+- **Forbidden:** any other `src/` file, any doc in §16.4's live list, and any `docs/*rule*.md`.
+
+### 16.7 Negative branch — the widened gate finds a hit
+
+If `check:listing-visibility` reports a violation in one of §16.2's files, stop. Record the file, line and text in the session log, and return `BLOCKED — R13 NEW HIT` (a public-read hit is a production visibility defect and needs an owner decision). Do not allowlist it and do not edit that file.
+
+### 16.8 Gate block (Revision 1)
+
+```powershell
+$ev = "docs\sessions\evidence\task857"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()" | Tee-Object "$ev\24-platform-r1.txt"
+npx.cmd vitest run src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx src/modules/listings/lib/__tests__/visibility.test.ts *>&1 | Tee-Object "$ev\25-tests-r1.txt"
+npm.cmd run check:listing-visibility *>&1 | Tee-Object "$ev\26-listing-visibility-r1.txt"
+npm.cmd run check:listing-visibility:verify *>&1 | Tee-Object "$ev\27-listing-visibility-verify-r1.txt"
+npm.cmd run typecheck *>&1 | Tee-Object "$ev\28-typecheck-r1.txt"
+npm.cmd run lint *>&1 | Tee-Object "$ev\29-lint-r1.txt"
+npm.cmd run check:file-integrity *>&1 | Tee-Object "$ev\30-file-integrity-r1.txt"
+npm.cmd run check:mojibake *>&1 | Tee-Object "$ev\31-mojibake-r1.txt"
+npm.cmd run build *>&1 | Tee-Object "$ev\32-build-r1.txt"
+git --no-optional-locks grep --untracked -n -E "AdminPageShell|admin-adminlistingstable|admin-adminpageshell" -- . ":!docs/sessions/**" ":!tasks/Archive/**" ":!tasks/Sprints/**" ":!docs/backlog-archive.md" ":!docs/governance-reports/**" ":!docs/reviews/**" ":!tasks/Epics/**" ":!docs/mantine-tailadmin-migration-tracker.md" ":!scripts/task419-qa-shell-fullwidth.mjs" | Tee-Object "$ev\20c-reference-audit-r1.txt"
+git --no-optional-locks status --porcelain | Tee-Object "$ev\33-status-after-r1.txt"
+```
+
+If T1b lives in the new file, add its path to the `vitest` line. Record every exit code, normalise the `Tee-Object` files to UTF-8 without BOM through Node, and write `git hash-object` of every Revision 1 file to `34-hash-object-r1.txt` in the same pass.
+
+**Expected:** `win32`; tests pass; `26` = 0; `27` = 0 with the four new arms; typecheck, lint, file-integrity, mojibake and build = 0; `20c` = only §16.4's live list.
+
+### 16.9 Completion report (Revision 1)
+
+Status per `execute-task` (strongest: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`). Report: R13/R14 and AC10/AC11 with their evidence, the P2a–P2c hash pairs, the count of `from('listings')` declarations the widened rule now follows (re-measured), any §16.7 hit, and `GR-2 SCOPE STATED` for `check:listing-visibility` (what it still cannot see). Update the 857 cell of `docs/backlog.md`. No Git.
+
+### 16.10 Still owed outside the executor
+
+- **O78-12** (§13.3, 34 tuples) can be reviewed now. Revision 1 changes no visible artifact, and Opus's measurements (§16 preface) are clean.
+- **Opus at approval closure:** the §16.4 live references, the archive, and the kickoff move to `tasks/Archive/`.

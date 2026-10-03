@@ -541,6 +541,55 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 
 **Receipt:** `GR-6 HANDOFF EMITTED — <task-design | approved-review | none: no artifact written>.`
 
+## GR-7 — Study the references and map them onto lero.al's data before writing a UI task
+
+**Owner rule, 2026-10-03.** The owner asked for row checkboxes, a bulk-delete button and per-row edit/delete icons in
+every table, and wrote, verbatim: *"Я бачу, що ти взагалі тупо не дослідив проект референсу, просто навмання пишеш
+задачі, авось проканає. … Так от, відтепер ти досконало вивчаєш референси, співставляєш UI/UX з нашими даними у
+проекті lero.al і тільки потім пишеш задачу. Пропиши це у правило!"* … *"Шукаєш найкращий UI/UX візуал, підставляєш
+наші дані, і тільки потім пишеш задачу для Sonet!"*
+
+**The references (all pages of each):**
+- TailAdmin — https://demo.tailadmin.com/ (also the bundled copy, `docs/tailadmin-style-reference.md`);
+- Lahomes — https://techzaa.in/lahomes/admin/;
+- Kamr — https://kamr-vite.vercel.app/dashboard (the login form is prefilled with demo credentials).
+
+**Forbidden:** writing a kickoff, a revision or a design decision for visible UI before this research is done in the
+current session. That includes picking a layout, a control, an action set or a visual style from memory, from one
+page of one reference, or from what lero.al already has. A previous session's research does not count.
+
+**Required, before any UI kickoff or UI revision:**
+1. **Enumerate.** List every page of all three references (their sidebar links) and name the pages that carry the
+   artifact the task changes (for example every page with a table).
+2. **Inspect live.** Open each of those pages in a browser and record, per page:
+   - the artifact's anatomy (columns, controls, states);
+   - its behaviour: what selecting, hovering, clicking and opening each control does, measured by actually doing it;
+   - its visual values, measured with `getComputedStyle`: size, radius, colours, gap.
+   Save the screenshots under `docs/sessions/evidence/task<N>/research/`.
+3. **Compare.** Write a table of what each reference does, then state which reference's pattern is best for this
+   artifact and why. Where no reference has the requested feature, say so plainly. Never present it as "per the
+   reference".
+4. **Map onto lero.al.** For every lero.al surface the task touches, write down:
+   - the real entity and fields;
+   - the existing server actions, permissions and guards;
+   - the routes (does an edit page exist?);
+   - the existing UI.
+   Then fill the chosen pattern with that real data: which columns, which actions, what each action calls, what a
+   guard blocks. Every gap between the reference pattern and lero.al's data or capabilities is a requirement or an
+   owner decision.
+5. **Decide.** Choices the evidence cannot settle go to the owner as bounded options (AskUserQuestion), before the
+   kickoff is written. The kickoff carries one route only.
+
+The kickoff carries the result as a section named **"Reference research (GR-7)"**. It holds the pages inspected,
+the comparison table, the chosen pattern, the lero.al data map, the evidence paths and the owner decisions.
+
+**Receipt — task design (and any UI revision):**
+
+`GR-7 REFERENCE RESEARCH — artifact: <what>; pages enumerated: TailAdmin <n> / Lahomes <n> / Kamr <n>; inspected live: <page list>; chosen pattern: <reference page + why>; absent from all references: <features | none>; lero.al data map: <surfaces × entity/actions/routes>; owner decisions: <IDs | none>; evidence: <path>.`
+
+With no receipt, or with a UI kickoff missing the "Reference research (GR-7)" section, the kickoff is not publishable.
+The reviewer returns `NEEDS REVISION` on a revision that changed visible UI without it.
+
 ## Enforcement status
 
 | Rule | Enforced by | State |
@@ -556,6 +605,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 | GR-3e | executor + reviewer check at 390/1440 (no two text buttons share a row) + required receipt | **active** — no automated gate yet. |
 | GR-3f | executor + reviewer device-scale-1 pixel crop at 10×, saved as evidence + required receipt; canonical radio 20px / 10px dot in the `Radio` theme entry | **active** — no automated gate; computed styles cannot see rasterisation. |
 | GR-3g | executor + reviewer: a clipping-ancestor probe plus a device-scale-1 crop of each touching corner at 10×, saved as evidence + required receipt; the radius comes from the ancestor's token (`--paper-radius` / `--card-radius` / theme key) | **active** — no automated gate; computed styles cannot see a clipped line. |
+| GR-7 | `create-task` gate: live research of all three references + a lero.al data map + the "Reference research (GR-7)" kickoff section + required receipt; `review-task` checks it on every UI revision | **active** — enforced by rule and receipt; no automated gate. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

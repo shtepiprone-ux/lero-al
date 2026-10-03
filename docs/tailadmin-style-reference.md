@@ -108,6 +108,9 @@ look like the reference.
   the header row inside the card, the card's own rounded border is the header's top line, so the header keeps
   `border-bottom` only. A straight top line there doubles the card border and is cut by the card's rounded clip.
   `border-collapse` ignores a radius on `thead`/`th`. Owner: `MantineDataTableToCards`.
+  **Header background (owner D78-12, 2026-10-03):** our header row is **white** (`var(--mantine-color-body)`) in every
+  cell, the sticky column included, not `bg-gray-50`. Mantine's sticky header paints each `th` with the body colour, and
+  the owner chose that look over the reference's gray band.
 - **Th:** `px-6 py-3` (24×12) · `whitespace-nowrap` · `text-theme-xs` (12) · `font-medium` · `text-gray-500`
   · left · NOT uppercase.
 - **Td:** `px-6 py-3` · `whitespace-nowrap` · 14px · `text-gray-700`. Row divider gray-100; hover `bg-gray-50`.

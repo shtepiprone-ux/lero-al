@@ -3,9 +3,8 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`NEEDS REVISION` — review 11, 2026-10-03 (§29). Revisions 1–9 and Revision 10's R65 are verified. Execute §29
-(Revision 11) only: `check:design-tokens` learns Mantine's `--paper-radius`, and the table header drops its top line
-when it is flush with the card's top edge (owner D78-11, GR-3g). Earlier "Execute §N" lines are history.**
+`NEEDS REVISION` — owner answer on §29.7, 2026-10-03 (§31). Revisions 1–11 are verified. Execute §31 (Revision 12)
+only: the sticky column's header cell becomes white like the rest (owner D78-12). Earlier "Execute §N" lines are history.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -1917,3 +1916,141 @@ MantineDataTableToCards."* The decision is recorded in the sprint plan (D78-11) 
 Three tuples are owed. Before they reach the owner, Opus re-measures AC38, AC41 and AC43 itself and emits a GR-3g
 receipt per Story. **On their acceptance and a verified Revision 11:** Opus approves 857, archives it, and emits the
 commit and push handoff.
+
+---
+
+## 30. Review 12 — `PARTIALLY VERIFIED`, 2026-10-03: Revision 11 verified, 3 owner tuples owed
+
+- **Source.**
+  - R68: `EXTERNAL_VAR_EXACT_NAMES` gains only `'--paper-radius'`, with its provenance comment, and the two §H arms
+    match §29.3.
+  - R69: `styles.thead` spreads `borderTop` only when `tableHeader` is truthy. `backgroundColor` and `borderBottom` are
+    unchanged, and the comment cites D78-11 and GR-3g.
+  - R70: the new test asserts both branches.
+- **Evidence.**
+  - `141s-hash-object-r11.txt` equals the current hash of all four files.
+  - Every source write (16:42–16:44) predates the gate run (16:45) and the `storybook-static` rebuild (16:46:56).
+  - Red first, in `142`: 1 failed / 156 passed, only the `--paper-radius` arm; then 157/157.
+  - Plant, in `143`: only the "without `tableHeader`" arm fails, and the restored hash `f060e58c` equals the pre-plant
+    one.
+  - Gates: `141-summary-r11.txt` is as §29.6 expects. Lint exits 1 with 4 errors, all in
+    `docs/sessions/evidence/task912/rv2-opus-probe.cjs`. Tests: 4 failed / 2308 passed, the known 790 set.
+  - `138-gr3g-probe-r11.json` reports `cutCorners: 0` over 12 Stories × 2 widths.
+- **Opus re-measure** (`144-opus-review12.{mjs,json,png}`, `win32 v22.22.3`, final `storybook-static`, sq, 1440, DPR 1):
+  - AC38: NavRowList rows 1 and 3 compute 6px on their outer corners, equal to the list, and row 2 is 0px. Tab gives
+    `:focus-visible` and the brand-7 ring on every row, and the 10× crops show the line around each outer curve.
+  - AC43: in all three table Stories the `thead` computes `border-top: 0px` and is flush with the card. The pixel just
+    under the card's top border, at its centre, is the header fill, not a gray-1 line. The 10× tl/tr crops show only the
+    card's curved border.
+  - AC41: `npm run check:design-tokens` exits 0. Vitest over the design-tokens test, the new thead test and
+    `AdminTable.adapter.test.tsx` gives 164/164.
+- **Owner matrix.** The three tuples of §29.7 are owed:
+  - the `NavRowList` Tab;
+  - the `AdminListingsView` card corners;
+  - the `Primitives/Table` card corners.
+
+  **On their acceptance:** Opus approves 857, archives it, and emits the commit and push handoff. A return re-opens the
+  task as Revision 12. **Superseded by §31:** all three tuples accepted, and the owner's question on tuple 2 opens
+  Revision 12.
+
+---
+
+## 31. Owner answer on §29.7, 2026-10-03 → `NEEDS REVISION`, Revision 12 (the table header is white everywhere)
+
+### 31.1 Owner answer (verbatim)
+
+- **§29.7 tuple 1** (`NavRowList` `Default`, Tab onto the first and last row): *"приймаю"*.
+- **§29.7 tuple 2** (`AdminListingsView` `Default`, card corners): *"приймаю. Лише не розумію, чому назва першого
+  стовпчика має інший бекграунд. Інші таблиці мають звичайний білий бекграунд."*
+- **§29.7 tuple 3** (`Mantine/Primitives/Table` `Default`, card corners): *"приймаю"*.
+
+All 24 O78-12 tuples so far are accepted. The question on tuple 2 is a defect on 857's surface. By the owner's 857
+rule of 2026-10-02 (*"Це треба вирішити одразу у цій задачі, а не створювати купу додаткових задач!"*), it is fixed
+here.
+
+### 31.2 Measured cause (Opus, `145-opus-thead-bg.{mjs,json}`, `win32 v22.22.3`, final `storybook-static`, sq, 1440)
+
+- `MantineDataTableToCards` renders `<Table stickyHeader>`. Mantine's rule
+  `.m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3)` paints every header cell `var(--mantine-color-body)`, which is
+  white. This covers the `thead`'s `gray-0` background (the `thead` computes `rgb(249,250,251)`, but no part of it
+  shows).
+- The sticky column's header cell alone sets `bg: gray.0` (`MantineDataTableToCards.tsx:540`,
+  `stickyProps(idx, 'gray.0')`). It is the only header cell that computes `rgb(249,250,251)`, while every other one
+  computes `rgb(255,255,255)`.
+- Affected Stories: every table with a sticky column. That is `AdminListingsView` `Default` ("Njoftim",
+  `stickyColumnIndex={1}`), `AdminTable` `Default` ("Kodi"; the adapter defaults to `stickyColumnIndex = 0`, so every
+  `AdminTable` consumer is affected) and `Mantine/Primitives/Table` `StickyColumn` ("Emri"). `Primitives/Table`
+  `Default` has no sticky column and is white throughout.
+- The sticky body cell already uses `stickyProps(idx, 'var(--mantine-color-body)')` (`:558`).
+
+### 31.3 Owner decision D78-12 (verbatim, AskUserQuestion, 2026-10-03)
+
+The question: the header row is meant to be light gray per TailAdmin §6b, but Mantine's sticky header paints every
+header cell white, and only the sticky first column sets its own gray. Which way should every table header go? The
+option chosen: *"White everywhere (Recommended)"*. Its text: *"The sticky column's header cell becomes white like the
+rest. This is what every table already looks like, and what you've accepted in the matrices, so nothing else changes.
+Departs from TailAdmin §6b's gray header, and the reference doc gets a note."* The decision is recorded in the sprint
+plan (D78-12) and in `docs/tailadmin-style-reference.md` §6b.
+
+### 31.4 Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R73** | **The sticky header cell is white like the rest (D78-12).** In `MantineDataTableToCards.tsx:540`, the header cell uses `stickyProps(idx, 'var(--mantine-color-body)')`, the same token as the sticky body cell at `:558` and as Mantine's sticky-header rule. In the same `styles.thead`, remove `backgroundColor: 'var(--mantine-color-gray-0)'`, because `stickyHeader` covers it in every table (§31.2) and it would misstate the design. Update the desktop comment at `:492` to cite D78-12. Do not touch the `Table` entry in `theme.ts`, the borders, the sticky position or `zIndex`, or the mobile cards. | P1 | AC45 |
+| **R74** | **Unit test.** In `src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx`, add an arm: with `stickyColumnIndex={0}`, the first header cell's inline `background` is `var(--mantine-color-body)`, and the `thead` has no inline `background-color`. The two D78-11 arms stay as they are. | P2 | AC45 |
+| **R75** | **Measurement.** Re-run `145-opus-thead-bg.mjs` unchanged as `147-thead-bg-r12.{mjs,json}`. Then take a DPR-1 crop of the header row's left end at 1440 in `AdminListingsView` `Default` and in `Mantine/Primitives/Table` `StickyColumn` to `148-thead-bg-r12.png` (1×, unscaled). | P1 | AC46 |
+| **R76** | **Receipts and hashes.** Write `149-receipts-r12.txt` with `GR-0` (`MantineDataTableToCards` sticky header cell, `EXTEND`), `GR-3a` (`Mantine/Primitives/Table` `StickyColumn`, `REUSE`, no Story change) and `GR-2` for the test. The §31.6 gate block writes `150s-hash-object-r12.txt` with both Revision 12 files, in the same run. | P2 | AC47 |
+
+### 31.5 Acceptance (Revision 12)
+
+- **AC45 [R73, R74].** The new arm passes, and so do the two D78-11 arms. A plant that puts back
+  `stickyProps(idx, 'gray.0')` on the header cell, restored afterwards, makes only the new arm fail. Record it in
+  `146-plant-sticky-th-r12.txt` with the before, planted and restored `git hash-object` of `MantineDataTableToCards.tsx`;
+  the restored hash must equal the pre-plant one. Do the plant through Node `readFileSync`/`writeFileSync`, never
+  `Get-Content -Raw`.
+- **AC46 [R75].** In `147-thead-bg-r12.json`, every header cell in all four Stories computes `rgb(255, 255, 255)`, the
+  sticky one included. The sticky body cell is still `var(--mantine-color-body)`. `148-thead-bg-r12.png` shows one white
+  header row with no gray cell.
+- **AC47 [R76].** `149-receipts-r12.txt` and `150s-hash-object-r12.txt` exist. The §31.6 gate block gives the expected
+  results, and `npm run build` exits 0.
+
+### 31.6 Flows, re-entry, write set and gate block (Revision 12)
+
+- **Positive:** every admin table header row is white from the first cell to the last, and the sticky column keeps its
+  place while the table scrolls sideways, with nothing scrolling visibly under it.
+- **Negative, applicable:**
+  - a table without a sticky column, which is unchanged;
+  - horizontal scroll, where the sticky header cell must stay opaque: body colour, not transparent. Check it in
+    `Primitives/Table` `StickyColumn` at 1024 and record the result in `147`.
+- **Not applicable:** data, locale or permission branches, because the change is one style token.
+- **Mode:** `remediation`. **Start step:** platform line `146-platform-r12.txt`, then R73/R74 with the AC45 plant, then
+  R75, R76 and the gate block. Nothing from Revision 11 is re-run.
+- **Write set:**
+  - `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`, for R73 only;
+  - `src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx`, for the R74 arm only;
+  - the session log ("Revision 12" section);
+  - evidence `146`+ with the `-r12` suffix;
+  - the 857 cell of `docs/backlog.md`.
+
+  Every other file is forbidden, including every Story file and every rule document. Do not overwrite evidence
+  `01`–`145`.
+- **Gate block:** the §29.6 block renamed `150*-r12`, every output renamed, with the tests after the build. Expected
+  results:
+  - `win32`;
+  - the four calibration census FAIL lines;
+  - `check:design-tokens` exits 0;
+  - lint exits 0, or exits 1 only with errors that are all under `docs/sessions/evidence/task912/`, and you name them;
+  - tests with exactly the 4 known 790 failures, and 2309 or more passed;
+  - `check:file-integrity` flags only files outside task857, if any, and you name them;
+  - every other gate exits 0.
+
+### 31.7 Owner matrix (O78-12) after Revision 12
+
+| Story | State / action | Locale | Viewport |
+|---|---|---|---|
+| `Patterns/Mantine/AdminListingsView` | `Default`: the header row is white from "ID" to the last column, "Njoftim" included | sq | 1440 |
+| `Mantine/Primitives/Table` | `StickyColumn`: the header row is white, and when you scroll sideways the "Emri" header stays white over the scrolled cells | sq | 1024 |
+
+Every other O78-12 tuple is accepted. Before these two reach the owner, Opus re-measures AC45 and AC46 itself.
+**On their acceptance and a verified Revision 12:** Opus approves 857, archives it, and emits the commit and push
+handoff.

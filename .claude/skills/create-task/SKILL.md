@@ -89,6 +89,17 @@ write a kickoff or issue a decision first.
    root prop: record its exact interface/type and access path before drawing a conclusion. A line-oriented grep,
    a JSX call with no direct prop, or a comment is discovery evidence only, never verification of an absence claim.
 5. State verified facts separately from assumptions and unresolved questions.
+6. **GR-7 reference research, blocking for every task or revision that changes visible UI (owner rule 2026-10-03).**
+   Before choosing any layout, control, action set or visual value, do the live research in `docs/golden-rules.md`
+   GR-7 in this session:
+   - enumerate every page of TailAdmin, Lahomes and Kamr;
+   - open every page carrying the artifact, operate its controls, and measure them;
+   - compare the three and choose the best pattern, stating plainly what no reference has;
+   - map the pattern onto lero.al's real entities, actions, permissions and routes;
+   - take the open choices to the owner before writing.
+
+   The kickoff gets a "Reference research (GR-7)" section and the response carries the `GR-7 REFERENCE RESEARCH`
+   receipt. A UI kickoff without both is not publishable.
 
 ### Permanent Storybook story creation gate — blocking
 

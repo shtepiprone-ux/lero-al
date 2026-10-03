@@ -243,6 +243,11 @@ evidence that a child component has a canonical visual contract.
     ancestor. Scale each crop 10× and look at the curve. A line cut at a corner is `NEEDS REVISION`, and so is a
     radius not taken from the ancestor's token. Task 857's nav row focus line reached the owner with all four outer
     corners cut. Opus's own crop showed the cut corner and Opus passed it.
+12. **GR-7 (owner rule 2026-10-03).** A `NEEDS REVISION` that changes visible UI is a task design. Before writing it,
+    do the live research of TailAdmin, Lahomes and Kamr in `docs/golden-rules.md` GR-7. Then map the result onto
+    lero.al's data and add a "Reference research (GR-7)" section to the revision, with the `GR-7 REFERENCE RESEARCH`
+    receipt. When reviewing a UI kickoff's outcome, confirm that its GR-7 section exists. Confirm also that the shipped
+    UI follows the pattern the section chose. A difference from that pattern is a finding.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
 composition consumes the proven source, return a non-approved decision. The correction is never a request for a

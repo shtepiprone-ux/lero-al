@@ -39,6 +39,22 @@ or executor's desired conclusion. If the evidence contradicts a claim, state tha
 - If evidence cannot support approval, return the non-approved decision required by this skill. Never use agreeable,
   optimistic, or vague language to disguise missing proof.
 
+## GR-7 reference-audit integrity gate
+
+For every owner-provided URL, site, interactive demo, screenshot, or external example named by the review request,
+the task, its revision history, or the implementation claim, inspect the current GR-7 audit before accepting any
+reference-based behavior or visual conclusion. Independently open the cited entry URL and every cited relevant and
+supporting page, re-operate the workflow states that the task says it used, and compare them to the implementation.
+The audit must contain the full route inventory, page-level evidence rows, actual blocked routes, cross-page
+differences, lero.al data/permission map, and the GR-7 receipt. The standing references are a minimum; an owner link
+added after the task was written is also required evidence.
+
+Missing inventory, an unopened supporting page, a summary in place of page-level evidence, a claim that an
+inaccessible page was inspected, or a reference claim without an exact supporting page is a `NEEDS REVISION`
+finding when it affects the result. Never accept a self-correction phrased as an apology or excuse. Require the
+GR-7 `RETRACTION` (invalid prior claim, why invalid, evidence, corrected status) and a restarted preflight before
+continuing the review.
+
 For any token-existence claim, follow [“A documented token is not an implemented token — grep the definition, never the table”](../../../docs/orchestrator-procedures.md).
 
 ## Windows-native evidence gate
@@ -244,10 +260,12 @@ evidence that a child component has a canonical visual contract.
     radius not taken from the ancestor's token. Task 857's nav row focus line reached the owner with all four outer
     corners cut. Opus's own crop showed the cut corner and Opus passed it.
 12. **GR-7 (owner rule 2026-10-03).** A `NEEDS REVISION` that changes visible UI is a task design. Before writing it,
-    do the live research of TailAdmin, Lahomes and Kamr in `docs/golden-rules.md` GR-7. Then map the result onto
-    lero.al's data and add a "Reference research (GR-7)" section to the revision, with the `GR-7 REFERENCE RESEARCH`
-    receipt. When reviewing a UI kickoff's outcome, confirm that its GR-7 section exists. Confirm also that the shipped
-    UI follows the pattern the section chose. A difference from that pattern is a finding.
+    complete the full current-session GR-7 audit in `docs/golden-rules.md` for TailAdmin, Lahomes, Kamr, and every
+    owner-provided reference link. Map the result onto lero.al's data and add a "Reference research (GR-7)" section
+    to the revision, with the complete route inventory, page-level evidence, gaps, and `GR-7 REFERENCE RESEARCH`
+    receipt. When reviewing a UI kickoff's outcome, verify that the section is complete, independently inspect its
+    cited pages and workflows, and confirm the shipped UI follows the selected pattern. An incomplete audit or a
+    difference from that pattern is a finding.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
 composition consumes the proven source, return a non-approved decision. The correction is never a request for a

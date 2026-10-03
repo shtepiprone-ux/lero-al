@@ -12,7 +12,7 @@ This file selects the minimal rule bundle for each task type. It replaces "read 
 
 ## Always Required
 
-- `docs/golden-rules.md` - **GR-1…GR-6, receipt-enforced. A response missing a required receipt is void.**
+- `docs/golden-rules.md` - **GR-1…GR-7, receipt-enforced. A response missing a required receipt is void. GR-7 blocks every reference-dependent kickoff, audit, revision, and review until the current-session reference audit is complete.**
 - `docs/agent-contract.md`
 - `docs/rule-index.md`
 - `docs/qa-profiles.md`

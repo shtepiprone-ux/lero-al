@@ -89,17 +89,23 @@ write a kickoff or issue a decision first.
    root prop: record its exact interface/type and access path before drawing a conclusion. A line-oriented grep,
    a JSX call with no direct prop, or a comment is discovery evidence only, never verification of an absence claim.
 5. State verified facts separately from assumptions and unresolved questions.
-6. **GR-7 reference research, blocking for every task or revision that changes visible UI (owner rule 2026-10-03).**
-   Before choosing any layout, control, action set or visual value, do the live research in `docs/golden-rules.md`
-   GR-7 in this session:
-   - enumerate every page of TailAdmin, Lahomes and Kamr;
-   - open every page carrying the artifact, operate its controls, and measure them;
-   - compare the three and choose the best pattern, stating plainly what no reference has;
-   - map the pattern onto lero.al's real entities, actions, permissions and routes;
-   - take the open choices to the owner before writing.
+6. **GR-7 reference research, blocking for every task, revision, or audit claim that relies on an owner-provided
+   reference (owner rule 2026-10-03).** Before choosing or describing a layout, control, action set, behavior,
+   visual value, permission expectation, or acceptance criterion, perform the current-session live audit in
+   `docs/golden-rules.md` GR-7. It applies to every owner-provided URL or example as well as TailAdmin, Lahomes,
+   and Kamr: resolve the entry URL; inventory every accessible first-party and supporting route; open each page;
+   operate every relevant control and workflow state; retain a page-level evidence row; compare the results; and
+   map the chosen pattern onto lero.al's real entities, actions, permissions, and routes. A landing page, a single
+   convenient screen, a screenshot, a prior session, or a summary is not reference research.
+
+   If a relevant page or flow is inaccessible or uninspected, state `UNVERIFIED` with its exact URL and reason. Do
+   not use it as evidence; if the task depends on it, return `BLOCKED`. If a prior reference statement is wrong or
+   incomplete, emit the GR-7 `RETRACTION` and restart the affected preflight — no apology, excuse, or deferred
+   check permits a ready kickoff.
 
    The kickoff gets a "Reference research (GR-7)" section and the response carries the `GR-7 REFERENCE RESEARCH`
-   receipt. A UI kickoff without both is not publishable.
+   receipt with inventory counts, operated states, page-level evidence, gaps, and owner decisions. A dependent
+   kickoff without both is not publishable.
 
 ### Permanent Storybook story creation gate — blocking
 

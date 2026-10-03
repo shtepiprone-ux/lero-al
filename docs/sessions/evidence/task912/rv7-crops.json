@@ -1,0 +1,256 @@
+[
+  {
+    "tag": "detailpattern",
+    "i": 0,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_0.png",
+    "top": 676,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "92,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailpattern",
+    "i": 1,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_1.png",
+    "top": 2022,
+    "left": 32,
+    "width": 897,
+    "height": 163,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(17, 17, 17)"
+      }
+    ],
+    "struck": []
+  },
+  {
+    "tag": "detailpattern",
+    "i": 2,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_2.png",
+    "top": 3348,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "8,000,000 ALL",
+        "color": "rgb(17, 17, 17)"
+      }
+    ],
+    "struck": []
+  },
+  {
+    "tag": "detailpattern",
+    "i": 3,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_3.png",
+    "top": 4217,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "92,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailpattern",
+    "i": 4,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_4.png",
+    "top": 5563,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "92,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailpattern",
+    "i": 5,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_5.png",
+    "top": 6909,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "92,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailpattern",
+    "i": 6,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_6.png",
+    "top": 8349,
+    "left": 32,
+    "width": 897,
+    "height": 203,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "8,000,000 ALL",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "9,200,000 ALL"
+    ]
+  },
+  {
+    "tag": "detailpattern",
+    "i": 7,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailpattern_7.png",
+    "top": 9716,
+    "left": 32,
+    "width": 897,
+    "height": 183,
+    "badges": [
+      "New",
+      "Premium",
+      "Price reduced",
+      "Sale · Apartment"
+    ],
+    "price": [
+      {
+        "t": "80,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "92,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailview-public-listing",
+    "i": 0,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailview-public-listing_0.png",
+    "top": 551,
+    "left": 16,
+    "width": 358,
+    "height": 212,
+    "badges": [
+      "Premium",
+      "Price reduced",
+      "For sale",
+      "Apartment"
+    ],
+    "price": [
+      {
+        "t": "125,000 EUR",
+        "color": "rgb(236, 84, 71)"
+      }
+    ],
+    "struck": [
+      "138,000 EUR"
+    ]
+  },
+  {
+    "tag": "detailview-public-listing-not-reduced",
+    "i": 0,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailview-public-listing-not-reduced_0.png",
+    "top": 551,
+    "left": 16,
+    "width": 358,
+    "height": 168,
+    "badges": [
+      "Premium",
+      "For sale",
+      "Apartment"
+    ],
+    "price": [
+      {
+        "t": "125,000 EUR",
+        "color": "rgb(17, 17, 17)"
+      }
+    ],
+    "struck": []
+  },
+  {
+    "tag": "detailview-public-listing-converted",
+    "i": 0,
+    "file": "docs/sessions/evidence/task912/rv7-shots/crop_detailview-public-listing-converted_0.png",
+    "top": 551,
+    "left": 16,
+    "width": 358,
+    "height": 188,
+    "badges": [
+      "Premium",
+      "For sale",
+      "Apartment"
+    ],
+    "price": [
+      {
+        "t": "12,500,000 ALL",
+        "color": "rgb(17, 17, 17)"
+      }
+    ],
+    "struck": []
+  }
+]

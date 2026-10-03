@@ -10,7 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Revision 6 (2026-10-03, owner return on §22.2): §23 is the current executable route.** Story files only. Every
+> **Revision 7 (2026-10-03, review 7): §24 is the current executable route.** Two Story fixtures only. §24.3 also
+> holds a GR-7 RETRACTION of §20.3/§21.2's inventory counts.
+>
+> **Revision 6 (2026-10-03, owner return on §22.2): §23.** Story files only. Every
 > composition Story shows every price state in context. O88-1 is accepted.
 >
 > **Review 6 (2026-10-03): `PARTIALLY VERIFIED`, §22.**
@@ -1320,3 +1323,113 @@ Receipts, per changed Story or new export:
 Append `## Revision 6` to the session log. Update 912's backlog row. End with
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Review 7 measures every row of §23.6 before it goes to the owner. That
 includes the state coverage of every matrix Story, not only the order and colour of what it renders.
+
+## 24. Revision 7 (review 7, 2026-10-03): `NEEDS REVISION` — two fixture contradictions; GR-7 retraction
+
+**§24 is the current executable route.** Re-entry mode: `remediation`. **Two Story files only:**
+`ListingDetailPattern.stories.tsx` and `ListingDetailView.stories.tsx`. Keep every other file hash-equal to the
+Revision 6 hashes (`r6-*`), including `ListingContactPattern.stories.tsx`. New evidence files use an `r7-` prefix.
+
+### 24.1 Review 7 verified (do not redo)
+
+Measured with Opus's own probes (`win32`):
+- `ListingContactPattern/Default`: the four price-state cards are present in order, in the right colours.
+  `rv7-shots/listingcontactpattern--default_en_1440.png` was looked at in full.
+- `ListingDetailView/PublicListingNotReduced`: dark `125,000 EUR`, no struck price and no "Price reduced" badge.
+- `ListingDetailView/PublicListingConverted`: dark `12,500,000 ALL`, no struck price and no "Price reduced" badge.
+- `rv7-crops.txt`; the `r6-probe.mjs` re-run: new exports bad 0, overflow 0, no side at 0.
+- AC21, AC22 (screen) and AC24 are `VERIFIED`.
+
+### 24.2 What was wrong (both caused by §23's own wording)
+
+- **F5 (P2, R28/R15, visible).** `ListingDetailPattern/Default` shows the **"Price reduced" badge** in the new "Not
+  reduced" and "Converted" sections, beside a dark price that is not reduced. Evidence:
+  - `rv7-crops.txt` rows `detailpattern 1` and `2`;
+  - `rv7-shots/crop_detailpattern_1.png`.
+
+  The cause is that §23 R28 said *"the same `base` props otherwise"*, and `demoBadges()` (`:146-153`) always
+  includes `{ tone: 'reduced' }`. Production shows that badge only when `isPriceReduced` (`ListingDetailView.tsx:266`).
+- **F6 (P3, R27/R15, invisible).** `PublicListingNotReduced` and `PublicListingConverted` keep the fixture listing's
+  `price_old: 138000` (`ListingDetailView.stories.tsx` `baseListing`) while they set `isPriceReduced: false`. Production
+  computes `isPriceReduced` from that data (`[slug]/page.tsx:221`) and would call this listing reduced. The page does
+  not show it, but the fixture contradicts production.
+
+### 24.3 RETRACTION (GR-7 item 6, owner rule tightened 2026-10-03)
+
+- **Invalid prior claims**:
+  - §20.3 said *"Pages enumerated: TailAdmin 88, Lahomes 123, Kamr 1"* and *"inspected live … Lahomes 42 price URLs"*;
+  - §21.2's receipt inherited those counts (*"pages enumerated: as §20.3"*).
+- **Why invalid**:
+  - 17 of the 123 Lahomes links are in-page `#sidebar…` anchors that re-render the dashboard. 17 of the 42 Lahomes
+    "price URLs" are those anchors.
+  - 1 TailAdmin link is external (`tailadmin.com/pricing`).
+  - The script read the text and colour of price-like elements. It did not operate any control or workflow.
+  - Kamr's scripted login failed, so Kamr's route inventory is not complete.
+- **Evidence now available**: the recount from `research/rv4-price-colour-research.json`:
+  - TailAdmin: 87 first-party pages, 20 with a price;
+  - Lahomes: 106 first-party pages, 25 with a price;
+  - Kamr: 1 page (dashboard); every other route is `BLOCKED` (login automation failed).
+- **Corrected status**:
+  - §20.3 and §21.2 are `UNVERIFIED` as exhaustive GR-7 audits. They are only partial observations: colour values
+    read from 20 TailAdmin pages, 25 Lahomes pages and the Kamr dashboard, and `white-space` on 6 pages.
+  - No 912 decision depends on them. The price colour rests on owner decisions D89-7 and D88-6 (§20.1), and the
+    owner accepted it as O88-1. The wrapped name line rests on GR-3b content loss, and the owner accepted it within
+    O88-2.
+  - Both §20.3 and §21.2 stay in this file for history, re-labelled by this retraction.
+
+`GR-7: n/a for this revision — R29/R30 align two fixtures with production's own badge and isPriceReduced logic; no layout, control, action, behaviour or visual style is chosen, and no reference claim is used.`
+
+### 24.4 Requirements
+
+**R29 [F5] (P2).** In `ListingDetailPattern.stories.tsx` → `Default`, the "Not reduced" and "Converted" sections
+(§23 R28) pass `badges={base.badges.filter((b) => b.tone !== 'reduced')}`.
+- Every reduced section keeps `base.badges`.
+- Add a one-line comment citing `ListingDetailView.tsx:266` (the badge only when reduced).
+- Add no new key, Story, wrapper or style.
+
+**R30 [F6] (P3).** In `ListingDetailView.stories.tsx`, both `PublicListingNotReduced` and `PublicListingConverted`
+add `listing: { ...baseListing, price_old: null }` to their `args`. Nothing else changes.
+
+### 24.5 Acceptance criteria
+
+- **AC25 [R29]** In `ListingDetailPattern/Default` at `en@1440`, the badge row of the "Not reduced" and "Converted"
+  sections has no "Price reduced" badge. Every reduced section still has it. Re-run
+  `docs/sessions/evidence/task912/rv7-crops.mjs` and copy its output to `r7-crops.txt`.
+- **AC26 [R30]** `git grep -n "price_old: null"` in `ListingDetailView.stories.tsx` hits both new exports.
+  `rv7-crops.txt` rows `detailview-public-listing-not-reduced` and `-converted` are unchanged: dark, no struck price,
+  no badge.
+
+`GR-4 AC AUDIT — 2 criteria; each states an observable property; absolutes: none.`
+
+### 24.6 Verification (one pass, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task912\rv7-crops.mjs
+node.exe docs\sessions\evidence\task912\r6-probe.mjs
+git hash-object src\stories\patterns\mantine\ListingDetailPattern.stories.tsx src\stories\patterns\mantine\ListingDetailView.stories.tsx src\stories\patterns\mantine\ListingContactPattern.stories.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0.
+- `r6-probe.mjs` shows bad 0, overflow 0 and no side at 0 in every cell. Copy its output to `r7-probe.txt`.
+- The `ListingContactPattern` hash equals Revision 6's.
+
+Receipts for the two changed Stories: `GR-3b`, `GR-3c`, `GR-3d`, and `GR-3e` (`n/a: no popup`).
+
+### 24.7 Completion
+
+Append `## Revision 7` to the session log. Update 912's backlog row. End with
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+Before §23.6 goes to the owner, review 8 does all of the following:
+- re-runs `rv7-crops.mjs` and `rv7-shots.mjs`;
+- **looks at** the screenshot of every §23.6 tuple;
+- checks every badge, price, struck line and owner line against production's rules (the state × Story table in §23.2).

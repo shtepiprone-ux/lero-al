@@ -1,0 +1,1178 @@
+[
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|681",
+    "138,000 EUR|line-through|16px|685",
+    "1,471 EUR /m²|none|14px|723"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2044",
+    "125,000 EUR|none|20px|2064"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|681",
+    "138,000 EUR|line-through|16px|685",
+    "1,471 EUR /m²|none|14px|688"
+   ],
+   [
+    "138,000 EUR|line-through|12px|1952",
+    "125,000 EUR|none|20px|1972"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|826",
+    "138,000 EUR|line-through|16px|830",
+    "1,471 EUR /m²|none|14px|833"
+   ],
+   [
+    "138,000 EUR|line-through|12px|231",
+    "125,000 EUR|none|20px|251"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|781",
+    "138,000 EUR|line-through|16px|785",
+    "1,471 EUR /m²|none|14px|788"
+   ],
+   [
+    "138,000 EUR|line-through|12px|231",
+    "125,000 EUR|none|20px|251"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "uk",
+  "w": 320,
+  "vw": 320,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|681",
+    "138 000 EUR|line-through|16px|685",
+    "1 471 EUR /м²|none|14px|723"
+   ],
+   [
+    "138 000 EUR|line-through|12px|2066",
+    "125 000 EUR|none|20px|2086"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--public-listing",
+  "loc": "uk",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|781",
+    "138 000 EUR|line-through|16px|785",
+    "1 471 EUR /м²|none|14px|788"
+   ],
+   [
+    "138 000 EUR|line-through|12px|231",
+    "125 000 EUR|none|20px|251"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|951",
+    "138,000 EUR|line-through|16px|955",
+    "1,471 EUR /m²|none|14px|993"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2212",
+    "125,000 EUR|none|20px|2232"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|911",
+    "138,000 EUR|line-through|16px|915",
+    "1,471 EUR /m²|none|14px|918"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2080",
+    "125,000 EUR|none|20px|2100"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|1017",
+    "138,000 EUR|line-through|16px|1021",
+    "1,471 EUR /m²|none|14px|1024"
+   ],
+   [
+    "138,000 EUR|line-through|12px|422",
+    "125,000 EUR|none|20px|442"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|972",
+    "138,000 EUR|line-through|16px|976",
+    "1,471 EUR /m²|none|14px|979"
+   ],
+   [
+    "138,000 EUR|line-through|12px|422",
+    "125,000 EUR|none|20px|442"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|799",
+    "138,000 EUR|line-through|16px|803",
+    "1,471 EUR /m²|none|14px|841"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2060",
+    "125,000 EUR|none|20px|2080"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|779",
+    "138,000 EUR|line-through|16px|783",
+    "1,471 EUR /m²|none|14px|786"
+   ],
+   [
+    "138,000 EUR|line-through|12px|1948",
+    "125,000 EUR|none|20px|1968"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|924",
+    "138,000 EUR|line-through|16px|928",
+    "1,471 EUR /m²|none|14px|931"
+   ],
+   [
+    "138,000 EUR|line-through|12px|329",
+    "125,000 EUR|none|20px|349"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|879",
+    "138,000 EUR|line-through|16px|883",
+    "1,471 EUR /m²|none|14px|886"
+   ],
+   [
+    "138,000 EUR|line-through|12px|329",
+    "125,000 EUR|none|20px|349"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--archived-listing",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|821",
+    "138,000 EUR|line-through|16px|825",
+    "1,471 EUR /m²|none|14px|863"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2184",
+    "125,000 EUR|none|20px|2204"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--archived-listing",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|821",
+    "138,000 EUR|line-through|16px|825",
+    "1,471 EUR /m²|none|14px|828"
+   ],
+   [
+    "138,000 EUR|line-through|12px|2092",
+    "125,000 EUR|none|20px|2112"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--archived-listing",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|946",
+    "138,000 EUR|line-through|16px|950",
+    "1,471 EUR /m²|none|14px|953"
+   ],
+   [
+    "138,000 EUR|line-through|12px|351",
+    "125,000 EUR|none|20px|371"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailview--archived-listing",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "DIV.m_3b8f2208 mantine-Breadcrumbs-separator 10 w6",
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€125,000|none|20px|901",
+    "138,000 EUR|line-through|16px|905",
+    "1,471 EUR /m²|none|14px|908"
+   ],
+   [
+    "138,000 EUR|line-through|12px|351",
+    "125,000 EUR|none|20px|371"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingcontactpattern--default",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "P.mantine-focus-auto m_b6d8b162 mantine-Text-root 24 w288",
+  "gut": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€92,000|line-through|12px|178",
+    "€80,000|none|20px|198",
+    "Original price: €80,000|none|12px|230"
+   ],
+   [
+    "€80,000|none|20px|760",
+    "Original price: €80,000|none|12px|792"
+   ],
+   [
+    "€80,000|none|20px|1322",
+    "Original price: €80,000|none|12px|1354"
+   ],
+   [
+    "€80,000|none|20px|1790",
+    "Original price: €80,000|none|12px|1822"
+   ],
+   [
+    "€80,000|none|20px|2238",
+    "Original price: €80,000|none|12px|2270"
+   ],
+   [
+    "€80,000|none|20px|2740",
+    "Original price: €80,000|none|12px|2772"
+   ],
+   [
+    "125,000 EUR|none|20px|3302"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingcontactpattern--default",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "P.mantine-focus-auto m_b6d8b162 mantine-Text-root 24 w358",
+  "gut": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€92,000|line-through|12px|178",
+    "€80,000|none|20px|198",
+    "Original price: €80,000|none|12px|230"
+   ],
+   [
+    "€80,000|none|20px|760",
+    "Original price: €80,000|none|12px|792"
+   ],
+   [
+    "€80,000|none|20px|1304",
+    "Original price: €80,000|none|12px|1336"
+   ],
+   [
+    "€80,000|none|20px|1772",
+    "Original price: €80,000|none|12px|1804"
+   ],
+   [
+    "€80,000|none|20px|2202",
+    "Original price: €80,000|none|12px|2234"
+   ],
+   [
+    "€80,000|none|20px|2704",
+    "Original price: €80,000|none|12px|2736"
+   ],
+   [
+    "125,000 EUR|none|20px|3248"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingcontactpattern--default",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "P.mantine-focus-auto m_b6d8b162 mantine-Text-root 24 w400",
+  "gut": {
+   "top": 24,
+   "right": 592,
+   "bottom": 24,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€92,000|line-through|12px|178",
+    "€80,000|none|20px|198",
+    "Original price: €80,000|none|12px|230"
+   ],
+   [
+    "€80,000|none|20px|760",
+    "Original price: €80,000|none|12px|792"
+   ],
+   [
+    "€80,000|none|20px|1304",
+    "Original price: €80,000|none|12px|1336"
+   ],
+   [
+    "€80,000|none|20px|1772",
+    "Original price: €80,000|none|12px|1804"
+   ],
+   [
+    "€80,000|none|20px|2202",
+    "Original price: €80,000|none|12px|2234"
+   ],
+   [
+    "€80,000|none|20px|2704",
+    "Original price: €80,000|none|12px|2736"
+   ],
+   [
+    "125,000 EUR|none|20px|3248"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingcontactpattern--default",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "P.mantine-focus-auto m_b6d8b162 mantine-Text-root 24 w459",
+  "gut": {
+   "top": 24,
+   "right": 949,
+   "bottom": 24,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€92,000|line-through|12px|160",
+    "€80,000|none|20px|180",
+    "Original price: €80,000|none|12px|212"
+   ],
+   [
+    "€80,000|none|20px|724",
+    "Original price: €80,000|none|12px|756"
+   ],
+   [
+    "€80,000|none|20px|1268",
+    "Original price: €80,000|none|12px|1300"
+   ],
+   [
+    "€80,000|none|20px|1718",
+    "Original price: €80,000|none|12px|1750"
+   ],
+   [
+    "€80,000|none|20px|2130",
+    "Original price: €80,000|none|12px|2162"
+   ],
+   [
+    "€80,000|none|20px|2632",
+    "Original price: €80,000|none|12px|2664"
+   ],
+   [
+    "125,000 EUR|none|20px|3176"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailpattern--default",
+  "loc": "en",
+  "w": 320,
+  "vw": 320,
+  "topEl": "BUTTON.mantine-focus-auto block h-full shrink-0 m_87cf263 104 w288",
+  "gut": {
+   "top": 104,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€80,000|none|20px|601",
+    "€92,000|line-through|16px|605",
+    "€941 /m²|none|14px|608"
+   ],
+   [
+    "€80,000|none|20px|1654",
+    "Original price: €92,000|none|12px|1686"
+   ],
+   [
+    "€80,000|none|20px|2401",
+    "€92,000|line-through|16px|2405",
+    "€941 /m²|none|14px|2408"
+   ],
+   [
+    "€80,000|none|20px|3455",
+    "Original price: €92,000|none|12px|3487"
+   ],
+   [
+    "€80,000|none|20px|4468",
+    "€92,000|line-through|16px|4472",
+    "€941 /m²|none|14px|4475"
+   ],
+   [
+    "€80,000|none|20px|6114",
+    "€92,000|line-through|16px|6118",
+    "€941 /m²|none|14px|6121"
+   ],
+   [
+    "€80,000|none|20px|7261",
+    "Original price: €92,000|none|12px|7293"
+   ],
+   [
+    "€80,000|none|20px|8274",
+    "€92,000|line-through|16px|8278",
+    "€941 /m²|none|14px|8281"
+   ],
+   [
+    "€80,000|none|20px|9357",
+    "Original price: €92,000|none|12px|9389"
+   ],
+   [
+    "€80,000|none|20px|10370",
+    "€92,000|line-through|16px|10374",
+    "€941 /m²|none|14px|10377"
+   ],
+   [
+    "€80,000|none|20px|11424",
+    "Original price: €92,000|none|12px|11456"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailpattern--default",
+  "loc": "en",
+  "w": 390,
+  "vw": 390,
+  "topEl": "BUTTON.mantine-focus-auto block h-full shrink-0 m_87cf263 104 w358",
+  "gut": {
+   "top": 104,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€80,000|none|20px|569",
+    "€92,000|line-through|16px|573",
+    "€941 /m²|none|14px|576"
+   ],
+   [
+    "€80,000|none|20px|1543",
+    "Original price: €92,000|none|12px|1575"
+   ],
+   [
+    "€80,000|none|20px|2240",
+    "€92,000|line-through|16px|2244",
+    "€941 /m²|none|14px|2247"
+   ],
+   [
+    "€80,000|none|20px|3215",
+    "Original price: €92,000|none|12px|3247"
+   ],
+   [
+    "€80,000|none|20px|4196",
+    "€92,000|line-through|16px|4200",
+    "€941 /m²|none|14px|4203"
+   ],
+   [
+    "€80,000|none|20px|5713",
+    "€92,000|line-through|16px|5717",
+    "€941 /m²|none|14px|5720"
+   ],
+   [
+    "€80,000|none|20px|6782",
+    "Original price: €92,000|none|12px|6814"
+   ],
+   [
+    "€80,000|none|20px|7745",
+    "€92,000|line-through|16px|7749",
+    "€941 /m²|none|14px|7752"
+   ],
+   [
+    "€80,000|none|20px|8749",
+    "Original price: €92,000|none|12px|8781"
+   ],
+   [
+    "€80,000|none|20px|9730",
+    "€92,000|line-through|16px|9734",
+    "€941 /m²|none|14px|9737"
+   ],
+   [
+    "€80,000|none|20px|10705",
+    "Original price: €92,000|none|12px|10737"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailpattern--default",
+  "loc": "en",
+  "w": 1024,
+  "vw": 1024,
+  "topEl": "BUTTON.mantine-focus-auto absolute inset-0 block h-full w 104 w540",
+  "gut": {
+   "top": 104,
+   "right": 32,
+   "bottom": 24,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€80,000|none|20px|777",
+    "€92,000|line-through|16px|781",
+    "€941 /m²|none|14px|784"
+   ],
+   [
+    "€80,000|none|20px|214",
+    "Original price: €92,000|none|12px|246"
+   ],
+   [
+    "€80,000|none|20px|1702",
+    "€92,000|line-through|16px|1706",
+    "€941 /m²|none|14px|1709"
+   ],
+   [
+    "€80,000|none|20px|1617",
+    "Original price: €92,000|none|12px|1649"
+   ],
+   [
+    "€80,000|none|20px|3105",
+    "€92,000|line-through|16px|3109",
+    "€941 /m²|none|14px|3112"
+   ],
+   [
+    "€80,000|none|20px|4508",
+    "€92,000|line-through|16px|4512",
+    "€941 /m²|none|14px|4515"
+   ],
+   [
+    "€80,000|none|20px|3945",
+    "Original price: €92,000|none|12px|3977"
+   ],
+   [
+    "€80,000|none|20px|6005",
+    "€92,000|line-through|16px|6009",
+    "€941 /m²|none|14px|6012"
+   ],
+   [
+    "€80,000|none|20px|5442",
+    "Original price: €92,000|none|12px|5474"
+   ],
+   [
+    "€80,000|none|20px|7438",
+    "€92,000|line-through|16px|7442",
+    "€941 /m²|none|14px|7445"
+   ],
+   [
+    "€80,000|none|20px|6875",
+    "Original price: €92,000|none|12px|6907"
+   ]
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "listingdetailpattern--default",
+  "loc": "en",
+  "w": 1440,
+  "vw": 1440,
+  "topEl": "BUTTON.mantine-focus-auto absolute inset-0 block h-full w 104 w897",
+  "gut": {
+   "top": 104,
+   "right": 32,
+   "bottom": 24,
+   "left": 32
+  },
+  "rootPad": "0px",
+  "bodyPad": "0px",
+  "canvasWrap": false,
+  "chain": [
+   {
+    "tag": "STYLE",
+    "cls": "",
+    "pad": "0px",
+    "left": 0
+   }
+  ],
+  "blocks": [
+   [
+    "€80,000|none|20px|777",
+    "€92,000|line-through|16px|781",
+    "€941 /m²|none|14px|784"
+   ],
+   [
+    "€80,000|none|20px|214",
+    "Original price: €92,000|none|12px|246"
+   ],
+   [
+    "€80,000|none|20px|1625",
+    "€92,000|line-through|16px|1629",
+    "€941 /m²|none|14px|1632"
+   ],
+   [
+    "€80,000|none|20px|1540",
+    "Original price: €92,000|none|12px|1572"
+   ],
+   [
+    "€80,000|none|20px|2951",
+    "€92,000|line-through|16px|2955",
+    "€941 /m²|none|14px|2958"
+   ],
+   [
+    "€80,000|none|20px|4278",
+    "€92,000|line-through|16px|4282",
+    "€941 /m²|none|14px|4285"
+   ],
+   [
+    "€80,000|none|20px|3715",
+    "Original price: €92,000|none|12px|3747"
+   ],
+   [
+    "€80,000|none|20px|5698",
+    "€92,000|line-through|16px|5702",
+    "€941 /m²|none|14px|5705"
+   ],
+   [
+    "€80,000|none|20px|5135",
+    "Original price: €92,000|none|12px|5167"
+   ],
+   [
+    "€80,000|none|20px|7054",
+    "€92,000|line-through|16px|7058",
+    "€941 /m²|none|14px|7061"
+   ],
+   [
+    "€80,000|none|20px|6491",
+    "Original price: €92,000|none|12px|6523"
+   ]
+  ],
+  "hOverflow": false
+ }
+]

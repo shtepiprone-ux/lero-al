@@ -428,7 +428,9 @@ nothing else: no `StoryPageGutter`, padding, wrapper or `style`. The change affe
 
 **AC10 [R10].** Given `Patterns/Mantine/ListingDetailView`, each of its three exports at 320, 390, 1024 and 1440
 (`en`), plus `PublicListing` at `uk@320`:
-- left/right equal the frame's own `px` (16 / 16 / 32 / 32, the `ListingsPageFrame.tsx:93` ladder);
+- left/right equal the frame's own `px` (16 / 16 / 32 / **64**, the `ListingsPageFrame.tsx:93` ladder; *corrected in
+  review 2:* at 1440 the frame's `xxl` rung gives `3xl` = 48px, and `maw="var(--width-page-max)"` (1408px) centres it
+  by a further 16px, so production shows 64. The original "32" ignored both);
 - no side is 0;
 - nothing exceeds the frame's own value.
 
@@ -482,3 +484,56 @@ Append a `## Revision 1` section to `docs/sessions/2026-10-03-task912-strikethro
 the Files Changed delta (one path), the block transcript with exit codes, the AC10 table and the receipts. Update
 912's row in `docs/backlog.md`. The registry addition (§10.6) stays owed while `docs/critical-flow-registry.md` is
 dirty. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+## 17. Review 2 (2026-10-03): Revision 1 verified — `PARTIALLY VERIFIED`, owner matrix owed
+
+**Scope reviewed.** One changed path: `src/stories/patterns/mantine/ListingDetailView.stories.tsx`, meta
+`parameters: { skipCanvas: true }` (blob `40da042b`). The six untouched files and both test files hash-equal
+`41-hashes.txt` / `r1-hashes.txt`. The revision gate block (`r1-summary.txt`, `win32`, Node v22.22.3) exits 0 on every
+command, `check:design-tokens` included (0 violations). Vitest is 27/27, and build and build-storybook were run after the
+Story edit (08:16 edit, gate from 08:16:59).
+
+**Reviewer measurement** (`docs/sessions/evidence/task912/rv2-opus-probe.cjs` → `rv2-opus-probe.json`, the built
+`storybook-static`, `deviceScaleFactor` 1, a clip-aware probe independent of the executor's):
+
+| Story | 320 t/r/b/l | 390 | 1024 | 1440 | Contact card order |
+|---|---|---|---|---|---|
+| `ListingDetailView` ×4 exports (`PublicListing`, `StaffPreviewUnpublished`, `StaffPreviewPublished`, `ArchivedListing`) | 10/16/56/16 | 10/16/56/16 | 10/32/56/32 | 10/64/56/64 | struck `138,000 EUR` 12px → `125,000 EUR` 20px |
+| `ListingDetailView/PublicListing` `uk` | 10/16/56/16 | — | — | 10/64/56/64 | `138 000 EUR` struck → `125 000 EUR` |
+| `ListingContactPattern/Default` (control) | 24/16/24/16 | 24/16/24/16 | 24/–/24/32 | 24/–/24/32 | first section `€92,000` struck → `€80,000` → plain "Original price"; later sections have no struck text |
+
+- There is no `.container-wide` wrapper, and `#storybook-root` padding is 0. The Story adds nothing. Top 10 is the
+  breadcrumb band's own `padding-block`. Bottom 56 is the frame's `py="xl"` (24) plus `ListingDetailView.tsx:404`
+  `pb="2xl"` (32). Both are production values. No horizontal overflow.
+- **1440 = 64 is production** (`theme.ts` `xxl: '90em'`, `3xl` = 48px; `globals.css:299` `--width-page-max: 88rem`).
+  AC10 is corrected in §16.1. The original "32" was an orchestrator error, not an executor deviation.
+- §16.1 said "three exports". The meta change reaches the fourth, `ArchivedListing`, too. The reviewer measured it, and
+  it matches.
+- GR-1 re-run (`win32`): the pattern has 1 node and the card 7, all migrated, enrolled and storied. The two
+  pass-through parents report exactly §3.1's node set, with nothing new.
+
+**Requirement status.** R1–R4, R6–R10 and AC1–AC6, AC8–AC10 are `VERIFIED` (AC1–AC9 from review 1, AC10 here).
+- **R5 / AC7: `PARTIALLY VERIFIED`.** The regression commands keep their baseline (review 1). The registry addition
+  (§10.6) is still owed: `docs/critical-flow-registry.md` is now dirty with **Task 857**'s uncommitted line on the
+  "Listing public visibility invariant" row, not 868's.
+- **Visual criterion: `NOT VERIFIABLE`** until the owner returns §13.5.
+
+**NOTE (P3, not a 912 finding).** `Patterns/Mantine/ListingDetailPattern/Default` shows its first content 104px from
+the top at every width: 24 from `StoryPageGutter` plus the `Box pt={theme.other.layout.listingContactStickyOffset}`
+(80) that Task 886 R11 put there on purpose. It keeps the sticky contact card level with the gallery at `lg+`
+(Story comment `:231-239`). Below `lg` the sticky offset is inactive, so the 80px is a Story-only top gap at 320/390.
+This is pre-existing and approved in 886. 912 does not change it. The §13.5 row for this Story is `en@1440`, where the
+spacer does its job. Record it at the owner matrix, and change nothing here.
+
+**Receipts (review).**
+- `GR-1 CENSUS COMPLETE — pattern 1 node + card 7 nodes migrated+enrolled+story; pass-through parents ListingContact/ListingDetailView: unchanged §3.1 set (13 tier-1 with owners 794·795·834·838·839·814·913, tier-2 primitives owned by 795's dialogs); tier3 filed as 913.`
+- `GR-3b STORY RESPONSIVE CHECK — ListingDetailView ×4: 320 320/320 · 390 390/390 · 1024 1024/1024 · 1440 1440/1440 (fluid, production frame); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+- `GR-3c TYPE RESPONSIVE CHECK — ListingDetailView/PublicListing: H1 320 20px · 390 20px · 1024 36px · 1440 36px; H2 18 · 18 · 24 · 24 (r1-measure.json); contact price 20px, old price 12px; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+- `GR-3d STORY GUTTER CHECK — ListingDetailView ×4: gutter n/a: own gutter (ListingsPageFrame.tsx:93-94, :52-56; ListingDetailView.tsx:404); top/right/bottom/left 320 10/16/56/16 · 390 10/16/56/16 · 1024 10/32/56/32 · 1440 10/64/56/64 (expected the frame's own values); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+- `GR-3e TEXT BUTTONS STACKED — n/a: no popup opened.` · `GR-3f CIRCLE CHECK — n/a: no circular element changed.` · `GR-3g CORNER CHECK — n/a: no line changed.`
+
+**What closes 912.**
+1. The owner returns the §13.5 matrix.
+2. Once `docs/critical-flow-registry.md` carries no other task's uncommitted change, the §10.6 rows `:62` and `:63` are
+   added (exact text in the session log, "Registry addition owed"), and nothing else in that file changes.
+3. Then comes the approval review. No executor code work is owed.

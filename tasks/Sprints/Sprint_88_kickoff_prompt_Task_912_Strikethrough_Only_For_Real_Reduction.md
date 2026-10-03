@@ -10,7 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Revision 4 (2026-10-03, review 4 + owner return): §20 is the current executable route.** The price colour
+> **Revision 5 (2026-10-03, review 5): §21 is the current executable route.** One line: the contact card's name
+> line wraps (R25). It replaces R23's wrong target. §20's colour work is verified.
+>
+> **Revision 4 (2026-10-03, review 4 + owner return): §20.** The price colour
 > (D89-7: dark `#111111` token when not reduced, coral when reduced) is now **912's**. This supersedes the line above
 > that kept the colour for 918, and §18.3's *"the colour is 918's"*.
 >
@@ -938,7 +941,7 @@ This restates **D89-7** (2026-10-02, Sprint 89 plan): *"ціну за замов
 
 **R23 [F4] (P2).**
 - In `MantineListingContactPattern.tsx:148`, delete `truncate` from the subtitle `Text`, so the line wraps.
-- The agent name's `truncate` (`:140`) stays.
+- ~~The agent name's `truncate` (`:140`) stays.~~ *Superseded by §21 R25: the name line is the one that is cut, so its `truncate` is removed.*
 - Add nothing else: no `lineClamp`, `style` or width.
 
 **R24 [R22] (P1). Tests**, in `MantineListingPrice.smoke.test.tsx`:
@@ -1015,3 +1018,91 @@ Append `## Revision 4` to the session log, with the Files Changed delta, the blo
 values, the plants and the receipts. Update 912's backlog row. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 Review 5 re-measures, then hands the §18.9 matrix to the owner. In the matrix, `ListingPrice` shows the dark price in
 its "Not reduced" and "Converted" sections.
+
+## 21. Revision 5 (review 5, 2026-10-03): `NEEDS REVISION` — R23 pointed at the wrong line
+
+**§21 is the current executable route.** Re-entry mode: `remediation`.
+
+**Verified in review 5 (do not redo):**
+- R21, R22, R24, AC17, AC19, AC20;
+- vitest 35/35 on `win32` (Opus's own run);
+- `r4-colour.json`: `ListingPrice` "Not reduced" and "Converted" are `rgb(17, 17, 17)`; every reduced price is
+  `rgb(236, 84, 71)`; the other three matrix Stories are all reduced, so they are all coral;
+- `git grep "#111111" -- src` finds only `theme.ts`.
+
+Keep every file hash-equal to the Revision 4 hashes (`r4-*`), except the one line in §21.2. New evidence files use an
+`r5-` prefix.
+
+### 21.1 What was wrong (orchestrator defect, reported correctly by the executor as `PARTIALLY IMPLEMENTED`)
+
+- §20.2 F4 named the **subtitle** (`MantineListingContactPattern.tsx:148`) as the cut line. That was wrong.
+- In the owner-deleted and owner-unavailable states, production passes the message as **`agent.name`**
+  (`ListingContact.tsx:155-158`: `{ name: t('owner_deleted_label') }`, `{ name: t('owner_name_unavailable') }`). The
+  Story does the same (`ListingContactPattern.stories.tsx:157`).
+- `rv4-opus-overrun.json`'s own chain starts at the name `Text` (`:140`, `truncate`, 178px). At 320 that line is still
+  cut to an ellipsis: `uk` needs 278px and `it` 306px.
+- R23 told the executor to keep the name's `truncate`, so AC18 could not pass. The executor removed `truncate` from the
+  subtitle as R23 said. That change is harmless and stays: a company subtitle may wrap too.
+
+### 21.2 Reference research (GR-7), name line beside an avatar
+
+- **Inspected live**, at 1440 and 375 (`docs/sessions/evidence/task912/research/rv5-name-research.{mjs,json,txt}`,
+  screenshots `rv5-*-375.png`):
+  - Lahomes `agents-grid`, `agents-list`, `agents-details`, `property-details` (the "Property Owner Details" card, the
+    nearest counterpart to lero.al's contact card) and `customers-grid`;
+  - TailAdmin `profile`.
+- **Result.** None of these pages has an element with `text-overflow: ellipsis`. A name beside an avatar is
+  `white-space: normal`, so it wraps: Lahomes `property-details` "Gaston Lapierre", TailAdmin `profile` "Musharof
+  Chowdhury". Only Lahomes `agents-list`, a table cell, is `nowrap`.
+- **lero.al data map.** In the contact card, the name line carries a real name (`normal`, `closedListing`) or a status
+  message (`ownerDeleted`, `ownerUnavailable`). A message must never be cut.
+
+`GR-7 REFERENCE RESEARCH — artifact: contact-card name line beside the avatar; pages enumerated: as §20.3 (TailAdmin 88 / Lahomes 123 / Kamr 1); inspected live: Lahomes agents-grid, agents-list, agents-details, property-details, customers-grid; TailAdmin profile (1440 + 375); chosen pattern: Lahomes property-details owner card + TailAdmin profile — the name wraps, no ellipsis; absent from all references: a status message in the name slot; lero.al data map: MantineListingContactPattern :140 gets agent.name = real name or owner_deleted_label / owner_name_unavailable (ListingContact.tsx:155-158); owner decisions: none needed; evidence: docs/sessions/evidence/task912/research/rv5-*.`
+
+### 21.3 Requirement and acceptance criterion
+
+**R25 [F4, replaces R23's "the name's `truncate` stays"] (P2).**
+- In `MantineListingContactPattern.tsx:140`, delete `truncate` from the name `Text` (`fw={600} size="sm"`). The name
+  then wraps.
+- Add nothing else: no `lineClamp`, `style`, `miw` or `wrap` change. The surrounding `Group wrap="nowrap"` with the
+  verified badge stays.
+- The subtitle change from Revision 4 stays.
+
+**AC18 (restated) [R25].** Given `ListingContactPattern/Default` at `uk@320` and `it@320`, then:
+- `rv4-opus-overrun.mjs` prints an empty `hits` list for `en`, `uk` and `it`;
+- the owner-deleted message is shown in full, on one or more lines;
+- no horizontal overflow is reported;
+- in the `normal` section, the name and the verified badge still share the first row at 320 and 1440.
+
+### 21.4 Verification (one pass, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:mojibake
+npm.cmd run build
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task912\rv4-opus-overrun.mjs
+node.exe docs\sessions\evidence\task912\rv4-opus-probe.mjs
+git hash-object src\design-system\mantine\patterns\MantineListingContactPattern.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0.
+- The overrun probe has no hits.
+- Copy the probe outputs to `r5-overrun.json` and `r5-probe.json`.
+- Measure the `normal` section's name row (name top vs badge top) at 320 and 1440, and record it in `r5-namerow.json`.
+
+Receipts for `ListingContactPattern/Default`:
+- `GR-3b`, `GR-3c` and `GR-3d` (320/390/1024/1440);
+- `GR-3e`: `n/a: no popup`.
+
+### 21.5 Completion
+
+Append `## Revision 5` to the session log. Update 912's backlog row. End with
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Review 6 re-measures, then hands the §18.9 matrix to the owner.

@@ -1,0 +1,12 @@
+SCOPE GUARD manifest:
+ 1. src/app/admin/listings/visibilityFilter.ts
+ 2. src/app/admin/listings/page.tsx
+ 3. src/components/admin/AdminListingsTable.tsx
+ 4. src/components/admin/ListingPreviewDialogView.tsx
+ 5. src/components/admin/AdminListingsView.tsx
+P2c src/app/admin/listings/page.tsx
+  hash before b682cd9cf61457ee18c651a6a53c4f9a9804e2b0
+  planted     62fc7e9aa88f8fa3a97aa74573947a27d321602f
+  restored    b682cd9cf61457ee18c651a6a53c4f9a9804e2b0  equal=true
+  exit under plant=0 (expect: check:listing-visibility exits 1 (inline in the route chain))
+  ✅ Listing public-visibility invariant gate PASSED — 0 violations.

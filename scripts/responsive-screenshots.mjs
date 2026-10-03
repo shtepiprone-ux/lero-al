@@ -123,7 +123,7 @@ const STORY_TARGETS = [
   { id: 'mantine-primitives-recentlyviewedgridview--empty', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
   { id: 'mantine-primitives-recentlyviewedgridview--populated', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
   // Task 427 rework AC R4 — targeted rendered proof for the 2 density-changed surfaces
-  { id: 'admin-adminlistingstable--preview-dialog-sold-status-actions', label: 'AdminListingsTable/PreviewDialogSoldStatusActions', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  { id: 'patterns-mantine-listingpreviewdialogview--sold-status-actions', label: 'ListingPreviewDialogView/SoldStatusActions', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
   { id: 'listings-listingformshellview--staff-status-control-open', label: 'ListingFormShellView/StaffStatusControlOpen', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
 ];
 

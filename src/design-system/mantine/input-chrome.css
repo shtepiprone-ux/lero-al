@@ -244,6 +244,12 @@
   outline: none;
   box-shadow: none;
 }
+/* Task 857 R40 (§6g focus row: brand ring + brand border): the resting rule above is (0,3,0) and beats the plain
+   :focus-visible rule at (0,2,0), so the brand border never applied. This (0,5,0) rule restores it for unchecked,
+   non-error radios; error (red-6 border + ring) keeps winning because it is excluded here; checked keeps brand. */
+.mantine-Radio-radio:not(:checked):not([data-checked]):not([data-error]):focus-visible {
+  border-color: var(--mantine-color-brand-7);
+}
 
 /* Error: red-6 border + ring. Mantine emits data-error via mod:{error:!!error} in Radio.mjs ~L137.
    :not(:checked) lifts specificity to (0,3,0) — same as resting rule — wins by source order.
@@ -269,6 +275,66 @@
 .mantine-Radio-radio[data-disabled] {
   opacity: 1;
   cursor: not-allowed;
+}
+/* Task 857 R41 (§6g disabled row: the whole control at 0.5 and nothing else): Mantine's :disabled rules paint a gray
+   bg/border and a gray dot under the root fade. Neutralise them so a disabled radio renders as its enabled state. */
+.mantine-Radio-radio:disabled:not(:checked) {
+  background-color: var(--mantine-color-white);
+  border-color: var(--mantine-color-gray-3);
+}
+.mantine-Radio-radio:disabled:checked {
+  background-color: var(--mantine-color-brand-7);
+  border-color: var(--mantine-color-brand-7);
+}
+.mantine-Radio-root .mantine-Radio-radio:disabled + .mantine-Radio-icon {
+  --radio-icon-color: var(--mantine-color-white);
+}
+.mantine-Radio-root .mantine-Radio-radio:disabled:checked + .mantine-Radio-icon {
+  --radio-icon-opacity: 1;
+  --radio-icon-transform: none;
+}
+
+/* ── Radio.Card + Radio.Indicator — Task 857 R49 (§23.7 "A choice", §6g colours) ──────────────────────────────────
+   Card: bordered (theme RadioCard entry). Checked → brand-7 border + brand-0 tint. Keyboard focus → brand-7 border +
+   the same 3px ring as the Radio above (the card is the focusable element). Disabled → the whole card at 0.5.
+   Indicator: the canonical 20px circle with a 10px dot (theme RadioIndicator entry). Unchecked gray-3 border, checked
+   brand-7 fill and a white dot; disabled keeps those colours under the card's fade (R41 look). */
+.mantine-RadioCard-card[data-checked] {
+  border-color: var(--mantine-color-brand-7);
+  background-color: var(--mantine-color-brand-0);
+}
+.mantine-RadioCard-card:focus-visible {
+  outline: none;
+  border-color: var(--mantine-color-brand-7);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
+}
+.mantine-RadioCard-card:disabled,
+.mantine-RadioCard-card[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.mantine-RadioIndicator-indicator {
+  border-color: var(--mantine-color-gray-3);
+}
+.mantine-RadioIndicator-indicator[data-checked] {
+  background-color: var(--mantine-color-brand-7);
+  border-color: var(--mantine-color-brand-7);
+}
+.mantine-RadioIndicator-indicator[data-checked] > .mantine-RadioIndicator-icon {
+  color: var(--mantine-color-white);
+}
+.mantine-RadioIndicator-indicator[data-disabled]:not([data-checked]) {
+  background-color: var(--mantine-color-white);
+  border-color: var(--mantine-color-gray-3);
+}
+.mantine-RadioIndicator-indicator[data-disabled][data-checked] {
+  background-color: var(--mantine-color-brand-7);
+  border-color: var(--mantine-color-brand-7);
+}
+.mantine-RadioIndicator-indicator[data-disabled][data-checked] > .mantine-RadioIndicator-icon {
+  color: var(--mantine-color-white);
+  opacity: 1;
+  transform: none;
 }
 
 /* ── Switch — §6h state chrome (Task 499) ─────────────────────────────── */

@@ -1,0 +1,1469 @@
+[
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "uk",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "uk",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "uk",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-150@99",
+   "162-374@99",
+   "386-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-398@99",
+   "410-622@99",
+   "634-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-814@99",
+   "826-1038@99",
+   "1050-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "uk",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 275,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "uk",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 279,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "uk",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-150@99",
+   "162-374@99",
+   "386-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-398@99",
+   "410-622@99",
+   "634-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-814@99",
+   "826-1038@99",
+   "1050-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "uk",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 243,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "uk",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 247,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "uk",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-150@99",
+   "162-374@99",
+   "386-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-398@99",
+   "410-622@99",
+   "634-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-814@99",
+   "826-1038@99",
+   "1050-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 2,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "uk",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "uk",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "uk",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-150@99",
+   "162-374@99",
+   "386-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-398@99",
+   "410-622@99",
+   "634-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-814@99",
+   "826-1038@99",
+   "1050-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "uk",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 90,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "uk",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 179,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "uk",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 162,
+  "left": 164,
+  "right": 164,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 164,
+  "dialogRight": 164,
+  "parentPad": "45/38/45/38"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 162,
+  "left": 292,
+  "right": 292,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 292,
+  "dialogRight": 292,
+  "parentPad": "45/51/45/51"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 162,
+  "left": 500,
+  "right": 500,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 500,
+  "dialogRight": 500,
+  "parentPad": "45/72/45/72"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "uk",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 90,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "uk",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 147,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "uk",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 162,
+  "left": 164,
+  "right": 164,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 164,
+  "dialogRight": 164,
+  "parentPad": "45/38/45/38"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 162,
+  "left": 292,
+  "right": 292,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 292,
+  "dialogRight": 292,
+  "parentPad": "45/51/45/51"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 162,
+  "left": 500,
+  "right": 500,
+  "bottom": 162,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 500,
+  "dialogRight": 500,
+  "parentPad": "45/72/45/72"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "uk",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 441,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 2,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "uk",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 461,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 2,
+  "dialogLeft": 0,
+  "dialogRight": 0,
+  "parentPad": "0/0/0/0"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "uk",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 277,
+  "left": 164,
+  "right": 164,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 164,
+  "dialogRight": 164,
+  "parentPad": "45/38/45/38"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "uk",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 277,
+  "left": 292,
+  "right": 292,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 292,
+  "dialogRight": 292,
+  "parentPad": "45/51/45/51"
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "uk",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 277,
+  "left": 500,
+  "right": 500,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 500,
+  "dialogRight": 500,
+  "parentPad": "45/72/45/72"
+ }
+]

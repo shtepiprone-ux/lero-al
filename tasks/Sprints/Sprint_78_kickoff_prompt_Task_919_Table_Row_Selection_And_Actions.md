@@ -135,6 +135,7 @@ Every other node is tier 1, migrated, enrolled and storied. There are no tier-2 
 | R12 | §26 | Every row-action and bulk icon this task adds or changes comes from `@solar-icons/react/broken`: pen (edit), trash (delete), and the neutral actions' icons in the three Views that already had them (provider toggle, page "open public page", user verify). Look up the exact export names in `node_modules/@solar-icons/react/dist`, never from the Iconify id. If the package is not in `package.json` when you start, add `@solar-icons/react@2.3.2`. lucide imports for other roles in those files stay. | P1 | AC12 |
 | R13 | i18n | New strings exist in `sq`, `en`, `uk` and `it`: select all, select row (`{name}`), actions header, delete selected (`{count}`), bulk confirm title and body (`{count}`), bulk success (`{count}`), bulk partial (`{deleted}`/`{failed}`), and the per-code failure reasons `self`, `default_currency`, `too_many`. Reuse existing keys where they exist (`delete`, `cancel`, `edit`, `delete_confirm`). | P1 | AC13 |
 | R14 | Stories (16c, GR-3) | Story work:<br>• Extend `Mantine/Primitives/Table` (`src/stories/mantine/primitives/Table.stories.tsx`) with export `SelectionAndActions` (stateful: 5 rows, 2 selected, edit/delete actions, header indeterminate).<br>• Create `Patterns/Mantine/TableBulkDeleteButton` (`Default` with count 2) and `Patterns/Mantine/DeleteConfirmModal` (`Single`, `Bulk`).<br>• Show the new column and the bulk button in the six existing View Stories: `AdminListingsView`, `AdminUsersTable`, `AdminCurrenciesView`, `AdminExchangeProvidersView`, `AdminPagesView`, `AdminReportsView`. Each holds its selection in story state, as the 857 `DialogDemo` does, and each `Default` starts with 2 rows selected.<br>No other Story file is created. | P1 | AC14 |
+| R16 | D78-12, 857 review 13 | In `src/design-system/mantine/theme.ts`, the `Table` entry's `styles.thead.backgroundColor: gray-0` (`:1582`) is removed. It is covered by the white sticky-header cells in every table and misstates D78-12 (white header). Nothing visible changes: every header cell still computes `rgb(255,255,255)` in the four table Stories (857 `151-opus-review13.json` is the before value). | P3 | AC16 |
 | R15 | regression | Tests:<br>• unit tests for R1–R4;<br>• per surface, a container test: select 2 → bulk → confirm → bulk action called with those ids → selection cleared; row trash → confirm → single action; edit → href or handler;<br>• a smoke test per bulk action: denied → no DB call; happy; guard row in `failed` and the others deleted; duplicates; over 100; per-row DB error → `failed`;<br>• the `softDeleteUser` self refusal.<br>The existing critical-flow tests still pass unchanged: report delete (registry row 67), hard-delete user (row 50) and admin write guard (row 85). Add one registry row "Admin bulk delete" with the bulk smoke command. | P0 | AC15 |
 
 ## 5. Assumptions and open questions
@@ -177,7 +178,7 @@ Read these before starting:
   - `src/modules/admin/actions/index.ts` (listings, users, pages);
   - `currencies.ts` and `exchangeProviders.ts`;
   - `src/modules/listings/actions/reportListing.ts`.
-- `messages/{sq,en,uk,it}.json`, `scripts/mantine-migration-scope.json`, and `package.json` / `package-lock.json`
+- `src/design-system/mantine/theme.ts` (R16 only), `messages/{sq,en,uk,it}.json`, `scripts/mantine-migration-scope.json`, and `package.json` / `package-lock.json`
   (only if Solar is missing).
 - The Stories listed in R14, the tests in R15, and the one new row in `docs/critical-flow-registry.md`.
 - The session log, evidence under `docs/sessions/evidence/task919/`, and the 919 row of `docs/backlog.md`.
@@ -186,8 +187,8 @@ Read these before starting:
 
 - The five legacy managers (916), `AdminSupportManager` (859), `AgentStatisticsView` and the dashboard tables.
 - Bulk actions other than delete: status changes and export.
-- `hardDeleteUser`, `ListingPreviewDialogView`'s internal delete step, the `Table` theme entry, the `thead` lines and
-  background (D78-11, D78-12), and the mobile card anatomy beyond the checkbox and the actions row.
+- `hardDeleteUser`, `ListingPreviewDialogView`'s internal delete step, the `Table` theme entry except R16, the `thead`
+  lines and background (D78-11, D78-12), and the mobile card anatomy beyond the checkbox and the actions row.
 - Every other `MantineModal` dialog. Those are 915's; this task moves only the six delete confirmations.
 
 ## 9. Current and required behavior
@@ -307,6 +308,8 @@ edit page, and the row trash with confirm deletes one listing.
 - **AC14 [R14].** The new and extended Stories exist and import their component directly. `check:story-coverage`,
   `check:rendered-scope`, `check:pattern-enrolment` and `check:surface-census:changed` exit 0. The census shows no new
   FAIL line.
+- **AC16 [R16].** `theme.ts` has no `thead` `backgroundColor` in the `Table` entry. Re-running 857's
+  `151-opus-review13.mjs` gives every header cell `rgb(255, 255, 255)` in the four Stories, as before.
 - **AC15 [R15].**
   - The full test suite shows only the known 790 failures, and more tests passed than the 857 baseline.
   - The registry row commands for rows 50, 67 and 85 and the new row all exit 0.

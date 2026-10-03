@@ -1,0 +1,8076 @@
+{
+ "platform": "win32 v22.22.3",
+ "tables": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      200,
+      146,
+      302,
+      70
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      200,
+      164,
+      277,
+      78
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      200,
+      155,
+      289,
+      74
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      200,
+      162,
+      279,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      200,
+      164,
+      277,
+      78
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      200,
+      155,
+      289,
+      74
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      200,
+      162,
+      279,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      200,
+      146,
+      302,
+      70
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      200,
+      188,
+      318,
+      179,
+      89
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      200,
+      182,
+      315,
+      190,
+      87
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      200,
+      189,
+      353,
+      143,
+      90
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      200,
+      170,
+      352,
+      170,
+      81
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Listing",
+      "Price",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      131,
+      200,
+      195,
+      330,
+      186,
+      93
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      120,
+      200,
+      179,
+      371,
+      179,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      131,
+      200,
+      196,
+      366,
+      148,
+      93
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      128,
+      200,
+      190,
+      328,
+      198,
+      90
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      200,
+      155,
+      289,
+      74
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      200,
+      146,
+      302,
+      70
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      200,
+      162,
+      279,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      200,
+      164,
+      277,
+      78
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      200,
+      164,
+      277,
+      78
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      200,
+      162,
+      279,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      200,
+      146,
+      302,
+      70
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      200,
+      155,
+      289,
+      74
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Price",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      200,
+      188,
+      318,
+      179,
+      89
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      200,
+      182,
+      315,
+      190,
+      87
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      200,
+      189,
+      353,
+      143,
+      90
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 976,
+   "tables": [
+    {
+     "cardW": 976,
+     "tableW": 974,
+     "viewW": 974,
+     "scrollW": 974,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      200,
+      170,
+      352,
+      170,
+      81
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Listing",
+      "Price",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      131,
+      200,
+      195,
+      330,
+      186,
+      93
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Njoftim",
+      "Çmimi",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      128,
+      200,
+      190,
+      328,
+      198,
+      90
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Annuncio",
+      "Prezzo",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      131,
+      200,
+      196,
+      366,
+      148,
+      93
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1136,
+   "tables": [
+    {
+     "cardW": 1136,
+     "tableW": 1134,
+     "viewW": 1134,
+     "scrollW": 1134,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "ID",
+      "Оголошення",
+      "Ціна",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      120,
+      200,
+      179,
+      371,
+      179,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Përdorues",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      276,
+      247,
+      195
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "User",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      276,
+      247,
+      195
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Utente",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      276,
+      253,
+      189
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Користувач",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      276,
+      267,
+      175
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Përdorues",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      276,
+      256,
+      202
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "User",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      276,
+      256,
+      202
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Користувач",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      276,
+      277,
+      181
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Utente",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      276,
+      262,
+      196
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Përdorues",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      276,
+      239,
+      287,
+      188
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "User",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      276,
+      238,
+      289,
+      187
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Користувач",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      276,
+      263,
+      278,
+      173
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Utente",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      276,
+      246,
+      284,
+      184
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "User",
+      "Status",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      276,
+      291,
+      354,
+      229
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Përdorues",
+      "Statusi",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      276,
+      293,
+      351,
+      230
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Користувач",
+      "Статус",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      276,
+      322,
+      340,
+      211
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Utente",
+      "Stato",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      276,
+      301,
+      348,
+      225
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agjent",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      292,
+      187
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agent",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      238,
+      295,
+      185
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Агент",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      238,
+      292,
+      187
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agente",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      295,
+      185
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agjent",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      302,
+      194
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agent",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      238,
+      305,
+      191
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agente",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      305,
+      191
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 736,
+   "tables": [
+    {
+     "cardW": 736,
+     "tableW": 734,
+     "viewW": 734,
+     "scrollW": 734,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Агент",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      238,
+      302,
+      194
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agjent",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      458,
+      294
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agent",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      238,
+      462,
+      290
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Агент",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      238,
+      458,
+      294
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 992,
+   "tables": [
+    {
+     "cardW": 992,
+     "tableW": 990,
+     "viewW": 990,
+     "scrollW": 990,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agente",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      462,
+      290
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agjent",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      556,
+      356
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agent",
+      "Date",
+      ""
+     ],
+     "colWidths": [
+      238,
+      560,
+      351
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Agente",
+      "Data",
+      ""
+     ],
+     "colWidths": [
+      238,
+      560,
+      351
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1152,
+   "tables": [
+    {
+     "cardW": 1152,
+     "tableW": 1150,
+     "viewW": 1150,
+     "scrollW": 1150,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Агент",
+      "Дата",
+      ""
+     ],
+     "colWidths": [
+      238,
+      556,
+      356
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Emri i ofruesit",
+      "Prioriteti",
+      "Mënyra",
+      ""
+     ],
+     "colWidths": [
+      332,
+      107,
+      137,
+      142
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Provider name",
+      "Priority",
+      "Mode",
+      ""
+     ],
+     "colWidths": [
+      332,
+      105,
+      130,
+      151
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Nome fornitore",
+      "Priorità",
+      "Modalità",
+      ""
+     ],
+     "colWidths": [
+      332,
+      99,
+      145,
+      143
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Назва постачальника",
+      "Пріоритет",
+      "Режим",
+      ""
+     ],
+     "colWidths": [
+      332,
+      114,
+      136,
+      137
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Provider name",
+      "Priority",
+      "Mode",
+      ""
+     ],
+     "colWidths": [
+      332,
+      105,
+      130,
+      151
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Emri i ofruesit",
+      "Prioriteti",
+      "Mënyra",
+      ""
+     ],
+     "colWidths": [
+      332,
+      107,
+      137,
+      142
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Назва постачальника",
+      "Пріоритет",
+      "Режим",
+      ""
+     ],
+     "colWidths": [
+      332,
+      114,
+      136,
+      137
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Nome fornitore",
+      "Priorità",
+      "Modalità",
+      ""
+     ],
+     "colWidths": [
+      332,
+      99,
+      145,
+      143
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Provider name",
+      "Priority",
+      "Mode",
+      "Notes",
+      ""
+     ],
+     "colWidths": [
+      332,
+      136,
+      169,
+      124,
+      197
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Emri i ofruesit",
+      "Prioriteti",
+      "Mënyra",
+      "Shënime",
+      ""
+     ],
+     "colWidths": [
+      332,
+      136,
+      174,
+      136,
+      180
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Назва постачальника",
+      "Пріоритет",
+      "Режим",
+      "Примітки",
+      ""
+     ],
+     "colWidths": [
+      332,
+      144,
+      171,
+      139,
+      172
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Nome fornitore",
+      "Priorità",
+      "Modalità",
+      "Note",
+      ""
+     ],
+     "colWidths": [
+      332,
+      132,
+      193,
+      111,
+      190
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Emri i ofruesit",
+      "Prioriteti",
+      "Mënyra",
+      "Shënime",
+      ""
+     ],
+     "colWidths": [
+      332,
+      136,
+      174,
+      136,
+      180
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Provider name",
+      "Priority",
+      "Mode",
+      "Notes",
+      ""
+     ],
+     "colWidths": [
+      332,
+      136,
+      169,
+      124,
+      197
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Nome fornitore",
+      "Priorità",
+      "Modalità",
+      "Note",
+      ""
+     ],
+     "colWidths": [
+      332,
+      132,
+      193,
+      111,
+      190
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Назва постачальника",
+      "Пріоритет",
+      "Режим",
+      "Примітки",
+      ""
+     ],
+     "colWidths": [
+      332,
+      144,
+      171,
+      139,
+      172
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titulli",
+      "Statusi",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      250,
+      268
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Title",
+      "Status",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      251,
+      267
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Заголовок",
+      "Статус",
+      "Дії"
+     ],
+     "colWidths": [
+      200,
+      277,
+      241
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titolo",
+      "Stato",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      255,
+      263
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Title",
+      "Status",
+      "Updated",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      151,
+      207,
+      160
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titulli",
+      "Statusi",
+      "Përditësuar",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      157,
+      193,
+      168
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titolo",
+      "Stato",
+      "Aggiornato",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      162,
+      189,
+      167
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Заголовок",
+      "Статус",
+      "Оновлено",
+      "Дії"
+     ],
+     "colWidths": [
+      200,
+      162,
+      215,
+      141
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Title",
+      "Status",
+      "Updated",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      183,
+      252,
+      195
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titulli",
+      "Statusi",
+      "Përditësuar",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      191,
+      235,
+      205
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titolo",
+      "Stato",
+      "Aggiornato",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      197,
+      229,
+      203
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Заголовок",
+      "Статус",
+      "Оновлено",
+      "Дії"
+     ],
+     "colWidths": [
+      200,
+      197,
+      261,
+      172
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titulli",
+      "Statusi",
+      "Përditësuar",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      191,
+      235,
+      205
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Title",
+      "Status",
+      "Updated",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      183,
+      252,
+      195
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Заголовок",
+      "Статус",
+      "Оновлено",
+      "Дії"
+     ],
+     "colWidths": [
+      200,
+      197,
+      261,
+      172
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 832,
+   "tables": [
+    {
+     "cardW": 832,
+     "tableW": 830,
+     "viewW": 830,
+     "scrollW": 830,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Titolo",
+      "Stato",
+      "Aggiornato",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      197,
+      229,
+      203
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Reason",
+      "Listing",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      227,
+      200,
+      206,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      265,
+      200,
+      173,
+      80
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Motivo",
+      "Annuncio",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      251,
+      200,
+      182,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      244,
+      200,
+      203,
+      71
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      265,
+      200,
+      173,
+      80
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Reason",
+      "Listing",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      227,
+      200,
+      206,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      244,
+      200,
+      203,
+      71
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Motivo",
+      "Annuncio",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      251,
+      200,
+      182,
+      85
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      387,
+      200,
+      254,
+      117
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Reason",
+      "Listing",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      332,
+      200,
+      301,
+      124
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Motivo",
+      "Annuncio",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      368,
+      200,
+      266,
+      124
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      357,
+      200,
+      297,
+      105
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Reason",
+      "Listing",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      332,
+      200,
+      301,
+      124
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Arsye",
+      "Njoftimi",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      387,
+      200,
+      254,
+      117
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Причина",
+      "Оголошення",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      357,
+      200,
+      297,
+      105
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Motivo",
+      "Annuncio",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      368,
+      200,
+      266,
+      124
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Kodi",
+      "Emri (Anglisht)",
+      "Aktive",
+      ""
+     ],
+     "colWidths": [
+      130,
+      196,
+      299,
+      93
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Code",
+      "Name (English)",
+      "Active",
+      ""
+     ],
+     "colWidths": [
+      139,
+      212,
+      268,
+      99
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Codice",
+      "Nome (Inglese)",
+      "Attiva",
+      ""
+     ],
+     "colWidths": [
+      133,
+      204,
+      287,
+      95
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Код",
+      "Назва (Англійська)",
+      "Активна",
+      ""
+     ],
+     "colWidths": [
+      122,
+      223,
+      287,
+      87
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Kodi",
+      "Emri (Anglisht)",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ],
+     "colWidths": [
+      101,
+      153,
+      233,
+      158,
+      72
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Code",
+      "Name (English)",
+      "Active",
+      "Updated",
+      ""
+     ],
+     "colWidths": [
+      109,
+      166,
+      210,
+      156,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Код",
+      "Назва (Англійська)",
+      "Активна",
+      "Оновлено",
+      ""
+     ],
+     "colWidths": [
+      97,
+      177,
+      229,
+      145,
+      69
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 720,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Codice",
+      "Nome (Inglese)",
+      "Attiva",
+      "Aggiornata",
+      ""
+     ],
+     "colWidths": [
+      108,
+      165,
+      232,
+      136,
+      77
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Kodi",
+      "Emri (Anglisht)",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ],
+     "colWidths": [
+      135,
+      204,
+      311,
+      211,
+      96
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Code",
+      "Name (English)",
+      "Active",
+      "Updated",
+      ""
+     ],
+     "colWidths": [
+      145,
+      222,
+      280,
+      208,
+      103
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Код",
+      "Назва (Англійська)",
+      "Активна",
+      "Оновлено",
+      ""
+     ],
+     "colWidths": [
+      129,
+      237,
+      306,
+      194,
+      92
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Codice",
+      "Nome (Inglese)",
+      "Attiva",
+      "Aggiornata",
+      ""
+     ],
+     "colWidths": [
+      144,
+      220,
+      310,
+      182,
+      102
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Kodi",
+      "Emri (Anglisht)",
+      "Aktive",
+      "Përditësuar",
+      ""
+     ],
+     "colWidths": [
+      135,
+      204,
+      311,
+      211,
+      96
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Code",
+      "Name (English)",
+      "Active",
+      "Updated",
+      ""
+     ],
+     "colWidths": [
+      145,
+      222,
+      280,
+      208,
+      103
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Код",
+      "Назва (Англійська)",
+      "Активна",
+      "Оновлено",
+      ""
+     ],
+     "colWidths": [
+      129,
+      237,
+      306,
+      194,
+      92
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 960,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": null,
+     "headers": [
+      "Codice",
+      "Nome (Inglese)",
+      "Attiva",
+      "Aggiornata",
+      ""
+     ],
+     "colWidths": [
+      144,
+      220,
+      310,
+      182,
+      102
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": 678,
+   "tables": [
+    {
+     "cardW": 678,
+     "tableW": 1039,
+     "viewW": 676,
+     "scrollW": 1039,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -339,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Skadon",
+      "Numrat e aktivitetit",
+      "Aktiviteti i fundit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      150,
+      186,
+      159,
+      211,
+      132
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "en",
+   "expectedCard": 678,
+   "tables": [
+    {
+     "cardW": 678,
+     "tableW": 959,
+     "viewW": 676,
+     "scrollW": 959,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -259,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Expires",
+      "Activity counts",
+      "Last activity",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      142,
+      189,
+      131,
+      192,
+      104
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": 678,
+   "tables": [
+    {
+     "cardW": 678,
+     "tableW": 1071,
+     "viewW": 676,
+     "scrollW": 1071,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -371,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Спливає",
+      "Показники активності",
+      "Остання активність",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      144,
+      187,
+      181,
+      199,
+      149
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "it",
+   "expectedCard": 678,
+   "tables": [
+    {
+     "cardW": 678,
+     "tableW": 1006,
+     "viewW": 676,
+     "scrollW": 1006,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -306,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Scade",
+      "Conteggi attività",
+      "Ultima attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      132,
+      201,
+      141,
+      201,
+      131
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 1039,
+     "viewW": 932,
+     "scrollW": 1039,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -83,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Skadon",
+      "Numrat e aktivitetit",
+      "Aktiviteti i fundit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      150,
+      186,
+      159,
+      211,
+      132
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 959,
+     "viewW": 932,
+     "scrollW": 959,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -3,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Expires",
+      "Activity counts",
+      "Last activity",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      142,
+      189,
+      131,
+      192,
+      104
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 1071,
+     "viewW": 932,
+     "scrollW": 1071,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -115,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Спливає",
+      "Показники активності",
+      "Остання активність",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      144,
+      187,
+      181,
+      199,
+      149
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 1006,
+     "viewW": 932,
+     "scrollW": 1006,
+     "scrolls": true,
+     "clipped": true,
+     "insetFirst": 24,
+     "insetLast": -50,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Scade",
+      "Conteggi attività",
+      "Ultima attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      132,
+      201,
+      141,
+      201,
+      131
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Skadon",
+      "Numrat e aktivitetit",
+      "Aktiviteti i fundit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      177,
+      219,
+      188,
+      249,
+      156
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Expires",
+      "Activity counts",
+      "Last activity",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      185,
+      246,
+      171,
+      250,
+      135
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Спливає",
+      "Показники активності",
+      "Остання активність",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      163,
+      212,
+      205,
+      226,
+      170
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Scade",
+      "Conteggi attività",
+      "Ultima attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      162,
+      246,
+      173,
+      246,
+      161
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Skadon",
+      "Numrat e aktivitetit",
+      "Aktiviteti i fundit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      206,
+      254,
+      218,
+      289,
+      181
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Expires",
+      "Activity counts",
+      "Last activity",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      215,
+      286,
+      198,
+      291,
+      157
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Спливає",
+      "Показники активності",
+      "Остання активність",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      190,
+      247,
+      239,
+      263,
+      197
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Scade",
+      "Conteggi attività",
+      "Ultima attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      188,
+      286,
+      201,
+      286,
+      187
+     ],
+     "hasMetaLine": true,
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "l": "sq",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Statusi",
+      ""
+     ],
+     "colWidths": [
+      200,
+      362,
+      156
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "l": "en",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      ""
+     ],
+     "colWidths": [
+      200,
+      361,
+      157
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "l": "uk",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      ""
+     ],
+     "colWidths": [
+      200,
+      362,
+      156
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "l": "it",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 720,
+     "tableW": 718,
+     "viewW": 718,
+     "scrollW": 718,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      ""
+     ],
+     "colWidths": [
+      200,
+      352,
+      166
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Statusi",
+      "Agjent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      311,
+      312,
+      134
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Agent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      310,
+      313,
+      135
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Агент",
+      ""
+     ],
+     "colWidths": [
+      200,
+      311,
+      312,
+      134
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 960,
+     "tableW": 958,
+     "viewW": 958,
+     "scrollW": 958,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Agente",
+      ""
+     ],
+     "colWidths": [
+      200,
+      296,
+      323,
+      139
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1216,
+     "tableW": 1214,
+     "viewW": 1214,
+     "scrollW": 1214,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Statusi",
+      "Agjent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      417,
+      418,
+      180
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1216,
+     "tableW": 1214,
+     "viewW": 1214,
+     "scrollW": 1214,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Agent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      414,
+      419,
+      181
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1216,
+     "tableW": 1214,
+     "viewW": 1214,
+     "scrollW": 1214,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Агент",
+      ""
+     ],
+     "colWidths": [
+      200,
+      417,
+      418,
+      180
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1216,
+     "tableW": 1214,
+     "viewW": 1214,
+     "scrollW": 1214,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Agente",
+      ""
+     ],
+     "colWidths": [
+      200,
+      396,
+      432,
+      186
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1376,
+     "tableW": 1374,
+     "viewW": 1374,
+     "scrollW": 1374,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Njoftim",
+      "Statusi",
+      "Agjent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      482,
+      483,
+      208
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1376,
+     "tableW": 1374,
+     "viewW": 1374,
+     "scrollW": 1374,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Listing",
+      "Status",
+      "Agent",
+      ""
+     ],
+     "colWidths": [
+      200,
+      480,
+      485,
+      209
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1376,
+     "tableW": 1374,
+     "viewW": 1374,
+     "scrollW": 1374,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Агент",
+      ""
+     ],
+     "colWidths": [
+      200,
+      482,
+      483,
+      208
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": null,
+   "tables": [
+    {
+     "cardW": 1376,
+     "tableW": 1374,
+     "viewW": 1374,
+     "scrollW": 1374,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "maxTitleLines": 2,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Agente",
+      ""
+     ],
+     "colWidths": [
+      200,
+      458,
+      500,
+      215
+     ],
+     "hasMetaLine": true,
+     "cardOk": null
+    }
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 5,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 5,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 4,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 1,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 3,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 3,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 5,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 342,
+   "cardCount": 3,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 316,
+   "cardCount": 10,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsBoxW": 358,
+   "cardCount": 3,
+   "insets": [
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    },
+    {
+     "l": 21,
+     "r": 21
+    }
+   ]
+  }
+ ],
+ "shell": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1200,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 390,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 320,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 768,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1024,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 1200,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrencytabs--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 896,
+   "frameLeft": 392,
+   "contentLeft": 424,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminreportsview--all-tab",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admininquiriesview--default",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admininquiriesview--default",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admininquiriesview--default",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admininquiriesview--default",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-admininquiriesview--default",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14,
+    12
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpermissionsview--default",
+   "w": 320,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    16,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpermissionsview--default",
+   "w": 768,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    16,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpermissionsview--default",
+   "w": 390,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    16,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpermissionsview--default",
+   "w": 1024,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    16,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpermissionsview--default",
+   "w": 1440,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    16,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--view",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--view",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--view",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--view",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--create",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    12,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--view",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    14,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--create",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    12,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--create",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    12,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--create",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 768,
+   "frameLeft": 456,
+   "contentLeft": 488,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    12,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminuserprofileview--create",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 768,
+   "frameLeft": 248,
+   "contentLeft": 280,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    20,
+    16,
+    16
+   ],
+   "body": [
+    12,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--page",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--page",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--page",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--page",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--page",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1024,
+   "frameLeft": 328,
+   "contentLeft": 360,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 1200,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "w": 320,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "w": 390,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "w": 768,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "w": 1024,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "w": 1440,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 1200,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--narrow",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--narrow",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--narrow",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--narrow",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 784,
+   "frameLeft": 240,
+   "contentLeft": 272,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--narrow",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 896,
+   "frameLeft": 392,
+   "contentLeft": 424,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--panel",
+   "w": 320,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--panel",
+   "w": 390,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--panel",
+   "w": 768,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--panel",
+   "w": 1024,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--panel",
+   "w": 1440,
+   "expectedGutterKind": "xl",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 672,
+   "frameLeft": 240,
+   "contentLeft": 264,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--form",
+   "w": 320,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 320,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 320,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--form",
+   "w": 390,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 390,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 390,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    20
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--form",
+   "w": 768,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 768,
+   "mainLeft": 0,
+   "pad": {
+    "t": 24,
+    "r": 24,
+    "b": 24,
+    "l": 24
+   },
+   "frameW": 768,
+   "frameLeft": 0,
+   "contentLeft": 24,
+   "contentTop": 96,
+   "contentRight": 24,
+   "contentBottomGap": 24,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--form",
+   "w": 1024,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 768,
+   "frameLeft": 248,
+   "contentLeft": 280,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "patterns-mantine-adminpageframe--form",
+   "w": 1440,
+   "expectedGutterKind": "responsive",
+   "navVisible": true,
+   "navW": 240,
+   "mainLeft": 0,
+   "pad": {
+    "t": 32,
+    "r": 32,
+    "b": 32,
+    "l": 32
+   },
+   "frameW": 768,
+   "frameLeft": 456,
+   "contentLeft": 488,
+   "contentTop": 104,
+   "contentRight": 32,
+   "contentBottomGap": 32,
+   "overflowX": false,
+   "h": [
+    24
+   ],
+   "body": [
+    14,
+    14
+   ]
+  }
+ ],
+ "audit": [
+  {
+   "l": "sq",
+   "sizes": [
+    {
+     "t": "Të pranueshëm publikisht",
+     "fs": 14
+    },
+    {
+     "t": "skaduar 2",
+     "fs": 14
+    },
+    {
+     "t": "pa skadencë 1",
+     "fs": 14
+    },
+    {
+     "t": "#1004",
+     "fs": 10
+    },
+    {
+     "t": "Apartament 2+1 — Durrës,",
+     "fs": 14
+    }
+   ]
+  },
+  {
+   "l": "en",
+   "sizes": [
+    {
+     "t": "Public-eligible but hidd",
+     "fs": 14
+    },
+    {
+     "t": "expired 2",
+     "fs": 14
+    },
+    {
+     "t": "no expiry 1",
+     "fs": 14
+    },
+    {
+     "t": "#1004",
+     "fs": 10
+    },
+    {
+     "t": "Apartament 2+1 — Durrës,",
+     "fs": 14
+    }
+   ]
+  },
+  {
+   "l": "it",
+   "sizes": [
+    {
+     "t": "Idonei pubblicamente ma ",
+     "fs": 14
+    },
+    {
+     "t": "scaduti 2",
+     "fs": 14
+    },
+    {
+     "t": "senza scadenza 1",
+     "fs": 14
+    },
+    {
+     "t": "#1004",
+     "fs": 10
+    },
+    {
+     "t": "Apartament 2+1 — Durrës,",
+     "fs": 14
+    }
+   ]
+  },
+  {
+   "l": "uk",
+   "sizes": [
+    {
+     "t": "Публічно-прийнятні, але ",
+     "fs": 14
+    },
+    {
+     "t": "прострочені 2",
+     "fs": 14
+    },
+    {
+     "t": "без терміну 1",
+     "fs": 14
+    },
+    {
+     "t": "#1004",
+     "fs": 10
+    },
+    {
+     "t": "Apartament 2+1 — Durrës,",
+     "fs": 14
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,232 @@
+{
+  "platform": "win32 v22.22.3",
+  "nav": {
+    "rowCount": 3,
+    "rows": [
+      [
+        "6px",
+        "6px",
+        "0px",
+        "0px"
+      ],
+      [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      [
+        "0px",
+        "0px",
+        "6px",
+        "6px"
+      ]
+    ],
+    "listRadius": "6px",
+    "focus": [
+      {
+        "isRow": true,
+        "fv": true,
+        "shadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+        "rect": [
+          33,
+          25,
+          1407,
+          83
+        ]
+      },
+      {
+        "isRow": true,
+        "fv": true,
+        "shadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+        "rect": [
+          33,
+          84,
+          1407,
+          142
+        ]
+      },
+      {
+        "isRow": true,
+        "fv": true,
+        "shadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+        "rect": [
+          33,
+          143,
+          1407,
+          206
+        ]
+      }
+    ]
+  },
+  "tables": {
+    "patterns-mantine-admintable--default": {
+      "paperRadius": "16px",
+      "paperOverflow": "hidden",
+      "theadBorderTop": "0px solid",
+      "theadBorderBottom": "1px solid",
+      "collapse": "collapse",
+      "flush": true,
+      "paperRect": [
+        32,
+        24,
+        1408,
+        215
+      ],
+      "centreColumn": [
+        [
+          250,
+          250,
+          250
+        ],
+        [
+          250,
+          250,
+          250
+        ],
+        [
+          208,
+          213,
+          221
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    },
+    "patterns-mantine-adminlistingsview--default": {
+      "paperRadius": "16px",
+      "paperOverflow": "hidden",
+      "theadBorderTop": "0px solid",
+      "theadBorderBottom": "1px solid",
+      "collapse": "collapse",
+      "flush": true,
+      "paperRect": [
+        272,
+        306.015625,
+        1408,
+        781.171875
+      ],
+      "centreColumn": [
+        [
+          249,
+          250,
+          251
+        ],
+        [
+          249,
+          250,
+          251
+        ],
+        [
+          208,
+          213,
+          221
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    },
+    "mantine-primitives-table--default": {
+      "paperRadius": "16px",
+      "paperOverflow": "hidden",
+      "theadBorderTop": "0px solid",
+      "theadBorderBottom": "1px solid",
+      "collapse": "collapse",
+      "flush": true,
+      "paperRect": [
+        49,
+        49,
+        1391,
+        289
+      ],
+      "centreColumn": [
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          208,
+          213,
+          221
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    }
+  }
+}

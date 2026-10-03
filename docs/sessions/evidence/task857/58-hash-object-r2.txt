@@ -1,0 +1,17 @@
+b0349db804ee7b16de12a9bdf7beafa052375ba8  src/components/admin/AdminTable.tsx
+002348ff4295bda9c8386dce4cc102d4fd4dc181  src/components/admin/AdminListingsView.tsx
+b99948c1f27681de1f8c7cc8ee5f5af5ea5e58d3  src/components/admin/ListingPreviewDialog.tsx
+389099720a19b3f0e3cc9a95a4bc335871d147c6  src/components/admin/ListingPreviewDialogView.tsx
+a2426a0e9b488194909f916b0be05755f0ed84e2  src/components/admin/PremiumDialog.tsx
+5dda7d3ef59889dc6f0f49082ac4d580a8107551  src/components/admin/PremiumDialogView.tsx
+4579cbd3d6fb5928e6f5cdb90a3b983e8ae2e193  src/stories/patterns/mantine/AdminTable.stories.tsx
+28b7e9ced6bb07db48155a8841398b09e718ad22  src/stories/patterns/mantine/AdminListingsView.stories.tsx
+404eef3cdbf1a0ab81ee79567f1e4783b7f9920d  src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
+27b0828c6d642113594a4a97c2154cfaf6bbd431  src/stories/patterns/mantine/PremiumDialogView.stories.tsx
+7d1130f9e3055ad4f3dcf104b30afbaa4e5df1fc  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+217190126b5f229e734eea47fddc36b9abe16fb6  messages/sq.json
+332723df2640e860413026b3e1905df7d8660a6c  messages/en.json
+251ab3b367a18a55ef9a783dadfb98cde7403fd9  messages/it.json
+c28b5fdd3235123158acef0d380ee866e7c30271  messages/uk.json
+4e66151a96282113afefe89463f2be92e8afa63a  docs/sessions/2026-10-02-task857-admin-listings-mantine.md
+04cf9904a10c3ae927425366a536f73382b438c0  docs/backlog.md

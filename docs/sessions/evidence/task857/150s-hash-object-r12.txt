@@ -1,0 +1,2 @@
+67cf1a2e1369ede8456e82719b3c1d78857cf6ce  src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+5dcadb4e07355c630a1ce99192cef244433d07e1  src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx

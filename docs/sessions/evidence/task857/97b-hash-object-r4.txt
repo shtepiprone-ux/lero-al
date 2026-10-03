@@ -1,0 +1,8 @@
+ec9758d2de85553dd239b37434d55cce4e138dc8 src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+ae188bec9083e8569218eb02bdbcaa8f5d4b1db6 src/stories/mantine/primitives/Table.stories.tsx
+7a7dc4c57309d7fa7bbd4d52f9f1e03bee129e2d src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+498f01a6f4683907217bdb188d3907b8c8b9e0cc src/components/admin/AdminTable.tsx
+9f076beba44e635988e9784fd9d3fcd8aa6606a8 messages/en.json
+63c0bafeb7c920cf44d401072a76f9809829cf9b messages/it.json
+7ae617199dd5481579a6db6beeafb08366d89fd8 messages/sq.json
+861be2f1d4bcbb87dbc2f955244769831c139ee1 messages/uk.json

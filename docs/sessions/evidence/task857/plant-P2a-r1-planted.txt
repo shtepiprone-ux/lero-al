@@ -1,0 +1,28 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (16 tests | 1 failed) 5751ms
+     × 'visible' calls applyPublicVisibility once with the builder, not applyPublicEligibleButHidden 49ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  09:55:07
+   Duration  9.75s (transform 451ms, setup 80ms, import 2.98s, tests 5.75s, environment 698ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — routes through the canonical helpers (T1b) > 'visible' calls applyPublicVisibility once with the builder, not applyPublicEligibleButHidden
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:238:46
+    236|     const q = builder()
+    237|     applyAdminListingsVisibility(q, 'visible', '')
+    238|     expect(visibilitySpies.publicVisibility).toHaveBeenCalledTimes(1)
+       |                                              ^
+    239|     expect(visibilitySpies.publicVisibility).toHaveBeenCalledWith(q)
+    240|     expect(visibilitySpies.eligibleButHidden).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+EXIT_CODE=1

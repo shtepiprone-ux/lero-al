@@ -1,0 +1,8 @@
+..............................................
+FIT FAILURES: 0 
+
+HEADERS ["Оголошення|Статус|Дати|Показники активності|Дії","Njoftimi|Statusi|Datat|Numrat e aktivitetit|Veprime","Listing|Status|Dates|Activity counts|Actions","Annuncio|Stato|Date|Conteggi attività|Azioni"]
+CARDS [[768,"uk",false,true,10],[768,"sq",false,true,10],[390,"sq",false,true,10],[390,"uk",false,true,10]]
+ARIA [[1024,"sq",8,false],[1024,"uk",8,false],[1280,"sq",8,false],[1280,"uk",8,false],[1440,"uk",8,false],[1440,"sq",8,false]]
+SWITCH [["default",700,"table"],["default",1000,"table"],["cards-below-md",700,"cards"],["default",1024,"table"],["cards-below-md",1000,"table"],["cards-below-md",1024,"table"],["cards-below-lg",700,"cards"],["cards-below-lg",1000,"cards"],["cards-below-lg",1024,"table"]]
+EXIT_CODE=0

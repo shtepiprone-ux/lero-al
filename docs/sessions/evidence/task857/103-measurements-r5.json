@@ -1,0 +1,1083 @@
+{
+  "dialogs": [
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--active",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Fshi",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--active",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 499,
+          "bottom": 543,
+          "left": 516
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 551,
+          "bottom": 595,
+          "left": 516
+        },
+        {
+          "label": "Fshi",
+          "top": 611,
+          "bottom": 655,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--active",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Видалити",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--active",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 499,
+          "bottom": 543,
+          "left": 516
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 551,
+          "bottom": 595,
+          "left": 516
+        },
+        {
+          "label": "Видалити",
+          "top": 611,
+          "bottom": 655,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Fshi",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 485,
+          "bottom": 529,
+          "left": 516
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 537,
+          "bottom": 581,
+          "left": 516
+        },
+        {
+          "label": "Fshi",
+          "top": 597,
+          "bottom": 641,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Видалити",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 485,
+          "bottom": 529,
+          "left": 516
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 537,
+          "bottom": 581,
+          "left": 516
+        },
+        {
+          "label": "Видалити",
+          "top": 597,
+          "bottom": 641,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--hidden",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Fshi",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--hidden",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 511,
+          "bottom": 555,
+          "left": 516
+        },
+        {
+          "label": "Fshi",
+          "top": 571,
+          "bottom": 615,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--hidden",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Видалити",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--hidden",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 511,
+          "bottom": 555,
+          "left": 516
+        },
+        {
+          "label": "Видалити",
+          "top": 571,
+          "bottom": 615,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--premium",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Fshi",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--premium",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Shiko listimin",
+          "top": 499,
+          "bottom": 543,
+          "left": 516
+        },
+        {
+          "label": "Hap faqen publike",
+          "top": 551,
+          "bottom": 595,
+          "left": 516
+        },
+        {
+          "label": "Fshi",
+          "top": 611,
+          "bottom": 655,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Shiko listimin",
+          "b": "Hap faqen publike",
+          "shareRow": false
+        },
+        {
+          "a": "Shiko listimin",
+          "b": "Fshi",
+          "shareRow": false
+        },
+        {
+          "a": "Hap faqen publike",
+          "b": "Fshi",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--premium",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 624,
+          "bottom": 668,
+          "left": 16
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 676,
+          "bottom": 720,
+          "left": 16
+        },
+        {
+          "label": "Видалити",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-listingpreviewdialogview--premium",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Переглянути оголошення",
+          "top": 499,
+          "bottom": 543,
+          "left": 516
+        },
+        {
+          "label": "Відкрити публічну сторінку",
+          "top": 551,
+          "bottom": 595,
+          "left": 516
+        },
+        {
+          "label": "Видалити",
+          "top": 611,
+          "bottom": 655,
+          "left": 516
+        }
+      ],
+      "pairs": [
+        {
+          "a": "Переглянути оголошення",
+          "b": "Відкрити публічну сторінку",
+          "shareRow": false
+        },
+        {
+          "a": "Переглянути оголошення",
+          "b": "Видалити",
+          "shareRow": false
+        },
+        {
+          "a": "Відкрити публічну сторінку",
+          "b": "Видалити",
+          "shareRow": false
+        }
+      ],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 440
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--not-premium",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--not-premium",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--not-premium",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--not-premium",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--premium",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Hiq Premium",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--premium",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Hiq Premium",
+          "top": 631,
+          "bottom": 675,
+          "left": 546
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--premium",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Зняти Premium",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--premium",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Зняти Premium",
+          "top": 631,
+          "bottom": 675,
+          "left": 546
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--custom-date",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--custom-date",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--custom-date",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--custom-date",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--saving",
+      "loc": "sq",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Hiq Premium",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--saving",
+      "loc": "sq",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Hiq Premium",
+          "top": 631,
+          "bottom": 675,
+          "left": 546
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--saving",
+      "loc": "uk",
+      "w": 390,
+      "textButtons": [
+        {
+          "label": "Зняти Premium",
+          "top": 840,
+          "bottom": 884,
+          "left": 16
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 390
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--saving",
+      "loc": "uk",
+      "w": 1440,
+      "textButtons": [
+        {
+          "label": "Зняти Premium",
+          "top": 631,
+          "bottom": 675,
+          "left": 546
+        }
+      ],
+      "pairs": [],
+      "titleFs": [
+        16
+      ],
+      "overflowX": false,
+      "dlgW": 380
+    }
+  ],
+  "radio": [
+    {
+      "id": "mantine-primitives-radio--default",
+      "w": 320,
+      "radio": [
+        20,
+        20
+      ],
+      "icon": [
+        10,
+        10
+      ],
+      "count": 8,
+      "overflowX": false,
+      "fs": [
+        16,
+        14,
+        22
+      ]
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "w": 390,
+      "radio": [
+        20,
+        20
+      ],
+      "icon": [
+        10,
+        10
+      ],
+      "count": 8,
+      "overflowX": false,
+      "fs": [
+        16,
+        14,
+        22
+      ]
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "w": 1024,
+      "radio": [
+        20,
+        20
+      ],
+      "icon": [
+        10,
+        10
+      ],
+      "count": 8,
+      "overflowX": false,
+      "fs": [
+        16,
+        14,
+        22
+      ]
+    },
+    {
+      "id": "mantine-primitives-radio--default",
+      "w": 1440,
+      "radio": [
+        20,
+        20
+      ],
+      "icon": [
+        10,
+        10
+      ],
+      "count": 8,
+      "overflowX": false,
+      "fs": [
+        16,
+        14,
+        22
+      ]
+    },
+    {
+      "id": "patterns-mantine-premiumdialogview--not-premium",
+      "w": 1440,
+      "radio": [
+        20,
+        20
+      ],
+      "icon": null,
+      "count": 5,
+      "overflowX": false,
+      "fs": [
+        16,
+        14,
+        22,
+        16
+      ]
+    }
+  ]
+}

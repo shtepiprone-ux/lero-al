@@ -94,6 +94,12 @@ export interface ResponsiveBottomSheetProps {
   onClose: () => void
   /** Optional heading rendered below the drag handle */
   title?: ReactNode
+  /**
+   * Optional structured header block (Task 857 R44, `MantineModal structured`): replaces the 14px `title` text
+   * under the drag handle with an icon tile, title and description. Keeps the drag handle and the header divider.
+   * Sections supply their own top spacing, so the body starts flush under the divider (like the desktop modal body).
+   */
+  header?: ReactNode
   children: ReactNode
   /**
    * Optional pinned footer (Task 567 round-2 Fix 4). When present, `body` becomes a true
@@ -128,9 +134,11 @@ export function ResponsiveBottomSheet({
   opened,
   onClose,
   title,
+  header,
   children,
   footer,
 }: ResponsiveBottomSheetProps) {
+  const hasHeading = Boolean(title) || Boolean(header)
   return (
     <Drawer
       opened={opened}
@@ -142,11 +150,11 @@ export function ResponsiveBottomSheet({
       title={
         <Box>
           <DragHandle />
-          {title && (
+          {header ?? (title && (
             <Text fw={600} size="sm" c="gray.8">
               {title}
             </Text>
-          )}
+          ))}
         </Box>
       }
       styles={{
@@ -168,7 +176,7 @@ export function ResponsiveBottomSheet({
         // are untouched — this only applies inside the same `title ?` branch as the divider.
         header: {
           ...bottomSheetDrawerStyles.header,
-          ...(title ? { borderBottom: '1px solid var(--mantine-color-gray-3)', paddingBottom: 'var(--mantine-spacing-md)' } : {}),
+          ...(hasHeading ? { borderBottom: '1px solid var(--mantine-color-gray-3)', paddingBottom: 'var(--mantine-spacing-md)' } : {}),
         },
         // Task 567 round-2 Fix 4: body becomes ITS OWN flex column (not a single scroll
         // region) ONLY when a footer is passed — every other consumer's body stays exactly
@@ -185,7 +193,7 @@ export function ResponsiveBottomSheet({
           ...(footer
             ? { ...bottomSheetDrawerStyles.body, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }
             : bottomSheetDrawerStyles.body),
-          ...(title ? { paddingTop: 'var(--mantine-spacing-md)' } : {}),
+          ...(hasHeading ? { paddingTop: header ? 0 : 'var(--mantine-spacing-md)' } : {}),
         },
       }}
     >

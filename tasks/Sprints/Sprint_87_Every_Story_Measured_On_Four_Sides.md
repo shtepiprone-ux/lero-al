@@ -28,6 +28,7 @@ per-axis) where only the Story does.
 | ID | Question | Owner answer (verbatim) | Binding consequence |
 |---|---|---|---|
 | **D87-1** | (2026-10-01, AskUserQuestion) The four-side audit also fails shell chrome — `AdminHeader`, `AdminSidebar`, `AdminLocaleSwitcher`, `AdminShell` — which the real page places at the screen edge. How does the gate treat them? | *"Іменний список-виняток (Recommended)"* (option: *"Story хрому оболонки (хедер, навбар, сайдбар, drawer) стоять у явному списку в скрипті з причиною для кожної. Гейт друкує цей список на кожному запуску. Додати Story до списку можна лише з вашим рішенням. Усі інші Story мають мати відступ з усіх 4 сторін."*) | 909 R4: a named shell-chrome list in `check-story-gutters.mjs`, starting with those four titles; any addition needs a quoted owner decision. |
+| **D87-2** | (2026-10-03, Task 857 review 14, AskUserQuestion) The Storybook frame for all `Mantine/Primitives/*` Stories (`_MantineStoryShell.tsx:86`, `bd={{ base: 'none', md: '1px solid gray-2' }}`) adds a second outer border from 768px, so a table or card shows a double frame the real page does not have. What should happen to it? | *"Remove its border, in 909 (Recommended)"* | 909 R9: the shell loses its border at every width; its background, radius and padding stay; `check:card-track-monotonicity` is re-proved. |
 
 ## Tasks
 

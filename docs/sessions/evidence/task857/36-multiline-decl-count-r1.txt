@@ -1,0 +1,7 @@
+6
+src/app/admin/listings/page.tsx:63
+src/app/api/listings/route.ts:15
+src/app/[locale]/cabinet/page.tsx:49
+src/app/[locale]/listings/page.tsx:42
+src/modules/listings/lib/favoritesQueries.ts:54
+src/modules/listings/lib/favoritesQueries.ts:120

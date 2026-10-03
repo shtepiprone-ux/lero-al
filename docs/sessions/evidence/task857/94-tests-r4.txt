@@ -1,0 +1,869 @@
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (48 tests | 1 failed) 164ms
+     × matches the committed ownership snapshot (Task 743 Rev 1) — no hardcoded count 25ms
+ ❯ scripts/__tests__/mantine-story-scope.test.ts (7 tests | 1 failed) 201ms
+     × enrols an exact title without enrolling its unrelated siblings (R3 / D32 counterexample) 117ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 2 failed) 94ms
+     × lightbox: containerClass has no frameClip (matches prior "relative w-full h-full" utility set), imageClass=fitContain 30ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 9ms
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts (5 tests | 4 failed) 14082ms
+     × tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 11243ms
+     × form submit: verifyOtp called with correct token_hash + type — NOT on mount 51ms
+     × success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 42ms
+     × expired/used token on submit → expired state + request-new CTA rendered 24ms
+stderr | src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — server error mapping (Task 873) > invalid_current reason shows the localized alert
+You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx (5 tests | 5 failed) 14792ms
+     × submit stays disabled when current and new password are identical 11812ms
+     × invalid_current reason shows the localized alert 2795ms
+     × a successful change calls signOut("global") 33ms
+     × the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys 124ms
+     × both toggles are not aria-hidden and carry a localized label; clicking toggles the input type 16ms
+ ❯ src/components/layout/__tests__/Header.signOut.test.tsx (1 test | 1 failed) 5197ms
+     × holds the header and shows loading on both controls while pending, then switches together on the public path (872) 5168ms
+ ❯ src/components/shared/__tests__/PhoneField.smoke.test.tsx (3 tests | 1 failed) 9519ms
+     × country change rebuilds the E.164 value with the new dial code 5475ms
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx (4 tests | 1 failed) 18701ms
+     × case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload 6592ms
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx (6 tests | 1 failed) 21792ms
+     × T2 — a 4-character reply keeps Send disabled; 5+ calls sendInquiryReply(id, body) 5944ms
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx (5 tests | 1 failed) 22792ms
+     × sq: month header + weekday row render Albanian, not English 6193ms
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx (6 tests | 2 failed) 31533ms
+     × clicking the filters button opens FiltersPanel 8895ms
+     × the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge) 11756ms
+stderr | src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T3 — any other server error raises the save_error toast
+An update to @mantine/core/ScrollAreaRoot inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to ForwardRef inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to @mantine/core/ScrollAreaRoot inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to @mantine/core/ScrollAreaRoot inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to ForwardRef inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to @mantine/core/ScrollAreaRoot inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ❯ src/components/layout/__tests__/header-hydration-id-parity.test.tsx (3 tests | 1 failed) 7755ms
+       × ASYMMETRIC tree (bell absent server / present client, the pre-Task-599 shape) → onRecoverableError fires — planted-violation proof 5036ms
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx (7 tests | 3 failed) 31177ms
+     × case 1 — create: submit sends the typed payload (code upper-cased) and the new row appears 5792ms
+     × case 4 — toggle: flips the state; deactivating the default shows error_default_required 5398ms
+     × case 6 — delete: the confirm names the currency, confirming removes the row; a default refusal shows delete_blocked 5549ms
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx (8 tests | 5 failed) 39328ms
+     × T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it 6010ms
+     × T2 — slug_already_used: inline slug error, no toast 6559ms
+     × T3 — any other server error raises the save_error toast 5351ms
+     × posts the file to /api/upload-cms-image and inserts the returned URL 7055ms
+     × a failed upload raises the localized toast and keeps the image dialog open 5288ms
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (17 tests | 4 failed) 46006ms
+     × choosing Visible pushes visibility=visible&page=1 and keeps q 5328ms
+     × choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge 6390ms
+     × confirm calls deleteListing(id) and removes the row 6183ms
+     × cancel makes no call 5392ms
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 5 failed) 66188ms
+     × hydrates the trigger from values.date_from/date_to 11243ms
+     × picking a range then Apply filters commits BOTH date_from + date_to atomically 16511ms
+     × Reset clears date_from + date_to (along with every other filter) 8622ms
+     × picking a range pushes BOTH date_from + date_to in ONE router.push call 8329ms
+     × mounts the month option list inside the calendar dropdown, and the pick takes effect 6935ms
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx (19 tests | 6 failed) 75936ms
+     × Apply fires onApply with the composed local values 9757ms
+     × Reset clears all filters via the existing handleReset semantics 8594ms
+     × clicking a type chip selects it (data-variant="light"); "All types" is deselected 7697ms
+     × clicking the active type again clears it back to "All types" 9007ms
+     × clicking a market type selects it; "All" clears it 8857ms
+     × typing fires update with the typed string (via onApply after Apply) 6175ms
+ ❯ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx (12 tests | 2 failed) 78598ms
+     × T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields 18410ms
+     × T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both 16248ms
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (47 tests | 1 failed) 123700ms
+     × tapping days alone does NOT fire onChange; only Confirm commits 27603ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 47 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the committed ownership snapshot (Task 743 Rev 1) — no hardcoded count
+AssertionError: expected { added: [ '--width-content' ], …(1) } to deeply equal { added: [], dropped: [] }
+
+- Expected
++ Received
+
+  {
+-   "added": [],
++   "added": [
++     "--width-content",
++   ],
+    "dropped": [],
+  }
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:227:32
+    225|     const added = [...owned].filter((n) => !snapshotNames.has(n))
+    226|     const dropped = [...snapshotNames].filter((n) => !owned.has(n))
+    227|     expect({ added, dropped }).toEqual({ added: [], dropped: [] })
+       |                                ^
+    228|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    229|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/47]⎯
+
+ FAIL  scripts/__tests__/mantine-story-scope.test.ts > mantine-story-scope — Task 678 per-story enrolment > enrols an exact title without enrolling its unrelated siblings (R3 / D32 counterexample)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ scripts/__tests__/mantine-story-scope.test.ts:20:62
+     18|
+     19|   it('enrols an exact title without enrolling its unrelated siblings (…
+     20|     expect(isCanonicalMantineTitle('Admin/AdminUsersTable')).toBe(true…
+       |                                                              ^
+     21|     // 3 arbitrary siblings under the same `Admin/` segment — none enr…
+     22|     // enrolled by name, so none may resolve true.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/47]⎯
+
+ FAIL  src/components/layout/__tests__/header-hydration-id-parity.test.tsx > Header hydration id-parity — dual-phase onRecoverableError proof (Task 601) > desktop (>=640px — Mantine Menu.Target path, matches the real Task 599 bug shape) > ASYMMETRIC tree (bell absent server / present client, the pre-Task-599 shape) → onRecoverableError fires — planted-violation proof
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/layout/__tests__/header-hydration-id-parity.test.tsx:187:5
+    185| describe('Header hydration id-parity — dual-phase onRecoverableError p…
+    186|   describe('desktop (>=640px — Mantine Menu.Target path, matches the r…
+    187|     it('ASYMMETRIC tree (bell absent server / present client, the pre-…
+       |     ^
+    188|       stubMatchMedia(false)
+    189|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/47]⎯
+
+ FAIL  src/components/layout/__tests__/Header.signOut.test.tsx > Header sign-out pending state (Task 876) > holds the header and shows loading on both controls while pending, then switches together on the public path (872)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/layout/__tests__/Header.signOut.test.tsx:139:3
+    137|
+    138| describe('Header sign-out pending state (Task 876)', () => {
+    139|   it('holds the header and shows loading on both controls while pendin…
+       |   ^
+    140|     let resolveCoreSignOut!: (r: { error: null }) => void
+    141|     mockCoreSignOut.mockImplementation(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx > AdminCurrenciesManager (T1) > case 1 — create: submit sends the typed payload (code upper-cased) and the new row appears
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx:106:3
+    104|
+    105| describe('AdminCurrenciesManager (T1)', () => {
+    106|   it('case 1 — create: submit sends the typed payload (code upper-case…
+       |   ^
+    107|     renderManager()
+    108|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx > AdminCurrenciesManager (T1) > case 4 — toggle: flips the state; deactivating the default shows error_default_required
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx:160:3
+    158|   })
+    159|
+    160|   it('case 4 — toggle: flips the state; deactivating the default shows…
+       |   ^
+    161|     renderManager()
+    162|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx > AdminCurrenciesManager (T1) > case 6 — delete: the confirm names the currency, confirming removes the row; a default refusal shows delete_blocked
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx:189:3
+    187|   })
+    188|
+    189|   it('case 6 — delete: the confirm names the currency, confirming remo…
+       |   ^
+    190|     renderManager()
+    191|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx > AdminExchangeProvidersManager (T1) > case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx:92:3
+     90|
+     91| describe('AdminExchangeProvidersManager (T1)', () => {
+     92|   it('case 1 — create: masked API key with a labelled reveal toggle, s…
+       |   ^
+     93|     renderManager()
+     94|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx > AdminInquiriesManager — Task 894 > T2 — a 4-character reply keeps Send disabled; 5+ calls sendInquiryReply(id, body)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminInquiriesManager.smoke.test.tsx:145:3
+    143|   })
+    144|
+    145|   it('T2 — a 4-character reply keeps Send disabled; 5+ calls sendInqui…
+       |   ^
+    146|     renderManager()
+    147|     const dialog = await openRow(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:265:3
+    263|
+    264| describe('AdminListingsTable — visibility filter (T2)', () => {
+    265|   it('choosing Visible pushes visibility=visible&page=1 and keeps q', …
+       |   ^
+    266|     mockSearch = 'q=villa&page=3'
+    267|     renderTable()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:308:3
+    306|   }
+    307|
+    308|   it('choosing Sold in the StatusChangeSelect calls updateListingStatu…
+       |   ^
+    309|     renderTable([ACTIVE_LISTING])
+    310|     await openPreview(ACTIVE_LISTING.title)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — delete (T5) > confirm calls deleteListing(id) and removes the row
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:335:3
+    333|
+    334| describe('ListingPreviewDialog — delete (T5)', () => {
+    335|   it('confirm calls deleteListing(id) and removes the row', async () =…
+       |   ^
+    336|     renderTable()
+    337|     await openPreview(ACTIVE_LISTING.title)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — delete (T5) > cancel makes no call
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:347:3
+    345|   })
+    346|
+    347|   it('cancel makes no call', async () => {
+       |   ^
+    348|     renderTable()
+    349|     await openPreview(ACTIVE_LISTING.title)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:132:3
+    130|
+    131| describe('AdminPagesManager (T1–T6)', () => {
+    132|   it('T1 — sq_body_required: sq tab active, body-field error, no toast…
+       |   ^
+    133|     mockCreate.mockResolvedValue({ error: 'sq_body_required' })
+    134|     renderManager([PAGE_A])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T2 — slug_already_used: inline slug error, no toast
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:157:3
+    155|   })
+    156|
+    157|   it('T2 — slug_already_used: inline slug error, no toast', async () =…
+       |   ^
+    158|     mockCreate.mockResolvedValue({ error: 'slug_already_used' })
+    159|     renderManager([PAGE_A])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T3 — any other server error raises the save_error toast
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:170:3
+    168|   })
+    169|
+    170|   it('T3 — any other server error raises the save_error toast', async …
+       |   ^
+    171|     mockCreate.mockResolvedValue({ error: 'boom' })
+    172|     renderManager([PAGE_A])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager — editor image upload (T12) > posts the file to /api/upload-cms-image and inserts the returned URL
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:251:3
+    249|   }
+    250|
+    251|   it('posts the file to /api/upload-cms-image and inserts the returned…
+       |   ^
+    252|     const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: asyn…
+    253|     vi.stubGlobal('fetch', fetchMock)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager — editor image upload (T12) > a failed upload raises the localized toast and keeps the image dialog open
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:267:3
+    265|   })
+    266|
+    267|   it('a failed upload raises the localized toast and keeps the image d…
+       |   ^
+    268|     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, json…
+    269|     renderManager([PAGE_A])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:169:3
+    167|
+    168| describe('AdminUserProfile (T1–T9)', { timeout: 15_000 }, () => {
+    169|   it('T1 — edit a first name and save: updateUserProfileFull gets the …
+       |   ^
+    170|     renderProfile()
+    171|     enterEditMode()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/47]⎯
+
+ FAIL  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:207:3
+    205|   })
+    206|
+    207|   it('T2 — blocked with an empty reason is refused; with a reason and …
+       |   ^
+    208|     renderProfile({ user: FIXTURE_PROFILE_USER_PRIVATE })
+    209|     enterEditMode()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — Apply / Reset wiring > Apply fires onApply with the composed local values
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:141:3
+    139|
+    140| describe('FiltersPanel shell — Apply / Reset wiring', () => {
+    141|   it('Apply fires onApply with the composed local values', () => {
+       |   ^
+    142|     const { onApply } = renderPanel({ values: { rooms: [2] } })
+    143|     fireEvent.click(screen.getByText('Apply filters'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — Apply / Reset wiring > Reset clears all filters via the existing handleReset semantics
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:147:3
+    145|   })
+    146|
+    147|   it('Reset clears all filters via the existing handleReset semantics'…
+       |   ^
+    148|     const { onChange } = renderPanel({ values: { rooms: [2], price_min…
+    149|     fireEvent.click(screen.getByText('Reset filters'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — property-type toggle (soft-tint selected) > clicking a type chip selects it (data-variant="light"); "All types" is deselected
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:155:3
+    153|
+    154| describe('FiltersPanel shell — property-type toggle (soft-tint selecte…
+    155|   it('clicking a type chip selects it (data-variant="light"); "All typ…
+       |   ^
+    156|     renderPanel()
+    157|     const allTypesBtn = screen.getByText('All types').closest('button'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — property-type toggle (soft-tint selected) > clicking the active type again clears it back to "All types"
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:170:3
+    168|   })
+    169|
+    170|   it('clicking the active type again clears it back to "All types"', (…
+       |   ^
+    171|     renderPanel()
+    172|     const allTypesBtn = screen.getByText('All types').closest('button'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — market-type toggle (soft-tint selected) > clicking a market type selects it; "All" clears it
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:185:3
+    183|
+    184| describe('FiltersPanel shell — market-type toggle (soft-tint selected)…
+    185|   it('clicking a market type selects it; "All" clears it', () => {
+       |   ^
+    186|     renderPanel()
+    187|     const allBtn = screen.getByText('All').closest('button')!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — listing-id input > typing fires update with the typed string (via onApply after Apply)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:203:3
+    201|
+    202| describe('FiltersPanel shell — listing-id input', () => {
+    203|   it('typing fires update with the typed string (via onApply after App…
+       |   ^
+    204|     const { onApply } = renderPanel()
+    205|     fireEvent.change(screen.getByPlaceholderText('e.g. 12345'), { targ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > hydrates the trigger from values.date_from/date_to
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:133:3
+    131|
+    132| describe('FiltersPanel — RangeDatePicker wiring (Task 559)', () => {
+    133|   it('hydrates the trigger from values.date_from/date_to', () => {
+       |   ^
+    134|     const values: FilterValues = { date_from: DAY_10, date_to: DAY_15 }
+    135|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > picking a range then Apply filters commits BOTH date_from + date_to atomically
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:152:3
+    150|   })
+    151|
+    152|   it('picking a range then Apply filters commits BOTH date_from + date…
+       |   ^
+    153|     const onChange = vi.fn()
+    154|     const onApply = vi.fn()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > Reset clears date_from + date_to (along with every other filter)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:185:3
+    183|   })
+    184|
+    185|   it('Reset clears date_from + date_to (along with every other filter)…
+       |   ^
+    186|     const onChange = vi.fn()
+    187|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > ListingsFilters — RangeDatePicker wiring (Task 559) > picking a range pushes BOTH date_from + date_to in ONE router.push call
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:220:3
+    218|   })
+    219|
+    220|   it('picking a range pushes BOTH date_from + date_to in ONE router.pu…
+       |   ^
+    221|     mockSearchParams = new URLSearchParams(`date_from=${ANCHOR_FROM}`)
+    222|     const { baseElement } = render(withProviders(<ListingsFilters loca…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/47]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — in-calendar month selector stays inside the calendar popover (Task 773) > mounts the month option list inside the calendar dropdown, and the pick takes effect
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:299:3
+    297|
+    298| describe('FiltersPanel — in-calendar month selector stays inside the c…
+    299|   it('mounts the month option list inside the calendar dropdown, and t…
+       |   ^
+    300|     render(
+    301|       withRealPortals(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/47]⎯
+
+ FAIL  src/components/shared/__tests__/heroSearch.smoke.test.tsx > HeroSearch — Mantine Button migration (Task 568) > clicking the filters button opens FiltersPanel
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx:125:3
+    123|   })
+    124|
+    125|   it('clicking the filters button opens FiltersPanel', () => {
+       |   ^
+    126|     render(withProviders(<HeroSearch />))
+    127|     expect(screen.queryByPlaceholderText('e.g. 12345')).not.toBeInTheD…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/47]⎯
+
+ FAIL  src/components/shared/__tests__/heroSearch.smoke.test.tsx > HeroSearch — Mantine Button migration (Task 568) > the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx:132:3
+    130|   })
+    131|
+    132|   it('the active count badge is absent with no filters, and shows the …
+       |   ^
+    133|     render(withProviders(<HeroSearch />))
+    134|     const filtersButton = screen.getByLabelText('Advanced filters')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/47]⎯
+
+ FAIL  src/components/shared/__tests__/PhoneField.smoke.test.tsx > PhoneField — Mantine migration wiring (Task 556) > country change rebuilds the E.164 value with the new dial code
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/PhoneField.smoke.test.tsx:53:3
+     51|
+     52| describe('PhoneField — Mantine migration wiring (Task 556)', () => {
+     53|   it('country change rebuilds the E.164 value with the new dial code',…
+       |   ^
+     54|     const onChange = vi.fn()
+     55|     render(withProvider(<PhoneField value="+355691234567" onChange={on…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/47]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > lightbox: containerClass has no frameClip (matches prior "relative w-full h-full" utility set), imageClass=fitContain
+AssertionError: expected '_frame_f1ba10 _frameFill_f1ba10 _fram…' not to contain '_frameClip_f1ba10'
+
+Expected: "_frameClip_f1ba10"
+Received: "_frame_f1ba10 _frameFill_f1ba10 _frameClip_f1ba10"
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:48:34
+     46|     expect(c.containerClass).toContain(styles.frame)
+     47|     expect(c.containerClass).toContain(styles.frameFill)
+     48|     expect(c.containerClass).not.toContain(styles.frameClip)
+       |                                  ^
+     49|     expect(c.imageClass).toBe(styles.fitContain)
+     50|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/47]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/47]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile (Task 558/561) > tapping days alone does NOT fire onChange; only Confirm commits
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:276:3
+    274|   beforeEach(() => stubMatchMedia(true))
+    275|
+    276|   it('tapping days alone does NOT fire onChange; only Confirm commits'…
+       |   ^
+    277|     const onChange = vi.fn<(next: DateRange) => void>()
+    278|     const { baseElement, container } = render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/47]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx > RangeDatePicker — calendar-body localization (Task 562) > sq: month header + weekday row render Albanian, not English
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx:94:3
+     92|
+     93| describe('RangeDatePicker — calendar-body localization (Task 562)', ()…
+     94|   it('sq: month header + weekday row render Albanian, not English', ()…
+       |   ^
+     95|     const screen = renderOpen('sq')
+     96|     // Right-month gray label uses `formatMonthYearLabel` — Albanian m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/47]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:119:3
+    117|
+    118| describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)',…
+    119|   it('tokenHash + type=recovery: shows form WITHOUT calling verifyOtp …
+       |   ^
+    120|     const { ResetPasswordClient } = await import('../ResetPasswordClie…
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/47]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:180:17
+    178|     const input = container!.querySelector('input#new-password')!
+    179|     await act(async () => {
+    180|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    181|     })
+    182|
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:179:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/47]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount)
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:219:46
+    217|     expect(mockVerifyOtp).not.toHaveBeenCalled()
+    218|     // Form is present after mount (link is usable)
+    219|     expect(container!.querySelector('form')).toBeTruthy()
+       |                                              ^
+    220|
+    221|     const input = container!.querySelector('input#new-password')!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/47]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:261:17
+    259|     const input = container!.querySelector('input#new-password')!
+    260|     await act(async () => {
+    261|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    262|     })
+    263|     await act(async () => {
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:260:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/47]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — same-password guard (Task 873) > submit stays disabled when current and new password are identical
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:91:3
+     89|
+     90| describe('CabinetPasswordSection — same-password guard (Task 873)', ()…
+     91|   it('submit stays disabled when current and new password are identica…
+       |   ^
+     92|     const { CabinetPasswordSection } = await import('../CabinetPasswor…
+     93|     let container: HTMLElement
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/47]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — server error mapping (Task 873) > invalid_current reason shows the localized alert
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:132:17
+    130|
+    131|     await act(async () => {
+    132|       fireEvent.change(current, { target: { value: 'WrongPass1!' } })
+       |                 ^
+    133|       fireEvent.change(next, { target: { value: 'Sample123!' } })
+    134|     })
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:131:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/47]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — success path (Task 873) > a successful change calls signOut("global")
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:162:17
+    160|
+    161|     await act(async () => {
+    162|       fireEvent.change(current, { target: { value: 'OldPass123!' } })
+       |                 ^
+    163|       fireEvent.change(next, { target: { value: 'Sample123!' } })
+    164|     })
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:161:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/47]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — new-password hint stays linked (Task 873, §16.3, AC5′, owner D81-5) > the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys
+TestingLibraryElementError: Unable to find a label with the text of: /password_new_label/
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:188:29
+    186|     // Found by its label (the mocked `password_new_label` key-echo), …
+    187|     // this component's own implementation detail, not the accessibili…
+    188|     const newInput = screen.getByLabelText(/password_new_label/) as HT…
+       |                             ^
+    189|     const describedBy = newInput.getAttribute('aria-describedby')
+    190|     expect(describedBy).toBeTruthy()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/47]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — reveal toggles have an accessible name (Task 873, §16.2) > both toggles are not aria-hidden and carry a localized label; clicking toggles the input type
+TypeError: Cannot read properties of null (reading 'closest')
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:216:77
+    214|     })
+    215|
+    216|     const currentRoot = container!.querySelector('#cabinet-current-pas…
+       |                                                                             ^
+    217|     const newRoot = container!.querySelector('#cabinet-new-password')!…
+    218|     const currentToggle = currentRoot.querySelector<HTMLButtonElement>…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/47]⎯
+
+
+ Test Files  19 failed | 123 passed (142)
+      Tests  47 failed | 2237 passed (2284)
+   Start at  16:03:50
+   Duration  150.52s (transform 55.22s, setup 17.99s, import 820.79s, tests 826.78s, environment 160.60s)
+
+EXIT_CODE=1

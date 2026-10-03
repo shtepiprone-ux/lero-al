@@ -1,0 +1,251 @@
+{
+  "platform": "win32 v22.22.3",
+  "patterns-mantine-adminlistingsview--default": {
+    "theadBg": "rgb(249, 250, 251)",
+    "theadInline": "background-color: var(--mantine-color-gray-0); border-bottom: 1px solid var(--mantine-color-gray-1);",
+    "theadRules": [],
+    "trBg": "rgba(0, 0, 0, 0)",
+    "ths": [
+      {
+        "text": "ID",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Njoftim",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: normal; width: 12.5rem; text-align: left; z-index: 1; background: var(--mantine-color-body); position: sticky; left: 0rem;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Çmimi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Data",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      }
+    ]
+  },
+  "patterns-mantine-admintable--default": {
+    "theadBg": "rgb(249, 250, 251)",
+    "theadInline": "background-color: var(--mantine-color-gray-0); border-bottom: 1px solid var(--mantine-color-gray-1);",
+    "theadRules": [],
+    "trBg": "rgba(0, 0, 0, 0)",
+    "ths": [
+      {
+        "text": "Kodi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left; z-index: 1; background: var(--mantine-color-body); position: sticky; left: 0rem;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Simboli",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Emri (Anglisht)",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Aktive",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Shifra dhjetore",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      }
+    ]
+  },
+  "mantine-primitives-table--default": {
+    "theadBg": "rgb(249, 250, 251)",
+    "theadInline": "background-color: var(--mantine-color-gray-0); border-bottom: 1px solid var(--mantine-color-gray-1);",
+    "theadRules": [],
+    "trBg": "rgba(0, 0, 0, 0)",
+    "ths": [
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; width: 35%; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; width: 20%; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; width: 20%; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; width: 25%; text-align: right;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      }
+    ]
+  },
+  "mantine-primitives-table--sticky-column": {
+    "theadBg": "rgb(249, 250, 251)",
+    "theadInline": "background-color: var(--mantine-color-gray-0); border-bottom: 1px solid var(--mantine-color-gray-1);",
+    "theadRules": [],
+    "trBg": "rgba(0, 0, 0, 0)",
+    "ths": [
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left; z-index: 1; background: var(--mantine-color-body); position: sticky; left: 0rem;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: right;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: right;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: center;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: right;",
+        "rules": [
+          ".m_b242d975:where([data-sticky]) :where(.m_4e7aa4f3) { var(--mantine-color-body) }"
+        ]
+      }
+    ]
+  }
+}

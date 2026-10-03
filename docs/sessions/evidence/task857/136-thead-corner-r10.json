@@ -1,0 +1,42 @@
+{
+  "paper": {
+    "radius": "16px",
+    "border": "1px solid rgb(208, 213, 221)",
+    "bg": "rgb(255, 255, 255)",
+    "collapse": "separate",
+    "overflow": "hidden"
+  },
+  "table": {
+    "radius": "0px",
+    "border": "0px none oklch(0.145 0 0)",
+    "bg": "rgba(0, 0, 0, 0)",
+    "collapse": "collapse",
+    "overflow": "visible"
+  },
+  "thead": {
+    "radius": "0px",
+    "border": "1px solid rgb(242, 244, 247)",
+    "bg": "rgb(249, 250, 251)",
+    "collapse": "collapse",
+    "overflow": "visible"
+  },
+  "firstTh": {
+    "radius": "0px",
+    "border": "0px solid oklch(0.922 0 0)",
+    "bg": "rgb(255, 255, 255)",
+    "collapse": "collapse",
+    "overflow": "visible"
+  },
+  "paperRect": [
+    49,
+    49,
+    1391,
+    290
+  ],
+  "theadRect": [
+    50,
+    50.5,
+    1390,
+    93.5
+  ]
+}

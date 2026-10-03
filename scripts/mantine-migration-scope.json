@@ -46,6 +46,10 @@
   "src/design-system/mantine/patterns/MantineListingContactPattern.tsx",
   "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx",
   "src/design-system/mantine/patterns/MantineModal.tsx",
+  "src/design-system/mantine/patterns/MantineDialogSections.tsx",
+  "src/design-system/mantine/patterns/MantineDetailList.tsx",
+  "src/design-system/mantine/patterns/MantineNavRowList.tsx",
+  "src/design-system/mantine/patterns/MantineDialogFooter.tsx",
   "src/design-system/mantine/patterns/MantinePagination.tsx",
   "src/design-system/mantine/patterns/RangeDatePicker.tsx",
   "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx",
@@ -114,6 +118,7 @@
   "src/modules/cabinet/statistics/components/AgentStatisticsView.tsx",
   "src/components/admin/AdminTable.tsx",
   "src/components/admin/AdminPageHeader.tsx",
+  "src/components/admin/AdminPageFrame.tsx",
   "src/components/admin/AdminCurrenciesView.tsx",
   "src/components/admin/CurrencyFormDialogView.tsx",
   "src/components/admin/CurrencyDetailDialogView.tsx",
@@ -130,5 +135,8 @@
   "src/components/admin/AdminUserProfileView.tsx",
   "src/components/admin/AdminUserProfileDialogsView.tsx",
   "src/components/admin/AdminUserAvatarFieldView.tsx",
-  "src/components/admin/AdminPermissionsView.tsx"
+  "src/components/admin/AdminPermissionsView.tsx",
+  "src/components/admin/AdminListingsView.tsx",
+  "src/components/admin/ListingPreviewDialogView.tsx",
+  "src/components/admin/PremiumDialogView.tsx"
 ]

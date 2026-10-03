@@ -1,0 +1,25 @@
+GR-0 CANONICAL REUSE PREFLIGHT — request: canonical Radio circle (20px / 10px dot) and stacked text buttons in ListingPreviewDialogView; semantic queries: radio circle size dot theme entry, Mantine Radio vars, text button stack, subtle button group; inspected candidates: src/design-system/mantine/theme.ts components.Radio, components.Button vars (:969), Mantine/Primitives/Radio (src/stories/mantine/primitives/Radio.stories.tsx), PremiumDialogView, ListingPreviewDialogView; decision: EXTEND (Radio theme entry) + REUSE (Stack); selected canonical owner: src/design-system/mantine/theme.ts Radio entry; Mantine/TailAdmin token path: --radio-icon-size via theme vars, size sm, TailAdmin §6g (owner decision 2026-10-02); new hardcoded visual values: NONE (0.625rem is the owner-decided 10px dot, set once in the theme entry, same rem exemption as the 44px body); rationale: kickoff §21 R37.
+
+GR-3a STORY PREFLIGHT — Radio × caption update; canonical candidates: Mantine/Primitives/Radio; direct-import evidence: src/stories/mantine/primitives/Radio.stories.tsx; toolbar coverage: locale=toolbar, viewport=toolbar; decision: EXTEND (captions only); target: mantine-primitives-radio--default; rationale: R38.
+
+GR-3e TEXT BUTTONS STACKED — patterns-mantine-listingpreviewdialogview--active: text buttons 3 (View, Open public, resting Delete); groups of >=2: 1 (View + Open public, now Stack); pairs sharing a row at 390/1440 (sq, uk): NONE.
+GR-3e TEXT BUTTONS STACKED — ...--sold-status-actions: text buttons 3; groups of >=2: 1; pairs sharing a row at 390/1440 (sq, uk): NONE.
+GR-3e TEXT BUTTONS STACKED — ...--hidden: text buttons 2 (View, Delete); groups of >=2: 0 (Open public absent); pairs sharing a row: NONE.
+GR-3e TEXT BUTTONS STACKED — ...--premium: text buttons 3; groups of >=2: 1; pairs sharing a row: NONE.
+GR-3e TEXT BUTTONS STACKED — ...--delete-confirm: text buttons 0; groups: 0; pairs sharing a row: NONE.
+GR-3e TEXT BUTTONS STACKED — patterns-mantine-premiumdialogview--{not-premium,custom-date}: text buttons 0; groups 0; pairs sharing a row: NONE.
+GR-3e TEXT BUTTONS STACKED — patterns-mantine-premiumdialogview--{premium,saving}: text buttons 1 (Remove); groups 0; pairs sharing a row: NONE.
+(Source: 103-measurements-r5.json, tops/bottoms per pair; 390 and 1440 x sq and uk.)
+
+GR-3f CIRCLE CHECK — Mantine/Primitives/Radio Default, unchecked: outer 20px, inner none; DPR-1 crop docs/sessions/evidence/task857/103-radio-crops-r5.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Mantine/Primitives/Radio Default, checked: outer 20px, inner 10px; DPR-1 crop 103-radio-crops-r5.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — PremiumDialogView NotPremium, unchecked: outer 20px, inner none; DPR-1 crop 103-radio-crops-r5.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — PremiumDialogView NotPremium, checked (first radio checked in the probe): outer 20px, inner 10px; DPR-1 crop 103-radio-crops-r5.png; reads as a circle: yes.
+Focus / error / disabled states of Mantine/Primitives/Radio: not touched (theme change is size + dot only; input-chrome.css unchanged); not re-measured visually.
+
+GR-3b STORY RESPONSIVE CHECK — mantine-primitives-radio--default: 320 radio 20/20 · 390 20/20 · 1024 20/20 · 1440 20/20; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+GR-3c TYPE RESPONSIVE CHECK — mantine-primitives-radio--default: no headings; label 14px (theme, unchanged); >=24px text without a responsive step: NONE; heading above 20px below 640: NONE; child heading larger than page title: NONE.
+GR-3d STORY GUTTER CHECK — mantine-primitives-radio--default: gutter n/a: MantineStoryShell primitive; unchanged by Revision 5.
+Dialog Stories (overlay-only, GR-3d n/a): no overflow at 390/1440 in any export; modal title 16px.
+
+GR-2 SCOPE STATED — none of the gates run inspects radio rasterisation or text-button row sharing; AC21/AC22 are closed by 103-measurements-r5.json and the DPR-1 crop, not by a gate.

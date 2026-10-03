@@ -545,9 +545,8 @@ Task 307 MUST add these 11 keys to `messages/{sq,en,uk,it}.json` under the `admi
 
 ### 14.1 Container
 
-- All admin pages MUST wrap their content in `<AdminPageShell>`.
-- `<AdminPageShell>` uses the `.container-admin` utility (full-width up to `2xl:`, capped at 1792px at `2xl:+`). DO NOT use `.container-wide` (that is for public site pages).
-- AdminPageShell header pattern: title + optional countBadge + optional subtitle + actions (right-aligned at `md:+`, stacked at `<md`). Filter bar slot below header.
+- Every `/admin/*` route renders inside `AdminShell` and wraps its content in `<AdminPageFrame width=…>` (`src/components/admin/AdminPageFrame.tsx`, Task 857 R23): the responsive gutter plus one `theme.other.layout.adminPage*MaxWidth` cap (`page` / `shell` / `narrow` / `panel` / `form`). `AdminPageShell` and `.container-admin` page wrappers were deleted by Task 857 (2026-10-03). DO NOT use `.container-wide` (that is for public site pages).
+- The page header is `AdminPageHeader` (over `MantineDashboardHeader`): title + optional count + optional subtitle + actions. Filters sit in the page View below it.
 
 ### 14.2 Data display
 
@@ -576,7 +575,7 @@ Sticky first column applies at `lg:+` only (cards have natural hierarchy via tit
 
 ### 14.5 Wide-screen behaviour (1440 / 1920 / 2560)
 
-- AdminPageShell fills the full main area up to `2xl:`. At `2xl:+` (1536+) caps at 1792px (`max-w-10xl`).
+- `AdminPageFrame` fills the main area up to the cap its `width` names (`theme.other.layout.adminPage*MaxWidth`), centred by default.
 - Table columns show their full set at `xl:` (1280+). Wider screens do not gain extra columns.
 - DO NOT introduce `2xl:grid-cols-N` for admin tables — natural column widths use available space.
 

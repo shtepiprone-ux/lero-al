@@ -2,7 +2,10 @@ import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminListingsTable } from '@/components/admin/AdminListingsTable'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { applyPublicEligibleButHidden } from '@/modules/listings/lib/visibility'
+import { applyAdminListingsVisibility } from './visibilityFilter'
 
 export const metadata = { title: 'Listings — Admin' }
 
@@ -56,7 +59,7 @@ export default async function AdminListingsPage({
     .from('listings')
     .select(`
       id, public_id, slug, title, price, currency, listing_type, property_type,
-      status, is_premium, views_count, created_at, expires_at,
+      status, is_premium, premium_until, views_count, created_at, expires_at,
       owner:users!listings_user_id_fkey(id, name, user_type)
     `, { count: 'exact' })
     .order('created_at', { ascending: false })
@@ -84,9 +87,7 @@ export default async function AdminListingsPage({
     query = query.or(orParts.join(','))
   }
 
-  if (visibility === 'hidden_eligible') {
-    query = applyPublicEligibleButHidden(query, reason ? { reason } : undefined)
-  }
+  query = applyAdminListingsVisibility(query, visibility, reason)
 
   // Audit panel: three dedicated head/count queries (total · expired · no_expiry)
   const [auditTotalResult, auditExpiredResult, auditNoExpiryResult] = await Promise.all([
@@ -112,18 +113,20 @@ export default async function AdminListingsPage({
   const { data: listings, count } = await query
 
   return (
-    <AdminListingsTable
-      pageTitle={t('listings_title')}
-      listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
-      total={count ?? 0}
-      page={page}
-      perPage={PER_PAGE}
-      activeStatus={status}
-      searchQuery={q}
-      activeTab={tab}
-      activeVisibility={visibility}
-      activeReason={reason}
-      auditCounts={auditCounts}
-    />
+    <AdminPageFrame width="shell">
+      <AdminPageHeader title={t('listings_title')} subtitle={t('listings_total', { count: count ?? 0 })} />
+      <AdminListingsTable
+        listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
+        total={count ?? 0}
+        page={page}
+        perPage={PER_PAGE}
+        activeStatus={status}
+        searchQuery={q}
+        activeTab={tab}
+        activeVisibility={visibility}
+        activeReason={reason}
+        auditCounts={auditCounts}
+      />
+    </AdminPageFrame>
   )
 }

@@ -1,0 +1,99 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts (48 tests | 1 failed) 50ms
+     × matches the committed ownership snapshot (Task 743 Rev 1) — no hardcoded count 12ms
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts (9 tests | 2 failed) 10ms
+     × lightbox: containerClass has no frameClip (matches prior "relative w-full h-full" utility set), imageClass=fitContain 4ms
+     × BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight) 1ms
+ ❯ scripts/__tests__/mantine-story-scope.test.ts (7 tests | 1 failed) 8ms
+     × enrols an exact title without enrolling its unrelated siblings (R3 / D32 counterexample) 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/css-var-resolvability.test.ts > extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :root > matches the committed ownership snapshot (Task 743 Rev 1) — no hardcoded count
+AssertionError: expected { added: [ '--width-content' ], …(1) } to deeply equal { added: [], dropped: [] }
+
+- Expected
++ Received
+
+  {
+-   "added": [],
++   "added": [
++     "--width-content",
++   ],
+    "dropped": [],
+  }
+
+ ❯ scripts/__tests__/css-var-resolvability.test.ts:227:32
+    225|     const added = [...owned].filter((n) => !snapshotNames.has(n))
+    226|     const dropped = [...snapshotNames].filter((n) => !owned.has(n))
+    227|     expect({ added, dropped }).toEqual({ added: [], dropped: [] })
+       |                                ^
+    228|     // --spacing-N is prose inside a comment at globals.css:146-150 (d…
+    229|     // own D2 defect) — must never be counted.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  scripts/__tests__/mantine-story-scope.test.ts > mantine-story-scope — Task 678 per-story enrolment > enrols an exact title without enrolling its unrelated siblings (R3 / D32 counterexample)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ scripts/__tests__/mantine-story-scope.test.ts:20:62
+     18|
+     19|   it('enrols an exact title without enrolling its unrelated siblings (…
+     20|     expect(isCanonicalMantineTitle('Admin/AdminUsersTable')).toBe(true…
+       |                                                              ^
+     21|     // 3 arbitrary siblings under the same `Admin/` segment — none enr…
+     22|     // enrolled by name, so none may resolve true.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > lightbox: containerClass has no frameClip (matches prior "relative w-full h-full" utility set), imageClass=fitContain
+AssertionError: expected '_frame_f1ba10 _frameFill_f1ba10 _fram…' not to contain '_frameClip_f1ba10'
+
+Expected: "_frameClip_f1ba10"
+Received: "_frame_f1ba10 _frameFill_f1ba10 _frameClip_f1ba10"
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:48:34
+     46|     expect(c.containerClass).toContain(styles.frame)
+     47|     expect(c.containerClass).toContain(styles.frameFill)
+     48|     expect(c.containerClass).not.toContain(styles.frameClip)
+       |                                  ^
+     49|     expect(c.imageClass).toBe(styles.fitContain)
+     50|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts > Task 763 — appImageConfig CSS Module wiring > BLOCKED: listing.hoverClass is still the literal Tailwind string (documented, not an oversight)
+AssertionError: expected undefined to be 'group-hover:scale-105' // Object.is equality
+
+- Expected:
+"group-hover:scale-105"
+
++ Received:
+undefined
+
+ ❯ docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts:63:41
+     61|
+     62|   it('BLOCKED: listing.hoverClass is still the literal Tailwind string…
+     63|     expect(VARIANTS.listing.hoverClass).toBe('group-hover:scale-105')
+       |                                         ^
+     64|   })
+     65|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  3 failed | 139 passed (142)
+      Tests  4 failed | 2281 passed (2285)
+   Start at  23:55:30
+   Duration  250.40s (transform 2.97s, setup 8.82s, import 66.71s, tests 70.15s, environment 87.30s)
+
+
+EXIT_CODE=1

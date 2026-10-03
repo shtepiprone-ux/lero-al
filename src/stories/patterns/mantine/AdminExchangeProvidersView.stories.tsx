@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { AdminExchangeProvidersView } from '@/components/admin/AdminExchangeProvidersView'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { FIXTURE_PROVIDERS } from '@/stories/fixtures/admin.fixtures'
 import type { DBExchangeProvider } from '@/types/database'
 
@@ -13,9 +14,11 @@ import type { DBExchangeProvider } from '@/types/database'
 const meta: Meta<typeof AdminExchangeProvidersView> = {
   title: 'Patterns/Mantine/AdminExchangeProvidersView',
   component: AdminExchangeProvidersView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/currency' } },
     docs: {
       description: {
         component:
@@ -39,7 +42,7 @@ function ViewDemo({
   const [providers, setProviders] = useState(initialProviders)
   const [deleteTarget, setDeleteTarget] = useState<DBExchangeProvider | null>(initialDeleteTarget)
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width="page">
     <AdminExchangeProvidersView
       providers={providers}
       isPending={isPending}
@@ -54,7 +57,7 @@ function ViewDemo({
         setDeleteTarget(null)
       }}
     />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 

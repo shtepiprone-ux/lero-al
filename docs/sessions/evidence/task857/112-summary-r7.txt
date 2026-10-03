@@ -1,0 +1,17 @@
+112b-census-r7: 1
+112c-tests-r7: 1
+112d-typecheck-r7: 0
+112e-lint-r7: 0
+112f-story-coverage-r7: 0
+112g-rendered-scope-r7: 0
+112h-census-changed-r7: 0
+112i-design-tokens-r7: 0
+112j-enrolled-tailwind-r7: 0
+112k-i18n-r7: 0
+112l-type-responsive-r7: 0
+112m-file-integrity-r7: 0
+112n-mojibake-r7: 0
+112o-listing-visibility-r7: 0
+112t-pattern-enrolment-r7: 0
+112p-storybook-build-r7: 0
+112q-build-r7: 0

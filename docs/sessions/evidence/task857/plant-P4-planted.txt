@@ -1,0 +1,40 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1884ms
+     × is absent for a hidden (pending) listing 101ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  00:40:48
+   Duration  5.04s (transform 325ms, setup 76ms, import 2.30s, tests 1.88s, environment 653ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — Open public (T7) > is absent for a hidden (pending) listing
+AssertionError: expected <span …(2)></span> to be null
+
+- Expected:
+null
+
++ Received:
+<span
+  class="m_811560b9 mantine-Button-label"
+  style="white-space: normal; overflow: visible; word-break: normal; overflow-wrap: break-word;"
+>
+  Open public page
+</span>
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:324:51
+    322|     await openPreview(PENDING_LISTING.title)
+    323|     expect(screen.getByText(t.btn_view)).toBeTruthy()
+    324|     expect(screen.queryByText(t.btn_open_public)).toBeNull()
+       |                                                   ^
+    325|   })
+    326|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+exit=1

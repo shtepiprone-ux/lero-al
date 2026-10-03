@@ -1,0 +1,39 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1891ms
+     × 'visible' applies the canonical public-visibility chain (status active + unexpired) 7ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  00:40:35
+   Duration  5.15s (transform 331ms, setup 80ms, import 2.37s, tests 1.89s, environment 683ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — page.tsx visibility filter (T1) > 'visible' applies the canonical public-visibility chain (status active + unexpired)
+AssertionError: expected [] to deep equally contain [ 'eq', 'status', 'active' ]
+
+- Expected
++ Received
+
+- [
+-   "eq",
+-   "status",
+-   "active",
+- ]
++ []
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:179:19
+    177|     const { q, calls } = capture()
+    178|     applyAdminListingsVisibility(q, 'visible', '')
+    179|     expect(calls).toContainEqual(['eq', 'status', 'active'])
+       |                   ^
+    180|     expect(calls.some(c => c[0] === 'gte' && c[1] === 'expires_at')).t…
+    181|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+exit=1

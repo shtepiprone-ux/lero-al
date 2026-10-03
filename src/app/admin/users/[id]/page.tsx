@@ -6,13 +6,8 @@ import { getUser } from '@/lib/auth/server'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
 import { formatDate, formatDateTime } from '@/lib/formatters'
-import { Box } from '@mantine/core'
-import { theme } from '@/design-system/mantine/theme'
 import type { UserChangeLog, UserStatusHistory } from '@/types/database'
-
-// Server Component: the width token is read straight from the theme object (same precedent as
-// `src/app/admin/currency/page.tsx`); `!` because `createTheme()`'s return type is deep-partial.
-const layout = theme.other!.layout!
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -93,7 +88,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
     : null
 
   return (
-    <Box p={{ base: 'xl', lg: '2xl' }} maw={layout.adminPageMaxWidth} mx="auto">
+    <AdminPageFrame width="page">
       <AdminUserProfile
         user={user}
         email={email}
@@ -108,6 +103,6 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
         statusHistoryDates={statusHistoryDates}
         suspendedUntilFormatted={suspendedUntilFormatted}
       />
-    </Box>
+    </AdminPageFrame>
   )
 }

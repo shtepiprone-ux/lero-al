@@ -1,0 +1,10 @@
+
+> lero-al@0.1.0 check:listing-visibility
+> node scripts/check-listing-visibility.mjs
+
+ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables, and same-file arrow factories (call sites, their continuation lines, variables assigned from them). CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.
+✅ Listing public-visibility invariant gate PASSED — 0 violations.
+   Anchor VISIBILITY_POLICY_ANCHOR present in src/modules/listings/lib/visibility.ts.
+   Allowlist: 9 entries, 0 stale.
+   Scanned 811 files.
+exit=0

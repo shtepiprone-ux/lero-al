@@ -1,0 +1,38 @@
+/*
+ * Task 857 R47/R61 — `MantineNavRowList` row states. Tokens only: the hover background is the gray.0 theme colour.
+ * Keyboard focus is the canonical card focus of `input-chrome.css:305-309` (RadioCard): a 1px brand-7 border plus the
+ * 3px brand-5 10% ring, drawn inset here (1 + 3) because the list clips at its radius and a row has no border of its
+ * own. The border is what makes focus visible; the 10% halo alone is about 1.1:1 on gray-0. `[data-nav-row]` lifts the
+ * rules above Mantine's own unlayered `UnstyledButton` rules.
+ * Task 857 R65 / GR-3g — the list clips at its radius, so the first and last row take the list's `--paper-radius` on the
+ * corners they share with it. A square line there is cut by the clip; a curve of the ancestor's radius is not. The rule
+ * is state-independent, so focus, hover and any later line follow the curve; a one-row list matches both selectors.
+ */
+.list {
+  overflow: hidden;
+}
+
+.row[data-nav-row] {
+  display: block;
+  text-align: start;
+}
+
+.row[data-nav-row]:first-child {
+  border-top-left-radius: var(--paper-radius);
+  border-top-right-radius: var(--paper-radius);
+}
+
+.row[data-nav-row]:last-child {
+  border-bottom-left-radius: var(--paper-radius);
+  border-bottom-right-radius: var(--paper-radius);
+}
+
+.row[data-nav-row]:hover {
+  background-color: var(--mantine-color-gray-0);
+}
+
+.row[data-nav-row]:focus-visible {
+  outline: none;
+  background-color: var(--mantine-color-gray-0);
+  box-shadow: inset 0 0 0 1px var(--mantine-color-brand-7), inset 0 0 0 4px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 1px — focus border width, as input-chrome.css:305-309; no project token represents ring/border width */ /* design-tokens-allow: box-shadow: 4px — border (1px) plus ring (3px) drawn inset, as input-chrome.css:305-309; no project token represents ring/border width */
+}

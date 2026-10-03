@@ -1,0 +1,21 @@
+# R35 receipts (Revision 4) — every number is what 98-measurements-r4.json / 98c-gutters-r4.json show
+
+GR-3b STORY RESPONSIVE CHECK — agentstatisticsview--default: 320 document fits viewport · 390 document fits viewport · 1024 document fits viewport · 1440 document fits viewport; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — agentstatisticsview--default: 320 headings 20/20 body 14/12 · 390 headings 20/20 body 14/12 · 768 headings 24/20 body 14/12 · 1440 headings 24/20 body 14/12; ≥24px text without a responsive step: NONE (page title 20px at 320/390, 24px at 768/1440: breakpoint-keyed, MantineDashboardHeader); heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3d STORY GUTTER CHECK — agentstatisticsview--default: gutter n/a: own gutter (src/design-system/mantine/patterns/MantineDashboardGrid.tsx:56 px; Story unchanged since Revision 3); top/right/bottom/left (visible content boxes) 320 16/16/16/16 · 390 16/16/16/16 · 1024 24/24/24/24 · 1440 24/24/24/24; side at 0: NONE; doubled gutter: not asserted — values equal the component/profile values (agt 16 then 24; wrap 24 top, 16/16/32/32 left-right); gutter written in the Story: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — admintable--wrapped-title-column: 320 document fits viewport · 390 document fits viewport · 1024 document fits viewport · 1440 document fits viewport; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — admintable--wrapped-title-column: 320 headings — body 14/14 · 390 headings — body 14/14 · 768 headings — body 12/12 · 1440 headings — body 12/12; ≥24px text without a responsive step: NONE (no heading); heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3d STORY GUTTER CHECK — admintable--wrapped-title-column: gutter StoryPageGutter all (Story unchanged); top/right/bottom/left (visible content boxes) 320 24/16/327/16 · 390 24/16/367/16 · 1024 24/32/636/32 · 1440 24/32/636/32 (the bottom value is the distance from the short content to the viewport bottom, not the gutter; the profile's 24px bottom padding sits inside it); side at 0: NONE; doubled gutter: not asserted — values equal the component/profile values (agt 16 then 24; wrap 24 top, 16/16/32/32 left-right); gutter written in the Story: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — primitives/table--cards-below-lg: 320 document fits viewport · 390 document fits viewport · 1024 document fits viewport · 1440 document fits viewport; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — primitives/table--cards-below-lg: 320 headings — body 12/14 · 390 headings — body 12/14 · 768 headings — body 12/14 · 1440 headings — body 12/12; ≥24px text without a responsive step: NONE (no heading); heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3d STORY GUTTER CHECK — primitives/table--cards-below-lg: gutter n/a: MantineStoryShell primitive (known exception); top/right/bottom/left (visible content boxes) 320 16/16/16/16 · 390 16/16/16/16 · 1024 49/49/610/49 · 1440 49/49/610/49; side at 0: NONE; doubled gutter: not asserted — the shell is the known exception (1024/1440 left-right 49); gutter written in the Story: NONE.
+
+TABLE FIT CHECK — agentstatisticsview--default: 1024 card en 934, it 934, sq 934, uk 934 · 1280 en 1190, it 1190, sq 1190, uk 1190 · 1440 en 1350, it 1350, sq 1350, uk 1350; table scrollWidth ≤ clientWidth in every cell (scroll: NONE); clipped: NONE; first/last inset 24/24 (card border excluded); card width = production (934/1190/1350): yes; headers in all four locales: title · status · dates · counts · actions. Below 1024 the table is hidden and 10 cards render (390 and 768, sq/uk).

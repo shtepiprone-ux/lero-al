@@ -82,6 +82,7 @@ Result: 72 failing cells in 15 Story files; 46 cells were overlay-only or empty,
 | **R5** | Task 815 precedent | `--verify-gate` builds its own small HTML fixtures (no Storybook): (a) content with a 0px top gap → fails; (b) 16px on all four sides → passes; (c) 0px right at 320 only → fails; (d) an overlay-only page → `n/a`, passes; (e) an AppShell-main page with 0px top inside main → fails. Each arm asserts the expected exit status and the failing side, and exits 1 if any arm misbehaves. | P0 | AC3 | Confirmed |
 | **R6** | CI | `package.json`: `check:story-gutters` and `check:story-gutters:verify`. `governance-pr.yml`: two blocking steps right after the card-track steps (`:221-226`). | P0 | AC4 | Confirmed |
 | **R7** | GR-3d | Every story the gate fails on day one is fixed, by the GR-3d table: a side the real page also lacks is fixed in the **component** (stop and report it if the component is not a page container or the fix is not a theme key already used by that component); a side only the Story lacks gets `StoryPageGutter` (all, or `sides="x"`/`"y"` when the content has its own gutter on the other axis); a Story-written gutter is removed. The gate then exits 0. | P0 | AC5 | Confirmed |
+| **R9** | owner D87-2 (2026-10-03) | `src/stories/mantine/_MantineStoryShell.tsx:86`: the inner `Box` loses `bd` at every width (today `bd={{ base: 'none', md: '1px solid var(--mantine-color-gray-2)' }}`). `bg`, `bdrs`, `px` and `py` stay unchanged. Re-run `npm run check:card-track-monotonicity` and its verify arm: both exit 0, or report the delta the border removal caused (2px of content width from 768). Owner tuple: `Mantine/Primitives/Table` `Default`, sq, 768 and 1440 — only the table card's own border, no outer frame. | P1 | AC7 | Confirmed |
 | **R8** | GR-5 | `docs/golden-rules.md` → Enforcement status, GR-3d row, names `check:story-gutters` (blocking, Task 909); the GR-3d "Automated gate" line reads "Task 909 (landed)". | P1 | AC6 | Confirmed |
 
 ## 5. Assumptions and open questions
@@ -116,8 +117,8 @@ Result: 72 failing cells in 15 Story files; 46 cells were overlay-only or empty,
 
 ## 8. Out of scope
 
-- `_MantineStoryShell.tsx`'s values: measured, not changed (GR-3d known exception). If a primitive fails, report it;
-  do not change the shell.
+- `_MantineStoryShell.tsx`'s padding, background and radius: measured, not changed (GR-3d known exception). If a
+  primitive fails, report it; do not change them. The one shell change is R9 (its border, D87-2).
 - Non-canonical (legacy) Stories: owner rule 2026-09-17, legacy Stories are excluded from tests. The gate prints the
   exclusion.
 - Detecting doubled gutters automatically.
@@ -222,3 +223,19 @@ mutating git. Update the 909 line of `docs/backlog.md`, and write the session lo
 `GR-0 CANONICAL REUSE PREFLIGHT — request: a Story gutter on one axis; semantic queries: "StoryPageGutter", "gutter", "MantineStoryShell", "px=", "py="; inspected candidates: src/stories/_StoryPageGutter.tsx, src/stories/mantine/_MantineStoryShell.tsx; decision: EXTEND; selected canonical owner: StoryPageGutter; Mantine/TailAdmin token path: the profile's existing px ladder and py="xl"; new hardcoded visual values: NONE; rationale: GR-3d allows one profile; an axis selector reuses its values and adds none.`
 
 `GR-3a STORY PREFLIGHT — no Story is created; R7 edits existing Stories in place; decision: REUSE/EXTEND per story; target: the failing Story IDs in §3.1.`
+
+---
+
+## 16. Amendment, 2026-10-03 (owner D87-2, from Task 857 review 14)
+
+R9 is added (§4). Owner, verbatim, on `Primitives/Table` at 767→768: *"не розумію куди дівається бордер таблиці починаючи від
+767px?"*. Measured by Opus (`docs/sessions/evidence/task857/152-opus-table-border.json`): the table card's border is
+constant; the Storybook shell's own `bd` appears from 768.
+
+- **Decision:** *"Remove its border, in 909 (Recommended)"*.
+- **AC7 [R9]:**
+  - `_MantineStoryShell.tsx` has no `bd`.
+  - At 767, 768 and 1440, `Primitives/Table` `Default` shows exactly one border, the table card's.
+  - `check:card-track-monotonicity` and `:verify` exit 0.
+  - **Owner matrix:** `Mantine/Primitives/Table` `Default`, sq, at 768 and 1440.
+- **Write set:** add `src/stories/mantine/_MantineStoryShell.tsx` (R9 only).

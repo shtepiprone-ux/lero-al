@@ -1,0 +1,495 @@
+{
+  "platform": "win32 v22.22.3",
+  "dpr": 1,
+  "cases": [
+    {
+      "label": "NavRowList Default 1440",
+      "story": "patterns-mantine-navrowlist--default",
+      "width": 1440,
+      "rowCount": 3,
+      "list": {
+        "radius": "6px",
+        "border": "1px",
+        "overflow": "hidden",
+        "paperRadiusVar": "0.375rem"
+      },
+      "rows": [
+        {
+          "tl": "6px",
+          "tr": "6px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "6px",
+          "br": "6px"
+        }
+      ],
+      "focus": [
+        {
+          "row": 1,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 2,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 3,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        }
+      ],
+      "hover": {
+        "boxShadow": "none",
+        "bg": "rgb(249, 250, 251)"
+      },
+      "click": {
+        "isRow": true,
+        "focusVisible": false,
+        "boxShadow": "none"
+      }
+    },
+    {
+      "label": "ListingPreviewDialogView Active 1440",
+      "story": "patterns-mantine-listingpreviewdialogview--active",
+      "width": 1440,
+      "rowCount": 3,
+      "list": {
+        "radius": "6px",
+        "border": "1px",
+        "overflow": "hidden",
+        "paperRadiusVar": "0.375rem"
+      },
+      "rows": [
+        {
+          "tl": "6px",
+          "tr": "6px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "6px",
+          "br": "6px"
+        }
+      ],
+      "focus": [
+        {
+          "row": 1,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 2,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 3,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        }
+      ],
+      "hover": {
+        "boxShadow": "none",
+        "bg": "rgb(249, 250, 251)"
+      },
+      "click": {
+        "isRow": true,
+        "focusVisible": false,
+        "boxShadow": "none"
+      }
+    },
+    {
+      "label": "ListingPreviewDialogView Active 390",
+      "story": "patterns-mantine-listingpreviewdialogview--active",
+      "width": 390,
+      "rowCount": 3,
+      "list": {
+        "radius": "6px",
+        "border": "1px",
+        "overflow": "hidden",
+        "paperRadiusVar": "0.375rem"
+      },
+      "rows": [
+        {
+          "tl": "6px",
+          "tr": "6px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "0px",
+          "br": "0px"
+        },
+        {
+          "tl": "0px",
+          "tr": "0px",
+          "bl": "6px",
+          "br": "6px"
+        }
+      ],
+      "focus": [
+        {
+          "row": 1,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 2,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        },
+        {
+          "row": 3,
+          "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+          "brand7": true,
+          "sides": {
+            "left": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "right": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "top": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            },
+            "bottom": {
+              "rgb": [
+                236,
+                84,
+                71
+              ],
+              "contrast": 3.39
+            }
+          },
+          "minContrast": 3.39
+        }
+      ],
+      "hover": {
+        "boxShadow": "none",
+        "bg": "rgb(249, 250, 251)"
+      },
+      "click": {
+        "isRow": true,
+        "focusVisible": false,
+        "boxShadow": "none"
+      }
+    }
+  ]
+}

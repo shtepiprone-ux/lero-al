@@ -1,0 +1,110 @@
+[
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 320,
+  "n": 201,
+  "left": 16,
+  "right": 16,
+  "top": 16,
+  "bottom": 16
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 390,
+  "n": 201,
+  "left": 16,
+  "right": 16,
+  "top": 16,
+  "bottom": 16
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1024,
+  "n": 138,
+  "left": 24,
+  "right": 24,
+  "top": 24,
+  "bottom": 24
+ },
+ {
+  "id": "patterns-mantine-agentstatisticsview--default",
+  "w": 1440,
+  "n": 138,
+  "left": 24,
+  "right": 24,
+  "top": 24,
+  "bottom": 24
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 320,
+  "n": 15,
+  "left": 16,
+  "right": 16,
+  "top": 24,
+  "bottom": 327
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 390,
+  "n": 15,
+  "left": 16,
+  "right": 16,
+  "top": 24,
+  "bottom": 367
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 1024,
+  "n": 11,
+  "left": 32,
+  "right": 32,
+  "top": 24,
+  "bottom": 636
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 1440,
+  "n": 11,
+  "left": 32,
+  "right": 32,
+  "top": 24,
+  "bottom": 636
+ },
+ {
+  "id": "mantine-primitives-table--cards-below-lg",
+  "w": 320,
+  "n": 36,
+  "left": 16,
+  "right": 16,
+  "top": 16,
+  "bottom": 16
+ },
+ {
+  "id": "mantine-primitives-table--cards-below-lg",
+  "w": 390,
+  "n": 36,
+  "left": 16,
+  "right": 16,
+  "top": 16,
+  "bottom": 16
+ },
+ {
+  "id": "mantine-primitives-table--cards-below-lg",
+  "w": 1024,
+  "n": 14,
+  "left": 49,
+  "right": 49,
+  "top": 49,
+  "bottom": 610
+ },
+ {
+  "id": "mantine-primitives-table--cards-below-lg",
+  "w": 1440,
+  "n": 14,
+  "left": 49,
+  "right": 49,
+  "top": 49,
+  "bottom": 610
+ }
+]

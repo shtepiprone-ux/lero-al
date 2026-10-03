@@ -1,0 +1,90 @@
+check:surface-census — per-surface GR-1 census (Task 817)
+    Surface: src/app/admin/listings/page.tsx
+    Nodes visited: 16
+    Local import edges resolved (from tier-1 nodes): 52
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 30
+    Tier-3 nodes excluded from recursion, owner-filed (0): none
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 0
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    className is counted as JsxAttribute nodes named "className" via the TypeScript AST (whole file).
+    ui-imports is counted as RENDERED, non-type-only import bindings in that node's own file resolving
+    under src/components/ui/* (a co-located .module.css or hook sibling is never a rendered JSX tag).
+    story:yes means a canonical Mantine story imports the node directly OR through a single-hop index.ts(x)
+    barrel re-export (same resolution the render-side walk uses) — never merely its parent (GR-3).
+    Nodes whose source could not be parsed (unreadable, or real TypeScript parse errors): 0
+    Cannot see: dynamic import(), React.lazy(), and components rendered only from a .stories.tsx file.
+    Task 831 R11: a .ts root is not a component; a .ts module that renders through createElement or
+    re-exports a component under a non-barrel name is not walked.
+    Canonical Mantine story files consulted: 149 (of 180 total *.stories.ts(x)).
+
+NODES (16):
+    src/app/admin/listings/page.tsx  tier:tier1  manifest:no  story:no  className:0  ui-imports:0  parent:(root surface)
+    src/components/admin/AdminListingsTable.tsx  tier:tier1  manifest:no  story:no  className:93  ui-imports:8  parent:src/app/admin/listings/page.tsx
+    src/components/admin/AdminInput.tsx  tier:tier1  manifest:no  story:no  className:1  ui-imports:1  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/admin/AdminPageShell.tsx  tier:tier1  manifest:no  story:no  className:10  ui-imports:1  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/admin/AdminSearchInput.tsx  tier:tier1  manifest:no  story:no  className:3  ui-imports:1  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/admin/AdminTable.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/shared/Combobox.tsx  tier:tier1  manifest:no  story:no  className:21  ui-imports:0  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/shared/RelativeTime.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/ui/button.tsx  tier:tier2  manifest:no  story:no  className:1  ui-imports:0  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/ui/dialog.tsx  tier:tier2  manifest:no  story:no  className:11  ui-imports:1  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/ui/label.tsx  tier:tier2  manifest:no  story:no  className:1  ui-imports:0  parent:src/components/admin/AdminListingsTable.tsx
+    src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminPageShell.tsx
+    src/components/ui/input.tsx  tier:tier2  manifest:no  story:no  className:1  ui-imports:0  parent:src/components/admin/AdminInput.tsx
+    src/design-system/mantine/patterns/MantineDataTableToCards.tsx  tier:tier1  manifest:yes  story:yes  className:3  ui-imports:0  parent:src/components/admin/AdminTable.tsx
+    src/design-system/mantine/patterns/MantineTooltip.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/components/shared/RelativeTime.tsx
+    src/design-system/mantine/patterns/responsiveBottomSheet.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/design-system/mantine/patterns/MantineTooltip.tsx
+
+node.exe : FAIL  src/app/admin/listings/page.tsx  [tier1-unenrolled-or-unstoried]
+At line:5 char:1
++ node.exe scripts\check-surface-census.mjs --surface src\app\admin\lis ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  src/app/a...d-or-unstoried]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/admin/AdminListingsTable.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/admin/AdminInput.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/admin/AdminPageShell.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/admin/AdminSearchInput.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/shared/Combobox.tsx  [tier1-unenrolled-or-unstoried]
+  Fix: Migrate this component, give it its own canonical Mantine Story, and add it to 
+scripts/mantine-migration-scope.json — or, if it is a tier-3 shared component owned by another surface, add it to 
+scripts/rendered-scope-allowlist.json with a reason and an owning task number.
+FAIL  src/components/ui/button.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+FAIL  src/components/ui/dialog.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+FAIL  src/components/ui/label.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+FAIL  src/components/ui/input.tsx  [tier2-legacy-primitive]
+  Fix: Stop importing this legacy @/components/ui/* primitive from the enrolled surface (agent-contract 16d tier 2). 
+Migrating the primitive file itself is a separate, repo-wide task.
+
+GR-1 CENSUS BLOCKED — src/app/admin/listings/page.tsx, src/components/admin/AdminListingsTable.tsx, 
+src/components/admin/AdminInput.tsx, src/components/admin/AdminPageShell.tsx, 
+src/components/admin/AdminSearchInput.tsx, src/components/shared/Combobox.tsx, src/components/ui/button.tsx, 
+src/components/ui/dialog.tsx, src/components/ui/label.tsx, src/components/ui/badge.tsx, src/components/ui/input.tsx
+
+Docs: docs/golden-rules.md GR-1, docs/agent-contract.md 16d.
+exit=1

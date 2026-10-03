@@ -1,0 +1,74 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1941ms
+     × choosing Visible pushes visibility=visible&page=1 and keeps q 292ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 passed (13)
+   Start at  00:40:42
+   Duration  5.15s (transform 332ms, setup 78ms, import 2.33s, tests 1.94s, environment 667ms)
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+AssertionError: expected '/admin/listings?q=villa&page=3&visibi…' to contain 'page=1'
+
+Expected: "page=1"
+Received: "/admin/listings?q=villa&page=3&visibility=visible"
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:207:17
+    205|     const url = String(mockPush.mock.calls[0][0])
+    206|     expect(url).toContain('visibility=visible')
+    207|     expect(url).toContain('page=1')
+       |                 ^
+    208|     expect(url).not.toContain('page=3')
+    209|     expect(url).toContain('q=villa')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+exit=1

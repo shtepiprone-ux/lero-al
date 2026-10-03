@@ -1,0 +1,65 @@
+=== RED (script unchanged, 2 new arms) ===
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts (157 tests | 1 failed) 46ms
+     × does NOT flag var(--paper-radius) — Mantine Paper.css exact-name external (Task 857 R68, GR-3g) 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/__tests__/check-design-tokens.test.ts > §H — undefined CSS custom-property reference coverage (Task 718, R4) > does NOT flag var(--paper-radius) — Mantine Paper.css exact-name external (Task 857 R68, GR-3g)
+AssertionError: expected [ { …(6) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/__tests__/check-design-tokens.test.ts:579:22
+    577|       {}
+    578|     ).filter(f => f.cat === 'css-undefined-var')
+    579|     expect(findings).toHaveLength(0)
+       |                      ^
+    580|   })
+    581|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 156 passed (157)
+   Start at  16:42:46
+   Duration  4.50s (transform 125ms, setup 2.23s, import 122ms, tests 46ms, environment 0ms)
+
+EXIT_CODE=1
+
+=== GREEN (after script edit) ===
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  157 passed (157)
+   Start at  16:43:00
+   Duration  365ms (transform 106ms, setup 90ms, import 109ms, tests 36ms, environment 0ms)
+
+EXIT_CODE=0
+
+=== GATE npm run check:design-tokens ===
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 542 production src/**/*.{tsx,ts,css} files
+    + 157 canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+
+✅  check:design-tokens — 0 violations found.
+EXIT_CODE=0

@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Badge, Group, ScrollArea, Stack, Tabs, Text } from '@mantine/core'
+import { Badge, Group, ScrollArea, Stack, Tabs, Text, useMantineTheme } from '@mantine/core'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { REPORT_STATUS_COLOR } from '@/components/admin/ReportDetailDialogView'
 import { RelativeTime } from '@/components/shared/RelativeTime'
@@ -21,12 +21,13 @@ export interface AdminReportsViewProps {
 /**
  * Presentational View of the `/admin/reports` list (Task 858, Container/Presentational split of
  * `AdminReportsManager`). `useTranslations` only: no state, no navigation, no server action. Status tabs
- * are Mantine `Tabs` with a count `Badge`; the list is the shared `AdminTable` adapter (table from 640px,
+ * are Mantine `Tabs` with a count `Badge`; the list is the shared `AdminTable` adapter (table from 768px,
  * cards below). The detail dialog is the separate `ReportDetailDialogView`.
  */
 export function AdminReportsView({ reports, filter, counts, onFilterChange, onSelect }: AdminReportsViewProps) {
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
+  const theme = useMantineTheme()
 
   function statusBadge(r: ReportRow) {
     return (
@@ -48,21 +49,27 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
     {
       key: 'listing',
       header: t('col_listing'),
-      visibility: 'md',
-      cell: r => <Text size="sm" c="dimmed" lineClamp={1}>{r.listing?.title ?? '—'}</Text>,
+      // §7.3 (a)/(b): the listing title wraps at the table-title token width, clamped to two lines;
+      // the reporter is its dimmed meta line.
+      width: theme.other.layout.tableTitleColumnWidth,
+      wrap: true,
+      cell: r => (
+        <Stack gap="micro">
+          <Text size="sm" c="dimmed" lineClamp={2}>{r.listing?.title ?? '—'}</Text>
+          <Text size="xs" c="dimmed" lineClamp={1}>{reporterLabel(r)}</Text>
+        </Stack>
+      ),
     },
     {
-      key: 'reporter',
-      header: t('col_reporter'),
-      visibility: 'lg',
-      cell: r => <Text size="sm" c="dimmed">{reporterLabel(r)}</Text>,
-    },
-    { key: 'status', header: t('col_status'), cell: statusBadge },
-    {
-      key: 'date',
-      header: t('col_date'),
-      visibility: 'sm',
-      cell: r => <RelativeTime date={r.created_at} />,
+      key: 'status',
+      header: t('col_status'),
+      // §7.3 (b): status and date stacked in one cell.
+      cell: r => (
+        <Stack gap="tight" align="flex-start">
+          {statusBadge(r)}
+          <Text size="xs" c="dimmed" component="div"><RelativeTime date={r.created_at} /></Text>
+        </Stack>
+      ),
     },
   ]
 

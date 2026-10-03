@@ -1,0 +1,38 @@
+[
+  {
+    "loc": "sq",
+    "before": "Aktiv",
+    "items": [
+      "Aktiv",
+      "Nën shqyrtim",
+      "Joaktiv",
+      "Shitur",
+      "Dhënë me qira",
+      "Arkivuar",
+      "Skaduar"
+    ],
+    "after": "Shitur",
+    "toast": [
+      "Statusi u përditësua"
+    ],
+    "openDrawers": 1
+  },
+  {
+    "loc": "uk",
+    "before": "Активне",
+    "items": [
+      "Активне",
+      "На модерації",
+      "Неактивне",
+      "Продано",
+      "Орендовано",
+      "Архів",
+      "Прострочене"
+    ],
+    "after": "Продано",
+    "toast": [
+      "Статус оновлено"
+    ],
+    "openDrawers": 1
+  }
+]

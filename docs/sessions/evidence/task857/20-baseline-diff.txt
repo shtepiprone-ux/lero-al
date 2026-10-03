@@ -1,0 +1,43 @@
+diff --git a/scripts/surface-census-baseline.json b/scripts/surface-census-baseline.json
+index f74253a49..2d14605fb 100644
+--- a/scripts/surface-census-baseline.json
++++ b/scripts/surface-census-baseline.json
+@@ -397,36 +397,15 @@
+     "src/app/admin/listings/page.tsx :: src/app/admin/listings/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/admin/AdminInput.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+     "src/app/admin/listings/page.tsx :: src/components/admin/AdminListingsTable.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/admin/AdminPageShell.tsx :: tier1-unenrolled-or-unstoried": {
+-      "reasonCode": "tier1-unenrolled-or-unstoried"
+-    },
+-    "src/app/admin/listings/page.tsx :: src/components/admin/AdminSearchInput.tsx :: tier1-unenrolled-or-unstoried": {
++    "src/app/admin/listings/page.tsx :: src/components/admin/ListingPreviewDialog.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/shared/Combobox.tsx :: tier1-unenrolled-or-unstoried": {
++    "src/app/admin/listings/page.tsx :: src/components/admin/PremiumDialog.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/badge.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/button.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/dialog.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/input.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+-    "src/app/admin/listings/page.tsx :: src/components/ui/label.tsx :: tier2-legacy-primitive": {
+-      "reasonCode": "tier2-legacy-primitive"
+-    },
+     "src/app/admin/locations/page.tsx :: src/app/admin/locations/page.tsx :: tier1-unenrolled-or-unstoried": {
+       "reasonCode": "tier1-unenrolled-or-unstoried"
+     },

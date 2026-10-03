@@ -570,6 +570,25 @@ describe('§H — undefined CSS custom-property reference coverage (Task 718, R4
     expect(findings).toHaveLength(0)
   })
 
+  it('does NOT flag var(--paper-radius) — Mantine Paper.css exact-name external (Task 857 R68, GR-3g)', () => {
+    const findings = scanContent(
+      '.x { border-radius: var(--paper-radius); }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('DOES flag var(--paper-radiusx) — --paper-radius is an exact name, not a prefix (Task 857 R68 control)', () => {
+    const findings = scanContent(
+      '.x { border-radius: var(--paper-radiusx); }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--paper-radiusx)')
+  })
+
   it('does NOT flag a var() reference inside a CSS comment (R4/AC4 branch: in-comment, A3)', () => {
     const findings = scanContent(
       '.x {\n  /* color: var(--totally-phantom-token); */\n  color: red;\n}',

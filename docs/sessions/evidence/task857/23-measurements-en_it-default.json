@@ -1,0 +1,458 @@
+[
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "en",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "en",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "en",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-231@99",
+   "243-455@99",
+   "467-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "en",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-479@99",
+   "491-703@99",
+   "715-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "en",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-895@99",
+   "907-1119@99",
+   "1131-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "it",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-304@94",
+   "16-304@150",
+   "16-304@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "it",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "16-374@94",
+   "16-374@150",
+   "16-374@206"
+  ],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0,
+  "parentPad": "24/16/24/16"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "it",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "24-164@99",
+   "176-388@99",
+   "400-744@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/24/24/24"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "it",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-412@99",
+   "424-636@99",
+   "648-992@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "it",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": true,
+  "filterBar": [
+   "32-828@99",
+   "840-1052@99",
+   "1064-1408@94"
+  ],
+  "filterStackedBelow640": false,
+  "listVisibleRows": 6,
+  "parentPad": "24/32/24/32"
+ }
+]

@@ -1,0 +1,157 @@
+PLANT T4-dialog (Revision 9, R64): remove setPreviewListing(...) from onStatusChanged in AdminListingsTable.tsx
+BEFORE c12a3b26be26c4260433a852d194539ee0141096
+PLANTED c.f. hash 80e1bb398f1905bf48e721450b86ae69d58cab1c
+AFTER-RESTORE c12a3b26be26c4260433a852d194539ee0141096
+--- vitest output with the plant applied ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge
+The current testing environment is not configured to support act(...)
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (18 tests | 1 failed) 3816ms
+     × choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge 1389ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge
+AssertionError: expected 'Active' to be 'Sold' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mdata-scroll-locked[39m=[32m"1"[39m
+  [36m>[39m
+    [36m<div>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_9df02822 mantine-Modal-root"[39m
+          [33mdata-centered[39m=[32m"true"[39m
+          [33mdata-size[39m=[32m"lg"[39m
+          [33mstyle[39m=[32m"--modal-size: var(--modal-size-lg); --modal-y-offset: 5dvh; --mb-z-index: 200;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mantine-Modal-overlay m_9814e45f mantine-Overlay-root"[39m
+            [33mdata-fixed[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"--overlay-z-index: 200;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_60c222c7 m_1f958f16 mantine-Modal-inner"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33maria-describedby[39m=[32m"mantine-06zcn7k8r-body"[39m
+              [33maria-labelledby[39m=[32m"mantine-06zcn7k8r-title"[39m
+              [33maria-modal[39m=[32m"true"[39m
+              [33mclass[39m=[32m"m_fd1ab0aa m_54c44539 mantine-Modal-content m_1b7284a3 mantine-Paper-root"[39m
+              [33mdata-modal-content[39m=[32m"true"[39m
+              [33mrole[39m=[32m"dialog"[39m
+              [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl);"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+            [36m>[39m
+              [36m<header[39m
+                [33mclass[39m=[32m"m_b5489c3c m_d0e2b9cd mantine-Modal-header"[39m
+                [33mstyle[39m=[32m"padding: 0rem;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                  [33mstyle[39m=[32m"--stack-gap: 0rem; --stack-align: stretch; --stack-justify: flex-start; width: 100%;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                    [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; --group-justify: space-between; --group-wrap: nowrap; padding: var(--mb-padding, var(--mantine-spacing-md));"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: flex-start; --group-justify: flex-start; --group-wrap: nowrap; min-width: 0rem; flex: 1 1 0%;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-tight); --stack-align: stretch; --stack-justify: flex-start; min-width: 0rem; flex: 1 1 0%;"[39m
+                      [36m>[39m
+                        [36m<h2[39m
+                          [33mclass[39m=[32m"m_615af6c9 mantine-Modal-title"[39m
+                          [33mid[39m=[32m"mantine-06zcn7k8r-title"[39m
+                        [36m>[39m
+                          [36m<span[39m
+                            [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                            [33mdata-line-clamp[39m=[32m"true"[39m
+                            [33mstyle[39m=[32m"--text-line-clamp: 2; font-size: var(--mantine-font-size-lg); font-weight: 600;"[39m
+                          [36m>[39m
+                            [0mSunny apartment in the centre[0m
+                          [36m</span>[39m
+                        [36m</h2>[39m
+                        [36m<p[39m
+                          [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                          [33mdata-line-clamp[39m=[32m"true"[39m
+                          [33mstyle[39m=[32m"--text-line-clamp: 2; color: var(--mantine-color-dimmed); font-size: var(--mantine-font-size-sm);"[39m
+                        [36m>[39m
+                          [0mFor sale · apartment[0m
+                        [36m</p>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                    [36m<button[39m
+                      [33maria-label[39m=[32m"Close"[39m
+                      [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"[39m
+                      [33mdata-size[39m=[32m"input-sm"[39m
+                      [33mdata-variant[39m=[32m"light"[39m
+                      [33mstyle[39m=[32m"--ai-size: var(--ai-size-input-sm); --ai-radius: var(--mantine-radius-pill); --ai-bg: var(--mantine-color-gray-light); --ai-hover: var(--mantine-color-gray-light-hover); --ai-color: var(--mantine-color-gray-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [36m<span[39m
+                        [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+                      [36m>[39m
+                        [36m<svg[39m
+                          [33maria-hidden[39m=[32m"true"[39m
+                          [33mclass[39m=[32m"lucide lucide-x"[39m
+                          [33mfill[39m=[32m"none"[39m
+                          [33mheight[39m=[32m"16"[39m
+                          [33mstroke[39m=[32m"currentColor"[39m
+                          [33mstroke-linecap[39m=[32m"round"[39m
+                          [33mstroke-linejoin[39m=[32m"round"[39m
+                          [33mstroke-width[39m=[32m"2"[39m
+                          [33mviewBox[39m=[32m"0 0 24 24"[39m
+                          [33mwidth[39m=[32m"16"[39m
+                          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                        [36m>[39m
+                          [36m<path[39m
+                            [33md[39m=[32m"M18 6 6 18"[39m
+                          [36m/>[39m
+                          [36m<path[39m
+                            [33md[39m=[32m"m6 6 12 12"[39m
+                          [36m/>[39m
+                        [36m</svg>[39m
+                      [36m</span>[39m
+                    [36m</button>[39m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+                    [33mdata-orientation[39m=[32m"horizontal"[39m
+                    [33mrole[39m=[32m"separator"[39m
+                    [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gra...
+
+Expected: "Sold"
+Received: "Active"
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:345:52
+    343|     // `previewListing.status` (a parent that skips this leaves the se…
+    344|     const dialogSelect = within(screen.getByRole('dialog')).getByRole(…
+    345|     await waitFor(() => expect(dialogSelect.value).toBe(soldLabel))
+       |                                                    ^
+    346|   })
+    347|
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  00:36:47
+   Duration  8.03s (transform 696ms, setup 85ms, import 3.22s, tests 3.82s, environment 756ms)
+
+VITEST_EXIT=1

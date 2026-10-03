@@ -14,11 +14,15 @@ export type AdminTableColumn<Row> = {
   header: ReactNode
   cell: (row: Row) => ReactNode
   /** Desktop-table breakpoint from which the column is shown; `'always'` (default) shows it everywhere. */
-  visibility?: 'always' | 'sm' | 'md' | 'lg' | 'xl'
+  visibility?: 'always' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   align?: 'left' | 'right' | 'center'
+  /** Desktop-table column width (e.g. `theme.other.layout.tableTitleColumnWidth`; a percentage width is forbidden, §7.3 rule 6), forwarded unchanged to `TableColumn.width` (Task 857 R15). */
+  width?: string | number
+  /** `true` lets the cell content wrap (e.g. a clamped title) instead of the table's `nowrap`; forwarded to `TableColumn.wrap` (Task 857 R15). */
+  wrap?: boolean
   /**
    * @deprecated Accepted only so the two consumers that still pass a width utility typecheck; NOT
-   * forwarded (Task 877 §5 item 3). Widths belong to `TableColumn.width` in each manager's migration.
+   * forwarded (Task 877 §5 item 3). Use `width` / `wrap` instead.
    */
   className?: string
 }
@@ -54,13 +58,13 @@ function visibleFrom(visibility: AdminTableColumn<unknown>['visibility']): Manti
 
 /**
  * Shared admin data list (Task 877, D78-8): a thin adapter over the canonical `MantineDataTableToCards`
- * pattern — cards below 640px, the TailAdmin §6b table above. It keeps the legacy `AdminTable` props
+ * pattern — cards below 768px (`cardsBelow="md"`, §7.3 rule 2; Task 857 R20), the TailAdmin §6b table above. It keeps the legacy `AdminTable` props
  * (minus the sorting/hiding/loading/error ones no production consumer ever passed) so the five admin
  * managers that render it change with the pattern and need no edit.
  *
  * Without `cardRow` the card is synthesized: the sticky column is the title, the first two always-visible
- * columns the subtitle, the rest the detail row. Column `className` is not forwarded (widths belong to
- * `TableColumn.width` in each manager's own migration).
+ * columns the subtitle, the rest the detail row. Column `className` is not forwarded; `width` and `wrap`
+ * are (Task 857 R15), and omitted they leave today's output unchanged.
  */
 export function AdminTable<Row>({
   rows,
@@ -109,6 +113,8 @@ export function AdminTable<Row>({
     key: col.key,
     label: col.header,
     align: col.align,
+    width: col.width,
+    wrap: col.wrap,
     visibleFrom: visibleFrom(col.visibility),
     render: w => col.cell(w.row),
   }))
@@ -130,6 +136,7 @@ export function AdminTable<Row>({
         card={card}
         onRowClick={onRowClick ? w => onRowClick(w.row) : undefined}
         stickyColumnIndex={stickyColumnIndex}
+        cardsBelow="md"
         ariaLabel={ariaLabel}
       />
     </div>

@@ -1,0 +1,53 @@
+{
+  "hover": {
+    "boxShadow": "none",
+    "bg": "rgb(249, 250, 251)"
+  },
+  "keyboard": {
+    "isRow": true,
+    "focusVisible": true,
+    "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+    "bg": "rgb(249, 250, 251)"
+  },
+  "brand7InShadow": true,
+  "sides": {
+    "left": {
+      "rgb": [
+        236,
+        84,
+        71
+      ],
+      "contrastVsGray0": 3.39
+    },
+    "right": {
+      "rgb": [
+        236,
+        84,
+        71
+      ],
+      "contrastVsGray0": 3.39
+    },
+    "top": {
+      "rgb": [
+        236,
+        84,
+        71
+      ],
+      "contrastVsGray0": 3.39
+    },
+    "bottom": {
+      "rgb": [
+        236,
+        84,
+        71
+      ],
+      "contrastVsGray0": 3.39
+    }
+  },
+  "minContrast": 3.39,
+  "mouse": {
+    "isRow": true,
+    "focusVisible": false,
+    "boxShadow": "none"
+  }
+}

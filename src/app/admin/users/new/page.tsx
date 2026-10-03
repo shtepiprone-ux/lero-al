@@ -3,14 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
-import { Box } from '@mantine/core'
-import { theme } from '@/design-system/mantine/theme'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 
 export const metadata = { title: 'Новий користувач — Admin' }
-
-// Server Component: the width token is read straight from the theme object (same precedent as
-// `src/app/admin/currency/page.tsx`); `!` because `createTheme()`'s return type is deep-partial.
-const layout = theme.other!.layout!
 
 export default async function AdminUserNewPage() {
   const db = createAdminClient()
@@ -33,7 +28,7 @@ export default async function AdminUserNewPage() {
   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
 
   return (
-    <Box p={{ base: 'xl', lg: '2xl' }} maw={layout.adminPageFormMaxWidth} mx="auto">
+    <AdminPageFrame width="form">
       <AdminUserProfile
         user={null}
         email=""
@@ -44,6 +39,6 @@ export default async function AdminUserNewPage() {
         isAdmin={isAdmin}
         canClearHistory={canClearHistory}
       />
-    </Box>
+    </AdminPageFrame>
   )
 }

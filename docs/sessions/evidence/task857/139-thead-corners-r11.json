@@ -1,0 +1,95 @@
+{
+  "patterns-mantine-admintable--default": {
+    "paper": {
+      "radius": "16px",
+      "borderTop": "1px solid rgb(208, 213, 221)",
+      "borderBottom": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)",
+      "collapse": "separate",
+      "overflow": "hidden"
+    },
+    "thead": {
+      "radius": "0px",
+      "borderTop": "0px solid oklch(0.922 0 0)",
+      "borderBottom": "1px solid rgb(242, 244, 247)",
+      "bg": "rgb(249, 250, 251)",
+      "collapse": "collapse",
+      "overflow": "visible"
+    },
+    "paperRect": [
+      32,
+      24,
+      1408,
+      215
+    ],
+    "theadRect": [
+      33,
+      25,
+      1407,
+      67.5
+    ],
+    "theadFlushWithCardTop": true
+  },
+  "patterns-mantine-adminlistingsview--default": {
+    "paper": {
+      "radius": "16px",
+      "borderTop": "1px solid rgb(208, 213, 221)",
+      "borderBottom": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)",
+      "collapse": "separate",
+      "overflow": "hidden"
+    },
+    "thead": {
+      "radius": "0px",
+      "borderTop": "0px solid oklch(0.922 0 0)",
+      "borderBottom": "1px solid rgb(242, 244, 247)",
+      "bg": "rgb(249, 250, 251)",
+      "collapse": "collapse",
+      "overflow": "visible"
+    },
+    "paperRect": [
+      272,
+      306.015625,
+      1408,
+      781.171875
+    ],
+    "theadRect": [
+      273,
+      307.015625,
+      1407,
+      349.515625
+    ],
+    "theadFlushWithCardTop": true
+  },
+  "mantine-primitives-table--default": {
+    "paper": {
+      "radius": "16px",
+      "borderTop": "1px solid rgb(208, 213, 221)",
+      "borderBottom": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)",
+      "collapse": "separate",
+      "overflow": "hidden"
+    },
+    "thead": {
+      "radius": "0px",
+      "borderTop": "0px solid oklch(0.922 0 0)",
+      "borderBottom": "1px solid rgb(242, 244, 247)",
+      "bg": "rgb(249, 250, 251)",
+      "collapse": "collapse",
+      "overflow": "visible"
+    },
+    "paperRect": [
+      49,
+      49,
+      1391,
+      289
+    ],
+    "theadRect": [
+      50,
+      50,
+      1390,
+      92.5
+    ],
+    "theadFlushWithCardTop": true
+  }
+}

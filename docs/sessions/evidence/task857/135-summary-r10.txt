@@ -1,0 +1,17 @@
+135b-census-r10: 1
+135d-typecheck-r10: 0
+135e-lint-r10: 1
+135f-story-coverage-r10: 0
+135g-rendered-scope-r10: 0
+135h-census-changed-r10: 0
+135i-design-tokens-r10: 1
+135j-enrolled-tailwind-r10: 0
+135k-i18n-r10: 0
+135l-type-responsive-r10: 0
+135m-file-integrity-r10: 0
+135n-mojibake-r10: 0
+135o-listing-visibility-r10: 0
+135t-pattern-enrolment-r10: 0
+135p-storybook-build-r10: 0
+135q-build-r10: 0
+135c-tests-r10: 1

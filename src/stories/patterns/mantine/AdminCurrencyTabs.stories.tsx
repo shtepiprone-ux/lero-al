@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { AdminCurrencyTabs } from '@/components/admin/AdminCurrencyTabs'
 import { AdminCurrenciesView } from '@/components/admin/AdminCurrenciesView'
 import { AdminExchangeProvidersView } from '@/components/admin/AdminExchangeProvidersView'
@@ -14,10 +15,12 @@ import type { DBCurrency } from '@/types/database'
 const meta: Meta<typeof AdminCurrencyTabs> = {
   title: 'Patterns/Mantine/AdminCurrencyTabs',
   component: AdminCurrencyTabs,
-  decorators: [(StoryFn) => <StoryPageGutter><StoryFn /></StoryPageGutter>],
+  // `withAdminShell` last: the first decorator is the innermost, so the shell wraps the frame.
+  decorators: [(StoryFn) => <AdminPageFrame width="page"><StoryFn /></AdminPageFrame>, withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/currency' } },
     docs: {
       description: {
         component:

@@ -356,8 +356,8 @@ describe('Surface consumption proof — static import gate (Task 456)', () => {
   const CABINET_LISTINGS_TAB = path.resolve(
     __dirname, '../../../../modules/cabinet/components/ListingsTab.tsx',
   )
-  const ADMIN_LISTINGS_TABLE = path.resolve(
-    __dirname, '../../../../components/admin/AdminListingsTable.tsx',
+  const ADMIN_LISTINGS_VIEW = path.resolve(
+    __dirname, '../../../../components/admin/AdminListingsView.tsx',
   )
 
   function readSource(filePath: string): string {
@@ -384,19 +384,19 @@ describe('Surface consumption proof — static import gate (Task 456)', () => {
     })
   })
 
-  describe('AdminListingsTable (admin surface)', () => {
+  describe('AdminListingsView (admin surface)', () => {
     it('imports formatVisibility from the canonical module', () => {
-      const src = readSource(ADMIN_LISTINGS_TABLE)
+      const src = readSource(ADMIN_LISTINGS_VIEW)
       expect(src).toContain("import { formatVisibility } from '@/modules/listings/lib/visibility'")
     })
 
     it('calls formatVisibility (not a dead import)', () => {
-      const src = readSource(ADMIN_LISTINGS_TABLE)
+      const src = readSource(ADMIN_LISTINGS_VIEW)
       expect(src).toMatch(/formatVisibility\s*\(/)
     })
 
     it('does NOT contain inline status/expiry visibility predicates', () => {
-      const src = readSource(ADMIN_LISTINGS_TABLE)
+      const src = readSource(ADMIN_LISTINGS_VIEW)
       expect(src).not.toMatch(/status\s*===?\s*['"]active['"]\s*&&\s*expires_at/)
       expect(src).not.toMatch(/expires_at\s*[<>]=?\s*new\s+Date/)
     })

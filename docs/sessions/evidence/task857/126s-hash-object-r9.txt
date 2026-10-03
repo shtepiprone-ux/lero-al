@@ -1,0 +1,4 @@
+d74ea9934bba0dddad2b1e8b5d3648da0163d5ca  src/design-system/mantine/patterns/MantineNavRowList.module.css
+14a71a506cd0bd069b0399eaf5881855a2f7cb6f  src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
+f428974ceaf11611937a60db1139168defa77f75  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+c12a3b26be26c4260433a852d194539ee0141096  src/components/admin/AdminListingsTable.tsx

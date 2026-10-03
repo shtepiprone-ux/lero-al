@@ -1,0 +1,36 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (17 tests | 1 failed) 8176ms
+     × the resting footer has exactly one filled button, and it is Edit 518ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  10:48:26
+   Duration  13.84s (transform 1.47s, setup 96ms, import 4.59s, tests 8.18s, environment 745ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — action hierarchy (T8) > the resting footer has exactly one filled button, and it is Edit
+AssertionError: expected <a …(6)><span …(2)>…(2)</span></a>
+…(1) to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:423:20
+    421|     // Mantine's default (filled) variant renders no `data-variant`; e…
+    422|     const filled = dialog.querySelectorAll('.mantine-Button-root:not([…
+    423|     expect(filled).toHaveLength(1)
+       |                    ^
+    424|     expect(filled[0].textContent).toBe('Edit')
+    425|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+EXIT_CODE=1

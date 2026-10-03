@@ -1,0 +1,295 @@
+{
+  "mantine-primitives-radio--default": {
+    "states": [
+      {
+        "checked": false,
+        "disabled": false,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "1"
+      },
+      {
+        "checked": true,
+        "disabled": false,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(236, 84, 71)",
+        "border": "rgb(236, 84, 71)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "1",
+          "size": [
+            10,
+            10
+          ]
+        },
+        "rootOpacity": "1"
+      },
+      {
+        "checked": false,
+        "disabled": false,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "1"
+      },
+      {
+        "checked": false,
+        "disabled": false,
+        "error": true,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(217, 45, 32)",
+        "shadow": "color(srgb 0.85098 0.176471 0.12549 / 0.1) 0px 0px 0px 3px",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "1"
+      },
+      {
+        "checked": true,
+        "disabled": false,
+        "error": true,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(236, 84, 71)",
+        "border": "rgb(236, 84, 71)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "1",
+          "size": [
+            10,
+            10
+          ]
+        },
+        "rootOpacity": "1"
+      },
+      {
+        "checked": false,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": true,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(236, 84, 71)",
+        "border": "rgb(236, 84, 71)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "1",
+          "size": [
+            10,
+            10
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": false,
+        "disabled": false,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "1"
+      }
+    ],
+    "focusRadio3": {
+      "active": true,
+      "focusVisible": true,
+      "border": "rgb(236, 84, 71)",
+      "shadow": "color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 3px"
+    },
+    "focusRadio4Error": {
+      "active": true,
+      "focusVisible": true,
+      "border": "rgb(217, 45, 32)",
+      "shadow": "color(srgb 0.85098 0.176471 0.12549 / 0.1) 0px 0px 0px 3px"
+    }
+  },
+  "patterns-mantine-premiumdialogview--saving": {
+    "states": [
+      {
+        "checked": true,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(236, 84, 71)",
+        "border": "rgb(236, 84, 71)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "1",
+          "size": [
+            10,
+            10
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": false,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": false,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": false,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "0.5"
+      },
+      {
+        "checked": false,
+        "disabled": true,
+        "error": false,
+        "size": [
+          20,
+          20
+        ],
+        "bg": "rgb(255, 255, 255)",
+        "border": "rgb(208, 213, 221)",
+        "shadow": "none",
+        "icon": {
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "size": [
+            2,
+            2
+          ]
+        },
+        "rootOpacity": "0.5"
+      }
+    ]
+  }
+}

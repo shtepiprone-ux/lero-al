@@ -77,16 +77,19 @@ export function AdminCurrenciesView({
       header: t('code'),
       cell: c => (
         <UnstyledButton
+          aria-label={c.code}
           onClick={e => {
             e.stopPropagation()
             onOpenDetail(c)
           }}
         >
-          <Text size="sm" fw={600} ff="monospace" c="gray.7">{c.code}</Text>
+          <Group gap="xs" wrap="nowrap">
+            <Text size="sm" fw={600} ff="monospace" c="gray.7">{c.code}</Text>
+            <Text size="sm" c="dimmed">{c.symbol}</Text>
+          </Group>
         </UnstyledButton>
       ),
     },
-    { key: 'symbol', header: t('symbol'), cell: c => <Text size="sm" c="dimmed">{c.symbol}</Text> },
     { key: 'name', header: t('name_en'), cell: c => <Text size="sm" c="gray.7">{c.name_en || c.name_sq}</Text> },
     { key: 'is_active', header: t('is_active'), cell: c => statusBadges(c) },
     {

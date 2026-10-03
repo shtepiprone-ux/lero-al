@@ -1,0 +1,17 @@
+150b-census-r12: 1
+150d-typecheck-r12: 0
+150e-lint-r12: 1
+150f-story-coverage-r12: 0
+150g-rendered-scope-r12: 0
+150h-census-changed-r12: 0
+150i-design-tokens-r12: 0
+150j-enrolled-tailwind-r12: 0
+150k-i18n-r12: 0
+150l-type-responsive-r12: 0
+150m-file-integrity-r12: 0
+150n-mojibake-r12: 0
+150o-listing-visibility-r12: 0
+150t-pattern-enrolment-r12: 0
+150p-storybook-build-r12: 0
+150q-build-r12: 0
+150c-tests-r12: 1

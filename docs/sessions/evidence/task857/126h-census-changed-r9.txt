@@ -1,0 +1,89 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs --base HEAD
+
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 297da2bf8e24c27a5a3795387ea5d3ae67712e8d
+    Changed paths seen: 65
+    Excluded (37):
+      docs/backlog.md  [outside-src]
+      docs/critical-flow-registry.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      scripts/check-listing-visibility.mjs  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/responsive-screenshots.mjs  [outside-src]
+      scripts/story-realmode-allowlist.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      scripts/type-responsive-baseline.json  [outside-src]
+      src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx  [story-or-test-file]
+      src/components/admin/__tests__/AdminTable.adapter.test.tsx  [story-or-test-file]
+      src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx  [story-or-test-file]
+      src/components/admin/AdminListingsTable.stories.tsx  [deleted]
+      src/components/admin/AdminPageShell.stories.tsx  [deleted]
+      src/components/admin/AdminPageShell.tsx  [deleted]
+      src/design-system/mantine/input-chrome.css  [not-ts-tsx]
+      src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx  [story-or-test-file]
+      src/modules/listings/lib/__tests__/visibility.test.ts  [story-or-test-file]
+      src/stories/mantine/primitives/Modal.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Radio.stories.tsx  [story-or-test-file]
+      src/stories/mantine/primitives/Table.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminDashboardView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminInquiriesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminPagesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminPermissionsView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminReportsView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminTable.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminUserProfileView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminUsersTable.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingContactPattern.stories.tsx  [story-or-test-file]
+    Included surfaces (27):
+      src/app/admin/currency/page.tsx
+      src/app/admin/inquiries/sales/page.tsx
+      src/app/admin/inquiries/support/page.tsx
+      src/app/admin/listings/page.tsx
+      src/app/admin/pages/page.tsx
+      src/app/admin/permissions/page.tsx
+      src/app/admin/property-types/page.tsx
+      src/app/admin/reports/page.tsx
+      src/app/admin/users/[id]/page.tsx
+      src/app/admin/users/new/page.tsx
+      src/app/admin/users/page.tsx
+      src/components/admin/AdminCurrenciesView.tsx
+      src/components/admin/AdminExchangeProvidersView.tsx
+      src/components/admin/AdminPagesView.tsx
+      src/components/admin/AdminReportsView.tsx
+      src/components/admin/AdminTable.tsx
+      src/components/admin/AdminUsersTable.tsx
+      src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+      src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+      src/design-system/mantine/patterns/MantineModal.tsx
+      src/design-system/mantine/patterns/index.ts
+      src/design-system/mantine/patterns/responsiveBottomSheet.tsx
+      src/design-system/mantine/theme.ts
+      src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingContact.tsx
+      src/modules/listings/components/ListingDetailView.tsx
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 27
+    Blocks baselined (recorded debt, does not fail): 56
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 290
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+
+EXIT_CODE=0

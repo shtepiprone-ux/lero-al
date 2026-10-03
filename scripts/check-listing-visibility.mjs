@@ -83,7 +83,7 @@ const VISIBILITY_PATTERNS = [
 ];
 
 const SCOPE_LINE =
-  "ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables, and same-file arrow factories (call sites, their continuation lines, variables assigned from them). " +
+  "ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables (including a multi-line `let q = supabase` / `.from('listings')` declaration), and same-file arrow factories (call sites, their continuation lines, variables assigned from them). " +
   "CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.";
 
 const WRITE_METHODS = /\.(update|insert|upsert|delete)\s*\(/;
@@ -99,7 +99,8 @@ const WRITE_METHODS = /\.(update|insert|upsert|delete)\s*\(/;
  *
  * Two shapes are captured:
  * 1. Inline chains — `from('listings')` followed by continuation `.method()` lines.
- * 2. Derived variables — `let/const <name> = ...from('listings')...`, then later
+ * 2. Derived variables — `let/const <name> = ...from('listings')...` (the declaration may span lines:
+ *    `let <name> = <identifier>`, then `.from('listings')` on the next line), then later
  *    lines referencing `<name>.method(...)` or `<name> = <name>.method(...)`.
  *
  * 3. Arrow factories — `const <name> = (...) => ...from('listings')...`; every call of
@@ -113,6 +114,10 @@ function extractListingsQueryBlocks(lines) {
   const fromRe = /from\(\s*['"]listings['"]\s*\)/;
   // Matches: const/let <name> = <expr>from('listings')<expr>
   const assignRe = /(?:const|let)\s+(\w+)\s*=.*from\(\s*['"]listings['"]\s*\)/;
+  // Task 857 R13: multi-line declaration — `const|let <name> = [await] <identifier>` on one line and
+  // `.from('listings')` starting the next.
+  const multiLineDeclRe = /(?:const|let)\s+(\w+)\s*=\s*(?:await\s+)?[\w$.]+\s*$/;
+  const continuedFromRe = /^\s*\.\s*from\(\s*['"]listings['"]\s*\)/;
 
   for (let i = 0; i < lines.length; i++) {
     if (!fromRe.test(lines[i])) continue;
@@ -128,8 +133,12 @@ function extractListingsQueryBlocks(lines) {
 
     // Shape 2: derived variable — scan rest of scope for `varName.method(` or `varName = varName.method(`
     const assignMatch = lines[i].match(assignRe);
-    if (assignMatch) {
-      const varName = assignMatch[1];
+    let varName = assignMatch ? assignMatch[1] : null;
+    if (!varName && i > 0 && continuedFromRe.test(lines[i])) {
+      const declMatch = lines[i - 1].match(multiLineDeclRe);
+      if (declMatch) varName = declMatch[1];
+    }
+    if (varName) {
       const varUseRe = new RegExp(
         `(?:^|\\b)${varName}\\s*(?:=\\s*(?:await\\s+)?${varName}\\s*\\.|\\.)`
       );
@@ -263,6 +272,10 @@ function runSelfTest() {
       code: `const base = () => supabase.from('listings').select('*')\nawait base().update({ status: 'x' }).eq('id', id)\nconst r = await base().eq('status', 'active')` },
     { label: "factory: variable assigned from factory call, then q.lt('expires_at')",
       code: `const base = () => supabase.from('listings').select('*')\nlet q = base()\nq = q.lt('expires_at', now)` },
+    { label: "multi-line declaration: query = query.eq('status','active')",
+      code: "let query = supabase\n  .from('listings')\n  .select(`\n    id, title\n  `, { count: 'exact' })\n  .order('created_at', { ascending: false })\nquery = query.eq('status', 'active')" },
+    { label: "multi-line declaration: query.gte('expires_at')",
+      code: "let query = supabase\n  .from('listings')\n  .select('*')\nquery = query.gte('expires_at', now)" },
   ];
 
   // Good snippets: canonical helpers (no from('listings') chain)
@@ -292,6 +305,10 @@ function runSelfTest() {
       code: `const base = () => supabase.from('listings').select('*')\nawait base().update({ status: 'active' }).eq('id', id)` },
     { label: "factory declared, never called",
       code: `const base = () => supabase.from('listings').select('*')` },
+    { label: "multi-line declaration + dynamic .eq('status', status)",
+      code: "let query = supabase\n  .from('listings')\n  .select('*')\nquery = query.eq('status', status)" },
+    { label: "multi-line declaration + applyPublicVisibility(query)",
+      code: "let query = supabase\n  .from('listings')\n  .select('*')\nquery = applyPublicVisibility(query)" },
   ];
 
   let passed = 0;

@@ -1,0 +1,30 @@
+GR-0 CANONICAL REUSE PREFLIGHT — request: Radio focus border + disabled chrome per §6g; semantic queries: radio focus-visible border specificity, Mantine Radio disabled bg/border/icon colour, input chrome radio block; inspected candidates: src/design-system/mantine/input-chrome.css Radio block (:230-290), node_modules/@mantine/core/styles/Radio.css (:82-108), Mantine/Primitives/Radio (src/stories/mantine/primitives/Radio.stories.tsx), PremiumDialogView Saving; decision: EXTEND (Radio block of input-chrome.css, the canonical Radio chrome owner); selected canonical owner: src/design-system/mantine/input-chrome.css; Mantine/TailAdmin token path: --mantine-color-brand-7 / gray-3 / white, TailAdmin §6g; new hardcoded visual values: NONE; rationale: kickoff §22 R40/R41, theme variables only, no !important.
+
+GR-3a STORY PREFLIGHT — Radio × focus/error/disabled; canonical candidates: Mantine/Primitives/Radio (Default already renders all eight states); direct-import evidence: src/stories/mantine/primitives/Radio.stories.tsx; toolbar coverage: locale=toolbar, viewport=toolbar; decision: REUSE (R42: no caption contradicts the new rendering, Story file unchanged); target: mantine-primitives-radio--default.
+
+AC23 (107-measurements-r6.json, storybook-static, 1440 sq):
+- Default #3 under keyboard :focus-visible (active+focusVisible true): border rgb(236, 84, 71) = checked radio's brand-7; ring 3px brand-5 10% present.
+- Default #4 (error, unchecked) under keyboard focus: border rgb(217, 45, 32) (red-6), red ring.
+- Default #7 (disabled, checked) and PremiumDialogView Saving checked: bg rgb(236, 84, 71), border rgb(236, 84, 71); icon 10x10, opacity 1, colour rgb(255, 255, 255); root opacity 0.5.
+- Default #6 (disabled, unchecked): bg rgb(255, 255, 255), border rgb(208, 213, 221) (gray-3), root opacity 0.5.
+- Default #1, #2, #5, #8 equal 105b-opus-radio-disabled-focus.json (bg, border, icon colour).
+- AC21/AC22 re-run as 107-measure-r6.mjs -> 107-measurements-r6-ac21-22.json: no pair of text buttons shares a row, no overflow (36 tuples); radio 20x20 and checked icon 10x10 at 320/390/1024/1440 (Default) and 1440 (NotPremium; icon null there as no radio is checked, closed in Revision 5 by the first-radio-checked crop).
+
+GR-3f CIRCLE CHECK — Mantine/Primitives/Radio Default #1 unchecked: outer 20px, inner none; DPR-1 crop docs/sessions/evidence/task857/107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #2 checked: outer 20px, inner 10px; 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #3 unchecked, keyboard focus: outer 20px, inner none (brand border + ring); 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #4 error unchecked, keyboard focus: outer 20px, inner none (red border + ring); 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #5 error checked: outer 20px, inner 10px; 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #6 disabled unchecked: outer 20px, inner none; 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #7 disabled checked: outer 20px, inner 10px (faded together); 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — Default #8 unchecked (long label): outer 20px, inner none; 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — PremiumDialogView Saving checked: outer 20px, inner 10px; 107-radio-states-r6.png; reads as a circle: yes.
+GR-3f CIRCLE CHECK — PremiumDialogView Saving unchecked (x4): outer 20px, inner none; 107-radio-states-r6.png; reads as a circle: yes.
+
+GR-3b STORY RESPONSIVE CHECK — mantine-primitives-radio--default: 320/390/1024/1440 radio 20/20, no overflow (107-measurements-r6-ac21-22.json); fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE. Story file unchanged this revision.
+GR-3b STORY RESPONSIVE CHECK — patterns-mantine-premiumdialogview--saving: 390/1440 no overflow (same json); NONE for the rest.
+GR-3c TYPE RESPONSIVE CHECK — Default and Saving: no headings changed; label 14px (theme); modal title 16px; >=24px text without a responsive step: NONE; heading above 20px below 640: NONE.
+GR-3d STORY GUTTER CHECK — Default: n/a: MantineStoryShell primitive; Saving: n/a: overlay-only.
+GR-3e TEXT BUTTONS STACKED — Default: text buttons 0; Saving: text buttons 1 (Remove); groups of >=2: 0; pairs sharing a row at 390/1440: NONE.
+
+GR-2 SCOPE STATED — no gate inspects Radio state chrome or rasterisation; check:design-tokens sees only raw literals; AC23 is closed by the computed-style measurements and the DPR-1 crops, not by a gate.

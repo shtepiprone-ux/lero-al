@@ -1,0 +1,22 @@
+{
+  "scrollableWidth": 659,
+  "scrollLeftBefore": 0,
+  "scrollLeftAfter": 659,
+  "th": {
+    "text": "Emri",
+    "position": "sticky",
+    "left": "0px",
+    "zIndex": "1",
+    "bg": "rgb(255, 255, 255)",
+    "inline": "font-size: var(--mantine-font-size-xs); font-weight: 500; color: var(--mantine-color-gray-5); text-transform: none; white-space: nowrap; text-align: left; z-index: 1; background: var(--mantine-color-body); position: sticky; left: 0rem;"
+  },
+  "td": {
+    "text": "Arben Krasniqi",
+    "position": "sticky",
+    "left": "0px",
+    "zIndex": "1",
+    "bg": "rgb(255, 255, 255)",
+    "inline": "font-size: var(--mantine-font-size-sm); color: var(--mantine-color-gray-7); white-space: nowrap; text-align: left; z-index: 1; background: var(--mantine-color-body); position: sticky; left: 0rem;"
+  },
+  "elementAtThCentreIsTh": true
+}

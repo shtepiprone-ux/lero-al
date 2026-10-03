@@ -1,0 +1,38 @@
+{
+  "before": {
+    "mantine-primitives-modal--default@1440": {
+      "sha256": "eff672c5039a7aa0566f27659dca07604e7fcd7089c829100f81c5fec190eeb1",
+      "length": 51914
+    },
+    "patterns-mantine-reportdetaildialogview--pending@1440": {
+      "sha256": "55a731678d2c2eb32c66d723e532bfa5776b21efbea0652c535cc24b2cdd1a14",
+      "length": 58616
+    },
+    "mantine-primitives-modal--default@390": {
+      "sha256": "143608a2b67a28cf5bdb6f494180c213ba0140328804a74ab8eb6e9b10ba7e86",
+      "length": 52045
+    },
+    "patterns-mantine-reportdetaildialogview--pending@390": {
+      "sha256": "dbd4d1d61e9b859adb6b7211f03a9948a4afd008ab9908a729b02a8e0f4c738b",
+      "length": 58747
+    }
+  },
+  "after": {
+    "mantine-primitives-modal--default@1440": {
+      "sha256": "eff672c5039a7aa0566f27659dca07604e7fcd7089c829100f81c5fec190eeb1",
+      "length": 51914
+    },
+    "patterns-mantine-reportdetaildialogview--pending@1440": {
+      "sha256": "55a731678d2c2eb32c66d723e532bfa5776b21efbea0652c535cc24b2cdd1a14",
+      "length": 58616
+    },
+    "mantine-primitives-modal--default@390": {
+      "sha256": "143608a2b67a28cf5bdb6f494180c213ba0140328804a74ab8eb6e9b10ba7e86",
+      "length": 52045
+    },
+    "patterns-mantine-reportdetaildialogview--pending@390": {
+      "sha256": "dbd4d1d61e9b859adb6b7211f03a9948a4afd008ab9908a729b02a8e0f4c738b",
+      "length": 58747
+    }
+  }
+}

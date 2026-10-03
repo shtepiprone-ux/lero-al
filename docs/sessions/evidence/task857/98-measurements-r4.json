@@ -1,0 +1,817 @@
+{
+ "platform": "win32 v22.22.3",
+ "fit": [
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "uk",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 932,
+     "viewW": 932,
+     "scrollW": 932,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники активності",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      150,
+      225,
+      189,
+      156
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "sq",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 932,
+     "viewW": 932,
+     "scrollW": 932,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktivitetit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      164,
+      249,
+      175,
+      144
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "en",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 932,
+     "viewW": 932,
+     "scrollW": 932,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity counts",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      178,
+      260,
+      164,
+      130
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "it",
+   "expectedCard": 934,
+   "tables": [
+    {
+     "cardW": 934,
+     "tableW": 932,
+     "viewW": 932,
+     "scrollW": 932,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      156,
+      256,
+      166,
+      154
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "en",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity counts",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      240,
+      352,
+      221,
+      175
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "uk",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники активності",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      204,
+      305,
+      256,
+      212
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "it",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      210,
+      345,
+      224,
+      208
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "sq",
+   "expectedCard": 1190,
+   "tables": [
+    {
+     "cardW": 1190,
+     "tableW": 1188,
+     "viewW": 1188,
+     "scrollW": 1188,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktivitetit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      222,
+      336,
+      236,
+      195
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "uk",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Оголошення",
+      "Статус",
+      "Дати",
+      "Показники активності",
+      "Дії"
+     ],
+     "colWidths": [
+      212,
+      237,
+      355,
+      298,
+      246
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "it",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Annuncio",
+      "Stato",
+      "Date",
+      "Conteggi attività",
+      "Azioni"
+     ],
+     "colWidths": [
+      200,
+      244,
+      401,
+      261,
+      242
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "en",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Listing",
+      "Status",
+      "Dates",
+      "Activity counts",
+      "Actions"
+     ],
+     "colWidths": [
+      200,
+      279,
+      408,
+      257,
+      204
+     ],
+     "cardOk": true
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "sq",
+   "expectedCard": 1350,
+   "tables": [
+    {
+     "cardW": 1350,
+     "tableW": 1348,
+     "viewW": 1348,
+     "scrollW": 1348,
+     "scrolls": false,
+     "clipped": false,
+     "insetFirst": 24,
+     "insetLast": 24,
+     "headers": [
+      "Njoftimi",
+      "Statusi",
+      "Datat",
+      "Numrat e aktivitetit",
+      "Veprime"
+     ],
+     "colWidths": [
+      200,
+      258,
+      390,
+      274,
+      227
+     ],
+     "cardOk": true
+    }
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "uk",
+   "tableVisible": false,
+   "cardsVisible": true,
+   "cardCount": 10,
+   "firstCardText": "РедагуватиАктивнеСучасна Квартира в Центрі ТираниВидимістьВидимеСпливає08.10.2026 (за 20 днів)Перегляди42WhatsApp5Запити з форми2Остання активність17.09.2026 (1"
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsVisible": true,
+   "cardCount": 10,
+   "firstCardText": "ModifikoAktivApartament Modern në Qendër të TiranësDukshmëriaI dukshëmSkadon08.10.2026 (në 20 ditë)Shikime42WhatsApp5Kërkesa nga formulari2Aktiviteti i fundit17"
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 390,
+   "l": "sq",
+   "tableVisible": false,
+   "cardsVisible": true,
+   "cardCount": 10,
+   "firstCardText": "ModifikoAktivApartament Modern në Qendër të TiranësDukshmëriaI dukshëmSkadon08.10.2026 (në 20 ditë)Shikime42WhatsApp5Kërkesa nga formulari2Aktiviteti i fundit17"
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 390,
+   "l": "uk",
+   "tableVisible": false,
+   "cardsVisible": true,
+   "cardCount": 10,
+   "firstCardText": "РедагуватиАктивнеСучасна Квартира в Центрі ТираниВидимістьВидимеСпливає08.10.2026 (за 20 днів)Перегляди42WhatsApp5Запити з форми2Остання активність17.09.2026 (1"
+  }
+ ],
+ "aria": [
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "sq",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Apartament Modern në Qendër të Tiranës",
+    "Skadon",
+    "në 20 ditë (08.10.2026, 10:00 p.d.)",
+    "Aktiviteti i fundit",
+    "1 ditë më parë (17.09.2026)",
+    "Shikime",
+    "WhatsApp",
+    "Kërkesa nga formulari"
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "l": "uk",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Сучасна Квартира в Центрі Тирани",
+    "Спливає",
+    "за 20 днів (08.10.2026, 10:00)",
+    "Остання активність",
+    "1 день тому (17.09.2026)",
+    "Перегляди",
+    "WhatsApp",
+    "Запити з форми"
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "sq",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Apartament Modern në Qendër të Tiranës",
+    "Skadon",
+    "në 20 ditë (08.10.2026, 10:00 p.d.)",
+    "Aktiviteti i fundit",
+    "1 ditë më parë (17.09.2026)",
+    "Shikime",
+    "WhatsApp",
+    "Kërkesa nga formulari"
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1280,
+   "l": "uk",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Сучасна Квартира в Центрі Тирани",
+    "Спливає",
+    "за 20 днів (08.10.2026, 10:00)",
+    "Остання активність",
+    "1 день тому (17.09.2026)",
+    "Перегляди",
+    "WhatsApp",
+    "Запити з форми"
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "uk",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Сучасна Квартира в Центрі Тирани",
+    "Спливає",
+    "за 20 днів (08.10.2026, 10:00)",
+    "Остання активність",
+    "1 день тому (17.09.2026)",
+    "Перегляди",
+    "WhatsApp",
+    "Запити з форми"
+   ]
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "l": "sq",
+   "count": 8,
+   "all": false,
+   "labels": [
+    "Apartament Modern në Qendër të Tiranës",
+    "Skadon",
+    "në 20 ditë (08.10.2026, 10:00 p.d.)",
+    "Aktiviteti i fundit",
+    "1 ditë më parë (17.09.2026)",
+    "Shikime",
+    "WhatsApp",
+    "Kërkesa nga formulari"
+   ]
+  }
+ ],
+ "switch": [
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 700,
+   "tableVisible": true
+  },
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 1000,
+   "tableVisible": true
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 700,
+   "tableVisible": false
+  },
+  {
+   "id": "mantine-primitives-table--default",
+   "w": 1024,
+   "tableVisible": true
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 1000,
+   "tableVisible": true
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-md",
+   "w": 1024,
+   "tableVisible": true
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 700,
+   "tableVisible": false
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1000,
+   "tableVisible": false
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1024,
+   "tableVisible": true
+  }
+ ],
+ "receipts": [
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 320,
+   "overflowX": false,
+   "h": [
+    20,
+    20
+   ],
+   "body": [
+    14,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 768,
+   "overflowX": false,
+   "h": [
+    24,
+    20
+   ],
+   "body": [
+    14,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 390,
+   "overflowX": false,
+   "h": [
+    20,
+    20
+   ],
+   "body": [
+    14,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1024,
+   "overflowX": false,
+   "h": [
+    24,
+    20
+   ],
+   "body": [
+    14,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-agentstatisticsview--default",
+   "w": 1440,
+   "overflowX": false,
+   "h": [
+    24,
+    20
+   ],
+   "body": [
+    14,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 390,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 320,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    14,
+    14
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 320,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 390,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 768,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    14
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1024,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  },
+  {
+   "id": "mantine-primitives-table--cards-below-lg",
+   "w": 1440,
+   "overflowX": false,
+   "h": [],
+   "body": [
+    12,
+    12
+   ],
+   "left": 0,
+   "right": 0,
+   "top": 0,
+   "bottom": 0
+  }
+ ]
+}

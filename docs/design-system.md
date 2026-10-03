@@ -142,7 +142,7 @@ Every visual element belongs to exactly one tier. This determines where it may b
 | Tier | Definition | Lives in | Responsive ownership |
 |---|---|---|---|
 | **1. Primitive UI** | Atomic, domain-agnostic (Button, Input, Combobox, Dialog, Sheet, DropdownMenu, Card, Badge, Tabs, Table primitive). | `src/components/ui/*` | The primitive. Consumers do NOT restyle its internals. Single-source (`ui-rules.md §0`): one Button, one Combobox. |
-| **2. Global layout primitive** | Admin specialisations **AdminPageShell, AdminTable** (adapter over `MantineDataTableToCards`, Task 877; the separate legacy card list is deleted). The public half of this tier — **PageShell, PageHeader, Section, FilterBar** — was deleted (Task 788, 2026-09-05): zero production consumers, kept alive only by their own closed-loop Storybook stories. See §11.1/§12a and §18 for the retired prescriptive fragments this leaves behind. | `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
+| **2. Global layout primitive** | Admin specialisations **AdminPageFrame (+ `AdminShell`, `AdminPageHeader`), AdminTable** (`AdminPageShell` deleted by Task 857, 2026-10-03) (adapter over `MantineDataTableToCards`, Task 877; the separate legacy card list is deleted). The public half of this tier — **PageShell, PageHeader, Section, FilterBar** — was deleted (Task 788, 2026-09-05): zero production consumers, kept alive only by their own closed-loop Storybook stories. See §11.1/§12a and §18 for the retired prescriptive fragments this leaves behind. | `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
 | **3. Data-surface primitive** | Tabular/list/grid surfaces: AdminTable (adapter over `MantineDataTableToCards`, Task 877), listing grid, card list. | `src/components/admin/*`, `src/modules/*/components` | Owns the table↔card switch (§10) and column visibility. |
 | **4. Domain component** | Feature-specific composition (ListingCard, ListingsFilters, CabinetShell, AdminListingsTable). | `src/modules/*`, feature folders | Composes tiers 1–3. May choose a `tableAt` decision and pass a `cardRow`, but may NOT invent a new container/spacing/table style. |
 
@@ -162,8 +162,8 @@ Rule: **layout styling flows down from tiers 1–3; domain components (tier 4) c
 
 ## §9 — Admin layout rules
 
-1. Every admin route wraps content in **AdminPageShell** (data-container / `.container-admin`).
-2. AdminPageShell header = title + optional countBadge + optional subtitle + an optional actions slot (right-aligned at `md:+`, stacked `<md`), with a FilterBar slot below the header.
+1. Every admin route renders inside **AdminShell** and wraps content in **AdminPageFrame** (`width` = one `theme.other.layout.adminPage*MaxWidth` cap; Task 857 R23). `AdminPageShell` / `.container-admin` were deleted by Task 857 (2026-10-03).
+2. The page header is **AdminPageHeader** = title + optional count + optional subtitle + an optional actions slot; filters live in the page View below it.
 3. Tabular data uses **AdminTable** (Sprint 28 primitive). (The separate legacy card list was deleted in Task 877; its cards are `MantineDataTableToCards` `CardConfig`.) No raw `<table>` and no card-imitating `<div>` rows outside these primitives in admin routes.
 4. Admin content fills the main area up to `2xl:`, then caps at **1792px** (`.max-w-10xl`). Admin does NOT use `2xl:grid-cols-N` for tables — natural column widths consume available space.
 5. Admin inherits the same spacing, typography, overlay, and form rules as the rest of the app; only its container width and density differ.
@@ -197,7 +197,7 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 1. **FilterBar §11.1 — RETIRED (Task 788, 2026-09-05).** `src/components/layout/FilterBar.tsx` and its canonical outer fragment (`flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`) are deleted — zero production consumers. The live hand-rolled filter bar in `src/modules/cabinet/components/ListingsTab.tsx` is a separate component reserved for its own migration (Task 789) and does not inherit this fragment.
 2. **Search** — canonical search input (Input primitive); `min-w-0 flex-1` so it shrinks, never pushes the row.
 3. **Tabs** — the shadcn **Tabs** primitive only. Local tab clones (`CabinetShell`, `AdminCurrencyTabs`) are migration targets.
-4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (AdminPageShell). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers); `PageHeader` was removed (Task 788, 2026-09-05; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
+4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (`AdminPageHeader` actions). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers); `PageHeader` was removed (Task 788, 2026-09-05; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
 
 ---
 
@@ -224,7 +224,7 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 ### Mobile stacking / full-width
 - At 320 / 375 / 390 / 480 / 560px (i.e. `<sm:`), primary and secondary action buttons in DS primitives are **full-width or stacked in a column** unless a documented exception applies.
 - `PageHeader` was removed (Task 788, 2026-09-05; zero product consumers) — its `max-sm:w-full [&>*]:max-sm:w-full` action-slot fragment retired with it. The `ActionBar` primitive was removed earlier (Task 358, 2026-06-02); page-level action clusters use a plain flex-wrap div with the canonical stacking fragment in the action slot.
-- `AdminPageShell` actions container: `flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:shrink-0 max-sm:w-full [&>*]:max-sm:w-full`.
+- `AdminPageShell` (and its actions-container fragment) was deleted by Task 857 (2026-10-03); admin page actions go through `AdminPageHeader`.
 - `FilterBar` was removed (Task 788, 2026-09-05; zero product consumers) — its `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full` outer-row fragment retired with it.
 
 ### Filter chips / filter pills

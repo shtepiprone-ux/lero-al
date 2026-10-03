@@ -1,0 +1,11 @@
+before:   f060e58c8fc174c2db4e398b1a398bf9535d5db1
+planted:  264de1594b02b872eb5484f7df24d58f3bb18201
+planted run exit=1
+     × without tableHeader the thead has no top line and keeps its bottom line 80ms
+      Tests  1 failed | 1 passed (2)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx > MantineDataTableToCards thead top line (Task 857 R69) > without tableHeader the thead has no top line and keeps its bottom line
+AssertionError: expected '1px solid var(--mantine-color-gray-1)' to be '' // Object.is equality
+restored: f060e58c8fc174c2db4e398b1a398bf9535d5db1
+restored run exit=0
+      Tests  2 passed (2)

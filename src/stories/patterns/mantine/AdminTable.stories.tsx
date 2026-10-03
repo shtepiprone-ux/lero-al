@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Badge, Group, Text } from '@mantine/core'
+import { Badge, Group, Text, useMantineTheme } from '@mantine/core'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
+import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import { storyT } from '@/stories/_storyI18n'
 import { StoryPageGutter } from '@/stories/_StoryPageGutter'
-import { FIXTURE_CURRENCIES } from '@/stories/fixtures/admin.fixtures'
+import { FIXTURE_CURRENCIES, FIXTURE_LISTINGS } from '@/stories/fixtures/admin.fixtures'
 import type { DBCurrency } from '@/types/database'
 
 // Task 877 — the shared admin data list, a thin adapter over the canonical `MantineDataTableToCards`
@@ -136,6 +137,62 @@ export const RowClick: Story = {
           onRowClick={() => {}}
           ariaLabel={storyT(l, 'admin.currency.currencies.code')}
           emptyState={storyT(l, 'admin.currency.currencies.empty')}
+        />
+      </StoryPageGutter>
+    )
+  },
+}
+
+// Task 857 R15 — a long title in its own `wrap` + `width` column: it clamps to two lines instead of setting the
+// table width, so the right-hand columns and the row chevron stay inside the card. Rows are labelled fixture data.
+interface WrappedTitleRow {
+  id: string
+  title: string
+  status: string
+  agent: string
+}
+
+// Rows come from `FIXTURE_LISTINGS`; the first title joins three of them so one row is far longer than its column.
+const [FIRST, SECOND, THIRD] = FIXTURE_LISTINGS
+const WRAPPED_TITLE_ROWS: WrappedTitleRow[] = [FIRST, SECOND, THIRD].map((l, i) => ({
+  id: l.id,
+  title: i === 0 ? [FIRST, SECOND, THIRD].map(x => x.title).join(' · ') : l.title,
+  status: l.status,
+  agent: l.owner?.name ?? '—',
+}))
+
+export const WrappedTitleColumn: Story = {
+  render: (_, context) => {
+    const l = localeOf(context)
+    const theme = useMantineTheme()
+    const t = (key: string) => storyT(l, `admin.listings.${key}`)
+    // The container resolves the status label the same way: `getListingStatusLabel` with the `cabinet` translator.
+    const statusLabel = (code: string) => getListingStatusLabel(code, k => storyT(l, `cabinet.${k}`))
+    const columns: AdminTableColumn<WrappedTitleRow>[] = [
+      {
+        key: 'title',
+        header: t('col_listing'),
+        width: theme.other.layout.tableTitleColumnWidth,
+        wrap: true,
+        cell: r => <Text size="sm" fw={500} lineClamp={2}>{r.title}</Text>,
+      },
+      { key: 'status', header: t('col_status'), cell: r => <Badge size="sm" variant="light" color="gray">{statusLabel(r.status)}</Badge> },
+      { key: 'agent', header: t('col_agent'), visibility: 'lg', cell: r => <Text size="xs" c="dimmed">{r.agent}</Text> },
+    ]
+    return (
+      <StoryPageGutter>
+        <AdminTable
+          rows={WRAPPED_TITLE_ROWS}
+          columns={columns}
+          rowKey={r => r.id}
+          onRowClick={() => {}}
+          ariaLabel={t('col_listing')}
+          cardRow={r => ({
+            title: <Text size="sm" fw={500} lineClamp={2}>{r.title}</Text>,
+            subtitle: <Badge size="sm" variant="light" color="gray">{statusLabel(r.status)}</Badge>,
+            meta: <Text size="xs" c="dimmed">{r.agent}</Text>,
+          })}
+          emptyState={t('empty')}
         />
       </StoryPageGutter>
     )

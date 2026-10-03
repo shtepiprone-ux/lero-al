@@ -1,0 +1,229 @@
+{
+  "platform": "win32 v22.22.3",
+  "dpr": 1,
+  "locale": "sq",
+  "widths": [
+    390,
+    1440
+  ],
+  "cutCorners": 0,
+  "cuts": [],
+  "coverage": [
+    {
+      "story": "patterns-mantine-navrowlist--default",
+      "width": 390,
+      "states": 6,
+      "linesSeen": 4,
+      "pairsSeen": 2,
+      "tabs": 3,
+      "hovers": 2
+    },
+    {
+      "story": "patterns-mantine-navrowlist--default",
+      "width": 1440,
+      "states": 6,
+      "linesSeen": 4,
+      "pairsSeen": 2,
+      "tabs": 3,
+      "hovers": 2
+    },
+    {
+      "story": "patterns-mantine-detaillist--default",
+      "width": 390,
+      "states": 1,
+      "linesSeen": 0,
+      "pairsSeen": 0,
+      "tabs": 0,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-detaillist--default",
+      "width": 1440,
+      "states": 1,
+      "linesSeen": 0,
+      "pairsSeen": 0,
+      "tabs": 0,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-dialogsections--default",
+      "width": 390,
+      "states": 1,
+      "linesSeen": 3,
+      "pairsSeen": 0,
+      "tabs": 0,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-dialogsections--default",
+      "width": 1440,
+      "states": 1,
+      "linesSeen": 3,
+      "pairsSeen": 0,
+      "tabs": 0,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-dialogfooter--default",
+      "width": 390,
+      "states": 3,
+      "linesSeen": 3,
+      "pairsSeen": 0,
+      "tabs": 2,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-dialogfooter--default",
+      "width": 1440,
+      "states": 3,
+      "linesSeen": 3,
+      "pairsSeen": 0,
+      "tabs": 2,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-listingpreviewdialogview--active",
+      "width": 390,
+      "states": 33,
+      "linesSeen": 11,
+      "pairsSeen": 4,
+      "tabs": 30,
+      "hovers": 2
+    },
+    {
+      "story": "patterns-mantine-listingpreviewdialogview--active",
+      "width": 1440,
+      "states": 33,
+      "linesSeen": 11,
+      "pairsSeen": 2,
+      "tabs": 30,
+      "hovers": 2
+    },
+    {
+      "story": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "width": 390,
+      "states": 31,
+      "linesSeen": 5,
+      "pairsSeen": 2,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+      "width": 1440,
+      "states": 31,
+      "linesSeen": 5,
+      "pairsSeen": 0,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-premiumdialogview--not-premium",
+      "width": 390,
+      "states": 31,
+      "linesSeen": 14,
+      "pairsSeen": 2,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-premiumdialogview--not-premium",
+      "width": 1440,
+      "states": 31,
+      "linesSeen": 15,
+      "pairsSeen": 0,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-premiumdialogview--premium",
+      "width": 390,
+      "states": 31,
+      "linesSeen": 17,
+      "pairsSeen": 2,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-premiumdialogview--premium",
+      "width": 1440,
+      "states": 31,
+      "linesSeen": 17,
+      "pairsSeen": 0,
+      "tabs": 30,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-admintable--default",
+      "width": 390,
+      "states": 1,
+      "linesSeen": 6,
+      "pairsSeen": 0,
+      "tabs": 0,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-admintable--default",
+      "width": 1440,
+      "states": 3,
+      "linesSeen": 5,
+      "pairsSeen": 4,
+      "tabs": 0,
+      "hovers": 2
+    },
+    {
+      "story": "patterns-mantine-adminlistingsview--default",
+      "width": 390,
+      "states": 14,
+      "linesSeen": 20,
+      "pairsSeen": 0,
+      "tabs": 13,
+      "hovers": 0
+    },
+    {
+      "story": "patterns-mantine-adminlistingsview--default",
+      "width": 1440,
+      "states": 33,
+      "linesSeen": 18,
+      "pairsSeen": 8,
+      "tabs": 30,
+      "hovers": 2
+    },
+    {
+      "story": "mantine-primitives-table--default",
+      "width": 390,
+      "states": 9,
+      "linesSeen": 13,
+      "pairsSeen": 0,
+      "tabs": 8,
+      "hovers": 0
+    },
+    {
+      "story": "mantine-primitives-table--default",
+      "width": 1440,
+      "states": 3,
+      "linesSeen": 7,
+      "pairsSeen": 4,
+      "tabs": 0,
+      "hovers": 2
+    },
+    {
+      "story": "mantine-primitives-radio--default",
+      "width": 390,
+      "states": 7,
+      "linesSeen": 8,
+      "pairsSeen": 0,
+      "tabs": 6,
+      "hovers": 0
+    },
+    {
+      "story": "mantine-primitives-radio--default",
+      "width": 1440,
+      "states": 7,
+      "linesSeen": 9,
+      "pairsSeen": 0,
+      "tabs": 6,
+      "hovers": 0
+    }
+  ]
+}

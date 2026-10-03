@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { AdminCurrenciesView } from '@/components/admin/AdminCurrenciesView'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { FIXTURE_CURRENCIES } from '@/stories/fixtures/admin.fixtures'
 import type { DBCurrency } from '@/types/database'
 
@@ -13,9 +14,11 @@ import type { DBCurrency } from '@/types/database'
 const meta: Meta<typeof AdminCurrenciesView> = {
   title: 'Patterns/Mantine/AdminCurrenciesView',
   component: AdminCurrenciesView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/currency' } },
     docs: {
       description: {
         component:
@@ -45,7 +48,7 @@ function ViewDemo({
     ? currencies.filter(c => c.code.toLowerCase().includes(q) || c.name_en.toLowerCase().includes(q) || c.name_sq.toLowerCase().includes(q))
     : currencies
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width="page">
     <AdminCurrenciesView
       currencies={filtered}
       query={query}
@@ -75,7 +78,7 @@ function ViewDemo({
         setDeleteTarget(null)
       }}
     />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 

@@ -1,0 +1,5 @@
+2ebc2abd7f4d8207b423e2a7e22d3ebaf1a9ca6f  scripts/check-listing-visibility.mjs
+21a16f33d2a50886345a0890ab55d82b26ea3b3c  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+77373b76cfe84797115bf0815b92ec38d3c2b7e9  docs/critical-flow-registry.md
+85470ba67b33db99fb34ee3d1f4379665e3a0aaf  docs/sessions/2026-10-02-task857-admin-listings-mantine.md
+4347fa7dcce4e8162bef62b51f06b9996cd93b00  docs/backlog.md

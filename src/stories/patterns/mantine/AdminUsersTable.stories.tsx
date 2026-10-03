@@ -1,22 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { AdminUsersTable } from '@/components/admin/AdminUsersTable'
 import { FIXTURE_USERS, FIXTURE_VERIFIED_AGENTS } from '@/stories/fixtures/admin.fixtures'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 
 /**
  * Task 896 — the Story moved here from `Admin/AdminUsersTable` (Task 483 / MM.1), which was canonical only through
  * the exact-title enrolment hatch the owner rejected for new use (2026-09-17). Viewport and locale come from the
  * Storybook toolbar; component-internal i18n is resolved by the `withLocale` global decorator.
  *
- * GR-3d: `AdminUsersTable` has no page gutter of its own on any side (the production page's `Box p="xl"` supplies it),
- * so every export is wrapped in `StoryPageGutter`.
+ * GR-3b/§7.3 (Task 857): every export renders inside the real `AdminShell` and the route's `AdminPageFrame`
+ * (`width="shell" gutter="xl"`, `src/app/admin/users/page.tsx`), so the tables have their production card width;
+ * GR-3d: the frame is the page gutter.
  */
 const meta: Meta<typeof AdminUsersTable> = {
   title: 'Patterns/Mantine/AdminUsersTable',
   component: AdminUsersTable,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/users' } },
     docs: {
       description: {
         component:
@@ -40,9 +44,9 @@ export default meta
 type Story = StoryObj<typeof AdminUsersTable>
 
 const render: Story['render'] = (args) => (
-  <StoryPageGutter>
+  <AdminPageFrame width="shell" gutter="xl">
     <AdminUsersTable {...args} />
-  </StoryPageGutter>
+  </AdminPageFrame>
 )
 
 export const Default: Story = { render }

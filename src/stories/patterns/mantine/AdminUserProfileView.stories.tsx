@@ -9,7 +9,8 @@ import {
   type UserWithLocation,
 } from '@/components/admin/AdminUserProfileView'
 import { AdminUserAvatarFieldView } from '@/components/admin/AdminUserAvatarFieldView'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { storyT } from '@/stories/_storyI18n'
 import {
   FIXTURE_CHANGE_LOG,
@@ -33,9 +34,11 @@ import {
 const meta: Meta<typeof AdminUserProfileView> = {
   title: 'Patterns/Mantine/AdminUserProfileView',
   component: AdminUserProfileView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/users/[id]' } },
     docs: {
       description: {
         component:
@@ -109,7 +112,7 @@ function ProfileDemo({
   const [createEmail, setCreateEmail] = useState('')
   const avatarInputRef = useRef<HTMLInputElement>(null)
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width={mode === 'create' ? 'form' : 'page'}>
       <AdminUserProfileView
         mode={mode}
         user={user}
@@ -164,7 +167,7 @@ function ProfileDemo({
         onClearHistory={() => {}}
         onClearHistoryRow={() => {}}
       />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 
@@ -208,7 +211,11 @@ export const EditErrors: Story = {
   },
 }
 
-export const Create: Story = { render: () => <ProfileDemo mode="create" user={null} /> }
+// `/admin/users/new` renders in the narrower `form` frame (`src/app/admin/users/new/page.tsx`); every other export is `/admin/users/[id]`.
+export const Create: Story = {
+  parameters: { nextjs: { navigation: { pathname: '/admin/users/new' } } },
+  render: () => <ProfileDemo mode="create" user={null} />,
+}
 
 export const Saving: Story = {
   render: () => <ProfileDemo mode="edit" user={FIXTURE_PROFILE_USER} isDirty saving />,

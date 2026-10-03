@@ -861,8 +861,15 @@ function findShorthandCssLiterals(line, spec) {
 //               was `MobileBottomNavView.module.css:92`, deleted by Task 787
 //               (2026-09-04, mobile bottom bar removal); no live call site
 //               remains in `src/`, kept defensively rather than removed.
+//   --paper-radius   Mantine's own `Paper` radius variable — defined at
+//               node_modules/@mantine/core/styles/Paper.css as
+//               `--paper-radius: var(--mantine-radius-default)`, present in
+//               .next/static/css/*.css. Forced onto the list by
+//               `MantineNavRowList.module.css` (Task 857 R65, GR-3g): a row that
+//               touches the corner of the list's `Paper` takes the Paper's radius
+//               token, so a clip never cuts its line. Exact name, not a prefix.
 const EXTERNAL_VAR_PREFIXES = ['--tw-', '--mantine-'];
-const EXTERNAL_VAR_EXACT_NAMES = new Set(['--spacing', '--default-transition-timing-function']);
+const EXTERNAL_VAR_EXACT_NAMES = new Set(['--spacing', '--default-transition-timing-function', '--paper-radius']);
 
 function isExternallyResolvedVar(name) {
   if (EXTERNAL_VAR_EXACT_NAMES.has(name)) return true;

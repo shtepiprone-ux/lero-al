@@ -1,0 +1,190 @@
+ M docs/component-catalog.md
+ M docs/critical-flow-registry.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/check-listing-visibility.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/responsive-screenshots.mjs
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M scripts/type-responsive-baseline.json
+ M src/app/admin/currency/page.tsx
+ M src/app/admin/inquiries/sales/page.tsx
+ M src/app/admin/inquiries/support/page.tsx
+ M src/app/admin/listings/page.tsx
+ M src/app/admin/pages/page.tsx
+ M src/app/admin/permissions/page.tsx
+ M src/app/admin/reports/page.tsx
+ M src/app/admin/users/[id]/page.tsx
+ M src/app/admin/users/new/page.tsx
+ M src/app/admin/users/page.tsx
+ M src/components/admin/AdminCurrenciesView.tsx
+ M src/components/admin/AdminExchangeProvidersView.tsx
+ D src/components/admin/AdminListingsTable.stories.tsx
+ M src/components/admin/AdminListingsTable.tsx
+ D src/components/admin/AdminPageShell.stories.tsx
+ D src/components/admin/AdminPageShell.tsx
+ M src/components/admin/AdminPagesView.tsx
+ M src/components/admin/AdminReportsView.tsx
+ M src/components/admin/AdminSearchInput.tsx
+ M src/components/admin/AdminTable.tsx
+ M src/components/admin/AdminUsersTable.tsx
+ M src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+ M src/components/admin/__tests__/AdminTable.adapter.test.tsx
+ M src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+ M src/design-system/mantine/theme.ts
+ M src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+ M src/modules/listings/lib/__tests__/visibility.test.ts
+ M src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+ M src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx
+ M src/stories/patterns/mantine/AdminDashboardView.stories.tsx
+ M src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx
+ M src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+ M src/stories/patterns/mantine/AdminPagesView.stories.tsx
+ M src/stories/patterns/mantine/AdminPermissionsView.stories.tsx
+ M src/stories/patterns/mantine/AdminReportsView.stories.tsx
+ M src/stories/patterns/mantine/AdminTable.stories.tsx
+ M src/stories/patterns/mantine/AdminUserProfileView.stories.tsx
+ M src/stories/patterns/mantine/AdminUsersTable.stories.tsx
+?? docs/sessions/2026-10-02-task857-admin-listings-mantine.md
+?? docs/sessions/evidence/task857/00-platform.txt
+?? docs/sessions/evidence/task857/01-status-before.txt
+?? docs/sessions/evidence/task857/02-census-before.txt
+?? docs/sessions/evidence/task857/04-vitest-visibility-before.txt
+?? docs/sessions/evidence/task857/04b-listing-visibility-before.txt
+?? docs/sessions/evidence/task857/05-deleted-hashes.txt
+?? docs/sessions/evidence/task857/06-plants-run.txt
+?? docs/sessions/evidence/task857/06b-plants-run.txt
+?? docs/sessions/evidence/task857/06c-plant-P2c.txt
+?? docs/sessions/evidence/task857/06d-plant-P2d-pair-in-route.txt
+?? docs/sessions/evidence/task857/10-tests.txt
+?? docs/sessions/evidence/task857/10b-listing-visibility.txt
+?? docs/sessions/evidence/task857/10c-listing-visibility-verify.txt
+?? docs/sessions/evidence/task857/11-census-after.txt
+?? docs/sessions/evidence/task857/12-typecheck.txt
+?? docs/sessions/evidence/task857/13-lint.txt
+?? docs/sessions/evidence/task857/14-story-coverage.txt
+?? docs/sessions/evidence/task857/15-rendered-scope.txt
+?? docs/sessions/evidence/task857/16-census-changed.txt
+?? docs/sessions/evidence/task857/16a-census-update-baseline.txt
+?? docs/sessions/evidence/task857/17-design-tokens.txt
+?? docs/sessions/evidence/task857/17b-enrolled-tailwind.txt
+?? docs/sessions/evidence/task857/17c-i18n.txt
+?? docs/sessions/evidence/task857/17d-i18n-dynamic.txt
+?? docs/sessions/evidence/task857/17e-type-responsive.txt
+?? docs/sessions/evidence/task857/18-file-integrity.txt
+?? docs/sessions/evidence/task857/18b-mojibake.txt
+?? docs/sessions/evidence/task857/19-storybook-build.txt
+?? docs/sessions/evidence/task857/19b-build.txt
+?? docs/sessions/evidence/task857/20-baseline-diff.txt
+?? docs/sessions/evidence/task857/20b-reference-audit.txt
+?? docs/sessions/evidence/task857/20c-reference-audit-r1.txt
+?? docs/sessions/evidence/task857/21-status-after.txt
+?? docs/sessions/evidence/task857/22-hash-object.txt
+?? docs/sessions/evidence/task857/23-measurements-en_it-default.json
+?? docs/sessions/evidence/task857/23-measurements-sq-default.json
+?? docs/sessions/evidence/task857/23-measurements-sq-default_premium-tab_filtered-pending_visible-filter_hidden-eligible_audit-zero_empty_paginated.json
+?? docs/sessions/evidence/task857/23-measurements-sq.json
+?? docs/sessions/evidence/task857/23-measurements-uk-default_visible-filter_hidden-eligible_paginated_active_sold-status-actions_delete-confirm.json
+?? docs/sessions/evidence/task857/24-platform-r1.txt
+?? docs/sessions/evidence/task857/24b-hash-before-r1.txt
+?? docs/sessions/evidence/task857/25-tests-r1.txt
+?? docs/sessions/evidence/task857/26-listing-visibility-r1.txt
+?? docs/sessions/evidence/task857/27-listing-visibility-verify-r1.txt
+?? docs/sessions/evidence/task857/28-typecheck-r1.txt
+?? docs/sessions/evidence/task857/29-lint-r1.txt
+?? docs/sessions/evidence/task857/30-file-integrity-r1.txt
+?? docs/sessions/evidence/task857/31-mojibake-r1.txt
+?? docs/sessions/evidence/task857/32-build-r1.txt
+?? docs/sessions/evidence/task857/33-status-after-r1.txt
+?? docs/sessions/evidence/task857/34-hash-object-r1.txt
+?? docs/sessions/evidence/task857/35-plants-r1.txt
+?? docs/sessions/evidence/task857/36-multiline-decl-count-r1.txt
+?? docs/sessions/evidence/task857/40-platform-r2.txt
+?? docs/sessions/evidence/task857/41-census-r2.txt
+?? docs/sessions/evidence/task857/42-tests-r2.txt
+?? docs/sessions/evidence/task857/43-typecheck-r2.txt
+?? docs/sessions/evidence/task857/44-lint-r2.txt
+?? docs/sessions/evidence/task857/45-story-coverage-r2.txt
+?? docs/sessions/evidence/task857/46-rendered-scope-r2.txt
+?? docs/sessions/evidence/task857/47-census-changed-r2.txt
+?? docs/sessions/evidence/task857/48-design-tokens-r2.txt
+?? docs/sessions/evidence/task857/49-enrolled-tailwind-r2.txt
+?? docs/sessions/evidence/task857/50-i18n-r2.txt
+?? docs/sessions/evidence/task857/51-i18n-dynamic-r2.txt
+?? docs/sessions/evidence/task857/52-type-responsive-r2.txt
+?? docs/sessions/evidence/task857/53-file-integrity-r2.txt
+?? docs/sessions/evidence/task857/54-mojibake-r2.txt
+?? docs/sessions/evidence/task857/55-storybook-build-r2.txt
+?? docs/sessions/evidence/task857/56-build-r2.txt
+?? docs/sessions/evidence/task857/57-status-after-r2.txt
+?? docs/sessions/evidence/task857/58-hash-object-r2.txt
+?? docs/sessions/evidence/task857/59-measure-r2.mjs
+?? docs/sessions/evidence/task857/59-measurements-r2.json
+?? docs/sessions/evidence/task857/59b-cols-r2.json
+?? docs/sessions/evidence/task857/59b-dialogs-r2.json
+?? docs/sessions/evidence/task857/59b-gutters-r2.json
+?? docs/sessions/evidence/task857/59b-measure2-r2.mjs
+?? docs/sessions/evidence/task857/59c-gutters-r2.json
+?? docs/sessions/evidence/task857/59c-gutters-r2.mjs
+?? docs/sessions/evidence/task857/60-admintable-default-after-1440.png
+?? docs/sessions/evidence/task857/60-admintable-empty-after-1440.png
+?? docs/sessions/evidence/task857/60-admintable-row-click-after-1440.png
+?? docs/sessions/evidence/task857/60-admintable-synthesized-after-1440.png
+?? docs/sessions/evidence/task857/60-admintable-wrapped-title-column-after-1440.png
+?? docs/sessions/evidence/task857/61-plant-P6-r2.txt
+?? docs/sessions/evidence/task857/70-platform-r3.txt
+?? docs/sessions/evidence/task857/71-census-r3.txt
+?? docs/sessions/evidence/task857/72-tests-r3.txt
+?? docs/sessions/evidence/task857/72b-tests-touched-r3.txt
+?? docs/sessions/evidence/task857/73-typecheck-r3.txt
+?? docs/sessions/evidence/task857/74-lint-r3.txt
+?? docs/sessions/evidence/task857/75-story-coverage-r3.txt
+?? docs/sessions/evidence/task857/76-rendered-scope-r3.txt
+?? docs/sessions/evidence/task857/77-census-changed-r3.txt
+?? docs/sessions/evidence/task857/78-design-tokens-r3.txt
+?? docs/sessions/evidence/task857/79-enrolled-tailwind-r3.txt
+?? docs/sessions/evidence/task857/80-i18n-r3.txt
+?? docs/sessions/evidence/task857/81-type-responsive-r3.txt
+?? docs/sessions/evidence/task857/82-file-integrity-r3.txt
+?? docs/sessions/evidence/task857/83-mojibake-r3.txt
+?? docs/sessions/evidence/task857/83b-listing-visibility-r3.txt
+?? docs/sessions/evidence/task857/84-storybook-build-r3.txt
+?? docs/sessions/evidence/task857/85-build-r3.txt
+?? docs/sessions/evidence/task857/86-status-after-r3.txt
+?? docs/sessions/evidence/task857/88-measure-r3.mjs
+?? docs/sessions/evidence/task857/88-measurements-r3-run2.json
+?? docs/sessions/evidence/task857/88-measurements-r3.json
+?? docs/sessions/evidence/task857/88-summary-r3.txt
+?? docs/sessions/evidence/task857/plant-P1-planted.txt
+?? docs/sessions/evidence/task857/plant-P2-planted.txt
+?? docs/sessions/evidence/task857/plant-P2a-r1-planted.txt
+?? docs/sessions/evidence/task857/plant-P2a-r1-restored.txt
+?? docs/sessions/evidence/task857/plant-P2b-planted.txt
+?? docs/sessions/evidence/task857/plant-P2b-r1-planted.txt
+?? docs/sessions/evidence/task857/plant-P2b-r1-restored.txt
+?? docs/sessions/evidence/task857/plant-P2c-planted.txt
+?? docs/sessions/evidence/task857/plant-P2c-r1-planted.txt
+?? docs/sessions/evidence/task857/plant-P2c-r1-restored.txt
+?? docs/sessions/evidence/task857/plant-P3-planted.txt
+?? docs/sessions/evidence/task857/plant-P4-planted.txt
+?? docs/sessions/evidence/task857/plant-P5-planted.txt
+?? docs/sessions/evidence/task857/plant-P6-r2-planted.txt
+?? docs/sessions/evidence/task857/plant-P6-r2-restored.txt
+?? src/app/admin/listings/visibilityFilter.ts
+?? src/components/admin/AdminListingsView.tsx
+?? src/components/admin/AdminPageFrame.tsx
+?? src/components/admin/ListingPreviewDialog.tsx
+?? src/components/admin/ListingPreviewDialogView.tsx
+?? src/components/admin/PremiumDialog.tsx
+?? src/components/admin/PremiumDialogView.tsx
+?? src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+?? src/components/admin/useAdminSearchQuery.ts
+?? src/stories/_StoryAdminShell.tsx
+?? src/stories/patterns/mantine/AdminListingsView.stories.tsx
+?? src/stories/patterns/mantine/AdminPageFrame.stories.tsx
+?? src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
+?? src/stories/patterns/mantine/PremiumDialogView.stories.tsx

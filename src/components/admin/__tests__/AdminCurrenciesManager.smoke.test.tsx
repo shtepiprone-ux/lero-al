@@ -173,7 +173,8 @@ describe('AdminCurrenciesManager (T1)', () => {
 
   it('case 5 — set default: calls setDefaultCurrency and the default badge moves to that row', async () => {
     renderManager()
-    const rowOf = (code: string) => screen.getAllByRole('button', { name: code })[0].closest('tr') as HTMLElement
+    // `AdminTable` renders the table and the cards together (Task 857 R20): the row is the table's.
+    const rowOf = (code: string) => within(screen.getByRole('table')).getAllByRole('button', { name: code })[0].closest('tr') as HTMLElement
     expect(within(rowOf(ALL.code)).queryByText(t.default_badge)).not.toBeNull()
     expect(within(rowOf(EUR.code)).queryByText(t.default_badge)).toBeNull()
 

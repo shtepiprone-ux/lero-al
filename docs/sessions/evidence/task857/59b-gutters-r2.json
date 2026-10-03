@@ -1,0 +1,938 @@
+{
+ "dialogs": [],
+ "gutters": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--visible-filter",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--visible-filter",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--visible-filter",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--visible-filter",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--visible-filter",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "p": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 16,
+   "fonts": {
+    "button": [
+     10,
+     14,
+     16
+    ],
+    "span": [
+     12,
+     14
+    ],
+    "input": [
+     14,
+     16
+    ],
+    "label": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "th": [
+     12
+    ],
+    "td": [
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "p": [
+     12,
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "p": [
+     12,
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--wrapped-title-column",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": 320,
+   "vw": 320,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "span": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": 390,
+   "vw": 390,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "span": [
+     12,
+     14
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": 768,
+   "vw": 768,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": 1024,
+   "vw": 1024,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  },
+  {
+   "id": "patterns-mantine-admintable--default",
+   "w": 1440,
+   "vw": 1440,
+   "top": 0,
+   "left": 0,
+   "right": 0,
+   "bottom": 0,
+   "pageOverflow": false,
+   "maxFont": 14,
+   "fonts": {
+    "th": [
+     12
+    ],
+    "p": [
+     12,
+     14
+    ],
+    "td": [
+     14
+    ],
+    "span": [
+     12
+    ]
+   }
+  }
+ ],
+ "fonts": [],
+ "titleCol": [],
+ "wrapped": []
+}

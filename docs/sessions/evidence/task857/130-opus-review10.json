@@ -1,0 +1,471 @@
+{
+  "platform": "win32 v22.22.3",
+  "ac35": {
+    "rowBox": {
+      "x": 33,
+      "y": 25,
+      "width": 1374,
+      "height": 58
+    },
+    "kbd": {
+      "isFirstRow": true,
+      "fv": true,
+      "boxShadow": "rgb(236, 84, 71) 0px 0px 0px 1px inset, color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 4px inset",
+      "bg": "rgb(249, 250, 251)"
+    },
+    "sides": {
+      "left": {
+        "outside": [
+          208,
+          213,
+          221
+        ],
+        "edge": [
+          236,
+          84,
+          71
+        ],
+        "ring1": [
+          248,
+          238,
+          238
+        ],
+        "inner": [
+          249,
+          250,
+          251
+        ],
+        "restEdge": [
+          255,
+          255,
+          255
+        ],
+        "edgeVsInner": 3.39,
+        "edgeVsOutside": 2.4,
+        "edgeVsGray0": 3.39,
+        "edgeVsWhite": 3.54
+      },
+      "right": {
+        "outside": [
+          208,
+          213,
+          221
+        ],
+        "edge": [
+          236,
+          84,
+          71
+        ],
+        "ring1": [
+          248,
+          238,
+          238
+        ],
+        "inner": [
+          249,
+          250,
+          251
+        ],
+        "restEdge": [
+          255,
+          255,
+          255
+        ],
+        "edgeVsInner": 3.39,
+        "edgeVsOutside": 2.4,
+        "edgeVsGray0": 3.39,
+        "edgeVsWhite": 3.54
+      },
+      "top": {
+        "outside": [
+          208,
+          213,
+          221
+        ],
+        "edge": [
+          236,
+          84,
+          71
+        ],
+        "ring1": [
+          248,
+          238,
+          238
+        ],
+        "inner": [
+          249,
+          250,
+          251
+        ],
+        "restEdge": [
+          255,
+          255,
+          255
+        ],
+        "edgeVsInner": 3.39,
+        "edgeVsOutside": 2.4,
+        "edgeVsGray0": 3.39,
+        "edgeVsWhite": 3.54
+      },
+      "bottom": {
+        "outside": [
+          228,
+          231,
+          236
+        ],
+        "edge": [
+          236,
+          84,
+          71
+        ],
+        "ring1": [
+          248,
+          238,
+          238
+        ],
+        "inner": [
+          249,
+          250,
+          251
+        ],
+        "restEdge": [
+          255,
+          255,
+          255
+        ],
+        "edgeVsInner": 3.39,
+        "edgeVsOutside": 2.86,
+        "edgeVsGray0": 3.39,
+        "edgeVsWhite": 3.54
+      }
+    },
+    "cornerTL": [
+      [
+        250,
+        250,
+        250
+      ],
+      [
+        241,
+        236,
+        237
+      ],
+      [
+        248,
+        238,
+        238
+      ]
+    ],
+    "crop": {
+      "W": 1380,
+      "H": 64
+    },
+    "hover": {
+      "boxShadow": "none",
+      "bg": "rgb(249, 250, 251)"
+    },
+    "mouse": {
+      "tag": "BUTTON",
+      "isRow3": true,
+      "fv": false,
+      "boxShadow": "none",
+      "url": "http://127.0.0.1:6130/iframe.html?id=patterns-mantine-navrowlist--default&globals=locale%3Asq&viewMode=story"
+    }
+  },
+  "ac37": [
+    {
+      "loc": "sq",
+      "w": 390,
+      "label": "Statusi",
+      "before": "Aktiv",
+      "soldOptionFound": 0,
+      "after": "Aktiv",
+      "reopen": "blocked: \u001b[2m      - <div data-fixed=\"true\" class=\"mantine-Drawer-overlay m_9814e45f mantine-Overlay-root\"></div> from <div>…</div> subtree intercepts pointer events\u001b[22m",
+      "overlays": [
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Drawer-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-87ii6so41-title",
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Select-options",
+          "role": "listbox",
+          "label": "Statusi",
+          "visible": false,
+          "text": "AktivNën shqyrtimJoaktivShiturDhënë me qiraArkivuarSkaduar"
+        },
+        {
+          "cls": "mantine-Drawer-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "AktivNën shqyrtimJoaktivShiturDhënë me qiraArkivuarSkaduar"
+        },
+        {
+          "cls": "mantine-Drawer-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-fery8dpdm-title",
+          "visible": true,
+          "text": "AktivNën shqyrtimJoaktivShiturDhënë me qiraArkivuarSkaduar"
+        }
+      ],
+      "toastText": [],
+      "optsBefore": [],
+      "optsAfter": [],
+      "dialogOpen": true,
+      "overflowX": false,
+      "textButtons": 0,
+      "sharedRowPairs": 0,
+      "navRows": 3
+    },
+    {
+      "loc": "sq",
+      "w": 1440,
+      "label": "Statusi",
+      "before": "Aktiv",
+      "soldOptionFound": 1,
+      "after": "Shitur",
+      "reopen": "ok",
+      "overlays": [
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Modal-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Modal-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-7ifma5gto-title",
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Select-options",
+          "role": "listbox",
+          "label": "Statusi",
+          "visible": false,
+          "text": "ShiturNën shqyrtimAktivJoaktivDhënë me qiraArkivuarSkaduar"
+        }
+      ],
+      "toastText": [
+        "Statusi u përditësua"
+      ],
+      "optsBefore": [
+        "Aktiv",
+        "Nën shqyrtim",
+        "Joaktiv",
+        "Shitur",
+        "Dhënë me qira",
+        "Arkivuar",
+        "Skaduar"
+      ],
+      "optsAfter": [
+        "Shitur",
+        "Nën shqyrtim",
+        "Aktiv",
+        "Joaktiv",
+        "Dhënë me qira",
+        "Arkivuar",
+        "Skaduar"
+      ],
+      "dialogOpen": true,
+      "overflowX": false,
+      "textButtons": 0,
+      "sharedRowPairs": 0,
+      "navRows": 3
+    },
+    {
+      "loc": "uk",
+      "w": 390,
+      "label": "Статус",
+      "before": "Активне",
+      "soldOptionFound": 0,
+      "after": "Активне",
+      "reopen": "blocked: \u001b[2m      - <div data-fixed=\"true\" class=\"mantine-Drawer-overlay m_9814e45f mantine-Overlay-root\"></div> from <div>…</div> subtree intercepts pointer events\u001b[22m",
+      "overlays": [
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Drawer-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-oqa2nsmb5-title",
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Select-options",
+          "role": "listbox",
+          "label": "Статус",
+          "visible": false,
+          "text": "АктивнеНа модераціїНеактивнеПроданоОрендованоАрхівПрострочен"
+        },
+        {
+          "cls": "mantine-Drawer-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "АктивнеНа модераціїНеактивнеПроданоОрендованоАрхівПрострочен"
+        },
+        {
+          "cls": "mantine-Drawer-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Drawer-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-yydhm6ojk-title",
+          "visible": true,
+          "text": "АктивнеНа модераціїНеактивнеПроданоОрендованоАрхівПрострочен"
+        }
+      ],
+      "toastText": [],
+      "optsBefore": [],
+      "optsAfter": [],
+      "dialogOpen": true,
+      "overflowX": false,
+      "textButtons": 0,
+      "sharedRowPairs": 0,
+      "navRows": 3
+    },
+    {
+      "loc": "uk",
+      "w": 1440,
+      "label": "Статус",
+      "before": "Активне",
+      "soldOptionFound": 1,
+      "after": "Продано",
+      "reopen": "ok",
+      "overlays": [
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Modal-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Modal-overlay mantine-Overlay-root",
+          "role": null,
+          "label": null,
+          "visible": true,
+          "text": ""
+        },
+        {
+          "cls": "mantine-Modal-content mantine-Paper-root",
+          "role": "dialog",
+          "label": "mantine-6ez1zp2ln-title",
+          "visible": true,
+          "text": "3+1 apartament në qendër të Tiranës — kati i 5-të, pamje pan"
+        },
+        {
+          "cls": "mantine-Select-options",
+          "role": "listbox",
+          "label": "Статус",
+          "visible": false,
+          "text": "ПроданоНа модераціїАктивнеНеактивнеОрендованоАрхівПрострочен"
+        }
+      ],
+      "toastText": [
+        "Статус оновлено"
+      ],
+      "optsBefore": [
+        "Активне",
+        "На модерації",
+        "Неактивне",
+        "Продано",
+        "Орендовано",
+        "Архів",
+        "Прострочене"
+      ],
+      "optsAfter": [
+        "Продано",
+        "На модерації",
+        "Активне",
+        "Неактивне",
+        "Орендовано",
+        "Архів",
+        "Прострочене"
+      ],
+      "dialogOpen": true,
+      "overflowX": false,
+      "textButtons": 0,
+      "sharedRowPairs": 0,
+      "navRows": 3
+    }
+  ]
+}

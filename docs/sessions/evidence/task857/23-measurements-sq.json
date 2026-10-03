@@ -1,0 +1,3016 @@
+[
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 380,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--premium-tab",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 275,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--premium-tab",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 279,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--premium-tab",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--premium-tab",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--premium-tab",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--filtered-pending",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 243,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--filtered-pending",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 247,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--filtered-pending",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--filtered-pending",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--filtered-pending",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 275,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 279,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 243,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 247,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 576,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 2
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--audit-zero",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--audit-zero",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--audit-zero",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 384,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--audit-zero",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 384,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--audit-zero",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 384,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--empty",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 358,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--empty",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 362,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--empty",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 598,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--empty",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 598,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--empty",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 598,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "sq",
+  "w": 320,
+  "compW": 288,
+  "parentW": 320,
+  "vw": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "sq",
+  "w": 390,
+  "compW": 358,
+  "parentW": 390,
+  "vw": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 0
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "sq",
+  "w": 768,
+  "compW": 720,
+  "parentW": 768,
+  "vw": 768,
+  "top": 24,
+  "left": 24,
+  "right": 24,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 960,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 1376,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 332,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "button": [
+    10,
+    14,
+    16
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "input": [
+    14,
+    16
+   ],
+   "label": [
+    12
+   ],
+   "p": [
+    12,
+    14,
+    16
+   ]
+  },
+  "rowsOrdered": false,
+  "filterBar": [],
+  "filterStackedBelow640": true,
+  "listVisibleRows": 6
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 127,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 179,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "sq",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 214,
+  "left": 164,
+  "right": 164,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 164,
+  "dialogRight": 164
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 214,
+  "left": 292,
+  "right": 292,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 292,
+  "dialogRight": 292
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--active",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 214,
+  "left": 500,
+  "right": 500,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 500,
+  "dialogRight": 500
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 147,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 199,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "sq",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 188,
+  "left": 164,
+  "right": 164,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 164,
+  "dialogRight": 164
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 188,
+  "left": 292,
+  "right": 292,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 292,
+  "dialogRight": 292
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 188,
+  "left": 500,
+  "right": 500,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 500,
+  "dialogRight": 500
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--hidden",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 199,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 10,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--hidden",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 251,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 10,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--hidden",
+  "locale": "sq",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 214,
+  "left": 164,
+  "right": 164,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 11,
+  "dialogLeft": 164,
+  "dialogRight": 164
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--hidden",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 214,
+  "left": 292,
+  "right": 292,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 11,
+  "dialogLeft": 292,
+  "dialogRight": 292
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--hidden",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 214,
+  "left": 500,
+  "right": 500,
+  "bottom": 214,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 11,
+  "dialogLeft": 500,
+  "dialogRight": 500
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 461,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 2,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 461,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 2,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "sq",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 277,
+  "left": 164,
+  "right": 164,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 164,
+  "dialogRight": 164
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 277,
+  "left": 292,
+  "right": 292,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 292,
+  "dialogRight": 292
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 277,
+  "left": 500,
+  "right": 500,
+  "bottom": 277,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 3,
+  "dialogLeft": 500,
+  "dialogRight": 500
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--changing-status",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 147,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--changing-status",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 199,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "span": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 11,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--changing-status",
+  "locale": "sq",
+  "w": 768,
+  "compW": 440,
+  "parentW": 768,
+  "vw": 768,
+  "top": 188,
+  "left": 164,
+  "right": 164,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 164,
+  "dialogRight": 164
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--changing-status",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 440,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 188,
+  "left": 292,
+  "right": 292,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 292,
+  "dialogRight": 292
+ },
+ {
+  "id": "patterns-mantine-listingpreviewdialogview--changing-status",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 440,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 188,
+  "left": 500,
+  "right": 500,
+  "bottom": 188,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "span": [
+    12,
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    12
+   ],
+   "a": [
+    12
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 12,
+  "dialogLeft": 500,
+  "dialogRight": 500
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--not-premium",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 487,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 6,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--not-premium",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 487,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 6,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--not-premium",
+  "locale": "sq",
+  "w": 768,
+  "compW": 380,
+  "parentW": 768,
+  "vw": 768,
+  "top": 254,
+  "left": 194,
+  "right": 194,
+  "bottom": 254,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 7,
+  "dialogLeft": 194,
+  "dialogRight": 194
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--not-premium",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 380,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 254,
+  "left": 322,
+  "right": 322,
+  "bottom": 254,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 7,
+  "dialogLeft": 322,
+  "dialogRight": 322
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--not-premium",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 380,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 254,
+  "left": 530,
+  "right": 530,
+  "bottom": 254,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 7,
+  "dialogLeft": 530,
+  "dialogRight": 530
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--premium",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 427,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 7,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--premium",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 427,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 7,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--premium",
+  "locale": "sq",
+  "w": 768,
+  "compW": 380,
+  "parentW": 768,
+  "vw": 768,
+  "top": 224,
+  "left": 194,
+  "right": 194,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 194,
+  "dialogRight": 194
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--premium",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 380,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 224,
+  "left": 322,
+  "right": 322,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 322,
+  "dialogRight": 322
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--premium",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 380,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 224,
+  "left": 530,
+  "right": 530,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 530,
+  "dialogRight": 530
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--saving",
+  "locale": "sq",
+  "w": 320,
+  "compW": 320,
+  "parentW": 320,
+  "vw": 320,
+  "top": 427,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 7,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--saving",
+  "locale": "sq",
+  "w": 390,
+  "compW": 390,
+  "parentW": 390,
+  "vw": 390,
+  "top": 427,
+  "left": 0,
+  "right": 0,
+  "bottom": 0,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 44,
+  "btnCount": 7,
+  "dialogLeft": 0,
+  "dialogRight": 0
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--saving",
+  "locale": "sq",
+  "w": 768,
+  "compW": 380,
+  "parentW": 768,
+  "vw": 768,
+  "top": 224,
+  "left": 194,
+  "right": 194,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 194,
+  "dialogRight": 194
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--saving",
+  "locale": "sq",
+  "w": 1024,
+  "compW": 380,
+  "parentW": 1024,
+  "vw": 1024,
+  "top": 224,
+  "left": 322,
+  "right": 322,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 322,
+  "dialogRight": 322
+ },
+ {
+  "id": "patterns-mantine-premiumdialogview--saving",
+  "locale": "sq",
+  "w": 1440,
+  "compW": 380,
+  "parentW": 1440,
+  "vw": 1440,
+  "top": 224,
+  "left": 530,
+  "right": 530,
+  "bottom": 224,
+  "pageOverflow": false,
+  "elOverflow": false,
+  "fonts": {
+   "h2": [
+    16
+   ],
+   "p": [
+    12,
+    14
+   ],
+   "button": [
+    14
+   ],
+   "span": [
+    14
+   ]
+  },
+  "minBtnH": 28,
+  "btnCount": 8,
+  "dialogLeft": 530,
+  "dialogRight": 530
+ }
+]

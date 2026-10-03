@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { ActionIcon, Badge, Box, Button, Center, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
-import { Check, Eye, Info, MessageCircle, MessageSquare } from 'lucide-react'
+import { Activity, CalendarClock, Check, Eye, Info, Mail, MessageCircle, MessageSquare } from 'lucide-react'
 import { MantineDashboardHeader } from '@/design-system/mantine/patterns/MantineDashboardHeader'
 import { MantineDashboardPeriodControl, type DashboardPeriodControlLabels } from '@/design-system/mantine/patterns/MantineDashboardPeriodControl'
 import {
@@ -339,17 +339,59 @@ export function AgentStatisticsView({
     )
   }
 
-  // R8/R12: title and expires wrap (D854-1 = A); the rest stay `nowrap` (the pattern's own default).
+  // §7.3 (a)/(b), Task 857 R31/R33 + the §19.1 owner decision (cards below 1024): the title wraps at the table-title
+  // token width (thumbnail + two-line link); status + visibility, expiry + last activity, and the three counts each
+  // stack in one cell; every other column stays `nowrap`. The card keeps every value separately labelled.
   const columns: TableColumn<Agt10Row>[] = [
-    { key: 'title', label: t('agt10_col_title'), width: '22%', wrap: true, render: (row) => <Group gap="sm" wrap="nowrap">{thumbnail(row)}{titleLink(row)}</Group> },
-    { key: 'status', label: t('agt10_col_status'), align: 'center', width: '10%', render: statusBadge },
-    { key: 'visibility', label: t('agt10_col_visibility'), align: 'center', width: '10%', render: visibilityBadge },
-    { key: 'expires', label: t('agt10_col_expires'), width: '14%', wrap: true, render: expiresCell },
-    { key: 'views', label: t('agt10_col_views'), align: 'right', width: '9%', render: viewsCell },
-    { key: 'whatsapp', label: t('agt10_col_whatsapp'), align: 'right', width: '9%', render: whatsappCell },
-    { key: 'inquiries', label: t('agt10_col_inquiries'), align: 'right', width: '9%', render: formInquiriesCell },
-    { key: 'activity', label: t('agt10_col_activity'), width: '12%', render: lastActivityCell },
-    { key: 'actions', label: t('agt10_col_actions'), align: 'right', width: '5%', render: editAction },
+    { key: 'title', label: t('agt10_col_title'), width: theme.other.layout.tableTitleColumnWidth, wrap: true, render: (row) => <Group gap="sm" wrap="nowrap">{thumbnail(row)}{titleLink(row)}</Group> },
+    {
+      key: 'status',
+      label: t('agt10_col_status'),
+      render: (row) => (
+        <Stack gap="tight" align="flex-start">
+          {statusBadge(row)}
+          {visibilityBadge(row)}
+        </Stack>
+      ),
+    },
+    {
+      key: 'dates',
+      label: t('agt10_col_dates'),
+      render: (row) => (
+        <Stack gap="tight" align="flex-start">
+          <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_expires')}>
+            <CalendarClock size={theme.other.iconSize.badge} aria-hidden="true" />
+            {expiresCell(row)}
+          </Group>
+          <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_activity')}>
+            <Activity size={theme.other.iconSize.badge} aria-hidden="true" />
+            {lastActivityCell(row)}
+          </Group>
+        </Stack>
+      ),
+    },
+    {
+      key: 'counts',
+      label: t('agt10_col_activity_counts'),
+      align: 'right',
+      render: (row) => (
+        <Stack gap="tight" align="flex-end">
+          <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_views')}>
+            <Eye size={theme.other.iconSize.badge} aria-hidden="true" />
+            {viewsCell(row)}
+          </Group>
+          <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_whatsapp')}>
+            <MessageCircle size={theme.other.iconSize.badge} aria-hidden="true" />
+            {whatsappCell(row)}
+          </Group>
+          <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_inquiries')}>
+            <Mail size={theme.other.iconSize.badge} aria-hidden="true" />
+            {formInquiriesCell(row)}
+          </Group>
+        </Stack>
+      ),
+    },
+    { key: 'actions', label: t('agt10_col_actions'), align: 'right', render: editAction },
   ]
 
   const card: CardConfig<Agt10Row> = {
@@ -668,7 +710,7 @@ export function AgentStatisticsView({
                 columns={columns}
                 rows={data.agt10.ok ? data.agt10.data.rows : []}
                 card={card}
-                cardsBelow="md"
+                cardsBelow="lg"
                 emptyLabel={filtersActive ? t('agt10_filtered_empty') : t('agt10_empty')}
               />
 

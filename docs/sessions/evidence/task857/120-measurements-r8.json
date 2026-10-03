@@ -1,0 +1,352 @@
+{
+  "ac31": [
+    {
+      "story": "active",
+      "loc": "sq",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "active",
+      "loc": "sq",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "active",
+      "loc": "uk",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "active",
+      "loc": "uk",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "sold-status-actions",
+      "loc": "sq",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "sold-status-actions",
+      "loc": "sq",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "sold-status-actions",
+      "loc": "uk",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "sold-status-actions",
+      "loc": "uk",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "hidden",
+      "loc": "sq",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Shtëpi / Vilë",
+      "navRows": 2,
+      "overflowX": false
+    },
+    {
+      "story": "hidden",
+      "loc": "sq",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Shtëpi / Vilë",
+      "navRows": 2,
+      "overflowX": false
+    },
+    {
+      "story": "hidden",
+      "loc": "uk",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Будинок / Вілла",
+      "navRows": 2,
+      "overflowX": false
+    },
+    {
+      "story": "hidden",
+      "loc": "uk",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Будинок / Вілла",
+      "navRows": 2,
+      "overflowX": false
+    },
+    {
+      "story": "delete-confirm",
+      "loc": "sq",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Fshi njoftimin?"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 0,
+      "overflowX": false
+    },
+    {
+      "story": "delete-confirm",
+      "loc": "sq",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Fshi njoftimin?"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 0,
+      "overflowX": false
+    },
+    {
+      "story": "delete-confirm",
+      "loc": "uk",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Видалити оголошення?"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 0,
+      "overflowX": false
+    },
+    {
+      "story": "delete-confirm",
+      "loc": "uk",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Видалити оголошення?"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 0,
+      "overflowX": false
+    },
+    {
+      "story": "premium",
+      "loc": "sq",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "premium",
+      "loc": "sq",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Statusi",
+        "Detajet"
+      ],
+      "description": "Shitje · Apartament",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "premium",
+      "loc": "uk",
+      "vw": 390,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    },
+    {
+      "story": "premium",
+      "loc": "uk",
+      "vw": 1440,
+      "imgs": 0,
+      "cardRoot": 0,
+      "sectionTitles": [
+        "Статус",
+        "Деталі"
+      ],
+      "description": "Продаж · Квартира",
+      "navRows": 3,
+      "overflowX": false
+    }
+  ],
+  "ac32": [
+    {
+      "story": "active",
+      "loc": "sq",
+      "contentScrollHeight": 765,
+      "contentClientHeight": 765,
+      "bodyScrollHeight": 653,
+      "bodyClientHeight": 653,
+      "noScroll": true,
+      "bodyChildHeights": [
+        576,
+        77
+      ],
+      "modalHeight": 765
+    },
+    {
+      "story": "active",
+      "loc": "uk",
+      "contentScrollHeight": 765,
+      "contentClientHeight": 765,
+      "bodyScrollHeight": 653,
+      "bodyClientHeight": 653,
+      "noScroll": true,
+      "bodyChildHeights": [
+        576,
+        77
+      ],
+      "modalHeight": 765
+    },
+    {
+      "story": "premium",
+      "loc": "sq",
+      "contentScrollHeight": 765,
+      "contentClientHeight": 765,
+      "bodyScrollHeight": 653,
+      "bodyClientHeight": 653,
+      "noScroll": true,
+      "bodyChildHeights": [
+        576,
+        77
+      ],
+      "modalHeight": 765
+    },
+    {
+      "story": "premium",
+      "loc": "uk",
+      "contentScrollHeight": 765,
+      "contentClientHeight": 765,
+      "bodyScrollHeight": 653,
+      "bodyClientHeight": 653,
+      "noScroll": true,
+      "bodyChildHeights": [
+        576,
+        77
+      ],
+      "modalHeight": 765
+    }
+  ],
+  "ac33": {
+    "keyboard": {
+      "isRow": true,
+      "focusVisible": true,
+      "boxShadow": "color(srgb 0.94902 0.529412 0.494118 / 0.1) 0px 0px 0px 3px inset",
+      "bg": "rgb(249, 250, 251)"
+    },
+    "mouse": {
+      "isRow": true,
+      "focusVisible": false,
+      "boxShadow": "none"
+    }
+  },
+  "noPhotoStoryExists": false
+}

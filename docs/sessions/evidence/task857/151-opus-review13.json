@@ -1,0 +1,157 @@
+{
+  "platform": "win32 v22.22.3",
+  "header": {
+    "patterns-mantine-adminlistingsview--default": [
+      {
+        "text": "ID",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Njoftim",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Çmimi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Data",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      }
+    ],
+    "patterns-mantine-admintable--default": [
+      {
+        "text": "Kodi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Simboli",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Emri (Anglisht)",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Aktive",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Shifra dhjetore",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      }
+    ],
+    "mantine-primitives-table--default": [
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      }
+    ],
+    "mantine-primitives-table--sticky-column": [
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Emri",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Statusi",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Roli",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      },
+      {
+        "text": "Regjistruar",
+        "bg": "rgb(255, 255, 255)",
+        "sticky": true
+      }
+    ]
+  },
+  "scroll": {
+    "scrollWidth": 1583,
+    "clientWidth": 924,
+    "scrollLeft": 659,
+    "thText": "Emri",
+    "thLeftMinusViewport": 0,
+    "thBg": "rgb(255, 255, 255)",
+    "topIsTh": true
+  }
+}

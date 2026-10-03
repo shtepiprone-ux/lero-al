@@ -36,7 +36,7 @@ interface ProviderRow {
  * Presentational View for the exchange-provider manager (Task 874, Container/Presentational split of
  * `AdminExchangeProvidersManager`). No hooks beyond `useTranslations` / `useMantineTheme`, no server
  * action, no `toast`. The list renders through the canonical `MantineDataTableToCards` (table from
- * `sm`, cards below) and the delete confirmation through `MantineModal`. Edit opens from the provider
+ * `md`, cards below 768px) and the delete confirmation through `MantineModal`. Edit opens from the provider
  * name and the edit icon (the legacy whole-row click is not part of the canonical pattern).
  */
 export function AdminExchangeProvidersView({
@@ -121,16 +121,39 @@ export function AdminExchangeProvidersView({
   }
 
   const columns: TableColumn<ProviderRow>[] = [
-    { key: 'name', label: t('name'), render: r => nameButton(r.provider) },
     {
-      key: 'endpoint',
-      label: t('endpoint'),
-      render: r => <Text size="xs" c="dimmed" ff="monospace">{r.provider.endpoint_url}</Text>,
+      key: 'name',
+      label: t('name'),
+      // §7.3 (a)/(b): the name wraps at the table-title token width; the endpoint is its dimmed meta line.
+      width: theme.other.layout.tableTitleColumnWidth,
+      wrap: true,
+      render: r => (
+        <Stack gap="micro" align="flex-start">
+          {nameButton(r.provider)}
+          {r.provider.endpoint_url && (
+            <Text size="xs" c="dimmed" ff="monospace" truncate="end" maw="100%">{r.provider.endpoint_url}</Text>
+          )}
+        </Stack>
+      ),
     },
     { key: 'priority', label: t('priority'), render: r => <Text size="sm" c="gray.7">{r.provider.priority}</Text> },
-    { key: 'mode', label: t('mode'), render: r => modeBadge(r.provider) },
-    { key: 'is_enabled', label: t('is_enabled'), render: r => statusBadge(r.provider) },
-    { key: 'notes', label: t('notes'), render: r => <Text size="xs" c="dimmed">{r.provider.notes ?? '—'}</Text> },
+    {
+      key: 'mode',
+      label: t('mode'),
+      // §7.3 (b): mode and enabled stacked in one cell.
+      render: r => (
+        <Stack gap="tight" align="flex-start">
+          {modeBadge(r.provider)}
+          {statusBadge(r.provider)}
+        </Stack>
+      ),
+    },
+    {
+      key: 'notes',
+      label: t('notes'),
+      visibleFrom: 'xl',
+      render: r => <Text size="xs" c="dimmed">{r.provider.notes ?? '—'}</Text>,
+    },
     { key: 'actions', label: '', align: 'right', render: r => actionIcons(r.provider, false) },
   ]
 
@@ -174,6 +197,7 @@ export function AdminExchangeProvidersView({
         rows={rows}
         emptyLabel={t('empty')}
         card={card}
+        cardsBelow="md"
       />
 
       <MantineModal

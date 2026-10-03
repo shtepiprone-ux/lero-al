@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { AdminPagesView } from '@/components/admin/AdminPagesView'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import type { Page } from '@/types/database'
 
 // Task 868 — presentational View of `/admin/pages` (Container/Presentational split of
@@ -13,9 +14,11 @@ import type { Page } from '@/types/database'
 const meta: Meta<typeof AdminPagesView> = {
   title: 'Patterns/Mantine/AdminPagesView',
   component: AdminPagesView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/pages' } },
     docs: {
       description: {
         component:
@@ -92,7 +95,7 @@ function ViewDemo({ variant = 'default' }: { variant?: Variant }) {
   )
   const [deleteTarget, setDeleteTarget] = useState<Page | null>(variant === 'deleteConfirm' ? fixture[0] : null)
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width="narrow">
       <AdminPagesView
         pages={pages}
         activeLocale="sq"
@@ -108,7 +111,7 @@ function ViewDemo({ variant = 'default' }: { variant?: Variant }) {
           setDeleteTarget(null)
         }}
       />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 

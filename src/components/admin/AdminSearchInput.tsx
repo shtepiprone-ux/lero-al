@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { useAdminSearchQuery } from '@/components/admin/useAdminSearchQuery'
 
 interface Props {
   value: string
@@ -16,34 +15,7 @@ interface Props {
  * Syncs q + resets page in the URL; preserves all other params.
  */
 export function AdminSearchInput({ value: propValue, placeholder = '', className }: Props) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const [value, setValue] = useState(propValue)
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  // Sync from URL only when no debounce is pending (user is not mid-type).
-  useEffect(() => {
-    if (!debounceTimer.current) setValue(propValue)
-  }, [propValue])
-
-  useEffect(() => () => {
-    if (debounceTimer.current) clearTimeout(debounceTimer.current)
-  }, [])
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const next = e.target.value
-    setValue(next)
-    if (debounceTimer.current) clearTimeout(debounceTimer.current)
-    debounceTimer.current = setTimeout(() => {
-      debounceTimer.current = null
-      const params = new URLSearchParams(searchParams.toString())
-      if (next) params.set('q', next)
-      else params.delete('q')
-      params.delete('page')
-      router.push(`${pathname}?${params.toString()}`)
-    }, 300)
-  }
+  const { value, onChange: handleChange } = useAdminSearchQuery(propValue)
 
   return (
     <div className={`relative ${className ?? ''}`}>

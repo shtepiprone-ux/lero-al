@@ -1,0 +1,14 @@
+{
+  "platform": "win32 v22.22.3",
+  "rows": 3,
+  "list": {
+    "borderRadius": "6px",
+    "borderWidth": "1px",
+    "overflow": "hidden",
+    "paperRadiusVar": "0.375rem"
+  },
+  "rowPaperRadiusVar": "0.375rem",
+  "rowBorderRadius": "0px",
+  "firstIsFirstChild": true,
+  "lastIsLastChild": true
+}

@@ -3,21 +3,24 @@ import { useState } from 'react'
 import { AdminInquiriesView, type InquiryMailboxFilter, type InquiryStatusFilter } from '@/components/admin/AdminInquiriesView'
 import type { InquiryRow } from '@/components/admin/AdminInquiriesManager'
 import { FIXTURE_INQUIRIES } from '@/stories/fixtures/admin.fixtures'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 
 // Task 894 — presentational View of the `/admin/inquiries/{sales,support}` list (Container/Presentational split of
 // `AdminInquiriesManager`). GR-3a: CREATE — no canonical Story imported this surface (the manager is a container
 // with live data). Status and mailbox filters on Mantine `SegmentedControl`s in a horizontal `ScrollArea`, rows
-// on `Paper` + `UnstyledButton`. The detail dialog is the separate `InquiryDetailDialogView`. GR-3d: the View has
-// no gutter of its own (the real page's gutter is the `Box` in the route), so each export is wrapped in
-// `StoryPageGutter`. `FIXTURE_INQUIRIES` is labelled fixture data; the filters are local state. Viewport and
+// on `Paper` + `UnstyledButton`. The detail dialog is the separate `InquiryDetailDialogView`. GR-3b: every export
+// renders inside the real `AdminShell` and the route's `AdminPageFrame` (`width="page"`); GR-3d: the frame is the
+// page gutter. `FIXTURE_INQUIRIES` is labelled fixture data; the filters are local state. Viewport and
 // locale come from the Storybook toolbar.
 const meta: Meta<typeof AdminInquiriesView> = {
   title: 'Patterns/Mantine/AdminInquiriesView',
   component: AdminInquiriesView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/inquiries/sales' } },
     docs: {
       description: {
         component:
@@ -41,7 +44,7 @@ function ViewDemo({
   const [mailboxFilter, setMailboxFilter] = useState<InquiryMailboxFilter>('all')
   const shown = inquiries.filter(i => statusFilter === 'all' || i.status === statusFilter)
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width="page">
       <AdminInquiriesView
         inquiries={shown}
         statusFilter={statusFilter}
@@ -52,7 +55,7 @@ function ViewDemo({
         onSelect={() => {}}
         displaySubject={subjectOf}
       />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 

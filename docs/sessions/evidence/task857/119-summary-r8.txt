@@ -1,0 +1,17 @@
+119b-census-r8: 1
+119c-tests-r8: 1
+119d-typecheck-r8: 0
+119e-lint-r8: 0
+119f-story-coverage-r8: 0
+119g-rendered-scope-r8: 0
+119h-census-changed-r8: 0
+119i-design-tokens-r8: 0
+119j-enrolled-tailwind-r8: 0
+112k-i18n-r7: 0
+119l-type-responsive-r8: 0
+119m-file-integrity-r8: 1
+119n-mojibake-r8: 0
+119o-listing-visibility-r8: 0
+119t-pattern-enrolment-r8: 0
+119p-storybook-build-r8: 0
+119q-build-r8: 0

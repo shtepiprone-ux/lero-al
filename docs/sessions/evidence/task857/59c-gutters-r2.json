@@ -1,0 +1,202 @@
+[
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "rootW": 288,
+  "vw": 320
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "rootW": 358,
+  "vw": 390
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 300,
+  "rootW": 960,
+  "vw": 1024
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--default",
+  "w": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 300,
+  "rootW": 1376,
+  "vw": 1440
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "w": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 289,
+  "rootW": 288,
+  "vw": 320
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "w": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 289,
+  "rootW": 358,
+  "vw": 390
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "w": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 564,
+  "rootW": 960,
+  "vw": 1024
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--visible-filter",
+  "w": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 564,
+  "rootW": 1376,
+  "vw": 1440
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "w": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 257,
+  "rootW": 288,
+  "vw": 320
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "w": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 289,
+  "rootW": 358,
+  "vw": 390
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "w": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 563,
+  "rootW": 960,
+  "vw": 1024
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+  "w": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 563,
+  "rootW": 1376,
+  "vw": 1440
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "w": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "rootW": 288,
+  "vw": 320
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "w": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 24,
+  "rootW": 358,
+  "vw": 390
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "w": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 252,
+  "rootW": 960,
+  "vw": 1024
+ },
+ {
+  "id": "patterns-mantine-adminlistingsview--paginated",
+  "w": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 252,
+  "rootW": 1376,
+  "vw": 1440
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 320,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 327,
+  "rootW": 288,
+  "vw": 320
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 390,
+  "top": 24,
+  "left": 16,
+  "right": 16,
+  "bottom": 367,
+  "rootW": 358,
+  "vw": 390
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 1024,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 636,
+  "rootW": 960,
+  "vw": 1024
+ },
+ {
+  "id": "patterns-mantine-admintable--wrapped-title-column",
+  "w": 1440,
+  "top": 24,
+  "left": 32,
+  "right": 32,
+  "bottom": 636,
+  "rootW": 1376,
+  "vw": 1440
+ }
+]

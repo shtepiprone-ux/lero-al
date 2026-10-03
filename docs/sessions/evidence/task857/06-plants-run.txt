@@ -1,0 +1,53 @@
+SCOPE GUARD manifest:
+ 1. src/app/admin/listings/visibilityFilter.ts
+ 2. src/components/admin/AdminListingsTable.tsx
+ 3. src/components/admin/ListingPreviewDialogView.tsx
+ 4. src/components/admin/AdminListingsView.tsx
+P1 src/app/admin/listings/visibilityFilter.ts
+  hash before 90e1dbc28e5edfbcf09e0f7192ec498aa3f60735
+  planted     9622878d06ac2b7b112d6863c9b18a57c66da00b
+  after       90e1dbc28e5edfbcf09e0f7192ec498aa3f60735  equal=true
+  exit under plant=1 (expect non-zero: T1)
+   ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1891ms
+       × 'visible' applies the canonical public-visibility chain (status active + unexpired) 7ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 12 passed (13)
+  ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+   FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — page.tsx visibility filter (T1) > 'visible' applies the canonical public-visibility chain (status active + unexpired)
+P2 src/app/admin/listings/visibilityFilter.ts
+  hash before 90e1dbc28e5edfbcf09e0f7192ec498aa3f60735
+  planted     ccff335245c1470550bb498ab8fa361d02d0cfc9
+  after       90e1dbc28e5edfbcf09e0f7192ec498aa3f60735  equal=true
+  exit under plant=0 (expect non-zero: check:listing-visibility)
+  ✅ Listing public-visibility invariant gate PASSED — 0 violations.
+P3 src/components/admin/AdminListingsTable.tsx
+  hash before 1a180cea927ca24204f4a21d1333dcfcbbe469b4
+  planted     5ee4b1e9fb6602fed08edc23183da58333f5e88c
+  after       1a180cea927ca24204f4a21d1333dcfcbbe469b4  equal=true
+  exit under plant=1 (expect non-zero: T2)
+   ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1941ms
+       × choosing Visible pushes visibility=visible&page=1 and keeps q 292ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 12 passed (13)
+  ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+   FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+P4 src/components/admin/ListingPreviewDialogView.tsx
+  hash before 363ffcfd09260482ed54df0f4e84d1a94b95d63b
+  planted     50dff108f079eee1c4b4e2f22c4a26090341364d
+  after       363ffcfd09260482ed54df0f4e84d1a94b95d63b  equal=true
+  exit under plant=1 (expect non-zero: T7)
+   ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (13 tests | 1 failed) 1884ms
+       × is absent for a hidden (pending) listing 101ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 12 passed (13)
+  ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+   FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — Open public (T7) > is absent for a hidden (pending) listing
+P5 src/components/admin/AdminListingsView.tsx
+  hash before 35b47f25c687562cfadb963e6171b07eeb150625
+  planted     9c4ab8d7455afb72a8021e5fcbf80f826e226e2f
+  after       35b47f25c687562cfadb963e6171b07eeb150625  equal=true
+  exit under plant=1 (expect non-zero: census ui/badge)
+  FAIL  src/app/admin/listings/page.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/AdminListingsTable.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/ListingPreviewDialog.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/PremiumDialog.tsx  [tier1-unenrolled-or-unstoried]

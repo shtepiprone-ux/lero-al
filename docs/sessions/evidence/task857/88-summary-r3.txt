@@ -1,0 +1,204 @@
+...................................................................................................................................................................................................................................................................
+adminlistingsview--default @768
+   uk:ok(card 720; in 24/24; 2ln)
+   en:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+adminlistingsview--default @1024
+   en:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+adminlistingsview--default @1280
+   en:ok(card 976; in 24/24; 2ln)
+   sq:ok(card 976; in 24/24; 2ln)
+   it:ok(card 976; in 24/24; 2ln)
+   uk:ok(card 976; in 24/24; 2ln)
+adminlistingsview--default @1440
+   en:ok(card 1136; in 24/24; 2ln)
+   uk:ok(card 1136; in 24/24; 2ln)
+   it:ok(card 1136; in 24/24; 2ln)
+   sq:ok(card 1136; in 24/24; 2ln)
+adminlistingsview--paginated @768
+   it:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+   en:ok(card 720; in 24/24; 2ln)
+adminlistingsview--paginated @1024
+   en:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+adminlistingsview--paginated @1280
+   en:ok(card 976; in 24/24; 2ln)
+   sq:ok(card 976; in 24/24; 2ln)
+   it:ok(card 976; in 24/24; 2ln)
+   uk:ok(card 976; in 24/24; 2ln)
+adminlistingsview--paginated @1440
+   en:ok(card 1136; in 24/24; 2ln)
+   sq:ok(card 1136; in 24/24; 2ln)
+   it:ok(card 1136; in 24/24; 2ln)
+   uk:ok(card 1136; in 24/24; 2ln)
+adminuserstable--default @768
+   sq:ok(card 720; in 24/24)
+   en:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+adminuserstable--default @1024
+   sq:ok(card 736; in 24/24)
+   en:ok(card 736; in 24/24)
+   uk:ok(card 736; in 24/24)
+   it:ok(card 736; in 24/24)
+adminuserstable--default @1280
+   sq:ok(card 992; in 24/24)
+   en:ok(card 992; in 24/24)
+   uk:ok(card 992; in 24/24)
+   it:ok(card 992; in 24/24)
+adminuserstable--default @1440
+   en:ok(card 1152; in 24/24)
+   sq:ok(card 1152; in 24/24)
+   uk:ok(card 1152; in 24/24)
+   it:ok(card 1152; in 24/24)
+adminuserstable--verified-tab @768
+   sq:ok(card 720; in 24/24)
+   en:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+adminuserstable--verified-tab @1024
+   sq:ok(card 736; in 24/24)
+   en:ok(card 736; in 24/24)
+   it:ok(card 736; in 24/24)
+   uk:ok(card 736; in 24/24)
+adminuserstable--verified-tab @1280
+   sq:ok(card 992; in 24/24)
+   en:ok(card 992; in 24/24)
+   uk:ok(card 992; in 24/24)
+   it:ok(card 992; in 24/24)
+adminuserstable--verified-tab @1440
+   sq:ok(card 1152; in 24/24)
+   en:ok(card 1152; in 24/24)
+   it:ok(card 1152; in 24/24)
+   uk:ok(card 1152; in 24/24)
+adminexchangeprovidersview--default @768
+   sq:ok(card 720; in 24/24)
+   en:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+adminexchangeprovidersview--default @1024
+   en:ok(card 720; in 24/24)
+   sq:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+adminexchangeprovidersview--default @1280
+   en:ok(card 960; in 24/24)
+   sq:ok(card 960; in 24/24)
+   uk:ok(card 960; in 24/24)
+   it:ok(card 960; in 24/24)
+adminexchangeprovidersview--default @1440
+   sq:ok(card 960; in 24/24)
+   en:ok(card 960; in 24/24)
+   it:ok(card 960; in 24/24)
+   uk:ok(card 960; in 24/24)
+adminpagesview--default @768
+   sq:ok(card 720; in 24/24; 2ln)
+   en:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+adminpagesview--default @1024
+   en:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+adminpagesview--default @1280
+   en:ok(card 832; in 24/24; 2ln)
+   sq:ok(card 832; in 24/24; 2ln)
+   it:ok(card 832; in 24/24; 2ln)
+   uk:ok(card 832; in 24/24; 2ln)
+adminpagesview--default @1440
+   sq:ok(card 832; in 24/24; 2ln)
+   en:ok(card 832; in 24/24; 2ln)
+   uk:ok(card 832; in 24/24; 2ln)
+   it:ok(card 832; in 24/24; 2ln)
+adminreportsview--all-tab @768
+   en:ok(card 720; in 24/24; 2ln)
+   sq:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+adminreportsview--all-tab @1024
+   sq:ok(card 720; in 24/24; 2ln)
+   en:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+adminreportsview--all-tab @1280
+   sq:ok(card 960; in 24/24; 2ln)
+   en:ok(card 960; in 24/24; 2ln)
+   it:ok(card 960; in 24/24; 2ln)
+   uk:ok(card 960; in 24/24; 2ln)
+adminreportsview--all-tab @1440
+   en:ok(card 960; in 24/24; 2ln)
+   sq:ok(card 960; in 24/24; 2ln)
+   uk:ok(card 960; in 24/24; 2ln)
+   it:ok(card 960; in 24/24; 2ln)
+admincurrenciesview--default @768
+   sq:ok(card 720; in 24/24)
+   en:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+admincurrenciesview--default @1024
+   sq:ok(card 720; in 24/24)
+   en:ok(card 720; in 24/24)
+   uk:ok(card 720; in 24/24)
+   it:ok(card 720; in 24/24)
+admincurrenciesview--default @1280
+   sq:ok(card 960; in 24/24)
+   en:ok(card 960; in 24/24)
+   uk:ok(card 960; in 24/24)
+   it:ok(card 960; in 24/24)
+admincurrenciesview--default @1440
+   sq:ok(card 960; in 24/24)
+   en:ok(card 960; in 24/24)
+   uk:ok(card 960; in 24/24)
+   it:ok(card 960; in 24/24)
+agentstatisticsview--default @768
+   sq:SCROLL+363 CLIP(card 678; in 24/-339; 2ln)
+   en:SCROLL+283 CLIP(card 678; in 24/-259; 2ln)
+   uk:SCROLL+395 CLIP(card 678; in 24/-371; 2ln)
+   it:SCROLL+330 CLIP(card 678; in 24/-306; 2ln)
+agentstatisticsview--default @1024
+   sq:SCROLL+107 CLIP(card 934; in 24/-83; 2ln)
+   en:SCROLL+27 CLIP(card 934; in 24/-3; 2ln)
+   uk:SCROLL+139 CLIP(card 934; in 24/-115; 2ln)
+   it:SCROLL+74 CLIP(card 934; in 24/-50; 2ln)
+agentstatisticsview--default @1280
+   sq:ok(card 1190; in 24/24; 2ln)
+   en:ok(card 1190; in 24/24; 2ln)
+   uk:ok(card 1190; in 24/24; 2ln)
+   it:ok(card 1190; in 24/24; 2ln)
+agentstatisticsview--default @1440
+   sq:ok(card 1350; in 24/24; 2ln)
+   en:ok(card 1350; in 24/24; 2ln)
+   uk:ok(card 1350; in 24/24; 2ln)
+   it:ok(card 1350; in 24/24; 2ln)
+admintable--wrapped-title-column @768
+   sq:ok(card 720; in 24/24; 2ln)
+   en:ok(card 720; in 24/24; 2ln)
+   uk:ok(card 720; in 24/24; 2ln)
+   it:ok(card 720; in 24/24; 2ln)
+admintable--wrapped-title-column @1024
+   sq:ok(card 960; in 24/24; 2ln)
+   en:ok(card 960; in 24/24; 2ln)
+   uk:ok(card 960; in 24/24; 2ln)
+   it:ok(card 960; in 24/24; 2ln)
+admintable--wrapped-title-column @1280
+   sq:ok(card 1216; in 24/24; 2ln)
+   en:ok(card 1216; in 24/24; 2ln)
+   uk:ok(card 1216; in 24/24; 2ln)
+   it:ok(card 1216; in 24/24; 2ln)
+admintable--wrapped-title-column @1440
+   sq:ok(card 1376; in 24/24; 2ln)
+   en:ok(card 1376; in 24/24; 2ln)
+   uk:ok(card 1376; in 24/24; 2ln)
+   it:ok(card 1376; in 24/24; 2ln)
+
+TABLE FIT FAILURES: 8 agentstatisticsview--default @768 sq | agentstatisticsview--default @768 en | agentstatisticsview--default @768 uk | agentstatisticsview--default @768 it | agentstatisticsview--default @1024 sq | agentstatisticsview--default @1024 en | agentstatisticsview--default @1024 uk | agentstatisticsview--default @1024 it
+EXIT_CODE=0

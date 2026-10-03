@@ -187,6 +187,25 @@ export const CardsBelowMd: Story = {
   },
 }
 
+// Task 857 (R32, GR-3a EXTEND): `cardsBelow="lg"` — the same CSS switch at 1024px, for a table that cannot fit
+// before 1024 (cards at 1000px, the table at 1024px). Same fixture as `CardsBelowMd`.
+export const CardsBelowLg: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const args = makeArgs(l)
+    return (
+      <MantineStoryShell width="constrained">
+        <MantineDataTableToCards
+          {...args}
+          card={makeCardConfig(l)}
+          emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
+          cardsBelow="lg"
+        />
+      </MantineStoryShell>
+    )
+  },
+}
+
 // Task 877 (R1, GR-3a EXTEND — the four exports below prove the additive props on the SAME real pattern;
 // no parallel Story). `onRowClick` / `visibleFrom` / `stickyColumnIndex` / `CardConfig.detail` are all
 // optional, so `Default` above renders unchanged. Fixtures reuse the labelled rows and `storyT` strings above.

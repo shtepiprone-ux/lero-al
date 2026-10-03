@@ -1,5 +1,5 @@
-import type { Decorator, Meta, StoryObj } from '@storybook/nextjs-vite'
-import { AdminShell } from '@/components/admin/AdminShell'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { AdminDashboardView, type AdminDashboardViewProps } from '@/modules/admin/dashboard/components/AdminDashboardView'
 import { DASHBOARD_PERIOD_NOW } from '@/stories/fixtures/dashboardPeriod.fixture'
 import {
@@ -38,14 +38,6 @@ import {
 // the same way `AdminShell.stories.tsx` does — no Box, width, padding or viewport pin of this Story's own.
 // GR-3d: no `StoryPageGutter` — this page-level View carries its own page gutter, the root
 // `MantineDashboardGrid` (`px={{ base: 'md', md: 'xl' }}`, `src/design-system/mantine/patterns/MantineDashboardGrid.tsx`).
-function withAdminShell(Story: Parameters<Decorator>[0]) {
-  return (
-    <AdminShell siteName="Lero.al">
-      <Story />
-    </AdminShell>
-  )
-}
-
 const meta: Meta<typeof AdminDashboardView> = {
   title: 'Patterns/Mantine/AdminDashboardView',
   component: AdminDashboardView,

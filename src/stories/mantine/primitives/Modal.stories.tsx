@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
-import { Stack, Text, Button, Flex } from '@mantine/core'
+import { Info } from 'lucide-react'
+import { Stack, Text, Button, Flex, useMantineTheme } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
@@ -103,6 +106,59 @@ export const Default: Story = {
           <ModalStandardSection locale={locale} />
           <ModalLongSection locale={locale} />
         </Stack>
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Task 857 R44 — the canonical dialog anatomy (docs §23.7): `structured` adds the icon tile, the title and a muted
+// description, a round close button (desktop; the sheet has none), full-bleed dividers under the header and above the
+// footer, and sections that own their spacing. Default above stays the unstructured contract, byte for byte.
+function ModalStructuredSection({ locale }: { locale: string }) {
+  const [opened, setOpened] = useState(false)
+  const theme = useMantineTheme()
+  const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+
+  return (
+    <Stack gap="xs">
+      <Text size="xs" c="gray.5" fw={500}>
+        structured dialog (closed/resting) — click trigger to open; header (icon tile · title · description · round close) · divider · sections · divider · equal-width footer pair; &lt;640: the same parts in the bottom sheet under the drag handle
+      </Text>
+      <Button variant="default" onClick={() => setOpened(true)}>{t('modal_trigger_open')}</Button>
+      <MantineModal
+        structured
+        opened={opened}
+        onClose={() => setOpened(false)}
+        icon={<Info size={theme.other.iconSize.standard} />}
+        title={t('modal_title')}
+        description={t('modal_body')}
+        footer={
+          <MantineDialogFooter
+            secondary={<Button variant="default" onClick={() => setOpened(false)}>{t('modal_cancel')}</Button>}
+            primary={<Button onClick={() => setOpened(false)}>{t('modal_confirm')}</Button>}
+          />
+        }
+      >
+        <MantineDialogSections>
+          <MantineDialogSection title={t('modal_title')} description={t('modal_body')}>
+            <Text fz="sm">{t('modal_long_trigger')}</Text>
+          </MantineDialogSection>
+          <MantineDialogSection title={t('modal_long_trigger')}>
+            <Text fz="sm" c="dimmed">{t('modal_body')}</Text>
+          </MantineDialogSection>
+        </MantineDialogSections>
+      </MantineModal>
+    </Stack>
+  )
+}
+
+export const Structured: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+
+    return (
+      <MantineStoryShell>
+        <ModalStructuredSection locale={locale} />
       </MantineStoryShell>
     )
   },

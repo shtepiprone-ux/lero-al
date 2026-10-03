@@ -1,0 +1,130 @@
+# GR-3b
+
+GR-3b STORY RESPONSIVE CHECK — adminlistingsview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1200/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminuserstable--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1200/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — admincurrencytabs--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — admincurrenciesview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminexchangeprovidersview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpagesview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 896/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminreportsview--all-tab: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — admininquiriesview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpermissionsview--default: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 672/1024 (navbar 240) · 1440 frame 672/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminuserprofileview--view: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminuserprofileview--create: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 768/1024 (navbar 240) · 1440 frame 768/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--page: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1024/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--shell: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1200/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--shell-fixed-gutter: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 1200/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--narrow: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 784/1024 (navbar 240) · 1440 frame 896/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--panel: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 672/1024 (navbar 240) · 1440 frame 672/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+GR-3b STORY RESPONSIVE CHECK — adminpageframe--form: 320 frame 320/320 · 390 frame 390/390 · 1024 frame 768/1024 (navbar 240) · 1440 frame 768/1440 (navbar 240); overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.
+
+# GR-3c
+
+GR-3c TYPE RESPONSIVE CHECK — adminlistingsview--default: 320 — body 14 · 390 — body 14 · 768 — body 14 · 1440 — body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminuserstable--default: 320 — body 12 · 390 — body 12 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — admincurrencytabs--default: 320 — body 14 · 390 — body 14 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — admincurrenciesview--default: 320 — body 14 · 390 — body 14 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminexchangeprovidersview--default: 320 — body 14 · 390 — body 14 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpagesview--default: 320 — body 14 · 390 — body 14 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminreportsview--all-tab: 320 — body 14 · 390 — body 14 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — admininquiriesview--default: 320 — body 12 · 390 — body 12 · 768 — body 12 · 1440 — body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpermissionsview--default: 320 16/16/16 body 14 · 390 16/16/16 body 14 · 768 16/16/16 body 14 · 1440 16/16/16 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminuserprofileview--view: 320 20/16/16 body 14 · 390 20/16/16 body 14 · 768 20/16/16 body 14 · 1440 20/16/16 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminuserprofileview--create: 320 20/16/16 body 12 · 390 20/16/16 body 12 · 768 20/16/16 body 12 · 1440 20/16/16 body 12; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--page: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--shell: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--shell-fixed-gutter: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--narrow: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--panel: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+GR-3c TYPE RESPONSIVE CHECK — adminpageframe--form: 320 20 body 14 · 390 20 body 14 · 768 24 body 14 · 1440 24 body 14; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.
+
+# GR-3d
+
+GR-3d STORY GUTTER CHECK — adminlistingsview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminuserstable--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 24/24/24/24 · 1440 24/24/24/24 (expected 24 at every width); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — admincurrencytabs--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — admincurrenciesview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminexchangeprovidersview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpagesview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminreportsview--all-tab: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — admininquiriesview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpermissionsview--default: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 24/24/24/24 · 1440 24/24/24/24 (expected 24 at every width); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminuserprofileview--view: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminuserprofileview--create: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--page: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--shell: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--shell-fixed-gutter: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 24/24/24/24 · 1440 24/24/24/24 (expected 24 at every width); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--narrow: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--panel: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 24/24/24/24 · 1440 24/24/24/24 (expected 24 at every width); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+GR-3d STORY GUTTER CHECK — adminpageframe--form: gutter n/a: own gutter (AdminPageFrame, src/components/admin/AdminPageFrame.tsx); top/right/bottom/left 320 24/24/24/24 · 390 24/24/24/24 · 1024 32/32/32/32 · 1440 32/32/32/32 (expected 24 below 1024, 32 from 1024); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+
+# TABLE FIT
+
+TABLE FIT CHECK — adminlistingsview--default: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 976, scroll NONE, inset 24/24 · 1440 card 1136, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminlistingsview--paginated: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 976, scroll NONE, inset 24/24 · 1440 card 1136, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminuserstable--default: 768 card 720, scroll NONE, inset 24/24 · 1024 card 736, scroll NONE, inset 24/24 · 1280 card 992, scroll NONE, inset 24/24 · 1440 card 1152, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminuserstable--verified-tab: 768 card 720, scroll NONE, inset 24/24 · 1024 card 736, scroll NONE, inset 24/24 · 1280 card 992, scroll NONE, inset 24/24 · 1440 card 1152, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminexchangeprovidersview--default: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 960, scroll NONE, inset 24/24 · 1440 card 960, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminpagesview--default: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 832, scroll NONE, inset 24/24 · 1440 card 832, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — adminreportsview--all-tab: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 960, scroll NONE, inset 24/24 · 1440 card 960, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — admincurrenciesview--default: 768 card 720, scroll NONE, inset 24/24 · 1024 card 720, scroll NONE, inset 24/24 · 1280 card 960, scroll NONE, inset 24/24 · 1440 card 960, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — agentstatisticsview--default: 768 card 678, scroll +363, inset 24/-339 | card 678, scroll +283, inset 24/-259 | card 678, scroll +395, inset 24/-371 | card 678, scroll +330, inset 24/-306 · 1024 card 934, scroll +107, inset 24/-83 | card 934, scroll +27, inset 24/-3 | card 934, scroll +139, inset 24/-115 | card 934, scroll +74, inset 24/-50 · 1280 card 1190, scroll NONE, inset 24/24 · 1440 card 1350, scroll NONE, inset 24/24; scroll: PRESENT at 768/1024 (BLOCKED — R31 BUDGET); clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+
+TABLE FIT CHECK — admintable--wrapped-title-column: 768 card 720, scroll NONE, inset 24/24 · 1024 card 960, scroll NONE, inset 24/24 · 1280 card 1216, scroll NONE, inset 24/24 · 1440 card 1376, scroll NONE, inset 24/24; scroll: NONE; clipped: NONE; first/last inset 24/24 (card border excluded); card width = production: yes.
+

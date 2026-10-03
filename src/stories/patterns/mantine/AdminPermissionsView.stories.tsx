@@ -2,15 +2,17 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { AdminPermissionsView } from '@/components/admin/AdminPermissionsView'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
 import type { PermissionData, PermissionEvent } from '@/modules/admin/actions/permissions'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 
 /**
  * Task 892 — the Story moved here from `Admin/AdminPermissionsManager` (legacy component, pinned viewport). It renders
  * the real `AdminPermissionsView`; the container `AdminPermissionsManager` owns only state, the server action and toasts
  * and is proven by this Story (GR-1 container exemption). Viewport and locale come from the Storybook toolbar.
  *
- * GR-3d: `AdminPermissionsView` has no page gutter of its own on any side (the production page's `Box p="xl"` supplies
- * it), so every export is wrapped in `StoryPageGutter`.
+ * GR-3b (Task 857): every export renders inside the real `AdminShell` and the route's `AdminPageFrame`
+ * (`width="panel" gutter="xl" centered={false}`, `src/app/admin/permissions/page.tsx`); GR-3d: the frame is the
+ * page gutter.
  */
 const NONE_ALLOWED = Object.fromEntries(
   PERMISSION_KEYS.map(k => [k, { allowed: false, updated_at: null, updated_by_name: null }]),
@@ -42,9 +44,11 @@ const FIXTURE_EVENTS: PermissionEvent[] = [
 const meta: Meta<typeof AdminPermissionsView> = {
   title: 'Patterns/Mantine/AdminPermissionsView',
   component: AdminPermissionsView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/permissions' } },
     docs: {
       description: {
         component:
@@ -64,9 +68,9 @@ export default meta
 type Story = StoryObj<typeof AdminPermissionsView>
 
 const render: Story['render'] = (args) => (
-  <StoryPageGutter>
+  <AdminPageFrame width="panel" gutter="xl" centered={false}>
     <AdminPermissionsView {...args} />
-  </StoryPageGutter>
+  </AdminPageFrame>
 )
 
 export const Default: Story = { render }

@@ -1,0 +1,1416 @@
+{
+ "table": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 640,
+   "l": "sq",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 640,
+   "l": "en",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 640,
+   "l": "uk",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 640,
+   "l": "it",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "sq",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "en",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 185,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "uk",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 173,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 768,
+   "l": "it",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 186,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "sq",
+   "vpScrollW": 1421,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -438,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -462,
+   "tableW": 1421,
+   "cardW": 960,
+   "titleColW": 148,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "en",
+   "vpScrollW": 1444,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -461,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -485,
+   "tableW": 1444,
+   "cardW": 960,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "uk",
+   "vpScrollW": 1528,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -545,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -569,
+   "tableW": 1528,
+   "cardW": 960,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1024,
+   "l": "it",
+   "vpScrollW": 1473,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -490,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -514,
+   "tableW": 1473,
+   "cardW": 960,
+   "titleColW": 172,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "sq",
+   "vpScrollW": 1793,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -554,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -578,
+   "tableW": 1793,
+   "cardW": 1216,
+   "titleColW": 717,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "en",
+   "vpScrollW": 1797,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -558,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -582,
+   "tableW": 1797,
+   "cardW": 1216,
+   "titleColW": 719,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "uk",
+   "vpScrollW": 1891,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -652,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -676,
+   "tableW": 1891,
+   "cardW": 1216,
+   "titleColW": 756,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1280,
+   "l": "it",
+   "vpScrollW": 1782,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -543,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -567,
+   "tableW": 1782,
+   "cardW": 1216,
+   "titleColW": 713,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "sq",
+   "vpScrollW": 1793,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -394,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -418,
+   "tableW": 1793,
+   "cardW": 1376,
+   "titleColW": 717,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "en",
+   "vpScrollW": 1797,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -398,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -422,
+   "tableW": 1797,
+   "cardW": 1376,
+   "titleColW": 719,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "uk",
+   "vpScrollW": 1891,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -492,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -516,
+   "tableW": 1891,
+   "cardW": 1376,
+   "titleColW": 756,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 1440,
+   "l": "it",
+   "vpScrollW": 1782,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -383,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -407,
+   "tableW": 1782,
+   "cardW": 1376,
+   "titleColW": 713,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 640,
+   "l": "sq",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 640,
+   "l": "en",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 640,
+   "l": "uk",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 640,
+   "l": "it",
+   "noTable": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "sq",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "en",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 185,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "uk",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 173,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 768,
+   "l": "it",
+   "vpScrollW": 1332,
+   "vpClientW": 718,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -589,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -613,
+   "tableW": 1332,
+   "cardW": 720,
+   "titleColW": 186,
+   "clipped": [],
+   "cols": 6
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "sq",
+   "vpScrollW": 1421,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -438,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -462,
+   "tableW": 1421,
+   "cardW": 960,
+   "titleColW": 148,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "en",
+   "vpScrollW": 1444,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -461,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -485,
+   "tableW": 1444,
+   "cardW": 960,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "uk",
+   "vpScrollW": 1528,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -545,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -569,
+   "tableW": 1528,
+   "cardW": 960,
+   "titleColW": 167,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1024,
+   "l": "it",
+   "vpScrollW": 1473,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -490,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -514,
+   "tableW": 1473,
+   "cardW": 960,
+   "titleColW": 172,
+   "clipped": [],
+   "cols": 7
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "sq",
+   "vpScrollW": 1793,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -554,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -578,
+   "tableW": 1793,
+   "cardW": 1216,
+   "titleColW": 717,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "en",
+   "vpScrollW": 1797,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -558,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -582,
+   "tableW": 1797,
+   "cardW": 1216,
+   "titleColW": 719,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "uk",
+   "vpScrollW": 1891,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -652,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -676,
+   "tableW": 1891,
+   "cardW": 1216,
+   "titleColW": 756,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1280,
+   "l": "it",
+   "vpScrollW": 1782,
+   "vpClientW": 1214,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -543,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -567,
+   "tableW": 1782,
+   "cardW": 1216,
+   "titleColW": 713,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "sq",
+   "vpScrollW": 1793,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -394,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -418,
+   "tableW": 1793,
+   "cardW": 1376,
+   "titleColW": 717,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "en",
+   "vpScrollW": 1797,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -398,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -422,
+   "tableW": 1797,
+   "cardW": 1376,
+   "titleColW": 719,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "uk",
+   "vpScrollW": 1891,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -492,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -516,
+   "tableW": 1891,
+   "cardW": 1376,
+   "titleColW": 756,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--paginated",
+   "w": 1440,
+   "l": "it",
+   "vpScrollW": 1782,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -383,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -407,
+   "tableW": 1782,
+   "cardW": 1376,
+   "titleColW": 713,
+   "clipped": [],
+   "cols": 9
+  },
+  {
+   "id": "cards",
+   "w": 320,
+   "l": "sq",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 320,
+   "l": "en",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 320,
+   "l": "uk",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 320,
+   "l": "it",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 288
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 390,
+   "l": "sq",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 390,
+   "l": "en",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 390,
+   "l": "uk",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    }
+   ],
+   "pageOverflow": false
+  },
+  {
+   "id": "cards",
+   "w": 390,
+   "l": "it",
+   "cards": [
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    },
+    {
+     "left": 21,
+     "right": 21,
+     "w": 358
+    }
+   ],
+   "pageOverflow": false
+  }
+ ],
+ "wrapped": [
+  {
+   "w": 1024,
+   "l": "sq",
+   "vpScrollW": 2734,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1751,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1775,
+   "tableW": 2734,
+   "cardW": 960,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1024,
+   "l": "en",
+   "vpScrollW": 2734,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1751,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1775,
+   "tableW": 2734,
+   "cardW": 960,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1024,
+   "l": "uk",
+   "vpScrollW": 2734,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1751,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1775,
+   "tableW": 2734,
+   "cardW": 960,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1024,
+   "l": "it",
+   "vpScrollW": 2734,
+   "vpClientW": 958,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1751,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1775,
+   "tableW": 2734,
+   "cardW": 960,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1440,
+   "l": "sq",
+   "vpScrollW": 2734,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1335,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1359,
+   "tableW": 2734,
+   "cardW": 1376,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1440,
+   "l": "en",
+   "vpScrollW": 2734,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1335,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1359,
+   "tableW": 2734,
+   "cardW": 1376,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1440,
+   "l": "uk",
+   "vpScrollW": 2734,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1335,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1359,
+   "tableW": 2734,
+   "cardW": 1376,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  },
+  {
+   "w": 1440,
+   "l": "it",
+   "vpScrollW": 2734,
+   "vpClientW": 1374,
+   "scrolls": true,
+   "firstInset": 25,
+   "lastInset": -1335,
+   "firstCellLeftToBorder": 1,
+   "lastCellRightToBorder": -1359,
+   "tableW": 2734,
+   "cardW": 1376,
+   "titleColW": 579,
+   "clipped": [],
+   "cols": 4
+  }
+ ],
+ "audit": [
+  {
+   "l": "sq",
+   "sizes": [
+    {
+     "t": "Të pranueshëm publikisht por",
+     "fz": "14px"
+    },
+    {
+     "t": "skaduar 2",
+     "fz": "14px"
+    },
+    {
+     "t": "pa skadencë 1",
+     "fz": "14px"
+    },
+    {
+     "t": "#1004",
+     "fz": "10px"
+    },
+    {
+     "t": "Apartament 2+1 — Durrës, pra",
+     "fz": "14px"
+    }
+   ]
+  },
+  {
+   "l": "en",
+   "sizes": [
+    {
+     "t": "Public-eligible but hidden: ",
+     "fz": "14px"
+    },
+    {
+     "t": "expired 2",
+     "fz": "14px"
+    },
+    {
+     "t": "no expiry 1",
+     "fz": "14px"
+    },
+    {
+     "t": "#1004",
+     "fz": "10px"
+    },
+    {
+     "t": "Apartament 2+1 — Durrës, pra",
+     "fz": "14px"
+    }
+   ]
+  },
+  {
+   "l": "uk",
+   "sizes": [
+    {
+     "t": "Публічно-прийнятні, але прих",
+     "fz": "14px"
+    },
+    {
+     "t": "прострочені 2",
+     "fz": "14px"
+    },
+    {
+     "t": "без терміну 1",
+     "fz": "14px"
+    },
+    {
+     "t": "#1004",
+     "fz": "10px"
+    },
+    {
+     "t": "Apartament 2+1 — Durrës, pra",
+     "fz": "14px"
+    }
+   ]
+  },
+  {
+   "l": "it",
+   "sizes": [
+    {
+     "t": "Idonei pubblicamente ma nasc",
+     "fz": "14px"
+    },
+    {
+     "t": "scaduti 2",
+     "fz": "14px"
+    },
+    {
+     "t": "senza scadenza 1",
+     "fz": "14px"
+    },
+    {
+     "t": "#1004",
+     "fz": "10px"
+    },
+    {
+     "t": "Apartament 2+1 — Durrës, pra",
+     "fz": "14px"
+    }
+   ]
+  }
+ ],
+ "visibility": [
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 288,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "Të gjitha",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 288,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": true,
+   "value": "Të pranueshëm publikisht por të fshehur",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 288,
+   "l": "en",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "All",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 288,
+   "l": "en",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "Public-eligible but hidden",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 288,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "Всі",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 288,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": true,
+   "value": "Публічно-прийнятні, але приховані",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 288,
+   "l": "it",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "Tutti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 288,
+   "l": "it",
+   "kind": "select",
+   "searchW": 288,
+   "labelClipped": false,
+   "value": "Idonei pubblicamente ma nascosti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 358,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Të gjitha",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 358,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Të pranueshëm publikisht por të fshehur",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 358,
+   "l": "en",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "All",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 358,
+   "l": "en",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Public-eligible but hidden",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 358,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Всі",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 358,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Публічно-прийнятні, але приховані",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 358,
+   "l": "it",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Tutti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 358,
+   "l": "it",
+   "kind": "select",
+   "searchW": 358,
+   "labelClipped": false,
+   "value": "Idonei pubblicamente ma nascosti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 212,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": false,
+   "value": "Të gjitha",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 212,
+   "l": "sq",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": true,
+   "value": "Të pranueshëm publikisht por të fshehur",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 212,
+   "l": "en",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": false,
+   "value": "All",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 212,
+   "l": "en",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": true,
+   "value": "Public-eligible but hidden",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 212,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": false,
+   "value": "Всі",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 212,
+   "l": "uk",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": true,
+   "value": "Публічно-прийнятні, але приховані",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 212,
+   "l": "it",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": false,
+   "value": "Tutti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 212,
+   "l": "it",
+   "kind": "select",
+   "searchW": 144,
+   "labelClipped": true,
+   "value": "Idonei pubblicamente ma nascosti",
+   "segmented": false
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 423,
+   "l": "sq",
+   "kind": "segmented",
+   "searchW": 301,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 423,
+   "l": "sq",
+   "kind": "segmented",
+   "searchW": 301,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 277,
+   "l": "en",
+   "kind": "segmented",
+   "searchW": 447,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 277,
+   "l": "en",
+   "kind": "segmented",
+   "searchW": 447,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 358,
+   "l": "uk",
+   "kind": "segmented",
+   "searchW": 366,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 358,
+   "l": "uk",
+   "kind": "segmented",
+   "searchW": 366,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--default",
+   "w": 344,
+   "l": "it",
+   "kind": "segmented",
+   "searchW": 380,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  },
+  {
+   "id": "patterns-mantine-adminlistingsview--hidden-eligible",
+   "w": 344,
+   "l": "it",
+   "kind": "segmented",
+   "searchW": 380,
+   "labelClipped": null,
+   "value": null,
+   "segmented": true
+  }
+ ],
+ "dialogs": [],
+ "gr": []
+}

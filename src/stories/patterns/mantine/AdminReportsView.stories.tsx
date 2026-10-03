@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { AdminReportsView } from '@/components/admin/AdminReportsView'
 import type { ReportStatusFilter } from '@/components/admin/reportStatusFilter'
 import type { ReportRow } from '@/components/admin/AdminReportsManager'
-import { StoryPageGutter } from '@/stories/_StoryPageGutter'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { withAdminShell } from '@/stories/_StoryAdminShell'
 
 // Task 858 — presentational View of the `/admin/reports` list (Container/Presentational split of
 // `AdminReportsManager`). GR-3a: CREATE — the only Story that rendered this surface was the legacy
@@ -14,9 +15,11 @@ import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 const meta: Meta<typeof AdminReportsView> = {
   title: 'Patterns/Mantine/AdminReportsView',
   component: AdminReportsView,
+  decorators: [withAdminShell],
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
+    nextjs: { navigation: { pathname: '/admin/reports' } },
     docs: {
       description: {
         component:
@@ -68,9 +71,9 @@ function ViewDemo({ initialFilter, reports = FIXTURE_REPORTS }: { initialFilter:
   for (const r of reports) counts[r.status] = (counts[r.status] ?? 0) + 1
   const shown = filter === 'all' ? reports : reports.filter(r => r.status === filter)
   return (
-    <StoryPageGutter>
+    <AdminPageFrame width="page">
       <AdminReportsView reports={shown} filter={filter} counts={counts} onFilterChange={setFilter} onSelect={() => {}} />
-    </StoryPageGutter>
+    </AdminPageFrame>
   )
 }
 

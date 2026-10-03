@@ -83,12 +83,17 @@ function renderTable(props: Partial<React.ComponentProps<typeof AdminTable<Row>>
   )
 }
 
+// Task 857 R20: `AdminTable` passes `cardsBelow="md"`, so BOTH trees are in the DOM (Mantine's `hiddenFrom` /
+// `visibleFrom` switch them by CSS). Queries are scoped to the tree they assert on.
+const tableScope = () => within(screen.getByRole('table'))
+const cardsScope = () => within(document.querySelector('.mantine-hidden-from-md') as HTMLElement)
+
 describe('AdminTable adapter (T2)', () => {
   it('case 1 — Enter and Space on a focused row call onRowClick with the original row', () => {
     const onRowClick = vi.fn()
     renderTable({ onRowClick })
 
-    const row = screen.getByText('Alpha').closest('tr') as HTMLElement
+    const row = tableScope().getByText('Alpha').closest('tr') as HTMLElement
     row.focus()
     fireEvent.keyDown(row, { key: 'Enter' })
     fireEvent.keyDown(row, { key: ' ' })
@@ -102,7 +107,7 @@ describe('AdminTable adapter (T2)', () => {
     const onRowClick = vi.fn()
     renderTable({ onRowClick })
 
-    fireEvent.keyDown(screen.getByRole('button', { name: 'inner-Tirana' }), { key: 'Enter' })
+    fireEvent.keyDown(tableScope().getByRole('button', { name: 'inner-Tirana' }), { key: 'Enter' })
 
     expect(onRowClick).not.toHaveBeenCalled()
   })
@@ -110,36 +115,34 @@ describe('AdminTable adapter (T2)', () => {
   it("case 3 — visibility 'md' renders the column with visibleFrom=md; 'always' does not", () => {
     renderTable()
 
-    const md = screen.getByText('tag-x').closest('td') as HTMLElement
-    const always = screen.getByText('Alpha').closest('td') as HTMLElement
+    const md = tableScope().getByText('tag-x').closest('td') as HTMLElement
+    const always = tableScope().getByText('Alpha').closest('td') as HTMLElement
     expect(md.className).toContain('mantine-visible-from-md')
     expect(always.className).not.toContain('mantine-visible-from')
   })
 
-  it('case 4 — with no cardRow the synthesized card shows the column-0 title', async () => {
-    stubMatchMedia(true) // below 640px → cards
+  it('case 4 — with no cardRow the synthesized card shows the column-0 title', () => {
     renderTable()
 
-    await waitFor(() => expect(screen.queryByRole('table')).toBeNull())
-    expect(screen.getByText('Alpha')).toBeTruthy()
-    expect(screen.getByText('inner-Tirana')).toBeTruthy()
+    expect(cardsScope().getByText('Alpha')).toBeTruthy()
+    expect(cardsScope().getByText('inner-Tirana')).toBeTruthy()
   })
 
   it('case 5 — a card with `trailing` shows it and no automatic chevron; without `trailing` it shows one', async () => {
-    stubMatchMedia(true)
     const chevrons = (el: HTMLElement) => el.querySelectorAll('.lucide-chevron-right').length
+    const cardsEl = () => document.querySelector('.mantine-hidden-from-md') as HTMLElement
 
     const { unmount } = renderTable({
       onRowClick: () => {},
       cardRow: r => ({ title: r.name, trailing: <span data-testid="own-trailing">own</span> }),
     })
     await waitFor(() => expect(screen.getAllByTestId('own-trailing')).toHaveLength(ROWS.length))
-    expect(chevrons(document.body)).toBe(0)
+    expect(chevrons(cardsEl())).toBe(0)
     unmount()
 
     renderTable({ onRowClick: () => {}, cardRow: r => ({ title: r.name }) })
-    await waitFor(() => expect(screen.getByText('Alpha')).toBeTruthy())
-    expect(chevrons(document.body)).toBe(ROWS.length)
-    expect(within(screen.getByText('Alpha').closest('[role="button"]') as HTMLElement).queryAllByTestId('own-trailing')).toHaveLength(0)
+    await waitFor(() => expect(cardsScope().getByText('Alpha')).toBeTruthy())
+    expect(chevrons(cardsEl())).toBe(ROWS.length)
+    expect(within(cardsScope().getByText('Alpha').closest('[role="button"]') as HTMLElement).queryAllByTestId('own-trailing')).toHaveLength(0)
   })
 })

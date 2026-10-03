@@ -42,8 +42,8 @@ interface PageRow {
 /**
  * Presentational View of `/admin/pages` (Task 868, Container/Presentational split of
  * `AdminPagesManager`). No hooks beyond `useTranslations` / `useMantineTheme`, no server action, no
- * `toast`. The list renders through the canonical `MantineDataTableToCards` (table from `sm`, cards
- * below) and the delete confirmation through `MantineModal`.
+ * `toast`. The list renders through the canonical `MantineDataTableToCards` (table from `md`, cards
+ * below 768px) and the delete confirmation through `MantineModal`.
  */
 export function AdminPagesView({
   pages,
@@ -121,12 +121,18 @@ export function AdminPagesView({
   }
 
   const columns: TableColumn<PageRow>[] = [
-    { key: 'title', label: t('col_title'), render: r => <Text size="sm" fw={500} c="gray.7">{getDisplayTitle(r.page)}</Text> },
     {
-      key: 'slug',
-      label: t('col_slug'),
-      visibleFrom: 'md',
-      render: r => <Text size="xs" c="dimmed" ff="monospace">{r.page.slug}</Text>,
+      key: 'title',
+      label: t('col_title'),
+      // §7.3 (a)/(b): the title wraps at the table-title token width, clamped to two lines; the slug is its meta line.
+      width: theme.other.layout.tableTitleColumnWidth,
+      wrap: true,
+      render: r => (
+        <Stack gap="micro">
+          <Text size="sm" fw={500} c="gray.7" lineClamp={2}>{getDisplayTitle(r.page)}</Text>
+          <Text size="xs" c="dimmed" ff="monospace" truncate="end">{r.page.slug}</Text>
+        </Stack>
+      ),
     },
     { key: 'status', label: t('col_status'), render: r => statusBadge(r.page) },
     {
@@ -187,6 +193,7 @@ export function AdminPagesView({
         rows={rows}
         emptyLabel={emptyLabel}
         card={card}
+        cardsBelow="md"
       />
 
       <MantineModal

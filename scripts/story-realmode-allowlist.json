@@ -10,6 +10,6 @@
   { "file": "src/components/ui/dialog.stories.tsx", "export": "MobileFullWidth", "check": 12, "reason": "Real overlay mode: dialog full-width mobile open state." },
   { "file": "src/components/ui/tabs.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal tab overflow scroll." },
   { "file": "src/stories/Containers.stories.tsx", "export": "ContainerWide", "check": 12, "reason": "Container variant name (wide vs narrow), not a viewport keyword." },
-  { "file": "src/components/admin/AdminListingsTable.stories.tsx", "export": "FilteredPending", "check": 13, "reason": "Genuine filter-state REAL_MODE (filtered → pending), not a proof duplicate — Group 5 canonical KEEP." },
+  { "file": "src/stories/patterns/mantine/AdminListingsView.stories.tsx", "export": "FilteredPending", "check": 13, "reason": "Genuine filter-state REAL_MODE (filtered → pending), not a proof duplicate — Group 5 canonical KEEP." },
   { "file": "src/stories/patterns/mantine/AgentStatisticsView.stories.tsx", "export": "Agt10FilteredEmpty", "check": 13, "reason": "Task 854 revision 1 (R12/F1): genuine filter-state REAL_MODE — the agent has listings but the active status filter matches none of them, distinct from Agt10Empty's genuinely-zero portfolio. Not a proof/demo duplicate." }
 ]

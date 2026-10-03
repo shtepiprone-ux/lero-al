@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { Box, Button, Group, Text } from '@mantine/core'
+import { Button, Group, Text } from '@mantine/core'
 import { UserPlus } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
 import { theme } from '@/design-system/mantine/theme'
 
@@ -12,7 +13,6 @@ export const metadata = { title: 'Users — Admin' }
 
 // Server Component: tokens are read straight from the theme object (precedent `src/app/admin/reports/page.tsx`);
 // `!` because `createTheme()`'s return type is deep-partial.
-const layout = theme.other!.layout!
 const iconSize = theme.other!.iconSize!
 
 export default async function AdminUsersPage({
@@ -84,7 +84,7 @@ export default async function AdminUsersPage({
   }
 
   return (
-    <Box p="xl" maw={layout.adminPageShellMaxWidth} mx="auto">
+    <AdminPageFrame width="shell" gutter="xl">
       <AdminPageHeader
         title={t('users_title')}
         subtitle={locationRequest ? t('users_location_filter') : undefined}
@@ -113,6 +113,6 @@ export default async function AdminUsersPage({
         activeTab={tab}
         verifiedAgents={verifiedAgents}
       />
-    </Box>
+    </AdminPageFrame>
   )
 }

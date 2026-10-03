@@ -233,7 +233,9 @@ export function AdminUsersTable({
     {
       key: 'user',
       label: t('col_user'),
-      width: '35%',
+      // §7.3 (a): the user cell wraps in a column of the table-title token width.
+      width: theme.other.layout.tableTitleColumnWidth,
+      wrap: true,
       render: (u) => {
         const initials = u.name
           ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
@@ -259,6 +261,7 @@ export function AdminUsersTable({
                   {[u.company_name, u.public_id != null ? `#${u.public_id}` : null].filter(Boolean).join(' · ')}
                 </Text>
               )}
+              {u.phone && <Text size="xs" c="dimmed" truncate="end">{u.phone}</Text>}
               {u.location_request && (
                 <Group gap="xs" wrap="nowrap">
                   <MapPin size={theme.other.iconSize.micro} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
@@ -271,38 +274,25 @@ export function AdminUsersTable({
       },
     },
     {
-      key: 'role',
-      label: t('col_role'),
-      align: 'center',
-      width: '10%',
-      render: (u) => (
-        <Badge color={ROLE_COLOR[u.role as UserRole] ?? 'gray'} variant="light" size="sm">
-          {t(`role_${u.role}` as `role_admin`)}
-        </Badge>
-      ),
-    },
-    {
       key: 'status',
       label: t('col_status'),
-      align: 'center',
-      width: '10%',
+      // §7.3 (b): role and status stacked in one cell.
       render: (u) => (
-        <Badge color={STATUS_COLOR[u.status ?? 'active'] ?? 'gray'} variant="light" size="sm">
-          {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
-        </Badge>
+        <Stack gap="tight" align="flex-start">
+          <Badge color={ROLE_COLOR[u.role as UserRole] ?? 'gray'} variant="light" size="sm">
+            {t(`role_${u.role}` as `role_admin`)}
+          </Badge>
+          <Badge color={STATUS_COLOR[u.status ?? 'active'] ?? 'gray'} variant="light" size="sm">
+            {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
+          </Badge>
+        </Stack>
       ),
-    },
-    {
-      key: 'phone',
-      label: t('col_phone'),
-      width: '13%',
-      render: (u) => <Text size="xs" c="dimmed">{u.phone ?? '—'}</Text>,
     },
     {
       key: 'date',
       label: t('col_date'),
       align: 'right',
-      width: '20%',
+      visibleFrom: 'xl',
       render: (u) => (
         <Stack gap="xs">
           <Text size="xs" c="dimmed">{formatDate(u.created_at, locale)}</Text>
@@ -318,7 +308,6 @@ export function AdminUsersTable({
       key: 'actions',
       label: '',
       align: 'right',
-      width: '12%',
       render: (u) => {
         const isLoading = loadingId === u.id
         return (
@@ -359,7 +348,8 @@ export function AdminUsersTable({
     {
       key: 'agent',
       label: t('col_agent'),
-      width: '55%',
+      width: theme.other.layout.tableTitleColumnWidth,
+      wrap: true,
       render: (u) => {
         const initials = u.name
           ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
@@ -385,14 +375,12 @@ export function AdminUsersTable({
       key: 'date',
       label: t('col_date'),
       align: 'right',
-      width: '25%',
       render: (u) => <Text size="xs" c="dimmed">{formatDate(u.created_at, locale)}</Text>,
     },
     {
       key: 'revoke',
       label: '',
       align: 'right',
-      width: '10%',
       render: (u) => {
         const isLoading = loadingId === u.id
         if (isLoading) return <Group justify="flex-end"><Loader size="xs" /></Group>
@@ -446,6 +434,7 @@ export function AdminUsersTable({
           rows={verifiedAgents}
           emptyLabel={t('empty_verified')}
           rowClassName={(u) => loadingId === u.id ? 'opacity-50' : ''}
+          cardsBelow="md"
         />
       ) : (
         <>
@@ -455,7 +444,7 @@ export function AdminUsersTable({
             placeholder={t('search_placeholder')}
             leftSection={<Search size={theme.other.iconSize.compact} />}
             onChange={handleSearchChange}
-            style={{ width: '100%' }}
+            w="100%"
             data-testid="users-search"
           />
 
@@ -513,6 +502,7 @@ export function AdminUsersTable({
             emptyLabel={t('empty')}
             rowClassName={(u) => loadingId === u.id ? 'opacity-50' : ''}
             card={userCard}
+            cardsBelow="md"
           />
 
           {/* Pagination — full-width on mobile */}

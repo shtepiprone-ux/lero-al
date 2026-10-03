@@ -134,7 +134,6 @@ const ASSERT_STORIES = [
   // ── Shared (1) ──
   { id: 'shared-combobox--button-variant',        label: 'Combobox/ButtonVariant',     anchors: [{ type: 'testid', value: 'combobox', label: 'combobox' }] },
   // ── Admin (19) — anchored via data-testid ──
-  { id: 'admin-adminpageshell--default',           label: 'AdminPageShell/Default',           anchors: [{ type: 'testid', value: 'admin-page-shell', label: 'page-shell' }] },
   { id: 'admin-statuschangecontrol--select',       label: 'StatusChangeControl/Select',       anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangecontrol--select-with-note', label: 'StatusChangeControl/SelectWithNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
   { id: 'admin-statuschangecontrol--workflow-required-note', label: 'StatusChangeControl/WorkflowRequiredNote', anchors: [{ type: 'testid', value: 'status-change-control', label: 'scc' }] },
@@ -158,7 +157,7 @@ const ASSERT_STORIES = [
   { id: 'admin-admincompaniesmanager--default',    label: 'AdminCompaniesManager/Default',    anchors: [{ type: 'testid', value: 'admin-companies-manager', label: 'companies' }] },
   { id: 'admin-adminsupportmanager--default',      label: 'AdminSupportManager/Default',      anchors: [{ type: 'testid', value: 'admin-support-manager', label: 'support' }] },
   { id: 'admin-adminemailtemplatesmanager--default', label: 'AdminEmailTemplatesManager/Default', anchors: [{ type: 'testid', value: 'admin-email-templates-manager', label: 'email-tpl' }] },
-  { id: 'admin-adminlistingstable--default',       label: 'AdminListingsTable/Default',       anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
+  { id: 'patterns-mantine-adminlistingsview--default', label: 'AdminListingsView/Default',        anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
   { id: 'patterns-mantine-adminuserstable--default', label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },
   { id: 'patterns-mantine-adminuserprofileview--view', label: 'AdminUserProfileView/View',       anchors: [{ type: 'testid', value: 'admin-user-profile', label: 'user-profile' }] },
   // ── Layout (0) — FilterBar/PageHeader/PageShell/Section deleted (Task 788, 2026-09-05):

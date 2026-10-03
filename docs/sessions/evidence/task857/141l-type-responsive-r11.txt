@@ -1,0 +1,25 @@
+
+> lero-al@0.1.0 check:type-responsive
+> node scripts/check-type-responsive.mjs
+
+check:type-responsive — no static large text reaches a phone (Task 886, GR-3c)
+    Scanned: src/**/*.tsx, excluding *.stories.tsx, *.test.tsx, __tests__/ and src/stories/.
+    Arm A: <Title> of effective size h1-h4 without a responsive fz; any other element with a static
+           fz/size h1-h4 or an fz/size bound to theme.headings.sizes.*.
+    Arm B: bare Tailwind text-2xl..9xl / text-title-* in a className literal, unless baselined.
+    Cannot see (stated, never implicit):
+      - font-size in CSS modules or in theme.ts component `styles`;
+      - a className composed across variables or cn()/clsx() arguments;
+      - fz passed through a variable that is not imported from typography.ts;
+      - the values of an fz object literal: it is accepted without checking them (the GR-3c measurement closes it);
+      - size/fz written as any other expression (e.g. size={'h3'}, a ternary): it is not read as static;
+      - computed sizes: the GR-3c measurement at 320/390/768/1440 stays binding.
+
+    Files scanned: 318
+    Arm A violations: 0
+    Arm B: 4 baselined, 0 new, 0 stale
+    Opening tags this scanner could not close (parse error): 0
+
+PASS  check:type-responsive — no static large Title/fz/size; Arm B equals the baseline exactly.
+
+EXIT_CODE=0

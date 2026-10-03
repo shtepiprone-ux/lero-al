@@ -1,0 +1,29 @@
+ M docs/component-catalog.md
+ M docs/critical-flow-registry.md
+ M scripts/check-listing-visibility.mjs
+ M scripts/check-stories-rendered.mjs
+ M scripts/mantine-migration-scope.json
+ M scripts/responsive-screenshots.mjs
+ M scripts/story-realmode-allowlist.json
+ M scripts/surface-census-baseline.json
+ M scripts/type-responsive-baseline.json
+ M src/app/admin/listings/page.tsx
+ D src/components/admin/AdminListingsTable.stories.tsx
+ M src/components/admin/AdminListingsTable.tsx
+ D src/components/admin/AdminPageShell.stories.tsx
+ D src/components/admin/AdminPageShell.tsx
+ M src/components/admin/AdminSearchInput.tsx
+ M src/modules/listings/lib/__tests__/visibility.test.ts
+?? docs/sessions/2026-10-02-task857-admin-listings-mantine.md
+?? docs/sessions/evidence/task857/
+?? src/app/admin/listings/visibilityFilter.ts
+?? src/components/admin/AdminListingsView.tsx
+?? src/components/admin/ListingPreviewDialog.tsx
+?? src/components/admin/ListingPreviewDialogView.tsx
+?? src/components/admin/PremiumDialog.tsx
+?? src/components/admin/PremiumDialogView.tsx
+?? src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+?? src/components/admin/useAdminSearchQuery.ts
+?? src/stories/patterns/mantine/AdminListingsView.stories.tsx
+?? src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
+?? src/stories/patterns/mantine/PremiumDialogView.stories.tsx

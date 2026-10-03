@@ -1,0 +1,17 @@
+141b-census-r11: 1
+141d-typecheck-r11: 0
+141e-lint-r11: 1
+141f-story-coverage-r11: 0
+141g-rendered-scope-r11: 0
+141h-census-changed-r11: 0
+141i-design-tokens-r11: 0
+141j-enrolled-tailwind-r11: 0
+141k-i18n-r11: 0
+141l-type-responsive-r11: 0
+141m-file-integrity-r11: 0
+141n-mojibake-r11: 0
+141o-listing-visibility-r11: 0
+141t-pattern-enrolment-r11: 0
+141p-storybook-build-r11: 0
+141q-build-r11: 0
+141c-tests-r11: 1

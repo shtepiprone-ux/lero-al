@@ -1,0 +1,23 @@
+SCOPE GUARD manifest:
+ 1. src/app/admin/listings/visibilityFilter.ts
+ 2. src/app/admin/listings/page.tsx
+ 3. src/components/admin/AdminListingsTable.tsx
+ 4. src/components/admin/ListingPreviewDialogView.tsx
+ 5. src/components/admin/AdminListingsView.tsx
+P2b src/app/admin/listings/page.tsx
+  hash before b682cd9cf61457ee18c651a6a53c4f9a9804e2b0
+  planted     2dd9fe692e0bd1ab2ca424d5a20669f247d2486b
+  restored    b682cd9cf61457ee18c651a6a53c4f9a9804e2b0  equal=true
+  exit under plant=0 (expect: check:listing-visibility exits 1 (route file))
+  ✅ Listing public-visibility invariant gate PASSED — 0 violations.
+P5 src/components/admin/AdminListingsView.tsx
+  hash before 35b47f25c687562cfadb963e6171b07eeb150625
+  planted     b0b3788529e1e3f1c507b37a703983079257e56b
+  restored    35b47f25c687562cfadb963e6171b07eeb150625  equal=true
+  exit under plant=1 (expect: census names ui/badge)
+      src/components/ui/badge.tsx  tier:tier2  manifest:no  story:no  className:0  ui-imports:0  parent:src/components/admin/AdminListingsView.tsx
+  FAIL  src/app/admin/listings/page.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/AdminListingsTable.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/ListingPreviewDialog.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/admin/PremiumDialog.tsx  [tier1-unenrolled-or-unstoried]
+  FAIL  src/components/ui/badge.tsx  [tier2-legacy-primitive]

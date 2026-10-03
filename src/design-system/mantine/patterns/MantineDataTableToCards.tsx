@@ -251,9 +251,10 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
    * The breakpoint below which cards render instead of the table. `'sm'` (default, 640px) is the
    * original `useMediaQuery` path, byte-for-byte unchanged. `'md'` (768px, Task 854, spec §17.1)
    * renders BOTH layouts and switches with Mantine's CSS `hiddenFrom`/`visibleFrom` — no
-   * `useMediaQuery`, so there is no first-paint flash on a public-site page.
+   * `useMediaQuery`, so there is no first-paint flash on a public-site page. `'lg'` (1024px, Task 857 R32)
+   * uses the same CSS switch as `'md'`, for a table that cannot fit before 1024 (named exception, §7.3 rule 2).
    */
-  cardsBelow?: 'sm' | 'md'
+  cardsBelow?: 'sm' | 'md' | 'lg'
   /** Task 877 (R1): makes the table row and the card clickable (`tabIndex=0`, Enter/Space) with a
    * trailing chevron. Omitted → no row interaction, render unchanged. */
   onRowClick?: (row: R) => void
@@ -283,6 +284,7 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
  * caveat: returns false on first render; admin pages are auth-gated, no visible flash.
  * `cardsBelow="md"` (Task 854) renders both layouts and switches with `hiddenFrom`/`visibleFrom`
  * (CSS media queries, no JS, no first-paint flash) — for public-site pages, spec §17.1.
+ * `cardsBelow="lg"` (Task 857 R32) is the same CSS switch at 1024px.
  *
  * Spacing rule (§7.1): ALL spacing uses theme tokens. Raw px forbidden (touch-target rem exempt).
  * Card anatomy rule (§7.2): CardConfig is the ONLY canonical admin card design.
@@ -489,7 +491,13 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
 
   // Desktop: TailAdmin CRM card-wrapped table (§6b).
   // Paper provides rounded-2xl card with gray-2 border; Table fills it edge-to-edge
-  // so thead border-y spans the full card width. Cell padding (xl×sm = 24×12) provides visual inset.
+  // so the thead line spans the full card width. Cell padding (xl×sm = 24×12) provides visual inset.
+  // Task 857 D78-11 / GR-3g: the thead top line is drawn only when `tableHeader` sits above it. When the header
+  // row is flush with the card's top edge, the card's own rounded border is that line: a second straight line
+  // there doubles the border and `border-collapse` ignores a radius, so the card's clip would cut it at the corners.
+  // Task 857 D78-12: the header row is white everywhere. Mantine's `stickyHeader` paints every header cell
+  // `--mantine-color-body`, so the sticky column's header cell uses the same token (opaque over scrolled cells)
+  // and the thead sets no background of its own. Departs from TailAdmin §6b's gray header by owner decision.
   const tableMarkup = (
     <Paper
       withBorder
@@ -517,8 +525,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
           withColumnBorders={false}
           styles={{
             thead: {
-              backgroundColor: 'var(--mantine-color-gray-0)',
-              borderTop: '1px solid var(--mantine-color-gray-1)',
+              ...(tableHeader ? { borderTop: '1px solid var(--mantine-color-gray-1)' } : {}),
               borderBottom: '1px solid var(--mantine-color-gray-1)',
             },
             td: { whiteSpace: 'nowrap' },
@@ -532,7 +539,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
                 <Table.Th
                   key={col.key}
                   visibleFrom={col.visibleFrom}
-                  {...stickyProps(idx, 'gray.0')}
+                  {...stickyProps(idx, 'var(--mantine-color-body)')}
                   style={{ width: col.width, textAlign: col.align ?? 'left', ...(col.wrap ? { whiteSpace: 'normal' } : {}), ...stickyStyle(idx) }}
                 >
                   <Text size="xs" fw={500} c="gray.5">
@@ -572,6 +579,16 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
       <>
         <Box hiddenFrom="md">{cardsMarkup}</Box>
         <Box visibleFrom="md">{tableMarkup}</Box>
+      </>
+    )
+  }
+
+  if (cardsBelow === 'lg') {
+    // Same CSS switch at 1024px (Task 857 R32).
+    return (
+      <>
+        <Box hiddenFrom="lg">{cardsMarkup}</Box>
+        <Box visibleFrom="lg">{tableMarkup}</Box>
       </>
     )
   }

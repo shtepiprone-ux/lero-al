@@ -286,6 +286,10 @@ declare module '@mantine/core' {
       // Task 892 (R5) — `/admin/permissions`'s page wrapper `max-w-2xl` (42rem, 672px), the narrowest admin
       // wrapper; same value type and read helper as `adminPageMaxWidth`.
       adminPagePanelMaxWidth: string
+      // Task 857 R19 — the width of a data table's title column (a `wrap: true` column clamped to two lines).
+      // Provenance: legacy `AdminListingsTable.tsx:511` (`git show HEAD`) `truncate max-w-50`, 12.5rem; owner
+      // decision 2026-10-02; `docs/mantine-responsive-design-system.md` §7.3 (a).
+      tableTitleColumnWidth: string
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -849,6 +853,7 @@ export const theme = createTheme({
       adminPageNarrowMaxWidth: '56rem', // 896px — Task 868: /admin/pages page wrapper (legacy `max-w-4xl`)
       adminPageShellMaxWidth: '112rem', // 1792px — Task 896: admin list-page wrapper (legacy max-w-10xl / .container-admin cap)
       adminPagePanelMaxWidth: '42rem', // 672px — Task 892: /admin/permissions page wrapper (legacy max-w-2xl)
+      tableTitleColumnWidth: '12.5rem', // 200px — Task 857 R19: table title column (legacy `max-w-50`, §7.3 (a))
     },
     overlay: {
       dragHandle: {
@@ -1087,13 +1092,30 @@ export const theme = createTheme({
       },
     },
     Radio: {
-      // size='xs' → 16px circle (sm ≈ 20px, too large per §6g); body min-height 44px touch target;
-      // label font-size reset: xs-size defaults to 12px, §6g requires 14px (sm).
-      defaultProps: { size: 'xs' },
+      // Owner decision 2026-10-02 ("20px circle, 10px dot (Recommended)"), GR-3f, §6g: size='sm' → 20px circle,
+      // checked dot 10px via --radio-icon-size. The earlier 16px ring / 6px dot rasterised as facets and a rounded
+      // square at device scale 1. Set here once; no consumer or Story sets size or these variables.
+      // body min-height 44px touch target; label font-size reset to 14px (sm), §6g.
+      defaultProps: { size: 'sm' },
+      vars: () => ({
+        root: { '--radio-icon-size': '0.625rem' }, // 10px dot (rem — same exemption as the 44px body)
+      }),
       styles: {
         body:  { minHeight: '2.75rem', alignItems: 'center' }, // ≥44px touch (rem — same exemption as Button/Checkbox)
         label: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)' }, // §6g 14px / gray-7
       },
+    },
+    // Task 857 R49 (§23.7 "A choice"): a bordered radio card. The checked tint and the focus/disabled chrome live in
+    // `input-chrome.css`'s Radio block; the card itself only sets radius, border and padding here.
+    RadioCard: {
+      defaultProps: { radius: 'md', withBorder: true, p: 'md' },
+    },
+    // The card's indicator is the canonical radio circle: 20px with a 10px dot (GR-3f), like the `Radio` entry above.
+    RadioIndicator: {
+      defaultProps: { size: 'sm' },
+      vars: () => ({
+        indicator: { '--radio-icon-size': '0.625rem' }, // 10px dot (rem — same exemption as the `Radio` entry)
+      }),
     },
     Switch: {
       // size='sm' → 20px track height (closest to source 18.4px); density-correction-approved (Task 499).

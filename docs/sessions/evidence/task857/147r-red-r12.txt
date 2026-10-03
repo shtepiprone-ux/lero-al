@@ -1,0 +1,12 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx (3 tests | 1 failed) 126ms
+     × the sticky column header cell is white like the rest and the thead paints no background of its own 21ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  18:22:17
+   Duration  2.09s (transform 109ms, setup 88ms, import 981ms, tests 126ms, environment 750ms)
+
+EXIT_CODE=1

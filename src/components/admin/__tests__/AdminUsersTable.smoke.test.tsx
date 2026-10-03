@@ -175,6 +175,8 @@ vi.mock('@mantine/core', () => {
         decorative: 24, feature: 28, prominent: 32, banner: 40, touch: 44, hero: 48,
         spotlight: 56, colossal: 64,
       },
+      // Task 857 R19: the table title column width (literal copy of `theme.other.layout.tableTitleColumnWidth`).
+      layout: { tableTitleColumnWidth: '12.5rem' },
     },
   })
 
@@ -587,8 +589,8 @@ describe('AdminUsersTable — data rendering', () => {
       total: 2,
     }))
 
-    const agentBadge = container.querySelector('[data-testid="cell-usr-001-role"] [data-testid="badge"]')
-    const moderatorBadge = container.querySelector('[data-testid="cell-usr-004-role"] [data-testid="badge"]')
+    const agentBadge = container.querySelector('[data-testid="cell-usr-001-status"] [data-testid="badge"]')
+    const moderatorBadge = container.querySelector('[data-testid="cell-usr-004-status"] [data-testid="badge"]')
     expect(agentBadge?.getAttribute('data-color')).toBe('blueLight')
     expect(moderatorBadge?.getAttribute('data-color')).toBe('orange')
   })

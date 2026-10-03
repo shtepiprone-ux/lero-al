@@ -1,0 +1,12 @@
+............agentstatisticsview--default 320 16/16/16/16
+agentstatisticsview--default 390 16/16/16/16
+agentstatisticsview--default 1024 24/24/24/24
+agentstatisticsview--default 1440 24/24/24/24
+admintable--wrapped-title-column 320 24/16/327/16
+admintable--wrapped-title-column 390 24/16/367/16
+admintable--wrapped-title-column 1024 24/32/636/32
+admintable--wrapped-title-column 1440 24/32/636/32
+mantine-primitives-table--cards-below-lg 320 16/16/16/16
+mantine-primitives-table--cards-below-lg 390 16/16/16/16
+mantine-primitives-table--cards-below-lg 1024 49/49/610/49
+mantine-primitives-table--cards-below-lg 1440 49/49/610/49

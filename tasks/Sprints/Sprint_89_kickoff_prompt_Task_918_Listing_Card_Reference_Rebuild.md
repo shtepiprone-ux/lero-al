@@ -12,6 +12,12 @@
 > `MantineListingPrice`. **857 Revision 8** (R56) removed the listing card and the price from `ListingPreviewDialogView`,
 > so that dialog is no longer in this task. 857 stays a start gate because this task edits its `AdminListingsView` and
 > its listings route.
+> **Amended 2026-10-03 (912 review 4, owner return; 912 kickoff §20):** the D89-7 colour on the **listing page** is built
+> in **912**. It adds the token `theme.other.priceColor.regular` (`#111111`, owner, 2026-10-03) and `MantineListingPrice`
+> renders the price in that token when not reduced and in `brand` when reduced. 918 **consumes** that rule for the card and
+> admin through the same component and token. It does not add another colour value, and R17 is reduced to nothing on
+> the colour side.
+>
 > **Amended 2026-10-03 (912 review 2, owner return; 912 kickoff §18.7):** **912 Revision 2 creates
 > `MantineListingPrice`** (`size="xl"`, props `price`, `priceOld`, `trailing`, `ownerCurrency`), its Story
 > `Patterns/Mantine/ListingPrice` and the manifest entry, and moves the detail block and the contact card onto it

@@ -7,10 +7,14 @@
 
 > **Amended 2026-10-03 before execution (owner decision D89-9, Sprint 89 plan):** *"Зверху всюди (Recommended)"*. The
 > contact card's struck old price sits **above** the current price, not below it. Every order statement below already
-> reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) is **918**'s, not this
-> task's: keep the main price's colour unchanged here.
+> reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
+> **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Revision 3 (2026-10-03, review 3): §19 is the current executable route.** It touches one Story fixture only. §18
+> **Revision 4 (2026-10-03, review 4 + owner return): §20 is the current executable route.** The price colour
+> (D89-7: dark `#111111` token when not reduced, coral when reduced) is now **912's**. This supersedes the line above
+> that kept the colour for 918, and §18.3's *"the colour is 918's"*.
+>
+> **Revision 3 (2026-10-03, review 3): §19.** It touches one Story fixture only. §18
 > is implemented and verified apart from that fixture.
 >
 > **Revision 2 (2026-10-03, owner return on the review-2 matrix): §18.** It adds the
@@ -586,7 +590,7 @@ New evidence files use an `r2-` prefix.
 | Owner's term | Meaning | Shown when | How |
 |---|---|---|---|
 | Original price | the higher price before the listing owner lowered it (`price_old`) | only when `price_old > price` | **struck, `xs` dimmed, no label, on its own line above the current price** |
-| Current price | `price`, in the viewer's currency when converted | always | `xl` 700 `brand` (the colour is 918's, D89-7) |
+| Current price | `price`, in the viewer's currency when converted | always | `xl` 700; colour per §20 (R22): `theme.other.priceColor.regular` when not reduced, `brand` when reduced (D89-7) |
 | Price in the owner's currency | `price` in `listing.currency` | only when the signed-in viewer's preferred currency differs from `listing.currency` (production `needsConversion`, `[slug]/page.tsx:227`, unchanged) | `xs` dimmed, **not struck**, last line: "{label}: {value}", with the new label |
 
 ### 18.4 Requirements
@@ -842,3 +846,172 @@ codes, the AC16 rows and the receipts. Update 912's backlog row. End with
 
 After that comes review 4. If it verifies AC16, the §18.9 owner matrix goes to the owner, unchanged. The matrix is not
 handed over before then, because the `ListingDetailPattern` row would show the defect.
+
+## 20. Revision 4 (review 4 + owner return, 2026-10-03): `NEEDS REVISION` — the price colour (D89-7) and one truncated line
+
+**§20 is the current executable route.** Re-entry mode: `remediation`. Review 4 verified §19 / AC16. Measured from
+built `storybook-static` (`docs/sessions/evidence/task912/rv4-opus-probe.json`, all four §18.9 Stories, `en` at
+320/390/1024/1440 plus `sq`/`uk`/`it` at 320/1440), with these results:
+- every price block reads struck old price (12px) above the price (20px), then the owner-currency line (12px, plain);
+- per-m² rows: `941 EUR /m²` and `94,118 ALL /m²`;
+- no horizontal overflow, no side at 0, no doubled gutter, no popup.
+
+Keep every §18/§19 file hash-equal to `r2-hashes.txt` and `fb10c5f6` (`ListingDetailPattern.stories.tsx`), except the
+§20.4 write set. New evidence files use an `r4-` prefix.
+
+### 20.1 Owner return, verbatim (2026-10-03)
+
+*"я вже неодноразово казав, що ціна по замовчуванню має бути темним кольором, наприклад #111111 (треба зробити
+токен). Але я все ще бачу ціну по замовчуванню brand кольром."*
+
+This restates **D89-7** (2026-10-02, Sprint 89 plan): *"ціну за замовчуванням у картках і на стоірнці оголошення треба
+зробити також чорною, а ціну, якщо її зменьшили червоним (кораловим)"*. It adds the value and asks for a token.
+
+### 20.2 What was wrong
+
+- **F3 (P1, orchestrator task-design defect).** D89-7 covers the listing page. The orchestrator routed its colour to
+  918 and wrote *"keep the main price's colour unchanged here"* into this kickoff (banner, and §18.3 *"the colour is
+  918's"*). §18 then created `MantineListingPrice`, the one component that owns the price, and still left the rule out.
+  So `MantineListingPrice.tsx` renders `c="brand"` in every state, and the owner sees a coral price with no reduction.
+  The executor followed the kickoff. **From here on, the listing-page colour belongs to 912, not 918.**
+- **F4 (P2, GR-3b content loss in an owner-matrix Story).** `MantineListingContactPattern.tsx:148`: the subtitle line
+  is `<Text size="xs" c="dimmed" truncate>`. In the owner-deleted state that line is the message "the owner deleted
+  their account". At 320 the column is 178px wide, so the line is cut to an ellipsis: `uk` needs 278px and `it`
+  306px (`docs/sessions/evidence/task912/rv4-opus-overrun.json`). This comes from Task 616 (`4715ad093`), not from 912.
+  It is in the `ListingContactPattern` Story, which the §18.9 matrix shows at `uk@320`, so it is fixed here.
+
+### 20.3 Reference research (GR-7)
+
+- **Pages enumerated:** TailAdmin 88, Lahomes 123, Kamr 1. Kamr's login did not advance past the dashboard in the
+  scripted run, so only its dashboard was inspected.
+- **Pages with a price, inspected live:**
+  - TailAdmin: 21, including `products-list`, `pricing-tables`, `single-invoice` and the dashboards;
+  - Lahomes: 42 URLs, including `property-grid`, `property-list` and `property-details`;
+  - Kamr: `dashboard`.
+- **Evidence:** `docs/sessions/evidence/task912/research/rv4-price-colour-research.{mjs,json,txt}`, plus screenshots
+  `lahomes-property-grid.png`, `lahomes-property-details.png`, `tailadmin-products-list.png`,
+  `tailadmin-pricing-tables.png` and `kamr-dashboard.png`.
+
+| Reference | Price colour, not reduced | Struck old price | Brand colour on the price? |
+|---|---|---|---|
+| Lahomes `property-grid` (the owner's card reference, Sprint 89) | `rgb(50,58,70)` `#323a46`, 16px 500 | `rgb(104,125,146)`, 16px, `line-through` | no: purple is only on links ("More Inquiry") |
+| Lahomes `property-details` | `#323a46`, 18px 500 | — | no |
+| TailAdmin `pricing-tables`, dashboards | `rgb(29,41,57)` `#1d2939` (gray-800), 20–36px 600–700 | `rgb(152,162,179)` (gray-400), `line-through` | no |
+| TailAdmin `products-list` | `rgb(52,64,84)` `#344054`, 14px | — | no |
+| Kamr `dashboard` | `rgb(45,49,52)` `#2d3134`, 30px 600 | — | no |
+
+- **Chosen pattern.** Every reference shows a regular price in a near-black text colour and a struck old price in
+  grey. None puts a regular price in the brand colour. That matches D89-7's "dark".
+- **Absent from all references.** A reduced price in red or coral. That comes from Rozetka (owner D89-3) and D89-7,
+  not from these three references.
+- **lero.al data map.**
+  - The listing page renders the price through `MantineListingPrice` in two places: the detail block
+    (`MantineListingDetailPattern`) and the contact card (`MantineListingContactPattern`).
+  - The data is `price` / `price_old`. "Reduced" is `isPriceReduced`: `price_old > price` (`[slug]/page.tsx:221`,
+    admin preview `:77`). Production passes `priceOld` only under that gate (`ListingDetailView.tsx:289,355`).
+  - So `priceOld` being present **is** the reduced state.
+- **Owner decisions:** D89-7 (2026-10-02) and §20.1 (2026-10-03): dark, the value `#111111`, as a token.
+
+`GR-7 REFERENCE RESEARCH — artifact: listing price colour (not reduced / reduced); pages enumerated: TailAdmin 88 / Lahomes 123 / Kamr 1; inspected live: TailAdmin 21 price pages, Lahomes 42 price URLs (property-grid, property-list, property-details, dashboards), Kamr dashboard; chosen pattern: Lahomes property-grid + TailAdmin — regular price near-black, struck old price grey, brand never on a price; absent from all references: coral reduced price (owner D89-3/D89-7, Rozetka); lero.al data map: listing page → MantineListingPrice in MantineListingDetailPattern + MantineListingContactPattern, reduced = priceOld present (gated by isPriceReduced, ListingDetailView.tsx:289,355); owner decisions: D89-7, §20.1; evidence: docs/sessions/evidence/task912/research/.`
+
+### 20.4 Requirements
+
+**R21 [§20.1, D89-7] (P1). Price colour token.**
+- In `src/design-system/mantine/theme.ts`, add `priceColor: { regular: string }` to the `MantineThemeOther`
+  augmentation (`:36`).
+- In `theme.other` (`:729`), add `priceColor: { regular: '#111111' }`. Give it a comment that cites the owner's words
+  (§20.1, 2026-10-03) and D89-7.
+- `theme.ts` is the allowlisted token source for `check:design-tokens` (`scripts/design-tokens-allowlist.json`, key
+  `src/design-system/mantine/theme.ts`).
+- No other file may contain `#111111`.
+
+**R22 [D89-7] (P1). `MantineListingPrice` colour rule.**
+- The current price's `Text` gets `c={priceOld ? 'brand' : theme.other.priceColor.regular}` via `useMantineTheme()`.
+  That makes it dark when not reduced and coral when reduced.
+- Nothing else in the component changes:
+  - the struck line stays `c="dimmed"`;
+  - the owner-currency line stays `c="dimmed"`;
+  - `trailing` is untouched.
+- Update the component's doc comment.
+- Do not touch the card (`MantineListingCardPattern`) or the admin surfaces. They stay **918**'s, and 918 consumes this
+  token.
+
+**R23 [F4] (P2).**
+- In `MantineListingContactPattern.tsx:148`, delete `truncate` from the subtitle `Text`, so the line wraps.
+- The agent name's `truncate` (`:140`) stays.
+- Add nothing else: no `lineClamp`, `style` or width.
+
+**R24 [R22] (P1). Tests**, in `MantineListingPrice.smoke.test.tsx`:
+- (e) Without `priceOld`, the price element's `style.color` resolves to `#111111`. Accept `rgb(17, 17, 17)` or
+  `#111111`, and record which one jsdom gives.
+- (f) With `priceOld`, the price element's `style.color` references the brand colour (`var(--mantine-color-brand-…)`),
+  and it is not `#111111`.
+- (g) The same two assertions through `MantineListingDetailPattern` and `MantineListingContactPattern`, with one render
+  each.
+
+**Write set (exact):**
+- `theme.ts`;
+- `MantineListingPrice.tsx`;
+- `MantineListingContactPattern.tsx` (`:148` only);
+- `MantineListingPrice.smoke.test.tsx`;
+- the session log, 912's backlog row and `r4-*` evidence.
+
+No Story changes. `ListingPrice/Default` already shows both colours: its "Not reduced" and "Converted" sections show a
+dark price, and its two reduced sections show a coral one. The other matrix Stories are all reduced, so they stay
+coral.
+
+### 20.5 Acceptance criteria
+
+- **AC17 [R21, R22]** In `Patterns/Mantine/ListingPrice/Default` at `en@320` and `en@1440`, the price in sections 1
+  and 3 has computed `color` `rgb(17, 17, 17)`. In sections 2 and 4 it equals the theme's `brand` filled shade, the
+  same value as before this revision. In `ListingContactPattern`, `ListingDetailView/PublicListing` and
+  `ListingDetailPattern` (all reduced), every price stays the brand shade.
+- **AC18 [R23]** In `ListingContactPattern/Default` at `uk@320` and `it@320`, the owner-deleted message is shown in
+  full. Its text box is not wider than its `p`, there is no ellipsis, and there is no horizontal overflow.
+- **AC19 [R24]** Plants, with Node read/write and a hash witness. After each restore, the tests pass and the hash is
+  equal.
+  - P-G: the not-reduced branch returns `'brand'`. Test (e) must fail.
+  - P-H: the reduced branch returns the token. Test (f) must fail.
+- **AC20** `git grep -n "#111111" -- src` returns only the `theme.ts` line.
+
+`GR-4 AC AUDIT — 4 criteria; each states an observable property; absolutes: none.`
+
+Type scale (GR-3c): unchanged. GR-3d: unchanged from review 4's measurement. No Story wrapper changes.
+
+### 20.6 Verification (one pass, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:mojibake
+npm.cmd run build
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task912\rv4-opus-probe.mjs
+node.exe docs\sessions\evidence\task912\rv4-opus-overrun.mjs
+git hash-object src\design-system\mantine\theme.ts src\design-system\mantine\patterns\MantineListingPrice.tsx src\design-system\mantine\patterns\MantineListingContactPattern.tsx src\design-system\mantine\patterns\__tests__\MantineListingPrice.smoke.test.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0.
+- `rv4-opus-overrun.mjs` prints an empty `hits` list for `en`, `uk` and `it`.
+- Copy both probes' outputs to `r4-probe.json` and `r4-overrun.json`.
+- For AC17, record the computed `color` of every price in an `r4-colour.json` probe. You may copy `rv4-opus-probe.mjs`
+  to `r4-colour.mjs` and add `color` to `leaf()`.
+
+Then run the plants (AC19). Receipts:
+- `GR-3b`, `GR-3c` and `GR-3d` per §18.9 Story;
+- `GR-3e`: `n/a: no popup`;
+- `GR-3f`: `n/a`;
+- `GR-3g`: `n/a: no line`.
+
+### 20.7 Completion
+
+Append `## Revision 4` to the session log, with the Files Changed delta, the block with exit codes, the AC17/AC18
+values, the plants and the receipts. Update 912's backlog row. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+Review 5 re-measures, then hands the §18.9 matrix to the owner. In the matrix, `ListingPrice` shows the dark price in
+its "Not reduced" and "Converted" sections.

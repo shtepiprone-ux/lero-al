@@ -1,0 +1,4399 @@
+{
+  "tailadmin": {
+    "pages": [
+      "https://demo.tailadmin.com/index.html",
+      "https://demo.tailadmin.com/analytics.html",
+      "https://demo.tailadmin.com/marketing.html",
+      "https://demo.tailadmin.com/crm.html",
+      "https://demo.tailadmin.com/stocks.html",
+      "https://demo.tailadmin.com/saas.html",
+      "https://demo.tailadmin.com/logistics.html",
+      "https://demo.tailadmin.com/ai.html",
+      "https://demo.tailadmin.com/sales.html",
+      "https://demo.tailadmin.com/finance.html",
+      "https://demo.tailadmin.com/text-generator.html",
+      "https://demo.tailadmin.com/image-generator.html",
+      "https://demo.tailadmin.com/code-generator.html",
+      "https://demo.tailadmin.com/video-generator.html",
+      "https://demo.tailadmin.com/ai-settings.html",
+      "https://demo.tailadmin.com/products-list.html",
+      "https://demo.tailadmin.com/add-product.html",
+      "https://demo.tailadmin.com/billing.html",
+      "https://demo.tailadmin.com/invoices.html",
+      "https://demo.tailadmin.com/single-invoice.html",
+      "https://demo.tailadmin.com/create-invoice.html",
+      "https://demo.tailadmin.com/transactions.html",
+      "https://demo.tailadmin.com/single-transaction.html",
+      "https://demo.tailadmin.com/calendar.html",
+      "https://demo.tailadmin.com/profile.html",
+      "https://demo.tailadmin.com/task-list.html",
+      "https://demo.tailadmin.com/task-kanban.html",
+      "https://demo.tailadmin.com/form-elements.html",
+      "https://demo.tailadmin.com/form-layout.html",
+      "https://demo.tailadmin.com/basic-tables.html",
+      "https://demo.tailadmin.com/data-tables.html",
+      "https://demo.tailadmin.com/file-manager.html",
+      "https://demo.tailadmin.com/pricing-tables.html",
+      "https://demo.tailadmin.com/faq.html",
+      "https://demo.tailadmin.com/api-keys.html",
+      "https://demo.tailadmin.com/integrations.html",
+      "https://demo.tailadmin.com/blank.html",
+      "https://demo.tailadmin.com/404.html",
+      "https://demo.tailadmin.com/500.html",
+      "https://demo.tailadmin.com/503.html",
+      "https://demo.tailadmin.com/coming-soon.html",
+      "https://demo.tailadmin.com/maintenance.html",
+      "https://demo.tailadmin.com/success.html",
+      "https://demo.tailadmin.com/layout-one.html",
+      "https://demo.tailadmin.com/layout-two.html",
+      "https://demo.tailadmin.com/layout-three.html",
+      "https://demo.tailadmin.com/layout-four.html",
+      "https://demo.tailadmin.com/layout-five.html",
+      "https://demo.tailadmin.com/layout-six.html",
+      "https://demo.tailadmin.com/chat.html",
+      "https://demo.tailadmin.com/support-tickets.html",
+      "https://demo.tailadmin.com/support-ticket-reply.html",
+      "https://demo.tailadmin.com/inbox.html",
+      "https://demo.tailadmin.com/inbox-details.html",
+      "https://demo.tailadmin.com/line-chart.html",
+      "https://demo.tailadmin.com/bar-chart.html",
+      "https://demo.tailadmin.com/pie-chart.html",
+      "https://demo.tailadmin.com/radar-chart.html",
+      "https://demo.tailadmin.com/radial-chart.html",
+      "https://demo.tailadmin.com/maps.html",
+      "https://demo.tailadmin.com/vector-maps.html",
+      "https://demo.tailadmin.com/alerts.html",
+      "https://demo.tailadmin.com/avatars.html",
+      "https://demo.tailadmin.com/badge.html",
+      "https://demo.tailadmin.com/breadcrumb.html",
+      "https://demo.tailadmin.com/buttons.html",
+      "https://demo.tailadmin.com/buttons-group.html",
+      "https://demo.tailadmin.com/cards.html",
+      "https://demo.tailadmin.com/carousel.html",
+      "https://demo.tailadmin.com/dropdowns.html",
+      "https://demo.tailadmin.com/images.html",
+      "https://demo.tailadmin.com/links.html",
+      "https://demo.tailadmin.com/list.html",
+      "https://demo.tailadmin.com/modals.html",
+      "https://demo.tailadmin.com/notifications.html",
+      "https://demo.tailadmin.com/pagination.html",
+      "https://demo.tailadmin.com/popovers.html",
+      "https://demo.tailadmin.com/progress-bar.html",
+      "https://demo.tailadmin.com/ribbons.html",
+      "https://demo.tailadmin.com/spinners.html",
+      "https://demo.tailadmin.com/tabs.html",
+      "https://demo.tailadmin.com/tooltips.html",
+      "https://demo.tailadmin.com/videos.html",
+      "https://demo.tailadmin.com/signin.html",
+      "https://demo.tailadmin.com/signup.html",
+      "https://demo.tailadmin.com/reset-password.html",
+      "https://demo.tailadmin.com/two-step-verification.html",
+      "https://tailadmin.com/pricing"
+    ],
+    "prices": {
+      "https://demo.tailadmin.com/index.html": [
+        {
+          "t": "$2399.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$879.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1869.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1699.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$240.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/analytics.html": [
+        {
+          "t": "$12,499",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$5,498",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$4,521",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$13,843",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$7,523",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,377",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$599,00",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/marketing.html": [
+        {
+          "t": "$9,758",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$9,758.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/crm.html": [
+        {
+          "t": "$120,369",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$234,210",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$212,142.12",
+          "color": "rgb(29, 41, 57)",
+          "fs": "20px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$30,321.23",
+          "color": "rgb(29, 41, 57)",
+          "fs": "20px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$90",
+          "color": "rgb(0, 0, 0)",
+          "fs": "36px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$30,569.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "16px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$20,486.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "16px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/stocks.html": [
+        {
+          "t": "$1,232.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$965.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$1,232.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$2,567.99",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$192.53",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$192.53",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$192.53",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$192.53",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$192.53",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,008.65",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$11,689.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$32,227.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$13,895.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,008.65",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,008.65",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$11,689.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$32,227.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$13,895.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,008.65",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$2,567.88",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,567.88",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$6,754.99",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,445.41",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$5,698.55",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/saas.html": [
+        {
+          "t": "$200,45.87",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$849.54",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$473.85",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$293.01",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$782.01",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$202.87",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$490.51",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,950",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/logistics.html": [
+        {
+          "t": "$23,445,700",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$1,250.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$340.75",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$128.40",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,150.89",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$849.99",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/ai.html": [
+        {
+          "t": "$90,369",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$20.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$249.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$199.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$249.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$20.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/sales.html": [
+        {
+          "t": "$10,590",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$20.594",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$20.594",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15.230",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$16.450",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89.99",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$49.99",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$120.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89.99",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/finance.html": [
+        {
+          "t": "$24,830",
+          "color": "rgb(52, 64, 84)",
+          "fs": "30px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$5,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "30px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$3,831",
+          "color": "rgb(52, 64, 84)",
+          "fs": "30px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$9,758.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "24px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$10,758",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$9,234.87",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$4,567.23",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$22,101.76",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$7,890.45",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$11,223.90",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/products-list.html": [
+        {
+          "t": "$2,199",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$839",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,579",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$279",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,899",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,299",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$899",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/billing.html": [
+        {
+          "t": "$120.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$120.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$120.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$250.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$250.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/invoices.html": [
+        {
+          "t": "$120.80",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,450.50",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/single-invoice.html": [
+        {
+          "t": "$48",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,200",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$300",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$150",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$800",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,600",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,850",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$385",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,235",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/create-invoice.html": [
+        {
+          "t": "$1200",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1200.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$300",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$150.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$800",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1600.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3850.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$385.00",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4235.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/transactions.html": [
+        {
+          "t": "$43,999",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$919",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$679",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$210",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$839",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,100",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,300",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,579",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$450",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/single-transaction.html": [
+        {
+          "t": "$1200",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1200",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$300",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$150",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$800",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1600",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$900",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,850",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$385",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$4,235",
+          "color": "rgb(29, 41, 57)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/basic-tables.html": [
+        {
+          "t": "$2399.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$879.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1869.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1699.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$240.00",
+          "color": "rgb(102, 112, 133)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$12,499",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$5,498",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$4,521",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$13,843",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$7,523",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,377",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$599,00",
+          "color": "rgb(3, 152, 85)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$18,50.34",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,567.88",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,567.88",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$6,754.99",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,445.41",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$5,698.55",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/data-tables.html": [
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$23,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$23,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$89,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$19,200",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$23,500",
+          "color": "rgb(52, 64, 84)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://demo.tailadmin.com/pricing-tables.html": [
+        {
+          "t": "$5.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$12.00",
+          "color": "rgb(152, 162, 179)",
+          "fs": "20px",
+          "fw": "600",
+          "td": "line-through"
+        },
+        {
+          "t": "$10.99",
+          "color": "rgb(255, 255, 255)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$30.00",
+          "color": "rgb(208, 213, 221)",
+          "fs": "20px",
+          "fw": "600",
+          "td": "line-through"
+        },
+        {
+          "t": "$15.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$59.00",
+          "color": "rgb(152, 162, 179)",
+          "fs": "20px",
+          "fw": "600",
+          "td": "line-through"
+        },
+        {
+          "t": "$59.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$199.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$599.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$99.00",
+          "color": "rgb(29, 41, 57)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$299",
+          "color": "rgb(255, 255, 255)",
+          "fs": "30px",
+          "fw": "700",
+          "td": "none"
+        }
+      ],
+      "https://tailadmin.com/pricing": [
+        {
+          "t": "$269",
+          "color": "rgb(141, 147, 165)",
+          "fs": "26px",
+          "fw": "500",
+          "td": "line-through"
+        },
+        {
+          "t": "$149",
+          "color": "rgb(52, 64, 84)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$799",
+          "color": "rgb(141, 147, 165)",
+          "fs": "26px",
+          "fw": "500",
+          "td": "line-through"
+        },
+        {
+          "t": "$289",
+          "color": "rgb(52, 64, 84)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$1800",
+          "color": "rgb(141, 147, 165)",
+          "fs": "26px",
+          "fw": "500",
+          "td": "line-through"
+        },
+        {
+          "t": "$699",
+          "color": "rgb(52, 64, 84)",
+          "fs": "36px",
+          "fw": "700",
+          "td": "none"
+        }
+      ]
+    }
+  },
+  "lahomes": {
+    "pages": [
+      "https://techzaa.in/lahomes/admin/index.html",
+      "https://techzaa.in/lahomes/admin/#sidebarDashboards",
+      "https://techzaa.in/lahomes/admin/dashboard-agent.html",
+      "https://techzaa.in/lahomes/admin/dashboard-customer.html",
+      "https://techzaa.in/lahomes/admin/#sidebarProperty",
+      "https://techzaa.in/lahomes/admin/property-grid.html",
+      "https://techzaa.in/lahomes/admin/property-list.html",
+      "https://techzaa.in/lahomes/admin/property-details.html",
+      "https://techzaa.in/lahomes/admin/property-add.html",
+      "https://techzaa.in/lahomes/admin/#sidebarAgents",
+      "https://techzaa.in/lahomes/admin/agents-list.html",
+      "https://techzaa.in/lahomes/admin/agents-grid.html",
+      "https://techzaa.in/lahomes/admin/agents-details.html",
+      "https://techzaa.in/lahomes/admin/agents-add.html",
+      "https://techzaa.in/lahomes/admin/#sidebarCustomers",
+      "https://techzaa.in/lahomes/admin/customers-list.html",
+      "https://techzaa.in/lahomes/admin/customers-grid.html",
+      "https://techzaa.in/lahomes/admin/customers-details.html",
+      "https://techzaa.in/lahomes/admin/customers-add.html",
+      "https://techzaa.in/lahomes/admin/orders.html",
+      "https://techzaa.in/lahomes/admin/transactions.html",
+      "https://techzaa.in/lahomes/admin/reviews.html",
+      "https://techzaa.in/lahomes/admin/messages.html",
+      "https://techzaa.in/lahomes/admin/inbox.html",
+      "https://techzaa.in/lahomes/admin/#sidebarBlog",
+      "https://techzaa.in/lahomes/admin/post.html",
+      "https://techzaa.in/lahomes/admin/post-details.html",
+      "https://techzaa.in/lahomes/admin/post-create.html",
+      "https://techzaa.in/lahomes/admin/#sidebarPages",
+      "https://techzaa.in/lahomes/admin/pages-starter.html",
+      "https://techzaa.in/lahomes/admin/pages-calendar.html",
+      "https://techzaa.in/lahomes/admin/pages-invoice.html",
+      "https://techzaa.in/lahomes/admin/pages-faqs.html",
+      "https://techzaa.in/lahomes/admin/pages-comingsoon.html",
+      "https://techzaa.in/lahomes/admin/pages-timeline.html",
+      "https://techzaa.in/lahomes/admin/pages-pricing.html",
+      "https://techzaa.in/lahomes/admin/pages-maintenance.html",
+      "https://techzaa.in/lahomes/admin/pages-404.html",
+      "https://techzaa.in/lahomes/admin/pages-404-alt.html",
+      "https://techzaa.in/lahomes/admin/#sidebarAuthentication",
+      "https://techzaa.in/lahomes/admin/auth-signin.html",
+      "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "https://techzaa.in/lahomes/admin/auth-password.html",
+      "https://techzaa.in/lahomes/admin/auth-lock-screen.html",
+      "https://techzaa.in/lahomes/admin/widgets.html",
+      "https://techzaa.in/lahomes/admin/#sidebarLayouts",
+      "https://techzaa.in/lahomes/admin/layouts-dark-sidenav.html",
+      "https://techzaa.in/lahomes/admin/layouts-dark-topnav.html",
+      "https://techzaa.in/lahomes/admin/layouts-simple-sidenav.html",
+      "https://techzaa.in/lahomes/admin/layouts-small-sidenav.html",
+      "https://techzaa.in/lahomes/admin/layouts-small-hover.html",
+      "https://techzaa.in/lahomes/admin/layouts-small-hover-active.html",
+      "https://techzaa.in/lahomes/admin/layouts-hidden-sidenav.html",
+      "https://techzaa.in/lahomes/admin/layouts-dark.html",
+      "https://techzaa.in/lahomes/admin/#sidebarBaseUI",
+      "https://techzaa.in/lahomes/admin/ui-accordion.html",
+      "https://techzaa.in/lahomes/admin/ui-alerts.html",
+      "https://techzaa.in/lahomes/admin/ui-avatar.html",
+      "https://techzaa.in/lahomes/admin/ui-badge.html",
+      "https://techzaa.in/lahomes/admin/ui-breadcrumb.html",
+      "https://techzaa.in/lahomes/admin/ui-buttons.html",
+      "https://techzaa.in/lahomes/admin/ui-card.html",
+      "https://techzaa.in/lahomes/admin/ui-carousel.html",
+      "https://techzaa.in/lahomes/admin/ui-collapse.html",
+      "https://techzaa.in/lahomes/admin/ui-dropdown.html",
+      "https://techzaa.in/lahomes/admin/ui-list-group.html",
+      "https://techzaa.in/lahomes/admin/ui-modal.html",
+      "https://techzaa.in/lahomes/admin/ui-tabs.html",
+      "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "https://techzaa.in/lahomes/admin/ui-pagination.html",
+      "https://techzaa.in/lahomes/admin/ui-placeholders.html",
+      "https://techzaa.in/lahomes/admin/ui-popovers.html",
+      "https://techzaa.in/lahomes/admin/ui-progress.html",
+      "https://techzaa.in/lahomes/admin/ui-scrollspy.html",
+      "https://techzaa.in/lahomes/admin/ui-spinners.html",
+      "https://techzaa.in/lahomes/admin/ui-toasts.html",
+      "https://techzaa.in/lahomes/admin/ui-tooltips.html",
+      "https://techzaa.in/lahomes/admin/#sidebarExtendedUI",
+      "https://techzaa.in/lahomes/admin/extended-ratings.html",
+      "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "https://techzaa.in/lahomes/admin/extended-swiper-silder.html",
+      "https://techzaa.in/lahomes/admin/extended-scrollbar.html",
+      "https://techzaa.in/lahomes/admin/extended-toastify.html",
+      "https://techzaa.in/lahomes/admin/#sidebarCharts",
+      "https://techzaa.in/lahomes/admin/charts-apex-area.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-bar.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-bubble.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-candlestick.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-column.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-heatmap.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-line.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-mixed.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-timeline.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-boxplot.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-treemap.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-pie.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-radar.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-radialbar.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-scatter.html",
+      "https://techzaa.in/lahomes/admin/charts-apex-polar-area.html",
+      "https://techzaa.in/lahomes/admin/#sidebarForms",
+      "https://techzaa.in/lahomes/admin/forms-basic.html",
+      "https://techzaa.in/lahomes/admin/forms-checkbox-radio.html",
+      "https://techzaa.in/lahomes/admin/forms-choices.html",
+      "https://techzaa.in/lahomes/admin/forms-clipboard.html",
+      "https://techzaa.in/lahomes/admin/forms-flatepicker.html",
+      "https://techzaa.in/lahomes/admin/forms-validation.html",
+      "https://techzaa.in/lahomes/admin/forms-wizard.html",
+      "https://techzaa.in/lahomes/admin/forms-fileuploads.html",
+      "https://techzaa.in/lahomes/admin/forms-editors.html",
+      "https://techzaa.in/lahomes/admin/forms-input-mask.html",
+      "https://techzaa.in/lahomes/admin/forms-range-slider.html",
+      "https://techzaa.in/lahomes/admin/#sidebarTables",
+      "https://techzaa.in/lahomes/admin/tables-basic.html",
+      "https://techzaa.in/lahomes/admin/tables-gridjs.html",
+      "https://techzaa.in/lahomes/admin/#sidebarIcons",
+      "https://techzaa.in/lahomes/admin/icons-remix.html",
+      "https://techzaa.in/lahomes/admin/icons-solar.html",
+      "https://techzaa.in/lahomes/admin/#sidebarMaps",
+      "https://techzaa.in/lahomes/admin/maps-google.html",
+      "https://techzaa.in/lahomes/admin/maps-vector.html",
+      "https://techzaa.in/lahomes/admin/#sidebarMultiLevelDemo",
+      "https://techzaa.in/lahomes/admin/#sidebarItemDemoSubItem"
+    ],
+    "prices": {
+      "https://techzaa.in/lahomes/admin/index.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarDashboards": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/dashboard-agent.html": [
+        {
+          "t": "$3548.09",
+          "color": "rgb(50, 58, 70)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$67435.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$978.56",
+          "color": "rgb(92, 193, 132)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$12,223.78",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$56,131",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$1,340.15",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$600.46",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$8,839",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$12,167",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$14,900",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/dashboard-customer.html": [
+        {
+          "t": "$15,781",
+          "color": "rgb(50, 58, 70)",
+          "fs": "14px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$23,263",
+          "color": "rgb(50, 58, 70)",
+          "fs": "14px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$30,562",
+          "color": "rgb(50, 58, 70)",
+          "fs": "14px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$41,341",
+          "color": "rgb(50, 58, 70)",
+          "fs": "14px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$733,291",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$831,760",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$647,900",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$530,389",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$763,829",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$80,675.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "18px",
+          "fw": "500",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarProperty": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/property-grid.html": [
+        {
+          "t": "$8,930.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$60,691.00",
+          "color": "rgb(104, 125, 146)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "line-through"
+        },
+        {
+          "t": "$70,245.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$5,825.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$90,674.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$10,500.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$75,341.00",
+          "color": "rgb(104, 125, 146)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "line-through"
+        },
+        {
+          "t": "$54,230.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$14,564.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$34,341.00",
+          "color": "rgb(104, 125, 146)",
+          "fs": "16px",
+          "fw": "500",
+          "td": "line-through"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/property-list.html": [
+        {
+          "t": "$12,7812.09",
+          "color": "rgb(104, 125, 146)",
+          "fs": "22px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$8,930.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$60,691.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$70,245.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$5,825.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$90,674.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$10,500.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$75,341.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$54,230.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$14,564.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$34,341.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/property-details.html": [
+        {
+          "t": "$80,675.00",
+          "color": "rgb(50, 58, 70)",
+          "fs": "18px",
+          "fw": "500",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/property-add.html": [
+        {
+          "t": "$8,930.00",
+          "color": "rgb(104, 125, 146)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarAgents": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarCustomers": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/customers-grid.html": [
+        {
+          "t": "$928,128",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$435,892",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$743,120",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$635,812",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$733,291",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$831,760",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/customers-details.html": [
+        {
+          "t": "$928,128",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$928,128",
+          "color": "rgb(50, 58, 70)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$613,321.12",
+          "color": "rgb(50, 58, 70)",
+          "fs": "18px",
+          "fw": "600",
+          "td": "none"
+        },
+        {
+          "t": "$928,128",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$84,091",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,120",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$65,900",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/customers-add.html": [
+        {
+          "t": "$142,465",
+          "color": "rgb(50, 58, 70)",
+          "fs": "15px",
+          "fw": "600",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/orders.html": [
+        {
+          "t": "$2,890,123",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,678,901",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$4,123,456",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$3,456,789",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,789,012",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2,456,789",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,567,890",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,234,567",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$1,502,331",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/transactions.html": [
+        {
+          "t": "$13,987",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$11,345",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$16,789",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$14,567",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$10,234",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$17,890",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$12,453",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$15,678",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/messages.html": [
+        {
+          "t": "$6,789",
+          "color": "rgb(104, 125, 146)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarBlog": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarPages": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/pages-invoice.html": [
+        {
+          "t": "$240.59",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$721.77",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$135.99",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$679.95",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$99.49",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$99.49",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$350.19",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$2266.59",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$226.659",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarAuthentication": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/widgets.html": [
+        {
+          "t": "$120.55",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$9.68",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$105.22",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$80.59",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$750.95",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$455.62",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$102.77",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$79.49",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$980.00",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarLayouts": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-dark-sidenav.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-dark-topnav.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-simple-sidenav.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-small-sidenav.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-small-hover.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-small-hover-active.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-hidden-sidenav.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/layouts-dark.html": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarBaseUI": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarExtendedUI": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarCharts": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarForms": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarTables": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/tables-basic.html": [
+        {
+          "t": "$ 879.500",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$ 93.250",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/tables-gridjs.html": [
+        {
+          "t": "$24.05",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$26.15",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$21.25",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25.03",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$22.61",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarIcons": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarMaps": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarMultiLevelDemo": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ],
+      "https://techzaa.in/lahomes/admin/#sidebarItemDemoSubItem": [
+        {
+          "t": "$85,934",
+          "color": "rgb(96, 74, 227)",
+          "fs": "18px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$117,000.43",
+          "color": "rgb(255, 255, 255)",
+          "fs": "24px",
+          "fw": "700",
+          "td": "none"
+        },
+        {
+          "t": "$13,321.12",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$7,566.11",
+          "color": "rgb(255, 255, 255)",
+          "fs": "15px",
+          "fw": "500",
+          "td": "none"
+        },
+        {
+          "t": "$45,842",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$78,483",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$83,644",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$94,305",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$42.561",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        },
+        {
+          "t": "$25,671",
+          "color": "rgb(93, 113, 134)",
+          "fs": "14px",
+          "fw": "400",
+          "td": "none"
+        }
+      ]
+    }
+  },
+  "kamr": {
+    "pages": [
+      "https://kamr-vite.vercel.app/dashboard"
+    ],
+    "prices": {
+      "https://kamr-vite.vercel.app/dashboard": [
+        {
+          "t": "$45,945",
+          "color": "rgb(45, 49, 52)",
+          "fs": "30.632px",
+          "fw": "600",
+          "td": "none"
+        }
+      ]
+    }
+  }
+}

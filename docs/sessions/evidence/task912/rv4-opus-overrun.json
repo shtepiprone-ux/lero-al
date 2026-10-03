@@ -1,0 +1,52 @@
+﻿[
+  {
+    "locale": "en",
+    "hits": [],
+    "scrollW": 320,
+    "bodyOv": "visible"
+  },
+  {
+    "locale": "uk",
+    "hits": [
+      {
+        "text": "Власник видалив свій обліковий запис",
+        "left": 105,
+        "right": 383,
+        "chain": [
+          "p.mantine-focus-auto[ov hidden, pos static, clip auto, w 178]",
+          "div.m_4081bf90[ov visible, pos static, clip auto, w 178]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 178]",
+          "div.m_4081bf90[ov visible, pos static, clip auto, w 246]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 246]",
+          "div.m_1b7284a3[ov visible, pos static, clip auto, w 288]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 288]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 288]"
+        ]
+      }
+    ],
+    "scrollW": 320,
+    "bodyOv": "visible"
+  },
+  {
+    "locale": "it",
+    "hits": [
+      {
+        "text": "Il proprietario ha eliminato il proprio account",
+        "left": 105,
+        "right": 411,
+        "chain": [
+          "p.mantine-focus-auto[ov hidden, pos static, clip auto, w 178]",
+          "div.m_4081bf90[ov visible, pos static, clip auto, w 178]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 178]",
+          "div.m_4081bf90[ov visible, pos static, clip auto, w 246]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 246]",
+          "div.m_1b7284a3[ov visible, pos static, clip auto, w 288]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 288]",
+          "div.m_6d731127[ov visible, pos static, clip auto, w 288]"
+        ]
+      }
+    ],
+    "scrollW": 320,
+    "bodyOv": "visible"
+  }
+]

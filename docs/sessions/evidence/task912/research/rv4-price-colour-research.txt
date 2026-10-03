@@ -1,0 +1,249 @@
+﻿tailadmin: 88 pages, 21 with prices
+  https://demo.tailadmin.com/index.html
+     rgb(102, 112, 133) 14px 400 none  e.g. $2399.00 | $879.00 | $1869.00 (5)
+  https://demo.tailadmin.com/analytics.html
+     rgb(3, 152, 85) 14px 400 none  e.g. $12,499 | $5,498 | $4,521 (7)
+  https://demo.tailadmin.com/marketing.html
+     rgb(29, 41, 57) 30px 700 none  e.g. $9,758 (1)
+     rgb(29, 41, 57) 24px 700 none  e.g. $9,758.00 (1)
+  https://demo.tailadmin.com/crm.html
+     rgb(29, 41, 57) 30px 700 none  e.g. $120,369 | $234,210 (2)
+     rgb(29, 41, 57) 20px 700 none  e.g. $212,142.12 | $30,321.23 (2)
+     rgb(0, 0, 0) 36px 600 none  e.g. $90 (1)
+     rgb(29, 41, 57) 16px 600 none  e.g. $30,569.00 | $20,486.00 (2)
+     rgb(52, 64, 84) 14px 400 none  e.g. $18,50.34 | $18,50.34 | $18,50.34 (5)
+  https://demo.tailadmin.com/stocks.html
+     rgb(29, 41, 57) 18px 600 none  e.g. $1,232.00 | $965.00 | $1,232.00 (4)
+     rgb(52, 64, 84) 14px 500 none  e.g. $192.53 | $192.53 | $192.53 (15)
+     rgb(52, 64, 84) 14px 400 none  e.g. $2,567.88 | $2,567.88 | $6,754.99 (5)
+  https://demo.tailadmin.com/saas.html
+     rgb(29, 41, 57) 30px 700 none  e.g. $200,45.87 | $849.54 (2)
+     rgb(52, 64, 84) 14px 400 none  e.g. $473.85 | $293.01 | $782.01 (5)
+     rgb(29, 41, 57) 30px 600 none  e.g. $2,950 (1)
+  https://demo.tailadmin.com/logistics.html
+     rgb(29, 41, 57) 30px 500 none  e.g. $23,445,700 (1)
+     rgb(52, 64, 84) 14px 400 none  e.g. $1,250.00 | $340.75 | $128.40 (5)
+  https://demo.tailadmin.com/ai.html
+     rgb(29, 41, 57) 30px 600 none  e.g. $90,369 (1)
+     rgb(52, 64, 84) 14px 400 none  e.g. $20.00 | $249.00 | $199.00 (5)
+  https://demo.tailadmin.com/sales.html
+     rgb(29, 41, 57) 30px 600 none  e.g. $10,590 (1)
+     rgb(52, 64, 84) 14px 400 none  e.g. $20.594 | $20.594 | $15.230 (4)
+     rgb(102, 112, 133) 14px 400 none  e.g. $89.99 | $49.99 | $25.00 (5)
+  https://demo.tailadmin.com/finance.html
+     rgb(52, 64, 84) 30px 500 none  e.g. $24,830 | $5,200 | $3,831 (3)
+     rgb(29, 41, 57) 24px 500 none  e.g. $9,758.00 (1)
+     rgb(29, 41, 57) 30px 500 none  e.g. $10,758 (1)
+     rgb(52, 64, 84) 14px 400 none  e.g. $9,234.87 | $4,567.23 | $22,101.76 (5)
+  https://demo.tailadmin.com/products-list.html
+     rgb(52, 64, 84) 14px 400 none  e.g. $2,199 | $839 | $1,579 (7)
+  https://demo.tailadmin.com/billing.html
+     rgb(52, 64, 84) 14px 400 none  e.g. $120.00 | $120.00 | $120.00 (5)
+  https://demo.tailadmin.com/invoices.html
+     rgb(29, 41, 57) 30px 400 none  e.g. $120.80 | $3,450.50 (2)
+  https://demo.tailadmin.com/single-invoice.html
+     rgb(102, 112, 133) 14px 400 none  e.g. $48 | $1,200 | $300 (8)
+     rgb(52, 64, 84) 14px 500 none  e.g. $3,850 | $385 (2)
+     rgb(29, 41, 57) 18px 600 none  e.g. $4,235 (1)
+  https://demo.tailadmin.com/create-invoice.html
+     rgb(102, 112, 133) 14px 400 none  e.g. $1200 | $1200.00 | $300 (8)
+     rgb(52, 64, 84) 14px 500 none  e.g. $3850.00 | $385.00 (2)
+     rgb(29, 41, 57) 18px 600 none  e.g. $4235.00 (1)
+  https://demo.tailadmin.com/transactions.html
+     rgb(52, 64, 84) 14px 400 none  e.g. $43,999 | $1,200 | $919 (10)
+  https://demo.tailadmin.com/single-transaction.html
+     rgb(102, 112, 133) 14px 400 none  e.g. $1200 | $1200 | $300 (8)
+     rgb(52, 64, 84) 14px 500 none  e.g. $3,850 | $385 (2)
+     rgb(29, 41, 57) 18px 600 none  e.g. $4,235 (1)
+  https://demo.tailadmin.com/basic-tables.html
+     rgb(102, 112, 133) 14px 400 none  e.g. $2399.00 | $879.00 | $1869.00 (5)
+     rgb(3, 152, 85) 14px 400 none  e.g. $12,499 | $5,498 | $4,521 (7)
+     rgb(52, 64, 84) 14px 400 none  e.g. $18,50.34 | $18,50.34 | $18,50.34 (10)
+  https://demo.tailadmin.com/data-tables.html
+     rgb(52, 64, 84) 14px 400 none  e.g. $89,500 | $89,500 | $89,500 (30)
+  https://demo.tailadmin.com/pricing-tables.html
+     rgb(29, 41, 57) 36px 700 none  e.g. $5.00 | $15.00 | $59.00 (5)
+     rgb(152, 162, 179) 20px 600 line-through  e.g. $12.00 | $59.00 (2)
+     rgb(255, 255, 255) 36px 700 none  e.g. $10.99 (1)
+     rgb(208, 213, 221) 20px 600 line-through  e.g. $30.00 (1)
+     rgb(29, 41, 57) 30px 700 none  e.g. $99.00 (1)
+     rgb(255, 255, 255) 30px 700 none  e.g. $299 (1)
+  https://tailadmin.com/pricing
+     rgb(141, 147, 165) 26px 500 line-through  e.g. $269 | $799 | $1800 (3)
+     rgb(52, 64, 84) 36px 700 none  e.g. $149 | $289 | $699 (3)
+lahomes: 123 pages, 42 with prices
+  https://techzaa.in/lahomes/admin/index.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarDashboards
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/dashboard-agent.html
+     rgb(50, 58, 70) 24px 700 none  e.g. $3548.09 | $67435.00 (2)
+     rgb(92, 193, 132) 14px 400 none  e.g. $978.56 (1)
+     rgb(50, 58, 70) 16px 500 none  e.g. $12,223.78 | $56,131 | $1,340.15 (4)
+     rgb(50, 58, 70) 15px 500 none  e.g. $8,839 (1)
+     rgb(50, 58, 70) 16px 600 none  e.g. $12,167 | $14,900 (2)
+  https://techzaa.in/lahomes/admin/dashboard-customer.html
+     rgb(50, 58, 70) 14px 600 none  e.g. $15,781 | $23,263 | $30,562 (4)
+     rgb(104, 125, 146) 14px 500 none  e.g. $733,291 | $831,760 | $647,900 (5)
+     rgb(50, 58, 70) 18px 500 none  e.g. $80,675.00 (1)
+  https://techzaa.in/lahomes/admin/#sidebarProperty
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/property-grid.html
+     rgb(50, 58, 70) 16px 500 none  e.g. $8,930.00 | $70,245.00 | $5,825.00 (7)
+     rgb(104, 125, 146) 16px 500 line-through  e.g. $60,691.00 | $75,341.00 | $34,341.00 (3)
+  https://techzaa.in/lahomes/admin/property-list.html
+     rgb(104, 125, 146) 22px 500 none  e.g. $12,7812.09 (1)
+     rgb(93, 113, 134) 14px 400 none  e.g. $8,930.00 | $60,691.00 | $70,245.00 (10)
+  https://techzaa.in/lahomes/admin/property-details.html
+     rgb(50, 58, 70) 18px 500 none  e.g. $80,675.00 (1)
+  https://techzaa.in/lahomes/admin/property-add.html
+     rgb(104, 125, 146) 18px 600 none  e.g. $8,930.00 (1)
+  https://techzaa.in/lahomes/admin/#sidebarAgents
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarCustomers
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/customers-grid.html
+     rgb(50, 58, 70) 15px 600 none  e.g. $928,128 | $435,892 | $743,120 (6)
+  https://techzaa.in/lahomes/admin/customers-details.html
+     rgb(50, 58, 70) 15px 600 none  e.g. $928,128 (1)
+     rgb(50, 58, 70) 18px 600 none  e.g. $928,128 | $613,321.12 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $928,128 | $84,091 | $83,120 (4)
+  https://techzaa.in/lahomes/admin/customers-add.html
+     rgb(50, 58, 70) 15px 600 none  e.g. $142,465 (1)
+  https://techzaa.in/lahomes/admin/orders.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $2,890,123 | $2,678,901 | $4,123,456 (9)
+  https://techzaa.in/lahomes/admin/transactions.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $13,987 | $11,345 | $16,789 (8)
+  https://techzaa.in/lahomes/admin/messages.html
+     rgb(104, 125, 146) 14px 400 none  e.g. $6,789 (1)
+  https://techzaa.in/lahomes/admin/#sidebarBlog
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarPages
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/pages-invoice.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $240.59 | $721.77 | $135.99 (9)
+  https://techzaa.in/lahomes/admin/#sidebarAuthentication
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/widgets.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $120.55 | $9.68 | $105.22 (9)
+  https://techzaa.in/lahomes/admin/#sidebarLayouts
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-dark-sidenav.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-dark-topnav.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-simple-sidenav.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-small-sidenav.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-small-hover.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-small-hover-active.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-hidden-sidenav.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/layouts-dark.html
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarBaseUI
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarExtendedUI
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarCharts
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarForms
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarTables
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/tables-basic.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $ 879.500 | $ 93.250 (2)
+  https://techzaa.in/lahomes/admin/tables-gridjs.html
+     rgb(93, 113, 134) 14px 400 none  e.g. $24.05 | $26.15 | $21.25 (5)
+  https://techzaa.in/lahomes/admin/#sidebarIcons
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarMaps
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarMultiLevelDemo
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+  https://techzaa.in/lahomes/admin/#sidebarItemDemoSubItem
+     rgb(96, 74, 227) 18px 700 none  e.g. $85,934 (1)
+     rgb(255, 255, 255) 24px 700 none  e.g. $117,000.43 (1)
+     rgb(255, 255, 255) 15px 500 none  e.g. $13,321.12 | $7,566.11 (2)
+     rgb(93, 113, 134) 14px 400 none  e.g. $45,842 | $78,483 | $83,644 (6)
+kamr: 1 pages, 1 with prices
+  https://kamr-vite.vercel.app/dashboard
+     rgb(45, 49, 52) 30.632px 600 none  e.g. $45,945 (1)

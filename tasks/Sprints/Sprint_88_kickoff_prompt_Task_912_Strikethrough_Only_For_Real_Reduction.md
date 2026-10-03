@@ -10,8 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Review 8 (2026-10-03): `PARTIALLY VERIFIED`, §25.** The owner matrix §23.6 (O88-2…O88-4) is with the owner.
-> Executor: only §25.2 R31 (the relative date in the `ListingDetailView` Story) is owed.
+> **Owner matrix accepted (2026-10-03), §26.** Every §23.6 row is accepted. The executor still owes §25.2 R31 (the
+> relative date in the `ListingDetailView` Story). Then the approval review follows.
+>
+> **Review 8 (2026-10-03): `PARTIALLY VERIFIED`, §25.**
 >
 > **Revision 7 (2026-10-03, review 7): §24.** Two Story fixtures only. §24.3 also
 > holds a GR-7 RETRACTION of §20.3/§21.2's inventory counts.
@@ -1500,3 +1502,24 @@ and the test files are unchanged. Build-storybook ran at 22:34:41, after the 22:
 
 R31 does not touch any price, badge or colour, so the owner can review §23.6 while it is done. The approval review
 checks R31, the owner's §23.6 return and a fresh `npm.cmd run build` together.
+
+## 26. Owner matrix §23.6 returned (2026-10-03): all rows accepted
+
+Verbatim owner returns, 2026-10-03:
+- **O88-1** `ListingPrice/Default`: *"приймаю"* (recorded in §23.1).
+- **O88-2** `ListingContactPattern/Default`: *"приймаю."*
+- **O88-3** `ListingDetailView` (`PublicListing`, `PublicListingNotReduced`, `PublicListingConverted`): *"приймаю."*
+- **O88-4** `ListingDetailPattern/Default`: *"приймаю."*
+
+The visual criterion is now `VERIFIED` for every §23.6 tuple.
+
+**What still closes 912.**
+1. The executor does §25.2 **R31**: the relative date in the `ListingDetailView` Story, in the viewer's locale. It is
+   P3, Story-only, and touches no price, badge or colour.
+2. The approval review then checks:
+   - R31 / AC27;
+   - that the `rv7-crops.mjs` output is unchanged from `rv8-crops.txt`;
+   - that the production files are hash-equal to `r5-hashes.txt`, so `r5-build.txt` stays the build for the
+     production diff.
+
+   After that it archives 912 and emits the commit + push handoff.

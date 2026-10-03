@@ -1,0 +1,194 @@
+[
+  {
+    "locale": "en",
+    "w": 320,
+    "cards": 7,
+    "normal": {
+      "name": "Elira Hoxha",
+      "nameRect": {
+        "top": 97,
+        "bottom": 117,
+        "left": 105,
+        "right": 182
+      },
+      "badgeRect": {
+        "top": 96,
+        "bottom": 118,
+        "left": 188,
+        "right": 210
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Owner deleted their account",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 178,
+      "scrollW": 178,
+      "lines": 2,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  },
+  {
+    "locale": "en",
+    "w": 1440,
+    "cards": 7,
+    "normal": {
+      "name": "Elira Hoxha",
+      "nameRect": {
+        "top": 79,
+        "bottom": 99,
+        "left": 121,
+        "right": 198
+      },
+      "badgeRect": {
+        "top": 78,
+        "bottom": 100,
+        "left": 204,
+        "right": 226
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Owner deleted their account",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 194,
+      "scrollW": 194,
+      "lines": 1,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  },
+  {
+    "locale": "uk",
+    "w": 320,
+    "cards": 7,
+    "normal": {
+      "name": "Еліра Ходжа",
+      "nameRect": {
+        "top": 115,
+        "bottom": 135,
+        "left": 105,
+        "right": 191
+      },
+      "badgeRect": {
+        "top": 114,
+        "bottom": 136,
+        "left": 197,
+        "right": 219
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Власник видалив свій обліковий запис",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 178,
+      "scrollW": 178,
+      "lines": 2,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  },
+  {
+    "locale": "it",
+    "w": 320,
+    "cards": 7,
+    "normal": {
+      "name": "Elira Hoxha",
+      "nameRect": {
+        "top": 97,
+        "bottom": 117,
+        "left": 105,
+        "right": 182
+      },
+      "badgeRect": {
+        "top": 96,
+        "bottom": 118,
+        "left": 188,
+        "right": 210
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Il proprietario ha eliminato il proprio account",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 178,
+      "scrollW": 178,
+      "lines": 3,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  },
+  {
+    "locale": "uk",
+    "w": 1440,
+    "cards": 7,
+    "normal": {
+      "name": "Еліра Ходжа",
+      "nameRect": {
+        "top": 97,
+        "bottom": 117,
+        "left": 121,
+        "right": 207
+      },
+      "badgeRect": {
+        "top": 96,
+        "bottom": 118,
+        "left": 213,
+        "right": 235
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Власник видалив свій обліковий запис",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 278,
+      "scrollW": 278,
+      "lines": 1,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  },
+  {
+    "locale": "it",
+    "w": 1440,
+    "cards": 7,
+    "normal": {
+      "name": "Elira Hoxha",
+      "nameRect": {
+        "top": 97,
+        "bottom": 117,
+        "left": 121,
+        "right": 198
+      },
+      "badgeRect": {
+        "top": 96,
+        "bottom": 118,
+        "left": 204,
+        "right": 226
+      },
+      "sameRow": true
+    },
+    "deleted": {
+      "text": "Il proprietario ha eliminato il proprio account",
+      "textOverflow": "clip",
+      "whiteSpace": "normal",
+      "overflowHidden": "visible",
+      "clientW": 306,
+      "scrollW": 306,
+      "lines": 1,
+      "ellipsised": false
+    },
+    "docOverflow": 0
+  }
+]

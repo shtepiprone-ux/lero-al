@@ -1,0 +1,1312 @@
+[
+ {
+  "id": "patterns-mantine-listingdetailview--public-listing",
+  "loc": "en",
+  "w": 320,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 681,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 685,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 723,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 2044,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 2064,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--public-listing",
+  "loc": "en",
+  "w": 390,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 681,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 685,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 688,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 1952,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 1972,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--public-listing",
+  "loc": "en",
+  "w": 1024,
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 826,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 830,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 833,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 231,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 251,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--public-listing",
+  "loc": "en",
+  "w": 1440,
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 781,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 785,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 788,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 231,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 251,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--public-listing",
+  "loc": "uk",
+  "w": 320,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 681,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138 000 EUR",
+     "top": 685,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1 471 EUR /м²",
+     "top": 723,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138 000 EUR",
+     "top": 2066,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125 000 EUR",
+     "top": 2086,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 320,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 951,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 955,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 993,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 2212,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 2232,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 390,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 911,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 915,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 918,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 2080,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 2100,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 1024,
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 1017,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 1021,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 1024,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 422,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 442,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+  "loc": "en",
+  "w": 1440,
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 972,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 976,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 979,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 422,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 442,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 320,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 799,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 803,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 841,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 2060,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 2080,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 390,
+  "gut": {
+   "top": 10,
+   "right": 16,
+   "bottom": 56,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 779,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 783,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 786,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 1948,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 1968,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 1024,
+  "gut": {
+   "top": 10,
+   "right": 32,
+   "bottom": 56,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 924,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 928,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 931,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 329,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 349,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailview--staff-preview-published",
+  "loc": "en",
+  "w": 1440,
+  "gut": {
+   "top": 10,
+   "right": 64,
+   "bottom": 56,
+   "left": 64
+  },
+  "blocks": [
+   [
+    {
+     "text": "€125,000",
+     "top": 879,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "138,000 EUR",
+     "top": 883,
+     "deco": "line-through",
+     "size": "16px"
+    },
+    {
+     "text": "1,471 EUR /m²",
+     "top": 886,
+     "deco": "none",
+     "size": "14px"
+    }
+   ],
+   [
+    {
+     "text": "138,000 EUR",
+     "top": 329,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "125,000 EUR",
+     "top": 349,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingcontactpattern--default",
+  "loc": "en",
+  "w": 320,
+  "gut": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€92,000",
+     "top": 178,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "€80,000",
+     "top": 198,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 230,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 760,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 792,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1322,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1354,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1790,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1822,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2238,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2270,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2740,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2772,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "125,000 EUR",
+     "top": 3302,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingcontactpattern--default",
+  "loc": "en",
+  "w": 390,
+  "gut": {
+   "top": 24,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "€92,000",
+     "top": 178,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "€80,000",
+     "top": 198,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 230,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 760,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 792,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1304,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1336,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1772,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1804,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2202,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2234,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2704,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2736,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "125,000 EUR",
+     "top": 3248,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingcontactpattern--default",
+  "loc": "en",
+  "w": 1024,
+  "gut": {
+   "top": 24,
+   "right": 592,
+   "bottom": 24,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "€92,000",
+     "top": 178,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "€80,000",
+     "top": 198,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 230,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 760,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 792,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1304,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1336,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1772,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1804,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2202,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2234,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2704,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2736,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "125,000 EUR",
+     "top": 3248,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingcontactpattern--default",
+  "loc": "en",
+  "w": 1440,
+  "gut": {
+   "top": 24,
+   "right": 949,
+   "bottom": 24,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "€92,000",
+     "top": 160,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "€80,000",
+     "top": 180,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 212,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 724,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 756,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1268,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1300,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 1718,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 1750,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2130,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2162,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "€80,000",
+     "top": 2632,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Original price: €80,000",
+     "top": 2664,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "125,000 EUR",
+     "top": 3176,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [],
+  "hOverflow": false
+ }
+]

@@ -1,0 +1,196 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx (5 tests | 2 failed) 225ms
+     × (a) priceOld: struck, and before the current price in DOM order 73ms
+     × the struck old price comes before the current price, and the owner-currency line follows it 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice (Task 912) > (a) priceOld: struck, and before the current price in DOM order
+TestingLibraryElementError: Unable to find an element with the text: 138,000 EUR. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+      [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: baseline; --group-justify: flex-start; --group-wrap: wrap;"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+          [33mdata-size[39m=[32m"xl"[39m
+          [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-brand-text); font-weight: 700;"[39m
+        [36m>[39m
+          [0m125,000 EUR[0m
+        [36m</p>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:49:29
+     47|     renderPrice({ price: '125,000 EUR', priceOld: '138,000 EUR' })
+     48|
+     49|     const oldPrice = screen.getByText('138,000 EUR')
+       |                             ^
+     50|     const main = screen.getByText('125,000 EUR')
+     51|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingDetailPattern — price block through MantineListingPrice (Task 912 R13, AC12) > the struck old price comes before the current price, and the owner-currency line follows it
+TestingLibraryElementError: Unable to find an element with the text: 13,800,000 ALL. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_410352e9 mantine-Grid-root __m__-_r_h_"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_dee7bd2f mantine-Grid-inner"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_96bdd299 mantine-Grid-col __m__-_r_j_ __m__-_r_k_"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+            [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-lg); --stack-align: stretch; --stack-justify: flex-start;"[39m
+          [36m>[39m
+            [36m<div />[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+              [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-sm); --stack-align: stretch; --stack-justify: flex-start;"[39m
+            [36m>[39m
+              [36m<h1[39m
+                [33mclass[39m=[32m"m_8a5d1357 mantine-Title-root __m__-_r_n_"[39m
+                [33mdata-order[39m=[32m"1"[39m
+                [33mdata-size[39m=[32m"h2"[39m
+                [33mstyle[39m=[32m"--title-fw: var(--mantine-h2-font-weight); --title-lh: var(--mantine-h2-line-height); --title-fz: var(--mantine-h2-font-size); word-break: break-word;"[39m
+              [36m>[39m
+                [0mApartment[0m
+              [36m</h1>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+                [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                  [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: baseline; --group-justify: flex-start; --group-wrap: wrap;"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                    [33mdata-size[39m=[32m"xl"[39m
+                    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-brand-text); font-weight: 700;"[39m
+                  [36m>[39m
+                    [0m12,500,000 ALL[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                  [33mdata-size[39m=[32m"xs"[39m
+                  [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+                [36m>[39m
+                  [0mPrice in the owner's currency[0m
+                  [0m: [0m
+                  [0m125,000 EUR[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                  [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-eye"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"16"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"color: var(--muted-foreground); flex-shrink: 0;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"16"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+                    [36m/>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"3"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                    [33mdata-size[39m=[32m"sm"[39m
+                    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-dimmed);"[39m
+                  [36m>[39m
+                    [0m1[0m
+                    [0m [0m
+                    [0mviews[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                  [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"16"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mstyle[39m=[32m"color: var(--muted-foreground); flex-shrink: 0;"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"16"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M8 2v4"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M16 2v4"[39m
+                    [36m/>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mw...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:120:29
+    118|     )
+    119|
+    120|     const oldPrice = screen.getByText('13,800,000 ALL')
+       |                             ^
+    121|     const main = screen.getByText('12,500,000 ALL')
+    122|     const owner = screen.getByText("Price in the owner's currency: 125…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  19:43:38
+   Duration  2.36s (transform 252ms, setup 95ms, import 1.15s, tests 225ms, environment 737ms)
+
+exit=1

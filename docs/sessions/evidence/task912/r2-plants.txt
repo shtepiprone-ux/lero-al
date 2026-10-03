@@ -1,0 +1,14 @@
+post-fix (blob sha1) hash=35f6d13b44515cfd0f1113859fee59f3a3a5958a
+plant D applied; hash before=35f6d13b44515cfd0f1113859fee59f3a3a5958a planted=0dbdf2f3872afdb4d13ea50e4282138b9d4a4c20
+restored; hash=35f6d13b44515cfd0f1113859fee59f3a3a5958a
+plant D vitest: exit=1; ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 3 passed (5)
+plant E applied; hash before=35f6d13b44515cfd0f1113859fee59f3a3a5958a planted=7474e359399c5aabd08e85a0e58cbda52d80497f
+restored; hash=35f6d13b44515cfd0f1113859fee59f3a3a5958a
+plant E vitest: exit=1; ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 3 passed (5)
+plant F applied; hash before=35f6d13b44515cfd0f1113859fee59f3a3a5958a planted=584ed0e7d589b910210588dc22dbf1b96342c98b
+restored; hash=35f6d13b44515cfd0f1113859fee59f3a3a5958a
+plant F vitest: exit=1; ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  3 failed | 2 passed (5)
+restored vitest: exit=0;       Tests  5 passed (5)

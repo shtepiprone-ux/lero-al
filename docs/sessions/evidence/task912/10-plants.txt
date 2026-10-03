@@ -1,0 +1,271 @@
+post-fix P=aa9fcd0d6fbbf2bd30c689e53bd37b4ccf7d9655 C=8b51418597262fcb4f88cc0df485488fbd559306
+plantA hash 6b3d291cf8be21d32332199be8cade4c614b20e3
+== PLANT A
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx (3 tests | 2 failed) 214ms
+     × (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure 88ms
+     × (b) without priceOld: nothing in the price block is struck, even with a disclosure 102ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx:79:34
+     77|
+     78|     expect(isStruck(oldPrice)).toBe(true)
+     79|     expect(isStruck(disclosure)).toBe(false)
+       |                                  ^
+     80|     expect(isStruck(main)).toBe(false)
+     81|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (b) without priceOld: nothing in the price block is struck, even with a disclosure
+AssertionError: expected [ <p …(3)></p> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx:96:20
+     94|     expect(screen.getByText('Original price: 80,000 EUR')).toBeInTheDo…
+     95|     const struck = Array.from(container.querySelectorAll<HTMLElement>(…
+     96|     expect(struck).toHaveLength(0)
+       |                    ^
+     97|   })
+     98|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  00:36:32
+   Duration  1.94s (transform 109ms, setup 94ms, import 703ms, tests 214ms, environment 714ms)
+
+vitest exit=1
+restored P aa9fcd0d6fbbf2bd30c689e53bd37b4ccf7d9655
+plantC hash 8f7bef78325da50e650d599d3f6595748bc80461
+== PLANT C
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx (3 tests | 1 failed) 191ms
+     × (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure 78ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure
+TestingLibraryElementError: Unable to find an element with the text: 92,000 EUR. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root __m__-_r_0_"[39m
+      [33mdata-testid[39m=[32m"listing-contact-card"[39m
+      [33mdata-with-border[39m=[32m"true"[39m
+      [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl); padding: var(--mantine-spacing-lg);"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_f85678b6 mantine-Avatar-root"[39m
+            [33mdata-size[39m=[32m"lg"[39m
+            [33mstyle[39m=[32m"--avatar-size: var(--avatar-size-lg); --avatar-radius: var(--mantine-radius-xl); --avatar-bg: var(--mantine-color-brand-light); --avatar-color: var(--mantine-color-brand-light-color); --avatar-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_104cd71f mantine-Avatar-placeholder"[39m
+            [36m>[39m
+              [0mEH[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+            [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start; min-width: 0rem; flex: 1 1 0%;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-compact); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                [33mdata-size[39m=[32m"sm"[39m
+                [33mdata-truncate[39m=[32m"end"[39m
+                [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 600;"[39m
+              [36m>[39m
+                [0mElira Hoxha[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+          [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start;"[39m
+        [36m>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+            [33mdata-size[39m=[32m"xl"[39m
+            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-brand-text); font-weight: 700;"[39m
+          [36m>[39m
+            [0m80,000 EUR[0m
+          [36m</p>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+            [33mdata-size[39m=[32m"xs"[39m
+            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
+          [36m>[39m
+            [0mOriginal price[0m
+            [0m: [0m
+            [0m80,000 EUR[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
+          [33mdata-orientation[39m=[32m"horizontal"[39m
+          [33mrole[39m=[32m"separator"[39m
+          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_925c2d2c mantine-SimpleGrid-container"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_2415a157 mantine-SimpleGrid-root __m__-_r_c_"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"[39m
+              [33mdata-block[39m=[32m"true"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-with-left-section[39m=[32m"true"[39m
+              [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: var(--mantine-color-brand-filled); --button-hover: var(--mantine-color-brand-filled-hover); --button-color: var(--mantine-color-white); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_80f1301b mantine-Button-inner"[39m
+                [33mstyle[39m=[32m"width: 100%; height: auto;"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"m_a74036a mantine-Button-section"[39m
+                  [33mdata-position[39m=[32m"left"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-phone"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx:74:29
+     72|     })
+     73|
+     74|     const oldPrice = screen.getByText('92,000 EUR')
+       |                             ^
+     75|     const disclosure = screen.getByText('Original price: 80,000 EUR')
+     76|     const main = screen.getAllByText('80,000 EUR').find(el => !el.text…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:36:35
+   Duration  1.86s (transform 96ms, setup 81ms, import 689ms, tests 191ms, environment 672ms)
+
+vitest exit=1
+restored P aa9fcd0d6fbbf2bd30c689e53bd37b4ccf7d9655
+plantB hash b90e117413c9c16fe02f2f8e71addc36f372fd6a
+== PLANT B
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (21 tests | 4 failed) 675ms
+     × Task 912: price_old equal to price → no struck old price, no badge 66ms
+     × Task 912: price_old below price → no struck old price, no badge 46ms
+     × Task 912: horizontal variant, price_old equal to price → no struck old price, no badge 43ms
+     × Task 912: horizontal variant, price_old below price → no struck old price, no badge 39ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > Task 912: price_old equal to price → no struck old price, no badge
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > Task 912: price_old below price → no struck old price, no badge
+AssertionError: expected [ <p …(3)></p> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:171:20
+    169|       /line-through/.test(el.style.textDecoration || getComputedStyle(…
+    170|     )
+    171|     expect(struck).toHaveLength(0)
+       |                    ^
+    172|     expect(screen.queryByText(/70,000/)).not.toBeInTheDocument()
+    173|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > Task 912: horizontal variant, price_old equal to price → no struck old price, no badge
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > Task 912: horizontal variant, price_old below price → no struck old price, no badge
+AssertionError: expected [ <span …(3)></span> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:185:20
+    183|       /line-through/.test(el.style.textDecoration || getComputedStyle(…
+    184|     )
+    185|     expect(struck).toHaveLength(0)
+       |                    ^
+    186|   })
+    187|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 17 passed (21)
+   Start at  00:36:38
+   Duration  3.90s (transform 676ms, setup 79ms, import 2.32s, tests 675ms, environment 690ms)
+
+vitest exit=1
+restored C 8b51418597262fcb4f88cc0df485488fbd559306

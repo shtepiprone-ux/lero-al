@@ -1,0 +1,179 @@
+[
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "en",
+    "w": 1440,
+    "rows": [
+      {
+        "row": [
+          "80,000 EUR",
+          "941 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80,000 EUR",
+          "941 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80,000 EUR",
+          "941 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80,000 EUR",
+          "941 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "8,000,000 ALL",
+          "94,118 ALL /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80,000 EUR",
+          "941 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "uk",
+    "w": 1440,
+    "rows": [
+      {
+        "row": [
+          "80 000 EUR",
+          "941 EUR /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80 000 EUR",
+          "941 EUR /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80 000 EUR",
+          "941 EUR /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80 000 EUR",
+          "941 EUR /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "8 000 000 ALL",
+          "94 118 ALL /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      },
+      {
+        "row": [
+          "80 000 EUR",
+          "941 EUR /м²"
+        ]
+      },
+      {
+        "row": [
+          "Площа",
+          "85 m²"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "en",
+    "w": 1440,
+    "rows": [
+      {
+        "row": [
+          "125,000 EUR",
+          "1,471 EUR /m²"
+        ]
+      },
+      {
+        "row": [
+          "Area",
+          "85 m²"
+        ]
+      }
+    ]
+  }
+]

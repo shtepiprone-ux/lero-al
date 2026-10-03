@@ -1,0 +1,86 @@
+[
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "en",
+    "w": 390,
+    "struck": []
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "en",
+    "w": 1440,
+    "struck": []
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "uk",
+    "w": 390,
+    "struck": []
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "uk",
+    "w": 1440,
+    "struck": []
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "en",
+    "w": 390,
+    "struck": []
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "en",
+    "w": 1440,
+    "struck": []
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "uk",
+    "w": 390,
+    "struck": []
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "uk",
+    "w": 1440,
+    "struck": []
+  },
+  {
+    "id": "public-listing",
+    "locale": "en",
+    "w": 390,
+    "struck": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ]
+  },
+  {
+    "id": "public-listing",
+    "locale": "en",
+    "w": 1440,
+    "struck": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ]
+  },
+  {
+    "id": "public-listing",
+    "locale": "uk",
+    "w": 390,
+    "struck": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ]
+  },
+  {
+    "id": "public-listing",
+    "locale": "uk",
+    "w": 1440,
+    "struck": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ]
+  }
+]

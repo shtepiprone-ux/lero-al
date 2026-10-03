@@ -1,6 +1,6 @@
 # Sprint 88 — a struck-through price means the owner lowered it, and nothing else
 
-**Opened:** 2026-10-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (917) · **Kickoffs filed:** 2 (912, 917)
+**Opened:** 2026-10-01 · **Status:** 🟠 **OPEN** (owner live check, exit criterion 3) · **Landed tasks:** 2 (912, 917) · **Kickoffs filed:** 2 (912, 917)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -57,13 +57,13 @@ The Tasks table is the single state source.
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
 | **917** | The server records the previous price on a reduction — `price_old` computed from the stored row in `updateListing` (D88-2, D88-3), ignored from the client, null on create | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering" read it) | — | ✅ `APPROVED` 2026-10-03 (review 1; [ledger](../../docs/reviews/2026-10-03-task917-server-records-previous-price.review-ledger.json)) → [`…_Task_917_…`](../Archive/Sprint_88_kickoff_prompt_Task_917_Server_Records_Previous_Price.md) |
-| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `PARTIALLY VERIFIED` (2026-10-03, kickoff §26: owner matrix O88-1…O88-4 all accepted; R31 P3 owed, then approval) → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
+| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | ✅ `APPROVED` 2026-10-03 (approval review, kickoff §27; owner matrix O88-1…O88-4 accepted) → [`…_Task_912_…`](../Archive/Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
 
 ## Execution order
 
 | Step | Task | Gate |
 |---|---|---|
-| 1 | **912** | — |
+| 1 | **912** | — ✅ landed 2026-10-03 |
 | 1 | **917** | — ✅ landed 2026-10-03 |
 
 ## Preconditions
@@ -71,6 +71,10 @@ The Tasks table is the single state source.
 - None. Both changed source files are clean in the worktree at design time (`git status --porcelain`, 2026-10-01).
 
 ## Exit criteria
+
+> **Open owner action (2026-10-03):** both tasks have landed. Criterion 3, the owner's live check after deploy, is the
+> only thing open. Steps: 912 kickoff §13.5 1–3 (`tasks/Archive/…_Task_912_…`), reading "Price in the owner's currency"
+> for "Original price". The sprint closes when the owner confirms it.
 
 - No listing surface renders a struck-through price unless `price_old > price` (detail block, card, contact card).
 - A regression test fails if `line-through` returns to the converted-currency line or if the card strikes a

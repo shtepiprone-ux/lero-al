@@ -5,6 +5,7 @@ import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, Box
 import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
 import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
+import { MantineListingPrice } from './MantineListingPrice'
 import { TITLE_FZ } from '@/design-system/mantine/typography'
 
 export interface ListingFeature {
@@ -200,27 +201,22 @@ export function MantineListingDetailPattern({
               {data.title}
             </Title>
 
-            <Group gap="sm" align="baseline" wrap="wrap">
-              <Text fw={700} size="xl" c="brand">
-                {data.price}
-              </Text>
-              {data.priceOld && (
-                <Text size="md" c="dimmed" td="line-through">
-                  {data.priceOld}
-                </Text>
-              )}
-              {data.pricePerSqm && (
-                <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
-                  {data.pricePerSqm}
-                </Text>
-              )}
-            </Group>
-
-            {data.originalPriceLabel && data.originalPrice && (
-              <Text size="xs" c="dimmed">
-                {data.originalPriceLabel}: {data.originalPrice}
-              </Text>
-            )}
+            <MantineListingPrice
+              price={data.price}
+              priceOld={data.priceOld}
+              trailing={
+                data.pricePerSqm ? (
+                  <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+                    {data.pricePerSqm}
+                  </Text>
+                ) : undefined
+              }
+              ownerCurrency={
+                data.originalPriceLabel && data.originalPrice
+                  ? { label: data.originalPriceLabel, value: data.originalPrice }
+                  : undefined
+              }
+            />
 
             <Group gap="md" wrap="wrap">
               {data.location && (

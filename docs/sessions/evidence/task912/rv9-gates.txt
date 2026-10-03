@@ -1,0 +1,620 @@
+﻿platform: win32 node v22.22.3 cwd C:\Claude_Code_Projects\lero-al
+
+=== npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  35 passed (35)
+   Start at  23:30:15
+   Duration  33.42s (transform 4.77s, setup 9.83s, import 31.25s, tests 4.02s, environment 74.16s)
+
+exit=0
+
+=== npx.cmd vitest run src/lib/__tests__/price-format-ssr-parity.smoke.test.ts src/lib/__tests__/date-format-icu-independence.smoke.test.ts src/lib/__tests__/date-format-ssr-parity.smoke.test.ts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  3 passed (3)
+      Tests  54 passed (54)
+   Start at  23:30:50
+   Duration  1.79s (transform 240ms, setup 266ms, import 259ms, tests 727ms, environment 2.05s)
+
+exit=0
+
+=== npm.cmd run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+exit=0
+
+=== npm.cmd run lint
+
+> lero-al@0.1.0 lint
+> eslint
+
+
+C:\Claude_Code_Projects\lero-al\.artifacts\_to_delete\homepage-detailwind-census.mjs
+  105:3  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\.artifacts\measure-text.mjs
+  27:7  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\probe886r6.mjs
+   41:10  warning  'alphaOf' is defined but never used          @typescript-eslint/no-unused-vars
+  164:15  warning  'frames' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\rail4.mjs
+  16:11  warning  'rail' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\sortbar-audit.mjs
+  48:13  warning  'countText' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  57:15  warning  'cs' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\worstcase-audit.mjs
+  31:13  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\leak877-scoped-r4.mjs
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  483:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\leak877-scoped.mjs
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  483:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task673-delta\capture-computed-styles.mjs
+   66:7   warning  'SITES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  157:22  warning  'sel' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\capture-computed-styles.mjs
+   23:37  warning  'readFileSync' is defined but never used                                     @typescript-eslint/no-unused-vars
+   99:10  warning  'readProps' is defined but never used                                        @typescript-eslint/no-unused-vars
+  100:3   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  131:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  149:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  163:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:31  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:66  warning  Expected an assignment or function call and instead saw an expression        @typescript-eslint/no-unused-expressions
+  181:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  189:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  200:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  226:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  249:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  269:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\compare-manifests.mjs
+  96:9  warning  'md5DeltaByStory' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task690-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\extract-candidate-rules.mjs
+  2:25  warning  'resolve' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task693-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task748-overlay\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task695\real-before-after-comparator.mjs
+  58:31  warning  'readdir' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\real-before-after-comparator.mjs
+  154:16  warning  'resolvePartAElementBefore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-round2\g1-gate-blindness-probe.mjs
+   92:9   warning  'overlayLostAfter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  100:11  warning  'baseId' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748\executor-comparator\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task763\capture-appimage-styles.mjs
+   63:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  106:9  warning  'root' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\compare-phase-c.mjs
+  110:9  warning  'postT0' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task765\capture-appimage-styles.mjs
+  65:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task815\62_probe-render-phase.mjs
+  87:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task822\17_explore-dom.mjs
+  54:7  warning  'stackCandidate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task822\19_r5_probe.mjs
+  120:13  warning  'indicator' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task827\_probe-ac3-ancestor-chain.mjs
+  106:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task828\execution\i0-probe.mjs
+  56:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task828\review1\probe-rail-extra-grid.mjs
+  48:5  warning  Unused eslint-disable directive (no problems were reported from 'no-new-func')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task832\40_r1_build_redarms_probe.mjs
+  8:10  warning  'createServer' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac31-before-dropdownmenu.mjs
+  9:39  warning  'reject' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac31-before-usermenu.mjs
+  9:39  warning  'reject' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac43-before-probe.mjs
+  6:25  warning  'resolve' is defined but never used             @typescript-eslint/no-unused-vars
+  9:7   warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\probe-drawer.mjs
+  146:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\probe-shell.mjs
+  172:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  219:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\ac9-measure.mjs
+  17:11  warning  'rows' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\gr3b-gr3c-measure.mjs
+  25:11  warning  'fixedWidthNodes' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\live-proof-links.mjs
+  39:7  warning  'targets' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\114-measure-r7.mjs
+  76:62  warning  'dr' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\133-gr3g-probe-r10.mjs
+  158:11  warning  'first' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\138-gr3g-probe-r11.mjs
+  158:11  warning  'first' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\145-opus-thead-bg.mjs
+  17:9  warning  'resp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\147-thead-bg-r12.mjs
+  17:9  warning  'resp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\152-opus-table-border.mjs
+  26:49  warning  'pc' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\59b-measure2-r2.mjs
+  101:9  warning  'ths' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  103:9  warning  'nonTitle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  104:9  warning  'title' is assigned a value but never used     @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\88-measure-r3.mjs
+  142:13  warning  'id' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task868\probe868-r1.mjs
+  41:7  warning  'r1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task868\probe868-r4.mjs
+  41:7  warning  'r1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task878\capture-badge-crop.mjs
+   6:25  warning  'resolve' is defined but never used             @typescript-eslint/no-unused-vars
+  10:7   warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac4-r3-contrast-probe.mjs
+  132:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  141:5  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-raw-repro-rev3.mjs
+  53:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  55:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  57:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  59:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  61:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-arm2.mjs
+   13:10  warning  'rectArea' is defined but never used                                                 @typescript-eslint/no-unused-vars
+  145:5   warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-rev3.mjs
+   59:107  warning  'pageErrors' is defined but never used                                               @typescript-eslint/no-unused-vars
+  151:5    warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-rev4.mjs
+  152:5  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe.mjs
+   13:10  warning  'rectArea' is defined but never used                                                 @typescript-eslint/no-unused-vars
+  145:5   warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\verify-ac.mjs
+  50:11  warning  'valueEl' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\probe890.mjs
+  55:11  warning  'h1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev1\live-probe.mjs
+  39:11  warning  'areaPts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\capture-agent1-session.mjs
+  31:7  warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\live-gap-cabinet.mjs
+  16:11  warning  'grid' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\live-gap.mjs
+  16:11  warning  'grid' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\review6\locale-leak-scoped.mjs
+   38:25  warning  'resolve' is defined but never used               @typescript-eslint/no-unused-vars
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  487:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task891\rev1\measure.mjs
+  15:7  warning  'GR3B_WIDTHS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  16:7  warning  'GR3C_WIDTHS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task891\rev3\diag2.mjs
+  26:9  warning  'donutBox' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\AdminUsersTable.tsx
+  164:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  335:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\__tests__\AdminUsersTable.smoke.test.tsx
+   93:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   94:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   98:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  139:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  192:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  195:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  196:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  202:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\auth\__tests__\CaptchaWidget.language.test.tsx
+  36:75  warning  '_ref' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\listing\WhatsAppContactButton.tsx
+  26:3  warning  'listingOwnerId' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantinePagination.tsx
+  238:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\components\ListingMobileCTA.tsx
+  23:91  warning  'listingOwnerId' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\components\__tests__\ListingGallery.portal.smoke.test.tsx
+  216:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\lib\__tests__\visibility.test.ts
+    3:32  warning  'vi' is defined but never used                 @typescript-eslint/no-unused-vars
+    4:13  warning  'visibilityModule' is defined but never used   @typescript-eslint/no-unused-vars
+  184:11  warning  'original' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 142 problems (0 errors, 142 warnings)
+  0 errors and 39 warnings potentially fixable with the `--fix` option.
+
+exit=0
+
+=== npm.cmd run check:design-tokens
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 543 production src/**/*.{tsx,ts,css} files
+    + 158 canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+
+✅  check:design-tokens — 0 violations found.
+exit=0
+
+=== npm.cmd run check:story-coverage
+
+> lero-al@0.1.0 check:story-coverage
+> node scripts/check-story-coverage.mjs
+
+📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)
+    Canonical Mantine story files: 158 (of 187 total *.stories.tsx; prefixes: Mantine/Primitives/, Patterns/Mantine/)
+    Manifest entries (migration scope): 141
+    ✅ 141 covered (statically imported by ≥1 canonical Mantine story)
+    ❌ 0 enrolled but unproven (no canonical Mantine story imports them)
+
+✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.
+exit=0
+
+=== npm.cmd run check:i18n
+
+> lero-al@0.1.0 check:i18n
+> node scripts/check-i18n-parity.mjs
+
+── Part 1: Locale key-set parity ──────────────────────────────
+  ✅ en  — 2566 keys (matches sq)
+  ✅ uk  — 2566 keys (matches sq)
+  ✅ it  — 2566 keys (matches sq)
+
+── Part 2: Raw-enum leak scan ──────────────────────────────────
+  ✅ No suspicious raw-enum patterns detected in .tsx files.
+
+✅ Parity PASSED — all 4 locale files have identical key sets (2566 keys).
+exit=0
+
+=== npm.cmd run check:mojibake
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 9496 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake: 0 artifacts in 9496 files
+exit=0
+
+=== npm.cmd run check:rendered-scope
+
+> lero-al@0.1.0 check:rendered-scope
+> node scripts/check-rendered-scope.mjs
+
+check:rendered-scope — enrolled-subgraph rendered-component detector (Task 812; Task 818 baseline)
+    Enrolled roots walked: 141 (of 141 manifest entries)
+    Local import edges resolved: 657
+    Non-rendered local imports skipped (hooks/utils/consts/context/type-only): 404
+    Allowlisted edges (tier3, owner-filed): 0
+    Barrel hops unwrapped (single-hop, index.ts/tsx re-export): 52
+    Barrel edges NOT unwrapped (reported at the barrel file itself): 0
+    Cannot see: dynamic import() and React.lazy() — not statically resolved by this gate.
+
+    Distinct rendered frontier edges: 22 (deduped from 22 finding(s) — two bindings can resolve to the same edge)
+
+    Baseline version: 1
+    Baselined edges (recorded debt, does not fail): 22
+    New edges (not in baseline): 0
+    Stale baseline entries (no matching measured edge): 0
+    A baselined tier-2 edge is recorded debt and not an exemption — agent-contract 16d tier 2 still binds.
+
+PASS  check:rendered-scope — every component an enrolled surface renders is enrolled, baselined, legacy-clean, or allowlisted.
+exit=0
+
+=== npm.cmd run build
+
+> lero-al@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.18
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (101kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (102kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (104kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled successfully in 68s
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/41) ...
+   Generating static pages (10/41) 
+   Generating static pages (20/41) 
+   Generating static pages (30/41) 
+ ✓ Generating static pages (41/41)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                      377 B         185 kB
+├ ƒ /_not-found                          1.16 kB         186 kB
+├ ƒ /[locale]                            6.03 kB         667 kB
+├ ƒ /[locale]/[slug]                       346 B         362 kB
+├ ƒ /[locale]/auth/confirm-email         5.09 kB         191 kB
+├ ƒ /[locale]/auth/login                 1.25 kB         277 kB
+├ ƒ /[locale]/auth/register              1.25 kB         277 kB
+├ ƒ /[locale]/auth/reset-password        2.81 kB         583 kB
+├ ƒ /[locale]/auth/verified              6.05 kB         259 kB
+├ ƒ /[locale]/cabinet                     144 kB         812 kB
+├ ƒ /[locale]/cabinet/statistics         10.3 kB         491 kB
+├ ƒ /[locale]/ci/click-shield-modal      7.89 kB         275 kB
+├ ƒ /[locale]/contact                    4.87 kB         230 kB
+├ ƒ /[locale]/favorites                  5.36 kB         600 kB
+├ ƒ /[locale]/listings                   11.5 kB         678 kB
+├ ƒ /[locale]/listings/[slug]              412 B         706 kB
+├ ƒ /[locale]/listings/[slug]/edit       1.46 kB         252 kB
+├ ƒ /[locale]/listings/create            1.46 kB         252 kB
+├ ƒ /admin                                 10 kB         472 kB
+├ ƒ /admin/companies                     14.3 kB         326 kB
+├ ƒ /admin/currency                      9.19 kB         611 kB
+├ ƒ /admin/email-templates               9.45 kB         263 kB
+├ ƒ /admin/footer                        12.2 kB         245 kB
+├ ƒ /admin/inquiries                       378 B         185 kB
+├ ƒ /admin/inquiries/sales                 388 B         601 kB
+├ ƒ /admin/inquiries/support               388 B         601 kB
+├ ƒ /admin/legal                           379 B         185 kB
+├ ƒ /admin/listings                        12 kB         614 kB
+├ ƒ /admin/listings/[id]/preview           412 B         706 kB
+├ ƒ /admin/locations                      7.7 kB         272 kB
+├ ƒ /admin/pages                          165 kB         767 kB
+├ ƒ /admin/permissions                   4.17 kB         599 kB
+├ ƒ /admin/popular-locations             7.37 kB         272 kB
+├ ƒ /admin/property-types                14.6 kB         313 kB
+├ ƒ /admin/reports                       7.16 kB         609 kB
+├ ƒ /admin/settings                      4.54 kB         234 kB
+├ ƒ /admin/support                       15.1 kB         434 kB
+├ ƒ /admin/users                         5.78 kB         601 kB
+├ ƒ /admin/users/[id]                      399 B         672 kB
+├ ƒ /admin/users/new                       399 B         672 kB
+├ ƒ /api/auth-email-hook                   379 B         185 kB
+├ ƒ /api/auth/me                           378 B         185 kB
+├ ƒ /api/cron/inactivity                   379 B         185 kB
+├ ƒ /api/cron/listing-activity             378 B         185 kB
+├ ƒ /api/cron/listings-expiry              379 B         185 kB
+├ ƒ /api/cron/price-alerts                 379 B         185 kB
+├ ƒ /api/cron/saved-searches               378 B         185 kB
+├ ○ /api/exchange-rate                     380 B         185 kB          1h      1y
+├ ƒ /api/listings                          380 B         185 kB
+├ ƒ /api/listings/[slug]/view              379 B         185 kB
+├ ƒ /api/presence                          380 B         185 kB
+├ ƒ /api/property-types                    379 B         185 kB
+├ ƒ /api/upload-avatar                     378 B         185 kB
+├ ƒ /api/upload-cms-image                  378 B         185 kB
+├ ƒ /api/upload-company-logo               379 B         185 kB
+├ ƒ /api/upload-popular-location-photo     378 B         185 kB
+├ ƒ /auth/callback                         378 B         185 kB
+└ ƒ /auth/confirm                          379 B         185 kB
++ First Load JS shared by all             185 kB
+  ├ chunks/3434-84c453f793b2888b.js       126 kB
+  ├ chunks/4bd1b696-bc62c0f5edf56f0e.js  54.4 kB
+  └ other shared chunks (total)          4.52 kB
+
+
+ƒ Middleware                              165 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+exit=0

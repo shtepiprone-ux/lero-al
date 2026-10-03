@@ -67,6 +67,12 @@ interface ListingCardProps {
 // — `MantineListingCardPattern` always renders these `variant="filled"` (opaque, safe on the
 // photo these badges sit on top of; the theme's default `variant="light"` is translucent and
 // unreadable over a photo, owner-caught 2026-07-17).
+// One predicate for the struck old price and the "price reduced" badge (Task 912): a price is
+// struck through only when the owner lowered it.
+function isListingPriceReduced(listing: CardListingData): boolean {
+  return listing.price_old != null && listing.price < listing.price_old
+}
+
 function getBadges(listing: CardListingData) {
   const badges: { label: string; color: string }[] = []
 
@@ -96,7 +102,7 @@ function getBadges(listing: CardListingData) {
     badges.push({ label: 'new', color: 'green' })
   }
   // Premium is expressed through card styling, not a text badge
-  if (listing.price_old && listing.price < listing.price_old) {
+  if (isListingPriceReduced(listing)) {
     badges.push({ label: 'price_reduced', color: 'sale' })
   }
   return badges
@@ -200,7 +206,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
             title: listing.title,
             location: locationName,
             price: formatPrice(displayPrice, activeCurrency, locale),
-            priceOld: displayPriceOld ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
+            priceOld: isListingPriceReduced(listing) && displayPriceOld != null ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
           }}
           image={thumbImage}
           favorite={inlineFavorite}
@@ -289,7 +295,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           title: listing.title,
           location: locationName,
           price: formatPrice(displayPrice, activeCurrency, locale),
-          priceOld: displayPriceOld ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
+          priceOld: isListingPriceReduced(listing) && displayPriceOld != null ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
         }}
         image={image}
         favorite={favorite}

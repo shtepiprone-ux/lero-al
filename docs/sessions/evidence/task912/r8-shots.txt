@@ -1,0 +1,17 @@
+listingcontactpattern--default_en_320.png
+listingcontactpattern--default_en_1440.png
+listingcontactpattern--default_uk_320.png
+listingcontactpattern--default_uk_1440.png
+listingdetailview--public-listing_en_390.png
+listingdetailview--public-listing_en_1440.png
+listingdetailview--public-listing_uk_390.png
+listingdetailview--public-listing_uk_1440.png
+listingdetailview--public-listing-not-reduced_en_390.png
+listingdetailview--public-listing-not-reduced_en_1440.png
+listingdetailview--public-listing-not-reduced_uk_390.png
+listingdetailview--public-listing-not-reduced_uk_1440.png
+listingdetailview--public-listing-converted_en_390.png
+listingdetailview--public-listing-converted_en_1440.png
+listingdetailview--public-listing-converted_uk_390.png
+listingdetailview--public-listing-converted_uk_1440.png
+listingdetailpattern--default_en_1440.png

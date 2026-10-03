@@ -1,0 +1,1948 @@
+[
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "en",
+  "w": 320,
+  "gut": {
+   "top": 416,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 601,
+     "bottom": 619,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 621,
+     "bottom": 651,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1674,
+     "bottom": 1692,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1694,
+     "bottom": 1724,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 2421,
+     "bottom": 2439,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 2441,
+     "bottom": 2471,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 3495,
+     "bottom": 3513,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3515,
+     "bottom": 3545,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4508,
+     "bottom": 4526,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4528,
+     "bottom": 4558,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 6174,
+     "bottom": 6192,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 6194,
+     "bottom": 6224,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 7341,
+     "bottom": 7359,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 7361,
+     "bottom": 7391,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 8354,
+     "bottom": 8372,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 8374,
+     "bottom": 8404,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 8406,
+     "bottom": 8424,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 9447,
+     "bottom": 9465,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 9467,
+     "bottom": 9497,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 9499,
+     "bottom": 9517,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 10480,
+     "bottom": 10498,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 10500,
+     "bottom": 10530,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 11554,
+     "bottom": 11572,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 11574,
+     "bottom": 11604,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "en",
+  "w": 390,
+  "gut": {
+   "top": 416,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 569,
+     "bottom": 587,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 589,
+     "bottom": 619,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1563,
+     "bottom": 1581,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1583,
+     "bottom": 1613,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 2260,
+     "bottom": 2278,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 2280,
+     "bottom": 2310,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 3255,
+     "bottom": 3273,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3275,
+     "bottom": 3305,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4236,
+     "bottom": 4254,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4256,
+     "bottom": 4286,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 5773,
+     "bottom": 5791,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 5793,
+     "bottom": 5823,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 6862,
+     "bottom": 6880,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 6882,
+     "bottom": 6912,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 7825,
+     "bottom": 7843,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 7845,
+     "bottom": 7875,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 7877,
+     "bottom": 7895,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 8839,
+     "bottom": 8857,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 8859,
+     "bottom": 8889,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 8891,
+     "bottom": 8909,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 9840,
+     "bottom": 9858,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 9860,
+     "bottom": 9890,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 10835,
+     "bottom": 10853,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 10855,
+     "bottom": 10885,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "en",
+  "w": 768,
+  "gut": {
+   "top": 104,
+   "right": 24,
+   "bottom": 24,
+   "left": 24
+  },
+  "blocks": [
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 831,
+     "bottom": 849,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 851,
+     "bottom": 881,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 214,
+     "bottom": 232,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 234,
+     "bottom": 264,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1941,
+     "bottom": 1959,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1961,
+     "bottom": 1991,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1802,
+     "bottom": 1820,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1822,
+     "bottom": 1852,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 3529,
+     "bottom": 3547,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3549,
+     "bottom": 3579,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 5116,
+     "bottom": 5134,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 5136,
+     "bottom": 5166,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4499,
+     "bottom": 4517,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4519,
+     "bottom": 4549,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 6798,
+     "bottom": 6816,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 6818,
+     "bottom": 6848,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 6850,
+     "bottom": 6868,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 6181,
+     "bottom": 6199,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 6201,
+     "bottom": 6231,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 6233,
+     "bottom": 6251,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 8344,
+     "bottom": 8362,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 8364,
+     "bottom": 8394,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 9059,
+     "bottom": 9077,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 9079,
+     "bottom": 9109,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "30px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "en",
+  "w": 1024,
+  "gut": {
+   "top": 104,
+   "right": 32,
+   "bottom": 24,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 777,
+     "bottom": 795,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 797,
+     "bottom": 827,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 214,
+     "bottom": 232,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 234,
+     "bottom": 264,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1722,
+     "bottom": 1740,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1742,
+     "bottom": 1772,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1637,
+     "bottom": 1655,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1657,
+     "bottom": 1687,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 3145,
+     "bottom": 3163,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3165,
+     "bottom": 3195,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4568,
+     "bottom": 4586,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4588,
+     "bottom": 4618,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4005,
+     "bottom": 4023,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4025,
+     "bottom": 4055,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 6085,
+     "bottom": 6103,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 6105,
+     "bottom": 6135,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 6137,
+     "bottom": 6155,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 5522,
+     "bottom": 5540,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 5542,
+     "bottom": 5572,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 5574,
+     "bottom": 5592,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 7528,
+     "bottom": 7546,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 7548,
+     "bottom": 7578,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 6965,
+     "bottom": 6983,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 6985,
+     "bottom": 7015,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "en",
+  "w": 1440,
+  "gut": {
+   "top": 104,
+   "right": 32,
+   "bottom": 24,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 777,
+     "bottom": 795,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 797,
+     "bottom": 827,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 214,
+     "bottom": 232,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 234,
+     "bottom": 264,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1645,
+     "bottom": 1663,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1665,
+     "bottom": 1695,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 1560,
+     "bottom": 1578,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 1580,
+     "bottom": 1610,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 2991,
+     "bottom": 3009,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3011,
+     "bottom": 3041,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 4338,
+     "bottom": 4356,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 4358,
+     "bottom": 4388,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 3775,
+     "bottom": 3793,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 3795,
+     "bottom": 3825,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 5778,
+     "bottom": 5796,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 5798,
+     "bottom": 5828,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 5830,
+     "bottom": 5848,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9,200,000 ALL",
+     "top": 5215,
+     "bottom": 5233,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8,000,000 ALL",
+     "top": 5235,
+     "bottom": 5265,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Price in the owner's currency: 80,000 EUR",
+     "top": 5267,
+     "bottom": 5285,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 7144,
+     "bottom": 7162,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 7164,
+     "bottom": 7194,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92,000 EUR",
+     "top": 6581,
+     "bottom": 6599,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80,000 EUR",
+     "top": 6601,
+     "bottom": 6631,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "uk",
+  "w": 320,
+  "gut": {
+   "top": 416,
+   "right": 16,
+   "bottom": 24,
+   "left": 16
+  },
+  "blocks": [
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 601,
+     "bottom": 619,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 621,
+     "bottom": 651,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 1700,
+     "bottom": 1718,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 1720,
+     "bottom": 1750,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 2447,
+     "bottom": 2465,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 2467,
+     "bottom": 2497,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 3546,
+     "bottom": 3564,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 3566,
+     "bottom": 3596,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 4559,
+     "bottom": 4577,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 4579,
+     "bottom": 4609,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 6275,
+     "bottom": 6293,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 6295,
+     "bottom": 6325,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 7492,
+     "bottom": 7510,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 7512,
+     "bottom": 7542,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9 200 000 ALL",
+     "top": 8505,
+     "bottom": 8523,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8 000 000 ALL",
+     "top": 8525,
+     "bottom": 8555,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Ціна у валюті власника: 80 000 EUR",
+     "top": 8557,
+     "bottom": 8575,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9 200 000 ALL",
+     "top": 9623,
+     "bottom": 9641,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8 000 000 ALL",
+     "top": 9643,
+     "bottom": 9673,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Ціна у валюті власника: 80 000 EUR",
+     "top": 9675,
+     "bottom": 9693,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 10656,
+     "bottom": 10674,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 10676,
+     "bottom": 10706,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 11755,
+     "bottom": 11773,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 11775,
+     "bottom": 11805,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H1",
+    "size": "20px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   },
+   {
+    "tag": "H2",
+    "size": "18px"
+   }
+  ],
+  "hOverflow": false
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "loc": "uk",
+  "w": 1440,
+  "gut": {
+   "top": 104,
+   "right": 32,
+   "bottom": 24,
+   "left": 32
+  },
+  "blocks": [
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 777,
+     "bottom": 795,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 797,
+     "bottom": 827,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 214,
+     "bottom": 232,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 234,
+     "bottom": 264,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 1645,
+     "bottom": 1663,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 1665,
+     "bottom": 1695,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 1560,
+     "bottom": 1578,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 1580,
+     "bottom": 1610,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 2991,
+     "bottom": 3009,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 3011,
+     "bottom": 3041,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 4338,
+     "bottom": 4356,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 4358,
+     "bottom": 4388,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 3775,
+     "bottom": 3793,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 3795,
+     "bottom": 3825,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "9 200 000 ALL",
+     "top": 5778,
+     "bottom": 5796,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8 000 000 ALL",
+     "top": 5798,
+     "bottom": 5828,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Ціна у валюті власника: 80 000 EUR",
+     "top": 5830,
+     "bottom": 5848,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "9 200 000 ALL",
+     "top": 5215,
+     "bottom": 5233,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "8 000 000 ALL",
+     "top": 5235,
+     "bottom": 5265,
+     "deco": "none",
+     "size": "20px"
+    },
+    {
+     "text": "Ціна у валюті власника: 80 000 EUR",
+     "top": 5267,
+     "bottom": 5285,
+     "deco": "none",
+     "size": "12px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 7144,
+     "bottom": 7162,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 7164,
+     "bottom": 7194,
+     "deco": "none",
+     "size": "20px"
+    }
+   ],
+   [
+    {
+     "text": "92 000 EUR",
+     "top": 6581,
+     "bottom": 6599,
+     "deco": "line-through",
+     "size": "12px"
+    },
+    {
+     "text": "80 000 EUR",
+     "top": 6601,
+     "bottom": 6631,
+     "deco": "none",
+     "size": "20px"
+    }
+   ]
+  ],
+  "heads": [
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H1",
+    "size": "36px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   },
+   {
+    "tag": "H2",
+    "size": "24px"
+   }
+  ],
+  "hOverflow": false
+ }
+]

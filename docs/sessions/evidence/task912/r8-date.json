@@ -1,0 +1,122 @@
+[
+  {
+    "id": "public-listing",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "public-listing",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "public-listing",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "public-listing",
+    "locale": "it",
+    "date": "2 giorni fa"
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "public-listing-not-reduced",
+    "locale": "it",
+    "date": "2 giorni fa"
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "public-listing-converted",
+    "locale": "it",
+    "date": "2 giorni fa"
+  },
+  {
+    "id": "staff-preview-unpublished",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "staff-preview-unpublished",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "staff-preview-unpublished",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "staff-preview-unpublished",
+    "locale": "it",
+    "date": "2 giorni fa"
+  },
+  {
+    "id": "staff-preview-published",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "staff-preview-published",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "staff-preview-published",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "staff-preview-published",
+    "locale": "it",
+    "date": "2 giorni fa"
+  },
+  {
+    "id": "archived-listing",
+    "locale": "en",
+    "date": "2 days ago"
+  },
+  {
+    "id": "archived-listing",
+    "locale": "uk",
+    "date": "2 днi тому"
+  },
+  {
+    "id": "archived-listing",
+    "locale": "sq",
+    "date": "2 ditë më parë"
+  },
+  {
+    "id": "archived-listing",
+    "locale": "it",
+    "date": "2 giorni fa"
+  }
+]

@@ -1,6 +1,6 @@
 # Task 912 — a price is struck through only when the owner lowered it, and the contact card shows it
 
-**Sprint:** 88 ([plan](Sprint_88_A_Struck_Price_Means_A_Reduction.md)) · **Priority:** P1 · **QA profile:** Q4 ·
+**Sprint:** 88 ([plan](../Sprints/Sprint_88_A_Struck_Price_Means_A_Reduction.md)) · **Priority:** P1 · **QA profile:** Q4 ·
 **Filed:** 2026-10-01 · **Amended:** 2026-10-01 (owner decision D88-1, §5) · **Executor workflow:**
 `.claude/skills/execute-task/SKILL.md` · **Required final status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. Never self-approval.
@@ -10,6 +10,8 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
+> **`APPROVED` 2026-10-03, §27.** Archived. Sprint 88 still has its exit criterion 3, the owner's live check.
+>
 > **Owner matrix accepted (2026-10-03), §26.** Every §23.6 row is accepted. The executor still owes §25.2 R31 (the
 > relative date in the `ListingDetailView` Story). Then the approval review follows.
 >
@@ -1523,3 +1525,35 @@ The visual criterion is now `VERIFIED` for every §23.6 tuple.
      production diff.
 
    After that it archives 912 and emits the commit + push handoff.
+
+## 27. Approval review (2026-10-03): `APPROVED`
+
+**R31 verified.**
+- `ListingDetailView.stories.tsx` (`ac74438b`) computes `relativeTimeStr` with `formatDistance` over a fixed
+  `STORY_NOW`, using the production locale set (`[slug]/page.tsx:3,243-244`). The literal `'2 days ago'` arg is gone.
+- `r8-date.json` reads at 390, all six exports: `2 days ago` / `2 днi тому` / `2 ditë më parë` / `2 giorni fa`.
+  (date-fns' own `uk` locale emits a Latin `i` in "днi"; production uses the same locale. It is not a 912 defect.)
+- The price blocks are unchanged: `r8-crops.txt` equals `rv8-crops.txt`.
+
+**Final gate block, run by Opus** (`docs/sessions/evidence/task912/rv9-gates.txt`; `win32`, Node v22.22.3), every
+command exit 0:
+- vitest 4 files, 35/35;
+- critical-flow vitest (price and date SSR parity) 3 files, 54/54;
+- `typecheck`, `lint`, `check:design-tokens`, `check:story-coverage`, `check:i18n`, `check:mojibake`,
+  `check:rendered-scope`;
+- `build`.
+
+Every changed source file is hash-witnessed (`r5`–`r8` hash files).
+
+**Status.**
+- R1–R31 and AC1–AC27 are `VERIFIED`. R23 is superseded by R25.
+- The owner visual matrix is accepted: O88-1…O88-4 (§23.1, §26).
+- The critical-flow rows `:62` and `:63` carry the new tests (§10.6).
+- `GR-1 CENSUS COMPLETE — MantineListingPrice 1, MantineListingDetailPattern 10, MantineListingContactPattern 2, ListingCard 7 nodes; tier1 all migrated+enrolled+story; tier2 0; pass-through parents ListingContact/ListingDetailView unchanged §3.1 set with owners 794·795·834·838·839·814·913; tier3 filed as 913.`
+
+**Open after approval (not 912's).**
+- The owner's live check after deploy (§13.5 steps 1–3, read with "Price in the owner's currency") is Sprint 88's exit
+  criterion 3. It is carried as an owner action in the Sprint 88 plan and in `docs/backlog.md`.
+- 903 (raw `condition`/`heating` keys), 839/798 (map label) and 794 (gallery) stay with their owners (§25.1).
+
+The kickoff moved to `tasks/Archive/` on 2026-10-03.

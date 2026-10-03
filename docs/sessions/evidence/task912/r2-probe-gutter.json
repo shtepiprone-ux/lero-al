@@ -1,0 +1,112 @@
+[
+ {
+  "id": "patterns-mantine-listingprice--default",
+  "w": 320,
+  "gutterPad": {
+   "t": "24px",
+   "r": "16px",
+   "b": "24px",
+   "l": "16px"
+  },
+  "gutterBox": {
+   "top": 0,
+   "bottom": 424,
+   "h": 424
+  },
+  "firstLeaf": {
+   "tag": "P",
+   "text": "Not reduced",
+   "top": 24
+  },
+  "lastLeafBottom": 400,
+  "scrollHeight": 900
+ },
+ {
+  "id": "patterns-mantine-listingprice--default",
+  "w": 1440,
+  "gutterPad": {
+   "t": "24px",
+   "r": "32px",
+   "b": "24px",
+   "l": "32px"
+  },
+  "gutterBox": {
+   "top": 0,
+   "bottom": 424,
+   "h": 424
+  },
+  "firstLeaf": {
+   "tag": "P",
+   "text": "Not reduced",
+   "top": 24
+  },
+  "lastLeafBottom": 400,
+  "scrollHeight": 900
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "w": 320,
+  "gutterPad": {
+   "t": "24px",
+   "r": "16px",
+   "b": "24px",
+   "l": "16px"
+  },
+  "gutterBox": {
+   "top": 0,
+   "bottom": 11962,
+   "h": 11962
+  },
+  "firstLeaf": {
+   "tag": "IMG",
+   "text": "",
+   "top": 104
+  },
+  "lastLeafBottom": 3995,
+  "scrollHeight": 11962
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "w": 390,
+  "gutterPad": {
+   "t": "24px",
+   "r": "16px",
+   "b": "24px",
+   "l": "16px"
+  },
+  "gutterBox": {
+   "top": 0,
+   "bottom": 11243,
+   "h": 11243
+  },
+  "firstLeaf": {
+   "tag": "IMG",
+   "text": "",
+   "top": 104
+  },
+  "lastLeafBottom": 3755,
+  "scrollHeight": 11243
+ },
+ {
+  "id": "patterns-mantine-listingdetailpattern--default",
+  "w": 1440,
+  "gutterPad": {
+   "t": "24px",
+   "r": "32px",
+   "b": "24px",
+   "l": "32px"
+  },
+  "gutterBox": {
+   "top": 0,
+   "bottom": 7727,
+   "h": 7727
+  },
+  "firstLeaf": {
+   "tag": "IMG",
+   "text": "",
+   "top": 104
+  },
+  "lastLeafBottom": 1788,
+  "scrollHeight": 7727
+ }
+]

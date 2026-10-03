@@ -1,0 +1,115 @@
+ M docs/critical-flow-registry.md
+ M docs/sessions/evidence/task912/rv3-opus-probe.json
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M scripts/mantine-migration-scope.json
+ M src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+ M src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+ M src/design-system/mantine/patterns/index.ts
+ M src/modules/listings/components/ListingCard.tsx
+ M src/modules/listings/components/ListingContact.tsx
+ M src/modules/listings/components/ListingDetailView.tsx
+ M src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+ M src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingDetailView.stories.tsx
+?? .playwright-mcp/
+?? docs/sessions/2026-10-03-task912-strikethrough-only-for-reduction.md
+?? docs/sessions/evidence/task912/00-i0.txt
+?? docs/sessions/evidence/task912/00-status-before.txt
+?? docs/sessions/evidence/task912/01-i0-registry-vitest.txt
+?? docs/sessions/evidence/task912/02-i0-card-vitest.txt
+?? docs/sessions/evidence/task912/10-plants.txt
+?? docs/sessions/evidence/task912/20-final-card-vitest.txt
+?? docs/sessions/evidence/task912/21-final-registry-vitest.txt
+?? docs/sessions/evidence/task912/22-checkdesign-tokens.txt
+?? docs/sessions/evidence/task912/22-checkmojibake.txt
+?? docs/sessions/evidence/task912/22-checkrendered-scope.txt
+?? docs/sessions/evidence/task912/22-checkstory-coverage.txt
+?? docs/sessions/evidence/task912/22-lint.txt
+?? docs/sessions/evidence/task912/22-typecheck.txt
+?? docs/sessions/evidence/task912/23-build.txt
+?? docs/sessions/evidence/task912/30-build-storybook.txt
+?? docs/sessions/evidence/task912/31-measure.err
+?? docs/sessions/evidence/task912/31-measure.json
+?? docs/sessions/evidence/task912/40-censuses.txt
+?? docs/sessions/evidence/task912/41-hashes.txt
+?? docs/sessions/evidence/task912/42-status-after.txt
+?? docs/sessions/evidence/task912/measure.mjs
+?? docs/sessions/evidence/task912/r1-build-storybook.txt
+?? docs/sessions/evidence/task912/r1-build.txt
+?? docs/sessions/evidence/task912/r1-design-tokens.txt
+?? docs/sessions/evidence/task912/r1-gate.sh
+?? docs/sessions/evidence/task912/r1-hashes.txt
+?? docs/sessions/evidence/task912/r1-lint.txt
+?? docs/sessions/evidence/task912/r1-measure.err
+?? docs/sessions/evidence/task912/r1-measure.json
+?? docs/sessions/evidence/task912/r1-measure.mjs
+?? docs/sessions/evidence/task912/r1-mojibake.txt
+?? docs/sessions/evidence/task912/r1-nodever.txt
+?? docs/sessions/evidence/task912/r1-platform.txt
+?? docs/sessions/evidence/task912/r1-serve.log
+?? docs/sessions/evidence/task912/r1-status.txt
+?? docs/sessions/evidence/task912/r1-story-coverage.txt
+?? docs/sessions/evidence/task912/r1-summary.txt
+?? docs/sessions/evidence/task912/r1-typecheck.txt
+?? docs/sessions/evidence/task912/r1-vitest.txt
+?? docs/sessions/evidence/task912/r2-build-storybook.txt
+?? docs/sessions/evidence/task912/r2-build.txt
+?? docs/sessions/evidence/task912/r2-censuses.txt
+?? docs/sessions/evidence/task912/r2-design-tokens.txt
+?? docs/sessions/evidence/task912/r2-governance-components.txt
+?? docs/sessions/evidence/task912/r2-hashes.txt
+?? docs/sessions/evidence/task912/r2-i0-i18n-hardcode.txt
+?? docs/sessions/evidence/task912/r2-i0-i18n.txt
+?? docs/sessions/evidence/task912/r2-i0.txt
+?? docs/sessions/evidence/task912/r2-i18n-hardcode.txt
+?? docs/sessions/evidence/task912/r2-i18n.txt
+?? docs/sessions/evidence/task912/r2-lint.txt
+?? docs/sessions/evidence/task912/r2-measure-summary.txt
+?? docs/sessions/evidence/task912/r2-measure.err
+?? docs/sessions/evidence/task912/r2-measure.json
+?? docs/sessions/evidence/task912/r2-measure.mjs
+?? docs/sessions/evidence/task912/r2-mojibake-final.txt
+?? docs/sessions/evidence/task912/r2-mojibake.txt
+?? docs/sessions/evidence/task912/r2-plant-D.txt
+?? docs/sessions/evidence/task912/r2-plant-E.txt
+?? docs/sessions/evidence/task912/r2-plant-F.txt
+?? docs/sessions/evidence/task912/r2-plant-restored.txt
+?? docs/sessions/evidence/task912/r2-plants.txt
+?? docs/sessions/evidence/task912/r2-platform.txt
+?? docs/sessions/evidence/task912/r2-probe-gutter.err
+?? docs/sessions/evidence/task912/r2-probe-gutter.json
+?? docs/sessions/evidence/task912/r2-probe-gutter.mjs
+?? docs/sessions/evidence/task912/r2-rendered-scope.txt
+?? docs/sessions/evidence/task912/r2-serve.log
+?? docs/sessions/evidence/task912/r2-status-after.txt
+?? docs/sessions/evidence/task912/r2-story-coverage.txt
+?? docs/sessions/evidence/task912/r2-summary.txt
+?? docs/sessions/evidence/task912/r2-typecheck.txt
+?? docs/sessions/evidence/task912/r2-vitest.txt
+?? docs/sessions/evidence/task912/r3-build-storybook.txt
+?? docs/sessions/evidence/task912/r3-design-tokens.txt
+?? docs/sessions/evidence/task912/r3-hashes.txt
+?? docs/sessions/evidence/task912/r3-i18n.txt
+?? docs/sessions/evidence/task912/r3-lint.txt
+?? docs/sessions/evidence/task912/r3-measure.err
+?? docs/sessions/evidence/task912/r3-measure.json
+?? docs/sessions/evidence/task912/r3-measure.mjs
+?? docs/sessions/evidence/task912/r3-mojibake.txt
+?? docs/sessions/evidence/task912/r3-platform.txt
+?? docs/sessions/evidence/task912/r3-probe-stdout.txt
+?? docs/sessions/evidence/task912/r3-probe.err
+?? docs/sessions/evidence/task912/r3-probe.json
+?? docs/sessions/evidence/task912/r3-serve.log
+?? docs/sessions/evidence/task912/r3-status.txt
+?? docs/sessions/evidence/task912/r3-story-coverage.txt
+?? docs/sessions/evidence/task912/r3-typecheck.txt
+?? docs/sessions/evidence/task912/r3-vitest.txt
+?? src/design-system/mantine/patterns/MantineListingPrice.tsx
+?? src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx
+?? src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx
+?? src/stories/patterns/mantine/ListingPrice.stories.tsx
+exit=0

@@ -44,6 +44,7 @@
   "src/design-system/mantine/patterns/MantineDropdownMenu.tsx",
   "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
   "src/design-system/mantine/patterns/MantineListingContactPattern.tsx",
+  "src/design-system/mantine/patterns/MantineListingPrice.tsx",
   "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx",
   "src/design-system/mantine/patterns/MantineModal.tsx",
   "src/design-system/mantine/patterns/MantineDialogSections.tsx",

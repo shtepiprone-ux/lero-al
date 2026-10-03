@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { Avatar, Text, Group, Stack, Paper, Divider, Button, SimpleGrid, ThemeIcon, Loader, useMantineTheme } from '@mantine/core'
 import { Phone, MessageCircle, CheckCircle, UserX, LogIn } from 'lucide-react'
+import { MantineListingPrice } from './MantineListingPrice'
 
 export interface MantineListingContactAgent {
   name: string
@@ -16,7 +17,11 @@ export interface MantineListingContactAgent {
 
 export interface MantineListingContactPriceInfo {
   price: string
+  /** Struck old price, already formatted; pass only when the owner lowered the price. */
+  priceOld?: string
+  /** Price in the owner's currency, already formatted; pass only when the viewer's currency differs. */
   originalPrice?: string
+  /** Label for `originalPrice`, e.g. "Price in the owner's currency". */
   originalPriceLabel?: string
 }
 
@@ -132,7 +137,7 @@ export function MantineListingContactPattern({
           </Avatar>
           <Stack gap="micro" flex={1} miw={0}>
             <Group gap="compact" wrap="nowrap">
-              <Text fw={600} size="sm" truncate>
+              <Text fw={600} size="sm">
                 {agent.name}
               </Text>
               {!dimmed && agent.isVerified && (
@@ -140,7 +145,7 @@ export function MantineListingContactPattern({
               )}
             </Group>
             {agent.subtitle && (
-              <Text size="xs" c="dimmed" truncate>
+              <Text size="xs" c="dimmed">
                 {agent.subtitle}
               </Text>
             )}
@@ -149,16 +154,15 @@ export function MantineListingContactPattern({
 
         <Divider />
 
-        <Stack gap="micro">
-          <Text fw={700} size="xl" c="brand">
-            {price.price}
-          </Text>
-          {price.originalPrice && (
-            <Text size="xs" c="dimmed" td="line-through">
-              {price.originalPriceLabel}: {price.originalPrice}
-            </Text>
-          )}
-        </Stack>
+        <MantineListingPrice
+          price={price.price}
+          priceOld={price.priceOld}
+          ownerCurrency={
+            price.originalPrice && price.originalPriceLabel
+              ? { label: price.originalPriceLabel, value: price.originalPrice }
+              : undefined
+          }
+        />
 
         <Divider />
 

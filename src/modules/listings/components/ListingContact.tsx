@@ -42,6 +42,8 @@ interface ListingContactProps {
   listingTitle: string
   price: number
   currency: string
+  /** Already in `currency`; passed only when the owner lowered the price. */
+  priceOld?: number
   /** Pre-formatted original price string shown when price is converted */
   originalPrice?: string
   originalPriceLabel?: string
@@ -69,7 +71,7 @@ interface ListingContactProps {
  * (rendered directly by `ListingDetailView.tsx`, a Server Component — see `ListingShareButton.tsx`
  * for why share needed its own `'use client'` split, kickoff §3.1/§3.4).
  */
-export function ListingContact({ owner, isGuest = false, listingTitle, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, canReport = false, inquiryListingId, contactListingId, canSendInquiry = true, inquirerName, inquirerEmail }: ListingContactProps) {
+export function ListingContact({ owner, isGuest = false, listingTitle, price, currency, priceOld, originalPrice, originalPriceLabel, listingStatus, listingId, canReport = false, inquiryListingId, contactListingId, canSendInquiry = true, inquirerName, inquirerEmail }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const theme = useMantineTheme()
@@ -212,6 +214,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
       agent={agent}
       price={{
         price: formatPrice(price, currency, locale),
+        priceOld: priceOld != null ? formatPrice(priceOld, currency, locale) : undefined,
         originalPrice,
         originalPriceLabel,
       }}

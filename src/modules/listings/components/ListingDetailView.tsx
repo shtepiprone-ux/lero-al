@@ -287,7 +287,7 @@ export function ListingDetailViewBody({
     location: listing.location?.name_al,
     price: formattedPrice,
     priceOld: isPriceReduced ? formatPrice(displayPriceOld!, displayCurrencyCode, locale) : undefined,
-    originalPriceLabel: originalPriceStr ? t('original_price') : undefined,
+    originalPriceLabel: originalPriceStr ? t('price_in_owner_currency') : undefined,
     originalPrice: originalPriceStr ?? undefined,
     pricePerSqm: pricePerSqm ? `${formatPrice(pricePerSqm, displayCurrencyCode, locale)} ${t('per_sqm')}` : undefined,
     views: listing.views_count,
@@ -352,8 +352,9 @@ export function ListingDetailViewBody({
       listingTitle={listing.title}
       price={displayPrice}
       currency={displayCurrencyCode}
+      priceOld={isPriceReduced && displayPriceOld != null ? displayPriceOld : undefined}
       originalPrice={originalPriceStr ?? undefined}
-      originalPriceLabel={t('original_price')}
+      originalPriceLabel={t('price_in_owner_currency')}
       listingStatus={listing.status as ListingStatus}
       listingId={effectiveListingId}
       canReport={effectiveCanReport}

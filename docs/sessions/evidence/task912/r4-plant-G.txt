@@ -1,0 +1,54 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx (8 tests | 2 failed) 307ms
+     × (e) without priceOld the price is the dark token colour 15ms
+     × (g) the same through MantineListingDetailPattern and MantineListingContactPattern 22ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice colour (Task 912 R22, D89-7) > (e) without priceOld the price is the dark token colour
+AssertionError: expected 'var(--mantine-color-brand-text)' to match /^(#111111|rgb\(17, 17, 17\))$/i
+
+- Expected:
+/^(#111111|rgb\(17, 17, 17\))$/i
+
++ Received:
+"var(--mantine-color-brand-text)"
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:101:57
+     99|   it('(e) without priceOld the price is the dark token colour', () => {
+    100|     renderPrice({ price: '125,000 EUR' })
+    101|     expect(screen.getByText('125,000 EUR').style.color).toMatch(DARK)
+       |                                                         ^
+    102|   })
+    103|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice colour (Task 912 R22, D89-7) > (g) the same through MantineListingDetailPattern and MantineListingContactPattern
+AssertionError: detail: expected 'var(--mantine-color-brand-text)' to match /^(#111111|rgb\(17, 17, 17\))$/i
+
+- Expected:
+/^(#111111|rgb\(17, 17, 17\))$/i
+
++ Received:
+"var(--mantine-color-brand-text)"
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:137:64
+    135|     for (const [name, make] of [['detail', detail], ['contact', contac…
+    136|       const plain = render(make())
+    137|       expect(screen.getByText('12,500 EUR').style.color, name).toMatch…
+       |                                                                ^
+    138|       plain.unmount()
+    139|       const reduced = render(make('13,800 EUR'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 6 passed (8)
+   Start at  20:36:39
+   Duration  2.45s (transform 294ms, setup 94ms, import 1.09s, tests 307ms, environment 810ms)
+
+exit=1

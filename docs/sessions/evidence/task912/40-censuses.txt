@@ -1,0 +1,48 @@
+## src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+    Local import edges resolved (from tier-1 nodes): 0
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:(root surface)
+GR-1 CENSUS COMPLETE — 1 nodes; tier1 1 migrated+enrolled+story; tier2 0 imports removed; tier3 0 listed and filed as none.
+## src/modules/listings/components/ListingCard.tsx
+    Local import edges resolved (from tier-1 nodes): 38
+    src/modules/listings/components/ListingCard.tsx  tier:tier1  manifest:yes  story:yes  className:6  ui-imports:0  parent:(root surface)
+    src/design-system/mantine/patterns/MantineCopyIdButton.tsx  tier:tier1  manifest:yes  story:yes  className:3  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+    src/design-system/mantine/patterns/MantineListingCardPattern.tsx  tier:tier1  manifest:yes  story:yes  className:27  ui-imports:0  parent:src/modules/listings/components/ListingCard.tsx
+## src/modules/listings/components/ListingContact.tsx
+    Local import edges resolved (from tier-1 nodes): 50
+    src/modules/listings/components/ListingContact.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:(root surface)
+    src/design-system/mantine/patterns/MantineListingContactPattern.tsx  tier:tier1  manifest:yes  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/ListingContact.tsx
+    src/modules/listings/components/ListingInquiryDialog.tsx  tier:tier1  manifest:no  story:no  className:11  ui-imports:10  parent:src/modules/listings/components/ListingContact.tsx
+## src/modules/listings/components/ListingDetailView.tsx
+    Local import edges resolved (from tier-1 nodes): 166
+    src/modules/listings/components/ListingDetailView.tsx  tier:tier1  manifest:yes  story:yes  className:1  ui-imports:0  parent:(root surface)
+    src/components/shared/MapWrapper.tsx  tier:tier1  manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+    src/design-system/mantine/patterns/MantineListingCardTrack.tsx  tier:tier1  manifest:yes  story:yes  className:5  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+## src/modules/listings/components/ListingCard.tsx
+GR-1 CENSUS COMPLETE — 7 nodes; tier1 7 migrated+enrolled+story; tier2 0 imports removed; tier3 0 listed and filed as none.
+## src/modules/listings/components/ListingContact.tsx
+GR-1 CENSUS BLOCKED — src/modules/listings/components/ListingInquiryDialog.tsx, src/modules/listings/components/ListingReportDialog.tsx, src/components/ui/button.tsx, src/components/ui/dialog.tsx, src/components/ui/input.tsx, src/components/ui/label.tsx, src/components/ui/textarea.tsx
+src/modules/listings/components/ListingInquiryDialog.tsx manifest:no  story:no  className:11  ui-imports:10  parent:src/modules/listings/components/ListingContact.tsx
+src/modules/listings/components/ListingReportDialog.tsx manifest:no  story:no  className:15  ui-imports:7  parent:src/modules/listings/components/ListingContact.tsx
+src/components/ui/button.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/dialog.tsx manifest:no  story:no  className:11  ui-imports:1  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/input.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingInquiryDialog.tsx
+src/components/ui/label.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/textarea.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+## src/modules/listings/components/ListingDetailView.tsx
+GR-1 CENSUS BLOCKED — src/components/shared/MapWrapper.tsx, src/modules/listings/components/GalleryIsland.tsx, src/modules/listings/components/GalleryStaticFrame.tsx, src/modules/listings/components/ListingReportDialog.tsx, src/modules/listings/components/ListingShareButton.tsx, src/modules/listings/components/RecentlyViewedSection.tsx, src/modules/listings/components/RecentlyViewedTracker.tsx, src/modules/listings/components/SimilarListings.tsx, src/modules/listings/components/ViewTracker.tsx, src/components/ui/button.tsx, src/components/ui/dialog.tsx, src/components/ui/label.tsx, src/components/ui/textarea.tsx, src/modules/listings/components/ClearRecentlyViewedButton.tsx, src/modules/listings/components/RecentlyViewedGrid.tsx, src/components/shared/ViewAllLink.tsx
+src/components/shared/MapWrapper.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/GalleryIsland.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/GalleryStaticFrame.tsx manifest:no  story:no  className:5  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/ListingReportDialog.tsx manifest:no  story:no  className:15  ui-imports:7  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/ListingShareButton.tsx manifest:no  story:yes  className:0  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/RecentlyViewedSection.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/RecentlyViewedTracker.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/SimilarListings.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/modules/listings/components/ViewTracker.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/ListingDetailView.tsx
+src/components/ui/button.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/dialog.tsx manifest:no  story:no  className:11  ui-imports:1  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/label.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/components/ui/textarea.tsx manifest:no  story:no  className:1  ui-imports:0  parent:src/modules/listings/components/ListingReportDialog.tsx
+src/modules/listings/components/ClearRecentlyViewedButton.tsx manifest:no  story:yes  className:6  ui-imports:6  parent:src/modules/listings/components/RecentlyViewedSection.tsx
+src/modules/listings/components/RecentlyViewedGrid.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/RecentlyViewedSection.tsx
+src/components/shared/ViewAllLink.tsx manifest:no  story:no  className:0  ui-imports:0  parent:src/modules/listings/components/SimilarListingsView.tsx

@@ -3,6 +3,8 @@ import { Box, Button, Paper, Stack, Text, useMantineTheme } from '@mantine/core'
 import { MessageCircle, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
 import { StoryPageGutter } from '@/stories/_StoryPageGutter';
+import { formatPrice } from '@/lib/formatters';
+import { convertPrice, type ExchangeRates } from '@/lib/getExchangeRate';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import {
@@ -150,6 +152,17 @@ function demoBadges(l: string): ListingDetailBadge[] {
   ];
 }
 
+// Fixture data (labelled): one reduced listing, 80,000 EUR lowered from 92,000 EUR, shared by the detail block
+// and the contact card. Prices go through the production formatter; `rates` is ListingCard.smoke.test.tsx's
+// fixture (ALL per 1 EUR = 100) and drives the converted E4 section through production's convertPrice.
+// STORY_AREA equals the fixture's area feature value ('85 m²' in demoFeatures).
+const STORY_AREA = 85;
+const STORY_PRICE = 80000;
+const STORY_PRICE_OLD = 92000;
+const STORY_CURRENCY = 'EUR';
+const STORY_VIEWER_CURRENCY = 'ALL';
+const rates: ExchangeRates = { ALL: 1, EUR: 100 };
+
 function demoContact(l: string): MantineListingContactPatternProps {
   return {
     state: 'normal',
@@ -160,9 +173,8 @@ function demoContact(l: string): MantineListingContactPatternProps {
       subtitle: storyT(l, 'storybook.mantine.listing_detail_agent_company'),
     },
     price: {
-      price: storyT(l, 'storybook.mantine.card_price_1'),
-      originalPrice: storyT(l, 'storybook.mantine.card_price_old_1'),
-      originalPriceLabel: storyT(l, 'storybook.mantine.listing_detail_original_price_label'),
+      price: formatPrice(STORY_PRICE, STORY_CURRENCY, l),
+      priceOld: formatPrice(STORY_PRICE_OLD, STORY_CURRENCY, l),
     },
     labels: {
       verified: storyT(l, 'storybook.mantine.listing_detail_verified_label'),
@@ -202,10 +214,9 @@ function buildBaseProps(l: string, featureIconSize: number) {
     data: {
       title: storyT(l, 'storybook.mantine.card_title_1'),
       location: storyT(l, 'storybook.mantine.card_location_tirana'),
-      price: storyT(l, 'storybook.mantine.card_price_1'),
-      priceOld: storyT(l, 'storybook.mantine.card_price_old_1'),
-      originalPriceLabel: storyT(l, 'storybook.mantine.listing_detail_original_price_label'),
-      pricePerSqm: storyT(l, 'storybook.mantine.card_price_per_sqm_1'),
+      price: formatPrice(STORY_PRICE, STORY_CURRENCY, l),
+      priceOld: formatPrice(STORY_PRICE_OLD, STORY_CURRENCY, l),
+      pricePerSqm: `${formatPrice(Math.round(STORY_PRICE / STORY_AREA), STORY_CURRENCY, l)} ${storyT(l, 'listing.per_sqm')}`,
       views: 128,
       viewsLabel: storyT(l, 'storybook.mantine.listing_detail_views_label'),
       date: storyT(l, 'storybook.mantine.card_footer_date'),
@@ -254,6 +265,29 @@ export const Default: Story = {
     // Task 837 R1 negative flow — closed/archived/expired listings disable the favorite in the
     // badges row (`ListingDetailView.tsx:238-245`'s branch). Applied to the E5 section below only;
     // every other section keeps `base.favorite` (enabled) unchanged.
+    // E4 (converted): the viewer chose ALL, so price and priceOld are production's convertPrice of the EUR
+    // values, and the price in the owner's currency is the original EUR price.
+    const convert = (n: number) => formatPrice(convertPrice(n, STORY_CURRENCY, STORY_VIEWER_CURRENCY, rates), STORY_VIEWER_CURRENCY, l);
+    const ownerCurrency = {
+      originalPrice: formatPrice(STORY_PRICE, STORY_CURRENCY, l),
+      originalPriceLabel: storyT(l, 'listing.price_in_owner_currency'),
+    };
+    const convertedPricePerSqm = `${formatPrice(Math.round(convertPrice(STORY_PRICE, STORY_CURRENCY, STORY_VIEWER_CURRENCY, rates) / STORY_AREA), STORY_VIEWER_CURRENCY, l)} ${storyT(l, 'listing.per_sqm')}`;
+    // Not-reduced states: the same listing without `priceOld`, plain (EUR) and converted (ALL + owner-currency line).
+    const plainData = { ...base.data, priceOld: undefined };
+    const plainContact = { ...base.contact, price: { price: base.contact.price.price } };
+    const convertedPlainData = { ...base.data, price: convert(STORY_PRICE), priceOld: undefined, pricePerSqm: convertedPricePerSqm, ...ownerCurrency };
+    const convertedPlainContact = { ...base.contact, price: { price: convert(STORY_PRICE), ...ownerCurrency } };
+    const convertedData = {
+      price: convert(STORY_PRICE),
+      pricePerSqm: convertedPricePerSqm,
+      priceOld: convert(STORY_PRICE_OLD),
+      ...ownerCurrency,
+    };
+    const convertedContact = {
+      ...base.contact,
+      price: { price: convertedData.price, priceOld: convertedData.priceOld, ...ownerCurrency },
+    };
     const disabledFavorite = (
       <FavoriteButton
         listingId="story-detail-1"
@@ -280,6 +314,52 @@ export const Default: Story = {
               amenitiesTitle={base.amenitiesTitle}
               amenities={base.amenities}
               contact={base.contact}
+              favorite={base.favorite}
+              share={base.share}
+            />
+          </Box>
+
+          {/* ── Task 912 R28 — price state: plain ── */}
+          {/* Not reduced: no "Price reduced" badge (production shows it only when isPriceReduced, ListingDetailView.tsx:266). */}
+          <Box pt={theme.other.layout.listingContactStickyOffset}>
+            <Stack gap="xs" mb="md">
+              <Text size="xs" c="gray.5" fw={500}>
+                {storyT(l, 'storybook.mantine.listing_price_section_plain')}
+              </Text>
+            </Stack>
+            <MantineListingDetailPattern
+              data={plainData}
+              images={base.images}
+              galleryLabels={base.galleryLabels}
+              badges={base.badges.filter((b) => b.tone !== 'reduced')}
+              features={base.features}
+              descriptionTitle={base.descriptionTitle}
+              amenitiesTitle={base.amenitiesTitle}
+              amenities={base.amenities}
+              contact={plainContact}
+              favorite={base.favorite}
+              share={base.share}
+            />
+          </Box>
+
+          {/* ── Task 912 R28 — price state: converted ── */}
+          {/* Not reduced: no "Price reduced" badge (production shows it only when isPriceReduced, ListingDetailView.tsx:266). */}
+          <Box pt={theme.other.layout.listingContactStickyOffset}>
+            <Stack gap="xs" mb="md">
+              <Text size="xs" c="gray.5" fw={500}>
+                {storyT(l, 'storybook.mantine.listing_price_section_converted')}
+              </Text>
+            </Stack>
+            <MantineListingDetailPattern
+              data={convertedPlainData}
+              images={base.images}
+              galleryLabels={base.galleryLabels}
+              badges={base.badges.filter((b) => b.tone !== 'reduced')}
+              features={base.features}
+              descriptionTitle={base.descriptionTitle}
+              amenitiesTitle={base.amenitiesTitle}
+              amenities={base.amenities}
+              contact={convertedPlainContact}
               favorite={base.favorite}
               share={base.share}
             />
@@ -357,11 +437,11 @@ export const Default: Story = {
           <Box pt={theme.other.layout.listingContactStickyOffset}>
             <Stack gap="xs" mb="md">
               <Text size="xs" c="gray.5" fw={500}>
-                {storyT(l, 'storybook.mantine.listing_detail_section_original_price')}
+                {storyT(l, 'storybook.mantine.listing_detail_section_converted_price')}
               </Text>
             </Stack>
             <MantineListingDetailPattern
-              data={{ ...base.data, originalPrice: storyT(l, 'storybook.mantine.card_price_1') }}
+              data={{ ...base.data, ...convertedData }}
               images={base.images}
               galleryLabels={base.galleryLabels}
               badges={base.badges}
@@ -369,7 +449,7 @@ export const Default: Story = {
               descriptionTitle={base.descriptionTitle}
               amenitiesTitle={base.amenitiesTitle}
               amenities={base.amenities}
-              contact={base.contact}
+              contact={convertedContact}
               favorite={base.favorite}
               share={base.share}
             />

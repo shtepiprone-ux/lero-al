@@ -158,6 +158,50 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
     expect(screen.queryByText('Price reduced')).not.toBeInTheDocument()
   })
 
+  it.each([
+    ['equal to price', 80000],
+    ['below price', 70000],
+  ])('Task 912: price_old %s → no struck old price, no badge', (_label, priceOld) => {
+    const { container } = renderCard({ ...BASE_LISTING, price: 80000, price_old: priceOld })
+
+    expect(screen.queryByText('Price reduced')).not.toBeInTheDocument()
+    const struck = Array.from(container.querySelectorAll<HTMLElement>('*')).filter(el =>
+      /line-through/.test(el.style.textDecoration || getComputedStyle(el).textDecorationLine),
+    )
+    expect(struck).toHaveLength(0)
+    expect(screen.queryByText(/70,000/)).not.toBeInTheDocument()
+  })
+
+  it.each([
+    ['equal to price', 80000],
+    ['below price', 70000],
+  ])('Task 912: horizontal variant, price_old %s → no struck old price, no badge', (_label, priceOld) => {
+    const { container } = renderCard({ ...BASE_LISTING, price: 80000, price_old: priceOld }, 'en', { variant: 'horizontal' })
+
+    expect(screen.queryByText('Price reduced')).not.toBeInTheDocument()
+    const struck = Array.from(container.querySelectorAll<HTMLElement>('*')).filter(el =>
+      /line-through/.test(el.style.textDecoration || getComputedStyle(el).textDecorationLine),
+    )
+    expect(struck).toHaveLength(0)
+  })
+
+  it('Task 912: converted reduced listing → struck value is the converted old price', () => {
+    const rates: ExchangeRates = { ALL: 1, EUR: 100 }
+    const { container } = renderCard(
+      { ...BASE_LISTING, price: 80000, price_old: 92000 },
+      'en',
+      { displayCurrency: 'ALL', rates },
+    )
+
+    const struck = Array.from(container.querySelectorAll<HTMLElement>('*')).filter(el =>
+      /line-through/.test(el.style.textDecoration || getComputedStyle(el).textDecorationLine),
+    )
+    expect(struck).toHaveLength(1)
+    // 92 000 EUR × 100 = 9 200 000 ALL — not the unconverted 92 000
+    expect(struck[0].textContent).toMatch(/9[, .]?200[, .]?000/)
+    expect(screen.getByText('Price reduced')).toBeInTheDocument()
+  })
+
   it('sold listing: favorite disabled with disabledLabel, closed overlay renders, nav still allowed', () => {
     renderCard({ ...BASE_LISTING, status: 'sold' })
 

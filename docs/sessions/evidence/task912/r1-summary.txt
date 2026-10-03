@@ -1,0 +1,11 @@
+platform EXIT_CODE=0
+nodever EXIT_CODE=0
+vitest EXIT_CODE=0
+typecheck EXIT_CODE=0
+lint EXIT_CODE=0
+design-tokens EXIT_CODE=0
+story-coverage EXIT_CODE=0
+mojibake EXIT_CODE=0
+build EXIT_CODE=0
+build-storybook EXIT_CODE=0
+DONE

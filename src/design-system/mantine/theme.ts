@@ -36,6 +36,8 @@ declare module '@mantine/core' {
   export interface MantineThemeOther {
     touchTarget: string
     mobileGate: string
+    // Task 912 R21 — listing price colour when the price was not reduced (owner, 2026-10-03; D89-7).
+    priceColor: { regular: string }
     // Icon/control dimension scale (Task 782, §3.1/§3.2) — the project's ONLY token source for a
     // lucide `size` prop, a Mantine `Avatar`/`Loader` numeric `size`, or any other plain-number
     // dimension prop. Named by role (Implementation requirement #3), not by pixel. `badge`/
@@ -729,6 +731,9 @@ export const theme = createTheme({
   other: {
     touchTarget: '2.75rem',  // 44px minimum
     mobileGate: '40em',      // 640px — P0 full-width gate
+    // Task 912 R21 — owner, 2026-10-03: "ціна по замовчуванню має бути темним кольором, наприклад #111111
+    // (треба зробити токен)"; restates D89-7 (2026-10-02). A reduced price keeps the brand colour.
+    priceColor: { regular: '#111111' },
     // Task 879 (D81-7, R2, F5) — the site header's stacking level. No `--z-*` custom property is
     // emitted at runtime for this value (Task 718); kept as a plain theme number, consumed via a
     // single `style={{ zIndex }}` (MECHANISM-KEPT, the one permitted inline z-index on the header).

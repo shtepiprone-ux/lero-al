@@ -1,0 +1,44 @@
+listingprice | en | 320 | gut t/r/b/l 24/16/500/16 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | en | 390 | gut t/r/b/l 24/16/500/16 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | en | 768 | gut t/r/b/l 24/24/500/24 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | en | 1024 | gut t/r/b/l 24/32/500/32 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | en | 1440 | gut t/r/b/l 24/32/500/32 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | sq | 320 | gut t/r/b/l 24/16/482/16 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | sq | 1440 | gut t/r/b/l 24/32/500/32 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | uk | 320 | gut t/r/b/l 24/16/482/16 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | uk | 1440 | gut t/r/b/l 24/32/500/32 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | it | 320 | gut t/r/b/l 24/16/482/16 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingprice | it | 1440 | gut t/r/b/l 24/32/500/32 | ovf false | blocks 4 | struck 2 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads 
+listingcontactpattern | en | 320 | gut t/r/b/l 24/16/24/16 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | en | 390 | gut t/r/b/l 24/16/24/16 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | en | 768 | gut t/r/b/l 24/444/24/24 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | en | 1024 | gut t/r/b/l 24/592/24/32 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | en | 1440 | gut t/r/b/l 24/949/24/32 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | sq | 320 | gut t/r/b/l 24/16/24/16 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | sq | 1440 | gut t/r/b/l 24/949/24/32 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | uk | 320 | gut t/r/b/l 24/16/24/16 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | uk | 1440 | gut t/r/b/l 24/949/24/32 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | it | 320 | gut t/r/b/l 24/16/24/16 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingcontactpattern | it | 1440 | gut t/r/b/l 24/949/24/32 | ovf false | blocks 7 | struck 7 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads 
+listingdetailview/PublicListing | en | 320 | gut t/r/b/l 10/16/56/16 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H2:18px
+listingdetailview/PublicListing | en | 390 | gut t/r/b/l 10/16/56/16 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H2:18px
+listingdetailview/PublicListing | en | 768 | gut t/r/b/l 10/24/56/24 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:30px,H2:24px,H2:24px,H2:24px
+listingdetailview/PublicListing | en | 1024 | gut t/r/b/l 10/32/56/32 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H2:24px
+listingdetailview/PublicListing | en | 1440 | gut t/r/b/l 10/64/56/64 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H2:24px
+listingdetailview/PublicListing | sq | 320 | gut t/r/b/l 10/16/56/16 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H2:18px
+listingdetailview/PublicListing | sq | 1440 | gut t/r/b/l 10/64/56/64 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H2:24px
+listingdetailview/PublicListing | uk | 320 | gut t/r/b/l 10/16/56/16 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H2:18px
+listingdetailview/PublicListing | uk | 1440 | gut t/r/b/l 10/64/56/64 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H2:24px
+listingdetailview/PublicListing | it | 320 | gut t/r/b/l 10/16/56/16 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H2:18px
+listingdetailview/PublicListing | it | 1440 | gut t/r/b/l 10/64/56/64 | ovf false | blocks 2 | struck 2 | orderBad 0 | ownerLines 0 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H2:24px
+listingdetailpattern | en | 320 | gut t/r/b/l 416/16/24/16 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px
+listingdetailpattern | en | 390 | gut t/r/b/l 416/16/24/16 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px
+listingdetailpattern | en | 768 | gut t/r/b/l 104/24/24/24 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:30px,H2:24px,H2:24px,H1:30px,H2:24px,H2:24px,H1:30px,H2:24px,H2:24px,H1:30px,H2:24px,H2:24px,H1:30px,H2:24px,H2:24px,H1:30px,H2:24px,H2:24px
+listingdetailpattern | en | 1024 | gut t/r/b/l 104/32/24/32 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px
+listingdetailpattern | en | 1440 | gut t/r/b/l 104/32/24/32 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px
+listingdetailpattern | sq | 320 | gut t/r/b/l 416/16/24/16 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px
+listingdetailpattern | sq | 1440 | gut t/r/b/l 104/32/24/32 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px
+listingdetailpattern | uk | 320 | gut t/r/b/l 416/16/24/16 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px
+listingdetailpattern | uk | 1440 | gut t/r/b/l 104/32/24/32 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px
+listingdetailpattern | it | 320 | gut t/r/b/l 416/16/24/16 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px,H1:20px,H2:18px,H2:18px
+listingdetailpattern | it | 1440 | gut t/r/b/l 104/32/24/32 | ovf false | blocks 11 | struck 11 | orderBad 0 | ownerLines 2 | ownerStruck 0 | heads H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px,H1:36px,H2:24px,H2:24px

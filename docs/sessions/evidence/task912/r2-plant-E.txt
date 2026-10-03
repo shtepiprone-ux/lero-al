@@ -1,0 +1,54 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx (5 tests | 2 failed) 222ms
+     × (a) priceOld: struck, and before the current price in DOM order 126ms
+     × the struck old price comes before the current price, and the owner-currency line follows it 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice (Task 912) > (a) priceOld: struck, and before the current price in DOM order
+AssertionError: expected +0 to be truthy
+
+- Expected:
+true
+
++ Received:
+0
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:54:64
+     52|     expect(isStruck(oldPrice)).toBe(true)
+     53|     expect(isStruck(main)).toBe(false)
+     54|     expect(oldPrice.compareDocumentPosition(main) & FOLLOWING).toBeTru…
+       |                                                                ^
+     55|   })
+     56|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingDetailPattern — price block through MantineListingPrice (Task 912 R13, AC12) > the struck old price comes before the current price, and the owner-currency line follows it
+AssertionError: expected +0 to be truthy
+
+- Expected:
+true
+
++ Received:
+0
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:126:64
+    124|     expect(isStruck(oldPrice)).toBe(true)
+    125|     expect(isStruck(owner)).toBe(false)
+    126|     expect(oldPrice.compareDocumentPosition(main) & FOLLOWING).toBeTru…
+       |                                                                ^
+    127|     expect(main.compareDocumentPosition(owner) & FOLLOWING).toBeTruthy…
+    128|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  19:43:41
+   Duration  2.30s (transform 248ms, setup 82ms, import 1.16s, tests 222ms, environment 695ms)
+
+exit=1

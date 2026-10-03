@@ -1,0 +1,10 @@
+post-fix hash=199810d73a457100b1b4faaaaaa3f96d4d42615f
+plant G applied; hash before=199810d73a457100b1b4faaaaaa3f96d4d42615f planted=ff7488e82e83ed7eada55781c260dee465f85cb3
+restored; hash=199810d73a457100b1b4faaaaaa3f96d4d42615f
+plant G vitest: exit=1; ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 6 passed (8)
+plant H applied; hash before=199810d73a457100b1b4faaaaaa3f96d4d42615f planted=22b3111566141152f6b6d9b3f1e9367d54f529c3
+restored; hash=199810d73a457100b1b4faaaaaa3f96d4d42615f
+plant H vitest: exit=1; ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 6 passed (8)
+restored vitest: exit=0;       Tests  8 passed (8)

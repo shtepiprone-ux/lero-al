@@ -1,0 +1,11 @@
+detailpattern 0 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailpattern 1 badges: New / Premium / Sale · Apartment | price: 80,000 EUR rgb(17, 17, 17) | struck: 
+detailpattern 2 badges: New / Premium / Sale · Apartment | price: 8,000,000 ALL rgb(17, 17, 17) | struck: 
+detailpattern 3 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailpattern 4 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailpattern 5 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailpattern 6 badges: New / Premium / Price reduced / Sale · Apartment | price: 8,000,000 ALL rgb(236, 84, 71) | struck: 9,200,000 ALL
+detailpattern 7 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailview-public-listing 0 badges: Premium / Price reduced / For sale / Apartment | price: 125,000 EUR rgb(236, 84, 71) | struck: 138,000 EUR
+detailview-public-listing-not-reduced 0 badges: Premium / For sale / Apartment | price: 125,000 EUR rgb(17, 17, 17) | struck: 
+detailview-public-listing-converted 0 badges: Premium / For sale / Apartment | price: 12,500,000 ALL rgb(17, 17, 17) | struck: 

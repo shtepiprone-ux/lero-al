@@ -1,0 +1,54 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx (8 tests | 2 failed) 313ms
+     × (f) with priceOld the price is the brand colour, not the dark token 13ms
+     × (g) the same through MantineListingDetailPattern and MantineListingContactPattern 37ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice colour (Task 912 R22, D89-7) > (f) with priceOld the price is the brand colour, not the dark token
+AssertionError: expected 'rgb(17, 17, 17)' to match /var\(--mantine-color-brand-/
+
+- Expected:
+/var\(--mantine-color-brand-/
+
++ Received:
+"rgb(17, 17, 17)"
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:107:19
+    105|     renderPrice({ price: '125,000 EUR', priceOld: '138,000 EUR' })
+    106|     const color = screen.getByText('125,000 EUR').style.color
+    107|     expect(color).toMatch(/var\(--mantine-color-brand-/)
+       |                   ^
+    108|     expect(color).not.toMatch(DARK)
+    109|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx > MantineListingPrice colour (Task 912 R22, D89-7) > (g) the same through MantineListingDetailPattern and MantineListingContactPattern
+AssertionError: detail: expected 'rgb(17, 17, 17)' to match /var\(--mantine-color-brand-/
+
+- Expected:
+/var\(--mantine-color-brand-/
+
++ Received:
+"rgb(17, 17, 17)"
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx:141:27
+    139|       const reduced = render(make('13,800 EUR'))
+    140|       const color = screen.getByText('12,500 EUR').style.color
+    141|       expect(color, name).toMatch(/var\(--mantine-color-brand-/)
+       |                           ^
+    142|       expect(color, name).not.toMatch(DARK)
+    143|       reduced.unmount()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 6 passed (8)
+   Start at  20:36:43
+   Duration  2.53s (transform 286ms, setup 99ms, import 1.06s, tests 313ms, environment 898ms)
+
+exit=1

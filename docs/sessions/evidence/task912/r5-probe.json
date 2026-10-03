@@ -1,0 +1,5926 @@
+[
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "en",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 24,
+      "bottom": 501,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125,000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13,800,000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "13,800,000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "en",
+    "w": 390,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 94,
+      "bottom": 501,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125,000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13,800,000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "13,800,000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "en",
+    "w": 1024,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 712,
+      "bottom": 501,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125,000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13,800,000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "13,800,000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "en",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 1128,
+      "bottom": 501,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125,000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13,800,000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12,500,000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 125,000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "13,800,000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "sq",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 39,
+      "bottom": 483,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125 000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 248,
+          "bottom": 278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 125 000 EUR",
+          "top": 280,
+          "bottom": 298,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13 800 000 ALL",
+          "top": 348,
+          "bottom": 366,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 368,
+          "bottom": 398,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 125 000 EUR",
+          "top": 400,
+          "bottom": 418,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "13 800 000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "sq",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 1100,
+      "bottom": 501,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125 000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 125 000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13 800 000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 125 000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "13 800 000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "uk",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 26,
+      "bottom": 483,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125 000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 148,
+          "bottom": 166,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 168,
+          "bottom": 198,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 248,
+          "bottom": 278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 125 000 EUR",
+          "top": 280,
+          "bottom": 298,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13 800 000 ALL",
+          "top": 348,
+          "bottom": 366,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 368,
+          "bottom": 398,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 125 000 EUR",
+          "top": 400,
+          "bottom": 418,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "13 800 000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "uk",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 1115,
+      "bottom": 501,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125 000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 125 000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13 800 000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12 500 000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 125 000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "13 800 000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "it",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 27,
+      "bottom": 483,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125.000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12.500.000 ALL",
+          "top": 248,
+          "bottom": 278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 125.000 EUR",
+          "top": 280,
+          "bottom": 298,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13.800.000 ALL",
+          "top": 348,
+          "bottom": 366,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12.500.000 ALL",
+          "top": 368,
+          "bottom": 398,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 125.000 EUR",
+          "top": 400,
+          "bottom": 418,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "13.800.000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingprice--default",
+    "locale": "it",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 1098,
+      "bottom": 501,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": null,
+        "price": {
+          "t": "125.000 EUR",
+          "top": 50,
+          "bottom": 80,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 130,
+          "bottom": 148,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 150,
+          "bottom": 180,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": null,
+        "price": {
+          "t": "12.500.000 ALL",
+          "top": 230,
+          "bottom": 260,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 125.000 EUR",
+          "top": 262,
+          "bottom": 280,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "13.800.000 ALL",
+          "top": 330,
+          "bottom": 348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "12.500.000 ALL",
+          "top": 350,
+          "bottom": 380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 125.000 EUR",
+          "top": 382,
+          "bottom": 400,
+          "fs": "12px",
+          "td": "none"
+        }
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "13.800.000 ALL"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "en",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 22,
+      "bottom": 58,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1302,
+          "bottom": 1320,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1322,
+          "bottom": 1352,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1770,
+          "bottom": 1788,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1790,
+          "bottom": 1820,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2218,
+          "bottom": 2236,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2238,
+          "bottom": 2268,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2720,
+          "bottom": 2738,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2740,
+          "bottom": 2770,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 3282,
+          "bottom": 3300,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 3302,
+          "bottom": 3332,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "en",
+    "w": 390,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 27,
+      "bottom": 58,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1284,
+          "bottom": 1302,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1304,
+          "bottom": 1334,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1752,
+          "bottom": 1770,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1772,
+          "bottom": 1802,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2182,
+          "bottom": 2200,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2202,
+          "bottom": 2232,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2684,
+          "bottom": 2702,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2704,
+          "bottom": 2734,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 3228,
+          "bottom": 3246,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 3248,
+          "bottom": 3278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "en",
+    "w": 1024,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 606,
+      "bottom": 58,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1284,
+          "bottom": 1302,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1304,
+          "bottom": 1334,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1752,
+          "bottom": 1770,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1772,
+          "bottom": 1802,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2182,
+          "bottom": 2200,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2202,
+          "bottom": 2232,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2684,
+          "bottom": 2702,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2704,
+          "bottom": 2734,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 3228,
+          "bottom": 3246,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 3248,
+          "bottom": 3278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "en",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 958,
+      "bottom": 58,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 160,
+          "bottom": 178,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 180,
+          "bottom": 210,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 704,
+          "bottom": 722,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 724,
+          "bottom": 754,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1248,
+          "bottom": 1266,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1268,
+          "bottom": 1298,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1698,
+          "bottom": 1716,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1718,
+          "bottom": 1748,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2110,
+          "bottom": 2128,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2130,
+          "bottom": 2160,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2612,
+          "bottom": 2630,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2632,
+          "bottom": 2662,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 3156,
+          "bottom": 3174,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 3176,
+          "bottom": 3206,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "sq",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 20,
+      "bottom": 58,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 758,
+          "bottom": 776,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 778,
+          "bottom": 808,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1320,
+          "bottom": 1338,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1340,
+          "bottom": 1370,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1826,
+          "bottom": 1844,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1846,
+          "bottom": 1876,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2274,
+          "bottom": 2292,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2294,
+          "bottom": 2324,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2794,
+          "bottom": 2812,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2814,
+          "bottom": 2844,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 3356,
+          "bottom": 3374,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 3376,
+          "bottom": 3406,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "sq",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 972,
+      "bottom": 58,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1284,
+          "bottom": 1302,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1304,
+          "bottom": 1334,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1752,
+          "bottom": 1770,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1772,
+          "bottom": 1802,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2182,
+          "bottom": 2200,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2202,
+          "bottom": 2232,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2684,
+          "bottom": 2702,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2704,
+          "bottom": 2734,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 3228,
+          "bottom": 3246,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 3248,
+          "bottom": 3278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "uk",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 23,
+      "bottom": 58,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 196,
+          "bottom": 214,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 216,
+          "bottom": 246,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 776,
+          "bottom": 794,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 796,
+          "bottom": 826,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1320,
+          "bottom": 1338,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1340,
+          "bottom": 1370,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1844,
+          "bottom": 1862,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1864,
+          "bottom": 1894,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2330,
+          "bottom": 2348,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2350,
+          "bottom": 2380,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2832,
+          "bottom": 2850,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2852,
+          "bottom": 2882,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 3394,
+          "bottom": 3412,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 3414,
+          "bottom": 3444,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "uk",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 972,
+      "bottom": 58,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1284,
+          "bottom": 1302,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1304,
+          "bottom": 1334,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 1752,
+          "bottom": 1770,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 1772,
+          "bottom": 1802,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2182,
+          "bottom": 2200,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2202,
+          "bottom": 2232,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2684,
+          "bottom": 2702,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2704,
+          "bottom": 2734,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 3228,
+          "bottom": 3246,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 3248,
+          "bottom": 3278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "it",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 17,
+      "bottom": 58,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 1302,
+          "bottom": 1320,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 1322,
+          "bottom": 1352,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 1830,
+          "bottom": 1848,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 1850,
+          "bottom": 1880,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 2316,
+          "bottom": 2334,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 2336,
+          "bottom": 2366,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 2836,
+          "bottom": 2854,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 2856,
+          "bottom": 2886,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 3398,
+          "bottom": 3416,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 3418,
+          "bottom": 3448,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingcontactpattern--default",
+    "locale": "it",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 24,
+      "right": 957,
+      "bottom": 58,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 178,
+          "bottom": 196,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 198,
+          "bottom": 228,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 740,
+          "bottom": 758,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 760,
+          "bottom": 790,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 1284,
+          "bottom": 1302,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 1304,
+          "bottom": 1334,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 1752,
+          "bottom": 1770,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 1772,
+          "bottom": 1802,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 2182,
+          "bottom": 2200,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 2202,
+          "bottom": 2232,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 2684,
+          "bottom": 2702,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 2704,
+          "bottom": 2734,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 3228,
+          "bottom": 3246,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 3248,
+          "bottom": 3278,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR",
+      "138.000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "en",
+    "w": 320,
+    "cut": [
+      {
+        "text": "Shitet apartament 2+1 në Tiranë, zonë e re",
+        "w": 232,
+        "shown": 224
+      }
+    ],
+    "gaps": {
+      "top": 7,
+      "right": 24,
+      "bottom": 90,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 681,
+          "bottom": 699,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 701,
+          "bottom": 731,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1,471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 2032,
+          "bottom": 2050,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 2052,
+          "bottom": 2082,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "en",
+    "w": 390,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 20,
+      "bottom": 90,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 681,
+          "bottom": 699,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 701,
+          "bottom": 731,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1,471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 1972,
+          "bottom": 1990,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 1992,
+          "bottom": 2022,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "en",
+    "w": 1024,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 157,
+      "bottom": 78,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 826,
+          "bottom": 844,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 846,
+          "bottom": 876,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1,471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 231,
+          "bottom": 249,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 251,
+          "bottom": 281,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "en",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 208,
+      "bottom": 78,
+      "left": 64
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 781,
+          "bottom": 799,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 801,
+          "bottom": 831,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1,471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138,000 EUR",
+          "top": 231,
+          "bottom": 249,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125,000 EUR",
+          "top": 251,
+          "bottom": 281,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138,000 EUR",
+      "138,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "sq",
+    "w": 320,
+    "cut": [
+      {
+        "text": "Shitet apartament 2+1 në Tiranë, zonë e re",
+        "w": 232,
+        "shown": 224
+      }
+    ],
+    "gaps": {
+      "top": 7,
+      "right": 24,
+      "bottom": 90,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 681,
+          "bottom": 699,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 701,
+          "bottom": 731,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2072,
+          "bottom": 2090,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2092,
+          "bottom": 2122,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "sq",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 197,
+      "bottom": 78,
+      "left": 64
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 781,
+          "bottom": 799,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 801,
+          "bottom": 831,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 231,
+          "bottom": 249,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 251,
+          "bottom": 281,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "uk",
+    "w": 320,
+    "cut": [
+      {
+        "text": "Shitet apartament 2+1 në Tiranë, zonë e re",
+        "w": 232,
+        "shown": 224
+      }
+    ],
+    "gaps": {
+      "top": 7,
+      "right": 24,
+      "bottom": 90,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 681,
+          "bottom": 699,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 701,
+          "bottom": 731,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1 471 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 2054,
+          "bottom": 2072,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 2074,
+          "bottom": 2104,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "uk",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 187,
+      "bottom": 78,
+      "left": 64
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 781,
+          "bottom": 799,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 801,
+          "bottom": 831,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1 471 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138 000 EUR",
+          "top": 231,
+          "bottom": 249,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125 000 EUR",
+          "top": 251,
+          "bottom": 281,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138 000 EUR",
+      "138 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "it",
+    "w": 320,
+    "cut": [
+      {
+        "text": "Shitet apartament 2+1 në Tiranë, zonë e re",
+        "w": 232,
+        "shown": 224
+      }
+    ],
+    "gaps": {
+      "top": 7,
+      "right": 24,
+      "bottom": 90,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 681,
+          "bottom": 699,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 701,
+          "bottom": 731,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 2054,
+          "bottom": 2072,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 2074,
+          "bottom": 2104,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "138.000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailview--public-listing",
+    "locale": "it",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 7,
+      "right": 209,
+      "bottom": 78,
+      "left": 64
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 781,
+          "bottom": 799,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 801,
+          "bottom": 831,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "1471 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "138.000 EUR",
+          "top": 231,
+          "bottom": 249,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "125.000 EUR",
+          "top": 251,
+          "bottom": 281,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "138.000 EUR",
+      "138.000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "en",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 16,
+      "bottom": 59,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 601,
+          "bottom": 619,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 621,
+          "bottom": 651,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1674,
+          "bottom": 1692,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1694,
+          "bottom": 1724,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 2421,
+          "bottom": 2439,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 2441,
+          "bottom": 2471,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 3495,
+          "bottom": 3513,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 3515,
+          "bottom": 3545,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 4508,
+          "bottom": 4526,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 4528,
+          "bottom": 4558,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 6174,
+          "bottom": 6192,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 6194,
+          "bottom": 6224,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 7341,
+          "bottom": 7359,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 7361,
+          "bottom": 7391,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 8354,
+          "bottom": 8372,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 8374,
+          "bottom": 8404,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94,118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 8406,
+          "bottom": 8424,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 9447,
+          "bottom": 9465,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 9467,
+          "bottom": 9497,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 9499,
+          "bottom": 9517,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 10480,
+          "bottom": 10498,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 10500,
+          "bottom": 10530,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 11554,
+          "bottom": 11572,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 11574,
+          "bottom": 11604,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "9,200,000 ALL",
+      "9,200,000 ALL",
+      "92,000 EUR",
+      "92,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "en",
+    "w": 390,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 16,
+      "bottom": 59,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 569,
+          "bottom": 587,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 589,
+          "bottom": 619,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1563,
+          "bottom": 1581,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1583,
+          "bottom": 1613,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 2260,
+          "bottom": 2278,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 2280,
+          "bottom": 2310,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 3255,
+          "bottom": 3273,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 3275,
+          "bottom": 3305,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 4236,
+          "bottom": 4254,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 4256,
+          "bottom": 4286,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 5773,
+          "bottom": 5791,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 5793,
+          "bottom": 5823,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 6862,
+          "bottom": 6880,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 6882,
+          "bottom": 6912,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 7825,
+          "bottom": 7843,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 7845,
+          "bottom": 7875,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94,118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 7877,
+          "bottom": 7895,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 8839,
+          "bottom": 8857,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 8859,
+          "bottom": 8889,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 8891,
+          "bottom": 8909,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 9840,
+          "bottom": 9858,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 9860,
+          "bottom": 9890,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 10835,
+          "bottom": 10853,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 10855,
+          "bottom": 10885,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "9,200,000 ALL",
+      "9,200,000 ALL",
+      "92,000 EUR",
+      "92,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "en",
+    "w": 1024,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 123,
+      "bottom": 46,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 777,
+          "bottom": 795,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 797,
+          "bottom": 827,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 214,
+          "bottom": 232,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 234,
+          "bottom": 264,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1722,
+          "bottom": 1740,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1742,
+          "bottom": 1772,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1637,
+          "bottom": 1655,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1657,
+          "bottom": 1687,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 3145,
+          "bottom": 3163,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 3165,
+          "bottom": 3195,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 4568,
+          "bottom": 4586,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 4588,
+          "bottom": 4618,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 4005,
+          "bottom": 4023,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 4025,
+          "bottom": 4055,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 6085,
+          "bottom": 6103,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 6105,
+          "bottom": 6135,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94,118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 6137,
+          "bottom": 6155,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 5522,
+          "bottom": 5540,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 5542,
+          "bottom": 5572,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 5574,
+          "bottom": 5592,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 7528,
+          "bottom": 7546,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 7548,
+          "bottom": 7578,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 6965,
+          "bottom": 6983,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 6985,
+          "bottom": 7015,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "9,200,000 ALL",
+      "9,200,000 ALL",
+      "92,000 EUR",
+      "92,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "en",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 152,
+      "bottom": 46,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 777,
+          "bottom": 795,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 797,
+          "bottom": 827,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 214,
+          "bottom": 232,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 234,
+          "bottom": 264,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1645,
+          "bottom": 1663,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1665,
+          "bottom": 1695,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 1560,
+          "bottom": 1578,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 1580,
+          "bottom": 1610,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 2991,
+          "bottom": 3009,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 3011,
+          "bottom": 3041,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 4338,
+          "bottom": 4356,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 4358,
+          "bottom": 4388,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 3775,
+          "bottom": 3793,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 3795,
+          "bottom": 3825,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 5778,
+          "bottom": 5796,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 5798,
+          "bottom": 5828,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94,118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 5830,
+          "bottom": 5848,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9,200,000 ALL",
+          "top": 5215,
+          "bottom": 5233,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8,000,000 ALL",
+          "top": 5235,
+          "bottom": 5265,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Price in the owner's currency: 80,000 EUR",
+          "top": 5267,
+          "bottom": 5285,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 7144,
+          "bottom": 7162,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 7164,
+          "bottom": 7194,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92,000 EUR",
+          "top": 6581,
+          "bottom": 6599,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80,000 EUR",
+          "top": 6601,
+          "bottom": 6631,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "92,000 EUR",
+      "9,200,000 ALL",
+      "9,200,000 ALL",
+      "92,000 EUR",
+      "92,000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "sq",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 16,
+      "bottom": 59,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 626,
+          "bottom": 644,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 646,
+          "bottom": 676,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1745,
+          "bottom": 1763,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1765,
+          "bottom": 1795,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 2541,
+          "bottom": 2559,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 2561,
+          "bottom": 2591,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 3660,
+          "bottom": 3678,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3680,
+          "bottom": 3710,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 4698,
+          "bottom": 4716,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 4718,
+          "bottom": 4748,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 6459,
+          "bottom": 6477,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 6479,
+          "bottom": 6509,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 7696,
+          "bottom": 7714,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 7716,
+          "bottom": 7746,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 8734,
+          "bottom": 8752,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 8754,
+          "bottom": 8784,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94 118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 80 000 EUR",
+          "top": 8786,
+          "bottom": 8804,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 9872,
+          "bottom": 9890,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 9892,
+          "bottom": 9922,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 80 000 EUR",
+          "top": 9924,
+          "bottom": 9942,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 10930,
+          "bottom": 10948,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 10950,
+          "bottom": 10980,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 12049,
+          "bottom": 12067,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 12069,
+          "bottom": 12099,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "9 200 000 ALL",
+      "9 200 000 ALL",
+      "92 000 EUR",
+      "92 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "sq",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 113,
+      "bottom": 46,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 777,
+          "bottom": 795,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 797,
+          "bottom": 827,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 214,
+          "bottom": 232,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 234,
+          "bottom": 264,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1645,
+          "bottom": 1663,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1665,
+          "bottom": 1695,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1560,
+          "bottom": 1578,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1580,
+          "bottom": 1610,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 2991,
+          "bottom": 3009,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3011,
+          "bottom": 3041,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 4338,
+          "bottom": 4356,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 4358,
+          "bottom": 4388,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 3775,
+          "bottom": 3793,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3795,
+          "bottom": 3825,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 5778,
+          "bottom": 5796,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 5798,
+          "bottom": 5828,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94 118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 80 000 EUR",
+          "top": 5830,
+          "bottom": 5848,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 5215,
+          "bottom": 5233,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 5235,
+          "bottom": 5265,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Çmimi në monedhën e pronarit: 80 000 EUR",
+          "top": 5267,
+          "bottom": 5285,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 7144,
+          "bottom": 7162,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 7164,
+          "bottom": 7194,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 6581,
+          "bottom": 6599,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 6601,
+          "bottom": 6631,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "9 200 000 ALL",
+      "9 200 000 ALL",
+      "92 000 EUR",
+      "92 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "uk",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 16,
+      "bottom": 59,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 601,
+          "bottom": 619,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 621,
+          "bottom": 651,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1700,
+          "bottom": 1718,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1720,
+          "bottom": 1750,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 2447,
+          "bottom": 2465,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 2467,
+          "bottom": 2497,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 3546,
+          "bottom": 3564,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3566,
+          "bottom": 3596,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 4559,
+          "bottom": 4577,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 4579,
+          "bottom": 4609,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 6275,
+          "bottom": 6293,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 6295,
+          "bottom": 6325,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 7492,
+          "bottom": 7510,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 7512,
+          "bottom": 7542,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 8505,
+          "bottom": 8523,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 8525,
+          "bottom": 8555,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94 118 ALL /м²"
+        ],
+        "owner": {
+          "t": "Ціна у валюті власника: 80 000 EUR",
+          "top": 8557,
+          "bottom": 8575,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 9623,
+          "bottom": 9641,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 9643,
+          "bottom": 9673,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 80 000 EUR",
+          "top": 9675,
+          "bottom": 9693,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 10656,
+          "bottom": 10674,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 10676,
+          "bottom": 10706,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 11755,
+          "bottom": 11773,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 11775,
+          "bottom": 11805,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "9 200 000 ALL",
+      "9 200 000 ALL",
+      "92 000 EUR",
+      "92 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "uk",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 137,
+      "bottom": 46,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 777,
+          "bottom": 795,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 797,
+          "bottom": 827,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 214,
+          "bottom": 232,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 234,
+          "bottom": 264,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1645,
+          "bottom": 1663,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1665,
+          "bottom": 1695,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 1560,
+          "bottom": 1578,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 1580,
+          "bottom": 1610,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 2991,
+          "bottom": 3009,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3011,
+          "bottom": 3041,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 4338,
+          "bottom": 4356,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 4358,
+          "bottom": 4388,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 3775,
+          "bottom": 3793,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 3795,
+          "bottom": 3825,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 5778,
+          "bottom": 5796,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 5798,
+          "bottom": 5828,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94 118 ALL /м²"
+        ],
+        "owner": {
+          "t": "Ціна у валюті власника: 80 000 EUR",
+          "top": 5830,
+          "bottom": 5848,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9 200 000 ALL",
+          "top": 5215,
+          "bottom": 5233,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8 000 000 ALL",
+          "top": 5235,
+          "bottom": 5265,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Ціна у валюті власника: 80 000 EUR",
+          "top": 5267,
+          "bottom": 5285,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 7144,
+          "bottom": 7162,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 7164,
+          "bottom": 7194,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /м²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92 000 EUR",
+          "top": 6581,
+          "bottom": 6599,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80 000 EUR",
+          "top": 6601,
+          "bottom": 6631,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "92 000 EUR",
+      "9 200 000 ALL",
+      "9 200 000 ALL",
+      "92 000 EUR",
+      "92 000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "it",
+    "w": 320,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 16,
+      "bottom": 59,
+      "left": 16
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px",
+      "H1:20px",
+      "H2:18px",
+      "H2:18px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 626,
+          "bottom": 644,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 646,
+          "bottom": 676,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 1750,
+          "bottom": 1768,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 1770,
+          "bottom": 1800,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 2546,
+          "bottom": 2564,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 2566,
+          "bottom": 2596,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 3671,
+          "bottom": 3689,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 3691,
+          "bottom": 3721,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 4709,
+          "bottom": 4727,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 4729,
+          "bottom": 4759,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 6475,
+          "bottom": 6493,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 6495,
+          "bottom": 6525,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 7718,
+          "bottom": 7736,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 7738,
+          "bottom": 7768,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9.200.000 ALL",
+          "top": 8756,
+          "bottom": 8774,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8.000.000 ALL",
+          "top": 8776,
+          "bottom": 8806,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94.118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 80.000 EUR",
+          "top": 8808,
+          "bottom": 8826,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9.200.000 ALL",
+          "top": 9900,
+          "bottom": 9918,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8.000.000 ALL",
+          "top": 9920,
+          "bottom": 9950,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 80.000 EUR",
+          "top": 9952,
+          "bottom": 9988,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 10976,
+          "bottom": 10994,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 10996,
+          "bottom": 11026,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 12101,
+          "bottom": 12119,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 12121,
+          "bottom": 12151,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "9.200.000 ALL",
+      "9.200.000 ALL",
+      "92.000 EUR",
+      "92.000 EUR"
+    ],
+    "popups": 0
+  },
+  {
+    "id": "patterns-mantine-listingdetailpattern--default",
+    "locale": "it",
+    "w": 1440,
+    "cut": [],
+    "gaps": {
+      "top": 104,
+      "right": 92,
+      "bottom": 46,
+      "left": 32
+    },
+    "overflow": 0,
+    "heads": [
+      "H1:14px",
+      "H1:22px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px",
+      "H1:36px",
+      "H2:24px",
+      "H2:24px"
+    ],
+    "blocks": [
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 777,
+          "bottom": 795,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 797,
+          "bottom": 827,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 214,
+          "bottom": 232,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 234,
+          "bottom": 264,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 1671,
+          "bottom": 1689,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 1691,
+          "bottom": 1721,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 1586,
+          "bottom": 1604,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 1606,
+          "bottom": 1636,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 3043,
+          "bottom": 3061,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 3063,
+          "bottom": 3093,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 4414,
+          "bottom": 4432,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 4434,
+          "bottom": 4464,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 3851,
+          "bottom": 3869,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 3871,
+          "bottom": 3901,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "9.200.000 ALL",
+          "top": 5880,
+          "bottom": 5898,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8.000.000 ALL",
+          "top": 5900,
+          "bottom": 5930,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "94.118 ALL /m²"
+        ],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 80.000 EUR",
+          "top": 5932,
+          "bottom": 5950,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "9.200.000 ALL",
+          "top": 5317,
+          "bottom": 5335,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "8.000.000 ALL",
+          "top": 5337,
+          "bottom": 5367,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": {
+          "t": "Prezzo nella valuta del proprietario: 80.000 EUR",
+          "top": 5369,
+          "bottom": 5387,
+          "fs": "12px",
+          "td": "none"
+        }
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 7272,
+          "bottom": 7290,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 7292,
+          "bottom": 7322,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [
+          "941 EUR /m²"
+        ],
+        "owner": null
+      },
+      {
+        "old": {
+          "t": "92.000 EUR",
+          "top": 6709,
+          "bottom": 6727,
+          "fs": "12px",
+          "td": "line-through"
+        },
+        "price": {
+          "t": "80.000 EUR",
+          "top": 6729,
+          "bottom": 6759,
+          "fs": "20px",
+          "td": "none"
+        },
+        "trailing": [],
+        "owner": null
+      }
+    ],
+    "struckAnywhere": [
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "92.000 EUR",
+      "9.200.000 ALL",
+      "9.200.000 ALL",
+      "92.000 EUR",
+      "92.000 EUR"
+    ],
+    "popups": 0
+  }
+]

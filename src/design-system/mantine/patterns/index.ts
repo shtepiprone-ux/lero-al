@@ -40,6 +40,9 @@ export type {
 export { MantineListingGalleryPattern } from './MantineListingGalleryPattern'
 export type { MantineListingGalleryPatternProps, MantineListingGalleryImage } from './MantineListingGalleryPattern'
 
+export { MantineListingPrice } from './MantineListingPrice'
+export type { MantineListingPriceProps, MantineListingPriceOwnerCurrency } from './MantineListingPrice'
+
 export { MantineListingContactPattern } from './MantineListingContactPattern'
 export type {
   MantineListingContactPatternProps,

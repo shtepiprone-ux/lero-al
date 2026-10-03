@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Grid, Stack, Text, Button, useMantineTheme } from '@mantine/core';
 import { MessageCircle, FolderOpen } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
+import { formatPrice } from '@/lib/formatters';
+import { convertPrice, type ExchangeRates } from '@/lib/getExchangeRate';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineListingContactPattern, type MantineListingContactLabels } from '@/design-system/mantine/patterns/MantineListingContactPattern';
@@ -68,15 +70,36 @@ function DemoSaveTrigger({ l }: { l: string }) {
   );
 }
 
+const STORY_PRICE = 125000;
+const STORY_PRICE_OLD = 138000;
+const STORY_CURRENCY = 'EUR';
+const STORY_VIEWER_CURRENCY = 'ALL';
+// Fixture data (labelled): `rates` is ListingCard.smoke.test.tsx's fixture (ALL per 1 EUR = 100).
+const rates: ExchangeRates = { ALL: 1, EUR: 100 };
+
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     const labels = makeLabels(l);
+    // Fixture data (labelled): the same numbers as Patterns/Mantine/ListingDetailView — reduced, not converted,
+    // used by every section except the four price-state cards below. Prices go through the production formatter.
     const price = {
-      price: storyT(l, 'storybook.mantine.card_price_1'),
-      originalPrice: storyT(l, 'storybook.mantine.card_price_old_1'),
-      originalPriceLabel: storyT(l, 'storybook.mantine.listing_detail_original_price_label'),
+      price: formatPrice(STORY_PRICE, STORY_CURRENCY, l),
+      priceOld: formatPrice(STORY_PRICE_OLD, STORY_CURRENCY, l),
     };
+
+    // The four price states of the "normal" card: neither, reduced, converted (the viewer chose ALL), both.
+    const convert = (n: number) => formatPrice(convertPrice(n, STORY_CURRENCY, STORY_VIEWER_CURRENCY, rates), STORY_VIEWER_CURRENCY, l);
+    const ownerCurrency = {
+      originalPrice: formatPrice(STORY_PRICE, STORY_CURRENCY, l),
+      originalPriceLabel: storyT(l, 'listing.price_in_owner_currency'),
+    };
+    const normalPriceStates = [
+      { key: 'plain', info: { price: formatPrice(STORY_PRICE, STORY_CURRENCY, l) } },
+      { key: 'reduced', info: price },
+      { key: 'converted', info: { price: convert(STORY_PRICE), ...ownerCurrency } },
+      { key: 'reduced_converted', info: { price: convert(STORY_PRICE), priceOld: convert(STORY_PRICE_OLD), ...ownerCurrency } },
+    ];
 
     return (
       // GR-3d: the profile wraps the page content. GR-3b: the card sits in the production sidebar
@@ -89,22 +112,30 @@ export const Default: Story = {
           <Text size="xs" c="gray.5" fw={500}>
             {storyT(l, 'storybook.mantine.listing_detail_section_normal')}
           </Text>
-          <MantineListingContactPattern
-            state="normal"
-            agent={{
-              name: storyT(l, 'storybook.mantine.listing_detail_agent_name'),
-              initials: 'EH',
-              isVerified: true,
-              subtitle: storyT(l, 'storybook.mantine.listing_detail_agent_company'),
-            }}
-            price={price}
-            labels={labels}
-            hasPhone
-            hasWhatsapp
-            inquiryTrigger={<DemoInquiryTrigger l={l} />}
-            saveTrigger={<DemoSaveTrigger l={l} />}
-            reportTrigger={<DemoReportTrigger l={l} />}
-          />
+          {/* One card per price state a listing can be in (reduced / converted / both / neither). */}
+          {normalPriceStates.map(({ key, info }) => (
+            <Stack key={key} gap="xs">
+              <Text size="xs" c="gray.5" fw={500}>
+                {storyT(l, `storybook.mantine.listing_price_section_${key}`)}
+              </Text>
+              <MantineListingContactPattern
+                state="normal"
+                agent={{
+                  name: storyT(l, 'storybook.mantine.listing_detail_agent_name'),
+                  initials: 'EH',
+                  isVerified: true,
+                  subtitle: storyT(l, 'storybook.mantine.listing_detail_agent_company'),
+                }}
+                price={info}
+                labels={labels}
+                hasPhone
+                hasWhatsapp
+                inquiryTrigger={<DemoInquiryTrigger l={l} />}
+                saveTrigger={<DemoSaveTrigger l={l} />}
+                reportTrigger={<DemoReportTrigger l={l} />}
+              />
+            </Stack>
+          ))}
         </Stack>
 
         <Stack gap="xs">
@@ -228,8 +259,9 @@ export const Default: Story = {
             }}
             isGuest={false}
             listingTitle={storyT(l, 'storybook.mantine.card_title_1')}
-            price={125000}
-            currency="EUR"
+            price={STORY_PRICE}
+            priceOld={STORY_PRICE_OLD}
+            currency={STORY_CURRENCY}
             listingStatus="active"
             listingId="story-listing-1"
             canReport={false}

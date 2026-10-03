@@ -1,4 +1,5 @@
 // Opus review probe for Task 912 Revision 1 (independent of the executor's r1-measure.mjs).
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS evidence probe run directly by node.exe (review 3) */
 const http = require('http')
 const fs = require('fs')
 const path = require('path')

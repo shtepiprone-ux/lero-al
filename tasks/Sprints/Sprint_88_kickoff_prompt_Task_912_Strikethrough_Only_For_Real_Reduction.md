@@ -10,7 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) is **918**'s, not this
 > task's: keep the main price's colour unchanged here.
 
-> **Revision 2 (2026-10-03, owner return on the review-2 matrix): §18 is the current executable route.** It adds the
+> **Revision 3 (2026-10-03, review 3): §19 is the current executable route.** It touches one Story fixture only. §18
+> is implemented and verified apart from that fixture.
+>
+> **Revision 2 (2026-10-03, owner return on the review-2 matrix): §18.** It adds the
 > shared `MantineListingPrice`, the "price in the owner's currency" label and Story fixtures that follow production.
 > Precondition §18.6: shared files free of other tasks' uncommitted work. The gallery is **794** (D88-5), not 912.
 
@@ -744,3 +747,98 @@ Append `## Revision 2` to the session log. Include:
 
 Update 912's backlog row. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`.
+
+## 19. Revision 3 (review 3, 2026-10-03): `NEEDS REVISION` — one Story fixture
+
+**§19 is the current executable route.** Review 3 inspected Revision 2's full diff. Everything §18 asked for is
+verified except one R15 fixture. Re-entry mode: `remediation`. **The only file you may edit is
+`src/stories/patterns/mantine/ListingDetailPattern.stories.tsx`.** Keep every other §18 file hash-equal to
+`docs/sessions/evidence/task912/r2-hashes.txt`. Do not re-run the I0 block, the plants or the censuses. New evidence
+files use an `r3-` prefix.
+
+Review 3 verified these, so do not redo them: vitest (4 files, 32/32, `win32`); `MantineListingPrice` and both
+consumers (R11–R13); the key rename and deletions (R14); `ListingContactPattern`, `ListingPrice` and `ListingDetailView`
+fixtures (R16, R18, R19); the plants (AC15); the registry rows; the GR-1 censuses (`MantineListingPrice` 1 node,
+`MantineListingDetailPattern` 10 nodes, all migrated, enrolled and storied).
+
+### 19.1 Finding F2 (P2, R15/AC14, defect D4 not fully closed)
+
+- **Observed.** `ListingDetailPattern.stories.tsx:217` still passes `pricePerSqm: storyT(l, 'storybook.mantine.card_price_per_sqm_1')`,
+  a hand-written `"€941 /m²"`. It sits on the price row beside the production-formatted price. In the converted E4
+  section, `convertedData` does not override it. Review 3's probe (`docs/sessions/evidence/task912/rv3-opus-probe.json`,
+  built `storybook-static`, `en`/`uk` at 1440) reads these rows:
+  - every non-converted section: `80,000 EUR` · `€941 /m²` (`uk`: `80 000 EUR` · `€941 /м²`);
+  - the converted E4 section: `8,000,000 ALL` · `€941 /m²`, a euro per-m² beside a lek price.
+- **Production** (`ListingDetailView.tsx:292`, `[slug]/page.tsx:236`) computes
+  `pricePerSqm = Math.round(displayPrice / area_gross)` and renders it as
+  `` `${formatPrice(pricePerSqm, displayCurrencyCode, locale)} ${t('per_sqm')}` ``. `ListingDetailView/PublicListing`
+  shows `125,000 EUR` · `1,471 EUR /m²`.
+- **Why it is a defect.** R15 says no price string in the four Stories is written by hand. D4 is the owner's return
+  for exactly this mismatch: a hand-written `€…` string beside `formatPrice` output. AC14's grep
+  (`card_price_(1|old_1)|'€`) could not see it, because the euro sign lives in `messages/*.json` under
+  `card_price_per_sqm_1`. That was a task-design gap in AC14, not executor negligence.
+- **GR-7.** Not applicable. This revision corrects fixture data to match production. It chooses no layout, control,
+  action or visual style, and the price block's layout is the owner's (D89-9, §18.1).
+
+### 19.2 Requirement and acceptance criterion
+
+**R20 [R15] (P2).** In `ListingDetailPattern.stories.tsx`:
+- Add `const STORY_AREA = 85`, with a comment that it equals the fixture's area feature value (`:129`, `'85 m²'`).
+- Build the per-m² string the way production does:
+  `` `${formatPrice(Math.round(<displayed price number> / STORY_AREA), <displayed currency>, l)} ${storyT(l, 'listing.per_sqm')}` ``.
+- In `buildBaseProps` (`:217`), the displayed price is `STORY_PRICE` in `STORY_CURRENCY`. That gives `941 EUR /m²` (en).
+- In the converted E4 section, add `pricePerSqm` to `convertedData`. Its number is
+  `Math.round(convertPrice(STORY_PRICE, STORY_CURRENCY, STORY_VIEWER_CURRENCY, rates) / STORY_AREA)`, formatted in
+  `STORY_VIEWER_CURRENCY`. That gives `94,118 ALL /m²` (en).
+- Do not edit or delete the key `storybook.mantine.card_price_per_sqm_1`. `ListingCardPattern.stories.tsx:199` still
+  consumes it, and that Story belongs to **918**.
+- Add no other change: no new key, Story, export, wrapper, `style` or padding.
+
+**AC16 [R20].**
+- `git grep -n "card_price_per_sqm_1" -- src/stories/patterns/mantine/ListingDetailPattern.stories.tsx` returns no hit.
+- In `Patterns/Mantine/ListingDetailPattern/Default` at `en@1440` and `uk@1440`, every price row's per-m² string has
+  the same currency code and number format as the price beside it:
+  - non-converted sections: `80,000 EUR` · `941 EUR /m²`;
+  - the E4 section: `8,000,000 ALL` · `94,118 ALL /m²`.
+
+  Exact digit grouping follows `formatPrice` for the locale.
+- No price row in any of the four §18 Stories contains `€`.
+
+### 19.3 Verification (one pass, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:i18n
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task912\rv3-opus-probe.mjs
+git hash-object src\stories\patterns\mantine\ListingDetailPattern.stories.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0. `lint` is now green: review 3 added an `eslint-disable` header to Opus's own
+  `rv2-opus-probe.cjs`, and the full `npm.cmd run lint` exits 0 (0 errors).
+- `rv3-opus-probe.json` is rewritten and shows the AC16 rows. Copy its output to `r3-probe.json`.
+- `npm.cmd run build` is not re-run. The change is in a Story file, which the Next build does not compile. The
+  Revision 2 build (`r2-build.txt`) stays the build evidence for the production diff.
+- Only the Story file is new in `git status`, apart from paths that were already listed.
+
+Receipts (one each, for `ListingDetailPattern/Default` only):
+- `GR-3b`, `GR-3c` and `GR-3d` with values measured at 320, 390, 1024 and 1440. They must equal Revision 2's, because
+  per-m² is on the price row, and the row wraps.
+- `GR-3e`: `n/a: no popup`.
+
+### 19.4 Completion
+
+Append `## Revision 3` to the session log. Include the one-path Files Changed delta, the block transcript with exit
+codes, the AC16 rows and the receipts. Update 912's backlog row. End with
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
+After that comes review 4. If it verifies AC16, the §18.9 owner matrix goes to the owner, unchanged. The matrix is not
+handed over before then, because the `ListingDetailPattern` row would show the defect.

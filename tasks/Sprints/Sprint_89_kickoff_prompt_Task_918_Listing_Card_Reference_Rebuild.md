@@ -3,8 +3,8 @@
 **Sprint 89** (`tasks/Sprints/Sprint_89_The_Listing_Card_Rebuilt_On_The_Owners_Reference.md`) · **P1** · **QA profile Q4**
 · Executor: Sonnet via `.claude/skills/execute-task/SKILL.md`. Evidence goes to `docs/sessions/evidence/task918/`.
 
-> **Start gate.** Do not start until **912** (Sprint 88), **741 Revision 2** (Sprint 46) and **857** (Sprint 78) are
-> `APPROVED` and committed. All three edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
+> **Start gate.** Do not start until **912** (Sprint 88), **794** (Sprint 71, the listing-page gallery, D88-5), **741
+> Revision 2** (Sprint 46) and **857** (Sprint 78) are `APPROVED` and committed. All four edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
 > in `docs/backlog-archive.md`. If any is not archived as approved, return `BLOCKED — START GATE` and make no write.
 >
 > **Amended 2026-10-03 (917 review):** owner decision **D89-9**: the struck old price sits **above** the current price
@@ -12,6 +12,13 @@
 > `MantineListingPrice`. **857 Revision 8** (R56) removed the listing card and the price from `ListingPreviewDialogView`,
 > so that dialog is no longer in this task. 857 stays a start gate because this task edits its `AdminListingsView` and
 > its listings route.
+> **Amended 2026-10-03 (912 review 2, owner return; 912 kickoff §18.7):** **912 Revision 2 creates
+> `MantineListingPrice`** (`size="xl"`, props `price`, `priceOld`, `trailing`, `ownerCurrency`), its Story
+> `Patterns/Mantine/ListingPrice` and the manifest entry, and moves the detail block and the contact card onto it
+> (struck original price above). This task therefore **extends** the pattern: it adds `lg`/`sm`, the D89-7 colour, and
+> the card and admin consumers. R17 shrinks to the D89-7 colour on those two blocks, and §10.1 items 3 and 8 read
+> "extend". The GR-0 receipt for the price block becomes `EXTEND`. The converted-currency line is labelled
+> `listing.price_in_owner_currency` (owner: *"Ціна у валюті власника"*); `listing.original_price` no longer exists.
 > After the gate, re-read every line reference below against the tree. Where the tree differs, the tree wins; record
 > the difference.
 

@@ -10,6 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) is **918**'s, not this
 > task's: keep the main price's colour unchanged here.
 
+> **Revision 2 (2026-10-03, owner return on the review-2 matrix): §18 is the current executable route.** It adds the
+> shared `MantineListingPrice`, the "price in the owner's currency" label and Story fixtures that follow production.
+> Precondition §18.6: shared files free of other tasks' uncommitted work. The gallery is **794** (D88-5), not 912.
+
 ## 1. Mode and task type
 
 `TASK DESIGN` → bug fix (regression) on current Mantine UI, plus a latent instance of the same rule in the listing
@@ -537,3 +541,206 @@ spacer does its job. Record it at the owner matrix, and change nothing here.
 2. Once `docs/critical-flow-registry.md` carries no other task's uncommitted change, the §10.6 rows `:62` and `:63` are
    added (exact text in the session log, "Registry addition owed"), and nothing else in that file changes.
 3. Then comes the approval review. No executor code work is owed.
+
+## 18. Revision 2 (owner return on §17's matrix, 2026-10-03): `NEEDS REVISION`
+
+**§18 supersedes §7, §8, §10, §12 and §13 wherever they conflict.** Re-entry mode: `remediation`. Keep these as they
+are:
+- the card predicate (`ListingCard.tsx`);
+- `ListingContact.tsx`;
+- both existing test files;
+- every earlier evidence file;
+- the plants.
+
+New evidence files use an `r2-` prefix.
+
+### 18.1 Owner return, verbatim (2026-10-03)
+
+- On `ListingContactPattern/Default`: *"Original price: має з'являтись лише при умові, якщо користувач змінив у себе в
+  налаштуваннях валюту. Якщо валюта співпадає з валютою користувача - Original price: не показується!"*
+- On `ListingDetailView/PublicListing`: *"Стара ціна завжди має бути над поточною ціною. … в одній картці є стара ціна,
+  в іншій немає."*
+- On `ListingDetailPattern/Default`: *"Як … користувач може зрозуміти що це … за оригінальна ціна? … В розумінні
+  людини Original price - це ціна, яка була спочатку виставлена. А в нас є три види ціни: 1. Original price -
+  оригінальна перша ціна від власника 2. Ціна у валюті власника - … та валюта, яка була обрана під час
+  створення/редагування оголошення. 3. Знижена ціна - ціна, яку власник знизив під час редагування оголошення. Тільки
+  в цьому випадку має показуватись перечеркнута оригінальна ціна над ціною зі зножкою!"*
+- On the gallery: the listing page still renders the legacy gallery, not the Rozetka-style
+  `MantineListingGalleryPattern`. The owner chose the routing as **D88-5**, option chosen verbatim: *"Окремо 794,
+  одразу після 912 (Recommended)"*. The gallery is **not** 912's. **794** runs first after 912 and before 918.
+
+### 18.2 What was wrong (measured by review 2's probe, `rv2-opus-probe.json`)
+
+| # | Defect | Source |
+|---|---|---|
+| D1 | The converted-currency line is labelled "Original price". The owner reads that as the first price the listing owner set. It is really **the price in the listing owner's currency**. | `listing.original_price` in `messages/*.json` → `ListingDetailView.tsx:290,357` |
+| D2 | One page uses two layouts. The detail block puts the struck old price **beside** the current price (`Group`, 16px). The contact card puts it **above** (12px). | `MantineListingDetailPattern.tsx:203-217` vs `MantineListingContactPattern.tsx:152-166` |
+| D3 | The Story fixtures contradict production. In `ListingContactPattern/Default` and the `ListingDetailPattern` E4 section, "Original price" shows the same value and currency as the price. `ListingDetailPattern`'s contact card shows `€92,000` as a plain "Original price", while its detail block strikes the same €92,000. The `ListingContactPattern` sections disagree: one has an old price and the rest do not. | `ListingContactPattern.stories.tsx:74-79`; `ListingDetailPattern.stories.tsx:162-166,206-207,364` |
+| D4 | Price strings are written by hand. The `ListingDetailView` Story arg `formattedPrice: '€125,000'` sits beside the contact card's `formatPrice` output `125,000 EUR`. Both pattern Stories pass `card_price_1` / `card_price_old_1` (`€80,000`) instead of using the production formatter. | `ListingDetailView.stories.tsx` args; both pattern Stories |
+
+### 18.3 Price semantics (binding for every surface this task touches)
+
+| Owner's term | Meaning | Shown when | How |
+|---|---|---|---|
+| Original price | the higher price before the listing owner lowered it (`price_old`) | only when `price_old > price` | **struck, `xs` dimmed, no label, on its own line above the current price** |
+| Current price | `price`, in the viewer's currency when converted | always | `xl` 700 `brand` (the colour is 918's, D89-7) |
+| Price in the owner's currency | `price` in `listing.currency` | only when the signed-in viewer's preferred currency differs from `listing.currency` (production `needsConversion`, `[slug]/page.tsx:227`, unchanged) | `xs` dimmed, **not struck**, last line: "{label}: {value}", with the new label |
+
+### 18.4 Requirements
+
+| ID | Requirement | P | AC |
+|---|---|---|---|
+| R11 | **New shared pattern `MantineListingPrice`** (`src/design-system/mantine/patterns/MantineListingPrice.tsx`), moved here from 918 R17 (§18.7). Props: `price: string`; `priceOld?: string`; `trailing?: ReactNode`, rendered on the current price's row; `ownerCurrency?: { label: string; value: string }`; `size?: 'xl'`, default `'xl'` (918 adds `lg`/`sm`). Markup, top to bottom inside `Stack gap="micro"`: when `priceOld` is set, `Text size="xs" c="dimmed" td="line-through"`; then `Group gap="sm" align="baseline" wrap="wrap"` holding `Text fw={700} size="xl" c="brand"` (the price) and `trailing`; then, when `ownerCurrency` is set, `Text size="xs" c="dimmed"` "{label}: {value}". No other visual value, no `style`, no CSS module, no raw px. Export it from `patterns/index.ts` and enrol it in `scripts/mantine-migration-scope.json`. | P1 | AC11 |
+| R12 | `MantineListingContactPattern` renders its price block through `MantineListingPrice`. It passes `priceOld`, and `ownerCurrency` built from `originalPrice`/`originalPriceLabel` when `originalPrice` is set. The prop names of `MantineListingContactPriceInfo` stay; their doc comments say "price in the owner's currency". | P1 | AC12 |
+| R13 | `MantineListingDetailPattern` replaces `:203-223` (the price `Group` and the separate disclosure `Text`) with one `MantineListingPrice`. It passes `priceOld`; `trailing` = the existing per-m² `Text`, moved as is; and `ownerCurrency` from `originalPrice`/`originalPriceLabel`. The struck old price moves **above** the price and becomes `xs` (it was `md`, beside the price). Nothing else in the pattern changes. | P1 | AC12 |
+| R14 | Label: a new key `listing.price_in_owner_currency` in all four locales: uk *"Ціна у валюті власника"* (the owner's words), en *"Price in the owner's currency"*, sq *"Çmimi në monedhën e pronarit"*, it *"Prezzo nella valuta del proprietario"*. `ListingDetailView.tsx:290` and `:357` change `t('original_price')` to `t('price_in_owner_currency')`. These two key literals are the **only** other edit to that file (D88-1, extended by §18.1). Then `git grep` that no consumer remains, and delete `listing.original_price` and `storybook.mantine.listing_detail_original_price_label` from all four files. | P1 | AC13 |
+| R15 | **Story fixtures follow production.** No price string in the four Stories is written by hand. Every price is `formatPrice(<number>, <currency>, l)` (`src/lib/formatters.ts:64`). Every converted value is `convertPrice(…, rates)` (`src/lib/getExchangeRate.ts:18`) with `const rates: ExchangeRates = { ALL: 1, EUR: 100 }`, the `ListingCard.smoke.test.tsx:189` fixture. Labels come from `storyT(l, 'listing.price_in_owner_currency')`, the production key; `storyT` resolves any key (`src/stories/_storyI18n.ts`). | P1 | AC14 |
+| R16 | `ListingContactPattern.stories.tsx` → `Default`: **every** section uses one price fixture. It is reduced and not converted, with the same numbers as `ListingDetailView` (`125000` / `138000` `EUR`). So every contact card shows the struck `138,000 EUR` above `125,000 EUR` and **no** owner-currency line. Delete `priceReduced`. The price states are proven in `ListingPrice` (R18), not here. | P1 | AC14 |
+| R17 | `ListingDetailPattern.stories.tsx` → `Default`: `base.data.price`/`priceOld` and `demoContact`'s `price` come from the same numbers (`80000` / `92000` `EUR`), so the detail block and the contact card both strike `92,000 EUR` above `80,000 EUR`. `demoContact` passes **no** `originalPrice`. The E4 section (`listing_detail_section_original_price`) becomes the converted case: display currency `ALL`, `price` = converted `80000`, `priceOld` = converted `92000`, `originalPrice` = `formatPrice(80000, 'EUR', l)`. Its `contact` gets the same converted price object, with the owner-currency line. Update that section label's value in all four locales so it says the section shows a converted price (en *"Converted price — the viewer chose another currency"*). | P1 | AC14 |
+| R18 | New Story `src/stories/patterns/mantine/ListingPrice.stories.tsx`, title `Patterns/Mantine/ListingPrice`, one export `Default`, wrapped in `StoryPageGutter`. It has four labelled sections: not reduced, reduced, converted, and reduced + converted (fixtures per R15). Add four new section-label keys `storybook.mantine.listing_price_section_{plain,reduced,converted,reduced_converted}` in all four locales. | P1 | AC11 |
+| R19 | `ListingDetailView.stories.tsx`: the Story wrapper computes `formattedPrice = formatPrice(props.displayPrice, props.displayCurrencyCode, storyLocale)`. Delete the `formattedPrice` arg. The `skipCanvas` parameter stays. | P1 | AC14 |
+
+### 18.5 Acceptance criteria
+
+- **AC11 [R11, R18]** `MantineListingPrice.smoke.test.tsx` is new and uses the harness of
+  `MantineListingContactPattern.smoke.test.tsx`. It asserts:
+  - (a) with `priceOld`, that line has `line-through` and comes before the price in DOM order;
+  - (b) without `priceOld`, no element has `line-through`;
+  - (c) with `ownerCurrency`, "{label}: {value}" follows the price without `line-through`; without it, the line is
+    absent;
+  - (d) `trailing` renders.
+
+  `check:story-coverage` passes with the new manifest entry, and `ListingPrice.stories.tsx` imports the pattern
+  directly.
+- **AC12 [R12, R13]** In `ListingDetailView/PublicListing` and `ListingDetailPattern/Default`, at 320 and 1440:
+  - the detail block's struck old price is its own 12px line, and its bottom is at or above the current price's top;
+  - the contact card shows the same order.
+
+  A detail-pattern assertion checks that the old price comes before the current price in DOM order. Put it in
+  `MantineListingPrice.smoke.test.tsx` (rendering `MantineListingDetailPattern`) or in a new
+  `MantineListingDetailPattern.smoke.test.tsx`.
+- **AC13 [R14]**
+  - `git grep -n "original_price" -- src messages` returns no hit.
+  - All four locales carry `listing.price_in_owner_currency`.
+  - `npm.cmd run check:i18n` exits 0.
+  - `npm.cmd run check:i18n-hardcode` ends with the same exit code and finding list as at I0.
+- **AC14 [R15–R17, R19]**
+  - `git grep -nE "card_price_(1|old_1)|'€"` over the four Stories in R15–R19 returns no hit.
+  - In every section of `ListingContactPattern/Default`, the struck `138,000 EUR` sits above `125,000 EUR`, and there
+    is no owner-currency line.
+  - In `ListingDetailPattern/Default`, the owner-currency line exists **only** in the converted (E4) section. There
+    its value is in `EUR` and the price is in `ALL`.
+- **AC15 [R11]** Plants, with Node read/write and a hash witness:
+  - P-D: drop the `priceOld` render in `MantineListingPrice`. AC11(a) must fail.
+  - P-E: render `priceOld` after the price. The order assertions must fail.
+  - P-F: add `td="line-through"` to the owner-currency line. AC11(c) must fail.
+
+  After each restore the tests pass and the hash is equal.
+
+### 18.6 Sequencing precondition (I0, STOP if unmet)
+
+At I0 run:
+
+```powershell
+git --no-optional-locks status --porcelain -- messages scripts/mantine-migration-scope.json src/design-system/mantine/patterns/index.ts docs/critical-flow-registry.md
+```
+
+**If it prints any line, report `BLOCKED — dirty shared file` and write nothing.** On 2026-10-03 all of these files
+carry Task 857's uncommitted work. Wait until the owner has committed it. Once they are clean, this revision also:
+- adds the §10.6 registry rows (`:62`/`:63`);
+- includes `MantineListingPrice.smoke.test.tsx` in those rows.
+
+Write set (exact):
+- `MantineListingPrice.tsx` (new), `MantineListingContactPattern.tsx`, `MantineListingDetailPattern.tsx`;
+- `patterns/index.ts` and `scripts/mantine-migration-scope.json`;
+- `ListingDetailView.tsx`: the two key literals only;
+- `messages/{sq,en,uk,it}.json`;
+- the four Stories in R15–R19;
+- `MantineListingPrice.smoke.test.tsx` (new), and optionally `MantineListingDetailPattern.smoke.test.tsx` (new);
+- `docs/critical-flow-registry.md`: the §10.6 rows only;
+- the session log, 912's backlog row and `docs/sessions/evidence/task912/r2-*`.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: one listing price block (struck original price above, current price, price in the owner's currency); semantic queries: line-through, priceOld, originalPrice, ListingPrice, Price( over src/design-system, src/components, src/modules, src/stories; inspected candidates: MantineListingContactPattern.tsx:152-166 + Patterns/Mantine/ListingContactPattern, MantineListingDetailPattern.tsx:203-223 + Patterns/Mantine/ListingDetailPattern, MantineListingCardPattern.tsx:228-242,366-382 + Patterns/Mantine/ListingCardPattern (card-internal CSS-module markup, rebuilt by 918); decision: CREATE; selected canonical owner: src/design-system/mantine/patterns/MantineListingPrice.tsx; Mantine/TailAdmin token path: theme fontSizes xs/xl, c="dimmed"/"brand", spacing micro/sm; new hardcoded visual values: NONE; rationale: the same price block is written separately in the detail and contact patterns and already disagrees (D2); 918's own GR-0 reached CREATE for the same block.`
+
+`GR-3a STORY PREFLIGHT — MantineListingPrice × plain/reduced/converted/reduced+converted; canonical candidates: NONE (no Story imports a shared price block); direct-import evidence: NONE; toolbar coverage: locale=toolbar globals.locale, viewport=toolbar; decision: CREATE; target: Patterns/Mantine/ListingPrice — Default; rationale: a new canonical pattern needs its own Story (GR-3).`
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.`
+
+Type scale (GR-3c): every line in this block is 20px or less at every width (`xs` 12, `xl` 20, per-m² `sm` 14). The
+detail block's old price changes from 16px (`md`) to 12px (`xs`).
+
+GR-3d lines:
+- `ListingPrice/Default` → `StoryPageGutter all` (wrap in this task).
+- `ListingContactPattern/Default` → profile present (`:84`).
+- `ListingDetailPattern/Default` → profile present (`:268`), with the 886 sticky spacer (§17 NOTE).
+- `ListingDetailView` ×4 → own gutter (§17).
+
+### 18.7 Effect on 918
+
+918 R17 and §10.1 items 3 and 8 change. After 912, `MantineListingPrice` and its Story exist. 918 **extends** them and
+does not create them:
+- it adds the `lg`/`sm` sizes, the D89-7 colour and the card/admin consumers;
+- its GR-0 becomes `EXTEND`;
+- its start gate gains **794** (D88-5).
+
+### 18.8 Verification plan
+
+I0:
+- the §18.6 precondition;
+- `node.exe -p process.platform`;
+- `git hash-object` of every write-set file;
+- `npm.cmd run check:i18n` and `npm.cmd run check:i18n-hardcode`, with the exit code and finding list recorded.
+
+Final gate block (one pass, exit code printed after each command):
+
+```powershell
+node.exe -p process.platform
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingPrice.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:i18n
+npm.cmd run check:i18n-hardcode
+npm.cmd run check:mojibake
+npm.cmd run build
+npm.cmd run build-storybook
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0, except `check:i18n-hardcode`, which matches I0 (AC13).
+- `git status` shows only §18.6 paths plus other tasks' pre-existing entries.
+
+Then:
+- run the plants (AC15);
+- re-run the four §3.1 censuses, plus `--surface src\design-system\mantine\patterns\MantineListingPrice.tsx`;
+- measure every §18.9 Story at 320, 390, 1024 and 1440, plus `uk@320` and `uk@1440`. For each price block, record the
+  line order (tops), `text-decoration-line` and `font-size`. Record all four edge gaps;
+- emit GR-3b, GR-3c and GR-3d per Story. GR-3e: `n/a: no popup`. GR-3f: `n/a`. GR-3g: `n/a: no line`.
+
+### 18.9 OWNER VISUAL QA REQUIRED (replaces §13.5)
+
+| Story | What to see | Locales | Viewports |
+|---|---|---|---|
+| `Patterns/Mantine/ListingPrice` → `Default` | four sections: plain; struck original price above; converted, with "Price in the owner's currency" plain below; both | sq · en · uk · it | 320 · 1440 |
+| `Patterns/Mantine/ListingContactPattern` → `Default` | every section: struck `138,000 EUR` above `125,000 EUR`, no owner-currency line | en · uk | 320 · 1440 |
+| `Patterns/Mantine/ListingDetailView` → `PublicListing` | detail block **and** contact card: struck `138,000 EUR` above `125,000 EUR`, the same format in both | en · uk | 390 · 1440 |
+| `Patterns/Mantine/ListingDetailPattern` → `Default` | the detail block and contact card agree; the owner-currency line appears only in the converted section | en | 1440 |
+
+Owner live check after deploy: §13.5 steps 1–3, reading "Price in the owner's currency" where they say "Original
+price".
+
+### 18.10 Completion
+
+Append `## Revision 2` to the session log. Include:
+- the Files Changed delta;
+- I0 vs final;
+- the gate block with exit codes;
+- the plants with hashes;
+- the measurement table;
+- the receipts;
+- the registry rows added.
+
+Update 912's backlog row. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`.

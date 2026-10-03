@@ -3,9 +3,9 @@
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** (legacy surface → Mantine on the registered critical flow
 "Listing public visibility invariant") · **depends on 893** (hard: `RangeDatePicker` `selectionMode="single"`) · runs
 **after 886** (886 edits `AdminPageShell`, which this task deletes) · owner action **O78-12** · **Status: 🔁
-`NEEDS REVISION` — owner return on O78-12, 2026-10-02 (§21). Revisions 1–4 are verified (§20). Execute §21
-(Revision 5) only: the dialog's text buttons stack one per row (new GR-3e), and the canonical radio becomes a 20px circle
-with a 10px dot in its theme entry (new GR-3f).**
+`NEEDS REVISION` — review 11, 2026-10-03 (§29). Revisions 1–9 and Revision 10's R65 are verified. Execute §29
+(Revision 11) only: `check:design-tokens` learns Mantine's `--paper-radius`, and the table header drops its top line
+when it is flush with the card's top edge (owner D78-11, GR-3g). Earlier "Execute §N" lines are history.**
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
@@ -1799,3 +1799,121 @@ The other 20 tuples were accepted on 2026-10-03 (§26.7). **On acceptance of bot
 
 Only the `NavRowList` tuple is still owed. Before it reaches the owner, Opus re-measures AC38/AC39 itself and emits a
 GR-3g receipt. **On its acceptance and a verified Revision 10:** Opus approves 857, archives it, and emits the commit and push handoff.
+**Superseded by §29.7.**
+
+---
+
+## 29. Review 11 — `NEEDS REVISION`, 2026-10-03 → Revision 11 (the token gate and the table header line)
+
+### 29.1 Review 11 result
+
+- **R65 / AC38 — verified.** `MantineNavRowList.module.css` hash `2eeceb36…` equals `135s-hash-object-r10.txt`, and
+  the CSS (08:29) predates the gate run (08:39). `132-navrow-corners-r10.json`: row 1 tl/tr and row 3 bl/br compute
+  6px, equal to the list; row 2 is 0px; focus is brand-7 at 3.39:1, click draws nothing, hover is gray-0 only. In
+  `132-navrow-corners-r10.png` the line runs around every outer curve in `NavRowList` `Default` 1440 and in
+  `ListingPreviewDialogView` `Active` 1440/390. `137-single-row-r10.json`: one row computes 6px on all four corners.
+- **AC40 / gate — not met.** `check:design-tokens` exits 1 (`135i-design-tokens-r10.txt`): four `css-undefined-var`
+  findings, one per `var(--paper-radius)` line. **This is a §28 design defect, not an executor defect.** R65 demanded
+  a token that the detector cannot resolve: `scripts/check-design-tokens.mjs:864-865` resolves `--tw-*`,
+  `--mantine-*`, `--spacing`, `--default-transition-timing-function`, `globals.css` and same-file definitions only.
+  Mantine defines the variable at `node_modules/@mantine/core/styles/Paper.css` (`--paper-radius:
+  var(--mantine-radius-default);`), and it is present in `.next/static/css/*.css`. `--card-radius` has no consumer in
+  `src/`, so the executor's proposal to add it too is declined: the script's own rule is "measured, not guessed" (A2).
+- **R66 / AC39 — not met, the block is upheld.** `133-gr3g-probe-r10.json` reports 6 cut corners. All six are the
+  `thead` top line of `MantineDataTableToCards` (`MantineDataTableToCards.tsx:521`, `borderTop: 1px solid gray-1`) at the
+  card's tl/tr corners (Paper radius 16, `overflow: hidden`) in `AdminTable` `Default`, `AdminListingsView` `Default`
+  and `Mantine/Primitives/Table` `Default` at 1440. `136b-thead-corner-amplified-r10.png` shows the straight line ending
+  where the card's curve cuts it. The table is `border-collapse: collapse`, which ignores `border-radius` on
+  `thead`/`th`, so GR-3g's "take the ancestor's token" route does not exist for this line. The executor's option (c),
+  the line on the first and last header cells, has the same problem and does not fix it. No consumer in `src/` passes
+  `tableHeader`, so in every current table the header row is flush with the card's top border, and its top line doubles
+  that border.
+- **Lint.** Lint exits 1 with 4 errors, all in `docs/sessions/evidence/task912/rv2-opus-probe.cjs`. That is Task
+  912's file, not an 857 defect.
+
+### 29.2 Owner decision D78-11 (verbatim, AskUserQuestion, 2026-10-03)
+
+The question: the `thead` top line is cut at the card's rounded corners when the header row is the first thing in
+the card, and `border-collapse` ignores a radius. How should the line be fixed? The option chosen: *"Drop it when flush
+(Recommended)"*. Its text: *"The header's top line is drawn only when something sits above the header inside the
+card (the tableHeader block). When the header is flush with the card's top edge, the card's own rounded border is the
+top line, so there's no double line and no cut. TailAdmin §6b is unchanged wherever its line applies. Fixed once in
+MantineDataTableToCards."* The decision is recorded in the sprint plan (D78-11) and in
+`docs/tailadmin-style-reference.md` §6b.
+
+### 29.3 Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R68** | **`check:design-tokens` resolves Mantine's `--paper-radius`.** In `scripts/check-design-tokens.mjs`, add `'--paper-radius'` to `EXTERNAL_VAR_EXACT_NAMES` (exact name, not a prefix). Add a provenance entry to the comment block above it (`:833-863`), in the same style as the others: defined at `node_modules/@mantine/core/styles/Paper.css` as `--paper-radius: var(--mantine-radius-default)`, present in `.next/static/css/*.css`, and forced onto the list by `MantineNavRowList.module.css` (Task 857 R65, GR-3g). Do not add `--card-radius` or any other name. In `scripts/__tests__/check-design-tokens.test.ts` §H, add two arms: `var(--paper-radius)` is **not** flagged, and `var(--paper-radiusx)` **is** flagged (it is an exact name, not a prefix). | P1 | AC41 |
+| **R69** | **The table header line is drawn only when something sits above it (D78-11, GR-3g).** In `MantineDataTableToCards.tsx` (`styles.thead`, now `:519-523`), `borderTop` is set only when `tableHeader` is present, with the same value as today. `backgroundColor` and `borderBottom` stay unchanged. Update the comment at `:492-494`, which says "thead border-y spans the full card width", so that it cites D78-11 and GR-3g. Do not change the Paper, its radius, border or `overflow`, or the mobile cards. | P1 | AC42 |
+| **R70** | **A unit test for both branches of R69.** Create `src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx`, wrapped in `MantineProvider` with the project theme as the sibling smoke tests are. Without `tableHeader`, the rendered `thead` has an empty `style.borderTop`. With `tableHeader`, it has `1px solid var(--mantine-color-gray-1)`. In both cases `borderBottom` is unchanged. | P2 | AC42 |
+| **R71** | **GR-3g probe re-run.** Re-run `133-gr3g-probe-r10.mjs` unchanged as `138-gr3g-probe-r11.{mjs,json}` over the same Stories, states and widths. Then crop the card's tl and tr corners in `AdminTable` `Default`, `AdminListingsView` `Default` and `Mantine/Primitives/Table` `Default` at 1440, DPR 1, scaled 10× and pixelated, to `139-thead-corners-r11.png`. | P1 | AC43 |
+| **R72** | **Receipts and hashes.** Write `140-receipts-r11.txt` with `GR-0` (`MantineDataTableToCards` thead line, `EXTEND`), `GR-3a` (`Mantine/Primitives/Table` `Default`, `REUSE`, no Story change), a `GR-3g CORNER CHECK` per table Story above, and `GR-2` for `check:design-tokens`. The §29.6 gate block writes `141s-hash-object-r11.txt` with every Revision 11 file, in the same run. List every production consumer of `MantineDataTableToCards` (`git grep -l MantineDataTableToCards -- src`) in the session log. Each one loses the doubled top line at desktop width. | P2 | AC44 |
+
+### 29.4 Acceptance (Revision 11)
+
+- **AC41 [R68].** Two-armed proof in `142-design-tokens-arms-r11.txt`:
+  - **Red first.** With the two new test arms added and the script still unchanged, the
+    `"does NOT flag var(--paper-radius)"` arm fails, and only that arm.
+  - **Green.** After the script edit, the whole file `scripts/__tests__/check-design-tokens.test.ts` passes, the
+    `--paper-radiusx` control arm included.
+  - **Gate.** `npm run check:design-tokens` exits 0, and its output has no `css-undefined-var` line.
+- **AC42 [R69, R70].** The new test passes. A plant that sets `borderTop` unconditionally, restored afterwards, makes
+  only the "without `tableHeader`" arm fail. Record it in `143-plant-thead-r11.txt` with the before, planted and
+  restored `git hash-object` of `MantineDataTableToCards.tsx`. The restored hash must equal the pre-plant hash. Do the
+  plant through Node `readFileSync`/`writeFileSync`, never `Get-Content -Raw`.
+- **AC43 [R71].** `138-gr3g-probe-r11.json` covers every Story, state and width that R66 names, and reports
+  `cutCorners: 0`. In `139-thead-corners-r11.png`, each corner shows the card's own curved border with no straight line
+  under it, and the gray-0 header fill stays inside the curve.
+- **AC44 [R72].** `140-receipts-r11.txt` and `141s-hash-object-r11.txt` exist. The §29.6 gate block gives the expected
+  results, and `npm run build` exits 0.
+
+### 29.5 Flows
+
+- **Positive:** at desktop width, a table whose header row is flush with the card's top shows the card's rounded border
+  as its top edge, with no second line and no cut. `var(--paper-radius)` passes the token gate.
+- **Negative, applicable:**
+  - a table with `tableHeader`, which keeps the §6b top line (it does not touch a corner; the unit test proves it);
+  - a typo of the token (`--paper-radiusx`), which is still flagged;
+  - mobile cards below `md`, which are unchanged.
+- **Not applicable:** data, locale or permission branches, because the change is one style key and one gate entry.
+
+### 29.6 Re-entry, write set and gate block (Revision 11)
+
+- **Mode:** `remediation`. **Start step:** platform line `138-platform-r11.txt`, then R68 with its red arm first, then
+  R69/R70 and the AC42 plant, then R71, R72 and the gate block. Nothing from Revision 10 is re-run except the probe in
+  R71.
+- **Write set:**
+  - `scripts/check-design-tokens.mjs`, for the R68 entry and its comment only;
+  - `scripts/__tests__/check-design-tokens.test.ts`, for the two §H arms only;
+  - `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`, for R69 only;
+  - `src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.thead.test.tsx`, a new file;
+  - the session log ("Revision 11" section);
+  - evidence `138`+ with the `-r11` suffix;
+  - the 857 cell of `docs/backlog.md`.
+
+  Every other file is forbidden, including every Story file and every rule document. Do not overwrite evidence
+  `01`–`137`.
+- **Gate block:** the §28.6 block renamed `141*-r11`, every output renamed, with the tests after the build. Expected
+  results:
+  - `win32`;
+  - the four calibration census FAIL lines;
+  - `check:design-tokens` exits 0;
+  - lint exits 0, or exits 1 only with errors that are all under `docs/sessions/evidence/task912/`, and you name them;
+  - tests with exactly the 4 known 790 failures, and more passed tests than Revision 10's 2304;
+  - `check:file-integrity` flags only files outside task857, if any, and you name them;
+  - every other gate exits 0.
+
+### 29.7 Owner matrix (O78-12) after Revision 11
+
+| Story | State / action | Locale | Viewport |
+|---|---|---|---|
+| `Patterns/Mantine/NavRowList` | `Default`: Tab onto the first row, then onto the last. The coral line runs around the rounded corners with no cut | sq | 1440 |
+| `Patterns/Mantine/AdminListingsView` | `Default`: the table card's top corners. Only the card's rounded border, with no second line under it and no cut | sq | 1440 |
+| `Mantine/Primitives/Table` | `Default`: the same at the card's top corners | sq | 1440 |
+| `Patterns/Mantine/ListingPreviewDialogView` | `Active`: choose Sold. **Accepted by the owner 2026-10-03** (*"приймаю"*) | sq | 1440 |
+
+Three tuples are owed. Before they reach the owner, Opus re-measures AC38, AC41 and AC43 itself and emits a GR-3g
+receipt per Story. **On their acceptance and a verified Revision 11:** Opus approves 857, archives it, and emits the
+commit and push handoff.

@@ -104,6 +104,10 @@ look like the reference.
   See all / tabs).
 - **Scroll:** `max-w-full overflow-x-auto`.
 - **Thead tr:** `border-y border-gray-100` (#f2f4f7) + **`bg-gray-50`** (#f9fafb).
+  **Flush header (owner D78-11, 2026-10-03, GR-3g):** our table fills the card edge to edge. When nothing sits above
+  the header row inside the card, the card's own rounded border is the header's top line, so the header keeps
+  `border-bottom` only. A straight top line there doubles the card border and is cut by the card's rounded clip.
+  `border-collapse` ignores a radius on `thead`/`th`. Owner: `MantineDataTableToCards`.
 - **Th:** `px-6 py-3` (24×12) · `whitespace-nowrap` · `text-theme-xs` (12) · `font-medium` · `text-gray-500`
   · left · NOT uppercase.
 - **Td:** `px-6 py-3` · `whitespace-nowrap` · 14px · `text-gray-700`. Row divider gray-100; hover `bg-gray-50`.

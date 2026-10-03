@@ -10,8 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Review 6 (2026-10-03): `PARTIALLY VERIFIED`, §22.** No executor work is owed. The owner matrix §22.2 (O88-1…O88-4)
-> is next, then the approval review.
+> **Revision 6 (2026-10-03, owner return on §22.2): §23 is the current executable route.** Story files only. Every
+> composition Story shows every price state in context. O88-1 is accepted.
+>
+> **Review 6 (2026-10-03): `PARTIALLY VERIFIED`, §22.**
 >
 > **Revision 5 (2026-10-03, review 5): §21.** One line: the contact card's name
 > line wraps (R25). It replaces R23's wrong target. §20's colour work is verified.
@@ -1158,3 +1160,163 @@ Append `## Revision 5` to the session log. Update 912's backlog row. End with
 | O88-4 | `Patterns/Mantine/ListingDetailPattern` → `Default` | The detail block and the contact card match in every section. The owner-currency line appears **only** in the "Converted price" section (`8,000,000 ALL` · `94,118 ALL /m²`, owner line in EUR). | en | 1440 |
 
 After the owner accepts every row, the approval review archives 912 and emits the commit + push handoff.
+
+## 23. Revision 6 (owner matrix return on §22.2, 2026-10-03): `NEEDS REVISION` — every composition Story shows every price state
+
+**§23 is the current executable route.** Re-entry mode: `remediation`. **Story files only.** No production file,
+test, message key or token changes. Keep every production and test file hash-equal to `r5-hashes.txt`. New evidence
+files use an `r6-` prefix.
+
+### 23.1 Owner return, verbatim (2026-10-03)
+
+- **O88-1** (`ListingPrice/Default`): *"приймаю"*. **Accepted.**
+- **O88-2** (`ListingContactPattern/Default`): *"приймаю, але я бачу лише картки з ціною знижки, але немає картки з
+  ціною по замовчуванню, з ціною, яка відрізняється валютою."* **Accepted for what it shows. Returned for state
+  coverage.**
+- O88-3 and O88-4 were not yet returned. They have the same gap, so they are fixed here too:
+  - `ListingDetailView` has one public export, and it is reduced;
+  - `ListingDetailPattern` has no not-reduced section.
+
+### 23.2 What was wrong (orchestrator task-design defect)
+
+- §18.4 **R16** told the executor to give every `ListingContactPattern` section the same reduced fixture, and said
+  *"The price states are proven in `ListingPrice` (R18), not here"*. That is GR-3's own failure turned around. A child
+  Story proves the child alone. It does not show the owner how each consumer looks in each state.
+- Review 6 then checked the order and colour of the blocks that were rendered. It never checked whether every state
+  was rendered.
+- **Rule applied from now on in this task:** every Story in the owner matrix that renders `MantineListingPrice` shows,
+  inside that consumer, each price state the consumer can receive in production:
+  - not reduced;
+  - reduced;
+  - converted (the owner-currency line);
+  - reduced + converted, where §23.3 says so.
+
+`GR-7: n/a — this revision adds fixture states to existing Stories. It chooses no layout, control, action or visual
+style; the price block and colours are already owner-accepted (O88-1).`
+
+### 23.3 Requirements
+
+All fixtures follow R15:
+- `formatPrice` / `convertPrice`, with `rates = { ALL: 1, EUR: 100 }`;
+- labels through `storyT`;
+- no hand-written price string;
+- **no new message key.** The four state captions reuse the existing
+  `storybook.mantine.listing_price_section_{plain,reduced,converted,reduced_converted}`.
+
+**R26 — `ListingContactPattern.stories.tsx` → `Default`.**
+- Keep the existing "normal" section caption (`listing_detail_section_normal`).
+- Under it, replace the single normal card with **four** `state="normal"` cards in this order. Each card gets its own
+  price-state caption above it, in the same `Text size="xs" c="gray.5" fw={500}` idiom the file already uses:
+  1. `plain` — price `125,000 EUR`, no `priceOld`, no owner line;
+  2. `reduced` — `priceOld` `138,000 EUR`, price `125,000 EUR`;
+  3. `converted` — price `convertPrice(125000, 'EUR', 'ALL', rates)` in `ALL` (`12,500,000 ALL`), no `priceOld`,
+     `originalPrice` = `formatPrice(125000, 'EUR', l)`, `originalPriceLabel` = `storyT(l, 'listing.price_in_owner_currency')`;
+  4. `reduced_converted` — as in 3, plus `priceOld` = `13,800,000 ALL`.
+- Every other section (loading, guest, deleted, contact-disabled, closed, production `ListingContact`) keeps the
+  existing reduced fixture unchanged.
+- Add no wrapper, `style`, padding or width.
+
+**R27 — `ListingDetailView.stories.tsx`: two new exports in the same file** (GR-3a `EXTEND`, same canonical Story):
+- `PublicListingNotReduced`: `args: { isPriceReduced: false, displayPriceOld: null }`.
+- `PublicListingConverted`, not reduced:
+  - `displayCurrencyCode: 'ALL'`;
+  - `displayPrice: convertPrice(125000, 'EUR', 'ALL', rates)`;
+  - `pricePerSqm: Math.round(convertPrice(125000, 'EUR', 'ALL', rates) / 85)`, where 85 = the fixture's `area_gross`
+    (`:44`), the same formula as production `[slug]/page.tsx:236`;
+  - `isPriceReduced: false`, `displayPriceOld: null`.
+- The owner-currency string must come from `formatPrice`, not from an arg literal:
+  - Add one optional Story-only prop to the wrapper `ListingDetailViewStory`:
+    `storyOwnerPrice?: { amount: number; currency: string }`.
+  - When it is set, the wrapper passes `originalPriceStr={formatPrice(amount, currency, storyLocale)}`. Otherwise it
+    passes the arg as today.
+  - `PublicListingConverted` sets `storyOwnerPrice: { amount: 125000, currency: 'EUR' }`.
+  - The meta arg `originalPriceStr: null` stays.
+- Import `convertPrice` / `ExchangeRates` from `@/lib/getExchangeRate`. Declare `rates` once at module level, with the
+  same comment as the other Stories.
+
+**R28 — `ListingDetailPattern.stories.tsx` → `Default`: two new sections**, placed directly after the first
+(unlabelled) section. Each has its caption in the file's existing section-caption idiom, and the same `base` props
+otherwise:
+- `listing_price_section_plain`: `data` and `contact.price` without `priceOld`;
+- `listing_price_section_converted`: `data` and `contact.price` converted to `ALL`, **not** reduced, with
+  `pricePerSqm` in `ALL` (`Math.round(convertPrice(80000, …) / STORY_AREA)`) and the owner-currency line on both
+  blocks;
+- the existing E4 section stays as the reduced + converted case.
+
+### 23.4 Acceptance criteria
+
+The computed `color` values:
+- **dark** = `rgb(17, 17, 17)`;
+- **coral** = `rgb(236, 84, 71)`.
+
+- **AC21 [R26]** `ListingContactPattern/Default` at `en@320`, `en@1440`, `uk@320` and `uk@1440`: the first four cards
+  read, in DOM order:
+  1. `125,000 EUR` dark, no struck line, no owner line;
+  2. struck `138,000 EUR` above coral `125,000 EUR`;
+  3. dark `12,500,000 ALL`, then the plain line `Price in the owner's currency: 125,000 EUR`;
+  4. struck `13,800,000 ALL` above coral `12,500,000 ALL`, then the owner line.
+
+  `uk` uses its own digit grouping and label.
+- **AC22 [R27]**:
+  - `PublicListingNotReduced`: both price blocks (detail block and contact card) show dark `125,000 EUR`, with no
+    struck element anywhere on the page.
+  - `PublicListingConverted`: both blocks show dark `12,500,000 ALL` and the owner line with `125,000 EUR`, and the
+    per-m² reads `147,059 ALL /m²`.
+  - Measure each at `en@390`, `en@1440`, `uk@390` and `uk@1440`.
+- **AC23 [R28]** `ListingDetailPattern/Default` at `en@1440`:
+  - the plain section: both blocks dark `80,000 EUR`, nothing struck;
+  - the converted section: both blocks dark `8,000,000 ALL` with the owner line `80,000 EUR`, per-m² `94,118 ALL /m²`;
+  - every other section unchanged from `r5-probe.json`.
+- **AC24** `git grep -nE "card_price_(1|old_1|per_sqm_1)|'€"` over the three changed Story files returns no hit. No
+  file under `messages/` changes.
+
+`GR-4 AC AUDIT — 4 criteria; each states an observable property; absolutes: none.`
+
+`GR-3a STORY PREFLIGHT — MantineListingContactPattern / ListingDetailViewBody / MantineListingDetailPattern × not-reduced, converted (and reduced, reduced+converted for the contact card); canonical candidates: Patterns/Mantine/ListingContactPattern (Default), Patterns/Mantine/ListingDetailView (PublicListing), Patterns/Mantine/ListingDetailPattern (Default); direct-import evidence: ListingContactPattern.stories.tsx:8, ListingDetailView.stories.tsx (ListingDetailViewBody), ListingDetailPattern.stories.tsx (MantineListingDetailPattern); toolbar coverage: locale=toolbar globals.locale, viewport=toolbar; decision: EXTEND; target: the three existing Stories (two new exports in the existing ListingDetailView file); rationale: missing distinct states of existing canonical Stories, no new Story file or title.`
+
+GR-3d: unchanged. Each Story keeps its wrapper (§22.1), and no gutter is written in the Story.
+
+### 23.5 Verification (one pass, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+git hash-object src\stories\patterns\mantine\ListingContactPattern.stories.tsx src\stories\patterns\mantine\ListingDetailView.stories.tsx src\stories\patterns\mantine\ListingDetailPattern.stories.tsx
+git --no-optional-locks status --porcelain
+```
+
+`npm.cmd run build` is not re-run, because only Story files change. `r5-build.txt` stays the production build
+evidence.
+
+Probe:
+1. Copy `docs/sessions/evidence/task912/rv4-opus-probe.mjs` to `r6-probe.mjs`.
+2. Add `color` to its `leaf()`.
+3. Add the two new export IDs to its Story list:
+   - `patterns-mantine-listingdetailview--public-listing-not-reduced`;
+   - `patterns-mantine-listingdetailview--public-listing-converted`.
+4. Run it. Write `r6-probe.json` and print, per cell, every block's old / price / owner text with the price colour.
+5. Re-run `rv4-opus-overrun.mjs`. Its `hits` must stay empty.
+
+Receipts, per changed Story or new export:
+- `GR-3b`, `GR-3c` and `GR-3d`;
+- `GR-3e`: `n/a: no popup`.
+
+### 23.6 OWNER VISUAL QA REQUIRED (replaces §22.2 for the open rows)
+
+| # | Story | What to see | Locales | Viewports |
+|---|---|---|---|---|
+| O88-1 | `ListingPrice` → `Default` | **Accepted 2026-10-03.** No recheck. | — | — |
+| O88-2 | `ListingContactPattern` → `Default` | The first four cards: dark plain · struck old above a coral price · dark converted price with "Price in the owner's currency" below · struck old above a coral converted price with the owner line. Every other section is unchanged. | en · uk | 320 · 1440 |
+| O88-3 | `ListingDetailView` → `PublicListing`, `PublicListingNotReduced`, `PublicListingConverted` | Reduced: struck old price above a coral price in both blocks. Not reduced: dark, nothing struck. Converted: a dark `ALL` price with the EUR owner line in both blocks, and per-m² in `ALL`. | en · uk | 390 · 1440 |
+| O88-4 | `ListingDetailPattern` → `Default` | The plain section is dark. The reduced sections are coral with the struck price above. The converted section is dark with the owner line. The "Converted price" section is coral with the owner line. In every section the detail block and the contact card agree. | en | 1440 |
+
+### 23.7 Completion
+
+Append `## Revision 6` to the session log. Update 912's backlog row. End with
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Review 7 measures every row of §23.6 before it goes to the owner. That
+includes the state coverage of every matrix Story, not only the order and colour of what it renders.

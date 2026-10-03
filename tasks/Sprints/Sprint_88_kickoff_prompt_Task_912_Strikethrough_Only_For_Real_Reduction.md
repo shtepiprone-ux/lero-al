@@ -10,7 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Revision 7 (2026-10-03, review 7): §24 is the current executable route.** Two Story fixtures only. §24.3 also
+> **Review 8 (2026-10-03): `PARTIALLY VERIFIED`, §25.** The owner matrix §23.6 (O88-2…O88-4) is with the owner.
+> Executor: only §25.2 R31 (the relative date in the `ListingDetailView` Story) is owed.
+>
+> **Revision 7 (2026-10-03, review 7): §24.** Two Story fixtures only. §24.3 also
 > holds a GR-7 RETRACTION of §20.3/§21.2's inventory counts.
 >
 > **Revision 6 (2026-10-03, owner return on §22.2): §23.** Story files only. Every
@@ -1433,3 +1436,67 @@ Before §23.6 goes to the owner, review 8 does all of the following:
 - re-runs `rv7-crops.mjs` and `rv7-shots.mjs`;
 - **looks at** the screenshot of every §23.6 tuple;
 - checks every badge, price, struck line and owner line against production's rules (the state × Story table in §23.2).
+
+## 25. Review 8 (2026-10-03): Revision 7 verified — `PARTIALLY VERIFIED`, owner matrix §23.6 handed over; one P3 fixture owed
+
+**Scope reviewed.** Two Story files changed: `ListingDetailPattern.stories.tsx` (`65449bcc`) and
+`ListingDetailView.stories.tsx` (`3bc68885`). `ListingContactPattern.stories.tsx` (`05c80272`), the production files
+and the test files are unchanged. Build-storybook ran at 22:34:41, after the 22:33:38 edit.
+
+**Opus's own evidence (`win32`):**
+- `rv8-crops.txt`: the badge row and price of all 11 detail blocks.
+- `rv8-sections.txt`: the contact card of each `ListingDetailPattern` section.
+- `rv7-shots/*.png`: full-page screenshots of every §23.6 tuple, plus `section_detailpattern_*.png`. Opus looked at
+  them, in particular:
+  - `section_detailpattern_1`: plain;
+  - `section_detailpattern_2` and `crop_detailpattern_2`: converted;
+  - `listingdetailview--public-listing-converted_uk_390`;
+  - `listingcontactpattern--default_uk_320` and `_en_1440`.
+
+**Result per state × Story (§23.2 rule):**
+
+| Story | Not reduced | Reduced | Converted | Reduced + converted |
+|---|---|---|---|---|
+| `ListingPrice/Default` | dark | coral, struck above | dark + owner line | coral, struck above, owner line |
+| `ListingContactPattern/Default` | dark (card 1) | coral, struck (card 2 + six other sections) | dark + owner line (card 3) | coral + owner line (card 4) |
+| `ListingDetailView` | `PublicListingNotReduced`: dark ×2, no badge | `PublicListing`: coral ×2, struck, badge | `PublicListingConverted`: dark ×2, owner line ×2, `147,059 ALL /m²`, no badge | (covered in the other three Stories) |
+| `ListingDetailPattern/Default` | section 1: dark ×2, no badge | sections 0, 3, 5, 7: coral ×2, struck, badge | section 2: dark ×2, owner line, `94,118 ALL /m²`, no badge | section 6 (E4): coral ×2, struck, owner line, badge |
+
+- Section 4 of `ListingDetailPattern` is the E2 `contactSlot` demo, which has no contact card by design.
+- R1–R30 and AC1–AC26 are `VERIFIED`. R23 is superseded by R25.
+- **Visual criterion: `NOT VERIFIABLE`** until the owner returns §23.6 (O88-2, O88-3, O88-4).
+
+### 25.1 Visible on the matrix pages, not 912's (stated to the owner with the matrix)
+
+| What the owner will see | Where | Owner |
+|---|---|---|
+| Raw keys `listing.condition` / `listing.heating` in the amenities card | `ListingDetailView` (all exports) | **903** (`backlog-reserved.md`, P2) |
+| The map popup's listing title runs under the zoom control and is cut | `ListingDetailView` (all exports) | **839** (Map) / **798** |
+| The legacy gallery placeholder ("Всі фото (3)" button, grey frame) | `ListingDetailView` (all exports) | **794** (D88-5, next after 912) |
+
+### 25.2 R31 (P3, owed before approval): the relative date in `ListingDetailView` follows production
+
+- **Observed.** In `uk`, `sq` and `it` the page reads **"2 days ago"** in English (`rv7-shots/listingdetailview--public-listing-converted_uk_390.png`).
+- **Cause.** `ListingDetailView.stories.tsx:171` is a hand-written arg, `relativeTimeStr: '2 days ago'` (Task 237
+  fixture). Production computes it with `formatDistanceToNow(new Date(listing.created_at), { addSuffix: true, locale: dfLocale })`
+  (`[slug]/page.tsx:244`), where `dfLocale = DATE_LOCALE_MAP[locale] ?? enUS` (`:243`), over
+  `{ enUS, it, uk, sq }` (`:3`).
+- **Required.** In the wrapper `ListingDetailViewStory`:
+  - compute `relativeTimeStr = formatDistance(new Date(props.listing.created_at), new Date(STORY_NOW), { addSuffix: true, locale: STORY_DATE_LOCALES[storyLocale] ?? enUS })`;
+  - `STORY_NOW = '2026-05-03T00:00:00.000Z'`, which is the fixture's `created_at` + 2 days, so `en` still reads "2 days
+    ago". Use a fixed "now", so the Story does not change from day to day;
+  - `STORY_DATE_LOCALES = { en: enUS, it, uk, sq }`, with a comment that cites `page.tsx:3,243-244`;
+  - delete the `relativeTimeStr` arg, and add `'relativeTimeStr'` to the wrapper's `Omit<…>`.
+- Nothing else changes. No production file changes.
+- **AC27 [R31].** `PublicListing` at 390 reads:
+  - `en`: "2 days ago";
+  - `uk`: "2 дні тому";
+  - `sq` and `it`: the date-fns phrase for that locale.
+
+  No export shows an English relative date in a non-English locale. `git grep -n "'2 days ago'"` in that file
+  returns no hit.
+- **Verification:** `typecheck`, `lint`, `check:mojibake` and `build-storybook` exit 0, then re-run
+  `rv7-shots.mjs`. The price blocks must be unchanged (`rv7-crops.mjs` output equal to `rv8-crops.txt`).
+
+R31 does not touch any price, badge or colour, so the owner can review §23.6 while it is done. The approval review
+checks R31, the owner's §23.6 return and a fresh `npm.cmd run build` together.

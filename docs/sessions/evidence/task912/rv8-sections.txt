@@ -1,0 +1,8 @@
+﻿0 contact card: 92,000 EUR [rgb(71, 84, 103), struck] | 80,000 EUR [rgb(236, 84, 71)]
+1 contact card: 80,000 EUR [rgb(17, 17, 17)]
+2 contact card: 8,000,000 ALL [rgb(17, 17, 17)] | Price in the owner's currency: 80,000 EUR [rgb(71, 84, 103)]
+3 contact card: 92,000 EUR [rgb(71, 84, 103), struck] | 80,000 EUR [rgb(236, 84, 71)]
+4 contact card: NO CONTACT CARD
+5 contact card: 92,000 EUR [rgb(71, 84, 103), struck] | 80,000 EUR [rgb(236, 84, 71)]
+6 contact card: 9,200,000 ALL [rgb(71, 84, 103), struck] | 8,000,000 ALL [rgb(236, 84, 71)] | Price in the owner's currency: 80,000 EUR [rgb(71, 84, 103)]
+7 contact card: 92,000 EUR [rgb(71, 84, 103), struck] | 80,000 EUR [rgb(236, 84, 71)]

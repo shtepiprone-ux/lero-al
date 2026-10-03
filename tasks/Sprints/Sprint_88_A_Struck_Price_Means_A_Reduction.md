@@ -57,7 +57,7 @@ The Tasks table is the single state source.
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
 | **917** | The server records the previous price on a reduction — `price_old` computed from the stored row in `updateListing` (D88-2, D88-3), ignored from the client, null on create | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering" read it) | — | ✅ `APPROVED` 2026-10-03 (review 1; [ledger](../../docs/reviews/2026-10-03-task917-server-records-previous-price.review-ledger.json)) → [`…_Task_917_…`](../Archive/Sprint_88_kickoff_prompt_Task_917_Server_Records_Previous_Price.md) |
-| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `NEEDS REVISION` (review 7, 2026-10-03 → kickoff §24 Revision 7: two Story fixture contradictions, R29/R30; O88-1 accepted) → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
+| **912** | Strikethrough only for a real reduction — contact card's converted-price line loses `line-through` and the card gains the struck old price when `price_old > price` (D88-1); `ListingCard` shows `priceOld` only when `price_old > price` | P1 | Q4 (critical-flow rows "Listings display — price" and "Listing card rendering") | — | `PARTIALLY VERIFIED` (review 8, 2026-10-03, kickoff §25: R1–R30 verified; owner matrix O88-2…O88-4 owed; R31 P3 owed) → [`…_Task_912_…`](Sprint_88_kickoff_prompt_Task_912_Strikethrough_Only_For_Real_Reduction.md) |
 
 ## Execution order
 

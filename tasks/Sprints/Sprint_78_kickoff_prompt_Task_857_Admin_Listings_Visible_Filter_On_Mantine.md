@@ -1689,3 +1689,113 @@ and a verified Revision 9:** Opus approves 857, archives it, and emits the commi
 - **Receipts:** add `GR-3a` (`ListingPreviewDialogView`, `EXTEND`, no new export) to `127-receipts-r9.txt`.
 - **Owner matrix:** add one tuple, `ListingPreviewDialogView` `Active`, sq, 1440: choose Sold, and the select shows
   Sold. With §26.6 that makes 2 tuples still owed. The other 20 are accepted.
+
+---
+
+## 27. Review 10 — `PARTIALLY VERIFIED`, 2026-10-03: Revision 9 verified, 2 owner tuples owed
+
+### 27.1 Verified by Opus
+
+- **Source.** R61: `MantineNavRowList.module.css` `.row[data-nav-row]:focus-visible` is exactly the §26.3 value (1px brand-7 + 4px 10% ring, inset), with one `design-tokens-allow` marker per distinct length. R63: `DialogDemo` holds the listing in `useState` and `onStatusChange` sets `status`, as `AdminListingsTable.tsx:111-114` does. R64: T4 asserts the dialog's status textbox (`AdminListingsTable.smoke.test.tsx:342-345`).
+- **Plant.** `128-plant-t4-dialog-r9.txt`: the plant fails only `:345` (`expected 'Active' to be 'Sold'`), with the row-badge assertion at `:341` already passed; restored hash `c12a3b26`, equal to the current file.
+- **Freshness.** The last source write is the CSS at 00:46:28. The gate run starts at 00:46:34, `storybook-static` is rebuilt at 00:47:22 and holds the R61 rule, the build ends `EXIT_CODE=0` (00:48:50), and the tests run after it (00:52:53: 4 failed, all known 790; 2304 passed). `126s-hash-object-r9.txt` equals the current hashes of all four files.
+- **Measurement** (`130-opus-review10.{mjs,json}`, `130b-opus-status-390.{mjs,json}`, `win32 v22.22.3`, final `storybook-static`):
+  - AC35: on Tab, row 1 is `:focus-visible` with brand-7 in its box-shadow. At DPR 1 the edge pixel is `rgb(236,84,71)` on all four sides. Contrast is 3.39:1 against gray-0 and 3.54:1 against the white resting edge. A mouse click on row 3 is not `:focus-visible` and has no shadow, and hover shows only the gray-0 background. Crop: `130-opus-navrow-focus-10x.png`.
+  - AC37: in `Active` at 1440 the select goes Aktiv → Shitur (sq) and Активне → Продано (uk), and the toast appears. At 390 the same happens through the select's bottom sheet (sq, uk). After the change the options list the new status first, and in every cell `overflowX` is false, there are 0 subtle/transparent text buttons and there are 3 nav rows.
+- **GR-1.** `126b-census-r9.txt` lists 27 tier-1 nodes. 23 are migrated, enrolled and storied. Four are container-exempt and are the known calibration FAIL lines: `page.tsx`, `AdminListingsTable`, `ListingPreviewDialog` and `PremiumDialog`.
+
+### 27.2 Owner matrix O78-12 — the 2 tuples still owed
+
+| Story | State / action | Locale | Viewport |
+|---|---|---|---|
+| `Patterns/Mantine/NavRowList` | `Default`, Tab onto the first row: a thin coral line on all four sides of the row | sq | 1440 |
+| `Patterns/Mantine/ListingPreviewDialogView` | `Active`, choose Sold: the select shows "Shitur" and the toast appears | sq | 1440 |
+
+The other 20 tuples were accepted on 2026-10-03 (§26.7). **On acceptance of both:** Opus approves 857, archives it, and emits the commit and push handoff. **Superseded by §28:** the owner returned tuple 1 (cut corners), so Revision 10 is owed.
+
+---
+
+## 28. Owner return on O78-12, 2026-10-03 → `NEEDS REVISION`, Revision 10 (a rounded clip never cuts a line)
+
+### 28.1 Owner return and the new rule (verbatim)
+
+- **Owner, 2026-10-03, on §27.2 tuple 1** (`NavRowList` `Default`, Tab): *"не приймаю, кути обрізаються. Це постівйна
+  проблема у тебе і Sonnet. Необхідно зробити правило, що якщо є бордер, він обов'язково має бути заокругденим а не
+  обрізатись!"* The screenshot shows the last row focused, with its bottom-left corner cut.
+- **New rule:** `docs/golden-rules.md` **GR-3g** ("A line follows a rounded corner; a clip never cuts it"), written in
+  the same edit and wired into the `create-task`, `execute-task` and `review-task` skills. Read it before starting.
+- **Opus failure, recorded:** review 10's own crop (`130-opus-navrow-focus-10x.png`) showed the cut top-left corner,
+  and Opus passed it. Tuple 2 of §27.2 (`ListingPreviewDialogView` `Active`, choose Sold) has no owner answer yet,
+  so it is still owed.
+
+### 28.2 Measured cause (Opus, `131-opus-navrow-corners.{mjs,json}`, `131-opus-navrow-corners-10x.png`, `win32 v22.22.3`)
+
+- The list is `Paper withBorder radius="md"` (`MantineNavRowList.tsx:48`): computed radius 6px, border 1px,
+  `overflow: hidden` (`MantineNavRowList.module.css:8-10`). The clip edge therefore has a 5px radius.
+- The rows have `border-radius: 0px`. The R61 focus line is an inset 1px `box-shadow`, so it has square corners. On
+  row 1 the clip cuts its top-left and top-right corners, and on the last row the bottom-left and bottom-right ones.
+  The crops show a diagonal gap where the curve should be.
+- `--paper-radius` is inherited by the rows (computed `0.375rem` on row 1), and row 1 and the last row are the
+  `:first-child` and `:last-child` of the `Stack`. A 6px corner stays inside the clip's 5px curve, so it is never cut.
+
+### 28.3 Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R65** | **The nav row corners follow the list (GR-3g).** In `MantineNavRowList.module.css`, add these rules, independent of state, so focus, hover and any later line all follow the curve: `.row[data-nav-row]:first-child` gets `border-top-left-radius` and `border-top-right-radius` of `var(--paper-radius)`, and `.row[data-nav-row]:last-child` gets the two bottom corners. A one-row list gets all four, because both selectors match. Use no raw value and no `calc`. R61's focus value, the hover background and the list's radius, border and clip stay unchanged. Update the file's header comment to cite GR-3g. | P1 | AC38 |
+| **R66** | **GR-3g probe over the 857 Stories that draw lines.** Write a Playwright probe (`133-gr3g-probe-r10.mjs`, DPR 1, sq, 390 and 1440) over `Patterns/Mantine/NavRowList`, `DetailList`, `DialogSections`, `DialogFooter`, `ListingPreviewDialogView` (`Active`, `DeleteConfirm`), `PremiumDialogView`, `AdminTable`, `AdminListingsView`, `Mantine/Primitives/Table` and `Mantine/Primitives/Radio`. In each Story, at rest, then on each focusable reached by Tab, then hovering the first and last row of each list or table: for every element that draws a line (border, outline or non-`none` box-shadow), find each ancestor with `overflow` other than `visible` and a radius above 0 whose corner the element's box touches, and record the ancestor's radius and the element's radius on that corner. A corner is cut when the element's radius there is smaller than the ancestor's and the line reaches that corner. Write the result to `133-gr3g-probe-r10.json`, with the number of cut corners. **Any cut found outside `MantineNavRowList`:** fix it in the canonical component that owns the line, with the ancestor's radius token, and list it in the session log. If that fix needs a visual choice beyond taking the ancestor's token, stop with `BLOCKED — GR-3g <component>` and the crop, and Opus decides. | P1 | AC39 |
+| **R67** | **Receipts and hashes.** One `GR-3g CORNER CHECK` per component and state that R65/R66 touch, plus `GR-0` and `GR-3a` (`NavRowList` `Default`, `EXTEND`) in `134-receipts-r10.txt`. The §28.6 gate block writes `135s-hash-object-r10.txt` with every Revision 10 file, in the same run. | P2 | AC40 |
+
+### 28.4 Acceptance (Revision 10)
+
+- **AC38 [R65].** `NavRowList` `Default`, sq, 1440, `deviceScaleFactor: 1`:
+  - Tab onto row 1, then onto row 3. Crop all four corners of each focused row, scale them 10× pixelated, and save
+    them as `132-navrow-corners-r10.png`. On each outer corner the brand line runs around the curve with no gap.
+  - The computed `border-top-left-radius` and `border-top-right-radius` of row 1, and the two bottom ones of row 3,
+    equal the list's computed radius. Row 2 keeps square corners. Record this in `132-navrow-corners-r10.json`.
+  - AC35 still holds: the line is brand-7 on all four sides and at least 3:1 on gray-0, a mouse click draws no line,
+    and hover shows only the gray-0 background.
+  - The same holds in `ListingPreviewDialogView` `Active` at 390 and 1440, on the dialog's nav rows.
+- **AC39 [R66].** `133-gr3g-probe-r10.json` covers every Story, state and width that R66 names and reports 0 cut
+  corners. Every fix outside `MantineNavRowList` is listed with its file and its ancestor token.
+- **AC40 [R67].** `134-receipts-r10.txt` and `135s-hash-object-r10.txt` exist. The §28.6 gate block gives the expected
+  results, and `npm run build` exits 0.
+
+### 28.5 Flows
+
+- **Positive:** keyboard focus on any nav row shows the brand line on all four sides, and on the first and last rows
+  it follows the list's curve.
+- **Negative, applicable:** a one-row list, because both selectors apply; a mouse click, which draws no line; hover
+  in the corners, where the gray-0 fill stays inside the curve.
+- **Not applicable:** data, locale or permission branches, because the change is CSS only.
+
+### 28.6 Re-entry, write set and gate block (Revision 10)
+
+- **Mode:** `remediation`. **Start step:** platform line `132-platform-r10.txt`, then R65, AC38, R66/AC39, R67 and
+  the gate block.
+- **Write set:**
+  - `src/design-system/mantine/patterns/MantineNavRowList.module.css`;
+  - the canonical owner of any cut that R66 finds, and only for that fix;
+  - the session log ("Revision 10" section);
+  - evidence `132`+ with the `-r10` suffix;
+  - the 857 cell of `docs/backlog.md`.
+
+  Every other file is forbidden, including every Story file and every rule document. Do not overwrite evidence
+  `01`–`131`.
+- **Gate block:** the §26.5 block renamed `135*-r10`, every output renamed, the i18n gate included, and the tests
+  after the build. Expected results:
+  - `win32`;
+  - the four calibration census FAIL lines;
+  - tests with exactly the 4 known 790 failures;
+  - `check:file-integrity` flags only files outside task857, if any, and you name them;
+  - every other gate exits 0.
+
+### 28.7 Owner matrix (O78-12) after Revision 10
+
+| Story | State / action | Locale | Viewport |
+|---|---|---|---|
+| `Patterns/Mantine/NavRowList` | `Default`: Tab onto the first row, then onto the last. The coral line runs around the rounded corners with no cut | sq | 1440 |
+| `Patterns/Mantine/ListingPreviewDialogView` | `Active`: choose Sold. The select shows "Shitur" and the toast appears (still owed from §27.2) | sq | 1440 |
+
+Before these reach the owner, Opus re-measures AC38/AC39 itself and emits a GR-3g receipt. **On acceptance of both
+and a verified Revision 10:** Opus approves 857, archives it, and emits the commit and push handoff.

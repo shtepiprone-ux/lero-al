@@ -169,6 +169,10 @@ composition. This is a project-wide rule, not a Storybook preference.
    - **Circles (GR-3f, owner rule 2026-10-02).** For every changed circular control or indicator, name its canonical
      owner (theme entry or component) and require a device-scale-1 pixel crop as evidence. The canonical radio is 20px
      with a 10px dot. A kickoff that sizes a circle in one consumer is not publishable.
+   - **Corners (GR-3g, owner rule 2026-10-03).** For every changed line (border, outline or box-shadow ring, in any
+     state) inside a rounded ancestor that clips, name the ancestor's radius token and require the corners that meet
+     it to take that token (`var(--paper-radius)`, `var(--card-radius)` or the theme key), with DPR-1 corner crops as
+     evidence. A kickoff that leaves such a line with square corners is not publishable.
 
 This gate does not require a new story for a non-visible data-only or layout-only change. The task must state that
 classification and its evidence explicitly; a claimed "layout-only" change that alters visible chrome is still

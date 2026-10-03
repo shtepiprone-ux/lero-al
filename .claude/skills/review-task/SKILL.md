@@ -238,6 +238,11 @@ evidence that a child component has a canonical visual contract.
     - a circle sized in one consumer instead of its canonical entry.
     A computed `border-radius` proves nothing about the pixels. Task 857's 16px radio had a CSS-perfect radius and
     reached the owner as a polygon.
+11. **GR-3g (owner rule 2026-10-03).** Before handing the matrix to the owner, crop at device scale 1 every corner
+    where a changed line (border, outline or box-shadow ring, in any state, focus included) meets a rounded clipping
+    ancestor. Scale each crop 10× and look at the curve. A line cut at a corner is `NEEDS REVISION`, and so is a
+    radius not taken from the ancestor's token. Task 857's nav row focus line reached the owner with all four outer
+    corners cut. Opus's own crop showed the cut corner and Opus passed it.
 
 If a changed visible component lacks this standalone proof, its token/primitive decision, or evidence that the
 composition consumes the proven source, return a non-approved decision. The correction is never a request for a

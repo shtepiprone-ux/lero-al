@@ -200,6 +200,13 @@ For every changed user-visible UI component, work from the lowest visible unit u
    - make any fix in the canonical component or theme entry, never in one consumer;
    - the canonical radio is 20px with a 10px dot (`Radio` theme entry).
    Emit one `GR-3f CIRCLE CHECK` receipt per element. A computed `border-radius` is not evidence.
+10. **GR-3g, blocking (owner rule 2026-10-03).** A rounded clip never cuts a line. For every changed border, outline
+    or box-shadow ring, in each state that draws it (Tab for focus; first, last and single item of a list):
+    - find each ancestor with `overflow` other than `visible` and a non-zero radius whose corner the element touches;
+    - give those corners the ancestor's radius token (`var(--paper-radius)` in a `Paper`, `var(--card-radius)` in a
+      `Card`, otherwise the same theme key), in the canonical component, never a raw value;
+    - take a `deviceScaleFactor: 1` crop of each touching corner, scale it 10× pixelated, save it, and look at it.
+    Emit one `GR-3g CORNER CHECK` receipt per component and state.
 
 If a visible primitive or state has no project story/source/token path, stop feature integration. Establish the
 native Mantine primitive/pattern and its standalone story before resuming; do not integrate a plausible local

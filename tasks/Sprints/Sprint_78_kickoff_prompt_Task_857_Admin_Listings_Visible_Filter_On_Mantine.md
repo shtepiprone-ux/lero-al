@@ -1795,7 +1795,7 @@ The other 20 tuples were accepted on 2026-10-03 (§26.7). **On acceptance of bot
 | Story | State / action | Locale | Viewport |
 |---|---|---|---|
 | `Patterns/Mantine/NavRowList` | `Default`: Tab onto the first row, then onto the last. The coral line runs around the rounded corners with no cut | sq | 1440 |
-| `Patterns/Mantine/ListingPreviewDialogView` | `Active`: choose Sold. The select shows "Shitur" and the toast appears (still owed from §27.2) | sq | 1440 |
+| `Patterns/Mantine/ListingPreviewDialogView` | `Active`: choose Sold. The select shows "Shitur" and the toast appears. **Accepted by the owner 2026-10-03** (verbatim: *"приймаю"*) | sq | 1440 |
 
-Before these reach the owner, Opus re-measures AC38/AC39 itself and emits a GR-3g receipt. **On acceptance of both
-and a verified Revision 10:** Opus approves 857, archives it, and emits the commit and push handoff.
+Only the `NavRowList` tuple is still owed. Before it reaches the owner, Opus re-measures AC38/AC39 itself and emits a
+GR-3g receipt. **On its acceptance and a verified Revision 10:** Opus approves 857, archives it, and emits the commit and push handoff.

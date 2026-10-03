@@ -10,7 +10,10 @@
 > reads the new order. The price **colour** (dark when not reduced, coral when reduced, D89-7) on the listing page is
 > **912**'s since Revision 4 (§20). *Superseded wording, 2026-10-03: "is 918's … keep the colour unchanged here".*
 
-> **Revision 5 (2026-10-03, review 5): §21 is the current executable route.** One line: the contact card's name
+> **Review 6 (2026-10-03): `PARTIALLY VERIFIED`, §22.** No executor work is owed. The owner matrix §22.2 (O88-1…O88-4)
+> is next, then the approval review.
+>
+> **Revision 5 (2026-10-03, review 5): §21.** One line: the contact card's name
 > line wraps (R25). It replaces R23's wrong target. §20's colour work is verified.
 >
 > **Revision 4 (2026-10-03, review 4 + owner return): §20.** The price colour
@@ -1106,3 +1109,52 @@ Receipts for `ListingContactPattern/Default`:
 
 Append `## Revision 5` to the session log. Update 912's backlog row. End with
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Review 6 re-measures, then hands the §18.9 matrix to the owner.
+
+## 22. Review 6 (2026-10-03): Revision 5 verified — `PARTIALLY VERIFIED`, owner matrix owed
+
+**Scope reviewed.**
+- Revision 5 changed one line: `MantineListingContactPattern.tsx:140` lost `truncate` (blob `979cda61`).
+- `theme.ts` (`ba342c49`), `MantineListingPrice.tsx` (`199810d7`) and its test (`6e5e0700`) are hash-equal to
+  `r4-hashes.txt`.
+- Build, lint and build-storybook exit 0 (`r5-*.txt`). The build ran at 21:03:17, after the 21:00:48 edit.
+- Opus's own runs, all on `win32`:
+  - vitest: 4 files, 35/35;
+  - `rv6-opus-overrun.json`: `hits` empty for `en`, `uk` and `it`;
+  - `rv6-opus-probe.{txt,json}`: 40 cells, 0 bad price blocks, 0 overflow, 0 popups, no side at 0, no doubled gutter.
+
+**Requirement status.**
+- R1–R25 and AC1–AC20 are `VERIFIED`. R23 is superseded by R25.
+- Colour (AC17, `r4-colour.json`): a price that is not reduced is `rgb(17, 17, 17)` (token
+  `theme.other.priceColor.regular`); a reduced price is `rgb(236, 84, 71)` (`brand`).
+- **Visual criterion: `NOT VERIFIABLE`** until the owner returns §22.2.
+
+**Disposition of the executor's open note.**
+- The four `CUT` lines in `ListingDetailView/PublicListing` at 320 are not the breadcrumb (`rv6-breadcrumb.json`:
+  the breadcrumb label is one line, 16→294px, with no clipping ancestor).
+- They are the listing title inside the legacy map, `div.listing-map … overflow-hidden`. That is `MapWrapper`, §3.1's
+  tier-1 node owned by **839**. It is not 912's.
+
+### 22.1 Receipts (review)
+
+- `GR-1 CENSUS COMPLETE — MantineListingPrice 1 node, MantineListingDetailPattern 10 nodes, MantineListingContactPattern 2 nodes; tier1 all migrated+enrolled+story; tier2 0; pass-through parents unchanged §3.1 set (MapWrapper → 839); tier3 filed as 913.`
+- `GR-3b STORY RESPONSIVE CHECK — ListingPrice/Default, ListingContactPattern/Default, ListingDetailView/PublicListing, ListingDetailPattern/Default: 320 · 390 · 1024 · 1440 fluid in their production containers; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+- `GR-3c TYPE RESPONSIVE CHECK — price blocks: old 12px · price 20px · owner-currency 12px at every width; ListingDetailView/ListingDetailPattern H1 20 · 20 · 36 · 36 (320/390/1024/1440), H2 18 · 18 · 24 · 24; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+- `GR-3d STORY GUTTER CHECK`:
+  - `ListingPrice/Default`: StoryPageGutter all, t/l 24/16 (320, 390) and 24/32 (1024, 1440);
+  - `ListingContactPattern/Default`: StoryPageGutter all, t/r/b/l 24/22/58/16 at 320, 24/–/58/32 at 1440;
+  - `ListingDetailView/PublicListing`: own gutter (`ListingsPageFrame.tsx:93-94`), left 16/16/32/64;
+  - `ListingDetailPattern/Default`: StoryPageGutter all, top 104 (the 886 spacer, §17 NOTE), l/r 16 at 320/390 and
+    32 at 1024+;
+  - side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.
+- `GR-3e TEXT BUTTONS STACKED — n/a: no popup in any matrix Story.` · `GR-3f CIRCLE CHECK — n/a: no circular element changed.` · `GR-3g CORNER CHECK — n/a: no border or ring changed (struck price is text-decoration).`
+
+### 22.2 OWNER VISUAL QA REQUIRED (replaces §18.9)
+
+| # | Story | What to see | Locales | Viewports |
+|---|---|---|---|---|
+| O88-1 | `Patterns/Mantine/ListingPrice` → `Default` | "Not reduced" and "Converted": the price is **dark** (`#111111`). "Reduced" and "Reduced and converted": the struck old price is above, and the price is **coral**. The owner-currency line is grey, plain, below. | sq · en · uk · it | 320 · 1440 |
+| O88-2 | `Patterns/Mantine/ListingContactPattern` → `Default` | Every card has struck `138,000 EUR` above a coral `125,000 EUR`, and no owner-currency line. The "owner deleted" card shows its full message on 2–3 lines at 320, with no "…". | en · uk | 320 · 1440 |
+| O88-3 | `Patterns/Mantine/ListingDetailView` → `PublicListing` | The detail block and the contact card match: struck `138,000 EUR` above a coral `125,000 EUR`, and per-m² `1,471 EUR /m²`. | en · uk | 390 · 1440 |
+| O88-4 | `Patterns/Mantine/ListingDetailPattern` → `Default` | The detail block and the contact card match in every section. The owner-currency line appears **only** in the "Converted price" section (`8,000,000 ALL` · `94,118 ALL /m²`, owner line in EUR). | en | 1440 |
+
+After the owner accepts every row, the approval review archives 912 and emits the commit + push handoff.

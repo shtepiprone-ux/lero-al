@@ -1,0 +1,132 @@
+﻿listingprice--default en@320 gaps t/r/b/l 24/24/501/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125,000 EUR  x1
+    138,000 EUR~125,000 EUR  x1
+    12,500,000 ALL / Price in the owner's currency: 125,000 EUR  x1
+    13,800,000 ALL~12,500,000 ALL / Price in the owner's currency: 125,000 EUR  x1
+listingprice--default en@390 gaps t/r/b/l 24/94/501/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+listingprice--default en@1024 gaps t/r/b/l 24/712/501/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+listingprice--default en@1440 gaps t/r/b/l 24/1128/501/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125,000 EUR  x1
+    138,000 EUR~125,000 EUR  x1
+    12,500,000 ALL / Price in the owner's currency: 125,000 EUR  x1
+    13,800,000 ALL~12,500,000 ALL / Price in the owner's currency: 125,000 EUR  x1
+listingprice--default sq@320 gaps t/r/b/l 24/39/483/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125 000 EUR  x1
+    138 000 EUR~125 000 EUR  x1
+    12 500 000 ALL / Çmimi në monedhën e pronarit: 125 000 EUR  x1
+    13 800 000 ALL~12 500 000 ALL / Çmimi në monedhën e pronarit: 125 000 EUR  x1
+listingprice--default sq@1440 gaps t/r/b/l 24/1100/501/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125 000 EUR  x1
+    138 000 EUR~125 000 EUR  x1
+    12 500 000 ALL / Çmimi në monedhën e pronarit: 125 000 EUR  x1
+    13 800 000 ALL~12 500 000 ALL / Çmimi në monedhën e pronarit: 125 000 EUR  x1
+listingprice--default uk@320 gaps t/r/b/l 24/26/483/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125 000 EUR  x1
+    138 000 EUR~125 000 EUR  x1
+    12 500 000 ALL / Ціна у валюті власника: 125 000 EUR  x1
+    13 800 000 ALL~12 500 000 ALL / Ціна у валюті власника: 125 000 EUR  x1
+listingprice--default uk@1440 gaps t/r/b/l 24/1115/501/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125 000 EUR  x1
+    138 000 EUR~125 000 EUR  x1
+    12 500 000 ALL / Ціна у валюті власника: 125 000 EUR  x1
+    13 800 000 ALL~12 500 000 ALL / Ціна у валюті власника: 125 000 EUR  x1
+listingprice--default it@320 gaps t/r/b/l 24/27/483/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125.000 EUR  x1
+    138.000 EUR~125.000 EUR  x1
+    12.500.000 ALL / Prezzo nella valuta del proprietario: 125.000 EUR  x1
+    13.800.000 ALL~12.500.000 ALL / Prezzo nella valuta del proprietario: 125.000 EUR  x1
+listingprice--default it@1440 gaps t/r/b/l 24/1098/501/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+    125.000 EUR  x1
+    138.000 EUR~125.000 EUR  x1
+    12.500.000 ALL / Prezzo nella valuta del proprietario: 125.000 EUR  x1
+    13.800.000 ALL~12.500.000 ALL / Prezzo nella valuta del proprietario: 125.000 EUR  x1
+listingcontactpattern--default en@320 gaps t/r/b/l 24/22/58/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138,000 EUR~125,000 EUR  x7
+listingcontactpattern--default en@390 gaps t/r/b/l 24/27/58/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+listingcontactpattern--default en@1024 gaps t/r/b/l 24/606/58/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+listingcontactpattern--default en@1440 gaps t/r/b/l 24/958/58/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138,000 EUR~125,000 EUR  x7
+listingcontactpattern--default sq@320 gaps t/r/b/l 24/20/58/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138 000 EUR~125 000 EUR  x7
+listingcontactpattern--default sq@1440 gaps t/r/b/l 24/972/58/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138 000 EUR~125 000 EUR  x7
+listingcontactpattern--default uk@320 gaps t/r/b/l 24/23/58/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138 000 EUR~125 000 EUR  x7
+listingcontactpattern--default uk@1440 gaps t/r/b/l 24/972/58/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138 000 EUR~125 000 EUR  x7
+listingcontactpattern--default it@320 gaps t/r/b/l 24/17/58/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138.000 EUR~125.000 EUR  x7
+listingcontactpattern--default it@1440 gaps t/r/b/l 24/957/58/32 ovf 0 popups 0 heads H1:14px H1:22px blocks 7 bad 0
+    138.000 EUR~125.000 EUR  x7
+listingdetailview--public-listing en@320 gaps t/r/b/l 7/24/90/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H2:18px blocks 2 bad 0
+    CUT {"text":"Shitet apartament 2+1 në Tiranë, zonë e re","w":232,"shown":224}
+    138,000 EUR~125,000 EUR [1,471 EUR /m²]  x1
+    138,000 EUR~125,000 EUR  x1
+listingdetailview--public-listing en@390 gaps t/r/b/l 7/20/90/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H2:18px blocks 2 bad 0
+listingdetailview--public-listing en@1024 gaps t/r/b/l 7/157/78/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H2:24px blocks 2 bad 0
+listingdetailview--public-listing en@1440 gaps t/r/b/l 7/208/78/64 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H2:24px blocks 2 bad 0
+    138,000 EUR~125,000 EUR [1,471 EUR /m²]  x1
+    138,000 EUR~125,000 EUR  x1
+listingdetailview--public-listing sq@320 gaps t/r/b/l 7/24/90/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H2:18px blocks 2 bad 0
+    CUT {"text":"Shitet apartament 2+1 në Tiranë, zonë e re","w":232,"shown":224}
+    138 000 EUR~125 000 EUR [1471 EUR /m²]  x1
+    138 000 EUR~125 000 EUR  x1
+listingdetailview--public-listing sq@1440 gaps t/r/b/l 7/197/78/64 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H2:24px blocks 2 bad 0
+    138 000 EUR~125 000 EUR [1471 EUR /m²]  x1
+    138 000 EUR~125 000 EUR  x1
+listingdetailview--public-listing uk@320 gaps t/r/b/l 7/24/90/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H2:18px blocks 2 bad 0
+    CUT {"text":"Shitet apartament 2+1 në Tiranë, zonë e re","w":232,"shown":224}
+    138 000 EUR~125 000 EUR [1 471 EUR /м²]  x1
+    138 000 EUR~125 000 EUR  x1
+listingdetailview--public-listing uk@1440 gaps t/r/b/l 7/187/78/64 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H2:24px blocks 2 bad 0
+    138 000 EUR~125 000 EUR [1 471 EUR /м²]  x1
+    138 000 EUR~125 000 EUR  x1
+listingdetailview--public-listing it@320 gaps t/r/b/l 7/24/90/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H2:18px blocks 2 bad 0
+    CUT {"text":"Shitet apartament 2+1 në Tiranë, zonë e re","w":232,"shown":224}
+    138.000 EUR~125.000 EUR [1471 EUR /m²]  x1
+    138.000 EUR~125.000 EUR  x1
+listingdetailview--public-listing it@1440 gaps t/r/b/l 7/209/78/64 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H2:24px blocks 2 bad 0
+    138.000 EUR~125.000 EUR [1471 EUR /m²]  x1
+    138.000 EUR~125.000 EUR  x1
+listingdetailpattern--default en@320 gaps t/r/b/l 104/16/59/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px blocks 11 bad 0
+    92,000 EUR~80,000 EUR [941 EUR /m²]  x5
+    92,000 EUR~80,000 EUR  x4
+    9,200,000 ALL~8,000,000 ALL [94,118 ALL /m²] / Price in the owner's currency: 80,000 EUR  x1
+    9,200,000 ALL~8,000,000 ALL / Price in the owner's currency: 80,000 EUR  x1
+listingdetailpattern--default en@390 gaps t/r/b/l 104/16/59/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px blocks 11 bad 0
+listingdetailpattern--default en@1024 gaps t/r/b/l 104/123/46/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px blocks 11 bad 0
+listingdetailpattern--default en@1440 gaps t/r/b/l 104/152/46/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px blocks 11 bad 0
+    92,000 EUR~80,000 EUR [941 EUR /m²]  x5
+    92,000 EUR~80,000 EUR  x4
+    9,200,000 ALL~8,000,000 ALL [94,118 ALL /m²] / Price in the owner's currency: 80,000 EUR  x1
+    9,200,000 ALL~8,000,000 ALL / Price in the owner's currency: 80,000 EUR  x1
+listingdetailpattern--default sq@320 gaps t/r/b/l 104/16/59/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px blocks 11 bad 0
+    92 000 EUR~80 000 EUR [941 EUR /m²]  x5
+    92 000 EUR~80 000 EUR  x4
+    9 200 000 ALL~8 000 000 ALL [94 118 ALL /m²] / Çmimi në monedhën e pronarit: 80 000 EUR  x1
+    9 200 000 ALL~8 000 000 ALL / Çmimi në monedhën e pronarit: 80 000 EUR  x1
+listingdetailpattern--default sq@1440 gaps t/r/b/l 104/113/46/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px blocks 11 bad 0
+    92 000 EUR~80 000 EUR [941 EUR /m²]  x5
+    92 000 EUR~80 000 EUR  x4
+    9 200 000 ALL~8 000 000 ALL [94 118 ALL /m²] / Çmimi në monedhën e pronarit: 80 000 EUR  x1
+    9 200 000 ALL~8 000 000 ALL / Çmimi në monedhën e pronarit: 80 000 EUR  x1
+listingdetailpattern--default uk@320 gaps t/r/b/l 104/16/59/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px blocks 11 bad 0
+    92 000 EUR~80 000 EUR [941 EUR /м²]  x5
+    92 000 EUR~80 000 EUR  x4
+    9 200 000 ALL~8 000 000 ALL [94 118 ALL /м²] / Ціна у валюті власника: 80 000 EUR  x1
+    9 200 000 ALL~8 000 000 ALL / Ціна у валюті власника: 80 000 EUR  x1
+listingdetailpattern--default uk@1440 gaps t/r/b/l 104/137/46/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px blocks 11 bad 0
+    92 000 EUR~80 000 EUR [941 EUR /м²]  x5
+    92 000 EUR~80 000 EUR  x4
+    9 200 000 ALL~8 000 000 ALL [94 118 ALL /м²] / Ціна у валюті власника: 80 000 EUR  x1
+    9 200 000 ALL~8 000 000 ALL / Ціна у валюті власника: 80 000 EUR  x1
+listingdetailpattern--default it@320 gaps t/r/b/l 104/16/59/16 ovf 0 popups 0 heads H1:14px H1:22px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px H1:20px H2:18px H2:18px blocks 11 bad 0
+    92.000 EUR~80.000 EUR [941 EUR /m²]  x5
+    92.000 EUR~80.000 EUR  x4
+    9.200.000 ALL~8.000.000 ALL [94.118 ALL /m²] / Prezzo nella valuta del proprietario: 80.000 EUR  x1
+    9.200.000 ALL~8.000.000 ALL / Prezzo nella valuta del proprietario: 80.000 EUR  x1
+listingdetailpattern--default it@1440 gaps t/r/b/l 104/92/46/32 ovf 0 popups 0 heads H1:14px H1:22px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px H1:36px H2:24px H2:24px blocks 11 bad 0
+    92.000 EUR~80.000 EUR [941 EUR /m²]  x5
+    92.000 EUR~80.000 EUR  x4
+    9.200.000 ALL~8.000.000 ALL [94.118 ALL /m²] / Prezzo nella valuta del proprietario: 80.000 EUR  x1
+    9.200.000 ALL~8.000.000 ALL / Prezzo nella valuta del proprietario: 80.000 EUR  x1

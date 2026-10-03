@@ -1,0 +1,61 @@
+﻿{
+  "out": [
+    {
+      "tag": "P",
+      "lines": [
+        {
+          "l": 16,
+          "r": 294,
+          "t": 23
+        }
+      ],
+      "chain": []
+    },
+    {
+      "tag": "H1",
+      "lines": [
+        {
+          "l": 16,
+          "r": 258,
+          "t": 618
+        },
+        {
+          "l": 16,
+          "r": 172,
+          "t": 643
+        }
+      ],
+      "chain": []
+    },
+    {
+      "tag": "DIV",
+      "lines": [
+        {
+          "l": 59,
+          "r": 291,
+          "t": 1454
+        },
+        {
+          "l": 59,
+          "r": 71,
+          "t": 1471
+        }
+      ],
+      "chain": [
+        {
+          "tag": "DIV",
+          "cls": "listing-map h-64 md:h-80 w-full rounded-2xl overfl",
+          "ov": "hidden",
+          "to": "clip",
+          "ws": "normal",
+          "l": 37,
+          "r": 283,
+          "testid": null
+        }
+      ]
+    }
+  ],
+  "nav": {
+    "b": 60
+  }
+}

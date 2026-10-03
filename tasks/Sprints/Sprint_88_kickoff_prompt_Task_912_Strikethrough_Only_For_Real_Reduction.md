@@ -116,7 +116,10 @@ The executor confirms `xl` = 20px from `theme.ts` `fontSizes` at I0. No changed 
   contact card gains the struck €138,000).
   - Width: production `ListingsPageFrame`.
   - GR-3d: all four sides `own gutter (src/modules/listings/components/ListingsPageFrame.tsx:93-94`,
-    `px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="xl"`). Action: none; a Story-added gutter would double it.
+    `px={{ base: 'md', sm: 'xl', lg: '2xl', xxl: '3xl' }} py="xl"`). **Action: remove the Story's doubled gutter in
+    this task (§16, R10).** *Corrected in review 1:* this line originally said "Action: none". That was wrong,
+    because the Story's meta has no `skipCanvas`, so `.storybook/preview.tsx` `withCanvas` wraps the frame in
+    `.container-wide py-6`. The executor measured 32px left/right at 320, where production gives 16.
 
 If any of these measures a side at 0 or a doubled gutter, GR-3d binds the executor to fix it in this task.
 
@@ -165,6 +168,8 @@ Write paths (exact):
 3. `src/modules/listings/components/ListingDetailView.tsx`: pass `priceOld` to `LazyListingContact`. Nothing else.
 4. `src/modules/listings/components/ListingCard.tsx`: one predicate (§10.4).
 5. `src/stories/patterns/mantine/ListingContactPattern.stories.tsx`: extend `Default` (§10.5).
+5a. `src/stories/patterns/mantine/ListingDetailView.stories.tsx`: the meta's `parameters` only (§16, R10). Added in
+    review 1.
 6. Tests:
    - `src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx` (new);
    - `src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx` (new cases).
@@ -180,7 +185,7 @@ Write paths (exact):
 - `[slug]/page.tsx` and `admin/listings/[id]/preview/page.tsx`. They already compute `isPriceReduced` and
   `displayPriceOld` correctly (F3, F4).
 - `MantineListingCardPattern.tsx`, `MantineListingDetailPattern.tsx`, and every Story other than
-  `ListingContactPattern.stories.tsx`.
+  `ListingContactPattern.stories.tsx` and the `ListingDetailView.stories.tsx` meta parameter (§16).
 - `messages/*.json` (dirty with 868's work). The Story uses existing keys only.
 - `StepPreview.tsx` (deleted by **905**). How `price_old` is written (A2).
 
@@ -232,7 +237,8 @@ Write paths (exact):
    - New `MantineListingContactPattern.smoke.test.tsx`, using the harness shape of
      `MantineListingCardPattern.smoke.test.tsx:15-35`. It asserts:
      - (a) with `priceOld` + `originalPrice`: the old price text is present with `line-through`; the "Original
-       price: …" text is present **without** it; the DOM order is main price → old price → disclosure;
+       price: …" text is present **without** it; the DOM order is old price → main price → disclosure (D89-9;
+       corrected in review 1, the pre-D89-9 order was left here by mistake);
      - (b) without `priceOld`: no element with `line-through`;
      - (c) without `originalPrice`: no disclosure.
    - `ListingCard.smoke.test.tsx`, both variants:
@@ -281,7 +287,9 @@ Write paths (exact):
   order and sits above it, the disclosure follows the main price, and is absent when `priceOld` is not passed.
 - **AC9 [R7, R8]** Given `ListingDetailView` source, `LazyListingContact` receives `priceOld` only under
   `isPriceReduced`. Given `Patterns/Mantine/ListingDetailView` → `PublicListing` (`isPriceReduced: true`,
-  `displayPriceOld: 138000`), the contact card shows a struck "€138,000" under "€125,000".
+  `displayPriceOld: 138000`), the contact card shows a struck "138,000 EUR" **above** "125,000 EUR" (D89-9; the
+  contact card formats through `formatPrice`, so the text is `138,000 EUR`, not the detail block's fixture
+  `€125,000` string).
 
 `GR-4 AC AUDIT — 9 criteria; each states an observable property; absolutes: none.`
 
@@ -393,3 +401,84 @@ Update only 912's row in `docs/backlog.md`. End with `IMPLEMENTED - AWAITING ORC
   owner are filed as **913**. The pass-through scope rests on owner decision D88-1, quoted in the Sprint 88 plan.
 - Dirty worktree: the shared `docs/critical-flow-registry.md` has an explicit conditional (§10.6). `messages/*.json`
   is not written.
+
+## 16. Revision 1 (review 1, 2026-10-03): `NEEDS REVISION`
+
+**Re-entry mode: `remediation`.** The production change, tests, plants and the `ListingContactPattern` Story change
+were inspected in review 1. Their final hashes equal `docs/sessions/evidence/task912/41-hashes.txt`. Keep them.
+**Do not edit** `MantineListingContactPattern.tsx`, `ListingCard.tsx`, `ListingContact.tsx`, `ListingDetailView.tsx`,
+`ListingContactPattern.stories.tsx` or either test file. Do not re-run the I0 block or the plants. Keep every
+existing evidence file and write new ones with an `r1-` prefix.
+
+### 16.1 Finding F1 (P2, GR-3d): `ListingDetailView/PublicListing` has a doubled gutter
+
+- **Observed.** At `en@320`, `31-measure.json` gives `gut` left/right **32/32**, and **96/96** at 1440.
+- **Cause.** `src/stories/patterns/mantine/ListingDetailView.stories.tsx` meta (`:142-170`) has no `parameters`, so
+  `.storybook/preview.tsx:135-145` `withCanvas` wraps the Story in `<div className="container-wide py-6">`. The
+  production frame inside (`ListingsPageFrame.tsx:93-94`) already sets `px={{ base: 'md', … }} py="xl"`, and the
+  breadcrumb band (`:52-56`) sets its own `px`. So the canvas adds a second gutter on all four sides.
+- **Precedent.** `ListingsPageFrame.stories.tsx:10`, `ListingDetailPattern.stories.tsx:31` and
+  `ListingContactPattern.stories.tsx:15` all set `skipCanvas: true`.
+- **Why it is in 912.** GR-3d covers every Story in the owner matrix (§13.5), and this one is in it. §3.5 wrongly
+  said "Action: none". That line is corrected above.
+
+**R10 [GR-3d] (P2).** In the meta of `ListingDetailView.stories.tsx`, add `parameters: { skipCanvas: true }`. Add
+nothing else: no `StoryPageGutter`, padding, wrapper or `style`. The change affects all three exports
+(`PublicListing`, `StaffPreviewUnpublished`, `StaffPreviewPublished`). All three render the same frame.
+
+**AC10 [R10].** Given `Patterns/Mantine/ListingDetailView`, each of its three exports at 320, 390, 1024 and 1440
+(`en`), plus `PublicListing` at `uk@320`:
+- left/right equal the frame's own `px` (16 / 16 / 32 / 32, the `ListingsPageFrame.tsx:93` ladder);
+- no side is 0;
+- nothing exceeds the frame's own value.
+
+Measure the top edge to the first visible text. That is the breadcrumb band's own `padding-block`
+(`ListingsPageFrame.module.css:10`, 10px), which is a production gutter, so it is not added in the Story. Also
+record the contact card's price block order: struck `138,000 EUR` above `125,000 EUR`.
+
+### 16.2 Gate expectation for `check:design-tokens` (corrected)
+
+§13.2 required every `npm.cmd` command to exit 0. Review 1 accepts the run's single finding,
+`src/design-system/mantine/patterns/MantineNavRowList.module.css:24`. That file is untracked work of **Task 857**
+(Sprint 78). It is named in that kickoff and is not a §7 path.
+
+From now on, the criterion is: **`check:design-tokens` reports no finding in a §7 path.** If it still exits 1 on
+another task's file, record that path and its owning task, and do not edit it.
+
+Every other §13.2 command must still exit 0.
+
+### 16.3 Revision gate block (one pass, transcript retained, exit code printed after each command)
+
+```powershell
+node.exe -p process.platform
+node.exe -v
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:design-tokens
+npm.cmd run check:story-coverage
+npm.cmd run check:mojibake
+npm.cmd run build
+npm.cmd run build-storybook
+git hash-object src\stories\patterns\mantine\ListingDetailView.stories.tsx src\design-system\mantine\patterns\MantineListingContactPattern.tsx src\modules\listings\components\ListingCard.tsx src\modules\listings\components\ListingContact.tsx src\modules\listings\components\ListingDetailView.tsx src\stories\patterns\mantine\ListingContactPattern.stories.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- Every command exits 0, except `check:design-tokens` under §16.2.
+- The six hashes after the first are unchanged from `41-hashes.txt`.
+- After the block, re-measure `AC10` with the existing `docs/sessions/evidence/task912/measure.mjs` (or an `r1-`
+  copy). Write the output to `r1-measure.json`.
+- Re-measure `ListingContactPattern/Default` at 320 and 1440 as a control. It must be unchanged.
+
+Receipts:
+- `GR-3b`, `GR-3c` and `GR-3d`, one per export of `ListingDetailView` with the measured values.
+- `GR-3e`: no popup is opened. Write `n/a: no popup`.
+- `GR-3f`: no circular element changed. Write `n/a`.
+
+### 16.4 Completion
+
+Append a `## Revision 1` section to `docs/sessions/2026-10-03-task912-strikethrough-only-for-reduction.md`. Include
+the Files Changed delta (one path), the block transcript with exit codes, the AC10 table and the receipts. Update
+912's row in `docs/backlog.md`. The registry addition (§10.6) stays owed while `docs/critical-flow-registry.md` is
+dirty. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.

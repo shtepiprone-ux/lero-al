@@ -1,0 +1,72 @@
+﻿{
+ "pagination@1440": {
+  "pageText": [],
+  "paginators": [
+   {
+    "items": "Previous 1 2 3 ... 8 9 10 Next",
+    "ctrl": {
+     "w": 40,
+     "h": 40,
+     "radius": "8px"
+    }
+   },
+   {
+    "items": "Previous 1 2 3 ... 8 9 10 Next",
+    "ctrl": {
+     "w": 40,
+     "h": 40,
+     "radius": "8px"
+    }
+   },
+   {
+    "items": "1 2 3 ... 8 9 10",
+    "ctrl": {
+     "w": 40,
+     "h": 40,
+     "radius": "8px"
+    }
+   }
+  ],
+  "focus": {
+   "text": "2",
+   "outline": "auto 1px offset 1px",
+   "boxShadow": "none",
+   "clip": {
+    "cls": "relative flex flex-1 flex-col overflow-x-hidden overflow-y-a",
+    "overflow": "hidden auto",
+    "roomPx": {
+     "top": 260,
+     "bottom": 600,
+     "left": 205.890625,
+     "right": 904.109375
+    }
+   }
+  }
+ },
+ "pagination@390": {
+  "pageText": [
+   "Page 1 of 10",
+   "Page 1 of 10",
+   "Page 1 of 10"
+  ],
+  "paginators": []
+ },
+ "products-list@1440": {
+  "pageText": [],
+  "paginators": [
+   {
+    "items": "icon 1 2 3 icon",
+    "ctrl": {
+     "w": 40,
+     "h": 40,
+     "radius": "8px"
+    }
+   }
+  ]
+ },
+ "products-list@390": {
+  "pageText": [],
+  "paginators": []
+ }
+}
+EXIT_CODE=0

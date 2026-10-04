@@ -559,8 +559,8 @@ reference".
 
 **Standing references. Every page of each, with no exception:**
 1. Lahomes — https://techzaa.in/lahomes/admin/index.html
-2. Kamr — https://kamr-vite.vercel.app/dashboard (login `admin`, password `123456`, a public demo account given by the
-   owner)
+2. Kamr — https://kamr-vite.vercel.app/dashboard (login `demo@example.com`, password `123456`: the public demo account, corrected by the owner on
+   2026-10-04; the earlier `admin` login is refused by the form's `type="email"` field)
 3. Omah — https://omah.dexignzone.com/xhtml/index.html
 4. TailAdmin — https://demo.tailadmin.com/ (the bundled copy, `docs/tailadmin-style-reference.md`, is supplementary and
    never replaces the live site)
@@ -746,6 +746,63 @@ review, verify the column order in the rendered Story at 1440 and the card at 39
 With no receipt, or with a `no` and no owner exception, the kickoff is not publishable, the executor returns
 `BLOCKED — GR-8`, and the reviewer returns `NEEDS REVISION`. No gate measures this yet (GR-2).
 
+## GR-9 — A review is meticulous: every element, every state, every variant, every claim
+
+**Owner rule, 2026-10-04 (Task 741, O46-2).** The owner returned all three matrix rows that Opus had handed over as
+measured, then wrote, verbatim: *"ти робиш дуже погано рев'ю! Ти мене вже заїбав, сука, роби блядь якісно, детальніше, бо
+ти блядь поверхнево робиш рев'ю, через що я палю дуже багато токенів! Запиши блядь правило - рев'ю робиться дуже
+прискіпливо, якісно, детально!"*
+
+**What the shallow review missed, one row each:**
+- **Rows 1–2:** the grid card and the list card of `ListingCard` are two hand-built markups, with two greys, a 10px
+  vs 12px per-m² text and literal CSS values. Opus measured overflow, type scale, gutters and corners, but never
+  compared the two variants.
+- **Row 3, states:** the `ListingsShellView` Story rendered only `active` listings, while the page also shows `sold`
+  and `rented` (the closed tab).
+- **Row 3, "Show more":** the button was `size="lg"` with a hand-made `Loader`. `size="lg"` is not in the canonical
+  `Mantine/Primitives/Button` Story, which shows `xs`/`sm` and the `loading` prop.
+
+The owner found all three. The GR-3b…GR-3g receipts were green, because they measure geometry, not completeness or
+canonicity.
+
+**Applies to:** every review (`review-task`), every owner-matrix handoff, and every Story a kickoff lists for owner
+review. It applies before the first finding and before the matrix reaches the owner.
+
+**Required, per matrix Story, in this order:**
+1. **Element census.** List every visible element the Story renders, including popups. Use the rendered DOM at 390 and
+   1440, not the source alone. For each element, name its canonical owner: the production component plus its own Story,
+   and the theme entry.
+2. **Canonical trace.** For each element, compare every prop and value it uses with what its canonical Story and theme
+   entry document: variant, size, colour, radius, spacing, loading/disabled mechanism and icon set. Each of these is a
+   finding:
+   - a value the canonical Story does not show;
+   - a hand-made state (a `Loader` in `leftSection` where the canonical uses `loading`);
+   - a literal value or a `style` object;
+   - a feature-local chrome.
+3. **State coverage.** Read the production data path (the query and its filters, every tab, every `status` the surface
+   can receive). List every state the real surface can render, including empty, loading, error, each tab and each
+   status. Then check that the Story renders each one. A Story that shows fewer states than production is a finding. A
+   Story that shows a state production cannot reach is a finding too, unless the owner decided it.
+4. **Variant parity.** Where one component renders in two or more variants or layouts (grid/list, desktop/phone, open/closed),
+   compare them part by part with computed styles. Any part whose font, colour, spacing or token differs without a
+   kickoff or owner reason is a finding.
+5. **Claim check.** Open every evidence file the executor cites and check each claim against it, the executor's
+   screenshots included. A claim its own evidence contradicts is a `CONTRADICTION` finding.
+6. **Only then** run the GR-3b…GR-3g measurements and hand the matrix to the owner.
+
+**Forbidden:**
+- handing a Story to the owner with any of steps 1–5 not done;
+- writing "measured", "ready" or "verified" for a Story on the strength of geometry receipts alone;
+- sampling: "the rest look the same" is not a check.
+
+**Receipt — review, one per matrix Story, before the matrix is handed over:**
+
+`GR-9 REVIEW DEPTH — <story id>: elements <n> (each → canonical owner); non-canonical props/values: <list | NONE>; production states <list> → rendered <list>, missing <list | NONE>, unreachable shown <list | NONE>; variant parity <pairs checked> → differences <list | NONE>; executor claims checked against their evidence <n>/<n>, contradictions <list | NONE>; evidence <path>.`
+
+With no receipt, or with an item not `NONE` and not raised as a finding, the review is void, and the matrix does not
+go to the owner. Task design applies the same census to the Stories a kickoff puts in the owner matrix (`create-task`),
+so that a kickoff never asks the executor to preserve a non-canonical element.
+
 ## Enforcement status
 
 | Rule | Enforced by | State |
@@ -763,6 +820,7 @@ With no receipt, or with a `no` and no owner exception, the kickoff is not publi
 | GR-3g | executor + reviewer: a clipping-ancestor probe plus a device-scale-1 crop of each touching corner at 10×, saved as evidence + required receipt; the radius comes from the ancestor's token (`--paper-radius` / `--card-radius` / theme key) | **active** — no automated gate; computed styles cannot see a clipped line. |
 | GR-7 | Four standing references (Lahomes, Kamr, Omah, TailAdmin), every page, in depth; run three times per task (creation by Opus, execution by Sonnet, review by Opus) with one receipt each; best 2026 UI/UX practice for every choice. Gates: `create-task` step 6, the `execute-task` STOP gate, the `review-task` integrity gate, both agent files, the `CLAUDE.md` "Read first" item | **active for every task, no exemption (owner, 2026-10-04)** — enforced by rule and receipt; no automated gate can prove a live audit. |
 | GR-8 | task design + executor + reviewer: one receipt per table; column order checked in the rendered Story at 1440 and the card at 390; chrome only in `MantineDataTableToCards` | **active** — no automated gate yet. |
+| GR-9 | reviewer: element census + canonical trace + production-state coverage + variant parity + executor-claim check, one receipt per matrix Story, before the owner matrix; `create-task` applies the same census to matrix Stories | **active** — no automated gate; a review without the receipt is void. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

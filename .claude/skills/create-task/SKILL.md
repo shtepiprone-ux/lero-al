@@ -93,7 +93,7 @@ write a kickoff or issue a decision first.
    2026-10-03 and 2026-10-04).** Before the first line of a kickoff or revision, and before any AskUserQuestion
    option, perform the current-session live audit in `docs/golden-rules.md` GR-7. It covers **every page** of all
    four standing references, in depth: Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr
-   https://kamr-vite.vercel.app/dashboard (login `admin` / `123456`), Omah https://omah.dexignzone.com/xhtml/index.html
+   https://kamr-vite.vercel.app/dashboard (login `demo@example.com` / `123456`), Omah https://omah.dexignzone.com/xhtml/index.html
    and TailAdmin https://demo.tailadmin.com/. It also covers every owner-provided URL or example. Use the shared reference library `docs/research/references/<newest date>/` (owner decision 2026-10-04, GR-7): read its rows for the subject, then open live every page you rely on and record unchanged/difference; a full re-crawl only on a difference, a missing page or the owner's request. Every UI/UX
    choice is the **best 2026 practice** among what they show, with the reason recorded. The kickoff must also
    require Sonnet's own audit before its first write, and the reviewer's own audit before review. For each
@@ -190,6 +190,10 @@ composition. This is a project-wide rule, not a Storybook preference.
    - **Circles (GR-3f, owner rule 2026-10-02).** For every changed circular control or indicator, name its canonical
      owner (theme entry or component) and require a device-scale-1 pixel crop as evidence. The canonical radio is 20px
      with a 10px dot. A kickoff that sizes a circle in one consumer is not publishable.
+   - **Review depth (GR-9, owner rule 2026-10-04).** For every Story in the owner matrix, the kickoff lists its rendered
+     elements with their canonical owners, every state the production data path can render (and requires the Story to
+     render exactly those), and every variant pair that must match part by part. A matrix Story whose non-canonical
+     element the kickoff would leave in place is not publishable.
    - **Corners (GR-3g, owner rule 2026-10-03).** For every changed line (border, outline or box-shadow ring, in any
      state) inside a rounded ancestor that clips, name the ancestor's radius token and require the corners that meet
      it to take that token (`var(--paper-radius)`, `var(--card-radius)` or the theme key), with DPR-1 corner crops as

@@ -963,7 +963,7 @@ The label renders 14px, 16px radius (D46-2), `2px solid` `--status-info` / `--st
 
 ## 18. Revision 3b — every card status in the card Stories; no list layout below 640 (owner matrix O46-1 returned, 2026-10-04)
 
-Sprint 46 · P1 · QA profile **Q4**. **This section is the only executable route.** §17's R30–R35 are implemented and
+Sprint 46 · P1 · QA profile **Q4**. **Route history:** this section was the executable route for Revision 3b; the current one is §18.14. §17's R30–R35 are implemented and
 reviewed (§17.11, §17.12). Do not touch them except where this section names a file. Re-entry mode: **remediation**,
 which starts at §18.7 I0. Evidence goes to `docs/sessions/evidence/task741r3/rev3b/`.
 
@@ -1325,7 +1325,7 @@ Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REV
 
 ### 18.12 Review of Revision 3c, 2026-10-04 — `NEEDS REVISION` → Revision 3d (GR-7 receipt only; no source write)
 
-**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree.
+**Superseded as the route by §18.14** (R44 implemented; its record is corrected there). Original text: re-entry mode: **remediation**, on the current working tree.
 Evidence goes to `docs/sessions/evidence/task741r3/rev3d/`. Revision 3d writes **no** source, Story, test, script or
 `messages/*.json` file.
 
@@ -1365,7 +1365,7 @@ Opus. It stands for this revision's task-creation receipt, which §18.3 and §18
 
 | Choice | Options ← pages | Shipped in 741 | Verdict |
 |---|---|---|---|
-| Status badge | a filled pill at the photo's top corner (13px/600, radius 4px) ← Lahomes 008, Omah 013; a tinted pill ← Kamr 005, TailAdmin 064/068 | a filled photo badge, one `LISTING_STATUS_COLOR` per status, labelled | matches both real-estate references; the label carries the state as well as the colour (WCAG 1.4.1) |
+| Status badge | a filled pill at the photo's top corner ← Lahomes 008 (13px/600, radius 4px), Omah 013 (11px/400, radius 4px) (corrected §18.14, F36); a tinted pill ← Kamr 005, TailAdmin 064/068 | a filled photo badge, one `LISTING_STATUS_COLOR` per status, labelled | matches both real-estate references; the label carries the state as well as the colour (WCAG 1.4.1) |
 | Closed listing | strike-through price only ← Lahomes 008 | overlay label + badge | owner O83-1 (2026-09-30), D46-2 |
 | Grid/list on a phone | an icon toggle beside the sort ← Omah 013; separate routes ← Lahomes 008/009 | a toggle beside the sort, hidden below 640, list→grid reset | owner D46-3 |
 | Inactive / pending badge | no reference shows it | gray / yellow from the map | owner D46-4 |
@@ -1444,7 +1444,7 @@ Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REV
 
 ### 18.13 Owner return of O46-2 rows 1–2, 2026-10-04 → owner D46-5: the grid/list card unification moves into Task 918
 
-**§18.12 (Revision 3d, R44) stays the only executable route for Sonnet.** This subsection changes what 741 closes on;
+**§18.12 (Revision 3d, R44) was the executable route when this was written; it is now §18.14 (Revision 3d-1).** This subsection changes what 741 closes on;
 it adds no executor step.
 
 **Owner return, verbatim:**
@@ -1485,3 +1485,265 @@ and Task 734's 12 reserved hits. The owner's return is a `FACT`.
 - **Why invalid:** GR-7 requires all four references, and the owner asked *"а ти тільки один референс перевіряв?"*.
 - **Evidence:** the full audit is now `docs/sessions/evidence/task741r3/rev3e/design/gr7-design.md`. It covers 17 live pages across Lahomes, Kamr, Omah and TailAdmin, plus Rozetka (home and catalogue, both tile views, opened in headed Chrome after headless got HTTP 403).
 - **Corrected status:** `FACT`. Omah's property list and Kamr's shop keep identical part styles. Omah's shop changes the price size. Lahomes switches to an admin table. TailAdmin has no pair. Rozetka keeps every part identical across its two tile views. The chosen practice (one card, one source per part) stands on three references and the owner's rule, not on one.
+
+### 18.14 Review of Revision 3d, 2026-10-04 — `NEEDS REVISION` → Revision 3d-1 (correct the audit record; no source write)
+
+**Folded into §18.15 (Revision 3e), which is the route; R45 below is executed there.** Re-entry mode: **remediation**. Evidence goes to
+`docs/sessions/evidence/task741r3/rev3d/`, in new files only. No source, Story, test, script or `messages/*.json` file
+is written.
+
+**Inspected:**
+- `rev3d/00_i0.txt` and `01_final_hashes.txt`: the five hashes equal `rev3c/final/13_hashes.txt` (`win32`);
+- `rev3d/research-exec/gr7-exec.md`, `card-badges.json`, `card-badges2.json` and `exec-00-lahomes-1440.png`;
+- the session log's `## Revision 3d`.
+
+**Verified, kept:**
+- AC43's hash clause.
+- Rows 3–12 of `gr7-exec.md`.
+- The Omah correction: Omah 013's on-photo pill is 11px/400, radius 4px, and **not** 13px/600. That error is the
+  orchestrator's (§18.12.2) and is corrected there.
+
+#### 18.14.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F35 | **P2** (R44, AC43, GR-7 integrity) | **CONTRADICTION.** `gr7-exec.md` rows 1–2 and the session log's "Difference reported" say Lahomes `/property-grid.html` (008) "shows no status pill on its cards" and that "For Rent/For Sale are filter labels". The executor's own evidence disproves it. `card-badges2.json` → `lahomes-grid@1440` records `SPAN.badge bg-success text-white fs-13` "For Rent" and `SPAN.badge bg-danger text-white fs-13` "Sold", both `onPhoto: true`, 13px/600, radius 4px, padding 3px 6px, white on `rgb(92,193,132)` / `rgb(233,103,103)`. `exec-00-lahomes-1440.png` shows a filled *For Rent* / *Sold* / *For Sale* pill at the top-right of every card photo. The reviewer's live measurement agrees (`rev3c/review/gr7-live-check.json`: *For Rent* 13px/600, radius 4px, `rgb(92,193,132)`). The record then moves Lahomes out of "filled pill on the photo" in its options table and receipt. A GR-7 record must not state what its own evidence contradicts. | **R45**, **AC44** |
+| F36 | NOTE, orchestrator | **RETRACTION (orchestrator).** **Invalid prior claim:** §18.12.2 gave "a filled pill at the photo's top corner (13px/600, radius 4px) ← Lahomes 008, Omah 013". **Why invalid:** the 13px/600 value is Lahomes 008's only. Omah 013's pill is 11px/400, radius 4px (`rev3d/research-exec/omah-badge.json`; `rev3c/review/gr7-live-check.json` Omah row: 11px/400, radius 4px, `rgb(59,76,184)`). **Corrected status:** `FACT`. §18.12.2's row now reads per page. The chosen practice is unchanged. | Kickoff corrected |
+
+#### 18.14.2 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R45** | Correct the GR-7 execution record. Only these change: <ol><li>`gr7-exec.md` rows 1–2 (Lahomes 008 at 1440 and at 390) state the on-photo filled status pills with the values in `card-badges2.json`. Re-measure 390 and cite it. They also keep the strike-through and route-link facts.</li><li>The options table lists "filled pill on the photo ← Lahomes 008 (13px/600, r4), Omah 013 (11px/400, r4)" and "tinted labelled pill ← Lahomes 009, Kamr 005, TailAdmin 064/068".</li><li>The "Difference from the kickoff's attribution" section keeps only the Omah size correction and deletes the "Lahomes 008 shows no status pill" claim.</li><li>The session log gets `## Revision 3d-1`. It holds a `RETRACTION` (invalid claim, why invalid, evidence, corrected status) and a re-emitted, corrected `GR-7 REFERENCE RESEARCH` receipt (execution, Sonnet), whose options field matches item 2. The `## Revision 3d` text stays as written; 3d-1 supersedes it.</li></ol> Do not edit any other file under `rev3d/`. | P2 |
+
+#### 18.14.3 Acceptance criteria
+
+`GR-4 AC AUDIT — 1 criterion; it states an observable property; absolutes: none.`
+
+- **AC44 [R45]** All of the following hold:
+  - every Lahomes 008 row in `gr7-exec.md` names the on-photo badge with its measured values and the source file;
+  - the session log's `## Revision 3d-1` carries the RETRACTION and the corrected receipt;
+  - `git hash-object` of the five files in `rev3c/final/13_hashes.txt` equals that file, both at I0 and at the end (`rev3d/04_i0.txt`, `rev3d/05_final_hashes.txt`, each ending `EXIT_CODE=`);
+  - `check:file-integrity` and `check:backlog-active` exit 0.
+
+#### 18.14.4 Verification plan
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+git --no-optional-locks hash-object src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/stories/mantine/primitives/ListingCard.stories.tsx src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingsShellView.tsx
+npm.cmd run check:file-integrity
+npm.cmd run check:backlog-active
+```
+
+Run the block at I0 and at the end. Write the outputs through Node or `Out-File -Encoding utf8`. Expected: `win32`, the five
+hashes equal `rev3c/final/13_hashes.txt`, and both checks exit 0.
+
+#### 18.14.5 Files in scope
+
+- `docs/sessions/evidence/task741r3/rev3d/research-exec/gr7-exec.md`
+- `docs/sessions/evidence/task741r3/rev3d/04_i0.txt`, `05_final_hashes.txt` (new); a 390 re-measure script and JSON under `rev3d/research-exec/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3d-1`)
+- `docs/backlog.md` (the 741 state only)
+
+#### 18.14.6 Completion
+
+Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git. 741
+is approvable after the review of 3d-1 and the owner's answer on O46-2 row 3 (§18.13).
+
+### 18.15 Owner return of O46-2 row 3, 2026-10-04 → Revision 3e (canonical "Show more", canonical empty state, production states in the page Story; includes 3d-1)
+
+**This subsection is the only executable route.** It **includes §18.14's R45** (Revision 3d-1), so one session does
+both. Re-entry mode: **remediation**. Evidence goes to `docs/sessions/evidence/task741r3/rev3e/exec/`. `rev3e/design/`
+belongs to Task 918's design and is not written.
+
+#### 18.15.1 Owner return and decisions, verbatim
+
+O46-2 row 3, `Patterns/Mantine/ListingsShellView`, returned 2026-10-04: *"Я не приймаю цю Story. Не всі статуси
+відображені. "Show more" кнопка взагалі якась хардкодна, не така як ми використовуємо. Коли на екрані обраний вид -
+список, а потім я переключаюсь на мобільний екран - все стає картками, а потім я повертаюсь на десктопне розширення і
+бачу вид картками, все ок."* So the D46-3 list→grid behaviour is **accepted**, and is not re-checked.
+
+Owner decisions, 2026-10-04, options chosen verbatim:
+- **D46-6** *"Як у продакшені (Recommended)"*. The page Story shows exactly what `/listings` can render:
+  - the active tab with every active variant (new, plain, reduced, premium, no photo, favourite), filter chips and pagination;
+  - a closed-tab export with `sold` and `rented`;
+  - the empty state of both tabs;
+  - the "loading more" state.
+  - Inactive, pending, archived and expired never reach `/listings` (`page.tsx:46-49`, `applyPublicVisibility`). They stay in the card Stories.
+- **D46-7** *"Primary brand, як Rozetka (Recommended)"*. "Show more" is the canonical theme `Button`:
+  - `variant="filled" color="brand"`, theme default size, `loading={isLoadingMore}`;
+  - centred above the paginator, full width below 640.
+
+**RETRACTION (orchestrator).**
+- **Invalid prior claim:** §18.12.3 / §18.12.8 handed row 3 to the owner as measured.
+- **Why invalid:** the review measured geometry only. It never compared the Story's states with production's data
+  path, and never traced "Show more" to the canonical Button.
+- **Evidence:** `rev3f/review/shell-census.json`.
+- **Corrected status:** `CONTRADICTION`. The owner rule **GR-9** (`docs/golden-rules.md`, 2026-10-04) now makes those
+  checks mandatory.
+
+#### 18.15.2 Verified context — GR-9 census of the Story (Opus, `win32`, final 3c `storybook-static`, `rev3f/review/shell-census.json`)
+
+| # | Element (rendered) | Canonical owner | Finding |
+|---|---|---|---|
+| F37 | "Show more" `Button` (`ListingsShellView.tsx:171-183`) | theme `Button` + `Mantine/Primitives/Button` (sizes `xs`/`sm`; loading via `loading`) | `size="lg"`, so the text is 18px while every other button on the page is `sm` (14px); `variant="outline"`; a hand-made `Loader` in `leftSection` plus `disabled` instead of `loading`. → **R46** |
+| F38 | Empty state (`ListingsShellView.tsx:117-131`) | `MantineEmptyLoadingErrorState` (`Patterns/Mantine/EmptyLoadingErrorState`) | a local `ThemeIcon size="colossal"` with a 🏠 emoji `Text` and its own title/description markup. → **R47** |
+| F39 | `ListingsSortBar` root (`ListingsSortBar.tsx:65`) | Mantine `Divider` (precedent `ListingsFilterBar.tsx:92,167`) | `style={{ borderBottom: '1px solid var(--mantine-color-gray-2)' }}`, a style object with a literal value. → **R48** |
+| F40 | "Save search" modal confirm `Button` (`SaveSearchButton.tsx:93-100`), a popup of this surface | theme `Button` `loading` | a hand-made `Loader` in `leftSection` plus `disabled`. → **R49** |
+| F41 | Story states (`ListingsShellView.stories.tsx`) | production data path | All 8 fixtures are `status: 'active'`. There is no reduced, no-photo or favourite card. The closed tab, the closed-empty state and "loading more" are never shown. → **R50** |
+| F42 | Story data consistency | `ListingsShell.tsx:167`, `ListingsPagination.tsx:21`, `ActiveFilterChips` (URL) | "Show more" is shown while `total === listings.length`, a state production never renders. Pagination is never shown, because `total` 8 < `perPage` 20. `activeFiltersCount={2}` badges "Filters 2" while 0 chips render, because the Story's URL query is empty. → **R50** |
+| — | tabs, filter bar, `ActiveFilterChips`, `ListingsActionRow`, view toggle, `MantinePagination`, `MantineDrawer`, `ListingCard` | each `manifest:yes story:yes` (GR-1 census) | no non-canonical prop found. The `ListingCard` grid/list parity is Task 918 §16 (D46-5). The `ListingsShell.tsx` loading skeleton is container debt (baselined). |
+
+`GR-9 REVIEW DEPTH — patterns-mantine-listingsshellview--default/--empty: elements 14 (each → canonical owner, table above); non-canonical props/values: F37, F38, F39, F40; production states active-tab variants, closed tab, both empty states, loading-more, pagination, chips → rendered active (new, plain, premium), active-empty; missing reduced, no-photo, favourite, closed tab, closed-empty, loading-more, pagination, chips; unreachable shown: "Show more" with everything loaded, filter count 2 with 0 chips; variant parity grid/list → Task 918 §16; executor claims checked: n/a (owner return); evidence docs/sessions/evidence/task741r3/rev3f/review/shell-census.json.`
+
+#### 18.15.3 Reference research (GR-7)
+
+The record is `docs/sessions/evidence/task741r3/rev3f/review/gr7-row3.md`. It covers:
+- **Rozetka:** the catalogue's "Показати ще" is the site's standard primary button (filled brand, 16px/500, radius 8px, 40px high), centred above the paginator, the same at 390.
+- **Lahomes and Kamr:** pagination only.
+- **Omah and TailAdmin:** neither control on these pages.
+
+`GR-7 REFERENCE RESEARCH — moment: task creation (741 §18.15); role: Opus; task: 741; subject: end-of-list "show more", paginator, page states; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages: Rozetka catalogue, Lahomes /property-grid + /ui-pagination, Kamr /ui-pagination + /ecom-product-grid, Omah /property-list, TailAdmin /products-list + /buttons → unchanged (Kamr live login works); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0, Rozetka 1/1/0; inspected in depth: 8 pages at 1440 and 390; workflow states operated: Kamr sign-in, scroll to list end; options across references: primary load-more ← Rozetka; pagination only ← Lahomes, Kamr; chosen 2026 best practice: canonical primary Button with loading state above the paginator; Story states equal to production; absent or unverified: none; lero.al data map: page.tsx:46-49, ListingsShell.tsx:167, ListingsPagination.tsx:21, URL-driven chips and tabs; owner decisions: D46-6, D46-7; evidence: docs/sessions/evidence/task741r3/rev3f/review/gr7-row3.md.`
+
+**Execution.** Before the first write, Sonnet runs its own GR-7 audit of the same pages into
+`rev3e/exec/research-exec/`. Rozetka needs headed Chrome; the precedent is `rev3f/review/gr7-rozetka-more.mjs`. Sonnet
+emits the full receipt. If the audit contradicts the choice above, it stops with `BLOCKED — GR-7 KICKOFF CONFLICT`.
+
+#### 18.15.4 Canonical decision record (GR-0)
+
+| Artifact | Disposition | Owner / token path |
+|---|---|---|
+| "Show more" | **REUSE** | theme `Button` (`theme.ts:949`, default `size: 'sm'`, radius `lg`), `variant="filled" color="brand"`, `loading` |
+| Empty state | **REUSE** | `MantineEmptyLoadingErrorState state="empty"`. Icon: lucide `Home` at `theme.other.iconSize.decorative` (Opus choice that replaces the emoji; returnable in O46-3) |
+| Sort-bar bottom line | **REUSE** | Mantine `Divider color="gray.2"` (the same colour as today), as in `ListingsFilterBar` |
+| Save-search confirm loading | **REUSE** | theme `Button` `loading={isPending}` |
+| Story state fixtures | **EXTEND** the shared fixture | move `makeFixtureListing` from `ListingCard.stories.tsx:90` into `src/stories/fixtures/cardListingData.fixture.ts` as an exported `makeStateListing`, and consume it from both Stories (no copy) |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: listings page "Show more", empty state, sort-bar line, save-search loading, page-Story state fixtures; semantic queries: show_more, load more, Loader leftSection, empty state, no_results, borderBottom, makeFixtureListing; inspected candidates: theme Button entry + Mantine/Primitives/Button, MantineEmptyLoadingErrorState + Patterns/Mantine/EmptyLoadingErrorState, ListingsFilterBar Divider, SaveSearchButton, cardListingData.fixture.ts, ListingCard.stories.tsx makeFixtureListing; decision: REUSE (+ EXTEND the shared fixture); selected canonical owner: theme Button, MantineEmptyLoadingErrorState, Mantine Divider, cardListingData.fixture.ts; Mantine/TailAdmin token path: theme Button defaults, brand colour, gray.2, iconSize.decorative; new hardcoded visual values: NONE; rationale: every artifact has an existing canonical owner.`
+
+`GR-3a STORY PREFLIGHT — ListingsShellView × closed tab, closed-empty, loading-more, active variants; canonical candidates: patterns-mantine-listingsshellview--default, --empty; direct-import evidence: ListingsShellView.stories.tsx:4; toolbar coverage: locale=context.globals.locale, viewport=toolbar; decision: EXTEND (exports ClosedTab, ClosedEmpty, LoadingMore added to the same file; Default extended); target: Patterns/Mantine/ListingsShellView; rationale: the states are missing variants of the existing canonical Story.`
+
+#### 18.15.5 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R45** | As §18.14.2 (correct the Revision 3d GR-7 record). Unchanged. | P2 |
+| **R46** | `ListingsShellView` "Show more": `<Button variant="filled" color="brand" loading={isLoadingMore} onClick={onShowMore} w={{ base: '100%', sm: 'auto' }}>`, with no `size`, no `leftSection` and no `disabled` (Mantine's `loading` disables it). It stays centred in its `Group` above `ListingsPagination`. `Loader` and `useMantineTheme` are removed from the file's imports if nothing else uses them. | P0 |
+| **R47** | `ListingsShellView`'s empty branch renders `MantineEmptyLoadingErrorState`: `state="empty"`, `icon={<Home size={theme.other.iconSize.decorative} />}`, and `title` = `t('no_results_closed')` on the closed tab, otherwise `t('no_results_title')`. `description` = `t('no_results_desc')` on the active tab only. The local `Center`/`ThemeIcon`/emoji markup is deleted. | P0 |
+| **R48** | `ListingsSortBar`: the root `Group`'s `style` object is removed. A `<Divider color="gray.2" />` directly after the row draws the line, and the visible line, its colour and its 1px weight are unchanged. If the sort bar's single-root contract needs a wrapper, wrap both in `<Stack gap={0}>` with the `listings-sort-bar` class kept on the `Group`. | P1 |
+| **R49** | `SaveSearchButton` modal confirm: `loading={isPending}`; `leftSection` stays `<Bookmark …/>`; the hand-made `Loader` branch and `disabled={isPending}` on that button are removed (cancel keeps `disabled`). | P1 |
+| **R50** | `ListingsShellView.stories.tsx` (D46-6). Every state comes from the shared `makeStateListing`, and every visible string comes from the existing keys. <ul><li>**`Default`** (active tab): six cards: new, plain (`created_at` 2026-07-01), reduced (`price_old`), premium, no photo, and one more plain card with its id in `favoriteIds`. `perPage={6}` `total={18}` `showLoadMore`, so pagination renders three pages. `parameters.nextjs.navigation.query = { type: 'sale', rooms: '2' }` with `activeFiltersCount={2}`, so two chips render.</li><li>**`ClosedTab`**: `tab="closed"`, query `{ tab: 'closed' }`, a sold card and a rented card, `total={2}`, no "Show more", no pagination.</li><li>**`ClosedEmpty`**: `tab="closed"`, query `{ tab: 'closed' }`, no listings.</li><li>**`Empty`**: unchanged, active tab.</li><li>**`LoadingMore`**: `Default`'s data with `isLoadingMore`.</li></ul> `makeFixtureListing` moves from `ListingCard.stories.tsx` to `cardListingData.fixture.ts` as `makeStateListing` (same signature and output). `ListingCard.stories.tsx` imports it, and its rendered states must not change. No `style` object, fixed width or viewport pin; `StoryPageGutter` stays. | P0 |
+| **R51** | Tests, red first: the `ListingsShellView` smoke/viewReset suite gains (a) "Show more" renders a Mantine `Button` with `data-variant="filled"` and, with `isLoadingMore`, `data-loading`; (b) an empty closed tab renders the `no_results_closed` text through the pattern, and no 🏠. | P1 |
+
+#### 18.15.6 Type scale (GR-3c)
+
+| Element | Role | base / sm / md / lg | Key | Provenance |
+|---|---|---|---|---|
+| "Show more" label | button label | 14 at all widths (today 18) | theme Button `sm` | `theme.ts:950` |
+| Empty title | section message | 18 at all widths | pattern `Text size="lg" fw={600}` | `MantineEmptyLoadingErrorState` |
+| Empty description | body | 14 at all widths | pattern `size="sm"` dimmed | same |
+
+Nothing reaches 24px, and no heading is above 20px below 640.
+
+#### 18.15.7 Acceptance criteria
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.`
+
+- **AC44** — as §18.14.3.
+- **AC45 [R46, R49, R51]** Given the final Story at 390 and 1440, the "Show more" button computes the same font size
+  (14px), height and radius as "Save search", with the brand background. Given `LoadingMore`, the button carries
+  `data-loading`. The R51 tests are red on the pre-change tree and green after.
+- **AC46 [R47, R51]** Given `Empty` and `ClosedEmpty`, the pattern's root renders the right title. Given `ClosedEmpty`,
+  the description is absent. A text search of the rendered root finds no 🏠.
+- **AC47 [R48]** Given `ListingsSortBar` and `ListingsShellView` at 1440, a line 1px high in `gray.2` renders under the
+  sort row, at the same y offset as before (±1px). A search of `ListingsSortBar.tsx` for `style={{` returns no hit.
+- **AC48 [R50]** Given the final build, a probe records for each export the selected tab, card statuses and badges,
+  chip count, pagination presence, "Show more" presence and loading state. Expected:
+  - `Default`: 6 cards with the badges New / – / New+Price reduced / – (premium) / – (placeholder) / – (favourite), 2 chips, pagination 3 pages, "Show more";
+  - `ClosedTab`: Sold+overlay, Rented+overlay, no "Show more", no pagination;
+  - `ClosedEmpty`: the closed message;
+  - `LoadingMore`: `data-loading`.
+
+  The `Mantine/Primitives/ListingCard` probe output equals `rev3c/probe-states.json` for every cell (the fixture move changed nothing).
+
+#### 18.15.8 Verification plan
+
+**I0, before any write.**
+- `git --no-optional-locks status --porcelain`, plus `git hash-object` of every §18.15.9 file → `rev3e/exec/00_i0.txt`.
+- The two R51 tests' red run → `01_red.txt`.
+
+**Gate block, after the writes.** Write one transcript per command to `rev3e/exec/final/`, each ending `EXIT_CODE=`.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsShell.tsx
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:i18n
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run check:backlog-active
+git --no-optional-locks hash-object src/modules/listings/components/ListingsShellView.tsx src/modules/listings/components/ListingsSortBar.tsx src/modules/listings/components/SaveSearchButton.tsx src/stories/patterns/mantine/ListingsShellView.stories.tsx src/stories/mantine/primitives/ListingCard.stories.tsx src/stories/fixtures/cardListingData.fixture.ts
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL (baselined debt);
+- every other command exits 0.
+
+Then run the AC48 probe on that build. The model is `rev3f/review/shell-census.mjs`, re-run against the final
+build, plus the primitive-card comparison with `rev3c/probe-states.json`.
+
+**Story receipts, GR-9 first** (`docs/golden-rules.md` GR-9): one `GR-9 REVIEW DEPTH` per changed Story
+(`ListingsShellView` exports, `ListingsSortBar`, `ListingsActionRow`, `Mantine/Primitives/ListingCard`). Then:
+- GR-3b at 320/390/1024/1440;
+- GR-3c at 320/390/768/1440;
+- GR-3d, all four sides (`ListingsShellView`: `StoryPageGutter all`, unchanged; `ListingsSortBar` and `ListingsActionRow`: as each file states);
+- GR-3e for the "Save search" modal, opened in `ListingsActionRow` at 390 and 1440 (cancel is a lone text button beside a filled one, allowed);
+- GR-3f n/a;
+- GR-3g for the overlay label in `ClosedTab`.
+
+#### 18.15.9 Files in scope
+
+- `src/modules/listings/components/ListingsShellView.tsx` (R46, R47)
+- `src/modules/listings/components/ListingsSortBar.tsx` (R48)
+- `src/modules/listings/components/SaveSearchButton.tsx` (R49)
+- `src/stories/patterns/mantine/ListingsShellView.stories.tsx` (R50)
+- `src/stories/mantine/primitives/ListingCard.stories.tsx` (R50: import of the moved fixture only)
+- `src/stories/fixtures/cardListingData.fixture.ts` (R50)
+- `src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx` (R51; or a new `ListingsShellView.smoke.test.tsx` beside it)
+- §18.14.5's files (R45)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3e`, with `## Revision 3d-1` content inside it)
+- `docs/backlog.md` (the 741 state only)
+
+Do not edit `messages/*.json`. Every string uses existing keys. If one is missing, stop with `BLOCKED — I18N`.
+
+#### 18.15.10 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-3)
+
+| Story → export | Viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Patterns/Mantine/ListingsShellView` → `Default`, `LoadingMore` | 390, 1440 | en, uk | active-tab variants; 2 chips match "Filters 2"; "Show more" is the brand primary button, 14px like the other buttons, with a spinner in `LoadingMore`; pagination below it |
+| `… → ClosedTab`, `ClosedEmpty`, `Empty` | 390, 1440 | en, uk | sold/rented cards with the overlay; the canonical empty state (house icon, title, description on the active tab only) |
+| `Patterns/Mantine/ListingsSortBar` → its exports | 390, 1440 | en | the line under the row is unchanged |
+
+#### 18.15.11 Completion
+
+Append `## Revision 3e` to the session log, with:
+- the R45 correction and its receipt (3d-1);
+- I0, the red and green runs, and the gate block;
+- the AC48 probe;
+- the GR-9 and GR-3b–3g receipts;
+- a `Files Changed` table.
+
+Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
+or `BLOCKED`. No self-approval, no git. 741 is approvable after the review of 3e and the owner's O46-3.

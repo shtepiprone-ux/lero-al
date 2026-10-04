@@ -1,0 +1,1109 @@
+[
+ {
+  "390": {
+   "title": "Ноутбуки - ROZETKA | Купити ноутбук у Києві, Україні: ціна, відгуки, продаж",
+   "more": [
+    {
+     "text": "Показати ще ↓",
+     "tag": "button",
+     "w": 115,
+     "h": 28,
+     "fs": "16px",
+     "fw": "500",
+     "radius": "8px",
+     "border": "0px none rgb(62, 119, 170)",
+     "bg": "rgba(0, 0, 0, 0)",
+     "color": "rgb(62, 119, 170)",
+     "pad": "0px"
+    },
+    {
+     "text": "Показати ще",
+     "tag": "button",
+     "w": 130,
+     "h": 40,
+     "fs": "16px",
+     "fw": "500",
+     "radius": "8px",
+     "border": "0px none rgb(255, 255, 255)",
+     "bg": "rgb(0, 160, 70)",
+     "color": "rgb(255, 255, 255)",
+     "pad": "1px 16px"
+    },
+    {
+     "text": "Показати ще",
+     "tag": "button",
+     "w": 103,
+     "h": 30,
+     "fs": "14px",
+     "fw": "500",
+     "radius": "8px",
+     "border": "1px solid rgb(210, 210, 210)",
+     "bg": "rgb(255, 255, 255)",
+     "color": "rgb(34, 31, 31)",
+     "pad": "4px 8px"
+    }
+   ],
+   "pag": [],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Ноутбуки - ROZETKA | Купити ноутбук у Києві, Україні: ціна, відгуки, продаж",
+   "more": [
+    {
+     "text": "Показати ще",
+     "tag": "button",
+     "w": 107,
+     "h": 24,
+     "fs": "14px",
+     "fw": "400",
+     "radius": "0px",
+     "border": "0px none rgb(34, 31, 31)",
+     "bg": "rgba(0, 0, 0, 0)",
+     "color": "rgb(34, 31, 31)",
+     "pad": "0px"
+    },
+    {
+     "text": "192 ГБ і більше (165)",
+     "tag": "a",
+     "w": 233,
+     "h": 28,
+     "fs": "14px",
+     "fw": "400",
+     "radius": "0px",
+     "border": "0px none rgb(34, 31, 31)",
+     "bg": "rgba(0, 0, 0, 0)",
+     "color": "rgb(34, 31, 31)",
+     "pad": "4px 4px 4px 24px"
+    },
+    {
+     "text": "18 і більше",
+     "tag": "a",
+     "w": 86,
+     "h": 34,
+     "fs": "14px",
+     "fw": "400",
+     "radius": "8px",
+     "border": "1px solid rgb(210, 210, 210)",
+     "bg": "rgba(0, 0, 0, 0)",
+     "color": "rgb(34, 31, 31)",
+     "pad": "8px 8px 4px"
+    },
+    {
+     "text": "2 ТБ і більше (29675)",
+     "tag": "a",
+     "w": 233,
+     "h": 28,
+     "fs": "14px",
+     "fw": "400",
+     "radius": "0px",
+     "border": "0px none rgb(34, 31, 31)",
+     "bg": "rgba(0, 0, 0, 0)",
+     "color": "rgb(34, 31, 31)",
+     "pad": "4px 4px 4px 24px"
+    }
+   ],
+   "pag": [],
+   "overflow": false
+  },
+  "ref": "rozetka",
+  "name": "catalog",
+  "url": "https://rozetka.com.ua/ua/notebooks/c80004/"
+ },
+ {
+  "390": {
+   "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "Previous 1 2 3 Next",
+      "tag": "ul",
+      "w": 295,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "Previous",
+       "tag": "a",
+       "w": 79,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "Next",
+       "tag": "a",
+       "w": 56,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "Previous 1 2 3 Next",
+      "tag": "ul",
+      "w": 757,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "Previous",
+       "tag": "a",
+       "w": 79,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "Next",
+       "tag": "a",
+       "w": 56,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "ref": "lahomes",
+  "name": "property-grid",
+  "url": "https://techzaa.in/lahomes/admin/property-grid.html"
+ },
+ {
+  "390": {
+   "title": "Pagination | Lahomes - Real Estate Management Admin Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "Previous 1 2 3 Next",
+      "tag": "ul",
+      "w": 295,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "Previous",
+       "tag": "a",
+       "w": 79,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "Next",
+       "tag": "a",
+       "w": 56,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    },
+    {
+     "box": {
+      "text": "« 1 2 3 »",
+      "tag": "ul",
+      "w": 295,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "«",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "»",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Pagination | Lahomes - Real Estate Management Admin Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "Previous 1 2 3 Next",
+      "tag": "ul",
+      "w": 757,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "Previous",
+       "tag": "a",
+       "w": 79,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "Next",
+       "tag": "a",
+       "w": 56,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    },
+    {
+     "box": {
+      "text": "« 1 2 3 »",
+      "tag": "ul",
+      "w": 757,
+      "h": 35,
+      "fs": "14px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(93, 113, 134)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(93, 113, 134)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "«",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "5.6px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "1",
+       "tag": "a",
+       "w": 32,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(96, 74, 227)",
+       "bg": "rgb(96, 74, 227)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      },
+      {
+       "text": "»",
+       "tag": "a",
+       "w": 34,
+       "h": 35,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(234, 237, 241)",
+       "bg": "rgb(255, 255, 255)",
+       "color": "rgb(66, 78, 90)",
+       "pad": "6px 12px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "ref": "lahomes",
+  "name": "ui-pagination",
+  "url": "https://techzaa.in/lahomes/admin/ui-pagination.html"
+ },
+ {
+  "390": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "ref": "omah",
+  "name": "property-list",
+  "url": "https://omah.dexignzone.com/xhtml/property-list.html"
+ },
+ {
+  "390": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "ref": "kamr",
+  "name": "ecom-product-grid",
+  "url": "https://kamr-vite.vercel.app/ecom-product-grid"
+ },
+ {
+  "390": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "1(current)234",
+      "tag": "ul",
+      "w": 218,
+      "h": 39,
+      "fs": "12.25px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(113, 117, 121)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(113, 117, 121)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "",
+       "tag": "a",
+       "w": 37,
+       "h": 39,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "10.5px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "9.1px 11.2px"
+      },
+      {
+       "text": "1(current)",
+       "tag": "span",
+       "w": 34,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(248, 133, 125)",
+       "bg": "rgb(248, 133, 125)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 38,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 38,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "4",
+       "tag": "a",
+       "w": 39,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "",
+       "tag": "a",
+       "w": 37,
+       "h": 39,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "9.1px 11.2px"
+      }
+     ]
+    },
+    {
+     "box": {
+      "text": "1(current)234",
+      "tag": "ul",
+      "w": 153,
+      "h": 26,
+      "fs": "12.25px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(113, 117, 121)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(113, 117, 121)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "10.5px",
+       "fw": "400",
+       "radius": "2.8px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "1(current)",
+       "tag": "span",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(248, 133, 125)",
+       "bg": "rgb(248, 133, 125)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "0px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "4",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "10.5px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "more": [],
+   "pag": [
+    {
+     "box": {
+      "text": "1(current)234",
+      "tag": "ul",
+      "w": 218,
+      "h": 39,
+      "fs": "12.25px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(113, 117, 121)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(113, 117, 121)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "",
+       "tag": "a",
+       "w": 37,
+       "h": 39,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "10.5px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "9.1px 11.2px"
+      },
+      {
+       "text": "1(current)",
+       "tag": "span",
+       "w": 34,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(248, 133, 125)",
+       "bg": "rgb(248, 133, 125)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 38,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 38,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "4",
+       "tag": "a",
+       "w": 39,
+       "h": 38,
+       "fs": "14px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "7.7px 14px"
+      },
+      {
+       "text": "",
+       "tag": "a",
+       "w": 37,
+       "h": 39,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "9.1px 11.2px"
+      }
+     ]
+    },
+    {
+     "box": {
+      "text": "1(current)234",
+      "tag": "ul",
+      "w": 153,
+      "h": 26,
+      "fs": "12.25px",
+      "fw": "400",
+      "radius": "0px",
+      "border": "0px none rgb(113, 117, 121)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(113, 117, 121)",
+      "pad": "0px"
+     },
+     "items": [
+      {
+       "text": "",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "10.5px",
+       "fw": "400",
+       "radius": "2.8px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "1(current)",
+       "tag": "span",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(248, 133, 125)",
+       "bg": "rgb(248, 133, 125)",
+       "color": "rgb(255, 255, 255)",
+       "pad": "0px"
+      },
+      {
+       "text": "2",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "3",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "4",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "12.25px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      },
+      {
+       "text": "",
+       "tag": "a",
+       "w": 26,
+       "h": 26,
+       "fs": "10.5px",
+       "fw": "400",
+       "radius": "0px",
+       "border": "1px solid rgb(211, 211, 211)",
+       "bg": "rgba(255, 255, 255, 0.15)",
+       "color": "rgb(110, 110, 110)",
+       "pad": "0px"
+      }
+     ]
+    }
+   ],
+   "overflow": false
+  },
+  "ref": "kamr",
+  "name": "ui-pagination",
+  "url": "https://kamr-vite.vercel.app/ui-pagination"
+ },
+ {
+  "390": {
+   "title": "E-commerce Products List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "1440": {
+   "title": "E-commerce Products List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "ref": "tailadmin",
+  "name": "products-list",
+  "url": "https://demo.tailadmin.com/products-list"
+ },
+ {
+  "390": {
+   "title": "Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "1440": {
+   "title": "Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "more": [],
+   "pag": [],
+   "overflow": false
+  },
+  "ref": "tailadmin",
+  "name": "buttons",
+  "url": "https://demo.tailadmin.com/buttons"
+ }
+]

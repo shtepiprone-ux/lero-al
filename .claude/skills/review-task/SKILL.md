@@ -43,7 +43,7 @@ or executor's desired conclusion. If the evidence contradicts a claim, state tha
 
 **Every review, with no exemption (owner rule, 2026-10-04).** Before the first finding or verdict, run your own
 current-session GR-7 audit (`docs/golden-rules.md`) of **every page** of all four standing references, in depth:
-Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login `admin` /
+Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login `demo@example.com` /
 `123456`), Omah https://omah.dexignzone.com/xhtml/index.html and TailAdmin https://demo.tailadmin.com/. Save it to
 `docs/sessions/evidence/task<N>/research-review/` and emit the receipt (moment: review). Use the shared reference library `docs/research/references/<newest date>/` (owner decision 2026-10-04, GR-7): read its rows for the subject, then open live every page you rely on and record unchanged/difference; a full re-crawl only on a difference, a missing page or the owner's request. Then:
 - check the kickoff's receipt (task creation) and Sonnet's receipt (execution). A missing one is `NEEDS REVISION`;
@@ -269,7 +269,8 @@ evidence that a child component has a canonical visual contract.
     ancestor. Scale each crop 10× and look at the curve. A line cut at a corner is `NEEDS REVISION`, and so is a
     radius not taken from the ancestor's token. Task 857's nav row focus line reached the owner with all four outer
     corners cut. Opus's own crop showed the cut corner and Opus passed it.
-12. **GR-7 (owner rule 2026-10-03).** A `NEEDS REVISION` that changes visible UI is a task design. Before writing it,
+12. **GR-9 (owner rule 2026-10-04), before any GR-3b…3g measurement and before the owner matrix.** For every matrix Story, run the five steps of `docs/golden-rules.md` GR-9 in order: (1) census every rendered element; (2) trace each prop and value to its canonical Story and theme entry; (3) enumerate every state the production data path can render and check the Story renders each, and no more; (4) compare every variant or layout part by part; (5) check every executor claim against its own evidence. Emit one `GR-9 REVIEW DEPTH` receipt per Story. Geometry receipts alone never make a Story ready. Task 741 reached the owner three times with all three rows returned for exactly these gaps, while every GR-3 receipt was green.
+13. **GR-7 (owner rule 2026-10-03).** A `NEEDS REVISION` that changes visible UI is a task design. Before writing it,
     complete the full current-session GR-7 audit in `docs/golden-rules.md` for Lahomes, Kamr, Omah, TailAdmin (every
     page, in depth), and every owner-provided reference link. Map the result onto lero.al's data and add a "Reference research (GR-7)" section
     to the revision, with the complete route inventory, page-level evidence, gaps, and `GR-7 REFERENCE RESEARCH`

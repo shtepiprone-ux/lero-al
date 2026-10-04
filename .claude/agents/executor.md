@@ -21,7 +21,7 @@ that a separate Opus `orchestrator` session must perform the review.
 **GR-7, owner rule 2026-10-04, every task, no exemption.** Before your first write, audit live and in depth every page
 of all four references, plus every owner link the kickoff names:
 1. https://techzaa.in/lahomes/admin/index.html
-2. https://kamr-vite.vercel.app/dashboard (login `admin` / `123456`)
+2. https://kamr-vite.vercel.app/dashboard (login `demo@example.com` / `123456`)
 3. https://omah.dexignzone.com/xhtml/index.html
 4. https://demo.tailadmin.com/
 

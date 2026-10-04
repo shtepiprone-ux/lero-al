@@ -67,7 +67,7 @@ Owner, verbatim: *"перед виконанням кожної задачі …
 Before the first write of **every** task, read `docs/golden-rules.md` **GR-7 in full**. Then audit live, in this session,
 **every page** of all four references, in depth (screenshot, controls operated, anatomy, `getComputedStyle`):
 1. https://techzaa.in/lahomes/admin/index.html
-2. https://kamr-vite.vercel.app/dashboard (login `admin`, password `123456`)
+2. https://kamr-vite.vercel.app/dashboard (login `demo@example.com`, password `123456`)
 3. https://omah.dexignzone.com/xhtml/index.html
 4. https://demo.tailadmin.com/
 

@@ -782,8 +782,8 @@ colour for five statuses, and `inactive` turns gray.
   `check:story-coverage` and `governance:tailwind` exit 0.
 - **AC35 [R34, R35].** The R34 assertions are red on the pre-change tree (`01_red.txt`, non-zero exit) and green after.
   Every command in the §17.7 gate block ends `EXIT_CODE=0`, except `governance:tailwind`. That gate is red at HEAD
-  and is retired by Task 897. It is judged by §17.11 F26 instead: its output lists no §17.8 path, and its HIGH set is
-  unchanged from HEAD.
+  and is retired by Task 897. It is judged by the clause as corrected in §17.12 F27: no finding sits on a line this
+  diff adds or changes, and its HIGH set equals HEAD's, with line numbers shifted only by the diff.
 
 ### 17.7 Verification plan
 
@@ -927,3 +927,36 @@ Expected:
 Append `## Revision 3a` to the session log. It contains the Files Changed row, the receipts and the transcripts.
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. The owner matrix O46-1 (§17.9) is handed over only after the
 review of 3a.
+
+### 17.12 Review 2 (Revision 3a), 2026-10-04 — `PARTIALLY VERIFIED` (executor work complete; owner matrix O46-1 open)
+
+**Inspected:**
+- the F25 diff (`ListingCard.stories.tsx`, hash `b1fc2c65…`);
+- every transcript in `docs/sessions/evidence/task741r3/rev3a/`;
+- the session log's `## Revision 3a`;
+- the theme.ts diff against `governance:tailwind`'s finding lines.
+
+The eight earlier hashes still equal `19_greps_hashes.txt`. Freshness holds: the source was written at 07:13:58, `storybook-static` at 07:14 and `.next` at 07:16. R30–R35 stand as reviewed in §17.11. All executor-side criteria are verified. The only open criterion is the owner visual matrix O46-1 (§17.9), which is `NOT VERIFIABLE` until the owner returns it.
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F27 | **P2**, orchestrator kickoff defect (GR-4) | F26's clause, "lists no file this task changes", could not be satisfied. `theme.ts` is a §17.8 file, and 9 of the gate's HIGH lines are pre-existing **comment** lines in it (tree `:974, :998, :1145, :1395, :1420, :1421, :1616, :1631, :1632` = HEAD `:971 … :1629`). They moved by +3 because the diff adds lines `:79-81` and `:770`, which carry no palette class. F26 also miscounted `theme.ts` as 10; the real count is 9. The HIGH set is 15: `theme.ts` 9, `MantineDashboardStatCard.tsx` 5, `MantineDataTableToCards.tsx` 1. | **Corrected.** AC35's gate clause now reads: *no `governance:tailwind` finding sits on a line this diff adds or changes, and its HIGH set equals HEAD's, with line numbers shifted only by the diff.* That is **VERIFIED** (diff hunks against `rev3a/13_governance-tailwind.txt`). The gate's exit code belongs to **897**. |
+| F28 | **P3**, evidence hygiene | `rev3a/17_file-integrity.txt` and `18_mojibake.txt` held only `EXIT_CODE=0`. The mojibake output was written to a stray `docs/sessions/evidence/task741r3/rev3a$n.txt` (the PowerShell `$n` was expanded in the path), and the file-integrity output was lost. The executor's GR-3b/GR-3c lines also leave out the receipt's per-width values and 1024. | The reviewer re-ran both checks natively (`win32`, v22.22.3): `rev3a/review2-17_file-integrity.txt` (110 files, exit 0) and `rev3a/review2-18_mojibake.txt` (exit 0). The stray file is deleted. The reviewer receipts below replace the executor's abbreviated ones. |
+
+**Reviewer measurement**: `rev3a/review2-probe.mjs` → `rev3a/review2-probe.json`, on the 07:14 `storybook-static`, `en`, DPR 1.
+
+`GR-3b STORY RESPONSIVE CHECK — mantine-primitives-listingcard--default: 320 fluid in MantineStoryShell · 390 · 1024 · 1440 fluid; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+`GR-3b STORY RESPONSIVE CHECK — patterns-mantine-listingcardpattern--default: 320/390/1024/1440 fluid in StoryPageGutter; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+`GR-3b STORY RESPONSIVE CHECK — mantine-primitives-listingstatusbanner--default: 320/390/1024/1440 fluid; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+`GR-3c TYPE RESPONSIVE CHECK — mantine-primitives-listingcard--default: section Title 320 18px · 390 18px · 768 24px · 1440 24px; card h3 14px at all four; overlay label 14px at all four; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+`GR-3c TYPE RESPONSIVE CHECK — patterns-mantine-listingcardpattern--default: section Title 320 18px · 390 18px · 768 24px · 1440 24px; card h3 14px; overlay label 14px; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+`GR-3c TYPE RESPONSIVE CHECK — mantine-primitives-listingstatusbanner--default: body 14px, link 12px at all four; max 16px; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+`GR-3d STORY GUTTER CHECK — mantine-primitives-listingcard--default: gutter n/a: MantineStoryShell primitive; top/right/bottom/left 320 16/16/16/16 · 390 16/16/16/16 · 1024 49/49/172/49 · 1440 49/49/68/49 (the shell frame, known exception; Task 909 D87-2 owns it); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — patterns-mantine-listingcardpattern--default: gutter StoryPageGutter all; top/right/bottom/left 320 24/16/24/16 · 390 24/16/24/16 · 1024 24/32/24/32 · 1440 24/32/24/32 (expected 24 / 16·16·32·32); side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+`GR-3d STORY GUTTER CHECK — mantine-primitives-listingstatusbanner--default: gutter n/a: MantineStoryShell primitive; top/right/bottom/left 320 16/16/40/16 · 390 16/16/44/16 · 1024 49/49/131/49 · 1440 49/49/131/49; side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+`GR-3e TEXT BUTTONS STACKED — all three: n/a, no popup.` `GR-3f CIRCLE CHECK — n/a: no circular element changed.`
+`GR-3g CORNER CHECK — overlay label (sold, rented): clipping ancestor = card photo frame; corners meeting it: none (the label is centred, for example 125–195px inside a 288px photo at 320); line cut at a corner: NONE.`
+
+The label renders 14px, 16px radius (D46-2), `2px solid` `--status-info` / `--status-rented`, and the 80% tone background at every width. That matches the AC32 probe.
+
+**Next step: the owner returns matrix O46-1 (§17.9).** If every row is accepted, the next review approves and archives 741. A returned row reopens this section as Revision 3b. No executor action is open.

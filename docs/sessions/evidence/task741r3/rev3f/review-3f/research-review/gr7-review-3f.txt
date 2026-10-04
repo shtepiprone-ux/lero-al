@@ -1,0 +1,35 @@
+﻿tailadmin https://demo.tailadmin.com/pagination 076
+   1440 no-overflow 
+   390 no-overflow 
+tailadmin https://demo.tailadmin.com/products-list 016
+   1440 no-overflow 
+   390 no-overflow 
+lahomes https://techzaa.in/lahomes/admin/ui-pagination.html 060
+   1440 no-overflow [Previous | 1 | 2 | 3 | Next] ctrl 79x35 r5.6px gap-1 || [« | 1 | 2 | 3 | »] ctrl 34x35 r5.6px gap-1 || [Previous | 1 | 2 | 3 | Next] ctrl 77x29 r3px gap2
+     focus 1 none 0px rgb(255, 255, 255) offset 1px | shadow none | clip null
+   390 no-overflow [Previous | 1 | 2 | 3 | Next] ctrl 79x35 r5.6px gap-1 || [« | 1 | 2 | 3 | »] ctrl 34x35 r5.6px gap-1 || [Previous | 1 | 2 | 3 | Next] ctrl 77x29 r3px gap2
+     focus 1 none 0px rgb(255, 255, 255) offset 1px | shadow none | clip null
+lahomes https://techzaa.in/lahomes/admin/property-grid.html 008
+   1440 no-overflow [Previous | 1 | 2 | 3 | Next] ctrl 79x35 r5.6px gap-1
+     focus 1 none 0px rgb(255, 255, 255) offset 1px | shadow none | clip null
+   390 no-overflow [Previous | 1 | 2 | 3 | Next] ctrl 79x35 r5.6px gap-1
+     focus 1 none 0px rgb(255, 255, 255) offset 1px | shadow none | clip null
+kamr https://kamr-vite.vercel.app/ui-pagination 038
+   1440 no-overflow [· | 1(current) | 2 | 3 | 4 | ·] ctrl 37x39 r10.5px gap-1 || [· | 1(current) | 2 | 3 | 4 | ·] ctrl 26x26 r2.8px gap-1 || [· | 1(current) | 2 | 3 | 4 | ·] ctrl 22x22 r10.5px gap-1
+     focus 2 none 3px rgb(110, 110, 110) offset 0px | shadow none | clip {"tag":"div","cls":"show  ","overflow":"hidden","cutPx":{"top":0,"bottom":0,"left":0,"right":0}}
+   390 no-overflow [· | 1(current) | 2 | 3 | 4 | ·] ctrl 37x39 r10.5px gap-1 || [· | 1(current) | 2 | 3 | 4 | ·] ctrl 26x26 r2.8px gap-1 || [· | 1(current) | 2 | 3 | 4 | ·] ctrl 22x22 r10.5px gap-1
+     focus 2 none 3px rgb(110, 110, 110) offset 0px | shadow none | clip {"tag":"div","cls":"show  ","overflow":"hidden","cutPx":{"top":0,"bottom":0,"left":0,"right":0}}
+omah https://omah.dexignzone.com/xhtml/property-list.html 013
+   1440 no-overflow 
+   390 no-overflow 
+omah https://omah.dexignzone.com/xhtml/order-list.html 006
+   1440 no-overflow [· | 1 | 2 | ·] ctrl 30x30 r8px gap3
+     focus 1 none 3px rgb(255, 255, 255) offset 0px | shadow none | clip {"tag":"div","cls":"table-responsive check-wrapper fs-14 mb-2","overflow":"auto","cutPx":{"top":0,"bottom":0,"left":0,"right":0}}
+   390 no-overflow [· | 1 | 2 | ·] ctrl 30x30 r8px gap3
+     focus 1 none 3px rgb(255, 255, 255) offset 0px | shadow none | clip {"tag":"div","cls":"table-responsive check-wrapper fs-14 mb-2","overflow":"auto","cutPx":{"top":0,"bottom":0.015625,"left":0,"right":0}}
+rozetka https://rozetka.com.ua/ua/notebooks/c80004/ owner link, not in library
+   1440 no-overflow [Показати ще | Попередня ст | 2 | 3 | 4 | 100 | Наступна сто] ctrl 130x40 r8px gap-596
+     focus  none 3px rgb(121, 120, 120) offset 0px | shadow rgb(111, 196, 229) 0px 0px 0px 2px | clip null
+   390 no-overflow [Показати ще | Попередня ст | 2 | 3 | 4 | 100 | Наступна сто] ctrl 130x40 r8px gap-244
+     focus  none 3px rgb(121, 120, 120) offset 0px | shadow rgb(111, 196, 229) 0px 0px 0px 2px | clip null
+EXIT_CODE=0

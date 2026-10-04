@@ -1750,7 +1750,7 @@ or `BLOCKED`. No self-approval, no git. 741 is approvable after the review of 3e
 
 ### 18.16 Review of Revision 3e, 2026-10-04 — `NEEDS REVISION` → Revision 3f (the canonical paginator shows only the current page)
 
-**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+**Implemented and reviewed in §18.17; the route is now §18.17 (Revision 3g).** Original text: **this subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
 goes to `docs/sessions/evidence/task741r3/rev3f/exec/`. `rev3f/review/` belongs to Opus and is not written.
 
 **Inspected:**
@@ -1919,3 +1919,204 @@ Append `## Revision 3f` to the session log, with:
 - a `Files Changed` table.
 
 Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
+
+### 18.17 Review of Revision 3f, 2026-10-04 — `NEEDS REVISION` → Revision 3g (fill-to-width ladder, uncut focus ring)
+
+**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+goes to `docs/sessions/evidence/task741r3/rev3g/exec/`. `rev3f/review-3f/` belongs to Opus and is not written.
+
+**Inspected:**
+- the diffs of `MantinePagination.tsx`, `MantinePagination.module.css` (new), `Pagination.stories.tsx`,
+  `MantinePagination.smoke.test.tsx` and `ListingsSortBar.tsx`;
+- the four consumers (`ListingsPagination.tsx:33`, `AdminListingsView.tsx:302`, `AgentStatisticsView.tsx:718`,
+  `MantineAdminSurfacePattern.tsx:120`), each a lone `MantinePagination` inside a `Group`;
+- `rev3f/exec/` (`00_i0*`, `01_red`, `02_green`, `final/*`, `probe-ac49/ac48/receipts`, `research-exec/`) and the session
+  log's `## Revision 3f`.
+
+**Re-measured by Opus** (`win32`, Node v22.22.3, the executor's final `storybook-static` built 19:00:16 after the last
+source write at 18:59:17; `next build` 19:02):
+- `rev3f/review-3f/review-probe.json` / `.txt`: every paginator Story × en 320/390/1024/1440 + uk 390/1440, with every
+  paginator control Tab-focused at 390 and 1440 in `InCenteredGroup`, `ListingsPagination` `Default` and
+  `ListingsShellView` `Default`, plus DPR-1 crops in `crops/`. The `default-*` crops are `ListingsShellView`'s, because
+  the `ListingsPagination` crops were overwritten by name.
+- `rev3f/review-3f/research-review/`: GR-7.
+
+**Verified, kept:**
+- R52: the budget is the consumer wrapper. The red/green pair is an A/B on the budget line alone (1 failed of 26, then
+  26 of 26), and the final file hash `6679e4d1…` equals the gate hash.
+- R53: no `style={{` in the file. Computed row styles are `flex`, `nowrap`, gap 8px, `max-width: 100%`. The probe is
+  `fixed`, `hidden` and `none` in every cell.
+- R54, R55 and R56.
+- AC49's page numbers, which equal `rev3f/exec/probe-ac49.txt` in every cell Opus re-measured, with no horizontal
+  overflow in any cell. AC50 and AC51.
+- Every gate exits 0, and the census lists only `ListingsShell.tsx`.
+- The two changed jsdom assertions are accepted: each declaration is asserted at its source, and both roles measured
+  the computed values in a real browser.
+
+#### 18.17.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F47 | **P1** (GR-3g "a clip never cuts it", WCAG 2.2 2.4.7; production) | **The keyboard focus ring of every paginator control is cut.** The row has `overflow: hidden` (R53, `MantinePagination.module.css` `.row`), and its height equals the control height. Mantine's focus ring is a 2px outline at a 2px offset (`@mantine/core/styles/global.css:16-18`). Measured in `review-probe.txt`, every Tab-focused control in every probed Story at 390 and 1440 loses 4px at the top and 4px at the bottom of its ring, and "Previous page" / "Next page" also lose 4px on their outer side. `crops/in-centered-group-{390,1440}-first-10x.png` show only the left and right arcs. Every reference that draws a ring draws it whole (Kamr, Omah, Rozetka, TailAdmin; `research-review/gr7-review-3f.md`). §18.16.6's "no clipping ancestor; confirm" was an orchestrator error. The executor reported that it had not measured the ring. | **R57** |
+| F48 | **P1** (owner **D46-8**, GR-7) | **The ladder drops every neighbour in one step.** At 390, with 10 pages on page 1, the paginator shows "‹ 1 … 10 ›" (5 controls, 252px) in a 358px wrapper, although "‹ 1 2 3 … 10 ›" (7 × 44 + 6 × 8 = 356px) fits. The cause is `SHED_LEVELS[1]`, which removes both siblings at once. It shows in `InCenteredGroup` and `Default` at 390 (`review-probe.txt`). Rozetka, Kamr and Lahomes show neighbouring numbers on a phone. | **R58** |
+| F49 | **P2** (GR-9 step 5) | **CONTRADICTION.** `rev3f/exec/00_i0.txt` says "ListingsSortBar.tsx = rev3e hash" and records `174d8209…`. The 3e final hash of that file is `ebb6709f…` (`rev3e/exec/final/15_hashes.txt`, line 2), and `174d8209…` is the hash after the R56 edit (`final/14_hashes.txt`). So the I0 was written after a 3f write, not before it. The pre-3f state of the other four files is still witnessed by `HEAD` and by `00_i0_status_from_3e_final.txt`, which does not list them. | **R59** |
+| F50 | P3 | In the R54 block of `MantinePagination.smoke.test.tsx`, jsdom defines `clientWidth` on `Element.prototype`, not on `HTMLElement.prototype` (checked: `HTMLElement own: false, Element own: true`). `getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth')` is therefore `undefined`, and `afterAll` leaves the stub installed. | **R60** |
+| F51 | NOTE | The gates ran from Git Bash with `node`/`npm` again, after §18.16.6 asked for PowerShell with `node.exe`/`npm.cmd`. The `win32` transcript makes 3f's results admissible. 3g runs the gate block in PowerShell. | §18.17.7 |
+
+`GR-9 REVIEW DEPTH — mantine-primitives-pagination--in-centered-group / --default, patterns-mantine-listingspagination--default, patterns-mantine-listingsshellview--default / --loading-more, patterns-mantine-adminlistingsview--paginated, patterns-mantine-agentstatisticsview--* (8 exports), patterns-mantine-adminsurfacepattern--default: elements per paginator 3–9 controls (each → MantinePagination, manifest yes, Story yes; chrome pagination-chrome.css) + the InCenteredGroup row labels (dev annotations, same convention as Default); non-canonical props/values: NONE in source; rendered defect F47 (the focus ring is cut by the row clip); production states: 1 page (nothing), 2–3 pages, many pages at the first, middle and last page, phone and desktop → rendered: all, across InCenteredGroup + Default + ListingsPagination + AgentStatisticsView (2 and 3 pages) + AdminListingsView (8 pages, page 2); missing: NONE; unreachable shown: NONE; variant parity: Stack consumer vs Group consumer at 1440 → identical items ("1 2 3 4 5 … 10"), phone vs desktop → F48 (390 drops neighbours that fit); executor claims checked against their evidence 11/12, contradictions: F49; evidence docs/sessions/evidence/task741r3/rev3f/review-3f/review-probe.json.`
+
+Geometry, from `review-probe.txt`:
+- **GR-3b.** No document overflow in any of 90 cells (15 Stories × 6). Every row is at most the width of its consumer (for example 356/358
+  at 390 and 252/288 at 320).
+- **GR-3d.** `MantineStoryShell` primitives are 16 at 320/390 and 49 at 1024/1440 (the known exception).
+  `ListingsShellView` is l/r 16 at 320/390 and 32 at 1024/1440. `ListingsPagination` is 16 / 24. The
+  `AgentStatisticsView` and `AdminSurfacePattern` gutters are their own. `AdminListingsView` `Paginated` reads l 12–20
+  and b −152: those leaves are the `AdminShell` navbar chrome (named shell list) and table cells inside the shell's
+  scroll area, not a page gutter. Unchanged by 3f, and no side is at 0.
+- **GR-3e** n/a.
+- **GR-3f** n/a (rounded squares).
+- **GR-3g**: F47.
+
+#### 18.17.2 Owner decision, verbatim
+
+**D46-8**, 2026-10-04. Option chosen: *"Заповнювати до ширини (Recommended)"*. The question asked whether the phone
+paginator should:
+- show as many neighbouring pages as fit (Rozetka);
+- keep the Task 535 ladder;
+- or switch to TailAdmin's "Page X of Y" below `sm`.
+
+#### 18.17.3 Reference research (GR-7)
+
+The record is `docs/sessions/evidence/task741r3/rev3f/review-3f/research-review/gr7-review-3f.md`. What each reference
+shows:
+- **TailAdmin `/pagination`:** "Previous 1 2 3 … 8 9 10 Next" at 40×40 on desktop, and "Page 1 of 10" at 390.
+- **Lahomes:** "Previous 1 2 3 Next", with no visible focus ring.
+- **Kamr:** "‹ 1 2 3 4 ›", with a 3px ring that is not cut.
+- **Omah order list:** "‹ 1 2 ›", with a 3px ring that is not cut.
+- **Rozetka:** "1 2 3 4 … 100" at 390, with a 2px shadow ring that is not cut.
+
+`GR-7 REFERENCE RESEARCH — moment: review (741 Revision 3f) and task creation (741 Revision 3g); role: Opus; task: 741; subject: paginator page numbers per width, keyboard focus ring; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin /pagination (076), /products-list (016); Lahomes /ui-pagination (060), /property-grid (008); Kamr /ui-pagination (038); Omah /property-list (013), /order-list (006); Rozetka catalogue → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library), Rozetka 1/1/0; inspected in depth: the 8 pages above at 1440 and 390, paginator items, control size, a Tab-focused page control; workflow states operated: Kamr sign-in, Rozetka scroll to list end, Tab focus on a page control; options across references: neighbours that fit ← Rozetka, Kamr, Lahomes; Page X of Y ← TailAdmin 390; uncut focus ring ← Kamr, Omah, Rozetka, TailAdmin; chosen 2026 best practice: fill-to-width ladder (D46-8) and an uncut focus ring; absent or unverified: none; lero.al data map: MantinePagination consumers ListingsPagination (/listings, /favorites), AdminListingsView (/admin/listings), AgentStatisticsView (cabinet statistics), MantineAdminSurfacePattern (Story only); owner decisions: D46-6, D46-7, D46-8; evidence: docs/sessions/evidence/task741r3/rev3f/review-3f/research-review/.`
+
+**Execution.** Before the first write, Sonnet re-checks Rozetka at 390, Kamr `/ui-pagination` and TailAdmin
+`/pagination` (at 1440 and 390, focus state included) into `rev3g/exec/research-exec/`, and emits the full receipt.
+
+#### 18.17.4 Canonical decision record (GR-0)
+
+| Artifact | Disposition | Owner / path |
+|---|---|---|
+| Focus-ring room | **EXTEND** `MantinePagination` (`src/design-system/mantine/patterns/MantinePagination.tsx` + `.module.css`) | Remove the row's `overflow: hidden`: delete `.row` from the module and its `className` from the `Group`; `.probe` stays. This is safe by construction. The estimate gives every control the probe's width (`String(total)`, the widest label), and the edge controls and dots are never wider, so `estimate ≥ rendered`. The floor (3 controls, 148px at 44px) fits the narrowest wrapper measured (246). The Rule 1 doc comment changes to say this. |
+| Fill levels | **EXTEND** the same file | Three fill levels between level 0 and today's level 1 (R58). Unchanged: level 0, the three existing shed levels, `computeFullRange`, `computeAsymmetricRange`, floor-first SSR and the probe. |
+| Proof | **EXTEND** `MantinePagination.smoke.test.tsx` | No Story change: `InCenteredGroup` and `Default` already render the rows that change. |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: paginator focus-ring room and fill-to-width ladder; semantic queries: MantinePagination, SHED_LEVELS, computeShedRange, overflow hidden, focus-visible, outline-offset; inspected candidates: MantinePagination.tsx + .module.css + Mantine/Primitives/Pagination, pagination-chrome.css, @mantine/core global.css focus ring, the four consumers; decision: EXTEND; selected canonical owner: src/design-system/mantine/patterns/MantinePagination.tsx; Mantine/TailAdmin token path: Mantine default focus ring, theme spacing xs, pagination-chrome.css (unchanged); new hardcoded visual values: NONE; rationale: both defects live in the shared owner and every consumer inherits the fix.`
+
+`GR-3a STORY PREFLIGHT — MantinePagination × keyboard focus and phone widths; canonical candidates: mantine-primitives-pagination--default, --in-centered-group; direct-import evidence: src/stories/mantine/primitives/Pagination.stories.tsx:5; toolbar coverage: locale=Storybook toolbar, viewport=Storybook toolbar; decision: REUSE (no new export); target: Mantine/Primitives/Pagination; rationale: both exports already render the 10-page and 50-page rows the fix changes.`
+
+#### 18.17.5 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R57** | The paginator row does not clip. `MantinePagination.module.css` keeps only `.probe`. The `Group` drops `className={styles.row}` and keeps `gap="xs" wrap="nowrap" align="center" maw="100%"`. Rule 1's comment states the by-construction bound (§18.17.4). The jsdom "never-wraps" test keeps its `--group-wrap`, `--group-gap` and `max-width` assertions and drops the `_row_` class assertion. In the browser, in every probe cell: `row.scrollWidth <= row.clientWidth`, the document has no horizontal overflow, and a Tab-focused control shows its whole ring on all four sides. | P0 |
+| **R58** | **D46-8, fill to width.** `SHED_LEVELS` becomes, in order: level 0 full (unchanged); `fill: 3`; `fill: 2`; `fill: 1`; today's "drop siblings"; "drop trailing"; floor (unchanged). A fill level's pages are `{1, total, active}` plus up to `fill` neighbours of `active`. Neighbours are tried in the order `active+1, active−1, active+2, active−2, …`. A page below 1, above `total` or already present is skipped and does not count. The pages are sorted. A gap that hides exactly one page shows that page instead of `dots` (same item count); a larger gap shows `dots`. The measurement loop is unchanged: it picks the first level whose estimate fits. Expected, with 44px controls and an 8px gap below 640: <ul><li>390 (wrapper 358): 10 pages, page 1 → "‹ 1 2 3 … 10 ›"; 10 pages, page 10 → "‹ 1 … 8 9 10 ›"; 10 pages, page 5 → "‹ 1 … 5 … 10 ›" (unchanged); 50 pages, page 25 → "‹ 1 … 25 … 50 ›" (unchanged); 3 pages → "‹ 1 2 3 ›".</li><li>320 (wrapper 288): 10 pages, page 1 → "‹ 1 … 10 ›" (unchanged, because 6 controls take 304px).</li><li>1024 and 1440: every cell equals `rev3f/review-3f/review-probe.txt` (level 0).</li></ul> | P0 |
+| **R59** | The session log's `## Revision 3g` carries a `RETRACTION` of the F49 I0 label. It gives the invalid claim, why it is invalid (`ebb6709f…` against `174d8209…`), the evidence and the corrected status. 3g's own I0 is captured **before** the first 3g write. Its transcript records a timestamp that is earlier than every 3g source mtime. | P2 |
+| **R60** | In the R54 test block, `afterAll` restores `clientWidth`. When `HTMLElement.prototype` had no own descriptor, it deletes the own property; otherwise it re-defines the saved descriptor. The R54 test still fails on the 3e budget line and passes after. | P3 |
+| **R61** | Tests, red first, on the 3f file. (a) `computeShedRange`, or the fill function it calls, returns: `[1,2,3,'dots',10]` for (10, 1, fill 2); `[1,'dots',8,9,10]` for (10, 10, fill 2); `[1,2,3,4,5]` for (5, 1, fill 2); `[1,'dots',25,26,'dots',50]` for (50, 25, fill 1). (b) A component test in the R54 stub style uses probe 32, jsdom gap 0 and a consumer wrapper of 230 (7 × 32 = 224 fits, 8 × 32 = 256 does not). For `total={10} value={1}` it renders the visible pages `1 2 3 10`. The 3f file renders `1 10`. The ladder-order test asserts the seven levels in order. | P1 |
+
+#### 18.17.6 Acceptance criteria
+
+`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+
+- **AC52 [R57]** On the final build, the probe records, for every paginator Story × en 320/390/1024/1440 + uk 390/1440:
+  - `overflow: false`, and `row.scrollWidth <= row.clientWidth` on every row;
+  - in `InCenteredGroup`, `ListingsShellView` `Default`, `ListingsPagination` `Default`, `AdminListingsView`
+    `Paginated` and `AgentStatisticsView` `Default` at 390 and 1440, every control Tab-focused in turn. For each: the
+    ring's extent (outline width + offset) against its nearest ancestor whose `overflow` is not `visible`, with that
+    ancestor's room ≥ 4px on every side or no such ancestor;
+  - a DPR-1 crop scaled 10× of the first, a middle and the last control, where the ring is whole on all four sides.
+
+  The probe's model is `rev3f/review-3f/review-probe.mjs`. Fix its crop names so that no two Stories share a file.
+- **AC53 [R58, R61]** The same probe records the visible items of every row. They equal R58's expected values at 320,
+  390, 1024 and 1440. For every other cell, the chosen level is the first in `SHED_LEVELS` whose estimate fits the
+  budget the probe records. The R61 tests are red on the 3f file and green after.
+- **AC54 [R59, R60]** The retraction is in the session log, and `00_i0.txt`'s timestamp is earlier than every 3g
+  source mtime. After the R54 block, `Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth')` is
+  `undefined` again; the same file asserts this.
+
+#### 18.17.7 Verification plan
+
+**I0, before any write.**
+- `git --no-optional-locks status --porcelain`, plus `git hash-object` of the §18.17.8 files and a `Get-Date -Format o`
+  line → `rev3g/exec/00_i0.txt`.
+- The R61 red run on the 3f file → `01_red.txt`.
+
+**Gate block.** Run it in PowerShell with `node.exe`/`npm.cmd`, not Git Bash. Write one transcript per command to
+`rev3g/exec/final/`, each ending `EXIT_CODE=`.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsShell.tsx
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run check:backlog-active
+git --no-optional-locks hash-object src/design-system/mantine/patterns/MantinePagination.tsx src/design-system/mantine/patterns/MantinePagination.module.css src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL;
+- every other command exits 0.
+
+Then run the AC52/AC53 probe on that build.
+
+**Receipts, GR-9 first.** Emit one `GR-9 REVIEW DEPTH` per Story in §18.17.9, with its visible items at 320, 390 and
+1440. Then:
+- GR-3b at 320/390/1024/1440;
+- GR-3c (no text change);
+- GR-3d, all four sides, as each file states;
+- GR-3e n/a;
+- GR-3f n/a, because the controls are rounded squares;
+- **GR-3g for the focus ring**, per AC52, with the crops as evidence.
+
+#### 18.17.8 Files in scope
+
+- `src/design-system/mantine/patterns/MantinePagination.tsx` (R57, R58)
+- `src/design-system/mantine/patterns/MantinePagination.module.css` (R57)
+- `src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx` (R57, R60, R61)
+- `docs/sessions/evidence/task741r3/rev3g/exec/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3g`)
+- `docs/backlog.md` (the 741 state only)
+
+No consumer, Story file or other 3e/3f file is edited.
+
+#### 18.17.9 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-3, extended)
+
+The §18.15.10 rows stay. These rows replace §18.16.8's:
+
+| Story → export | Viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Patterns/Mantine/ListingsShellView` → `Default` | 390, 1440 | en, uk | the paginator shows "‹ 1 2 3 ›"; Tab onto it shows the whole ring |
+| `Mantine/Primitives/Pagination` → `InCenteredGroup`, `Default` | 320, 390, 1440 | en | at 390, 10 pages read "‹ 1 2 3 … 10 ›"; numbers shed only when space runs out; no overflow; the focus ring is whole |
+| `Patterns/Mantine/ListingsPagination`, `AdminListingsView` → `Paginated`, `AgentStatisticsView` | 390, 1440 | uk | page numbers fill the width; the focus ring is whole |
+
+#### 18.17.10 Completion
+
+Append `## Revision 3g` to the session log, with:
+- the R59 retraction;
+- I0, the red and green runs, and the gate block;
+- AC52 and AC53;
+- the GR-9 and GR-3 receipts;
+- a `Files Changed` table.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
+741 can be approved after the review of 3g and the owner's O46-3.

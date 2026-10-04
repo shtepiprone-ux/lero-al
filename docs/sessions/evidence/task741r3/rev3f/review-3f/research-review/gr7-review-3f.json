@@ -1,0 +1,474 @@
+[
+ {
+  "390": {
+   "title": "Pagination | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-01-tailadmin-390.png"
+  },
+  "1440": {
+   "title": "Pagination | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-00-tailadmin-1440.png"
+  },
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/pagination",
+  "libraryRow": "076"
+ },
+ {
+  "390": {
+   "title": "E-commerce Products List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-03-tailadmin-390.png"
+  },
+  "1440": {
+   "title": "E-commerce Products List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-02-tailadmin-1440.png"
+  },
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/products-list",
+  "libraryRow": "016"
+ },
+ {
+  "390": {
+   "title": "Pagination | Lahomes - Real Estate Management Admin Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 79,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 310
+    },
+    {
+     "text": "« | 1 | 2 | 3 | »",
+     "n": 5,
+     "ctrl": {
+      "w": 34,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 310
+    },
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 77,
+      "h": 29,
+      "radius": "3px",
+      "fs": "14px"
+     },
+     "gap": 2,
+     "blockW": 310
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 0px rgb(255, 255, 255) offset 1px",
+    "boxShadow": "none",
+    "clip": null
+   },
+   "focusShot": "rv-05-lahomes-390-focus.png",
+   "screenshot": "rv-05-lahomes-390.png"
+  },
+  "1440": {
+   "title": "Pagination | Lahomes - Real Estate Management Admin Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 79,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 768
+    },
+    {
+     "text": "« | 1 | 2 | 3 | »",
+     "n": 5,
+     "ctrl": {
+      "w": 34,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 768
+    },
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 77,
+      "h": 29,
+      "radius": "3px",
+      "fs": "14px"
+     },
+     "gap": 2,
+     "blockW": 768
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 0px rgb(255, 255, 255) offset 1px",
+    "boxShadow": "none",
+    "clip": null
+   },
+   "focusShot": "rv-04-lahomes-1440-focus.png",
+   "screenshot": "rv-04-lahomes-1440.png"
+  },
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-pagination.html",
+  "libraryRow": "060"
+ },
+ {
+  "390": {
+   "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 79,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 310
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 0px rgb(255, 255, 255) offset 1px",
+    "boxShadow": "none",
+    "clip": null
+   },
+   "focusShot": "rv-07-lahomes-390-focus.png",
+   "screenshot": "rv-07-lahomes-390.png"
+  },
+  "1440": {
+   "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Previous | 1 | 2 | 3 | Next",
+     "n": 5,
+     "ctrl": {
+      "w": 79,
+      "h": 35,
+      "radius": "5.6px",
+      "fs": "14px"
+     },
+     "gap": -1,
+     "blockW": 768
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 0px rgb(255, 255, 255) offset 1px",
+    "boxShadow": "none",
+    "clip": null
+   },
+   "focusShot": "rv-06-lahomes-1440-focus.png",
+   "screenshot": "rv-06-lahomes-1440.png"
+  },
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+  "libraryRow": "008"
+ },
+ {
+  "390": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 37,
+      "h": 39,
+      "radius": "10.5px",
+      "fs": "12.25px"
+     },
+     "gap": -1,
+     "blockW": 218
+    },
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 26,
+      "h": 26,
+      "radius": "2.8px",
+      "fs": "10.5px"
+     },
+     "gap": -1,
+     "blockW": 153
+    },
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 22,
+      "h": 22,
+      "radius": "10.5px",
+      "fs": "8.75px"
+     },
+     "gap": -1,
+     "blockW": 126
+    }
+   ],
+   "focus": {
+    "text": "2",
+    "outline": "none 3px rgb(110, 110, 110) offset 0px",
+    "boxShadow": "none",
+    "clip": {
+     "tag": "div",
+     "cls": "show  ",
+     "overflow": "hidden",
+     "cutPx": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+     }
+    }
+   },
+   "focusShot": "rv-09-kamr-390-focus.png",
+   "screenshot": "rv-09-kamr-390.png"
+  },
+  "1440": {
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 37,
+      "h": 39,
+      "radius": "10.5px",
+      "fs": "12.25px"
+     },
+     "gap": -1,
+     "blockW": 218
+    },
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 26,
+      "h": 26,
+      "radius": "2.8px",
+      "fs": "10.5px"
+     },
+     "gap": -1,
+     "blockW": 153
+    },
+    {
+     "text": "· | 1(current) | 2 | 3 | 4 | ·",
+     "n": 6,
+     "ctrl": {
+      "w": 22,
+      "h": 22,
+      "radius": "10.5px",
+      "fs": "8.75px"
+     },
+     "gap": -1,
+     "blockW": 126
+    }
+   ],
+   "focus": {
+    "text": "2",
+    "outline": "none 3px rgb(110, 110, 110) offset 0px",
+    "boxShadow": "none",
+    "clip": {
+     "tag": "div",
+     "cls": "show  ",
+     "overflow": "hidden",
+     "cutPx": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+     }
+    }
+   },
+   "focusShot": "rv-08-kamr-1440-focus.png",
+   "screenshot": "rv-08-kamr-1440.png"
+  },
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/ui-pagination",
+  "libraryRow": "038"
+ },
+ {
+  "390": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-11-omah-390.png"
+  },
+  "1440": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [],
+   "screenshot": "rv-10-omah-1440.png"
+  },
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/property-list.html",
+  "libraryRow": "013"
+ },
+ {
+  "390": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "· | 1 | 2 | ·",
+     "n": 4,
+     "ctrl": {
+      "w": 30,
+      "h": 30,
+      "radius": "8px",
+      "fs": "12.25px"
+     },
+     "gap": 3,
+     "blockW": 360
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 3px rgb(255, 255, 255) offset 0px",
+    "boxShadow": "none",
+    "clip": {
+     "tag": "div",
+     "cls": "table-responsive check-wrapper fs-14 mb-2",
+     "overflow": "auto",
+     "cutPx": {
+      "top": 0,
+      "bottom": 0.015625,
+      "left": 0,
+      "right": 0
+     }
+    }
+   },
+   "focusShot": "rv-13-omah-390-focus.png",
+   "screenshot": "rv-13-omah-390.png"
+  },
+  "1440": {
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "· | 1 | 2 | ·",
+     "n": 4,
+     "ctrl": {
+      "w": 30,
+      "h": 30,
+      "radius": "8px",
+      "fs": "12.25px"
+     },
+     "gap": 3,
+     "blockW": 152
+    }
+   ],
+   "focus": {
+    "text": "1",
+    "outline": "none 3px rgb(255, 255, 255) offset 0px",
+    "boxShadow": "none",
+    "clip": {
+     "tag": "div",
+     "cls": "table-responsive check-wrapper fs-14 mb-2",
+     "overflow": "auto",
+     "cutPx": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+     }
+    }
+   },
+   "focusShot": "rv-12-omah-1440-focus.png",
+   "screenshot": "rv-12-omah-1440.png"
+  },
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/order-list.html",
+  "libraryRow": "006"
+ },
+ {
+  "390": {
+   "title": "Ноутбуки - ROZETKA | Купити ноутбук у Києві, Україні: ціна, відгуки, продаж",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Показати ще | Попередня ст | 2 | 3 | 4 | 100 | Наступна сто",
+     "n": 7,
+     "ctrl": {
+      "w": 130,
+      "h": 40,
+      "radius": "8px",
+      "fs": "16px"
+     },
+     "gap": -244,
+     "blockW": 359
+    }
+   ],
+   "focus": {
+    "text": "",
+    "outline": "none 3px rgb(121, 120, 120) offset 0px",
+    "boxShadow": "rgb(111, 196, 229) 0px 0px 0px 2px",
+    "clip": null
+   },
+   "focusShot": "rv-15-rozetka-390-focus.png",
+   "screenshot": "rv-15-rozetka-390.png"
+  },
+  "1440": {
+   "title": "Ноутбуки - ROZETKA | Купити ноутбук у Києві, Україні: ціна, відгуки, продаж",
+   "overflow": false,
+   "paginators": [
+    {
+     "text": "Показати ще | Попередня ст | 2 | 3 | 4 | 100 | Наступна сто",
+     "n": 7,
+     "ctrl": {
+      "w": 130,
+      "h": 40,
+      "radius": "8px",
+      "fs": "16px"
+     },
+     "gap": -596,
+     "blockW": 1111
+    }
+   ],
+   "focus": {
+    "text": "",
+    "outline": "none 3px rgb(121, 120, 120) offset 0px",
+    "boxShadow": "rgb(111, 196, 229) 0px 0px 0px 2px",
+    "clip": null
+   },
+   "focusShot": "rv-14-rozetka-1440-focus.png",
+   "screenshot": "rv-14-rozetka-1440.png"
+  },
+  "ref": "rozetka",
+  "url": "https://rozetka.com.ua/ua/notebooks/c80004/",
+  "libraryRow": "owner link, not in library"
+ }
+]

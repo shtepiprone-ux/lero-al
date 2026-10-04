@@ -506,8 +506,8 @@ destructured declaration as data, not a builder, are accepted. **Do not touch R1
 ### 17.1 Owner returns, 2026-10-02 (verbatim)
 
 1. `AdminListingsView` (`Default`, `VisibleFilter`, `HiddenEligible`, `Paginated` × sq/uk × 390/1440, and `Default` × en/it × 1024): *"не приймаю, не витримані горизонтальні відступи всередині таблиці на всіх breakpoints."*
-2. `ListingPreviewDialogView`: *"не приймаю. Це суцільний хаос однакових по ієрархії кнопок. Необхідно у цьому попапі розробити ієрархію основних і допоміжних кнопок. Це можуть бути текстові кнопки з іконками та звичайні основні кнопки. Необхідно розрробити цей попап та і взагалі всі інші попапи мають притримуватись UI/UX best practices 2026 року. Наразі це повне лайно."*
-3. `PremiumDialogView`: *"не приймаю. Звідки взявся цей жовтий колір ще й гімняного відтінку. … Кнопки мають бути стандартні з ієрархією!"*
+2. `ListingPreviewDialogView`: *"не приймаю. Це суцільний хаос однакових по ієрархії кнопок. Необхідно у цьому попапі розробити ієрархію основних і допоміжних кнопок. Це можуть бути текстові кнопки з іконками та звичайні основні кнопки. Необхідно розрробити цей попап та і взагалі всі інші попапи мають притримуватись UI/UX best practices 2026 року. Наразі це неприйнятно."*
+3. `PremiumDialogView`: *"не приймаю. Звідки взявся цей жовтий колір ще й невдалого відтінку. … Кнопки мають бути стандартні з ієрархією!"*
 4. The visibility segment that scrolls out of view at 320: the owner left this to Opus. Decision: fix it (R18).
 
 The dialog rule the owner asked for is now `docs/mantine-responsive-design-system.md` **§23.6 "Dialog action

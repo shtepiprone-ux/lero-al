@@ -151,7 +151,7 @@ theorized:**
 Three more owner-reported defects, each reproduced live before being fixed:
 
 1. **Colours still too saturated against the reference.** The owner rejected the Pass 5 palette
-   outright ("а не таке лайно, як ти запропонувала" — not the garbage you proposed) and demanded
+   outright ("а не таке рішення, як ти запропонувала" — not the garbage you proposed) and demanded
    literal reference-matched values, not invented ones. Re-measured `demo.tailadmin.com`'s actual
    rendered RGB values again (not re-guessed) and moved `theme.other.chartSeries` to the final set:
    `recordedViews: 'blueLight.4'`, `whatsappClicks: 'green.3'`, `formInquiries: 'purple.3'`,
@@ -177,7 +177,7 @@ variant had been missed going forward.
 ## Pass 7 — bar-chart rounding correction #2, mandatory animation, critical stacking-swap bug
 
 The owner's Pass 5 instruction to remove `MantineDashboardBarChart`'s rounding entirely
-("Прибери нахуй ті скруглення всередені бар чарту") turned out to be an overcorrection once the
+("Прибери ті скруглення всередені бар чарту") turned out to be an overcorrection once the
 owner supplied an actual TailAdmin bar-chart screenshot and rejected the fully-square result on
 sight ("я не приймаю задачу... Дивись на рефренс. Скільки разів тебе тикати носом в твої стилі?").
 Live SVG-path inspection of `demo.tailadmin.com/bar-chart`'s own rendered output (not a re-read of
@@ -825,7 +825,7 @@ locale files; no new keys needed since the wording, not the key, was wrong.
 
 ### Bar chart month/year views still used fake ordinal counters
 
-Broader owner correction after seeing the title fix ("Який блядь Тиждень 1, Тиждень 2…? Має бути
+Broader owner correction after seeing the title fix ("Який Тиждень 1, Тиждень 2…? Має бути
 один стандарт для всіх чартів!"): the bar chart's month view showed `"Тиждень 1"`…`"Тиждень 6"` and
 its year view showed `"Місяць 1"`…`"Місяць 12"` — the exact same defect class as the week bug,
 just not named in the first report. Neither had a real calendar date behind it.

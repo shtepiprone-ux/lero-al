@@ -671,7 +671,7 @@ on the same viewport (both measured in the Storybook `withAdminShell` frame, val
 - T2 still round-trips `unassignedSupportHref()` exactly.
 - P1 still fails T1/T3.
 
-**Owner, verbatim, on scope (2026-10-04):** *"стоп! Яка нахуй нова задача? У цю задачу дописуй ревізію!"* The width
+**Owner, verbatim, on scope (2026-10-04):** *"стоп! Яка взагалі нова задача? У цю задачу дописуй ревізію!"* The width
 alignment of the other Mantine list pages is therefore part of this revision (R23). No new number is filed.
 
 | ID | Requirement | P | AC |

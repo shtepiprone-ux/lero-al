@@ -1,7 +1,7 @@
 # Sprint 74 — one card width for the whole site
 
 **Opened 2026-09-10 by owner instruction**, after the owner compared the live homepage and listing page against
-Booking.com: *"приведи нахуй все до одного стандарту ширини і щоб на всіх breakpoints все виглядало чудово"*.
+Booking.com: *"приведи все до одного стандарту ширини і щоб на всіх breakpoints все виглядало чудово"*.
 
 ## Goal
 

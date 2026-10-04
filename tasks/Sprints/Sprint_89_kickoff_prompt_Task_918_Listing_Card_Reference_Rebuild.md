@@ -511,7 +511,7 @@ Update `docs/backlog.md` with one state line; write the session log with "Files 
 ### 16.1 Owner return and decision, verbatim
 
 Task 741's owner matrix O46-2 was returned on 2026-10-04:
-- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодна хуйня! Мають бути канонічні і однакові стилі."*
+- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодне рішення! Мають бути канонічні і однакові стилі."*
 - row 2, `Patterns/Mantine/ListingCardPattern`: *"аналогічна проблема як і в першому пункті."*
 
 Decision **D89-10** (= Task 741's **D46-5**), 2026-10-04. The owner chose, verbatim, *"У 918, жорсткіше (Recommended)"*,

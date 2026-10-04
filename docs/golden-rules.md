@@ -696,7 +696,7 @@ Sanctions:
 **Owner rule, 2026-10-04.** The owner returned Task 859 and wrote, verbatim: *"Я бачу, що таблиці в адмінці всі різні.
 Немає одного стилю таблиць, де спершу йде стовпчик з чекбоксами, а потім йдуть стовпчики контенту таблиці, а після
 контенту йдуть стовпчики з опціями редагувати,видалити. Я буквально вчора писав про це, і сьогодні я знову бачу цю
-хуйню!"* Then: *"я вчора сказав тобі щоб ти завів правило щодо таблиць і що треба перевірити референси, які я тобі
+невідповідність!"* Then: *"я вчора сказав тобі щоб ти завів правило щодо таблиць і що треба перевірити референси, які я тобі
 вчора надавав, завжди … перевіряти їх перед написанням."*
 
 **Why this rule exists.** On 2026-10-03 the request became Task 919's kickoff and decisions D78-13…D78-16, and no
@@ -749,8 +749,8 @@ With no receipt, or with a `no` and no owner exception, the kickoff is not publi
 ## GR-9 — A review is meticulous: every element, every state, every variant, every claim
 
 **Owner rule, 2026-10-04 (Task 741, O46-2).** The owner returned all three matrix rows that Opus had handed over as
-measured, then wrote, verbatim: *"ти робиш дуже погано рев'ю! Ти мене вже заїбав, сука, роби блядь якісно, детальніше, бо
-ти блядь поверхнево робиш рев'ю, через що я палю дуже багато токенів! Запиши блядь правило - рев'ю робиться дуже
+measured, then wrote, verbatim: *"ти робиш дуже погано рев'ю! Будь ласка, роби якісно, детальніше, бо
+ти поверхнево робиш рев'ю, через що я палю дуже багато токенів! Запиши правило - рев'ю робиться дуже
 прискіпливо, якісно, детально!"*
 
 **What the shallow review missed, one row each:**

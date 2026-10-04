@@ -970,10 +970,10 @@ which starts at §18.7 I0. Evidence goes to `docs/sessions/evidence/task741r3/re
 ### 18.1 Owner return and decisions, verbatim
 
 O46-1 (§17.9), returned 2026-10-04:
-- Row 1, `Mantine/Primitives/ListingCard`: **returned.** *"твоє рев'ю повне лайно. Де картки зі всіма статцсами? Це ж
-  примітив, база блядь!"*
+- Row 1, `Mantine/Primitives/ListingCard`: **returned.** *"твоє рев'ю неприйнятне. Де картки зі всіма статцсами? Це ж
+  примітив, база!"*
 - Row 2, `Patterns/Mantine/ListingCardPattern`: **returned.** *"List Layout ми не використовуємо на екранах меньше
-  640px. Нахуй ми його взагалі тримаємо?"*
+  640px. Навіщо ми його взагалі тримаємо?"*
 - Row 3, `Mantine/Primitives/ListingStatusBanner`: **accepted.** *"єдине в цій задачі, що я приймаю."* D46-1 is closed,
   and this row is not re-checked.
 
@@ -1448,7 +1448,7 @@ Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REV
 it adds no executor step.
 
 **Owner return, verbatim:**
-- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодна хуйня! Мають бути канонічні і однакові стилі."*
+- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодне рішення! Мають бути канонічні і однакові стилі."*
 - row 2, `Patterns/Mantine/ListingCardPattern`: *"аналогічна проблема як і в першому пункті."*
 - row 3 (`ListingsShellView`) and row 4 (production) are not answered yet.
 

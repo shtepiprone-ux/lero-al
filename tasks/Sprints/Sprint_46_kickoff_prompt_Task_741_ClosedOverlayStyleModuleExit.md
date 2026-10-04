@@ -960,3 +960,248 @@ The eight earlier hashes still equal `19_greps_hashes.txt`. Freshness holds: the
 The label renders 14px, 16px radius (D46-2), `2px solid` `--status-info` / `--status-rented`, and the 80% tone background at every width. That matches the AC32 probe.
 
 **Next step: the owner returns matrix O46-1 (§17.9).** If every row is accepted, the next review approves and archives 741. A returned row reopens this section as Revision 3b. No executor action is open.
+
+## 18. Revision 3b — every card status in the card Stories; no list layout below 640 (owner matrix O46-1 returned, 2026-10-04)
+
+Sprint 46 · P1 · QA profile **Q4**. **This section is the only executable route.** §17's R30–R35 are implemented and
+reviewed (§17.11, §17.12). Do not touch them except where this section names a file. Re-entry mode: **remediation**,
+which starts at §18.7 I0. Evidence goes to `docs/sessions/evidence/task741r3/rev3b/`.
+
+### 18.1 Owner return and decisions, verbatim
+
+O46-1 (§17.9), returned 2026-10-04:
+- Row 1, `Mantine/Primitives/ListingCard`: **returned.** *"твоє рев'ю повне лайно. Де картки зі всіма статцсами? Це ж
+  примітив, база блядь!"*
+- Row 2, `Patterns/Mantine/ListingCardPattern`: **returned.** *"List Layout ми не використовуємо на екранах меньше
+  640px. Нахуй ми його взагалі тримаємо?"*
+- Row 3, `Mantine/Primitives/ListingStatusBanner`: **accepted.** *"єдине в цій задачі, що я приймаю."* D46-1 is closed,
+  and this row is not re-checked.
+
+Owner decisions, 2026-10-04:
+- **D46-3** (list layout below 640), verbatim: *"якщо користувач переверне телефон у горизонтальне положення, обере List і
+  потім переверне телефон у портретне положення - треба ховати перемикач List Layout(як у нас є), а також автоматично
+  перемикати відображення оголошень у картковий режим, і якщо окристувач знову переверне телефон у горизонтальне
+  положення, то фільтр має бути активний на картковому типі відображення."* Below 640 the toggle stays hidden and the
+  view state switches to `grid`. Back at 640 or more, `grid` stays selected; the earlier List choice is **not** restored.
+- **D46-4** (cards with status `inactive` / `pending`), option chosen verbatim: *"Add badges, from the map
+  (Recommended)"*. `getBadges` labels them from `LISTING_STATUS_COLOR`: `inactive` gray, `pending` yellow.
+
+**RETRACTION (orchestrator).**
+- **Invalid prior claim:** §17.3's GR-3a receipt said *"every state already renders there"*, and §17.12 handed the
+  matrix to the owner on that basis.
+- **Why it was invalid:** R30 changed the archived and expired badge colours, and neither card Story rendered an
+  archived or expired `ListingCard`. The primitive renders only active, sold and rented. No Story renders `inactive`,
+  `pending`, price-reduced or no-image through the real `ListingCard`. The "New" badge has not rendered since
+  2026-08-04, because `FIXTURE_CREATED_AT` is 2026-07-28 and `getBadges` compares it with the real `Date.now()`
+  (`ListingCard.tsx:103-104`).
+- **Evidence:** `src/stories/mantine/primitives/ListingCard.stories.tsx` `Default` (three grid cards and one list card);
+  `ListingCard.tsx:80-112`.
+- **Corrected status:** `FACT`. Both reviews passed a primitive Story that does not prove the component's states.
+
+### 18.2 Verified context (orchestrator, 2026-10-04, working tree)
+
+- **FACT.** `ListingStatus` = `active | inactive | sold | rented | archived | pending | expired`
+  (`src/types/database.ts:43`). `getBadges` (`ListingCard.tsx:80-112`) handles each status as follows:
+  - sold, rented, archived and expired each get a status badge and return early;
+  - inactive and pending fall through to the active branch, so they show no status badge;
+  - active can get `new` (green, created less than 7 days ago) and `price_reduced` (`sale`, when `price_old > price`).
+  - Elsewhere in `ListingCard`:
+    - `isPremium` (`:223`, `:313`) gives the premium styling;
+    - `isArchived` (only `archived`, `listingSemanticLayer.ts:98`) gives the dimmed card;
+    - sold and rented get the overlay;
+    - `images: []` gives the `MediaPlaceholder`.
+- **FACT.** `LISTING_STATUS_COLOR` has `inactive: 'gray'` and `pending: 'yellow'` (`listingStatusTone.ts:21-29`). The
+  labels `listing.status_inactive` and `listing.status_pending` exist in all four locales: sq *Joaktiv* / *Nën shqyrtim*,
+  en *Inactive* / *Under review*, uk *Неактивне* / *На модерації*, it *Non attivo* / *In revisione*.
+- **FACT.** Favourites exclude only `archived` (`favoritesQueries.ts:58,79,124,161`), so inactive, pending and expired
+  cards can reach `ListingCard`.
+- **FACT.** The view state is `useState<'grid' | 'list'>('grid')` in `ListingsShell.tsx:81`. It is passed to
+  `ListingsShellView` (`view`, `onViewChange`), and `ListingsShellView.tsx:127-160` renders the grid track or the
+  `variant="horizontal"` stack. The toggle is `visibleFrom="sm"` (`ListingsSortBar.tsx:159-186`).
+  - **Gap:** nothing resets `view` when the width drops below 640. A List choice made at 640 or more therefore still
+    renders list cards in portrait.
+- **FACT.** The repo already uses `useMatches({ base: true, sm: false })` in a View (`LightboxView.tsx:53`). `sm` is
+  `40em` = 640px (`theme.ts:633`).
+- **FACT.** The `Patterns/Mantine/ListingsShellView` Story keeps its own `useState('grid')` and passes `view` /
+  `onViewChange` (`ListingsShellView.stories.tsx:51,67`). A reset placed **in the View** therefore runs in production
+  and in that Story alike. `ListingsShell.tsx` is not changed.
+- **FACT, GR-1 census** (`win32`, 2026-10-04), `check-surface-census.mjs --surface`:
+  - `ListingCard.tsx`: 7 nodes, all tier1 migrated+enrolled+story, exit 0.
+  - `ListingsShell.tsx`: 23 nodes, exit 1. Two nodes fail as `tier1-unenrolled-or-unstoried`:
+    - `ListingsShell.tsx` (className 0). It is not changed here. It is baselined debt (`surface-census-baseline.json:229`), and its `next/dynamic` loading skeleton keeps it out of the container exemption.
+    - `ListingsActionRow.tsx` (className 0, `story:yes` via `Patterns/Mantine/ListingsActionRow`, `manifest:no`). It is rendered by `ListingsShellView`, which this revision changes, so clause 16d puts it **in scope**: R38.
+
+### 18.3 Canonical decision record (GR-0) and receipts
+
+| Visible artifact | Today | Target | Disposition |
+|---|---|---|---|
+| `inactive` / `pending` card badge | none | the existing card badge (`MantineListingCardPattern` `badges`, `variant="filled"`), colour `LISTING_STATUS_COLOR[status]`, label `t('status_inactive')` / `t('status_pending')` | **REUSE** |
+| View reset below 640 | none | `ListingsShellView`: `useMatches({ base: true, sm: false })` (precedent `LightboxView.tsx:53`) + `useEffect` calling `onViewChange('grid')` when below sm and `view === 'list'`. The render branch uses grid whenever below sm, so no list frame paints | **REUSE** Mantine hook |
+| List section of both card Stories | rendered at every width | the section's `Stack` (title and cards) gets `visibleFrom="sm"`, mirroring `ListingsSortBar.tsx:162`, with a comment citing that line and D46-3 | **REUSE** Mantine prop |
+| "New" badge in the primitive Story | stale wall-clock comparison | a Story-level `beforeEach` on the `Mantine/Primitives/ListingCard` meta pins `Date.now` to `FIXTURE_NOW_MS` (`Date.parse('2026-07-30T00:00:00.000Z')`) and restores the original in its returned cleanup. Production is unchanged | fixture only |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: inactive/pending card badges, list→grid reset below 640, every card state in the two card Stories; semantic queries: "getBadges", "LISTING_STATUS_COLOR", "status_inactive", "visibleFrom=\"sm\"", "useMatches", "view === 'list'"; inspected candidates: ListingCard.tsx:80-112, listingStatusTone.ts:21-29, ListingsSortBar.tsx:159-186, ListingsShellView.tsx:127-160, LightboxView.tsx:53, ListingCard.stories.tsx, ListingCardPattern.stories.tsx:139-251, ListingsShellView.stories.tsx:51-67; decision: REUSE; selected canonical owner: ListingCard getBadges + LISTING_STATUS_COLOR, ListingsShellView, Mantine useMatches/visibleFrom; Mantine/TailAdmin token path: theme colours gray/yellow via the existing filled card badge, theme breakpoint sm; new hardcoded visual values: NONE; rationale: both production changes are owner decisions D46-3/D46-4 expressed with existing sources.`
+
+`GR-1 CENSUS COMPLETE — surface ListingCard.tsx 7 nodes; tier1 7 migrated+enrolled+story; tier2 0; tier3 0. Surface ListingsShellView.tsx (via ListingsShell.tsx census): tier1 ListingsActionRow enrolled in this task (R38); ListingsShell.tsx unchanged, baselined container debt with a loading skeleton, not exempt; tier2 0; tier3 0 listed and filed as none.`
+
+`GR-3a STORY PREFLIGHT — ListingCard / MantineListingCardPattern / ListingsShellView × every status, list-below-640, view reset; canonical candidates: mantine-primitives-listingcard--default, patterns-mantine-listingcardpattern--default, patterns-mantine-listingsshellview--default; direct-import evidence: ListingCard.stories.tsx:4, ListingCardPattern.stories.tsx:9, ListingsShellView.stories.tsx:4; toolbar coverage: locale=context.globals.locale, viewport=toolbar; decision: EXTEND (the existing Default exports; no new Story, no new export); target: the three Default exports; rationale: each Story already imports the real component; the missing states are added there.`
+
+**GR-7.** No reference audit is run, and no reference-based claim is made. Both production changes are the owner's
+direct decisions, D46-3 and D46-4. The badge reuses the existing card badge chrome, and no layout, control or visual
+value is chosen. If the owner requires the audit anyway, this revision is not executable until it is done.
+
+### 18.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R36** | `getBadges`: `inactive` → `{ label: 'status_inactive', color: LISTING_STATUS_COLOR.inactive }`, `pending` → `{ label: 'status_pending', color: LISTING_STATUS_COLOR.pending }`. Each returns early, like the other non-active statuses, so neither gets `new` / `price_reduced`. Neither gets the overlay or `isArchived`. The comment above `getBadges` names D46-4. | P0 |
+| **R37** | `ListingsShellView`: below `sm`, with `view === 'list'`, it calls `onViewChange('grid')` once and renders the grid track (never the horizontal stack). At `sm` or more it renders what `view` says. The View never calls `onViewChange('list')`. Nothing else in the View changes. | P0 |
+| **R38** | `src/modules/listings/components/ListingsActionRow.tsx` is added to `scripts/mantine-migration-scope.json`. The entries it makes stale are removed: `surface-census-baseline.json` keys `…listings/page.tsx :: …ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried` and `…ListingsShellView.tsx :: …ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried`, plus `rendered-scope-baseline.json` key `…ListingsShellView.tsx -> …ListingsActionRow.tsx`. Remove only what the gates report as stale, and edit through Node, not a hand-typed `Get-Content`. | P0 |
+| **R39** | `Mantine/Primitives/ListingCard` → `Default` renders the real `ListingCard` in every state below, in this order, first in the grid section and then in the list section. Each state gets its own fixture through `makeFixtureListing` options, and every visible string comes from `storyT`. The states: (1) active + New; (2) active, no badge (`created_at` 2026-07-01); (3) active + New + price reduced (`price_old` 92000); (4) premium; (5) inactive; (6) pending; (7) sold; (8) rented; (9) archived; (10) expired; (11) no image. The list section, with its title, has `visibleFrom="sm"`. The meta's `beforeEach` pins `Date.now` as in §18.3. `FavoritesComposition` is unchanged. No `style` object, fixed width or viewport pin is added. | P0 |
+| **R40** | `Patterns/Mantine/ListingCardPattern` → `Default` renders the same eleven states in both sections. For new cards (New + reduced, inactive, pending, expired), `DemoCard` gains options. Badge labels come from `storyT(l, 'listing.status_*')` and colours from `LISTING_STATUS_COLOR`. The list section, with its title and its `Divider`, has `visibleFrom="sm"`. The existing play test (`consumer-overlay-hook`) stays green. | P0 |
+| **R41** | Tests, red on the pre-change tree first: <ul><li>`ListingCard.smoke.test.tsx`: `inactive` renders one badge with text *Inactive* and the gray filled colour; `pending` renders *Under review* in yellow; neither renders *New*.</li><li>New file `src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx` (mock `matchMedia`). Below sm with `view="list"`, `onViewChange` is called with `'grid'` and no `.listing-card--horizontal` renders. At sm or more with `view="list"`, it is not called and the horizontal cards render. After the switch, a re-render at sm or more with `view="grid"` never calls `onViewChange('list')`.</li></ul> | P0 |
+
+### 18.5 Flows
+
+**Positive.** On a phone in landscape (≥640), the user picks List. Turning the phone to portrait hides the toggle and
+shows the grid. Turning it back shows the toggle with Grid selected. An inactive favourite shows a gray *Inactive*
+badge, and a pending one shows a yellow *Under review* badge.
+
+| Negative flow | Applicable | Expected |
+|---|---|---|
+| Below 640 at mount, `view` = `grid` | Yes | no `onViewChange` call |
+| `useMatches` initial render (returns `base` before its effect) on desktop | Yes | `view` is `grid` at mount, so no call. The test covers that a desktop `list` is not reset |
+| ≥640, List chosen | Yes | list renders, as today |
+| inactive / pending card with `price_old > price` or created < 7 days ago | Yes | status badge only |
+| sold / rented / archived / expired | Yes | unchanged from Revision 3 |
+| `ListingStatusBanner` | No | accepted O46-1 row 3; not touched |
+| Long `uk` label (*На модерації*) at 320 | Yes | the badge stays inside the photo; owner matrix |
+
+### 18.6 Acceptance criteria
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.`
+
+- **AC36 [R36, R41].** The R41 `ListingCard` assertions are red on the pre-change tree (`rev3b/01_red.txt`, exit not 0)
+  and green after.
+- **AC37 [R37, R41].** The R41 `ListingsShellView` assertions are red before (or the file fails because the behaviour
+  is absent) and green after. In `patterns-mantine-listingsshellview--default`, a Playwright probe does: 1440 → click
+  the `view_list` toggle → resize to 390 → read; then resize to 1440 → read. It records the following, in
+  `rev3b/probe-viewreset.json`:
+  - at 390: the count of `.listing-card--horizontal` = 0, and the toggle is not visible;
+  - at 1440: the `view_grid` `ActionIcon` has the filled variant.
+- **AC38 [R38].** `check:story-coverage`, `check:rendered-scope`, `check:rendered-scope:verify`,
+  `check:surface-census:changed` and `check:surface-census:changed:verify` exit 0. `node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsShell.tsx`
+  no longer lists `ListingsActionRow.tsx` as FAIL. `ListingsShell.tsx` itself stays as baselined debt.
+- **AC39 [R39, R40].** On the rebuilt Storybook, a probe at 320, 390, 768 and 1440 (`en`, `uk`) records the
+  following for each of the two card Stories, in `rev3b/probe-states.json`:
+  - the badge texts per grid card, in order;
+  - whether the list section is visible.
+
+  Expected:
+  - the grid shows eleven cards with the §18.4 badges: 1 *New*, 2 none, 3 *New* + *Price reduced*, 4 none (premium styling), 5 *Inactive*, 6 *Under review*, 7 *Sold* + overlay, 8 *Rented* + overlay, 9 *Archived* + dimmed card, 10 *Expired*, 11 none with the placeholder;
+  - the list section is hidden at 320 and 390, and shows the same eleven at 768 and 1440 (no overlay);
+  - the run is repeated on another calendar day, or with the system clock moved, and its badge texts are identical.
+- **AC40 [all].** Every command in the §18.7 gate block ends `EXIT_CODE=0`, except `governance:tailwind`, which is
+  judged by the AC35 clause (§17.12 F27).
+
+### 18.7 Verification plan
+
+**I0, before any write.**
+1. `git --no-optional-locks status --porcelain`, plus `git hash-object` of every file in §18.8 → `rev3b/00_i0.txt`.
+2. Re-run both §18.2 censuses and paste the node lists.
+3. Write the R41 assertions and retain the red run (`rev3b/01_red.txt`).
+
+**Gate block, after the writes.** One unpiped transcript per command under `rev3b/`, each ending `EXIT_CODE=`. Write
+every transcript through Node or `Out-File -Encoding utf8`, never into a path that holds an unexpanded `$` (§17.12 F28).
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/lib/__tests__/listingStatusTone.test.ts
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:type-responsive
+npm.cmd run check:rendered-scope
+npm.cmd run check:rendered-scope:verify
+npm.cmd run check:surface-census:changed
+npm.cmd run check:surface-census:changed:verify
+npm.cmd run governance:tailwind
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks hash-object src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingsShellView.tsx src/stories/mantine/primitives/ListingCard.stories.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx scripts/mantine-migration-scope.json scripts/surface-census-baseline.json scripts/rendered-scope-baseline.json
+git --no-optional-locks status --porcelain
+```
+
+Expected: exit 0 for every command except `governance:tailwind`, which is judged by AC35. The `build-storybook` must run
+after the last source write, and the AC37 and AC39 probes run on that build.
+
+**Story receipts**, one per matrix Story, before handoff:
+- GR-3b at 320/390/1024/1440;
+- GR-3c at 320/390/768/1440;
+- GR-3d at 320/390/1024/1440, all four sides;
+- GR-3e: n/a, no popup;
+- GR-3f: n/a, no circle changes;
+- GR-3g: the overlay label, as in §17.12.
+
+GR-3d lines:
+- `Mantine/Primitives/ListingCard`: `n/a: MantineStoryShell primitive`;
+- `Patterns/Mantine/ListingCardPattern`: profile `StoryPageGutter` all (`ListingCardPattern.stories.tsx`), unchanged;
+- `Patterns/Mantine/ListingsShellView`: profile `StoryPageGutter` all (`ListingsShellView.stories.tsx:55`), unchanged. Measure all four sides.
+
+Type scale (GR-3c). No text size changes:
+
+| Element | Role | base / sm / md / lg | Key | Provenance |
+|---|---|---|---|---|
+| Story section titles | section heading | 18 / 20 / 24 / 24 | `TITLE_FZ.h4` | `typography.ts:41` |
+| Card title | card heading | 14 at all | pattern | unchanged |
+| Card badge (incl. *Inactive*, *Under review*) | label | unchanged pattern badge size | pattern | `MantineListingCardPattern` |
+| Overlay label | label | 14 at all | `fz="sm"` | §17.3 |
+
+### 18.8 Files in scope
+
+- `src/modules/listings/components/ListingCard.tsx` (R36: `getBadges` and its comment only)
+- `src/modules/listings/components/ListingsShellView.tsx` (R37)
+- `src/stories/mantine/primitives/ListingCard.stories.tsx` (R39)
+- `src/stories/patterns/mantine/ListingCardPattern.stories.tsx` (R40)
+- `src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx` (R41)
+- `src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx` (R41, new)
+- `scripts/mantine-migration-scope.json`, `scripts/surface-census-baseline.json`, `scripts/rendered-scope-baseline.json` (R38)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3b`)
+- `docs/backlog.md` (the 741 state only)
+
+**Dirty worktree.** At design time, `scripts/mantine-migration-scope.json` and `scripts/surface-census-baseline.json`
+already carry **Task 859** changes, which are uncommitted. Take their I0 hashes, and add only the R38 lines. In the
+session log, list the R38 hunks by key so the review can separate them from 859's hunks. If either file has changed
+between I0 and the write, stop and report it.
+
+Do not edit anything else. If a gate needs another file, stop and report it.
+
+### 18.9 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-2)
+
+| Story | Toolbar viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Mantine/Primitives/ListingCard` → `Default` | 320, 768, 1440 | en, uk | eleven cards, every status with its badge; sold/rented overlay as accepted on 2026-09-30, label corners 16px; list section absent at 320, present with the same eleven at 768/1440 |
+| `Patterns/Mantine/ListingCardPattern` → `Default` | 320, 768, 1440 | en, uk | the same as the row above; footer date on one line; favourite chrome unchanged |
+| `Patterns/Mantine/ListingsShellView` → `Default` | 1440 → 390 → 1440 | en | choose List at 1440; at 390 the grid shows and the toggle is hidden; back at 1440 Grid is selected (D46-3) |
+| production `/uk/listings` and `/uk/favorites` after deploy | phone landscape → portrait → landscape; desktop | uk | the same as the row above; a sold/rented card matches Storybook |
+
+### 18.10 Completion
+
+Append `## Revision 3b` to the session log. It contains:
+- the I0 status and hashes;
+- the censuses;
+- the red and green transcripts;
+- the gate block;
+- `probe-states.json` and `probe-viewreset.json`;
+- the receipts;
+- a `Files Changed` table.
+
+Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
+or `BLOCKED`. No self-approval, no git. The reviewer measures every matrix Story (GR-3b–3g) and audits each Story
+against **every production state of the component** before the matrix reaches the owner.

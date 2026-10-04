@@ -803,6 +803,86 @@ With no receipt, or with an item not `NONE` and not raised as a finding, the rev
 go to the owner. Task design applies the same census to the Stories a kickoff puts in the owner matrix (`create-task`),
 so that a kickoff never asks the executor to preserve a non-canonical element.
 
+## GR-10 — No canonical component, or a canonical that differs from the original: the work is not accepted
+
+**Owner rule, 2026-10-04 (Task 741, O46-3).** The owner returned `ListingsShellView`, which still rendered the
+hand-built listing cards in grid and list. Verbatim: *"Запиши собі золоте правило, якщо немає канонічного компоненту, або
+він не відповідає оригіналу - не приймати виконання як якісне (це стосується всіх задач!)!"*
+
+**Applies to:** every task, at task creation, execution and review, and every Story handed to the owner.
+
+**Forbidden:**
+- accepting, approving, or handing to the owner matrix a surface that renders a visible element with no canonical
+  component of its own (canonical owner + its own Story + manifest entry, GR-1/GR-3);
+- the same where the canonical component exists but differs from its original, part by part (layout, size, colour,
+  radius, border, shadow, spacing, states). The original is the owner's reference where one was given (for example
+  Rozetka), otherwise the GR-7 references, with TailAdmin as the visual source;
+- deferring either of these to a later task as a reason to accept the current one. A later task can own the fix, but
+  the current task stays unaccepted until the fix has landed and the surface has been re-checked.
+
+**Required:** every kickoff names, for every visible element of every in-scope surface, its canonical owner and the
+original it must match. The review compares the two part by part, with computed styles and DPR-1 crops placed side by
+side.
+
+**Receipt — task design, execution and review alike, one per surface:**
+
+`GR-10 CANONICAL MATCH — <surface/Story>: elements <n>; with canonical owner <n>/<n>; matching the original <n>/<n> (original per element: <reference page>); missing or differing: <list | NONE>.`
+
+With anything but `NONE`, the kickoff is not publishable, the executor returns `BLOCKED — GR-10`, and the reviewer
+returns `NEEDS REVISION`. No gate measures this (GR-2).
+
+## GR-11 — Every rounded corner renders as a smooth curve, like the reference
+
+**Owner rule, 2026-10-04 (Task 741, O46-3 rows 3–4).** Verbatim: *"Запиши правило обов'язкове - якщо у об'єкта кути не
+скруглені - задача не приймається. Вони не скруглені, вони наче обрізані невірно!"* and *"проблема зі скругленням кутів
+глобальна! … Необхідно написати один раз обов'язкове правило щодо скруглення кутів у об'єктів (кнопки, таблиці, елементи
+і так далі)."* Also: *"у TailWind і у всіх інших реіференсів кути супер чудово скруглені. Проблема лише в моєму проекті."*
+
+**What was measured** (`docs/sessions/evidence/task741r3/rev3g/owner-return/`, Chromium, DPR 1, 8px radius). The
+coverage of the corner's diagonal pixels, where an ideal 8px arc gives 60/75/60:
+
+| Corner | Diagonal coverage |
+|---|---|
+| TailAdmin active page control (fill, no border) | 53/85/53, smooth |
+| lero.al active page control (fill plus a 1px border in the same colour) | 37/50/38, notched: reads as cut |
+| fill plus a transparent border | 53/85/53, smooth |
+| 1px gray-300 border at Mantine's disabled `opacity: 0.4` | 13–15: the corner almost vanishes |
+
+The radius value was right (8px in both). The corner broke because of how the shape is painted.
+
+**Applies to:** every object with a rounded corner in new or migrated UI, in every state (rest, hover, focus-visible,
+active/selected, checked, disabled, error, loading). That includes buttons, page controls, inputs, selects, chips,
+badges, cards, papers, tables and table wrappers, modals, drawers, popovers, menus, images and avatars. GR-3f (circles)
+and GR-3g (lines inside a rounded clip) are special cases of this rule and stay in force.
+
+**Forbidden:**
+- a radius that is not a theme token (`theme.radius.*`, `var(--mantine-radius-*)`, or the component's own radius
+  variable);
+- **a border in the same colour as the fill** on a rounded shape. A filled shape draws no border, or a transparent
+  one;
+- **fading a bordered or filled rounded shape with `opacity`** (a disabled state included). The disabled look uses
+  colour tokens for the text, border and fill, so that the corner keeps its contrast;
+- a corner that differs from the reference's equivalent at the same DPR: notched, stepped, chamfered, faded or
+  vanished;
+- fixing a corner in one consumer or Story. The fix goes in the canonical theme entry, chrome stylesheet or pattern.
+
+**Check, before handoff and at review:**
+- For every changed rounded object, in every state it has, take a crop at `deviceScaleFactor: 1` and `1.25`, the
+  default Windows scaling.
+- Scale each crop 10× with `image-rendering: pixelated`, and place it beside the reference's equivalent at the same DPR.
+- Measure the diagonal coverage of one corner (the model is `rev3g/owner-return/corner-pixels.mjs`). It must be
+  within 10 points of the reference's, or of the ideal arc for that radius where no reference element exists.
+- Save the crops and the numbers as evidence, and look at them.
+
+**Receipt — execution and review alike, one per changed rounded object and state:**
+
+`GR-11 CORNER CHECK — <object/state>: radius <token → px>; fill/border <colours>; opacity <1 | value>; DPR 1 diagonal <a/b/c> vs reference <a/b/c>; DPR 1.25 crop <path>; reads as a smooth curve like the reference: yes.`
+
+With no receipt, or with a corner that fails, the executor returns `BLOCKED — GR-11` and the reviewer returns
+`NEEDS REVISION`. Every kickoff that changes a rounded object lists it with this check. Existing objects outside a
+task's scope are being fixed by **Task 920** (Sprint 90). Until 920 lands, a task that touches such an object fixes it
+in its canonical source within that same task.
+
 ## Enforcement status
 
 | Rule | Enforced by | State |
@@ -821,6 +901,8 @@ so that a kickoff never asks the executor to preserve a non-canonical element.
 | GR-7 | Four standing references (Lahomes, Kamr, Omah, TailAdmin), every page, in depth; run three times per task (creation by Opus, execution by Sonnet, review by Opus) with one receipt each; best 2026 UI/UX practice for every choice. Gates: `create-task` step 6, the `execute-task` STOP gate, the `review-task` integrity gate, both agent files, the `CLAUDE.md` "Read first" item | **active for every task, no exemption (owner, 2026-10-04)** — enforced by rule and receipt; no automated gate can prove a live audit. |
 | GR-8 | task design + executor + reviewer: one receipt per table; column order checked in the rendered Story at 1440 and the card at 390; chrome only in `MantineDataTableToCards` | **active** — no automated gate yet. |
 | GR-9 | reviewer: element census + canonical trace + production-state coverage + variant parity + executor-claim check, one receipt per matrix Story, before the owner matrix; `create-task` applies the same census to matrix Stories | **active** — no automated gate; a review without the receipt is void. |
+| GR-10 | task design + executor + reviewer: every visible element has a canonical owner that matches its original, part by part; one receipt per surface | **active (owner, 2026-10-04)** — no automated gate. |
+| GR-11 | executor + reviewer: DPR 1 and 1.25 crops at 10× beside the reference + diagonal-coverage numbers per rounded object and state; no same-colour border on a fill, no `opacity` fade, radius from a token; existing objects → Task 920 | **active (owner, 2026-10-04)** — no automated gate yet (Task 920 decides whether one is feasible). |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

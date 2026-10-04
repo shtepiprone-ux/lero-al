@@ -506,7 +506,15 @@ Update `docs/backlog.md` with one state line; write the session log with "Files 
 
 ## 16. Amendment 2026-10-04 — one card for grid and list (owner D89-10)
 
-**Binding.** Where §3–§15 differ from this section, this section wins.
+**Moved to Task 741 Revision 3h** (kickoff `Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md` §18.19,
+R62–R66) **by owner decision D46-9**, 2026-10-04. The owner returned 741's `ListingsShellView` because its cards are
+non-canonical (rule GR-10), and chose *"Перенести 918 §16 у 741"*. When 918 starts (after 741 is approved), this section
+is already implemented. 918 rebuilds the card on its reference **on top of** that single source: one source per part,
+no layout-suffixed classes, no literals, one secondary colour, and the parity tests stay green. 918 does not re-do §16;
+its §13 gates re-run 741's parity probe (`docs/sessions/evidence/task741r3/rev3h/exec/parity-probe.mjs`). The text below
+is kept as the design record.
+
+**Binding (for the design record).** Where §3–§15 differ from this section, this section wins.
 
 ### 16.1 Owner return and decision, verbatim
 

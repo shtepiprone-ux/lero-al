@@ -48,7 +48,7 @@ The Tasks table is the single state source.
 
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **918** | The listing card rebuilt on the owner's reference — grid and list, Solar icons, property-type tile, feature chips, footer with the Rozetka price block and ID/date (D89-1…D89-6); one price block and colour rule on the card, the listing page and the admin (D89-7, D89-8) | P1 | Q4 (critical-flow rows "Listing card rendering" and "Listings display — price") | **912**, **741 R3**, **857** approved | `KICKOFF FILED` → [`…_Task_918_…`](Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md) |
+| **918** | The listing card rebuilt on the owner's reference — grid and list, Solar icons, property-type tile, feature chips, footer with the Rozetka price block and ID/date (D89-1…D89-6); one price block and colour rule on the card, the listing page and the admin (D89-7, D89-8) | P1 | Q4 (critical-flow rows "Listing card rendering" and "Listings display — price") | **912**, **741 R3**, **857** approved | `KICKOFF FILED` (§16 moved to 741 Revision 3h by owner D46-9, 2026-10-04; 918 builds on it) → [`…_Task_918_…`](Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md) |
 
 ## Execution order
 

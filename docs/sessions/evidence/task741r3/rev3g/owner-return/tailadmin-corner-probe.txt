@@ -1,0 +1,91 @@
+﻿{
+ "1": {
+  "edge": {
+   "x": 363,
+   "y": 259,
+   "w": 82.890625,
+   "h": 42,
+   "radius": "8px",
+   "border": "1px solid rgb(208, 213, 221)",
+   "bg": "rgb(255, 255, 255)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(16, 24, 40, 0.05) 0px 1px 2px 0px"
+  },
+  "active": {
+   "x": 453.890625,
+   "y": 260,
+   "w": 40,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px solid rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "boxShadow": "none"
+  }
+ },
+ "2": {
+  "edge": {
+   "x": 363,
+   "y": 259,
+   "w": 82.890625,
+   "h": 42,
+   "radius": "8px",
+   "border": "1px solid rgb(208, 213, 221)",
+   "bg": "rgb(255, 255, 255)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(16, 24, 40, 0.05) 0px 1px 2px 0px"
+  },
+  "active": {
+   "x": 453.890625,
+   "y": 260,
+   "w": 40,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px solid rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "boxShadow": "none"
+  }
+ },
+ "1.25": {
+  "edge": {
+   "x": 363,
+   "y": 259,
+   "w": 82.890625,
+   "h": 42,
+   "radius": "8px",
+   "border": "1px solid rgb(208, 213, 221)",
+   "bg": "rgb(255, 255, 255)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(16, 24, 40, 0.05) 0px 1px 2px 0px"
+  },
+  "active": {
+   "x": 453.890625,
+   "y": 260,
+   "w": 40,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px solid rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "boxShadow": "none"
+  }
+ },
+ "1.5": {
+  "edge": {
+   "x": 363,
+   "y": 259,
+   "w": 82.890625,
+   "h": 42,
+   "radius": "8px",
+   "border": "1px solid rgb(208, 213, 221)",
+   "bg": "rgb(255, 255, 255)",
+   "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(16, 24, 40, 0.05) 0px 1px 2px 0px"
+  },
+  "active": {
+   "x": 453.890625,
+   "y": 260,
+   "w": 40,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px solid rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "boxShadow": "none"
+  }
+ }
+}
+EXIT_CODE=0

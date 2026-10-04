@@ -45,7 +45,7 @@ the first user prompt. It applies the executor evidence protocol to normal Sonne
 
 For every task:
 
-0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-0…GR-9, receipt-enforced, non-negotiable. A response missing a required receipt is void.**
+0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-0…GR-11, receipt-enforced, non-negotiable. A response missing a required receipt is void.** GR-10 (owner, 2026-10-04): no canonical component, or a canonical that differs from the original, means the work is not accepted. GR-11 (owner, 2026-10-04): every rounded corner renders as a smooth curve like the reference; no same-colour border on a fill, no `opacity` fade, radius from a token.
    **GR-7 (owner rule 2026-10-04): before creating, executing, or reviewing EVERY task, Opus and Sonnet each audit live,
    in depth, every page of Lahomes (https://techzaa.in/lahomes/admin/index.html), Kamr
    (https://kamr-vite.vercel.app/dashboard, login `demo@example.com` / `123456`), Omah (https://omah.dexignzone.com/xhtml/index.html)
@@ -203,7 +203,7 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 
 ## Documentation map
 
-- `docs/golden-rules.md` - **GR-1…GR-6, receipt-enforced, non-negotiable.** Read first, every task.
+- `docs/golden-rules.md` - **GR-0…GR-11, receipt-enforced, non-negotiable.** Read first, every task.
 - `docs/agent-contract.md` - short P0 invariants.
 - `docs/orchestrator-role.md` - Opus role, git policy, review expectations.
 - `docs/orchestrator-procedures.md` - task design and implementation review procedures.

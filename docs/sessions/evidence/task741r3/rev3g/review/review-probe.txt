@@ -1,0 +1,147 @@
+﻿mantine-primitives-pagination--default@en@320 ok edges t16 r16 b272 l16 [‹ 1 … 5 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 137 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row288x44/root288/consumer288 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--default@en@390 ok edges t16 r16 b290 l16 [‹ 1 … 5 … 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 … 50 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 137 … 250 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 … 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 8 9 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--default@en@1024 ok edges t49 r49 b395 l49 [‹ 1 … 4 5 6 … 10 ›] row926x32/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row926x26/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 136 137 138 … 250 ›] row926x26/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row926x32/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 6 7 8 9 10 ›] row926x32/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row926x32/root926/consumer926 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--default@en@1440 ok edges t49 r49 b395 l49 [‹ 1 … 4 5 6 … 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row1342x26/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 136 137 138 … 250 ›] row1342x26/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 6 7 8 9 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--default@uk@390 ok edges t16 r16 b290 l16 [‹ 1 … 5 … 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 … 50 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 137 … 250 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 … 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 8 9 10 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row358x44/root358/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--default@uk@1440 ok edges t49 r49 b395 l49 [‹ 1 … 4 5 6 … 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row1342x26/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 136 137 138 … 250 ›] row1342x26/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 6 7 8 9 10 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 ›] row1342x32/root1342/consumer1342 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--in-centered-group@en@320 ok edges t16 r16 b626 l16 [‹ 1 2 3 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--in-centered-group@en@390 ok edges t16 r16 b626 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 … 10 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 … 50 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/mantine-primitives-pagination--in-centered-group-390-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 10 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus Previous page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":4,"right":0} 
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 25 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/mantine-primitives-pagination--in-centered-group-390-last.png
+mantine-primitives-pagination--in-centered-group@en@1024 ok edges t49 r49 b629 l49 [‹ 1 2 3 ›] row192x32/root192/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row352x32/root352/consumer926 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row356x32/root356/consumer926 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--in-centered-group@en@1440 ok edges t49 r49 b629 l49 [‹ 1 2 3 ›] row192x32/root192/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row352x32/root352/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row356x32/root356/consumer1342 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/mantine-primitives-pagination--in-centered-group-1440-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 4 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 5 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 10 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus Previous page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":4,"right":0} crops/mantine-primitives-pagination--in-centered-group-1440-last.png
+mantine-primitives-pagination--in-centered-group@uk@390 ok edges t16 r16 b626 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 … 10 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 25 … 50 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+mantine-primitives-pagination--in-centered-group@uk@1440 ok edges t49 r49 b629 l49 [‹ 1 2 3 ›] row192x32/root192/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 … 10 ›] row352x32/root352/consumer1342 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 24 25 26 … 50 ›] row356x32/root356/consumer1342 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@en@320 ok edges t25 r16 b24 l20 [‹ 1 2 ›] row200x44/root200/consumer272 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@en@390 ok edges t25 r16 b24 l20 [‹ 1 2 … 8 ›] row304x44/root304/consumer342 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@en@1024 ok edges t25 r16 b-152 l12 [‹ 1 2 3 4 5 … 8 ›] row352x32/root352/consumer720 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@en@1440 ok edges t25 r16 b-152 l12 [‹ 1 2 3 4 5 … 8 ›] row352x32/root352/consumer1136 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@uk@390 ok edges t25 r16 b24 l20 [‹ 1 2 … 8 ›] row304x44/root304/consumer342 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminlistingsview--paginated@uk@1440 ok edges t25 r16 b-152 l12 [‹ 1 2 3 4 5 … 8 ›] row352x32/root352/consumer1136 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@en@320 ok edges t16 r16 b16 l16 [‹ 1 2 3 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@en@390 ok edges t16 r16 b16 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@en@1024 ok edges t16 r37 b541 l24 [‹ 1 2 3 ›] row192x32/root192/consumer976 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@en@1440 ok edges t16 r37 b541 l24 [‹ 1 2 3 ›] row192x32/root192/consumer1392 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@uk@390 ok edges t16 r16 b16 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-adminsurfacepattern--default@uk@1440 ok edges t16 r37 b541 l24 [‹ 1 2 3 ›] row192x32/root192/consumer1392 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@en@320 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@en@1024 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@en@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--default@uk@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@en@320 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@en@1024 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@en@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-01-all-zero@uk@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--agt-10-empty@en@320 ok edges t16 r16 b80 l16 
+patterns-mantine-agentstatisticsview--agt-10-empty@en@390 ok edges t16 r16 b80 l16 
+patterns-mantine-agentstatisticsview--agt-10-empty@en@1024 ok edges t24 r24 b88 l24 
+patterns-mantine-agentstatisticsview--agt-10-empty@en@1440 ok edges t24 r24 b88 l24 
+patterns-mantine-agentstatisticsview--agt-10-empty@uk@390 ok edges t16 r16 b80 l16 
+patterns-mantine-agentstatisticsview--agt-10-empty@uk@1440 ok edges t24 r24 b88 l24 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@en@320 ok edges t16 r16 b37 l16 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@en@390 ok edges t16 r16 b37 l16 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@en@1024 ok edges t24 r24 b45 l24 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@en@1440 ok edges t24 r24 b45 l24 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@uk@390 ok edges t16 r16 b37 l16 
+patterns-mantine-agentstatisticsview--agt-10-filtered-empty@uk@1440 ok edges t24 r24 b45 l24 
+patterns-mantine-agentstatisticsview--activity-stale@en@320 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-stale@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-stale@en@1024 ok edges t24 r33 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-stale@en@1440 ok edges t24 r33 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-stale@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-stale@uk@1440 ok edges t24 r33 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@en@320 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@en@1024 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@en@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--activity-error@uk@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@en@320 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@en@1024 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@en@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 ›] row200x44/root200/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--no-activity@uk@1440 ok edges t24 r24 b45 l24 [‹ 1 2 ›] row152x32/root152/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@en@320 ok edges t16 r16 b37 l16 [‹ 1 ›] row148x44/root148/consumer246 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@en@390 ok edges t16 r16 b37 l16 [‹ 1 2 3 ›] row252x44/root252/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@en@1024 ok edges t24 r24 b45 l24 [‹ 1 2 3 ›] row192x32/root192/consumer934 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@en@1440 ok edges t24 r24 b45 l24 [‹ 1 2 3 ›] row192x32/root192/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@uk@390 ok edges t16 r16 b37 l16 [‹ 1 2 3 ›] row252x44/root252/consumer316 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-agentstatisticsview--sorted-by-views@uk@1440 ok edges t24 r24 b45 l24 [‹ 1 2 3 ›] row192x32/root192/consumer1350 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingspagination--default@en@320 ok edges t16 r16 b48 l16 [‹ 1 … 5 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 3 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 5 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row252x44/root252/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingspagination--default@en@390 ok edges t16 r16 b48 l16 [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 … 20 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row252x44/root252/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingspagination--default-390-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 4 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 5 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus Previous page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":4,"right":0} 
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 4 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 5 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingspagination--default-390-last.png
+patterns-mantine-listingspagination--default@en@1024 ok edges t16 r24 b94 l24 [‹ 1 2 3 4 5 ›] row272x32/root272/consumer976 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer976 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer976 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 9 10 11 … 20 ›] row356x32/root356/consumer976 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 … 20 ›] row276x32/root276/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingspagination--default@en@1440 ok edges t16 r24 b94 l24 [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 9 10 11 … 20 ›] row356x32/root356/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 … 20 ›] row276x32/root276/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingspagination--default-1440-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 4 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 5 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} 
+   focus Previous page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":4,"right":0} 
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 4 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 5 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingspagination--default-1440-last.png
+patterns-mantine-listingspagination--default@uk@390 ok edges t16 r16 b48 l16 [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 … 20 ›] row356x44/root356/consumer358 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 ›] row252x44/root252/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingspagination--default@uk@1440 ok edges t16 r24 b94 l24 [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 2 3 4 5 ›] row272x32/root272/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 9 10 11 … 20 ›] row356x32/root356/consumer1392 visible nowrap gap8px probe:fixed/hidden/none | [‹ 1 … 10 … 20 ›] row276x32/root276/consumer280 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--default@en@320 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--default@en@390 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingsshellview--default-390-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} crops/patterns-mantine-listingsshellview--default-390-last.png
+patterns-mantine-listingsshellview--default@en@1024 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer960 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--default@en@1440 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer1376 visible nowrap gap8px probe:fixed/hidden/none
+   focus 1 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} crops/patterns-mantine-listingsshellview--default-1440-first.png
+   focus 2 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus 3 fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":0} 
+   focus Next page fv solid 2px offset 2px clipped {"top":4,"bottom":4,"left":0,"right":4} crops/patterns-mantine-listingsshellview--default-1440-last.png
+patterns-mantine-listingsshellview--default@uk@390 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--default@uk@1440 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer1376 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@en@320 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer288 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@en@390 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@en@1024 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer960 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@en@1440 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer1376 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@uk@390 ok edges t60 r16 b56 l16 [‹ 1 2 3 ›] row252x44/root252/consumer358 visible nowrap gap8px probe:fixed/hidden/none
+patterns-mantine-listingsshellview--loading-more@uk@1440 ok edges t36 r32 b56 l32 [‹ 1 2 3 ›] row192x32/root192/consumer1376 visible nowrap gap8px probe:fixed/hidden/none
+EXIT_CODE=0

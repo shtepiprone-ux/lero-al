@@ -1922,7 +1922,7 @@ Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or 
 
 ### 18.17 Review of Revision 3f, 2026-10-04 — `NEEDS REVISION` → Revision 3g (fill-to-width ladder, uncut focus ring)
 
-**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+**Implemented and reviewed in §18.18 (`PARTIALLY VERIFIED`, owner matrix O46-3 open).** Original text: **this subsection was the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
 goes to `docs/sessions/evidence/task741r3/rev3g/exec/`. `rev3f/review-3f/` belongs to Opus and is not written.
 
 **Inspected:**
@@ -2120,3 +2120,288 @@ Append `## Revision 3g` to the session log, with:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
 741 can be approved after the review of 3g and the owner's O46-3.
+
+### 18.18 Review of Revision 3g, 2026-10-04 — `PARTIALLY VERIFIED` (executor work verified; owner matrix O46-3 open)
+
+**Superseded by §18.19** (the owner returned O46-3 rows 1, 3 and 4 on 2026-10-04; see the retraction in §18.19.1). The route is now §18.19 (Revision 3h).
+
+**No executor action remains.** 741 is approvable once the owner records O46-3 (§18.15.10 plus §18.17.9) as accepted.
+A returned row becomes a new revision here.
+
+**Inspected:**
+- the diffs of `MantinePagination.tsx` (final hash `8e3246bd…`), `MantinePagination.module.css` (`25602e9e…`) and
+  `MantinePagination.smoke.test.tsx` (`70f37bf7…`);
+- the unchanged hashes of `Pagination.stories.tsx` (`350079aa…`) and `ListingsSortBar.tsx` (`174d8209…`);
+- `rev3g/exec/`: `00_i0` (timestamp 20:00:16, before every 3g source mtime), `01_red` (3 failed of 30),
+  `01b_r54_arm_red` (2 failed of 30), `02_green` (30 of 30), `final/*` (PowerShell `node.exe`/`npm.cmd`, `win32`), the
+  probe, `check-ac52-53.json`, crops and `research-exec/`;
+- the session log's `## Revision 3g`.
+
+**Re-measured by Opus** on the executor's final `storybook-static` (built 20:03:57, after the last source write at
+20:01:22): `rev3g/review/review-probe.json` / `.txt`. That is 15 paginator Stories × en 320/390/1024/1440 + uk 390/1440,
+with every paginator control Tab-focused at 390 and 1440 in `InCenteredGroup`, `ListingsPagination` `Default` and
+`ListingsShellView` `Default`. Crops are in `rev3g/review/crops/`.
+
+**Results:** 
+- **Overflow.** Of 90 cells, 0 have document overflow, and every row satisfies `row.scrollWidth <= row.clientWidth`.
+- **Ladder (R58, D46-8).** Every expected value holds:
+  - 390: `InCenteredGroup` reads "‹ 1 2 3 ›", "‹ 1 2 3 … 10 ›" and "‹ 1 … 25 … 50 ›"; `Default` reads "‹ 1 … 5 … 10 ›", "‹ 1 2 3 … 10 ›" and "‹ 1 … 8 9 10 ›";
+  - 320: 10 pages on page 1 reads "‹ 1 … 10 ›";
+  - `ListingsShellView` `Default` reads "‹ 1 2 3 ›";
+  - 1024/1440: 0 differences from `rev3f/review-3f/review-probe.json` in all 45 cells.
+- **Focus ring (R57).** Every focused row computes `overflow: visible`. The 10× crops show the whole ring on all four sides (`crops/mantine-primitives-pagination--in-centered-group-390-first-10x.png`, `crops/patterns-mantine-listingsshellview--default-1440-last-10x.png`).
+  - **Probe limit:** the probe's `clippedPx` measures the ring against the row box. With the clip gone, its 4px values are the ring's extent, not a cut.
+  - **Card-hosted Stories:** for `AdminListingsView` and `AgentStatisticsView` I checked the executor's `probe-ac52.json`. AdminListingsView has no clipping ancestor; in `AgentStatisticsView` the nearest one leaves at least 21px of room. This matches `check-ac52-53.json` (99 controls, 0 cut).
+- **R59, R60 and R61** are verified, along with AC52, AC53 and AC54. The census lists only `ListingsShell.tsx`, and every other gate exits 0.
+
+**RETRACTION (Opus).** The full text is in `rev3g/review/research-review/gr7-review-3g.md`.
+- **Invalid claim:** F47 (§18.17.1) and §18.17.3 said that Kamr and Omah draw a 3px focus ring that is not cut.
+- **Why invalid:** the 3f record's own output gives `outline-style: none` for both, so neither draws a ring.
+- **Corrected status:** FACT. Only Rozetka and TailAdmin draw a ring, and both draw it whole. The requirement stands,
+  on the evidence of Rozetka, TailAdmin and WCAG 2.2 2.4.7.
+
+The executor reported the Kamr difference correctly.
+
+`GR-7 REFERENCE RESEARCH — moment: review (741 Revision 3g); role: Opus; task: 741; subject: paginator page numbers per width, keyboard focus ring; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin /pagination (076), /products-list (016); Lahomes /ui-pagination (060), /property-grid (008); Kamr /ui-pagination (038); Omah /property-list (013), /order-list (006); Rozetka catalogue → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library), Rozetka 1/1/0; inspected in depth: the 8 pages at 1440 and 390, paginator items, a Tab-focused page control with its indicator and clipping ancestor; workflow states operated: Kamr sign-in, Rozetka scroll to list end, Tab focus; options across references: neighbours that fit ← Rozetka, Kamr, Lahomes; Page X of Y ← TailAdmin 390; visible uncut ring ← Rozetka, TailAdmin; no indicator ← Lahomes, Kamr, Omah (fails WCAG 2.4.7); chosen 2026 best practice: fill-to-width ladder (D46-8) and a whole, uncut ring; absent or unverified: none; lero.al data map: ListingsPagination (/listings, /favorites), AdminListingsView (/admin/listings), AgentStatisticsView (cabinet statistics), MantineAdminSurfacePattern (Story only); owner decisions: D46-6, D46-7, D46-8; evidence: docs/sessions/evidence/task741r3/rev3g/review/research-review/.`
+
+`GR-9 REVIEW DEPTH — 15 paginator Stories (Mantine/Primitives/Pagination Default + InCenteredGroup, ListingsPagination Default, ListingsShellView Default + LoadingMore, AdminListingsView Paginated, AgentStatisticsView × 8, AdminSurfacePattern Default): elements per paginator 3–9 controls (each → MantinePagination, manifest yes, Story yes; chrome pagination-chrome.css; the row Group has no style or className); non-canonical props/values: NONE; production states 1 page, 2–3 pages, many pages at the first/middle/last page, phone and desktop, keyboard focus → rendered: all; missing: NONE; unreachable shown: NONE; variant parity: Stack vs Group consumer equal at 1440; phone fills the width as D46-8; executor claims checked against their evidence 9/9 (I0 timestamp, red 3/30, R54 arm 2/30, green 30/30, gates, 0 overflow, 99 rings uncut, 84 ladder rows, 45 desktop cells), contradictions: NONE; evidence docs/sessions/evidence/task741r3/rev3g/review/review-probe.json.`
+
+GR-3b: no overflow in any of 90 cells. GR-3c: no text change. GR-3d: unchanged from §18.17.1 (no side at 0). GR-3e: n/a. GR-3f: n/a. GR-3g: the focus ring is whole (crops above).
+
+**Owner matrix O46-3: `OWNER VISUAL QA REQUIRED`.** It consists of the §18.15.10 rows plus the §18.17.9 rows.
+The visual criterion is `NOT VERIFIABLE` until the owner records each row as accepted or returned.
+
+### 18.19 Owner return of O46-3, 2026-10-04 → Revision 3h (one canonical card for grid and list; round paginator corners)
+
+**This subsection is the only executable route.** Re-entry mode: **mixed**: the paginator corners are a remediation of
+3g, and the card unification is new work on the current tree. Evidence goes to `docs/sessions/evidence/task741r3/rev3h/exec/`.
+`rev3h/design/` and `rev3g/owner-return/` belong to Opus and are not written by the executor.
+
+#### 18.19.1 Owner return and decisions, verbatim
+
+O46-3, returned 2026-10-04:
+- **Row 1, `Patterns/Mantine/ListingsShellView` (all exports), returned:** *"не приймаю, я все ще бачу не канонічні
+  захардкоджені картки оголошень, що картками, що списком. Ти взагалі робиш рев'ю? Постійно одні й ті ж проблеми!"*
+- **Row 2, `Patterns/Mantine/ListingsSortBar`: accepted** (*"приймаю"*). It is not re-checked.
+- **Row 3, `Mantine/Primitives/Pagination`, returned:** *"У кнопок знову не скруглені кути, а багатогранні. … Вони не
+  скруглені, вони наче обрізані невірно!"*
+- **Row 4, `ListingsPagination`, `AdminListingsView`, `AgentStatisticsView`, returned** for the same corners.
+- Later in the same return: *"у TailWind і у всіх інших реіференсів кути супер чудово скруглені. Проблема лише в моєму
+  проекті."*
+
+New owner rules, 2026-10-04, written into `docs/golden-rules.md`:
+- **GR-10:** no canonical component, or a canonical that differs from the original, means the work is not accepted.
+- **GR-11:** every rounded corner renders as a smooth curve, like the reference.
+
+Owner decisions, 2026-10-04, options chosen verbatim:
+- **D46-9** *"Перенести 918 §16 у 741"*. The card unification that D46-5 had moved to Task 918 §16 comes back into
+  741 as this revision. 918 §16 now carries a pointer here, and 918 later rebuilds the card on top of this single source.
+- **D90-1** *"Окрема задача-аудит (Recommended)"*. Every other rounded object in the project goes to **Task 920**
+  (Sprint 90). The paginator is fixed here.
+
+**RETRACTION (orchestrator).**
+- **Invalid prior claim:** §18.18 recorded 3g as `PARTIALLY VERIFIED`, with "executor work verified" and no finding on
+  the paginator's corners or on the cards.
+- **Why invalid:**
+  - My 10× crops of 3g showed the corners, and I judged them by eye without measuring them against the reference.
+  - The cards were judged as Task 918's scope (D46-5) rather than as a canonical-match failure of the Story handed to
+    the owner.
+- **Evidence:** `rev3g/owner-return/corner-cause.json` and `corner-pixels.json` (below), and the owner's row-1 return.
+- **Corrected status:** `CONTRADICTION`. 3g did not meet the owner's standard, and GR-10 and GR-11 now make both
+  checks mandatory.
+
+#### 18.19.2 Verified context — corner diagnosis (Opus, `win32`, Chromium, `rev3g/owner-return/`)
+
+`corner-probe.json` (the 3g build, `InCenteredGroup`, 390 and 1440, DPR 1/1.25/1.5/2):
+- every page control has `border-radius: 8px` (`--pagination-control-radius` = `0.5rem`), with no `clip-path` and no
+  transform;
+- the active control is `background` + `border: 1px solid` in the **same** brand colour;
+- the edge control has a 1px gray-300 border on white, no shadow, and on page 1 it is disabled (Mantine
+  `.m_326d024a:where(:disabled,[data-disabled]) { opacity: 0.4 }`, `@mantine/core/styles/Pagination.css:30-33`).
+
+`tailadmin-corner-probe.json` (live `demo.tailadmin.com/pagination`):
+- "Previous" has radius 8px, a 1px gray-300 border, `shadow-theme-xs` (`0 1px 2px rgba(16,24,40,.05)`), and is
+  **not** faded on page 1;
+- the active "1" has radius 8px, a fill, and a 0px border.
+
+`corner-cause.json`: the coverage of a corner's diagonal pixels, DPR 1, 32px box, 8px radius. An ideal arc gives 60/75/60.
+
+| Box | Diagonal | Reads as |
+|---|---|---|
+| fill + 1px border in the same colour (**lero.al active**) | 37/50/38 | notched, "cut" |
+| fill only (**TailAdmin active**) | 53/85/53 | smooth |
+| fill + 1px transparent border | 53/85/53 | smooth |
+| white + 1px gray-300 border | 38/39/38 | a thin smooth line |
+| the same at `opacity: 0.4` (**lero.al disabled edge**) | 13/15/15 | the corner vanishes |
+
+`corner-pixels.json` confirms the same notch on the rendered 3g Story at 390 and 1440.
+
+#### 18.19.3 Verified context — the card census (GR-9 / GR-10)
+
+`MantineListingCardPattern.tsx` (421 lines) builds the two layouts as two separate markups (`if (layout === 'list')`
+at `:173`, then the grid markup). It has `style={{…}}` objects (for example `:185`, `:229`), the overlay is grid-only
+(`:95`), and the photo count sits bottom-left in list and bottom-right in grid (`:98-99`). `muted-foreground` has 13 hits
+across the four files listed in R65. The measured differences between the layouts are in
+`rev3e/design/variant-diff.json`: the colours of the type label and location, the location line-height, per-m² at
+10px/12px against 12px/18px, the block order, the badge direction, the photo-count corner, and the overlay.
+
+`GR-10 CANONICAL MATCH — Patterns/Mantine/ListingsShellView (all exports) → ListingCard → MantineListingCardPattern: elements 9 per card (photo chrome: badges, overlay, photo count; head: tile, title, address; chips; footer: price block, meta); with canonical owner 9/9 (the pattern); matching the original 0/9 between layouts (original: one card for both views, Omah /property-list, Kamr ecom, Rozetka catalogue both tile sizes); missing or differing: every part (variant-diff.json).`
+
+`GR-10 CANONICAL MATCH — MantinePagination page controls: elements 4 (edge, inactive, active, dots); with canonical owner 4/4 (pagination-chrome.css + Mantine Pagination); matching the original 2/4 (TailAdmin /pagination); differing: active (same-colour border, notched corner), edge (opacity 0.4 when disabled; no shadow-theme-xs).`
+
+#### 18.19.4 Reference research (GR-7)
+
+- **Cards.** The design record is Task 918 §16.2 (`rev3e/design/gr7-design.md`, 17 pages). Live re-check this session,
+  in `rev3h/design/`: `gr7-omah-toggle.json` shows Omah `/property-list` with price 21/600, description 12.25/400 and
+  agent 13.1/600 identical in grid and list; `gr7-rozetka-catalog.json` shows the Rozetka catalogue's title 14/400 and
+  struck price 14/400 grey identical in both tile sizes. **Unchanged** from 3e.
+- **Paginator corners.** The live record is `rev3g/review/research-review/gr7-review-3g.md` plus
+  `rev3g/owner-return/tailadmin-corner-probe.json`.
+
+`GR-7 REFERENCE RESEARCH — moment: task creation (741 Revision 3h); role: Opus; task: 741; subject: one listing card for grid and list; paginator control corners; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages: Omah /property-list (grid↔list toggle), Rozetka catalogue (both tile views), TailAdmin /pagination (DPR 1/1.25/1.5/2 corner crops), Kamr /ui-pagination, Lahomes /ui-pagination + /property-grid, Omah /order-list → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library), Rozetka 2/2/0; inspected in depth: 918 §16.2's 17 pages (rev3e/design) + the pages above at 1440 and 390; workflow states operated: Omah view toggle, Rozetka tile toggle, Tab focus, page 1 (disabled Previous); options across references: one card ← Omah /property-list, Kamr ecom, Rozetka; per-layout restyle ← Omah ecom; table ← Lahomes; corner: fill without border ← TailAdmin active; bordered edge with shadow-xs, not faded ← TailAdmin Previous; chosen 2026 best practice: one card with one source per part (D46-9), and TailAdmin's control painting (no same-colour border, no opacity fade, shadow-xs on edge controls); absent or unverified: none; lero.al data map: ListingCard → MantineListingCardPattern (grid on /listings, /favorites and the home rails; list on /listings from 640); MantinePagination (/listings, /favorites, /admin/listings, cabinet statistics); owner decisions: D46-5, D46-9, D89-10, D90-1; evidence: docs/sessions/evidence/task741r3/rev3h/design/, rev3g/owner-return/, rev3e/design/.`
+
+**Execution.** Before the first write, Sonnet re-checks, into `rev3h/exec/research-exec/`:
+- Omah `/property-list` (toggle) and the Rozetka catalogue (both tile views) at 1440 and 390;
+- TailAdmin `/pagination` at DPR 1 and 1.25.
+
+It emits the full receipt. If the audit contradicts this section, it stops with `BLOCKED — GR-7 KICKOFF CONFLICT`.
+
+#### 18.19.5 Canonical decision record (GR-0)
+
+| Artifact | Disposition | Owner / path |
+|---|---|---|
+| Card parts | **EXTEND** `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` + `.module.css` | One source per part (R62); the pattern stays the canonical owner, proven by `Patterns/Mantine/ListingCardPattern` and `Mantine/Primitives/ListingCard`. |
+| List photo column width | **EXTEND** `theme.ts` | `theme.other.layout.listingCardListThumb: { base: 128, sm: 176 }` (today's 8rem/11rem), plus its type in the `MantineThemeOther` augmentation. This is the only `theme.ts` change. |
+| Paginator corners | **EXTEND** `src/design-system/mantine/pagination-chrome.css` | The active control's border becomes `transparent`. Edge controls get `box-shadow: var(--mantine-shadow-xs)`. A disabled edge control gets `opacity: 1` and colour tokens instead (R67). No consumer or Story is edited. |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: one listing card source per part; round paginator corners; semantic queries: MantineListingCardPattern, layout list grid, badgesList, photoCount, muted-foreground, Pagination control data-active, data-disabled, opacity, shadow-xs; inspected candidates: MantineListingCardPattern.tsx/.module.css + Patterns/Mantine/ListingCardPattern, ListingCard.tsx/.module.css + Mantine/Primitives/ListingCard, pagination-chrome.css + Mantine/Primitives/Pagination, @mantine/core Pagination.css, theme.ts shadows.xs; decision: EXTEND; selected canonical owner: MantineListingCardPattern.tsx, pagination-chrome.css, theme.ts (one token); Mantine/TailAdmin token path: c="dimmed", --mantine-shadow-xs/lg, --motion-duration-slow, theme spacing, theme.other.layout.listingCardListThumb, gray-3/gray-4 colour tokens; new hardcoded visual values: NONE; rationale: every part has its canonical owner, which is extended rather than duplicated.`
+
+`GR-3a STORY PREFLIGHT — MantineListingCardPattern / ListingCard × every state in grid and list; MantinePagination × rest/hover/focus/active/disabled; canonical candidates: patterns-mantine-listingcardpattern--*, mantine-primitives-listingcard--*, mantine-primitives-pagination--*; direct-import evidence: the three Story files; toolbar coverage: locale=Storybook toolbar, viewport=Storybook toolbar; decision: REUSE (no new export); target: the same three Stories; rationale: they already render every state the revision changes.`
+
+#### 18.19.6 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R62** | **One source per part** (918 §16.3 R20, moved by D46-9). `MantineListingCardPattern` builds each part once per render, as a local JSX value, and both layouts place that same value. The parts: <ul><li>the photo chrome: the badge stack, the overlay and the photo count;</li><li>the head: the tile, the title and the address;</li><li>the chips;</li><li>the footer: the price block, the per-m² / original-price line, the ID and the date.</li></ul> Each part's root carries `data-card-part="badges"`, `"overlay"`, `"photo-count"`, `"head"`, `"chips"` or `"footer"`. The layouts may differ only in: (1) the arrangement, with the photo `Card.Section` on top in grid and a left photo column `theme.other.layout.listingCardListThumb` wide in list; (2) the favourite position, **unchanged from today** in each layout (918 applies D89-2 later). No class, style prop or token appears in only one layout's part markup, and no layout-suffixed class pair remains (`badgesList`/`badgesGrid`, `photoCountList`/`photoCountGrid`, `metaRow`/`metaRowBordered`, `locationIcon`/`locationIconGrid`). | P0 |
+| **R63** | The sold/rented overlay is part of the shared photo chrome and renders in **both** layouts (918 R21). The badge stack is a wrapping row at the top-left with a theme `xs` inset in both. The photo count is at the bottom-right in both. | P0 |
+| **R64** | **No literal visual value** (918 R22, with its rules and replacements, the icons excepted) in `MantineListingCardPattern.module.css`, `ListingCard.module.css` and `MantineListingCardPattern.tsx`, Task 734's reserved 12 included. <ul><li>Neither module keeps a `design-tokens-allow` marker or a px/rem/ms/hex/`rgb()` literal, and the TSX has no `style={{…}}` object.</li><li>Allowed: unitless numbers, keywords, and `rotate: -8deg` on the overlay label (its comment says why).</li><li>Transitions use `var(--motion-duration-slow)`; the hover shadow `var(--mantine-shadow-lg)`; the hover lift `translateY(calc(var(--mantine-spacing-micro) * -1))`; positions use Mantine `pos="absolute"` with theme `xs` offsets.</li><li>The photo count is a Mantine `Badge`, `variant="filled"` `color="dark"`, with **today's lucide `Camera`** in `leftSection`. The opaque `dark` replaces the 60% translucent black; this is an Opus decision the owner can return.</li><li>The list column uses the new token; the favourite shadow is `var(--mantine-shadow-xs)`; `.inlineFavorite`'s negative margins are removed.</li></ul> | P0 |
+| **R65** | **One secondary-text colour** (918 R23). Every secondary text in the pattern and in `ListingCard.tsx` uses `c="dimmed"`. `muted-foreground` has 0 hits in the four files (13 today). | P0 |
+| **R66** | **Parity proof** (918 R24). <ul><li>(a) A unit test: `MantineListingCardPattern.smoke.test.tsx` renders the same props in `grid` and `list` for an open reduced, a sold and a premium listing. Every `data-card-part` node's normalised `outerHTML` (Mantine ids stripped) is equal between the layouts. It fails on a plant: a different `fz` on the list title.</li><li>(b) A rendered probe, `rev3h/exec/parity-probe.mjs`, on the built Storybook: `Patterns/Mantine/ListingCardPattern` and `Mantine/Primitives/ListingCard`, en and uk, 768 and 1440, every state. For every text leaf in every `data-card-part`, the computed `font-size`, `font-weight`, `line-height`, `color` and `letter-spacing` are equal in grid and list.</li></ul> | P0 |
+| **R67** | **Round paginator corners** (GR-11), in `pagination-chrome.css` only. <ul><li>The active control draws no visible border: `.mantine-Pagination-control[data-active] { border-color: transparent; }`, with a comment that this is the one rule scoped to `[data-active]` and that it touches no colour Mantine's active rule sets.</li><li>Edge controls get `box-shadow: var(--mantine-shadow-xs)`, as TailAdmin's "Previous" has.</li><li>A disabled control is not faded: `[data-disabled]` / `:disabled` controls get `opacity: 1`, the icon/text `var(--mantine-color-gray-4)`, and the border stays gray-300. `cursor: not-allowed` stays.</li><li>Radius stays `--pagination-control-radius` (8px).</li></ul> | P0 |
+| **R68** | **GR-11 receipts** for every rounded object R62–R67 changes: the paginator's active, inactive (hover), edge (rest, hover, disabled) and focus states; the card's `Card` root, every badge, the photo-count badge, the overlay label and the favourite button. Each at DPR 1 and 1.25, 10× beside its reference (TailAdmin `/pagination` for the paginator; for the card, TailAdmin `/cards` and the Rozetka tile), with the diagonal coverage measured by a copy of `rev3g/owner-return/corner-pixels.mjs`. | P0 |
+
+#### 18.19.7 Acceptance criteria
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.`
+
+- **AC55 [R62, R66a]** The parity unit test passes on the final tree and fails on the plant. The plant's restore is
+  proven by `git hash-object` before and after. A search of the pattern TSX and module for class names ending in
+  `List` or `Grid` returns no hit.
+- **AC56 [R63]** In both card Stories at 768 and 1440 in `uk`, every sold/rented card in the list section shows the
+  overlay label inside its photo column, with its border uncut (GR-3g crop for *ОРЕНДОВАНО* on 128/176px). If it does
+  not fit, return `BLOCKED — OVERLAY WIDTH` with the measurement; do not shrink or clip it.
+- **AC57 [R64, R65]** On the final tree:
+  - the read-only search of the two CSS modules for `design-tokens-allow`, a px/rem/ms number, `#` followed by a hex
+    digit, or `rgb` returns nothing;
+  - the search of the TSX for `style={{` returns nothing;
+  - `muted-foreground` returns nothing in the four files;
+  - `check:design-tokens:strict` exits 0.
+- **AC58 [R66b]** `parity-probe.mjs` writes `rev3h/exec/parity.json` with every tuple equal and exits 0. On a build
+  carrying the AC55 plant it exits 1 and names the cell (`parity-red.json`).
+- **AC59 [R67, R68]** On the final build, at DPR 1, the diagonal coverage of the active control's corner is within 10
+  points of TailAdmin's active control (53/85/53). The disabled edge control's border diagonal is within 10 points of the
+  enabled edge control's. Every R68 object has a passing `GR-11 CORNER CHECK` with its crops.
+
+#### 18.19.8 Verification plan
+
+**I0, before any write:** `Get-Date -Format o`, `git --no-optional-locks status --porcelain`, and `git hash-object` of every
+§18.19.9 file → `rev3h/exec/00_i0.txt`. Write it with `[IO.File]::WriteAllText` and UTF-8 without BOM. Then the red runs
+→ `01_red.txt`: the R66a parity test on the 3g tree, which fails because the two markups differ.
+
+**Gate block** (PowerShell, `node.exe`/`npm.cmd`, one transcript per command in `rev3h/exec/final/`, each ending
+`EXIT_CODE=`):
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsShell.tsx
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task741r3\rev3h\exec\parity-probe.mjs
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run check:backlog-active
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.module.css,src\modules\listings\components\ListingCard.module.css -Pattern 'design-tokens-allow|\d(px|rem|ms)\b|#[0-9a-fA-F]|rgb'
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.tsx -Pattern 'style=\{\{|[A-Za-z](List|Grid)\b'
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.tsx,src\design-system\mantine\patterns\MantineListingCardPattern.module.css,src\modules\listings\components\ListingCard.tsx,src\modules\listings\components\ListingCard.module.css -Pattern 'muted-foreground'
+git --no-optional-locks hash-object src/design-system/mantine/patterns/MantineListingCardPattern.tsx src/design-system/mantine/patterns/MantineListingCardPattern.module.css src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingCard.module.css src/design-system/mantine/theme.ts src/design-system/mantine/pagination-chrome.css
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL;
+- every other command exits 0;
+- the three `Select-String` lines print nothing, apart from `'list'`/`'grid'` string literals in prop values, which are
+  recorded in the session log as not classes.
+
+Then run the AC59 corner probe on that build, with the copies of `corner-pixels.mjs` and `tailadmin-corner-probe.mjs`.
+Then re-run the 3g AC52/AC53 probe (`rev3g/exec/probe-ac52.mjs`, with its output path changed to `rev3h/exec/`), so that
+the ladder, overflow and focus results stay as in 3g.
+
+**Receipts, GR-9 first**, one per Story in §18.19.10:
+- `GR-9 REVIEW DEPTH`;
+- `GR-10 CANONICAL MATCH`;
+- `GR-11 CORNER CHECK` per R68 object and state;
+- GR-3b at 320/390/1024/1440;
+- GR-3c at 320/390/768/1440;
+- GR-3d, all four sides;
+- GR-3e for the "Save search" modal;
+- GR-3f for the favourite button (circular);
+- GR-3g for the overlay label and the focus ring.
+
+#### 18.19.9 Files in scope
+
+- `src/design-system/mantine/patterns/MantineListingCardPattern.tsx`, `.module.css` (R62–R66)
+- `src/modules/listings/components/ListingCard.tsx`, `ListingCard.module.css` (R64, R65)
+- `src/design-system/mantine/theme.ts` (R64: one token and its type only)
+- `src/design-system/mantine/pagination-chrome.css` (R67)
+- `src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx` (R66a)
+- `src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx` (only where R62–R65 change the asserted
+  markup; each changed assertion is listed in the session log)
+- `src/stories/patterns/mantine/ListingCardPattern.stories.tsx`, `src/stories/mantine/primitives/ListingCard.stories.tsx`
+  (only if a state needs a fixture to show a part in both layouts; no `style` object, fixed width or viewport pin)
+- `docs/sessions/evidence/task741r3/rev3h/exec/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3h`)
+- `docs/backlog.md` (the 741 state only)
+
+Do not edit `messages/*.json`. If a string is missing, stop with `BLOCKED — I18N`.
+
+#### 18.19.10 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-4)
+
+O46-3 row 2 (`ListingsSortBar`) is accepted and leaves the matrix.
+
+| Story → export | Viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Patterns/Mantine/ListingsShellView` → `Default`, `LoadingMore`, `ClosedTab`, `ClosedEmpty`, `Empty` | 390, 1440 | en, uk | the cards are one canonical card: grid and list differ only in where the photo sits (from 640); the pagination corners are round, with "‹ 1 2 3 ›" and a whole focus ring |
+| `Mantine/Primitives/ListingCard`, `Patterns/Mantine/ListingCardPattern` | 768, 1440 | en, uk | every state: identical fonts, colours and part order in grid and list; overlay in both; photo count bottom-right in both |
+| `Mantine/Primitives/Pagination` → `InCenteredGroup`, `Default` | 320, 390, 1440 | en | every control's corners are round (rest, hover, active, page-1 "‹"), as on TailAdmin; 390 reads "‹ 1 2 3 … 10 ›"; no overflow; whole focus ring |
+| `Patterns/Mantine/ListingsPagination`, `AdminListingsView` → `Paginated`, `AgentStatisticsView` | 390, 1440 | uk | round corners; numbers fill the width; whole focus ring |
+
+#### 18.19.11 Completion
+
+Append `## Revision 3h` to the session log, with:
+- I0, the red and green runs, and the gate block;
+- the parity probe and AC59;
+- the GR-9, GR-10, GR-11 and GR-3 receipts;
+- a `Files Changed` table.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
+741 can be approved after the review of 3h and the owner's acceptance of O46-4.

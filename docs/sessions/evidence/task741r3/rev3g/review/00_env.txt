@@ -1,0 +1,1 @@
+﻿platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al storybook-static=2026-10-04T20:03:57.8077948+02:00

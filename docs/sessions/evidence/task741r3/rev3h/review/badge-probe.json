@@ -1,0 +1,781 @@
+{
+ "patterns-mantine-listingsshellview--default": [
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 44,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 144,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New",
+     "Price reduced"
+    ]
+   },
+   "badgeChildren": 2,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": null
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  }
+ ],
+ "patterns-mantine-listingsshellview--closed-tab": [
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 42,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Sold"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "SOLD"
+    ]
+   },
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 59,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Rented"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "RENTED"
+    ]
+   },
+   "img": {
+    "w": 330,
+    "h": 248,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  }
+ ],
+ "mantine-primitives-listingcard--default": [
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 44,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 144,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New",
+     "Price reduced"
+    ]
+   },
+   "badgeChildren": 2,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 62,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Inactive"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 94,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Under review"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 42,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Sold"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "SOLD"
+    ]
+   },
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 59,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Rented"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "RENTED"
+    ]
+   },
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 68,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Archived"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 61,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Expired"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 435,
+    "h": 326,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": null
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 44,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 176,
+    "h": 191,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  }
+ ],
+ "patterns-mantine-listingcardpattern--default": [
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 44,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 144,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New",
+     "Price reduced"
+    ]
+   },
+   "badgeChildren": 2,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 62,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Inactive"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 94,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Under review"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": "head",
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 42,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Sold"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "SOLD"
+    ]
+   },
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 59,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Rented"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "RENTED"
+    ]
+   },
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 68,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Archived"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 61,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "Expired"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 446,
+    "h": 335,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": null,
+   "badgeChildren": 0,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": null
+  },
+  {
+   "title": "Modern Apartment in Tirana",
+   "badges": {
+    "w": 44,
+    "h": 24,
+    "vis": "visible",
+    "disp": "flex",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": [
+     "New"
+    ]
+   },
+   "badgeChildren": 1,
+   "topmostAtFirstBadge": null,
+   "overlay": null,
+   "img": {
+    "w": 176,
+    "h": 191,
+    "vis": "visible",
+    "disp": "block",
+    "z": "auto",
+    "pos": "absolute",
+    "texts": []
+   }
+  }
+ ]
+}

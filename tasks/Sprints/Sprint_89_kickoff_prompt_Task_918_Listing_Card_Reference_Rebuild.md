@@ -512,7 +512,7 @@ non-canonical (rule GR-10), and chose *"Перенести 918 §16 у 741"*. Wh
 is already implemented. 918 rebuilds the card on its reference **on top of** that single source: one source per part,
 no layout-suffixed classes, no literals, one secondary colour, and the parity tests stay green. 918 does not re-do §16;
 its §13 gates re-run 741's parity probe (`docs/sessions/evidence/task741r3/rev3h/exec/parity-probe.mjs`). The text below
-is kept as the design record.
+is kept as the design record. **Correction (741 §18.20, 2026-10-04):** R22's "`pos="absolute"` with theme `top`/`left`/`right`/`bottom` = `xs`" is invalid, because Mantine passes the size props through and emits `top: xs`. Use `resolveGalleryOffsetValue` (`GalleryNavActionIcon.tsx`). R22's allowed `opacity: 0.6` on the archived card breaks GR-11; fade the photo only.
 
 **Binding (for the design record).** Where §3–§15 differ from this section, this section wins.
 

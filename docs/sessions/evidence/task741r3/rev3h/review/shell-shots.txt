@@ -1,0 +1,2 @@
+﻿[{"cls":"_card_1f2xk_16 _vertical_1f2xk_27 _archived_1f2xk_43 m_e615b15f mantine-Card-roo","opacity":"0.6","filter":"grayscale(1)","radius":"6px","border":"rgb(208, 213, 221)","x":954.328125,"y":1162.9375},{"cls":"_card_1f2xk_16 _horizontal_1f2xk_31 _archived_1f2xk_43 m_e615b15f mantine-Card-r","opacity":"0.6","filter":"grayscale(1)","radius":"6px","border":"rgb(208, 213, 221)","x":49,"y":3925}]
+EXIT_CODE=0

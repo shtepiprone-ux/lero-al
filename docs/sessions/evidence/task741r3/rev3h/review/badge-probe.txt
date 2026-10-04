@@ -1,0 +1,37 @@
+﻿patterns-mantine-listingsshellview--default
+   Modern Apartment in Tirana | badges 1 child 44x24 visible/flex zauto [New] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 2 child 144x24 visible/flex zauto [New, Price reduced] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+patterns-mantine-listingsshellview--closed-tab
+   Modern Apartment in Tirana | badges 1 child 42x24 visible/flex zauto [Sold] top=head | overlay 330x248 [SOLD]
+   Modern Apartment in Tirana | badges 1 child 59x24 visible/flex zauto [Rented] top=head | overlay 330x248 [RENTED]
+mantine-primitives-listingcard--default
+   Modern Apartment in Tirana | badges 1 child 44x24 visible/flex zauto [New] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 2 child 144x24 visible/flex zauto [New, Price reduced] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 1 child 62x24 visible/flex zauto [Inactive] top=head | overlay none
+   Modern Apartment in Tirana | badges 1 child 94x24 visible/flex zauto [Under review] top=head | overlay none
+   Modern Apartment in Tirana | badges 1 child 42x24 visible/flex zauto [Sold] top=null | overlay 435x326 [SOLD]
+   Modern Apartment in Tirana | badges 1 child 59x24 visible/flex zauto [Rented] top=null | overlay 435x326 [RENTED]
+   Modern Apartment in Tirana | badges 1 child 68x24 visible/flex zauto [Archived] top=null | overlay none
+   Modern Apartment in Tirana | badges 1 child 61x24 visible/flex zauto [Expired] top=null | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 1 child 44x24 visible/flex zauto [New] top=null | overlay none
+patterns-mantine-listingcardpattern--default
+   Modern Apartment in Tirana | badges 1 child 44x24 visible/flex zauto [New] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 2 child 144x24 visible/flex zauto [New, Price reduced] top=head | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 1 child 62x24 visible/flex zauto [Inactive] top=head | overlay none
+   Modern Apartment in Tirana | badges 1 child 94x24 visible/flex zauto [Under review] top=head | overlay none
+   Modern Apartment in Tirana | badges 1 child 42x24 visible/flex zauto [Sold] top=null | overlay 446x335 [SOLD]
+   Modern Apartment in Tirana | badges 1 child 59x24 visible/flex zauto [Rented] top=null | overlay 446x335 [RENTED]
+   Modern Apartment in Tirana | badges 1 child 68x24 visible/flex zauto [Archived] top=null | overlay none
+   Modern Apartment in Tirana | badges 1 child 61x24 visible/flex zauto [Expired] top=null | overlay none
+   Modern Apartment in Tirana | badges none | overlay none
+   Modern Apartment in Tirana | badges 1 child 44x24 visible/flex zauto [New] top=null | overlay none
+EXIT_CODE=0

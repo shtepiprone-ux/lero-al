@@ -2173,7 +2173,7 @@ The visual criterion is `NOT VERIFIABLE` until the owner records each row as acc
 
 ### 18.19 Owner return of O46-3, 2026-10-04 → Revision 3h (one canonical card for grid and list; round paginator corners)
 
-**This subsection is the only executable route.** Re-entry mode: **mixed**: the paginator corners are a remediation of
+**Implemented and reviewed in §18.20; the route is now §18.20 (Revision 3i). R64's position props and its `opacity: 0.6` allowance are retracted there.** Original text: **this subsection was the only executable route.** Re-entry mode: **mixed**: the paginator corners are a remediation of
 3g, and the card unification is new work on the current tree. Evidence goes to `docs/sessions/evidence/task741r3/rev3h/exec/`.
 `rev3h/design/` and `rev3g/owner-return/` belong to Opus and are not written by the executor.
 
@@ -2405,3 +2405,133 @@ Append `## Revision 3h` to the session log, with:
 
 Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
 741 can be approved after the review of 3h and the owner's acceptance of O46-4.
+
+### 18.20 Review of Revision 3h, 2026-10-04 — `NEEDS REVISION` → Revision 3i (the card badges are invisible; archived fade; corner receipts)
+
+**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+goes to `docs/sessions/evidence/task741r3/rev3i/exec/`. `rev3h/review/` belongs to Opus.
+
+**Inspected.**
+- The final state of the 3h files and their hashes (`rev3h/exec/final/18_hashes.txt`, equal to the working tree).
+- The build timeline: `storybook-static` was built at 22:01 and `next build` ran at 22:03. The 22:08 mtime of
+  `MantineListingCardPattern.tsx` is the restore after the plant2 build, whose hash equals the final hash
+  (`plant2-hash-*.txt`). The plant build went to a temp directory.
+- The parity probe and its red arm, the corner checks with their crops, and the session log `## Revision 3h`.
+
+**Verified, kept.**
+- R62, R63, R65 and R66: one source per part; overlay in both layouts; 0 `muted-foreground`; parity 424/0, and the
+  plant gives 88 differences with exit 1.
+- R67: the paginator matches TailAdmin. Active 54/85/54 against TailAdmin's 54/85/54; disabled edge 41/45/43, equal to
+  enabled.
+- The gates: census as expected, every other gate exits 0.
+
+**Re-measured by Opus** (`win32`, the 3h `storybook-static`): `rev3h/review/badge-probe.json` and `shell-shots.mjs`
+(`shell-grid-1440.png`, `shell-list-1440.png`, `primitive-archived-1440.png`).
+
+#### 18.20.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F57 | **P0** (GR-9, GR-10; production) | **Every card's badge stack, and the photo count, sits outside the photo, so no status badge is visible on any card.** `MantineListingCardPattern.tsx:146` uses `pos="absolute" top="xs" left="xs"`, and `:179-181` uses `bottom="xs" right="xs"`. Mantine's `top`/`left`/`bottom`/`right` are *size* style props with an identity resolver (`@mantine/core/esm/core/Box/style-props/style-props-data.mjs:46-49`), so they emit the invalid `top: xs`, which the browser drops. The badges fall back to their static position below the image, inside `.imageSection { overflow: hidden }`, and are clipped. Measured: in `ListingsShellView` `Default`, the "New" and "New, Price reduced" badge groups exist (44×24, 144×24) but the topmost element at their centre is the `head` part (`badge-probe.json`). `shell-grid-1440.png` shows no badge on any photo. Sold, Rented, Inactive, Under review, Archived and Expired are hidden the same way in both card Stories. **Orchestrator error:** §18.19.6 R64 (copied from 918 R22) prescribed exactly these props. The repo already documents the trap and its canonical fix: `GalleryNavActionIcon.tsx:30-43` `resolveGalleryOffsetValue`. | **R69** |
+| F58 | **P1** (GR-11) | **An archived card is faded with `opacity: 0.6` on the bordered card root.** `MantineListingCardPattern.module.css` `.archived { filter: grayscale(1); opacity: 0.6 }`, computed on the root as `opacity 0.6`, radius 6px, border gray-300 (`shell-shots.txt`). GR-11 forbids an `opacity` fade on a bordered rounded shape. **Orchestrator error:** R64 listed `opacity: 0.6` as an allowed unitless number. | **R70** |
+| F59 | **P1** (GR-11) | **No valid GR-11 receipt exists for the card's rounded objects.** The `lero-card-status-badge` crop shows the photo-count badge, which follows from F57. The card-root and overlay numbers read 0/0/0, and the executor says they are unreliable. The executor viewed only the card-root crop. | **R71** |
+| F60 | P2 (GR-3b) | `FavoriteButton.stories.tsx`, changed in 3h, still holds fixed `Box … w={160} h={100}` photo stand-ins (`:140`, `:146`) and `Stack gap={4}` raw values. | **R72** |
+| F61 | NOTE | `color="gray.9"` on the photo count: `check:stories` refuses `dark`, and `gray.9` is a theme colour. Accepted as the Opus decision; the owner can return it. The card's look against the owner's reference (radius, icons, the Rozetka price block) stays **Task 918**. O46-4 row 2 says so. | — |
+
+`GR-9 REVIEW DEPTH — patterns-mantine-listingsshellview--default/--closed-tab, mantine-primitives-listingcard--default, patterns-mantine-listingcardpattern--default: elements per card 9 parts (each → MantineListingCardPattern); non-canonical props/values: top/left/bottom/right="xs" (invalid CSS, F57), .archived opacity (F58); production states active variants, closed tab, every status → rendered in the DOM but the badges are clipped invisible (F57); variant parity grid/list 424/0 (equal, and equally broken); executor claims checked 7/9, contradictions: the status-badge crop (F59), "badges in both layouts" holds in the DOM but not on screen (F57); evidence docs/sessions/evidence/task741r3/rev3h/review/.`
+
+**RETRACTION (orchestrator).** R64's position props and its `opacity: 0.6` allowance were invalid instructions. They
+were copied from 918 R22 without checking the Mantine resolver, or against GR-11. Corrected status: `CONTRADICTION`.
+R69 and R70 replace them, and 918 §16's header now says so.
+
+#### 18.20.2 Reference research (GR-7)
+
+The badge position is the GR-7 record of §18.19.4, live this session (`rev3h/design/`). On the Rozetka tile and the Omah
+`/property-list` card, the status labels sit on the photo, top-left. Nothing changes the chosen practice.
+
+`GR-7 REFERENCE RESEARCH — moment: review (741 Revision 3h) and task creation (741 Revision 3i); role: Opus; task: 741; subject: card badge and photo-count position, archived state, corner painting; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages (this session): Omah /property-list (toggle), Rozetka catalogue (both tiles), TailAdmin /pagination (corner crops) → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library), Rozetka 2/2/0; inspected in depth: as §18.19.4; workflow states operated: Omah toggle, Rozetka tile toggle; options across references: labels on the photo top-left ← Rozetka, Omah; chosen 2026 best practice: badges on the photo top-left, photo count bottom-right, visible in both layouts; archived without fading the card's border; absent or unverified: none; lero.al data map: ListingCard → MantineListingCardPattern (/listings, /favorites, home rails, cabinet); owner decisions: D46-9, D90-1; evidence: docs/sessions/evidence/task741r3/rev3h/design/, rev3h/review/.`
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: absolute offsets from theme spacing; archived look; semantic queries: top="xs", spacing offset, resolveGalleryOffset, archived, grayscale; inspected candidates: GalleryNavActionIcon.tsx resolveGalleryOffsetValue (+ LightboxView consumer), MantineListingCardPattern.module.css .archived; decision: REUSE (resolveGalleryOffsetValue) + EXTEND (.archived); selected canonical owner: src/design-system/mantine/patterns/GalleryNavActionIcon.tsx, MantineListingCardPattern.module.css; Mantine/TailAdmin token path: var(--mantine-spacing-xs); new hardcoded visual values: NONE; rationale: the repo's own documented fix for this exact resolver trap.`
+
+#### 18.20.3 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R69** | The badge stack takes `top={resolveGalleryOffsetValue(theme, 'xs')} left={resolveGalleryOffsetValue(theme, 'xs')}`, and the photo count takes the same helper for `bottom`/`right`. Import it from `./GalleryNavActionIcon` (REUSE; no copy, no literal). Both render `var(--mantine-spacing-xs)`. The badges sit on the photo at the top-left, and the photo count at the bottom-right, in both layouts. | P0 |
+| **R70** | `.archived` keeps `filter: grayscale(1)` on the root and **loses `opacity`**. The fade moves to the photo only: `.archived .imageSection { opacity: 0.6 }`. The `Card.Section` is clipped by the card and draws no border of its own. Its comment cites GR-11. The card's border and corners keep full contrast. | P1 |
+| **R71** | GR-11 receipts for the card's rounded objects, each in every state it has, in grid and in list, at DPR 1 and 1.25, at 10× beside its reference (the Rozetka tile and TailAdmin `/cards` for the card and its badges): <ul><li>the card root (rest, hover, premium, archived);</li><li>every status badge colour;</li><li>the photo-count badge;</li><li>the overlay label;</li><li>the favourite (GR-3f).</li></ul> The probe makes the corner measurable: in the browser only, it gives the photo a flat fill colour through `page.addStyleTag` (never in source), and records the diagonal coverage. Every crop is viewed, and the receipt says it was. | P1 |
+| **R72** | `FavoriteButton.stories.tsx`: the photo stand-ins have no fixed `w`/`h`. Use the production photo contract (the card's `Card.Section` image `AspectRatio` / the shared fixture image), or a fluid `Box` with an `AspectRatio` ratio token. `gap={4}` becomes a theme key. No `style` object and no viewport pin. | P2 |
+| **R73** | Tests, red first on the 3h tree. <ul><li>(a) The pattern smoke test asserts that the badge group's and the photo count's inline `top`/`left`/`bottom`/`right` equal `var(--mantine-spacing-xs)`.</li><li>(b) A rendered check in the probe, in both card Stories and `ListingsShellView` `Default`/`ClosedTab`, en, at 390, 768 and 1440: for every card with badges, `document.elementFromPoint` at each badge's centre returns that badge (or a child of it), and each badge's box lies inside the photo section's box. It fails on the 3h build.</li></ul> | P0 |
+
+#### 18.20.4 Acceptance criteria
+
+`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+
+- **AC60 [R69, R73]**
+  - The R73 tests are red on the 3h tree and green on the final tree.
+  - On the final build, every badge and photo count across the four Stories × 390/768/1440 is topmost at its centre
+    and inside its photo.
+  - `shell-grid-1440.png` and `shell-list-1440.png` re-shot by the executor show "New" and "Price reduced" on the photos.
+  - The parity probe still reports 0 differences.
+- **AC61 [R70, R71]**
+  - The archived card root computes `opacity: 1`.
+  - Every R71 object has a `GR-11 CORNER CHECK` within 10 points of its reference, or of the ideal arc where no
+    reference element exists.
+  - Every crop has been viewed.
+- **AC62 [R72]** A search of `FavoriteButton.stories.tsx` for `w={`, `h={`, `gap={4}` and `style={{` returns no hit, and
+  the GR-3b receipt holds at 320/390/1024/1440.
+
+#### 18.20.5 Verification plan
+
+**I0** (before any write; `Get-Date -Format o`, porcelain, and hashes of the §18.20.6 files, written without BOM) →
+`rev3i/exec/00_i0.txt`. The red runs → `01_red.txt`.
+
+**Gate block.** The §18.19.8 block unchanged, run in PowerShell, with transcripts in `rev3i/exec/final/`. Add one line
+after the parity probe:
+
+```powershell
+node.exe docs\sessions\evidence\task741r3\rev3i\exec\badge-visible-probe.mjs
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL;
+- every other command exits 0;
+- the three `Select-String` lines print nothing.
+
+Then run the R71 corner probe, and re-run the 3g AC52/AC53 paginator probe into `rev3i/exec/`.
+
+**Receipts.** For every Story in §18.19.10:
+- GR-9;
+- GR-10;
+- GR-11 (R71);
+- GR-3b/3c/3d;
+- GR-3e for "Save search";
+- GR-3f for the favourite;
+- GR-3g for the overlay label and the focus ring.
+
+#### 18.20.6 Files in scope
+
+- `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` (R69)
+- `src/design-system/mantine/patterns/MantineListingCardPattern.module.css` (R70)
+- `src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx` (R73a)
+- `src/stories/mantine/primitives/FavoriteButton.stories.tsx` (R72)
+- `docs/sessions/evidence/task741r3/rev3i/exec/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3i`)
+- `docs/backlog.md` (the 741 state only)
+
+#### 18.20.7 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-4)
+
+The §18.19.10 table stands. In row 2, the owner checks one canonical card in grid and list, with the badges on the photo
+in both. The card's look against the owner's reference (radius, icons, price block) is Task 918, rebuilt on this single
+source.
+
+#### 18.20.8 Completion
+
+Append `## Revision 3i` with:
+- I0, red and green, and the gates;
+- AC60–AC62;
+- the receipts;
+- a `Files Changed` table.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.

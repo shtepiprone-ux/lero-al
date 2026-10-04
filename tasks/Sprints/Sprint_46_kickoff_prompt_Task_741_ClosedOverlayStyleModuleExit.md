@@ -781,7 +781,9 @@ colour for five statuses, and `inactive` turns gray.
   `consumer-overlay-hook` and the two `ListingCard.module.css` classes, and no Tailwind utility. `check:stories`,
   `check:story-coverage` and `governance:tailwind` exit 0.
 - **AC35 [R34, R35].** The R34 assertions are red on the pre-change tree (`01_red.txt`, non-zero exit) and green after.
-  The full gate block (§17.7) ends `EXIT_CODE=0` per command.
+  Every command in the §17.7 gate block ends `EXIT_CODE=0`, except `governance:tailwind`. That gate is red at HEAD
+  and is retired by Task 897. It is judged by §17.11 F26 instead: its output lists no §17.8 path, and its HIGH set is
+  unchanged from HEAD.
 
 ### 17.7 Verification plan
 
@@ -830,8 +832,9 @@ GR-3d lines:
   sides, unchanged;
 - `Mantine/Primitives/ListingCard` and `Mantine/Primitives/ListingStatusBanner`: `n/a: MantineStoryShell primitive`.
 
-Type scale (GR-3c): the overlay label is 14px at base/sm/md/lg (`fz="sm"`). The date is 12px (`size="xs"`). No text
-reaches 24px.
+Type scale (GR-3c): the overlay label is 14px at base/sm/md/lg (`fz="sm"`). The date is 12px (`size="xs"`). The
+section titles of both card Stories are `TITLE_FZ.h4`: 18px at base, 20px at sm and 24px from md. Corrected by
+review 1 (§17.11 F25); the earlier text said "no text reaches 24px".
 
 ### 17.8 Files in scope
 
@@ -843,6 +846,7 @@ reaches 24px.
 - `src/modules/listings/components/ListingStatusBanner.tsx`
 - `src/modules/listings/lib/listingStatusTone.ts` (comment only)
 - `src/stories/patterns/mantine/ListingCardPattern.stories.tsx`
+- `src/stories/mantine/primitives/ListingCard.stories.tsx` (added by review 1, §17.11 F25: the two `Title`s only)
 - `docs/sessions/<date>-task741r3-closed-status-hardcode-exit.md`
 - `docs/backlog.md` (the 741 state only)
 
@@ -870,3 +874,56 @@ Write `docs/sessions/<date>-task741r3-closed-status-hardcode-exit.md`. It contai
 
 Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
 or `BLOCKED`. No self-approval, no git.
+
+### 17.11 Review 1 of Revision 3, 2026-10-04 — `NEEDS REVISION` (one Story fix; one AC corrected)
+
+**Inspected:**
+- the real diff of the 8 §17.8 source files;
+- the session log `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md`;
+- `probe-diff.txt` (only the D46-1 / D46-2 / `lh="sm"` / scrim-spelling deltas);
+- freshness: the last source write was 07:00:38. `storybook-static` was built at 07:03:29, the probe ran at 07:05 and
+  `.next` was built at 07:09.
+
+**The reviewer re-ran** `vitest` on the three files (`win32`, Node v22.22.3): 33/33, exit 0. R30–R35 match §17.3 in
+source.
+
+| # | Severity | Finding | Correction (binding) |
+|---|---|---|---|
+| F25 | **P2**, GR-3c | `Mantine/Primitives/ListingCard` is in the O46-1 matrix (§17.9). Its section titles `src/stories/mantine/primitives/ListingCard.stories.tsx:119` and `:128` are `Title order={4}` with no `fz`, so they render 24px at every width, 320 included. The executor measured this (session log §5) but did not fix it. §17.7's "No text reaches 24px" was an orchestrator error: it did not check this Story. 886 recorded the same two lines as out of scope (886 §16.2) because they were not in its matrix. Here they are. | Add `fz={TITLE_FZ.h4}` to both `Title`s, importing `TITLE_FZ` from `@/design-system/mantine/typography`, as `ListingCardPattern.stories.tsx:218/240` already do. This file is added to §17.8. |
+| F26 | **P2**, orchestrator kickoff defect (GR-4) | §17.7/AC35 required `governance:tailwind` to exit 0. The gate is red at HEAD: H15 vs baseline H10. The reviewer counted the T6 palette lines in `theme.ts` / `MantineDashboardStatCard.tsx` / `MantineDataTableToCards.tsx`: 10 / 4 / 1 at HEAD and the same in the tree. This diff adds no palette class. Retiring the gate, `governance-pr.yml:101` included, is **Task 897**'s scope (897 F7, F11, R-list). The absolute exit-0 clause was unsatisfiable when written. | AC35's gate clause is replaced: **`governance:tailwind` lists no file this task changes, and its HIGH set is unchanged from HEAD.** Its exit code belongs to 897. `GR-2 SCOPE STATED — governance:tailwind inspects className palette strings repo-wide; it cannot attribute a pre-existing HEAD finding to this diff; the criterion is closed by the per-file HEAD/tree T6 counts and the absence of any §17.8 path in its output.` |
+
+**Note, not a finding.** R34 does not prove the "no `tone` → `currentColor`" border in a browser, because no Story or
+production consumer renders an overlay without `tone`. The jsdom assertion is accepted, and that branch's behaviour
+is the CSS default.
+
+**Re-entry: remediation.** Do not touch the eight §17.8 source files or the BEFORE/AFTER probe artifacts. Do this:
+1. Make the F25 edit.
+2. `npm.cmd run build-storybook`.
+3. Measure `mantine-primitives-listingcard--default` at 320/390/768/1440 with `getComputedStyle` on both `Title`s.
+   Expected: 18 / 18 / 24 / 24px, which is `TITLE_FZ.h4` (h6 / h5 at sm / h4 at md).
+4. Emit its GR-3b, GR-3c and GR-3d receipts. For GR-3d it is `n/a: MantineStoryShell primitive`.
+5. Run this block, with one transcript per command under `docs/sessions/evidence/task741r3/rev3a/`:
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run governance:tailwind
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks hash-object src/stories/mantine/primitives/ListingCard.stories.tsx src/design-system/mantine/theme.ts src/design-system/mantine/patterns/MantineListingCardPattern.tsx src/design-system/mantine/patterns/MantineListingCardPattern.module.css src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingStatusBanner.tsx src/modules/listings/lib/listingStatusTone.ts src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+```
+
+Expected:
+- `governance:tailwind` is judged by F26's corrected clause. Its output lists no §17.8 path, and HIGH stays at 15.
+- Every other command exits 0.
+- The eight earlier hashes equal the ones in `19_greps_hashes.txt`.
+
+Append `## Revision 3a` to the session log. It contains the Files Changed row, the receipts and the transcripts.
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. The owner matrix O46-1 (§17.9) is handed over only after the
+review of 3a.

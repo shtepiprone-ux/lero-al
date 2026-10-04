@@ -1,0 +1,92 @@
+{
+ "patterns-mantine-listingsshellview--default": [
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w112 client112 display:flex",
+   "root": "div.mantine-Pagination-root w112 client112 display:block",
+   "consumer": "div.mantine-Group-root w1376 client1376 display:flex",
+   "pages": "1"
+  }
+ ],
+ "mantine-primitives-pagination--default": [
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1 4 5 6 10"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1 24 25 26 50"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1 136 137 138 250"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1 2 3 4 5 10"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1 6 7 8 9 10"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w1342 client1342 display:flex",
+   "root": "div.mantine-Pagination-root w1342 client1342 display:block",
+   "consumer": "div.mantine-Stack-root w1342 client1342 display:flex",
+   "pages": "1"
+  }
+ ],
+ "patterns-mantine-listingspagination--default": [
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w112 client112 display:flex",
+   "root": "div.mantine-Pagination-root w112 client112 display:block",
+   "consumer": "div.mantine-Group-root w1392 client1392 display:flex",
+   "pages": "1"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w112 client112 display:flex",
+   "root": "div.mantine-Pagination-root w112 client112 display:block",
+   "consumer": "div.mantine-Group-root w1392 client1392 display:flex",
+   "pages": "3"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w112 client112 display:flex",
+   "root": "div.mantine-Pagination-root w112 client112 display:block",
+   "consumer": "div.mantine-Group-root w1392 client1392 display:flex",
+   "pages": "5"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w116 client116 display:flex",
+   "root": "div.mantine-Pagination-root w116 client116 display:block",
+   "consumer": "div.mantine-Group-root w1392 client1392 display:flex",
+   "pages": "10"
+  },
+  {
+   "rowParentIsRoot": true,
+   "row": "div. w116 client116 display:flex",
+   "root": "div.mantine-Pagination-root w116 client116 display:block",
+   "consumer": "div.mantine-Group-root w280 client280 display:flex",
+   "pages": "10"
+  }
+ ]
+}

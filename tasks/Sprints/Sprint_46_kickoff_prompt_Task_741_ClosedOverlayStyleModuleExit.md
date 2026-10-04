@@ -1553,7 +1553,7 @@ is approvable after the review of 3d-1 and the owner's answer on O46-2 row 3 (§
 
 ### 18.15 Owner return of O46-2 row 3, 2026-10-04 → Revision 3e (canonical "Show more", canonical empty state, production states in the page Story; includes 3d-1)
 
-**This subsection is the only executable route.** It **includes §18.14's R45** (Revision 3d-1), so one session does
+**Implemented and reviewed in §18.16; the route is now §18.16 (Revision 3f).** Original text: it **includes §18.14's R45** (Revision 3d-1), so one session does
 both. Re-entry mode: **remediation**. Evidence goes to `docs/sessions/evidence/task741r3/rev3e/exec/`. `rev3e/design/`
 belongs to Task 918's design and is not written.
 
@@ -1747,3 +1747,175 @@ Append `## Revision 3e` to the session log, with:
 
 Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
 or `BLOCKED`. No self-approval, no git. 741 is approvable after the review of 3e and the owner's O46-3.
+
+### 18.16 Review of Revision 3e, 2026-10-04 — `NEEDS REVISION` → Revision 3f (the canonical paginator shows only the current page)
+
+**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+goes to `docs/sessions/evidence/task741r3/rev3f/exec/`. `rev3f/review/` belongs to Opus and is not written.
+
+**Inspected:**
+- the diffs of `ListingsShellView.tsx`, `ListingsSortBar.tsx`, `SaveSearchButton.tsx`, `ListingsShellView.stories.tsx`,
+  `ListingCard.stories.tsx` and `cardListingData.fixture.ts`;
+- `ListingsShellView.smoke.test.tsx`;
+- `rev3e/exec/` (`00_i0`, `01_red` 4/4 red, `final/*`, `probe-states-compare.txt`) and `rev3d/research-exec/gr7-exec.md`;
+- the session log's `## Revision 3d-1` / `## Revision 3e`.
+
+**Re-measured by Opus** (`win32`, the executor's final `storybook-static`, built 17:58 after the last write at 17:55):
+- `rev3e/review/review-probe.json`: 5 exports × en/uk × 320/390/768/1024/1440;
+- `pagination-probe.json` and `pagination-parent.json`.
+
+**Verified, kept:**
+- R45, R46, R47, R48, R49 and R51;
+- R50's states, chips and the primitive-card parity (0 diffs / 140 cells);
+- AC45, AC46 and AC47. AC47 holds by construction and by measurement: line gap 0, 1px, `gray.2`, full row width, no `style` attribute.
+
+#### 18.16.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F43 | **P1** (clause 16d, GR-9, AC48; production) | **The canonical `MantinePagination` never grows past its floor level wherever the consumer wraps it in a flex `Group`, which every production consumer does.** It measures `row.parentElement`, which is `Pagination.Root` (`MantinePagination.tsx:211`). Inside a `Group` that root hugs its content, so it is 112px wide (`pagination-parent.json`). The ladder (`:221-230`) therefore always picks level 3, and level 3 renders only the current page. Measured: `ListingsShellView` `Default` (3 pages) shows "‹ 1 ›" at 390 and at 1440 (`pagination-1440.png`). Every `Patterns/Mantine/ListingsPagination` export shows a single number ("1", "3", "5", "10"). The primitive Story works only because its consumer is a `Stack`, where the root is full-width. Production consumers: `ListingsPagination.tsx:33` (`/listings`), `AdminListingsView.tsx:302`, `AgentStatisticsView.tsx:718`, plus `MantineAdminSurfacePattern.tsx:120` (Story only). Users can only step with ‹ ›; no other page number is ever offered. | **R52–R54**, **AC49–AC51** |
+| F44 | **P2** (GR-9 step 5, AC48) | **CONTRADICTION.** The session log's `## Revision 3e` (line 404) says *"pagination controls 1 and 3 plus Previous/Next (the canonical MantinePagination collapses page 2 for 3 pages; not changed)"*, and AC48 is reported met. The "3" is the hidden measuring probe (`position: fixed; visibility: hidden`, `MantinePagination.tsx:289-296`); only "1" is visible (`pagination-probe.json`). The GR-9 receipt traced `MantinePagination` to its canonical owner without checking what it rendered. | **R55** |
+| F45 | P3 | `ListingsSortBar.tsx`: the comment kept at the root still says "Root stays a single Group with exactly two direct-child elements". After R48 the root is a `Stack` (Group + Divider). The `.listings-sort-bar > div:nth-of-type(n)` probe selectors still resolve, because the class stayed on the `Group`. | **R56** |
+| F46 | NOTE, orchestrator | AC44's hash clause (§18.14.3) cannot hold once §18.15 edits `ListingsShellView.tsx` and `ListingCard.stories.tsx`. The executor recorded this correctly; the clause is withdrawn for 3e/3f, and the I0 equality stands. The gates ran from Git Bash with `node`/`npm`. The `win32` platform transcript makes them admissible, but 3f runs them from PowerShell with `node.exe`/`npm.cmd`. | Kickoff corrected |
+
+`GR-9 REVIEW DEPTH — patterns-mantine-listingsshellview--default/--closed-tab/--closed-empty/--empty/--loading-more (+ ListingsSortBar, ListingsActionRow, Mantine/Primitives/ListingCard): elements 15 (each → canonical owner); non-canonical props/values: MantinePagination row and probe style objects (MantinePagination.tsx:258-265, :293); production states active variants, chips, pagination, closed tab, both empties, loading-more → rendered all, but pagination renders the floor ("‹ 1 ›") for 3 pages (F43); unreachable shown: NONE; variant parity: primitive card states vs rev3c 0/140 diffs; grid/list → Task 918 §16; executor claims checked against their evidence 9/10, contradictions: F44; evidence docs/sessions/evidence/task741r3/rev3e/review/.`
+
+#### 18.16.2 Reference research (GR-7)
+
+The live record for this session is `docs/sessions/evidence/task741r3/rev3f/review/gr7-row3.md`, with
+`gr7-loadmore/gr7-loadmore.json` and `gr7-rozetka-more.json`. Every reference with a paginator shows the neighbouring
+page numbers, not only the current one:
+- **Rozetka:** "‹ 1 2 3 4 … 100 ›", 42px bordered squares at 1440 and 32×34 at 390.
+- **Lahomes `/property-grid.html` and `/ui-pagination.html`:** "Previous 1 2 3 Next".
+- **Kamr `/ui-pagination`:** "‹ 1 2 3 4 ›", 38px.
+
+The canonical shed ladder (Task 535: full → no siblings → no trailing boundary → floor, only when space runs out) is the
+right design. Its width budget is what is broken. No owner decision is needed.
+
+`GR-7 REFERENCE RESEARCH — moment: review (741 Revision 3e); role: Opus; task: 741; subject: end-of-list pagination and "show more"; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages (this session): Rozetka catalogue paginator, Lahomes /property-grid + /ui-pagination, Kamr /ui-pagination + /ecom-product-grid, Omah /property-list, TailAdmin /products-list + /buttons → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0, Rozetka 1/1/0; inspected in depth: 8 pages at 1440 and 390; workflow states operated: Kamr sign-in, scroll to list end; options across references: neighbour page numbers ← Rozetka, Lahomes, Kamr; current page only ← none; chosen 2026 best practice: the canonical shed ladder with a correct width budget; absent or unverified: none; lero.al data map: ListingsPagination (/listings), AdminListingsView (/admin/listings), AgentStatisticsView (cabinet statistics); owner decisions: D46-6, D46-7; evidence: docs/sessions/evidence/task741r3/rev3f/review/gr7-row3.md, docs/sessions/evidence/task741r3/rev3e/review/pagination-parent.json.`
+
+**Execution.** Before the first write, Sonnet runs its own GR-7 check of the three paginator pages above into
+`rev3f/exec/research-exec/`, and emits the full receipt.
+
+#### 18.16.3 Canonical decision record (GR-0)
+
+| Artifact | Disposition | Owner / path |
+|---|---|---|
+| Paginator width budget | **EXTEND** the canonical owner, `src/design-system/mantine/patterns/MantinePagination.tsx`. Never a consumer. | Measure and observe the **consumer wrapper**, `Pagination.Root`'s parent (`row.parentElement?.parentElement`), with a fallback to the root when absent. Consumers stay unchanged. |
+| Paginator row and probe chrome | **EXTEND** the same file | The row is a Mantine `Group gap="xs" wrap="nowrap" align="center" maw="100%"` plus a keyword-only module class for `overflow: hidden`. The probe is `pos="fixed"` plus a keyword-only module class for `visibility: hidden; pointer-events: none`. No `style` object and no literal value. |
+| Consumer-contract proof | **EXTEND** `src/stories/mantine/primitives/Pagination.stories.tsx` | One new export, `InCenteredGroup`: the real consumer contract (`<Group justify="center">` around `MantinePagination`) with 3, 10 and 50 pages, toolbar-driven. Production consumers render it this way (`ListingsPagination.tsx:33`, `AdminListingsView.tsx:302`). It is canonical coverage of a production contract, not a gate probe. |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: paginator width budget and chrome; semantic queries: MantinePagination, Pagination.Root, parentElement, ResizeObserver, shed level; inspected candidates: MantinePagination.tsx + Mantine/Primitives/Pagination, ListingsPagination.tsx + Patterns/Mantine/ListingsPagination, AdminListingsView.tsx:302, AgentStatisticsView.tsx:718, MantineAdminSurfacePattern.tsx:120; decision: EXTEND; selected canonical owner: src/design-system/mantine/patterns/MantinePagination.tsx; Mantine/TailAdmin token path: theme spacing xs, existing pagination chrome; new hardcoded visual values: NONE; rationale: the defect is in the shared owner and all consumers inherit the fix.`
+
+`GR-3a STORY PREFLIGHT — MantinePagination × centred in a Group (the production consumer contract); canonical candidates: mantine-primitives-pagination--* (Stack consumer only); direct-import evidence: src/stories/mantine/primitives/Pagination.stories.tsx; toolbar coverage: locale=Storybook toolbar, viewport=Storybook toolbar; decision: EXTEND (one export); target: Mantine/Primitives/Pagination; rationale: the existing exports never render the contract every production consumer uses, which is why the defect stayed invisible.`
+
+#### 18.16.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R52** | `MantinePagination` takes its width budget from `Pagination.Root`'s parent element (the consumer wrapper), and observes it with `ResizeObserver`. It falls back to the root only when the root has no parent. Nothing else in the ladder (`SHED_LEVELS`, `computeShedRange`, the floor-first SSR rule, the probe-based item width) changes. Consumers are not edited. | P0 |
+| **R53** | `MantinePagination.tsx` has no `style={{…}}` object: the row and the probe use the §18.16.3 Mantine props plus keyword-only classes in a new `MantinePagination.module.css`. The rendered row keeps `display: flex; flex-wrap: nowrap; gap: var(--mantine-spacing-xs); overflow: hidden; max-width: 100%`, and the probe stays fixed, hidden and non-interactive. | P1 |
+| **R54** | `Pagination.stories.tsx` gains the export `InCenteredGroup` (§18.16.3), with three rows (3, 10 and 50 pages, page 1, then a mid page for 50). It uses no fixed width, `style` object or viewport pin, and the gutter stays as the file's other exports have it. `MantinePagination.smoke.test.tsx` gains a two-armed test. In jsdom, stub `clientWidth` so the consumer wrapper reports 1000 and the root reports 100, and give the probe a width of 32. Then render `total={3}` inside a wrapper, and assert that page buttons 1, 2 and 3 render. The test is red on the pre-change file (only "1") and green after. | P0 |
+| **R55** | The session log gets `## Revision 3f` with a `RETRACTION` of the line-404 claim (F44): the invalid claim, why it is invalid, the evidence (`rev3e/review/pagination-probe.json`) and the corrected status. AC48 is re-run on the 3f build. | P2 |
+| **R56** | `ListingsSortBar.tsx`: the root comment describes the real structure (`Stack` of the `.listings-sort-bar` `Group`, with its two children, plus the `Divider`). Comment only. | P3 |
+
+#### 18.16.5 Acceptance criteria
+
+`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+
+- **AC49 [R52, R54]** Given the final build, a probe like `rev3e/review/pagination-parent.mjs` records the visible page
+  numbers. A control counts as visible when it is not the probe: it is not `position: fixed` and it is inside the
+  row's box. Expected:
+  - `ListingsShellView` `Default` shows "1 2 3" at 390 and 1440;
+  - every `ListingsPagination` export shows more than the current page wherever its wrapper has the room;
+  - `Pagination` `InCenteredGroup` shows "1 2 3", "1 2 3 4 5 … 10" and the mid-page ladder for 50 at 1440, and a shed level at 320 with no overflow;
+  - the primitive's existing exports are unchanged from `rev3e/review/pagination-parent.json`.
+
+  The red arm is the 3e build's `pagination-parent.json` (floor only).
+- **AC50 [R53]** A search of `MantinePagination.tsx` for `style={{` returns no hit, and `check:design-tokens:strict` exits 0. The computed row styles equal the values R53 names.
+- **AC51 [R55, R56]** The RETRACTION is present in the session log, the re-run AC48 probe records "1 2 3", and the `ListingsSortBar` comment matches its JSX.
+
+#### 18.16.6 Verification plan
+
+**I0.**
+- `git --no-optional-locks status --porcelain`, plus `git hash-object` of the §18.16.7 files → `rev3f/exec/00_i0.txt`.
+- The R54 red run → `01_red.txt`.
+
+**Gate block** (PowerShell, `node.exe`/`npm.cmd`, one transcript per command in `rev3f/exec/final/`, each ending `EXIT_CODE=`):
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingsShell.tsx
+npx.cmd vitest run src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run check:backlog-active
+git --no-optional-locks hash-object src/design-system/mantine/patterns/MantinePagination.tsx src/design-system/mantine/patterns/MantinePagination.module.css src/stories/mantine/primitives/Pagination.stories.tsx src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx src/modules/listings/components/ListingsSortBar.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL;
+- every other command exits 0.
+
+Then run AC49 and the AC48 re-run on that build.
+
+**Receipts, GR-9 first.** Emit one `GR-9 REVIEW DEPTH` per changed or blast-radius Story:
+- `Mantine/Primitives/Pagination` (all exports);
+- `Patterns/Mantine/ListingsPagination`;
+- `Patterns/Mantine/ListingsShellView` `Default` / `LoadingMore`;
+- `Patterns/Mantine/AdminListingsView`;
+- `Patterns/Mantine/AgentStatisticsView`;
+- `Patterns/Mantine/AdminSurfacePattern`.
+
+For each, record the visible page numbers at 390 and 1440. Then:
+- GR-3b at 320/390/1024/1440, with no overflow anywhere;
+- GR-3c (no text change);
+- GR-3d, all four sides, as each file states;
+- GR-3e n/a;
+- GR-3f n/a, because pagination controls are rounded squares;
+- GR-3g for the paginator controls (no clipping ancestor; confirm).
+
+#### 18.16.7 Files in scope
+
+- `src/design-system/mantine/patterns/MantinePagination.tsx` (R52, R53)
+- `src/design-system/mantine/patterns/MantinePagination.module.css` (new, R53)
+- `src/stories/mantine/primitives/Pagination.stories.tsx` (R54)
+- `src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx` (R54)
+- `src/modules/listings/components/ListingsSortBar.tsx` (R56, comment only)
+- `docs/sessions/evidence/task741r3/rev3f/exec/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3f`)
+- `docs/backlog.md` (the 741 state only)
+
+No consumer file and no Revision 3e file is edited, apart from `ListingsSortBar.tsx`'s comment.
+
+#### 18.16.8 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-3, extended)
+
+The §18.15.10 rows, plus these:
+
+| Story → export | Viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Patterns/Mantine/ListingsShellView` → `Default` | 390, 1440 | en, uk | the paginator shows "‹ 1 2 3 ›" |
+| `Mantine/Primitives/Pagination` → `InCenteredGroup` and the existing exports | 320, 390, 1440 | en | page numbers shed only when space runs out; no overflow |
+| `Patterns/Mantine/ListingsPagination`, `AdminListingsView`, `AgentStatisticsView` | 390, 1440 | uk | the paginator now shows page numbers, not only the current page |
+
+#### 18.16.9 Completion
+
+Append `## Revision 3f` to the session log, with:
+- the R55 retraction;
+- I0, the red and green runs, and the gate block;
+- AC49 and the AC48 re-run;
+- the GR-9 and GR-3 receipts;
+- a `Files Changed` table.
+
+Status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.

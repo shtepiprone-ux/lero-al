@@ -1,0 +1,126 @@
+{
+ "390": [
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-Pagination-control mantine-Pagination-edgeControl mantine-UnstyledButton-root",
+   "text": "",
+   "aria": "Previous page",
+   "w": 44,
+   "h": 44,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "path",
+   "cls": "",
+   "text": "",
+   "aria": null,
+   "w": 6,
+   "h": 9,
+   "display": "inline",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-UnstyledButton-root",
+   "text": "1",
+   "aria": "page",
+   "w": 44,
+   "h": 44,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-Pagination-edgeControl mantine-UnstyledButton-root",
+   "text": "",
+   "aria": "Next page",
+   "w": 44,
+   "h": 44,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "path",
+   "cls": "",
+   "text": "",
+   "aria": null,
+   "w": 6,
+   "h": 9,
+   "display": "inline",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-UnstyledButton-root",
+   "text": "3",
+   "aria": null,
+   "w": 44,
+   "h": 44,
+   "display": "flex",
+   "vis": true
+  }
+ ],
+ "1440": [
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-Pagination-control mantine-Pagination-edgeControl mantine-UnstyledButton-root",
+   "text": "",
+   "aria": "Previous page",
+   "w": 32,
+   "h": 32,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "path",
+   "cls": "",
+   "text": "",
+   "aria": null,
+   "w": 6,
+   "h": 9,
+   "display": "inline",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-UnstyledButton-root",
+   "text": "1",
+   "aria": "page",
+   "w": 32,
+   "h": 32,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-Pagination-edgeControl mantine-UnstyledButton-root",
+   "text": "",
+   "aria": "Next page",
+   "w": 32,
+   "h": 32,
+   "display": "flex",
+   "vis": true
+  },
+  {
+   "tag": "path",
+   "cls": "",
+   "text": "",
+   "aria": null,
+   "w": 6,
+   "h": 9,
+   "display": "inline",
+   "vis": true
+  },
+  {
+   "tag": "button",
+   "cls": "mantine-focus-auto mantine-active mantine-Pagination-control mantine-UnstyledButton-root",
+   "text": "3",
+   "aria": null,
+   "w": 32,
+   "h": 32,
+   "display": "flex",
+   "vis": true
+  }
+ ]
+}

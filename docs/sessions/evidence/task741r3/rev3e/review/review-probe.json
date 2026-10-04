@@ -1,0 +1,3666 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "cells": {
+  "default/en@320": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 160
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "default/en@390": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 195
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "default/en@768": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 384
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 678
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 581,
+    "gw": 581,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    56,
+    24
+   ],
+   "maxFont": 16
+  },
+  "default/en@1024": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 512
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 926
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 821,
+    "gw": 821,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "default/en@1440": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 720
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1342
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1237,
+    "gw": 1237,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "default/uk@320": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 160
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    1,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "default/uk@390": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 195
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "default/uk@768": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 384
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 662
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 547,
+    "gw": 547,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    56,
+    24
+   ],
+   "maxFont": 16
+  },
+  "default/uk@1024": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 512
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 910
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 787,
+    "gw": 787,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "default/uk@1440": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 720
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1326
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1203,
+    "gw": 1203,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/en@320": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Sold",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Rented",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    24,
+    16
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/en@390": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Sold",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Rented",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    24,
+    16
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/en@768": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Sold",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Rented",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 678
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 581,
+    "gw": 581,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    92,
+    24
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/en@1024": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Sold",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Rented",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 926
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 821,
+    "gw": 821,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    177,
+    32
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/en@1440": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Sold",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Rented",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1342
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1237,
+    "gw": 1237,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    211,
+    32
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/uk@320": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Продано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Орендовано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    1,
+    24,
+    16
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/uk@390": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Продано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Орендовано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    24,
+    16
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/uk@768": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Продано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Орендовано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 662
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 547,
+    "gw": 547,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    92,
+    24
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/uk@1024": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Продано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Орендовано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 910
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 787,
+    "gw": 787,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    177,
+    32
+   ],
+   "maxFont": 16
+  },
+  "closed-tab/uk@1440": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [
+    {
+     "badges": "Продано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Орендовано",
+     "overlay": true,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    }
+   ],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1326
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1203,
+    "gw": 1203,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    211,
+    32
+   ],
+   "maxFont": 16
+  },
+  "closed-empty/en@320": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No sold or rented listings found | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    455,
+    16
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/en@390": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No sold or rented listings found | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    507,
+    16
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/en@768": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 678
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 581,
+    "gw": 581,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No sold or rented listings found | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    418,
+    24
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/en@1024": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 926
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 821,
+    "gw": 821,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No sold or rented listings found | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    470,
+    32
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/en@1440": {
+   "tabSelected": "Sold & Rented",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1342
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1237,
+    "gw": 1237,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No sold or rented listings found | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    522,
+    32
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/uk@320": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Продані та здані оголошення не знайдено | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    1,
+    441,
+    16
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/uk@390": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Продані та здані оголошення не знайдено | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    493,
+    16
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/uk@768": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 662
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 547,
+    "gw": 547,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Продані та здані оголошення не знайдено | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    404,
+    24
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/uk@1024": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 910
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 787,
+    "gw": 787,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Продані та здані оголошення не знайдено | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    456,
+    32
+   ],
+   "maxFont": 18
+  },
+  "closed-empty/uk@1440": {
+   "tabSelected": "Продані та здані",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1326
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1203,
+    "gw": 1203,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Продані та здані оголошення не знайдено | 18px/600"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    508,
+    32
+   ],
+   "maxFont": 18
+  },
+  "empty/en@320": {
+   "tabSelected": "Active listings",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No listings found | 18px/600",
+     "Try changing your filters or clearing your search | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    427,
+    16
+   ],
+   "maxFont": 18
+  },
+  "empty/en@390": {
+   "tabSelected": "Active listings",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No listings found | 18px/600",
+     "Try changing your filters or clearing your search | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    489,
+    16
+   ],
+   "maxFont": 18
+  },
+  "empty/en@768": {
+   "tabSelected": "Active listings",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 678
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 581,
+    "gw": 581,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No listings found | 18px/600",
+     "Try changing your filters or clearing your search | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    400,
+    24
+   ],
+   "maxFont": 18
+  },
+  "empty/en@1024": {
+   "tabSelected": "Active listings",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 926
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 821,
+    "gw": 821,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No listings found | 18px/600",
+     "Try changing your filters or clearing your search | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    452,
+    32
+   ],
+   "maxFont": 18
+  },
+  "empty/en@1440": {
+   "tabSelected": "Active listings",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1342
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1237,
+    "gw": 1237,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "No listings found | 18px/600",
+     "Try changing your filters or clearing your search | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    504,
+    32
+   ],
+   "maxFont": 18
+  },
+  "empty/uk@320": {
+   "tabSelected": "Активні оголошення",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Оголошень не знайдено | 18px/600",
+     "Спробуйте змінити фільтри або очистити пошук | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    1,
+    427,
+    16
+   ],
+   "maxFont": 18
+  },
+  "empty/uk@390": {
+   "tabSelected": "Активні оголошення",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Оголошень не знайдено | 18px/600",
+     "Спробуйте змінити фільтри або очистити пошук | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    489,
+    16
+   ],
+   "maxFont": 18
+  },
+  "empty/uk@768": {
+   "tabSelected": "Активні оголошення",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 662
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 547,
+    "gw": 547,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Оголошень не знайдено | 18px/600",
+     "Спробуйте змінити фільтри або очистити пошук | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    400,
+    24
+   ],
+   "maxFont": 18
+  },
+  "empty/uk@1024": {
+   "tabSelected": "Активні оголошення",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 910
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 787,
+    "gw": 787,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Оголошень не знайдено | 18px/600",
+     "Спробуйте змінити фільтри або очистити пошук | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    452,
+    32
+   ],
+   "maxFont": 18
+  },
+  "empty/uk@1440": {
+   "tabSelected": "Активні оголошення",
+   "chips": [],
+   "filterCount": null,
+   "cards": [],
+   "pagination": [],
+   "paginationRoot": false,
+   "showMore": null,
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1326
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1203,
+    "gw": 1203,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": {
+    "texts": [
+     "Оголошень не знайдено | 18px/600",
+     "Спробуйте змінити фільтри або очистити пошук | 14px/400"
+    ],
+    "icon": "lucide lucide-house w24",
+    "emoji": false
+   },
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    504,
+    32
+   ],
+   "maxFont": 18
+  },
+  "loading-more/en@320": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 160
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "loading-more/en@390": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 195
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "loading-more/en@768": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 384
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 678
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 581,
+    "gw": 581,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    56,
+    24
+   ],
+   "maxFont": 16
+  },
+  "loading-more/en@1024": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 512
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 926
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 821,
+    "gw": 821,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "loading-more/en@1440": {
+   "tabSelected": "Active listings",
+   "chips": [
+    "For sale",
+    "2 rooms"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "New",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "New+Price reduced",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Show more",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 109,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 720
+   },
+   "saveSearch": {
+    "text": "Save search",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 131,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1342
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1237,
+    "gw": 1237,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "loading-more/uk@320": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 160
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 288,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 160
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 288,
+    "gw": 288,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    1,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "loading-more/uk@390": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 195
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 358,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 195
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 358,
+    "gw": 358,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    45,
+    16,
+    56,
+    16
+   ],
+   "maxFont": 16
+  },
+  "loading-more/uk@768": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 384
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 662
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 547,
+    "gw": 547,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    24,
+    56,
+    24
+   ],
+   "maxFont": 16
+  },
+  "loading-more/uk@1024": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 512
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 910
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 787,
+    "gw": 787,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  },
+  "loading-more/uk@1440": {
+   "tabSelected": "Активні оголошення",
+   "chips": [
+    "Продаж",
+    "2 кімнати"
+   ],
+   "filterCount": "2",
+   "cards": [
+    {
+     "badges": "Нове",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "Нове+Ціну знижено",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": false,
+     "premium": true
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": true,
+     "fav": false,
+     "premium": false
+    },
+    {
+     "badges": "-",
+     "overlay": false,
+     "placeholder": false,
+     "fav": true,
+     "premium": false
+    }
+   ],
+   "pagination": [
+    "·",
+    "1",
+    "·"
+   ],
+   "paginationRoot": true,
+   "showMore": {
+    "text": "Показати ще",
+    "variant": "filled",
+    "size": "sm",
+    "loading": true,
+    "disabled": true,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 124,
+    "radius": "8px",
+    "bg": "rgb(236, 84, 71)",
+    "color": "rgb(255, 255, 255)",
+    "cx": 720
+   },
+   "saveSearch": {
+    "text": "Зберегти пошук",
+    "variant": "default",
+    "size": "sm",
+    "loading": false,
+    "disabled": false,
+    "fs": "14px",
+    "fw": "500",
+    "h": 44,
+    "w": 165,
+    "radius": "8px",
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(52, 64, 84)",
+    "cx": 1326
+   },
+   "sortLine": {
+    "gap": 0,
+    "h": 1,
+    "w": 1203,
+    "gw": 1203,
+    "color": "rgb(228, 231, 236)",
+    "bw": "1px"
+   },
+   "sortBarStyleAttr": "--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: space-between; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);",
+   "empty": null,
+   "overflow": false,
+   "gutter": [
+    36,
+    32,
+    56,
+    32
+   ],
+   "maxFont": 16
+  }
+ }
+}

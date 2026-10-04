@@ -1,8 +1,9 @@
 # Task 741 — Retire `CLOSED_OVERLAY_STYLE`'s Tailwind strings into `ListingCard.module.css`
 
-> **Status: `NEEDS REVISION` — reopened by the owner 2026-09-17 (Revision 2). The ONLY executable route is §16 at the
-> end of this file.** §1–§15 are the closed 2026-08-15 migration and are kept as history. Their D28 "nothing rendered may
-> change" constraint does **not** bind §16, because the owner ordered a style change.
+> **Status: `NEEDS REVISION` — Revision 3, 2026-10-04 (executor I0 block upheld). The ONLY executable route is §17 at
+> the end of this file.** §16 (Revision 2) is kept for its owner quote (§16.1) and findings (§16.2) only; §17.1 lists
+> which of its requirements are withdrawn, superseded or carried. §1–§15 are the closed 2026-08-15 migration, kept as
+> history.
 
 **Sprint 46.6. Q4 — Release/Critical Flow** (it edits `ListingCard.tsx`, named in
 `docs/critical-flow-registry.md:57`).
@@ -634,3 +635,238 @@ Each command gets its own unpiped transcript with `EXIT_CODE=`.
 Write `docs/sessions/<date>-task741r2-closed-status-canonical-style.md` with the owner quotes, R20–R26, the red and green
 transcripts, the probe JSON, the gate block and a `Files Changed` table. Update the 741 state in `docs/backlog.md`. Status
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No self-approval, no git.
+
+---
+
+## 17. Revision 3 — the owner-accepted overlay look stays; the hardcode, the duplicate colour map and the Story Tailwind go (review of the executor's I0 block, 2026-10-04)
+
+Sprint 46 · P1 · QA profile **Q4** (`ListingCard.tsx`, `docs/critical-flow-registry.md`). **This section is the only
+executable route.** It replaces §16.3–§16.9. Evidence goes to `docs/sessions/evidence/task741r3/`. Re-entry mode:
+**from-scratch** — no Revision 2 write was made (the executor stopped at I0), so no Revision 2 artifact is reused.
+
+### 17.1 Why §16 stopped, and what happens to each of its requirements
+
+The executor's I0 (2026-10-04) stopped before any write. The orchestrator re-measured every point on the tree:
+
+- **FACT.** Task 886 R40 (2026-09-30) already deleted `CLOSED_OVERLAY_STYLE` and `.closedOverlaySold`/`.closedOverlayRented`.
+  It added `overlay.tone: 'sold' | 'rented'` (`MantineListingCardPattern.tsx:44`, applied at `:325`). The colour now
+  lives in the pattern module as `.overlaySold`/`.overlayRented`: `--status-info` / `--status-rented`, with an 80%
+  `color-mix` background (`MantineListingCardPattern.module.css:412-436`).
+- **FACT.** The owner accepted that look on 2026-09-30. 886 §21.1 row 5 returned the cards, verbatim: *"Бейджи продано та
+  орендовано чомусь різні у примітиві і у інших сторісах. Необхідно привести до одного виду - кольорового!"*. After R40
+  the owner accepted §21.8 row 4 ("coloured sold/rented"), verbatim: *"приймаю."* (886 §22.1). The accepted render: sold
+  badge `rgb(0,134,201)`, sold overlay `oklab(0.577 -0.087 -0.151 / 0.8)` (886 §21.10, AC31).
+- **INFERENCE → decision.** §16.1 (the owner, 2026-09-17) asks for one style on every surface and no hardcode. It does
+  not say that the overlay must equal the badge. That equation (§16.3 rows 1–2, R21, R25) was an Opus design marked
+  "the owner visual matrix can return it". The later, explicit owner acceptance wins. **The overlay keeps the accepted
+  look.** What §16.1 still requires, and what 886 did not do, is remove the hardcode and the duplicate colour map.
+- **FACT.** `src/modules/listings/lib/listingStatusTone.ts` (Task 844) already exports `LISTING_STATUS_COLOR`. Its own
+  comment (`:15-19`) and the Sprint 46 backlog row say that 741 must switch `ListingCard` to it. §16 R20 instead
+  created a second file.
+- **FACT, missed by §16 and by the I0 report.** The shared map and `ListingStatusBanner` disagree on `inactive`:
+  `listingStatusTone.ts:23` `gray`, `ListingStatusBanner.tsx:33` `yellow`. R20's "with today's values" could not hold
+  for both. Owner decision **D46-1** below.
+- **FACT.** §16.2 F5's Story line numbers are stale. 886 R29 removed `DemoImage`. The Tailwind sites are now
+  `ListingCardPattern.stories.tsx:104`, `:116` and `:191`, and a rented grid card already exists (`:226`).
+- **FACT, a latent defect in §16 R22.** Mantine `Overlay` defaults to `zIndex: getDefaultZIndex('modal')` = 200
+  (`@mantine/core` 8.3.18 `Overlay.mjs:24`). Used as written, the scrim would rise above the badges and the favourite.
+  Today's `Center` scrim has `z-index: auto`.
+
+| §16 item | Revision 3 disposition |
+|---|---|
+| R20 / AC20 | **Carried, retargeted** → R30 (`listingStatusTone.ts`, no new file) |
+| R21 (overlay label = `Badge`), R25 / AC23 (overlay bg = badge bg) | **Withdrawn** (owner acceptance, above) → R31 keeps the look and removes the hardcode |
+| R22 | **Carried, corrected** → R32 (`zIndex="auto"`) |
+| R23, AC21 | **Superseded — already done by 886 R40.** AC21's grep is replaced by AC31 |
+| R24 / AC24 | **Carried, re-measured** → R33 |
+| R26 / AC22 | **Rewritten** → R34 |
+| §16.3 GR-1 / GR-3a receipts | Re-issued in §17.3 |
+
+### 17.2 Owner decisions — 2026-10-04, chosen verbatim from bounded options
+
+- **D46-1** (the `inactive` colour): *"Gray, from the map (Recommended)"*. `ListingStatusBanner` reads
+  `LISTING_STATUS_COLOR` and keeps no local copy. The inactive banner on the listing page turns from yellow to gray. No
+  other colour changes.
+- **D46-2** (the overlay label radius; the hand-copied `calc(var(--radius) * 1.5)` is 18px and has no theme key):
+  *"Use theme 2xl, 16px (Recommended)"*. The label's corners become 16px. No new radius token.
+
+### 17.3 Canonical decision record (GR-0) and receipts
+
+| Visible artifact | Today (source) | Target (token path) | Disposition |
+|---|---|---|---|
+| Status colour map | `ListingCard.tsx:82,87,91,95` literals; `ListingStatusBanner.tsx:27-34` `COLORS` | `LISTING_STATUS_COLOR` (`src/modules/listings/lib/listingStatusTone.ts:21`) | **REUSE** |
+| Overlay label typography | `.overlayLabel` `font-size: .875rem`, `line-height: 1.25rem`, `font-weight: 700` | Mantine style props `fz="sm"` (14px, `theme.ts:702`), `lh="sm"` (1.43 → 20.02px, `theme.ts:690`), `fw={700}` | **REUSE** |
+| Overlay label padding | `padding-inline: var(--homepage-runtime-space-3)` (12px), `padding-block: .375rem` | `px="sm"` (12px, `theme.ts:658`), `py="compact"` (6px, `theme.ts:672`) | **REUSE** |
+| Overlay label radius | `calc(var(--radius) * 1.5)` = 18px | `bdrs="2xl"` (16px, `theme.ts:682`) — **D46-2** | **REUSE** |
+| Overlay label border | `border-style: solid; border-width: 2px` + tone class `border-color` | `bd={`${theme.other.borderWidth.statusOverlay} solid ${OVERLAY_TONE_BORDER[tone]}`}`. The new role `statusOverlay: '0.125rem'` is in `theme.ts` `other.borderWidth` and its type (`:79`). It has the same value as `galleryThumbActive` but a different role, which is rule 3 in the comment at `:74-78`. `OVERLAY_TONE_BORDER = { sold: 'var(--status-info)', rented: 'var(--status-rented)' }` lives in the pattern. Precedent: `GalleryThumbnailButton.tsx:35` | **EXTEND** `theme.other.borderWidth` |
+| Overlay label text colour | `.overlayLabel` `color: var(--overlay-foreground)` | `c="var(--overlay-foreground)"` (`globals.css:532`) | **REUSE** |
+| Overlay label rotation | `.overlayLabel` `rotate: -8deg` | stays the only declaration in `.overlayLabel` | keep |
+| Overlay background | `.overlaySold` / `.overlayRented`, two tiers | unchanged, except that their two `border-color` lines are deleted (the border colour moves into `bd`) | keep |
+| Overlay scrim | `Center` + `.overlayCenter` (`#0000004d` fallback + `color-mix(in oklab, var(--overlay) 30%, transparent)`) | Mantine `Overlay color="var(--overlay)" backgroundOpacity={0.3} zIndex="auto" center`. Mantine's `rgba()` emits `color-mix(in srgb, var(--overlay), transparent 70%)` (`rgba.mjs`). `--overlay` is `oklch(0 0 0)` (`globals.css:531`), so the scrim stays black at 30%. `.overlayCenter` is deleted | **REUSE** native Mantine |
+| Card footer date | Story `:104` `className="whitespace-nowrap"`; production `ListingCard.tsx:188,278` `style={{ whiteSpace: 'nowrap' }}` | `Text component="span" size="xs" c="var(--muted-foreground)" miw="max-content"` in all three places. The span is a flex item of a `Group` in both layouts (pattern `:280-289`, `ListingCard.tsx:271`), so `min-width: max-content` keeps it on one line exactly as `nowrap` does | **REUSE** Mantine style prop |
+| Story grid footer | Story `:116` `className="text-xs text-muted-foreground"` | `fz="xs" c="var(--muted-foreground)"`, as production `ListingCard.tsx:271` | **REUSE** |
+| Story favourite chrome | Story `:191` Tailwind `'shrink-0 -mt-0.5 -mr-1'` / `'shadow-sm'` | `className={layout === 'list' ? styles.inlineFavorite : styles.overlayFavorite}` with `styles` imported from `@/modules/listings/components/ListingCard.module.css`. The Story then uses production's exact classes and writes no value of its own | **REUSE** production classes |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: closed-listing overlay label + scrim, status colour map, card Story footer/favourite chrome; semantic queries: "status colour map", "LISTING_STATUS_COLOR", "overlay scrim", "borderWidth", "whiteSpace nowrap", "overlayFavorite"; inspected candidates: src/modules/listings/lib/listingStatusTone.ts, src/design-system/mantine/theme.ts (spacing/radius/fontSizes/lineHeights/other.borderWidth), @mantine/core 8.3.18 Overlay + rgba(), src/design-system/mantine/patterns/GalleryThumbnailButton.tsx:35, src/modules/listings/components/ListingCard.tsx:188,271,278, ListingCard.module.css .inlineFavorite/.overlayFavorite, Mantine/Primitives/Badge, Mantine/Primitives/ListingStatusBanner; decision: REUSE (EXTEND theme.other.borderWidth by one role); selected canonical owner: listingStatusTone.ts + theme.ts + MantineListingCardPattern; Mantine/TailAdmin token path: theme.ts spacing.sm/compact, radius.2xl, fontSizes.sm, lineHeights.sm, other.borderWidth.statusOverlay; new hardcoded visual values: NONE; rationale: every value the label hand-copied has a theme key except the 18px radius (owner D46-2 → 2xl) and the 2px border (one new role, same pattern as D824-4).`
+
+`GR-1 CENSUS COMPLETE — 7 nodes; tier1 7 migrated+enrolled+story; tier2 0 imports removed; tier3 0 listed and filed as none.`
+That is surface `ListingCard.tsx`, re-run by the orchestrator on 2026-10-04 (`win32`, exit 0). Surface
+`ListingStatusBanner.tsx`: 1 node, tier1 1 migrated+enrolled+story. Re-run both at I0 and paste the node lists.
+
+`GR-3a STORY PREFLIGHT — MantineListingCardPattern / ListingCard / ListingStatusBanner × sold, rented, inactive; canonical candidates: patterns-mantine-listingcardpattern--default, mantine-primitives-listingcard--default, mantine-primitives-listingstatusbanner--*; direct-import evidence: ListingCardPattern.stories.tsx:9, src/stories/mantine/primitives/ListingCard.stories.tsx (ListingCard), ListingStatusBanner.stories.tsx:4; toolbar coverage: locale=context.globals.locale, viewport=toolbar; decision: REUSE (no new Story, no new export); target: the three existing Stories; rationale: every state already renders there (sold and rented grid cards exist, the banner Story maps all six non-active statuses at :23).`
+
+**GR-7.** No reference audit is run for this revision, and no reference-based claim is made. The revision does not
+choose a UI pattern. It keeps the overlay look the owner accepted on 2026-09-30, and its two visible changes are the
+owner's direct choices D46-1 and D46-2. If the owner requires the audit anyway, this revision is not executable until
+it is done.
+
+**Out of scope, recorded:**
+- `ListingCard.module.css` `.inlineFavorite` / `.overlayFavorite` keep their pre-existing `design-tokens-allow`
+  literals. They are favourite-button chrome, not the sold/rented elements §16.1 names, and `FavoriteButton` takes
+  only `className`, so a canonical replacement needs an API change. The Story reuses them unchanged.
+- The admin status maps stay with the admin migration (owner, 2026-09-17, §16.3).
+- `ListingDetailView.tsx:438` `'blueLight'` is the staff preview banner, not a listing status.
+
+### 17.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R30** | `ListingCard.tsx` `getBadges` takes the sold, rented, archived and expired colours from `LISTING_STATUS_COLOR`. `ListingStatusBanner.tsx` deletes `COLORS` and passes `color={LISTING_STATUS_COLOR[status]}`. `inactive` is therefore `gray` (D46-1). The comments that describe the old copies (`ListingStatusBanner.tsx:21-26`, `listingStatusTone.ts:15-19`, `ListingCard.tsx:57-69` where it names the mapping) are updated to say there is one source. | P0 |
+| **R31** | The overlay label keeps today's computed look except the radius. It is the same `Box component="span"` with the §17.3 style props and `bd`, and `cn(styles.overlayLabel, tone class, overlay.className)` is still merged on it. `.overlayLabel` contains only `rotate: -8deg`. `.overlaySold`/`.overlayRented` keep only their background tiers. `theme.ts` gains `other.borderWidth.statusOverlay` (value + type + a comment naming Task 741 Revision 3). `overlay` without `tone` keeps today's render: the border colour is `currentColor`, so `bd` falls back to it (`OVERLAY_TONE_BORDER[tone] ?? 'currentColor'`), and the label has no background. | P0 |
+| **R32** | The scrim is Mantine `Overlay` with `color="var(--overlay)" backgroundOpacity={0.3} zIndex="auto" center`, replacing `Center` + `.overlayCenter`. `.overlayCenter` and its `@supports` block are deleted. The badges, favourite and photo count paint in the same order as before. | P0 |
+| **R33** | `ListingCardPattern.stories.tsx`: the three Tailwind sites are replaced as in §17.3. The Story's `blueLight`/`purple`/`gray` status literals in `DemoCard` (`:152,156,159`) read `LISTING_STATUS_COLOR`. The `consumer-overlay-hook` play test is unchanged and green. No `style` object, no fixed width and no viewport pin are added (GR-3b). | P0 |
+| **R34** | Smoke tests, red on the pre-change tree first. `MantineListingCardPattern.smoke.test.tsx`: (a) with `tone: 'sold'`, the label's inline `border` contains `0.125rem solid var(--status-info)`; (b) the scrim element carries Mantine's Overlay root class and `--overlay-z-index: auto`; (c) the `className` pass-through test (`:110-117`) stays green. `ListingCard.smoke.test.tsx:217-229` stays green unchanged. | P0 |
+| **R35** | `ListingCard.tsx:188` and `:278` lose `style={{ whiteSpace: 'nowrap' }}` and use `miw="max-content"`. | P1 |
+
+### 17.5 Flows
+
+**Positive.** A sold card, in both Storybook pages and on `/listings`, looks as the owner accepted it on 2026-09-30: a
+blue filled top-left badge and a blue rotated centred label at 80% over a black 30% scrim. The only change is that the
+label's corners are 16px instead of 18px. A rented card does the same in purple. The listing-page banner keeps its
+colour for five statuses, and `inactive` turns gray.
+
+| Negative flow | Applicable | Expected |
+|---|---|---|
+| Active / new / price-reduced card | Yes | no overlay; badges unchanged |
+| Archived / expired card | Yes | badge only (`gray` / `yellow`), no overlay |
+| List layout | Yes | badge only; no overlay (pattern `:165`); date stays on one line |
+| `overlay.className` without `tone` | Yes | the class is still merged; the label has no tone background and a `currentColor` border, as today |
+| Long `uk` / `sq` label at 320px | Yes | the label stays inside the photo; owner matrix |
+| Footer date in a narrow card (320) | Yes | the date does not wrap, as today |
+| Stacking | Yes | scrim `z-index: auto`; favourite and badges paint as before (probe + owner matrix) |
+| Detail banner, five unchanged statuses | Yes | computed background unchanged |
+
+### 17.6 Acceptance criteria
+
+`GR-4 AC AUDIT — 6 criteria; each states an observable property; absolutes: the empty greps are the defined end state of deleting named hardcode and copies.`
+
+- **AC30 [R30].** `git grep -n -E "'(blueLight|purple)'" -- src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingStatusBanner.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx`
+  prints nothing, and `git grep -n "COLORS" -- src/modules/listings/components/ListingStatusBanner.tsx` prints nothing.
+- **AC31 [R31, R32].** `git grep -n -E "overlayCenter|design-tokens-allow" -- src/design-system/mantine/patterns/MantineListingCardPattern.module.css`
+  shows no `overlayCenter` line and no marker between `.overlayLabel {` and the end of the file. `.overlayLabel` holds only
+  `rotate`. `check:design-tokens:strict` exits 0.
+- **AC32 [R31, R32] — preservation probe.** The probe (in the evidence folder, not a gate) runs on two Storybook builds:
+  BEFORE, built at I0 before any write, and AFTER. It covers `en`, at 1440 and 320, the sold and rented grid cards of
+  `mantine-primitives-listingcard--default` and `patterns-mantine-listingcardpattern--default`. For each label it
+  records `background-color`, `border-*-width/style/color`, `color`, `font-size`, `font-weight`, `line-height`,
+  `padding-*`, `rotate` and `border-*-radius`. For each scrim it records `background-color` and `z-index`, plus the
+  `document.elementFromPoint` hit at the centre of the favourite button. Expected: every value is equal before and
+  after, except `border-*-radius` (18px → 16px, D46-2). `line-height` goes from 20px to `lh="sm"`'s computed value (14 × 1.43 = 20.02px); record both. The
+  scrim colour may change only in its `color-mix` spelling and must resolve to the same rgba. Retain both JSON files
+  and a diff.
+- **AC33 [R30].** On `mantine-primitives-listingstatusbanner--*`, the `Alert` computed background for `sold`,
+  `rented`, `archived`, `expired` and `pending` is equal before and after. `inactive` changes from the yellow tone to
+  the gray tone. Record the values in the AC32 JSON.
+- **AC34 [R33].** `git grep -n "className=" -- src/stories/patterns/mantine/ListingCardPattern.stories.tsx` shows only
+  `consumer-overlay-hook` and the two `ListingCard.module.css` classes, and no Tailwind utility. `check:stories`,
+  `check:story-coverage` and `governance:tailwind` exit 0.
+- **AC35 [R34, R35].** The R34 assertions are red on the pre-change tree (`01_red.txt`, non-zero exit) and green after.
+  The full gate block (§17.7) ends `EXIT_CODE=0` per command.
+
+### 17.7 Verification plan
+
+**I0, before any write.**
+1. `git --no-optional-locks status --porcelain`, plus `git hash-object` of every file in §17.8.
+2. Both §17.3 censuses.
+3. `npm.cmd run build-storybook`. Copy `storybook-static` to `$env:TEMP\task741r3-before-sb`, which is outside the
+   repo, because only `storybook-static` is git-ignored. Run the AC32 probe against that copy. Retain only the probe
+   JSON, `docs/sessions/evidence/task741r3/probe-before.json`, never the build.
+4. Write the R34 assertions and retain the red run.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/lib/__tests__/listingStatusTone.test.ts
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run governance:tailwind
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks grep -n -E "'(blueLight|purple)'" -- src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingStatusBanner.tsx src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+git --no-optional-locks grep -n "overlayCenter" -- src
+git --no-optional-locks hash-object src/design-system/mantine/theme.ts src/design-system/mantine/patterns/MantineListingCardPattern.tsx src/design-system/mantine/patterns/MantineListingCardPattern.module.css src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingStatusBanner.tsx src/modules/listings/lib/listingStatusTone.ts src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected: exit 0 for every command, except that the two `git grep` lines exit 1 with no output. Give each command its
+own unpiped transcript ending `EXIT_CODE=`. Read every file through Node or with `-Encoding utf8`, and include the
+`hash-object` line in the same pass (procedures, corollaries 818/819).
+
+**Story receipts.** Give one receipt per matrix Story:
+- **GR-3b, GR-3c, GR-3d** at 320/390/1024/1440 (GR-3c also at 768);
+- **GR-3e** n/a: no popup;
+- **GR-3f** n/a: no circle changes;
+- **GR-3g**: the label is centred and touches no clipping corner. Record the probe, and add a 10× crop if it does touch
+  one.
+
+GR-3d lines:
+- `Patterns/Mantine/ListingCardPattern`: profile `StoryPageGutter` (`ListingCardPattern.stories.tsx:212`), all four
+  sides, unchanged;
+- `Mantine/Primitives/ListingCard` and `Mantine/Primitives/ListingStatusBanner`: `n/a: MantineStoryShell primitive`.
+
+Type scale (GR-3c): the overlay label is 14px at base/sm/md/lg (`fz="sm"`). The date is 12px (`size="xs"`). No text
+reaches 24px.
+
+### 17.8 Files in scope
+
+- `src/design-system/mantine/theme.ts`
+- `src/design-system/mantine/patterns/MantineListingCardPattern.tsx`
+- `src/design-system/mantine/patterns/MantineListingCardPattern.module.css`
+- `src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx`
+- `src/modules/listings/components/ListingCard.tsx`
+- `src/modules/listings/components/ListingStatusBanner.tsx`
+- `src/modules/listings/lib/listingStatusTone.ts` (comment only)
+- `src/stories/patterns/mantine/ListingCardPattern.stories.tsx`
+- `docs/sessions/<date>-task741r3-closed-status-hardcode-exit.md`
+- `docs/backlog.md` (the 741 state only)
+
+Do not edit anything else. If a gate needs another file, stop and report it.
+
+### 17.9 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-1)
+
+| Story | Toolbar viewports | Locales | Owner checks |
+|---|---|---|---|
+| `Mantine/Primitives/ListingCard` → `Default` | 320, 768, 1440 | en, uk | sold/rented: same look as accepted on 2026-09-30, label corners 16px |
+| `Patterns/Mantine/ListingCardPattern` → `Default` | 320, 768, 1440 | en, uk | the same as the page above; footer date on one line; favourite chrome unchanged |
+| `Mantine/Primitives/ListingStatusBanner` | 1440 | en | five colours unchanged; `inactive` gray (D46-1) |
+| production `/uk/listings` after deploy | desktop + mobile | uk | a sold/rented card matches Storybook |
+
+### 17.10 Completion
+
+Write `docs/sessions/<date>-task741r3-closed-status-hardcode-exit.md`. It contains:
+- the §17.1 facts as re-measured at I0;
+- R30–R35 with their evidence paths;
+- the red and green transcripts;
+- the BEFORE/AFTER probe JSON and its diff;
+- the gate block;
+- the GR receipts;
+- a `Files Changed` table.
+
+Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
+or `BLOCKED`. No self-approval, no git.

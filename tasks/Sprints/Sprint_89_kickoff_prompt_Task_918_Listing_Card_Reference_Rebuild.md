@@ -4,7 +4,7 @@
 · Executor: Sonnet via `.claude/skills/execute-task/SKILL.md`. Evidence goes to `docs/sessions/evidence/task918/`.
 
 > **Start gate.** Do not start until **912** (Sprint 88), **794** (Sprint 71, the listing-page gallery, D88-5), **741
-> Revision 2** (Sprint 46) and **857** (Sprint 78) are `APPROVED` and committed. All four edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
+> Revision 3** (Sprint 46, kickoff §17; superseded Revision 2 on 2026-10-04) and **857** (Sprint 78) are `APPROVED` and committed. All four edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
 > in `docs/backlog-archive.md`. If any is not archived as approved, return `BLOCKED — START GATE` and make no write.
 >
 > **Amended 2026-10-03 (917 review):** owner decision **D89-9**: the struck old price sits **above** the current price

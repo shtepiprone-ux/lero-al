@@ -36,7 +36,7 @@ The reference was captured live and recorded in `docs/tailadmin-style-reference.
 
 | Open sprint | Goal | Fit |
 |---|---|---|
-| 46 | `ListingCard` de-Tailwind + overlay exit | No. Its goal is removing Tailwind with nothing rendered changing (D28); this sprint is a redesign. Its open **741 Revision 2** touches the same badges and overlay, so 918 runs after it. |
+| 46 | `ListingCard` de-Tailwind + overlay exit | No. Its goal is removing Tailwind with nothing rendered changing (D28); this sprint is a redesign. Its open **741 Revision 3** (2026-10-04, superseding Revision 2) touches the same badges and overlay, so 918 runs after it. |
 | 74 | one card width for the whole site | No. It sets widths; 918 keeps them. |
 | 88 | a struck price means a reduction | No. It owns price semantics (912, 917); 918 consumes them. |
 | 55 · 56 · 57 · 61 · 62 · 69 · 70 · 71 · 72 · 73 · 77 · 78 · 79 · 83 · 84 · 86 · 87 | ARIA, enum leaks, removal, projection, tokens, filters, chrome, detail route, similar listings, sold visibility, test suite, admin, CMS, type scale, dates, listing form, Story gutters | No. None of them is a card redesign. |
@@ -47,13 +47,13 @@ The Tasks table is the single state source.
 
 | # | Title | P | QA | Depends on | State |
 |---|---|---|---|---|---|
-| **918** | The listing card rebuilt on the owner's reference — grid and list, Solar icons, property-type tile, feature chips, footer with the Rozetka price block and ID/date (D89-1…D89-6); one price block and colour rule on the card, the listing page and the admin (D89-7, D89-8) | P1 | Q4 (critical-flow rows "Listing card rendering" and "Listings display — price") | **912**, **741 R2**, **857** approved | `KICKOFF FILED` → [`…_Task_918_…`](Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md) |
+| **918** | The listing card rebuilt on the owner's reference — grid and list, Solar icons, property-type tile, feature chips, footer with the Rozetka price block and ID/date (D89-1…D89-6); one price block and colour rule on the card, the listing page and the admin (D89-7, D89-8) | P1 | Q4 (critical-flow rows "Listing card rendering" and "Listings display — price") | **912**, **741 R3**, **857** approved | `KICKOFF FILED` → [`…_Task_918_…`](Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md) |
 
 ## Execution order
 
 | Step | Task | Gate |
 |---|---|---|
-| 1 | **918** | **912** (Sprint 88) approved: it changes the card's `priceOld` predicate in `ListingCard.tsx`. **741 R2** (Sprint 46) approved: it changes the card's status badge and overlay colour source. **857** (Sprint 78) approved: its `ListingPreviewDialogView` renders `MantineListingCardPattern layout="list"` and `ListingFeatureIcon`. All three edit files that 918 rewrites. |
+| 1 | **918** | **912** (Sprint 88) approved: it changes the card's `priceOld` predicate in `ListingCard.tsx`. **741 R3** (Sprint 46) approved: it changes the card's status colour source and the overlay label/scrim chrome. **857** (Sprint 78) approved: its `ListingPreviewDialogView` renders `MantineListingCardPattern layout="list"` and `ListingFeatureIcon`. All three edit files that 918 rewrites. |
 
 ## Preconditions
 

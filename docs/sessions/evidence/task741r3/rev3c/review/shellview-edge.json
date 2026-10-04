@@ -1,0 +1,106 @@
+{
+ "uk@320": {
+  "past": [
+   {
+    "tag": "button",
+    "w": 138,
+    "text": "Продані та здані",
+    "right": 331,
+    "path": "button.mantine-focus-auto.mantine-Tabs-tab < div.mantine-Tabs-list < div.mantine-ScrollArea-content < div.mantine-ScrollArea-viewport < div.mantine-ScrollArea-root < div.listings-status-tabs.mantine-Tabs-root",
+    "clippedBy": "div.mantine-ScrollArea-viewport < div.mantine-ScrollArea-root < div.listings-status-tabs.mantine-Tabs-root < div.mantine-Stack-root < div.listings-shell.mantine-Stack-root < div. [overflow-x scroll, right 304]"
+   }
+  ],
+  "badges": [
+   {
+    "text": "2",
+    "path": "div.mantine-Badge-root < span.mantine-Button-section < span.mantine-Button-inner < button.mantine-focus-auto.mantine-active < div.mantine-Group-root < div.listings-sort-bar.mantine-Group-root"
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "Нове",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   }
+  ]
+ },
+ "en@320": {
+  "past": [],
+  "badges": [
+   {
+    "text": "2",
+    "path": "div.mantine-Badge-root < span.mantine-Button-section < span.mantine-Button-inner < button.mantine-focus-auto.mantine-active < div.mantine-Group-root < div.listings-sort-bar.mantine-Group-root"
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   }
+  ]
+ },
+ "en@1440": {
+  "past": [],
+  "badges": [
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   },
+   {
+    "text": "New",
+    "path": "div.mantine-Badge-root < div. < div.mantine-Card-section < div.mantine-Card-root.mantine-Paper-root < a.listing-card.listing-card--vertical < div."
+   }
+  ]
+ }
+}

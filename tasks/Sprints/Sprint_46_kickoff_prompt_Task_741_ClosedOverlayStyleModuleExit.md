@@ -1047,9 +1047,8 @@ Owner decisions, 2026-10-04:
 
 `GR-3a STORY PREFLIGHT — ListingCard / MantineListingCardPattern / ListingsShellView × every status, list-below-640, view reset; canonical candidates: mantine-primitives-listingcard--default, patterns-mantine-listingcardpattern--default, patterns-mantine-listingsshellview--default; direct-import evidence: ListingCard.stories.tsx:4, ListingCardPattern.stories.tsx:9, ListingsShellView.stories.tsx:4; toolbar coverage: locale=context.globals.locale, viewport=toolbar; decision: EXTEND (the existing Default exports; no new Story, no new export); target: the three Default exports; rationale: each Story already imports the real component; the missing states are added there.`
 
-**GR-7.** No reference audit is run, and no reference-based claim is made. Both production changes are the owner's
-direct decisions, D46-3 and D46-4. The badge reuses the existing card badge chrome, and no layout, control or visual
-value is chosen. If the owner requires the audit anyway, this revision is not executable until it is done.
+**GR-7.** ~~No reference audit is run.~~ Retracted in §18.12 (F32): GR-7 has no exemption. The reference research
+for this revision is §18.12.2.
 
 ### 18.4 Requirements
 
@@ -1209,7 +1208,7 @@ against **every production state of the component** before the matrix reaches th
 
 ### 18.11 Review 1 of Revision 3b, 2026-10-04 — `NEEDS REVISION` → Revision 3c (one Story label fix, one test fix)
 
-**This subsection is the only executable route.** R36–R41 are implemented. Re-entry mode: **remediation**, on the
+**Superseded as the route by §18.12.** R42 and R43 below are implemented and verified there. Original text: R36–R41 are implemented. Re-entry mode: **remediation**, on the
 current working tree. Evidence goes to `docs/sessions/evidence/task741r3/rev3c/`. The `rev3b/` files are kept and are
 not re-run, except where §18.11.4 says so.
 
@@ -1294,8 +1293,7 @@ and verifier on that `build-storybook` output.
 
 Measure in `uk` at 320 as well: *Ціну знижено* next to *Нове* must stay inside the photo.
 
-**GR-7.** No reference audit is run. R42 makes a Story label equal to production's own label, and no layout, control
-or visual value is chosen.
+**GR-7.** ~~No reference audit is run.~~ Retracted in §18.12 (F32). The reference research is §18.12.2.
 
 #### 18.11.5 Files in scope
 
@@ -1320,6 +1318,125 @@ Append `## Revision 3c` to the session log, with:
 - the gate block;
 - `rev3c/probe-states.json` and `rev3c/probe-states-verify.txt`;
 - the receipts;
+- a `Files Changed` table.
+
+Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No self-approval, no git.
+
+### 18.12 Review of Revision 3c, 2026-10-04 — `NEEDS REVISION` → Revision 3d (GR-7 receipt only; no source write)
+
+**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree.
+Evidence goes to `docs/sessions/evidence/task741r3/rev3d/`. Revision 3d writes **no** source, Story, test, script or
+`messages/*.json` file.
+
+**Inspected:** the R42 diff of `ListingCardPattern.stories.tsx`; `ListingsShellView.viewReset.test.tsx` in full;
+`rev3c/00_i0.txt`, `r43-red.txt`, `r43-green.txt`, `verify-red.txt`, `probe-states-verify.txt`, `final/02`, `06`, `07`,
+`10`, `13`; `research-exec/gr7-live.json`; the session log's `## Revision 3c`. **Re-run by the reviewer, natively
+(`win32`, Node v22.22.3):** the four vitest files (39 passed, exit 0); both `check-surface-census.mjs` censuses;
+`git hash-object` of the five 3c files (equal to `rev3c/final/13`); the matrix probe
+(`rev3c/review/review-probe-s2.json`); GR-3g crops (`rev3c/review/gr3g-label-crop.json`, `gr3g-*-10x.png`); the GR-7
+live check (`rev3c/review/gr7-live-check.json`, `live-00…11.png`). `storybook-static` (15:42) postdates the last
+source write (15:41).
+
+**Verified, kept as is:** R42 (New, Price reduced and Archived read `listing.new`, `listing.price_reduced`,
+`listing.status_archived`; badge parity with the primitive holds in `en`/`uk` at 320/390/768/1440 and in `sq`/`it`
+at 1440, and the red arm on the 3b JSON exits 1 naming `uk`) and R43 (red arm exit 1, green 4/4). The executor's
+deviation 1 (one extra re-render step, without which AC42's red arm could not fail) and deviation 3 are accepted.
+
+#### 18.12.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F32 | **P2**, orchestrator kickoff defect | **RETRACTION (orchestrator).** **Invalid prior claim:** §18.3 and §18.11.4 said "No reference audit is run". **Why invalid:** GR-7 (owner, 2026-10-04) runs at every task creation, revision, execution and review with no exemption, and only the owner can narrow it. The kickoff therefore carried no task-creation receipt and no "Reference research (GR-7)" section. **Evidence:** `docs/golden-rules.md` GR-7 "When it runs" and "Sanctions"; the two retracted paragraphs. **Corrected status:** `FACT`. Both paragraphs now point here, and §18.12.2 is the section. | Kickoff corrected; §18.12.2 |
+| F33 | **P2** (GR-7, execution) | Sonnet's Revision 3c GR-7 record (session log, `## Revision 3c`) opened six reference pages live and read library rows, which is the 2026-10-04 library procedure. It is not in the receipt format: there is no route inventory, no `unchanged` / `difference` per live page, no options with their pages, no chosen practice, and no lero.al data map. It also says "only these pages were opened". GR-7 makes a missing receipt `NEEDS REVISION`. | **R44**, **AC43** |
+| F34 | NOTE | In `patterns-mantine-listingsshellview--default` at `uk@320`, the third status tab (*Продані та здані*) ends at 331px inside the status-tab `ScrollArea` (viewport right edge 304, `overflow-x: scroll`). The document does not overflow, and the partly visible tab is the scroll affordance. This is not a GR-3b or GR-3d defect, and Task 741 does not change the component. | No action |
+
+#### 18.12.2 Reference research (GR-7)
+
+The record is `docs/sessions/evidence/task741r3/rev3c/research-review/gr7-review.md`, made at review on 2026-10-04 by
+Opus. It stands for this revision's task-creation receipt, which §18.3 and §18.11.4 omitted (F32).
+
+| Reference | Enumerated / inspected / blocked (library) | Library rows for the subject | Live, 1440 + 390 | Live vs library |
+|---|---|---|---|---|
+| Lahomes | 106 / 106 / 0 | 008, 009, 049, 052 | `/property-grid.html`, `/property-list.html` | unchanged |
+| Kamr | 62 / 62 / 0 | 005, 026, 031 | `/room` (signed in, `demo@example.com`) | difference: the live login works, but the library crawl recorded a failed login |
+| Omah | 339 / 339 / 0 | 013, 019 | `/property-list.html` | unchanged |
+| TailAdmin | 88 / 88 / 0 | 064, 068 | `/cards`, `/badge` | unchanged |
+
+| Choice | Options ← pages | Shipped in 741 | Verdict |
+|---|---|---|---|
+| Status badge | a filled pill at the photo's top corner (13px/600, radius 4px) ← Lahomes 008, Omah 013; a tinted pill ← Kamr 005, TailAdmin 064/068 | a filled photo badge, one `LISTING_STATUS_COLOR` per status, labelled | matches both real-estate references; the label carries the state as well as the colour (WCAG 1.4.1) |
+| Closed listing | strike-through price only ← Lahomes 008 | overlay label + badge | owner O83-1 (2026-09-30), D46-2 |
+| Grid/list on a phone | an icon toggle beside the sort ← Omah 013; separate routes ← Lahomes 008/009 | a toggle beside the sort, hidden below 640, list→grid reset | owner D46-3 |
+| Inactive / pending badge | no reference shows it | gray / yellow from the map | owner D46-4 |
+
+lero.al data map:
+- `ListingCard`: `listings.status` (7 values), `created_at`, `price` / `price_old`, `is_premium`, `images`. Favourites
+  exclude only `archived`.
+- `ListingsShellView`: client `view` state.
+
+Owner decisions: D46-1…D46-4, O83-1.
+
+`GR-7 REFERENCE RESEARCH — moment: review; role: Opus; task: 741 (Revision 3c); subject: listing-card status badges, sold/rented overlay label, grid/list toggle below 640; references: Lahomes, Kamr, Omah, TailAdmin + none; library: docs/research/references/2026-10-04; live-checked pages: Lahomes /property-grid.html → unchanged, /property-list.html → unchanged, Omah /property-list.html → unchanged, Kamr /room → difference (live login works), TailAdmin /cards → unchanged, /badge → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0; inspected in depth: the six live pages at 1440 and 390 (gr7-review.md rows); workflow states operated: page load, Kamr sign-in, 1440→390; options across references: filled photo-corner pill ← Lahomes 008, Omah 013; tinted pill ← Kamr 005, TailAdmin 064/068; toggle beside sort ← Omah 013; separate routes ← Lahomes 008/009; chosen 2026 best practice: labelled filled photo-corner pill per status + owner D46-3 toggle, as shipped; absent or unverified: inactive/pending card badges, orientation reset (owner D46-4, D46-3); lero.al data map: ListingCard × listings.status/price/created_at, ListingsShellView × view; owner decisions: D46-1…D46-4, O83-1; evidence: docs/sessions/evidence/task741r3/rev3c/research-review/gr7-review.md.`
+
+#### 18.12.3 Reviewer receipts for the O46-2 matrix Stories (`review-probe-s2.json`, DPR 1)
+
+- `GR-0 CANONICAL REUSE PREFLIGHT — request: three pattern-Story badge labels; semantic queries: listing.new, listing.price_reduced, listing.status_archived, card_badge_*; inspected candidates: ListingCard.tsx getBadges, ListingCardPattern.stories.tsx DemoCard, ListingDetailPattern.stories.tsx; decision: REUSE; selected canonical owner: production listing.* keys; Mantine/TailAdmin token path: NONE (no visual value); new hardcoded visual values: NONE; rationale: the Story label equals production's label.`
+- `GR-1 CENSUS COMPLETE — ListingCard.tsx 7 nodes; tier1 7 migrated+enrolled+story; tier2 0 imports removed; tier3 0 listed and filed as none. ListingsShell.tsx 23 nodes: FAIL only ListingsShell.tsx (baselined container debt); ListingsActionRow.tsx manifest:yes story:yes.`
+- `GR-3b STORY RESPONSIVE CHECK — mantine-primitives-listingcard--default: 320 288/320 · 390 358/390 · 1024 926/1024 · 1440 1342/1440; patterns-mantine-listingcardpattern--default: 320 288/320 · 390 358/390 · 1024 960/1024 · 1440 1376/1440; patterns-mantine-listingsshellview--default: 320 288/320 · 390 358/390 · 1024 960/1024 · 1440 1376/1440; overflow: none; fixed-width containers: NONE; style objects: NONE; viewport pins: NONE; side-by-side sections below 640: NONE.`
+- `GR-3c TYPE RESPONSIVE CHECK — listingcard and listingcardpattern: section Title 320 18px · 390 18px · 768 24px · 1440 24px, card h3 14px, overlay label 14px; listingsshellview: largest text 18px at every width, no Title; ≥24px text without a responsive step: NONE; heading above 20px below 640 (non-hero): NONE; child heading larger than page title: NONE.`
+- `GR-3d STORY GUTTER CHECK — mantine-primitives-listingcard--default: n/a: MantineStoryShell primitive; 320 16/16/16/16 · 390 16/16/16/16 · 1024 49/49/49/49 · 1440 49/49/49/49. patterns-mantine-listingcardpattern--default: StoryPageGutter all; 320 24/16/24/16 · 390 24/16/24/16 · 1024 24/32/24/32 · 1440 24/32/24/32. patterns-mantine-listingsshellview--default: StoryPageGutter all; 320 45/16/24/16 · 390 45/16/24/16 · 1024 36/32/24/32 · 1440 36/32/24/32 (uk@320 right −11 is F34, inside the tab ScrollArea). Side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+- `GR-3e TEXT BUTTONS STACKED — all three: n/a, no popup.` `GR-3f CIRCLE CHECK — n/a: no circular element changed.`
+- `GR-3g CORNER CHECK — sold/rented overlay label, both card Stories, uk@320 (widest, 105px and 133px): clipping ancestor = card root (radius 6px, border 1px, overflow hidden); corners meeting it: none (the label is at least 77px from every card corner); its radius 16px; DPR-1 corner crops docs/sessions/evidence/task741r3/rev3c/review/gr3g-*-uk320-10x.png; line cut at a corner: NONE.`
+- `GR-8 TABLE ANATOMY — no table in scope.`
+
+#### 18.12.4 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R44** | Sonnet performs the GR-7 execution audit for Revision 3c's subject and records it in the receipt format. Steps: <ol><li>Read the library rows that §18.12.2 names, in `docs/research/references/2026-10-04/summary.md` and the matching `audit-<ref>.json`.</li><li>In its own session, open live at 1440 and at 390 every page in §18.12.2's "Live" column, plus any library page its record relies on. Take a full-page screenshot, record the badge `getComputedStyle` values (font size and weight, radius, background), and list the view-toggle controls.</li><li>Record `unchanged` or the difference against the library row for each page.</li><li>Write `rev3d/research-exec/gr7-exec.md`, with one evidence row per page, the options with their pages, the chosen practice, and the lero.al data map.</li><li>Emit the full `GR-7 REFERENCE RESEARCH` receipt (moment: execution, role: Sonnet) in the session log.</li></ol> If the audit contradicts §18.12.2's chosen practice, stop with `BLOCKED — GR-7 KICKOFF CONFLICT` and name the pages. No other file is written. | P2 |
+
+#### 18.12.5 Acceptance criteria
+
+`GR-4 AC AUDIT — 1 criterion; it states an observable property; absolutes: none.`
+
+- **AC43 [R44].** All of the following hold:
+  - `rev3d/research-exec/gr7-exec.md` exists, with one row per live page at 1440 and at 390, and a screenshot path for each row;
+  - the session log's `## Revision 3d` carries the receipt with every GR-7 field filled;
+  - `git hash-object` of the five files in `rev3c/final/13_hashes.txt` equals that file, both at I0 and after the audit (`rev3d/00_i0.txt`, `rev3d/01_final_hashes.txt`). This also keeps the Revision 3c build, test and probe evidence current.
+
+#### 18.12.6 Verification plan
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+git --no-optional-locks hash-object src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/stories/mantine/primitives/ListingCard.stories.tsx src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingsShellView.tsx
+git --no-optional-locks status --porcelain
+```
+
+Run this block at I0 (to `rev3d/00_i0.txt`) and again after the audit (to `rev3d/01_final_hashes.txt`). Each file ends
+with `EXIT_CODE=`, written through Node or `Out-File -Encoding utf8`. Expected: `win32`, and the five hashes equal
+`rev3c/final/13_hashes.txt` both times. If any hash differs, stop and report it. The audit script may be modelled on
+`rev3c/review/gr7-live-check.mjs`. Save it under `rev3d/research-exec/`.
+
+#### 18.12.7 Files in scope
+
+- `docs/sessions/evidence/task741r3/rev3d/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3d`)
+- `docs/backlog.md` (the 741 state only)
+
+#### 18.12.8 Owner visual review — O46-2 (§18.9)
+
+This review measured every O46-2 Story (§18.12.3), and Revision 3d writes no Story. Rows 1–3 therefore go to the
+owner now, in parallel with Revision 3d. Row 4 (production `/uk/listings` and `/uk/favorites`) needs a deploy.
+
+#### 18.12.9 Completion
+
+Append `## Revision 3d` to the session log, with:
+- the I0 and final hashes;
+- the receipt;
+- the path of `gr7-exec.md`;
 - a `Files Changed` table.
 
 Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or

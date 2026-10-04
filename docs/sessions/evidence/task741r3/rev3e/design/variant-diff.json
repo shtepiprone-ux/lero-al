@@ -1,0 +1,1122 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "cells": {
+  "768": {
+   "vertical": [
+    {
+     "card": {
+      "w": 213,
+      "h": 347,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 211,
+      "h": 158,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 13,
+      "y": 171,
+      "w": 187,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 13,
+      "y": 193,
+      "w": 187,
+      "h": 20
+     },
+     "location": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 29,
+      "y": 217,
+      "w": 83,
+      "h": 18
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 50,
+      "y": 248,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "p",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 13,
+      "y": 272,
+      "w": 187,
+      "h": 24
+     },
+     "priceOld": null,
+     "perSqm": {
+      "tag": "span",
+      "fs": "10px",
+      "fw": "400",
+      "lh": "12px",
+      "color": "oklab(0.556 0 0 / 0.7)",
+      "x": 142,
+      "y": 300,
+      "w": 58,
+      "h": 12
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 136,
+      "y": 316,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 165,
+      "y": 131,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 172,
+      "y": 9,
+      "w": 32,
+      "h": 32
+     }
+    },
+    {
+     "card": {
+      "w": 213,
+      "h": 347,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 211,
+      "h": 158,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 13,
+      "y": 171,
+      "w": 187,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 13,
+      "y": 193,
+      "w": 187,
+      "h": 20
+     },
+     "location": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 29,
+      "y": 217,
+      "w": 83,
+      "h": 18
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 50,
+      "y": 248,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "p",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 13,
+      "y": 272,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 105,
+      "y": 277,
+      "w": 63,
+      "h": 18
+     },
+     "perSqm": {
+      "tag": "span",
+      "fs": "10px",
+      "fw": "400",
+      "lh": "12px",
+      "color": "oklab(0.556 0 0 / 0.7)",
+      "x": 142,
+      "y": 300,
+      "w": 58,
+      "h": 12
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 136,
+      "y": 316,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 165,
+      "y": 131,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 172,
+      "y": 9,
+      "w": 32,
+      "h": 32
+     }
+    }
+   ],
+   "horizontal": [
+    {
+     "card": {
+      "w": 670,
+      "h": 156,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 176,
+      "h": 154,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 189,
+      "y": 13,
+      "w": 113,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 189,
+      "y": 47,
+      "w": 468,
+      "h": 20
+     },
+     "location": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 205,
+      "y": 126,
+      "w": 83,
+      "h": 16
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 226,
+      "y": 105,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "span",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 189,
+      "y": 75,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": null,
+     "perSqm": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 588,
+      "y": 80,
+      "w": 69,
+      "h": 18
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 344,
+      "y": 125,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 9,
+      "y": 127,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 629,
+      "y": 11,
+      "w": 32,
+      "h": 32
+     }
+    },
+    {
+     "card": {
+      "w": 670,
+      "h": 156,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 176,
+      "h": 154,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 189,
+      "y": 13,
+      "w": 113,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 189,
+      "y": 47,
+      "w": 468,
+      "h": 20
+     },
+     "location": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 205,
+      "y": 126,
+      "w": 83,
+      "h": 16
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 226,
+      "y": 105,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "span",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 189,
+      "y": 75,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 283,
+      "y": 80,
+      "w": 63,
+      "h": 18
+     },
+     "perSqm": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 588,
+      "y": 80,
+      "w": 69,
+      "h": 18
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 344,
+      "y": 125,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 9,
+      "y": 127,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 629,
+      "y": 11,
+      "w": 32,
+      "h": 32
+     }
+    }
+   ]
+  },
+  "1440": {
+   "vertical": [
+    {
+     "card": {
+      "w": 437,
+      "h": 515,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 435,
+      "h": 326,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 13,
+      "y": 339,
+      "w": 411,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 13,
+      "y": 361,
+      "w": 411,
+      "h": 20
+     },
+     "location": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 29,
+      "y": 385,
+      "w": 83,
+      "h": 18
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 50,
+      "y": 416,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "p",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 13,
+      "y": 440,
+      "w": 411,
+      "h": 24
+     },
+     "priceOld": null,
+     "perSqm": {
+      "tag": "span",
+      "fs": "10px",
+      "fw": "400",
+      "lh": "12px",
+      "color": "oklab(0.556 0 0 / 0.7)",
+      "x": 366,
+      "y": 468,
+      "w": 58,
+      "h": 12
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 360,
+      "y": 484,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 389,
+      "y": 299,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 396,
+      "y": 9,
+      "w": 32,
+      "h": 32
+     }
+    },
+    {
+     "card": {
+      "w": 437,
+      "h": 515,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 435,
+      "h": 326,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 13,
+      "y": 339,
+      "w": 411,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 13,
+      "y": 361,
+      "w": 411,
+      "h": 20
+     },
+     "location": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 29,
+      "y": 385,
+      "w": 83,
+      "h": 18
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 50,
+      "y": 416,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "p",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 13,
+      "y": 440,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "rgb(71, 84, 103)",
+      "x": 105,
+      "y": 445,
+      "w": 63,
+      "h": 18
+     },
+     "perSqm": {
+      "tag": "span",
+      "fs": "10px",
+      "fw": "400",
+      "lh": "12px",
+      "color": "oklab(0.556 0 0 / 0.7)",
+      "x": 366,
+      "y": 468,
+      "w": 58,
+      "h": 12
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 360,
+      "y": 484,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 389,
+      "y": 299,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 396,
+      "y": 9,
+      "w": 32,
+      "h": 32
+     }
+    }
+   ],
+   "horizontal": [
+    {
+     "card": {
+      "w": 1342,
+      "h": 156,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 176,
+      "h": 154,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 189,
+      "y": 13,
+      "w": 113,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 189,
+      "y": 47,
+      "w": 1140,
+      "h": 20
+     },
+     "location": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 205,
+      "y": 126,
+      "w": 83,
+      "h": 16
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 226,
+      "y": 105,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "span",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 189,
+      "y": 75,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": null,
+     "perSqm": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 1260,
+      "y": 80,
+      "w": 69,
+      "h": 18
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 344,
+      "y": 125,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 9,
+      "y": 127,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 1301,
+      "y": 11,
+      "w": 32,
+      "h": 32
+     }
+    },
+    {
+     "card": {
+      "w": 1342,
+      "h": 156,
+      "radius": "6px",
+      "border": "1px solid rgb(208, 213, 221)",
+      "bg": "rgb(255, 255, 255)"
+     },
+     "image": {
+      "w": 176,
+      "h": 154,
+      "x": 1,
+      "y": 1
+     },
+     "typeLabel": {
+      "tag": "p",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 189,
+      "y": 13,
+      "w": 113,
+      "h": 18
+     },
+     "title": {
+      "tag": "h3",
+      "fs": "14px",
+      "fw": "600",
+      "lh": "20.02px",
+      "color": "rgb(0, 0, 0)",
+      "x": 189,
+      "y": 47,
+      "w": 1140,
+      "h": 20
+     },
+     "location": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 205,
+      "y": 126,
+      "w": 83,
+      "h": 16
+     },
+     "locationIcon": {
+      "w": 12,
+      "h": 12,
+      "color": "oklch(0.556 0 0)"
+     },
+     "feature": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.556 0 0)",
+      "x": 226,
+      "y": 105,
+      "w": 50,
+      "h": 16
+     },
+     "featureIcon": null,
+     "price": {
+      "tag": "span",
+      "fs": "16px",
+      "fw": "700",
+      "lh": "24px",
+      "color": "rgb(236, 84, 71)",
+      "x": 189,
+      "y": 75,
+      "w": 86,
+      "h": 24
+     },
+     "priceOld": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 283,
+      "y": 80,
+      "w": 63,
+      "h": 18
+     },
+     "perSqm": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 1260,
+      "y": 80,
+      "w": 69,
+      "h": 18
+     },
+     "copyId": null,
+     "date": {
+      "tag": "span",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "18px",
+      "color": "oklch(0.556 0 0)",
+      "x": 344,
+      "y": 125,
+      "w": 64,
+      "h": 18
+     },
+     "badge": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "500",
+      "lh": "18px",
+      "color": "rgb(255, 255, 255)",
+      "x": 9,
+      "y": 9,
+      "w": 44,
+      "h": 24
+     },
+     "photoCount": {
+      "tag": "div",
+      "fs": "12px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(1 0 0)",
+      "x": 9,
+      "y": 127,
+      "w": 39,
+      "h": 20
+     },
+     "favorite": {
+      "tag": "button",
+      "fs": "16px",
+      "fw": "400",
+      "lh": "16px",
+      "color": "oklch(0.145 0 0)",
+      "x": 1301,
+      "y": 11,
+      "w": 32,
+      "h": 32
+     }
+    }
+   ]
+  }
+ }
+}

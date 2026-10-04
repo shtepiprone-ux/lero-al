@@ -1428,7 +1428,7 @@ with `EXIT_CODE=`, written through Node or `Out-File -Encoding utf8`. Expected: 
 
 #### 18.12.8 Owner visual review — O46-2 (§18.9)
 
-This review measured every O46-2 Story (§18.12.3), and Revision 3d writes no Story. Rows 1–3 therefore go to the
+**Rows 1–2 were returned on 2026-10-04 and moved to Task 918 by D46-5 (§18.13); row 3 still awaits the owner.** Original text: this review measured every O46-2 Story (§18.12.3), and Revision 3d writes no Story. Rows 1–3 therefore go to the
 owner now, in parallel with Revision 3d. Row 4 (production `/uk/listings` and `/uk/favorites`) needs a deploy.
 
 #### 18.12.9 Completion
@@ -1441,3 +1441,47 @@ Append `## Revision 3d` to the session log, with:
 
 Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`. No self-approval, no git.
+
+### 18.13 Owner return of O46-2 rows 1–2, 2026-10-04 → owner D46-5: the grid/list card unification moves into Task 918
+
+**§18.12 (Revision 3d, R44) stays the only executable route for Sonnet.** This subsection changes what 741 closes on;
+it adds no executor step.
+
+**Owner return, verbatim:**
+- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодна хуйня! Мають бути канонічні і однакові стилі."*
+- row 2, `Patterns/Mantine/ListingCardPattern`: *"аналогічна проблема як і в першому пункті."*
+- row 3 (`ListingsShellView`) and row 4 (production) are not answered yet.
+
+**Verified (Opus, `win32`, the final 3c `storybook-static`):** `MantineListingCardPattern.tsx` builds `layout="grid"` and
+`layout="list"` as two separate markups. `docs/sessions/evidence/task741r3/rev3e/design/variant-diff.json` (1440, the
+same listing in both layouts) shows:
+- the type label and the location in two different greys, `rgb(71,84,103)` and `oklch(0.556 0 0)`;
+- the location line height at 18px and 16px;
+- per-m² at 10px/12px (70%) and 12px/18px;
+- a different block order, badge stacking and photo-count corner;
+- the overlay in grid only.
+
+The pattern's CSS module also carries literal values: `#0009`, `.625rem`, `.75rem`, `8rem`, `11rem`, `3.40282e+38px`
+and Task 734's 12 reserved hits. The owner's return is a `FACT`.
+
+**Decision D46-5** (= Task 918's **D89-10**), 2026-10-04. The owner chose, verbatim, *"У 918, жорсткіше (Recommended)"*:
+- Task 741 closes on what it delivered: R30–R44, the status badges, the overlay tokens and the list→grid reset.
+- O46-2 rows 1–2 move into Task 918 as O89-1 and O89-3.
+- 918 is amended with one source per part for both layouts, no literal visual value in either CSS module, one secondary
+  colour, and a unit and rendered parity proof (918 kickoff §16).
+- 741 is approvable after the review of Revision 3d and the owner's answer on O46-2 row 3. Row 4 needs a deploy and
+  moves to O89-9.
+
+**RETRACTION (orchestrator), 1 of 2.**
+- **Invalid prior claim:** §18.12.3 and §18.12.8 handed O46-2 rows 1–3 to the owner as measured and ready.
+- **Why invalid:** the GR-3b–3g receipts measure overflow, type scale, gutters and corners. None compares the grid card
+  with the list card for the same state, and the two are separately hand-built, so the defect the owner saw went
+  unmeasured.
+- **Evidence:** `variant-diff.json`.
+- **Corrected status:** `CONTRADICTION`. Rows 1–2 were not review-ready, and they move to 918 under D46-5.
+
+**RETRACTION (orchestrator), 2 of 2.**
+- **Invalid prior claim:** the AskUserQuestion text said *"Omah підтверджує ваше правило"*, so it rested the choice on one reference.
+- **Why invalid:** GR-7 requires all four references, and the owner asked *"а ти тільки один референс перевіряв?"*.
+- **Evidence:** the full audit is now `docs/sessions/evidence/task741r3/rev3e/design/gr7-design.md`. It covers 17 live pages across Lahomes, Kamr, Omah and TailAdmin, plus Rozetka (home and catalogue, both tile views, opened in headed Chrome after headless got HTTP 403).
+- **Corrected status:** `FACT`. Omah's property list and Kamr's shop keep identical part styles. Omah's shop changes the price size. Lahomes switches to an admin table. TailAdmin has no pair. Rozetka keeps every part identical across its two tile views. The chosen practice (one card, one source per part) stands on three references and the owner's rule, not on one.

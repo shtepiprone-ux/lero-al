@@ -1,0 +1,1767 @@
+{
+ "kamrAfterLogin": "https://kamr-vite.vercel.app/dashboard",
+ "pages": [
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "350x234",
+     "350x234",
+     "350x234"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Listing Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "Show 15,780 Properties",
+      "Montreal",
+      "Toronto"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Listing Grid",
+      "Choose a city",
+      "Choose a city",
+      "127, Boulevard Cockeysville"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Properties"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Properties Location",
+      "Type Of Place",
+      "For Rent",
+      "For Sale"
+     ],
+     "12px/600 rgb(104, 125, 146)": [
+      "CA",
+      "FR",
+      "SP",
+      "UK"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Custom Price Range :",
+      "Accessibility Features :",
+      "Properties Type :",
+      "Bedrooms :"
+     ],
+     "14px/600 rgb(104, 125, 146)": [
+      "to"
+     ],
+     "14px/400 rgb(96, 74, 227)": [
+      "1 BHK",
+      "2 BHK",
+      "4 & 5 BHK"
+     ],
+     "14px/400 rgb(255, 255, 255)": [
+      "3 BHK",
+      "Apply"
+     ],
+     "13px/600 rgb(255, 255, 255)": [
+      "For Rent",
+      "Sold",
+      "For Sale",
+      "For Rent"
+     ],
+     "16px/500 rgb(50, 58, 70)": [
+      "Dvilla Residences Batu",
+      "$8,930.00",
+      "PIK Villa House",
+      "Tungis Luxury"
+     ],
+     "16px/500 rgb(104, 125, 146)": [
+      "$60,691.00",
+      "$75,341.00",
+      "$34,341.00"
+     ]
+    },
+    "shot": "lahomes-property-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "256x171",
+     "256x171",
+     "256x171"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Listing Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "Show 15,780 Properties",
+      "Montreal",
+      "Toronto"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Listing Grid",
+      "Choose a city",
+      "Choose a city",
+      "127, Boulevard Cockeysville"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Properties"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Properties Location",
+      "Type Of Place",
+      "For Rent",
+      "For Sale"
+     ],
+     "12px/600 rgb(104, 125, 146)": [
+      "CA",
+      "FR",
+      "SP",
+      "UK"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Custom Price Range :",
+      "Accessibility Features :",
+      "Properties Type :",
+      "Bedrooms :"
+     ],
+     "14px/600 rgb(104, 125, 146)": [
+      "to"
+     ],
+     "14px/400 rgb(96, 74, 227)": [
+      "1 BHK",
+      "2 BHK",
+      "4 & 5 BHK"
+     ],
+     "14px/400 rgb(255, 255, 255)": [
+      "3 BHK",
+      "Apply"
+     ],
+     "13px/600 rgb(255, 255, 255)": [
+      "For Rent",
+      "Sold",
+      "For Sale",
+      "For Rent"
+     ],
+     "16px/500 rgb(50, 58, 70)": [
+      "Dvilla Residences Batu",
+      "$8,930.00",
+      "PIK Villa House",
+      "Tungis Luxury"
+     ],
+     "16px/500 rgb(104, 125, 146)": [
+      "$60,691.00",
+      "$75,341.00",
+      "$34,341.00"
+     ]
+    },
+    "shot": "lahomes-property-grid-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "property-grid",
+   "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/property-grid.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Listing List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "1400ft",
+      "Residences",
+      "France"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Listing List"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Total Incomes",
+      "Total Properties",
+      "Unit Sold",
+      "Unit Rent"
+     ],
+     "22px/500 rgb(104, 125, 146)": [
+      "$12,7812.09",
+      "15,780 Unit",
+      "893 Unit",
+      "459 Unit"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Properties Photo & Name",
+      "Size",
+      "Property Type",
+      "Rent/Sale"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Dvilla Residences Batu",
+      "PIK Villa House",
+      "Tungis Luxury",
+      "Luxury Apartment"
+     ],
+     "13px/600 rgb(92, 193, 132)": [
+      "Rent",
+      "Rent",
+      "Rent",
+      "Rent"
+     ],
+     "13px/600 rgb(233, 103, 103)": [
+      "Sold",
+      "Sold",
+      "Sold"
+     ],
+     "13px/600 rgb(240, 147, 78)": [
+      "Sale",
+      "Sale",
+      "Sale"
+     ]
+    },
+    "shot": "lahomes-property-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Listing List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "1400ft",
+      "Residences",
+      "France"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Listing List"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Total Incomes",
+      "Total Properties",
+      "Unit Sold",
+      "Unit Rent"
+     ],
+     "22px/500 rgb(104, 125, 146)": [
+      "$12,7812.09",
+      "15,780 Unit",
+      "893 Unit",
+      "459 Unit"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Properties Photo & Name",
+      "Size",
+      "Property Type",
+      "Rent/Sale"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Dvilla Residences Batu",
+      "PIK Villa House",
+      "Tungis Luxury",
+      "Luxury Apartment"
+     ],
+     "13px/600 rgb(92, 193, 132)": [
+      "Rent",
+      "Rent",
+      "Rent",
+      "Rent"
+     ],
+     "13px/600 rgb(233, 103, 103)": [
+      "Sold",
+      "Sold",
+      "Sold"
+     ],
+     "13px/600 rgb(240, 147, 78)": [
+      "Sale",
+      "Sale",
+      "Sale"
+     ]
+    },
+    "shot": "lahomes-property-list-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "property-list",
+   "url": "https://techzaa.in/lahomes/admin/property-list.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/property-list.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "310x181",
+     "72x72",
+     "72x72"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Agent Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "This is your properties port",
+      "michaelminer@dayrep.com",
+      "theresbrosea@dayrep.com"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Agent Grid",
+      ":",
+      "Total properties",
+      "Pending"
+     ],
+     "18px/500 rgb(50, 58, 70)": [
+      "Welcome Back , Gaston"
+     ],
+     "15px/500 rgb(93, 113, 134)": [
+      "Properties",
+      "Social Media :",
+      "Social Media :",
+      "Social Media :"
+     ],
+     "23.925px/600 rgb(50, 58, 70)": [
+      "250"
+     ],
+     "14px/400 rgb(50, 58, 70)": [
+      "4 day ago",
+      "12 hour ago"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Development Task"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "250",
+      "30",
+      "04"
+     ],
+     "14px/500 rgb(96, 74, 227)": [
+      "View More"
+     ],
+     "16px/600 rgb(255, 255, 255)": [
+      "Total Seal Properties"
+     ],
+     "24px/500 rgb(255, 255, 255)": [
+      "450"
+     ],
+     "14px/600 rgb(50, 58, 70)": [
+      "311"
+     ],
+     "16px/500 rgb(50, 58, 70)": [
+      "Michael A. Miner",
+      "Theresa T. Brose",
+      "Walter L. Calab",
+      "Olive Mize"
+     ],
+     "14px/400 rgb(96, 74, 227)": [
+      "# 1",
+      "# 2",
+      "# 3",
+      "# 4"
+     ]
+    },
+    "shot": "lahomes-agents-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "193x113",
+     "72x72",
+     "72x72"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Agent Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "This is your properties port",
+      "michaelminer@dayrep.com",
+      "theresbrosea@dayrep.com"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Agent Grid",
+      ":",
+      "Total properties",
+      "Pending"
+     ],
+     "18px/500 rgb(50, 58, 70)": [
+      "Welcome Back , Gaston"
+     ],
+     "15px/500 rgb(93, 113, 134)": [
+      "Properties",
+      "Social Media :",
+      "Social Media :",
+      "Social Media :"
+     ],
+     "30px/600 rgb(50, 58, 70)": [
+      "250"
+     ],
+     "14px/400 rgb(50, 58, 70)": [
+      "4 day ago",
+      "12 hour ago"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "Development Task"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "250",
+      "30",
+      "04"
+     ],
+     "14px/500 rgb(96, 74, 227)": [
+      "View More"
+     ],
+     "16px/600 rgb(255, 255, 255)": [
+      "Total Seal Properties"
+     ],
+     "24px/500 rgb(255, 255, 255)": [
+      "450"
+     ],
+     "14px/600 rgb(50, 58, 70)": [
+      "311"
+     ],
+     "16px/500 rgb(50, 58, 70)": [
+      "Michael A. Miner",
+      "Theresa T. Brose",
+      "Walter L. Calab",
+      "Olive Mize"
+     ],
+     "14px/400 rgb(96, 74, 227)": [
+      "# 1",
+      "# 2",
+      "# 3",
+      "# 4"
+     ]
+    },
+    "shot": "lahomes-agents-grid-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "agents-grid",
+   "url": "https://techzaa.in/lahomes/admin/agents-grid.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/agents-grid.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Agent List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "Lincoln Drive Harrisburg, PA",
+      "michaelminer@dayrep.com",
+      "+787 608-360-0464"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Agent List"
+     ],
+     "15px/500 rgb(104, 125, 146)": [
+      "Agent"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "All Agent List"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Agent Photo & Name",
+      "Address",
+      "Email",
+      "Contact"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Michael A. Miner",
+      "Theresa T. Brose",
+      "Walter L. Calab",
+      "Olive Mize"
+     ],
+     "13px/600 rgb(92, 193, 132)": [
+      "Active",
+      "Active",
+      "Active",
+      "Active"
+     ],
+     "13px/600 rgb(233, 103, 103)": [
+      "Inactive",
+      "Inactive",
+      "Inactive"
+     ]
+    },
+    "shot": "lahomes-agents-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Agent List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Real Estate",
+      "Lincoln Drive Harrisburg, PA",
+      "michaelminer@dayrep.com",
+      "+787 608-360-0464"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Agent List"
+     ],
+     "15px/500 rgb(104, 125, 146)": [
+      "Agent"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "All Agent List"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Agent Photo & Name",
+      "Address",
+      "Email",
+      "Contact"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Michael A. Miner",
+      "Theresa T. Brose",
+      "Walter L. Calab",
+      "Olive Mize"
+     ],
+     "13px/600 rgb(92, 193, 132)": [
+      "Active",
+      "Active",
+      "Active",
+      "Active"
+     ],
+     "13px/600 rgb(233, 103, 103)": [
+      "Inactive",
+      "Inactive",
+      "Inactive"
+     ]
+    },
+    "shot": "lahomes-agents-list-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "agents-list",
+   "url": "https://techzaa.in/lahomes/admin/agents-list.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/agents-list.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "96x96",
+     "96x96",
+     "96x96"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Customer Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Customers"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Customer Grid"
+     ],
+     "18px/600 rgb(96, 74, 227)": [
+      "Daavid Nummi",
+      "Sinikka Penttinen",
+      "Jere Palmu",
+      "Ulla Nuorela"
+     ],
+     "12px/600 rgb(255, 255, 255)": [
+      "Available",
+      "Available",
+      "Available",
+      "Unavailable"
+     ],
+     "14px/500 rgb(50, 58, 70)": [
+      "Email Address :",
+      "Contact Number :",
+      "Address :",
+      "Email Address :"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "View Property",
+      "Own Property",
+      "Invest On Property",
+      "View Property"
+     ],
+     "15px/600 rgb(50, 58, 70)": [
+      "231",
+      "27",
+      "$928,128",
+      "134"
+     ],
+     "17px/500 rgb(93, 113, 134)": [
+      "Social Information :",
+      "Social Information :",
+      "Social Information :",
+      "Social Information :"
+     ],
+     "14px/400 rgb(255, 255, 255)": [
+      "Open Chat",
+      "Open Chat",
+      "Open Chat",
+      "Open Chat"
+     ],
+     "14px/400 rgb(50, 58, 70)": [
+      "Call To Customer",
+      "Call To Customer",
+      "Call To Customer",
+      "Call To Customer"
+     ]
+    },
+    "shot": "lahomes-customers-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "96x96",
+     "96x96",
+     "96x96"
+    ],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Customer Grid"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Customers"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Customer Grid"
+     ],
+     "18px/600 rgb(96, 74, 227)": [
+      "Daavid Nummi",
+      "Sinikka Penttinen",
+      "Jere Palmu",
+      "Ulla Nuorela"
+     ],
+     "12px/600 rgb(255, 255, 255)": [
+      "Available",
+      "Available",
+      "Available",
+      "Unavailable"
+     ],
+     "14px/500 rgb(50, 58, 70)": [
+      "Email Address :",
+      "Contact Number :",
+      "Address :",
+      "Email Address :"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "View Property",
+      "Own Property",
+      "Invest On Property",
+      "View Property"
+     ],
+     "15px/600 rgb(50, 58, 70)": [
+      "231",
+      "27",
+      "$928,128",
+      "134"
+     ],
+     "17px/500 rgb(93, 113, 134)": [
+      "Social Information :",
+      "Social Information :",
+      "Social Information :",
+      "Social Information :"
+     ],
+     "14px/400 rgb(255, 255, 255)": [
+      "Open Chat",
+      "Open Chat",
+      "Open Chat",
+      "Open Chat"
+     ],
+     "14px/400 rgb(50, 58, 70)": [
+      "Call To Customer",
+      "Call To Customer",
+      "Call To Customer",
+      "Call To Customer"
+     ]
+    },
+    "shot": "lahomes-customers-grid-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "customers-grid",
+   "url": "https://techzaa.in/lahomes/admin/customers-grid.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/customers-grid.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Customer List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Customers",
+      "daavidnumminen@teleworm.us",
+      "+231 06-75820711",
+      "Residential"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Customer List"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "All Customer List"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Customer Photo & Name",
+      "Email",
+      "Contact",
+      "Property Type"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Daavid Nummi",
+      "Sinikka Penttinen",
+      "Jere Palmu",
+      "Ulla Nuorela"
+     ]
+    },
+    "shot": "lahomes-customers-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "18px/600 rgb(93, 113, 134)": [
+      "Customer List"
+     ],
+     "14px/400 rgb(93, 113, 134)": [
+      "Customers",
+      "daavidnumminen@teleworm.us",
+      "+231 06-75820711",
+      "Residential"
+     ],
+     "14px/400 rgb(104, 125, 146)": [
+      "Customer List"
+     ],
+     "16px/600 rgb(93, 113, 134)": [
+      "All Customer List"
+     ],
+     "12.6px/400 rgb(50, 58, 70)": [
+      "This Month"
+     ],
+     "14px/500 rgb(93, 113, 134)": [
+      "Customer Photo & Name",
+      "Email",
+      "Contact",
+      "Property Type"
+     ],
+     "15px/500 rgb(50, 58, 70)": [
+      "Daavid Nummi",
+      "Sinikka Penttinen",
+      "Jere Palmu",
+      "Ulla Nuorela"
+     ]
+    },
+    "shot": "lahomes-customers-list-1440.png"
+   },
+   "ref": "lahomes",
+   "name": "customers-list",
+   "url": "https://techzaa.in/lahomes/admin/customers-list.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/customers-list.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "344x153",
+     "344x153",
+     "344x153"
+    ],
+    "styles": {
+     "12.25px/500 rgb(45, 49, 52)": [
+      "All Status"
+     ],
+     "12.25px/500 rgb(113, 117, 121)": [
+      "Available",
+      "Soldout"
+     ],
+     "11.382px/400 rgb(255, 255, 255)": [
+      "Add New Room"
+     ],
+     "10.5px/400 rgb(255, 255, 255)": [
+      "AVAILABLE",
+      "SOLDOUT",
+      "AVAILABLE",
+      "SOLDOUT"
+     ],
+     "16.8px/500 rgb(255, 255, 255)": [
+      "404 Brrom Str, Fl2",
+      "Neoma Path",
+      "Godfrey Common",
+      "Homenick Cove"
+     ],
+     "12.25px/400 rgb(255, 255, 255)": [
+      "Type 234",
+      "Type 234",
+      "Type 234",
+      "Type 234"
+     ],
+     "14px/700 rgb(45, 49, 52)": [
+      "3.4",
+      "3.4",
+      "3.4",
+      "3.4"
+     ],
+     "12.194px/400 rgb(113, 117, 121)": [
+      "245 Reviews",
+      "245 Reviews",
+      "245 Reviews",
+      "245 Reviews"
+     ],
+     "12.6px/400 rgb(113, 117, 121)": [
+      "G-05",
+      "Double Bed",
+      "G-05",
+      "Double Bed"
+     ]
+    },
+    "shot": "kamr-room-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "236x289",
+     "236x289",
+     "236x289"
+    ],
+    "styles": {
+     "12.25px/500 rgb(45, 49, 52)": [
+      "All Status"
+     ],
+     "12.25px/500 rgb(113, 117, 121)": [
+      "Available",
+      "Soldout"
+     ],
+     "14px/400 rgb(255, 255, 255)": [
+      "Add New Room"
+     ],
+     "10.5px/400 rgb(255, 255, 255)": [
+      "AVAILABLE",
+      "SOLDOUT",
+      "AVAILABLE",
+      "SOLDOUT"
+     ],
+     "18.382px/500 rgb(255, 255, 255)": [
+      "404 Brrom Str, Fl2",
+      "Neoma Path",
+      "Godfrey Common",
+      "Homenick Cove"
+     ],
+     "12.25px/400 rgb(255, 255, 255)": [
+      "Type 234",
+      "Type 234",
+      "Type 234",
+      "Type 234"
+     ],
+     "14px/700 rgb(45, 49, 52)": [
+      "3.4",
+      "3.4",
+      "3.4",
+      "3.4"
+     ],
+     "12.25px/400 rgb(113, 117, 121)": [
+      "245 Reviews",
+      "245 Reviews",
+      "245 Reviews",
+      "245 Reviews"
+     ],
+     "13.132px/400 rgb(113, 117, 121)": [
+      "G-05",
+      "Double Bed",
+      "G-05",
+      "Double Bed"
+     ]
+    },
+    "shot": "kamr-room-1440.png"
+   },
+   "ref": "kamr",
+   "name": "room",
+   "url": "https://kamr-vite.vercel.app/room",
+   "finalUrl": "https://kamr-vite.vercel.app/room"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "334x380",
+     "334x380",
+     "334x380"
+    ],
+    "styles": {
+     "16.625px/400 rgb(130, 134, 144)": [
+      "Shop"
+     ],
+     "16.625px/600 rgb(248, 133, 125)": [
+      "Product Grid"
+     ],
+     "14px/600 rgb(0, 0, 0)": [
+      "CHAIR GREY",
+      "BBOW POLKA-DOT",
+      "STRIPED DRESS",
+      "FOX SAKE WITHE"
+     ],
+     "21px/600 rgb(248, 133, 125)": [
+      "$369.00",
+      "$357.00",
+      "$159.00",
+      "$245.00"
+     ]
+    },
+    "shot": "kamr-ecom-product-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "201x229",
+     "201x229",
+     "201x229"
+    ],
+    "styles": {
+     "16.625px/400 rgb(130, 134, 144)": [
+      "Shop"
+     ],
+     "16.625px/600 rgb(248, 133, 125)": [
+      "Product Grid"
+     ],
+     "14px/600 rgb(0, 0, 0)": [
+      "STRIPED DRESS",
+      "Z PRODUCT 360",
+      "BONORUM ET MALORUM",
+      "FOX SAKE WITHE"
+     ],
+     "21px/600 rgb(248, 133, 125)": [
+      "$159.00",
+      "$654.00",
+      "$761.00",
+      "$245.00"
+     ]
+    },
+    "shot": "kamr-ecom-product-grid-1440.png"
+   },
+   "ref": "kamr",
+   "name": "ecom-product-grid",
+   "url": "https://kamr-vite.vercel.app/ecom-product-grid",
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-grid"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "334x380",
+     "334x380",
+     "334x380"
+    ],
+    "styles": {
+     "16.625px/400 rgb(130, 134, 144)": [
+      "Shop"
+     ],
+     "16.625px/600 rgb(248, 133, 125)": [
+      "Product List"
+     ],
+     "14px/600 rgb(0, 0, 0)": [
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-"
+     ],
+     "12.25px/400 rgb(113, 117, 121)": [
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /"
+     ],
+     "12.25px/400 rgb(110, 110, 110)": [
+      "Write a review?",
+      "Write a review?",
+      "Write a review?",
+      "Write a review?"
+     ],
+     "21px/600 rgb(248, 133, 125)": [
+      "$320.00",
+      "$325.00",
+      "$480.00",
+      "$658.00"
+     ],
+     "10.5px/400 rgb(110, 110, 110)": [
+      "0405689",
+      "Lee",
+      "0405689",
+      "Lee"
+     ]
+    },
+    "shot": "kamr-ecom-product-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "486x554",
+     "486x554",
+     "486x554"
+    ],
+    "styles": {
+     "16.625px/400 rgb(130, 134, 144)": [
+      "Shop"
+     ],
+     "16.625px/600 rgb(248, 133, 125)": [
+      "Product List"
+     ],
+     "14px/600 rgb(0, 0, 0)": [
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-",
+      "Solid Women's V-neck Dark T-"
+     ],
+     "12.25px/400 rgb(113, 117, 121)": [
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /"
+     ],
+     "12.25px/400 rgb(110, 110, 110)": [
+      "Write a review?",
+      "Write a review?",
+      "Write a review?",
+      "Write a review?"
+     ],
+     "21px/600 rgb(248, 133, 125)": [
+      "$320.00",
+      "$325.00",
+      "$480.00",
+      "$658.00"
+     ],
+     "10.5px/400 rgb(110, 110, 110)": [
+      "0405689",
+      "Lee",
+      "0405689",
+      "Lee"
+     ]
+    },
+    "shot": "kamr-ecom-product-list-1440.png"
+   },
+   "ref": "kamr",
+   "name": "ecom-product-list",
+   "url": "https://kamr-vite.vercel.app/ecom-product-list",
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-list"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "360x246",
+     "360x246",
+     "360x246"
+    ],
+    "styles": {
+     "13.125px/500 rgb(136, 136, 136)": [
+      "Select Location",
+      "Property Type",
+      "Select Category",
+      "Default"
+     ],
+     "13.132px/500 rgb(34, 43, 64)": [
+      "Price Range",
+      "Area Range"
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "40.00",
+      "60.00",
+      "40.00",
+      "60.00"
+     ],
+     "11.375px/500 rgb(34, 43, 64)": [
+      "Sort by:"
+     ],
+     "11px/400 rgb(255, 255, 255)": [
+      "For Rent",
+      "For Rent",
+      "For Rent",
+      "For Rent"
+     ],
+     "21px/600 rgb(0, 0, 0)": [
+      "$32000",
+      "$12000",
+      "$45000",
+      "$52000"
+     ],
+     "13.132px/600 rgb(34, 43, 64)": [
+      "Jane Cooper",
+      "Post Melone",
+      "Kevin Manla",
+      "Monalisa"
+     ]
+    },
+    "shot": "omah-property-list-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "382x261",
+     "382x261",
+     "382x261"
+    ],
+    "styles": {
+     "13.125px/500 rgb(136, 136, 136)": [
+      "Select Location",
+      "Property Type",
+      "Select Category",
+      "Default"
+     ],
+     "13.132px/500 rgb(34, 43, 64)": [
+      "Price Range",
+      "Area Range"
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "40.00",
+      "60.00",
+      "40.00",
+      "60.00"
+     ],
+     "11.375px/500 rgb(34, 43, 64)": [
+      "Sort by:"
+     ],
+     "11px/400 rgb(255, 255, 255)": [
+      "For Rent",
+      "For Rent",
+      "For Rent",
+      "For Rent"
+     ],
+     "21px/600 rgb(0, 0, 0)": [
+      "$32000",
+      "$12000",
+      "$45000",
+      "$52000"
+     ],
+     "13.132px/600 rgb(34, 43, 64)": [
+      "Jane Cooper",
+      "Post Melone",
+      "Kevin Manla",
+      "Monalisa"
+     ]
+    },
+    "shot": "omah-property-list-grid-1440.png"
+   },
+   "ref": "omah",
+   "name": "property-list-grid",
+   "url": "https://omah.dexignzone.com/xhtml/property-list.html",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/property-list.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "360x246",
+     "360x246",
+     "360x246"
+    ],
+    "styles": {
+     "13.125px/500 rgb(136, 136, 136)": [
+      "Select Location",
+      "Property Type",
+      "Select Category",
+      "Default"
+     ],
+     "13.132px/500 rgb(34, 43, 64)": [
+      "Price Range",
+      "Area Range"
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "40.00",
+      "60.00",
+      "40.00",
+      "60.00"
+     ],
+     "11.375px/500 rgb(34, 43, 64)": [
+      "Sort by:"
+     ],
+     "11px/400 rgb(255, 255, 255)": [
+      "For Rent",
+      "For Rent",
+      "For Rent",
+      "For Rent"
+     ],
+     "21px/600 rgb(0, 0, 0)": [
+      "$32000",
+      "$12000",
+      "$45000",
+      "$52000"
+     ],
+     "13.132px/600 rgb(34, 43, 64)": [
+      "Jane Cooper",
+      "Post Melone",
+      "Kevin Manla",
+      "Monalisa"
+     ]
+    },
+    "shot": "omah-property-list-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "245x254",
+     "245x254",
+     "245x254"
+    ],
+    "styles": {
+     "13.125px/500 rgb(136, 136, 136)": [
+      "Select Location",
+      "Property Type",
+      "Select Category",
+      "Default"
+     ],
+     "13.132px/500 rgb(34, 43, 64)": [
+      "Price Range",
+      "Area Range"
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "40.00",
+      "60.00",
+      "40.00",
+      "60.00"
+     ],
+     "11.375px/500 rgb(34, 43, 64)": [
+      "Sort by:"
+     ],
+     "11px/400 rgb(255, 255, 255)": [
+      "For Rent",
+      "For Rent",
+      "For Rent",
+      "For Rent"
+     ],
+     "21px/600 rgb(0, 0, 0)": [
+      "$20000",
+      "$32000",
+      "$28000",
+      "$45000"
+     ],
+     "13.132px/600 rgb(34, 43, 64)": [
+      "Jane Cooper",
+      "John Kipli",
+      "Tonni Sblak",
+      "Monalisa"
+     ]
+    },
+    "shot": "omah-property-list-list-1440.png"
+   },
+   "ref": "omah",
+   "name": "property-list-list",
+   "url": "https://omah.dexignzone.com/xhtml/property-list.html#list",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/property-list.html",
+   "note390": "toggle not operated at 390 (hidden/position differs)"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "307x350",
+     "307x350",
+     "307x350"
+    ],
+    "styles": {
+     "14px/500 rgb(34, 43, 64)": [
+      "Bonorum et Malorum",
+      "Striped Dress"
+     ],
+     "12.25px/400 rgb(255, 103, 70)": [
+      "$761.00",
+      "$861.00",
+      "$261.00",
+      "$561.00"
+     ],
+     "14px/600 rgb(59, 76, 184)": [
+      "$156.00",
+      "$259.00",
+      "$57.00",
+      "$254.00"
+     ],
+     "15.75px/500 rgb(34, 43, 64)": [
+      "BBow polka-dot",
+      "Z Product 360",
+      "Chair Grey",
+      "fox sake withe"
+     ]
+    },
+    "shot": "omah-ecom-product-grid-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "226x258",
+     "226x258",
+     "226x258"
+    ],
+    "styles": {
+     "14px/500 rgb(34, 43, 64)": [
+      "Bonorum et Malorum",
+      "Striped Dress"
+     ],
+     "12.25px/400 rgb(255, 103, 70)": [
+      "$761.00",
+      "$861.00",
+      "$261.00",
+      "$561.00"
+     ],
+     "14px/600 rgb(59, 76, 184)": [
+      "$156.00",
+      "$259.00",
+      "$57.00",
+      "$254.00"
+     ],
+     "15.75px/500 rgb(34, 43, 64)": [
+      "BBow polka-dot",
+      "Z Product 360",
+      "Chair Grey",
+      "fox sake withe"
+     ]
+    },
+    "shot": "omah-ecom-product-grid-1440.png"
+   },
+   "ref": "omah",
+   "name": "ecom-product-grid",
+   "url": "https://omah.dexignzone.com/xhtml/ecom-product-grid.html",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/ecom-product-grid.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "307x350",
+     "307x350",
+     "307x350"
+    ],
+    "styles": {
+     "14px/500 rgb(34, 43, 64)": [
+      "Solid Color Black Jumpsuit",
+      "Deep Neck Solid White Dress",
+      "Boat-Neck Black and Red Dres",
+      "Women's Boat-neck White One "
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /"
+     ],
+     "12.25px/400 rgb(108, 117, 125)": [
+      "Write a review?",
+      "Write a review?",
+      "Write a review?",
+      "Write a review?"
+     ],
+     "21px/600 rgb(59, 76, 184)": [
+      "$320.00",
+      "$325.00",
+      "$480.00",
+      "$658.00"
+     ],
+     "10.5px/400 rgb(136, 136, 136)": [
+      "0405689",
+      "Lee",
+      "0405689",
+      "Lee"
+     ]
+    },
+    "shot": "omah-ecom-product-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "206x234",
+     "206x234",
+     "206x234"
+    ],
+    "styles": {
+     "14px/500 rgb(34, 43, 64)": [
+      "Solid Color Black Jumpsuit",
+      "Deep Neck Solid White Dress",
+      "Boat-Neck Black and Red Dres",
+      "Women's Boat-neck White One "
+     ],
+     "12.25px/400 rgb(136, 136, 136)": [
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /",
+      "(34 reviews) /"
+     ],
+     "12.25px/400 rgb(108, 117, 125)": [
+      "Write a review?",
+      "Write a review?",
+      "Write a review?",
+      "Write a review?"
+     ],
+     "21px/600 rgb(59, 76, 184)": [
+      "$320.00",
+      "$325.00",
+      "$480.00",
+      "$658.00"
+     ],
+     "10.5px/400 rgb(136, 136, 136)": [
+      "0405689",
+      "Lee",
+      "0405689",
+      "Lee"
+     ]
+    },
+    "shot": "omah-ecom-product-list-1440.png"
+   },
+   "ref": "omah",
+   "name": "ecom-product-list",
+   "url": "https://omah.dexignzone.com/xhtml/ecom-product-list.html",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/ecom-product-list.html"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Products"
+     ],
+     "18px/600 rgb(29, 41, 57)": [
+      "Products List"
+     ],
+     "14px/400 rgb(102, 112, 133)": [
+      "Track your store's progress ",
+      "Laptop",
+      "Accessories",
+      "Watch"
+     ],
+     "12px/500 rgb(102, 112, 133)": [
+      "Products",
+      "Category",
+      "Brand",
+      "Price"
+     ],
+     "14px/500 rgb(52, 64, 84)": [
+      "ASUS ROG Gaming Laptop",
+      "Airpods Pro 2nd Gen",
+      "Apple Watch Ultra",
+      "Bose QuietComfort Earbuds"
+     ],
+     "14px/400 rgb(52, 64, 84)": [
+      "ASUS",
+      "$2,199",
+      "01 Dec, 2027",
+      "Apple"
+     ],
+     "12px/500 oklch(0.505 0.213 27.518)": [
+      "Out of Stock",
+      "Out of Stock",
+      "Out of Stock"
+     ],
+     "12px/500 rgb(2, 122, 72)": [
+      "In Stock",
+      "In Stock",
+      "In Stock",
+      "In Stock"
+     ],
+     "14px/500 rgb(29, 41, 57)": [
+      "1",
+      "7",
+      "20"
+     ]
+    },
+    "shot": "tailadmin-products-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Products"
+     ],
+     "18px/600 rgb(29, 41, 57)": [
+      "Products List"
+     ],
+     "14px/400 rgb(102, 112, 133)": [
+      "Track your store's progress ",
+      "Laptop",
+      "Accessories",
+      "Watch"
+     ],
+     "12px/500 rgb(102, 112, 133)": [
+      "Products",
+      "Category",
+      "Brand",
+      "Price"
+     ],
+     "14px/500 rgb(52, 64, 84)": [
+      "ASUS ROG Gaming Laptop",
+      "Airpods Pro 2nd Gen",
+      "Apple Watch Ultra",
+      "Bose QuietComfort Earbuds"
+     ],
+     "14px/400 rgb(52, 64, 84)": [
+      "ASUS",
+      "$2,199",
+      "01 Dec, 2027",
+      "Apple"
+     ],
+     "12px/500 oklch(0.505 0.213 27.518)": [
+      "Out of Stock",
+      "Out of Stock",
+      "Out of Stock"
+     ],
+     "12px/500 rgb(2, 122, 72)": [
+      "In Stock",
+      "In Stock",
+      "In Stock",
+      "In Stock"
+     ],
+     "14px/500 rgb(29, 41, 57)": [
+      "1",
+      "7",
+      "20"
+     ],
+     "14px/500 rgb(255, 255, 255)": [
+      "1"
+     ]
+    },
+    "shot": "tailadmin-products-list-1440.png"
+   },
+   "ref": "tailadmin",
+   "name": "products-list",
+   "url": "https://demo.tailadmin.com/products-list",
+   "finalUrl": "https://demo.tailadmin.com/products-list"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Task List"
+     ],
+     "12px/500 rgb(70, 95, 255)": [
+      "11",
+      "Marketing",
+      "Marketing",
+      "Marketing"
+     ],
+     "12px/500 rgb(102, 112, 133)": [
+      "3",
+      "4",
+      "4"
+     ],
+     "12px/500 rgb(52, 64, 84)": [
+      "3"
+     ],
+     "16px/400 rgb(29, 41, 57)": [
+      "Finish user onboarding",
+      "Work In Progress (WIP) Dashb",
+      "Kanban Flow Manager",
+      "Product Update - Q4 2024"
+     ],
+     "16px/400 rgb(152, 162, 179)": [
+      "Change license and remove pr"
+     ],
+     "12px/500 rgb(181, 71, 8)": [
+      "4"
+     ],
+     "12px/500 rgb(2, 122, 72)": [
+      "Template",
+      "4",
+      "Template"
+     ],
+     "12px/500 rgb(253, 133, 58)": [
+      "Development"
+     ]
+    },
+    "shot": "tailadmin-task-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Task List"
+     ],
+     "12px/500 rgb(70, 95, 255)": [
+      "11",
+      "Marketing",
+      "Marketing",
+      "Marketing"
+     ],
+     "12px/500 rgb(102, 112, 133)": [
+      "3",
+      "4",
+      "4"
+     ],
+     "12px/500 rgb(52, 64, 84)": [
+      "3"
+     ],
+     "16px/400 rgb(29, 41, 57)": [
+      "Finish user onboarding",
+      "Work In Progress (WIP) Dashb",
+      "Kanban Flow Manager",
+      "Product Update - Q4 2024"
+     ],
+     "16px/400 rgb(152, 162, 179)": [
+      "Change license and remove pr"
+     ],
+     "12px/500 rgb(181, 71, 8)": [
+      "4"
+     ],
+     "12px/500 rgb(2, 122, 72)": [
+      "Template",
+      "4",
+      "Template"
+     ],
+     "12px/500 rgb(253, 133, 58)": [
+      "Development"
+     ]
+    },
+    "shot": "tailadmin-task-list-1440.png"
+   },
+   "ref": "tailadmin",
+   "name": "task-list",
+   "url": "https://demo.tailadmin.com/task-list",
+   "finalUrl": "https://demo.tailadmin.com/task-list"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "List"
+     ],
+     "16px/500 rgb(29, 41, 57)": [
+      "Unordered List",
+      "Ordered List",
+      "List with button",
+      "List with Icon"
+     ],
+     "14px/400 rgb(102, 112, 133)": [
+      "Lorem ipsum dolor sit amet",
+      "It is a long established fac",
+      "Lorem ipsum dolor sit amet",
+      "Lorem ipsum dolor sit amet"
+     ],
+     "14px/500 rgb(102, 112, 133)": [
+      "Inbox",
+      "Sent",
+      "Drafts",
+      "Trash"
+     ]
+    },
+    "shot": "tailadmin-list-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "List"
+     ],
+     "16px/500 rgb(29, 41, 57)": [
+      "Unordered List",
+      "Ordered List",
+      "List with button",
+      "List with Icon"
+     ],
+     "14px/400 rgb(102, 112, 133)": [
+      "Lorem ipsum dolor sit amet",
+      "It is a long established fac",
+      "Lorem ipsum dolor sit amet",
+      "Lorem ipsum dolor sit amet"
+     ],
+     "14px/500 rgb(102, 112, 133)": [
+      "Inbox",
+      "Sent",
+      "Drafts",
+      "Trash"
+     ]
+    },
+    "shot": "tailadmin-list-1440.png"
+   },
+   "ref": "tailadmin",
+   "name": "list",
+   "url": "https://demo.tailadmin.com/list",
+   "finalUrl": "https://demo.tailadmin.com/list"
+  },
+  {
+   "390": {
+    "overflow": false,
+    "imgs": [
+     "290x181",
+     "290x181",
+     "290x181"
+    ],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Cards"
+     ],
+     "16px/500 rgb(29, 41, 57)": [
+      "Card with Image",
+      "Horizontal Card with Image",
+      "Card with link",
+      "Card with Icon"
+     ],
+     "20px/500 rgb(29, 41, 57)": [
+      "Card title",
+      "Card title",
+      "Card title",
+      "Card title"
+     ],
+     "14px/500 rgb(255, 255, 255)": [
+      "Read more",
+      "Read more",
+      "Read more",
+      "Read more"
+     ]
+    },
+    "shot": "tailadmin-cards-390.png"
+   },
+   "1440": {
+    "overflow": false,
+    "imgs": [
+     "303x190",
+     "303x190",
+     "303x190"
+    ],
+    "styles": {
+     "20px/600 rgb(29, 41, 57)": [
+      "Cards"
+     ],
+     "16px/500 rgb(29, 41, 57)": [
+      "Card with Image",
+      "Horizontal Card with Image",
+      "Card with link",
+      "Card with Icon"
+     ],
+     "20px/500 rgb(29, 41, 57)": [
+      "Card title",
+      "Card title",
+      "Card title",
+      "Card title"
+     ],
+     "14px/500 rgb(255, 255, 255)": [
+      "Read more",
+      "Read more",
+      "Read more",
+      "Read more"
+     ]
+    },
+    "shot": "tailadmin-cards-1440.png"
+   },
+   "ref": "tailadmin",
+   "name": "cards",
+   "url": "https://demo.tailadmin.com/cards",
+   "finalUrl": "https://demo.tailadmin.com/cards"
+  }
+ ]
+}

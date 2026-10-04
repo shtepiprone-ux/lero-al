@@ -7,6 +7,10 @@
 > Revision 3** (Sprint 46, kickoff §17; superseded Revision 2 on 2026-10-04) and **857** (Sprint 78) are `APPROVED` and committed. All four edit files this task rewrites (Sprint 89 → Execution order). At I0, check each one
 > in `docs/backlog-archive.md`. If any is not archived as approved, return `BLOCKED — START GATE` and make no write.
 >
+> **Amended 2026-10-04 (owner D89-10, Task 741 O46-2 rows 1–2 returned):** one listing card for both layouts, with one
+> source per part, no literal visual value, one secondary colour, and a parity proof. **§16 is binding.** Where §3–§15
+> differ from §16, §16 wins. The executor runs its own GR-7 audit before the first write (§16.6).
+>
 > **Amended 2026-10-03 (917 review):** owner decision **D89-9**: the struck old price sits **above** the current price
 > everywhere, on the card, the listing-page price block, the contact card and the admin, through one shared
 > `MantineListingPrice`. **857 Revision 8** (R56) removed the listing card and the price from `ListingPreviewDialogView`,
@@ -227,7 +231,7 @@ pin.
   **colour / price block** (R17, R18). Their other markup is not touched.
 - Other `lucide-react` icons on the site (A4 open item). On the card itself, every icon must be Solar after this task:
   the camera of the photo count and any icon the pattern renders (§26 "one visual group").
-- `messages/*.json` (F11) and `theme.ts` (dirty with 857; no theme change is needed).
+- `messages/*.json` (F11). `theme.ts` gets exactly one change, the §16 R22 token `theme.other.layout.listingCardListThumb`; nothing else in it changes.
 
 ## 9. Current and required behavior
 
@@ -406,7 +410,7 @@ viewport matrix applies to the rendered checks (`docs/qa-profiles.md`).
 node.exe -p process.platform
 node.exe --version
 node.exe scripts\check-surface-census.mjs --surface src\modules\listings\components\ListingCard.tsx
-npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
 npm.cmd run test
 npm.cmd run typecheck
 npm.cmd run lint
@@ -459,9 +463,9 @@ Receipts per changed or matrix Story:
 
 | # | Story → export | Locale | Viewports |
 |---|---|---|---|
-| O89-1 | `ListingCardPattern` → `Default` | uk | 320, 390, 768, 1024, 1440, 1920 |
+| O89-1 | `ListingCardPattern` → `Default` (+ §16: every state's grid and list cards identical part by part) | uk | 320, 390, 768, 1024, 1440, 1920 |
 | O89-2 | `ListingCardPattern` → `Default` | en, sq, it | 390, 1440 |
-| O89-3 | `ListingCard` → `Default` | uk | 390, 1440 |
+| O89-3 | `ListingCard` → `Default` (+ §16: grid and list identical part by part; the O46-2 rows 1–2 return) | uk, en | 390, 768, 1440 |
 | O89-4 | `ListingCardTrack` → `Grid`, `Rail` | uk | 390, 1024, 1440 |
 | O89-5 | `ListingFeatureIcon` → `Default` | uk | 1440 |
 | O89-6 | `Badge` → `Default` | uk | 390, 1440 |
@@ -496,6 +500,169 @@ Update `docs/backlog.md` with one state line; write the session log with "Files 
 - Type-scale table present (§3.5); no text reaches 24px.
 - Width contract named (§3.6); GR-3d line for every matrix row (§13.3).
 - Two-armed proof required (AC10); build is a hard gate.
-- Dirty-worktree boundary: `messages/*.json`, `theme.ts`, `patterns/index.ts` are 857's. This task does not edit the
-  first two. It edits `patterns/index.ts` only after the start gate has made it clean, and only to export new pattern
+- Dirty-worktree boundary: `messages/*.json`, `theme.ts`, `patterns/index.ts` are 857's. This task does not edit
+  `messages/*.json`. It edits `theme.ts` only for §16 R22, and only if `git status --porcelain` shows it clean at I0; otherwise it returns `BLOCKED — DIRTY THEME`. It edits `patterns/index.ts` only after the start gate has made it clean, and only to export new pattern
   types if needed.
+
+## 16. Amendment 2026-10-04 — one card for grid and list (owner D89-10)
+
+**Binding.** Where §3–§15 differ from this section, this section wins.
+
+### 16.1 Owner return and decision, verbatim
+
+Task 741's owner matrix O46-2 was returned on 2026-10-04:
+- row 1, `Mantine/Primitives/ListingCard`: *"не приймаю, стилі карток не збігаються між видом картки та списку. Це хардкодна хуйня! Мають бути канонічні і однакові стилі."*
+- row 2, `Patterns/Mantine/ListingCardPattern`: *"аналогічна проблема як і в першому пункті."*
+
+Decision **D89-10** (= Task 741's **D46-5**), 2026-10-04. The owner chose, verbatim, *"У 918, жорсткіше (Recommended)"*,
+whose text read: *"741 закривається на тому, що вже зроблено …, а рядки 1–2 O46-2 переходять у 918. Я доповнюю 918:
+одні й ті самі компоненти частин для обох видів (фото-рамка, заголовок, чіпи, футер), нуль літералів в обох CSS-модулях,
+тест на рівність стилів кожної частини між видами."*
+
+Also on 2026-10-04 the owner asked: *"а ти тільки один референс перевіряв? Я ж тобі надав як мінімум 3 референса, чому ти
+орієнтуєшся тільки на один?"* §16.2 is the audit of all four standing references plus the owner's Rozetka link.
+
+### 16.2 Reference research (GR-7)
+
+The record, with one row per page, is `docs/sessions/evidence/task741r3/rev3e/design/gr7-design.md`. The live data and
+screenshots are in `…/rev3e/design/gr7-pairs/`, `gr7-omah-toggle.json` and `variant-diff.json`.
+
+| Reference | Pair inspected live (1440 + 390) | Grid → list, shared parts | Verdict |
+|---|---|---|---|
+| Omah | `/property-list.html`, list toggle operated | price 21/600, badge 11px, agent 13.1/600, description 12.25px: all identical; the photo moves left | same card |
+| Kamr (signed in) | `/ecom-product-grid` · `/ecom-product-list` | title 14/600, price 21/600 coral: identical; the list adds reviews | same card |
+| Omah | `/ecom-product-grid.html` · `/ecom-product-list.html` | the price jumps from 14px to 21px | per-layout restyle |
+| Lahomes | property, agents and customers grid · list | the list is an admin table; the badge changes from filled to tinted | different pattern |
+| TailAdmin | `/products-list`, `/task-list`, `/list`, `/cards` | no grid/list pair | nothing shown |
+| Rozetka (owner, D89-3; URL re-supplied by the owner 2026-10-04) | catalogue `/ua/notebooks/c80004/` view toggle operated: "Мала плитка" (205px tiles) → "Крупна плитка" (261px) | title 14/400 `rgb(34,31,31)`, struck old price 14/400 grey `rgb(121,120,120)` **above** the current price, current price 20/700 red `rgb(248,65,71)` when reduced and dark `rgb(34,31,31)` when not: identical in both views; home tiles the same | **same card** (also confirms D89-3 / D89-7) |
+
+**Chosen 2026 best practice:** one card, with one source per part and the same tokens for every part; only the photo's
+position changes. Omah's property list, Kamr's shop and Rozetka's catalogue (both tile sizes) show it, and it is the owner's rule. The two other options are the
+defect the owner returned.
+
+**lero.al today** (`variant-diff.json`, 1440, the same listing in both layouts):
+- the type label and the location are `rgb(71,84,103)` (`dimmed`) in grid and `oklch(0.556 0 0)` (`--muted-foreground`) in list;
+- the location line height is 18px in grid and 16px in list;
+- per-m² is 10px/12px at 70% in grid and 12px/18px in list;
+- the block order differs;
+- the badges sit in a row in grid and in a column in list;
+- the photo count is bottom-right in grid and bottom-left in list;
+- the overlay is grid only.
+
+`MantineListingCardPattern.tsx` builds the two layouts as two separate markups (`:173-298` list, `:301-420` grid). They
+use layout-suffixed class pairs: `badgesList`/`badgesGrid`, `photoCountList`/`photoCountGrid`, `metaRow`/`metaRowBordered`,
+`locationIcon`/`locationIconGrid`. There are also six `style={{…}}` objects.
+
+The literal values in `MantineListingCardPattern.module.css`:
+- `#0009` ×2, `.75rem` ×4, `.625rem` ×3, `1rem` ×4, `.75rem` line heights, `.125rem` ×2, `3.40282e+38px` ×2, `8rem`, `11rem`;
+- 4 × `300ms` and 8 hover box-shadow literals (Task 734's reserved 12).
+
+The literal values in `ListingCard.module.css`: `.875rem` ×2, `-.125rem`, and the `rgba(…)` shadow.
+
+`GR-7 REFERENCE RESEARCH — moment: task creation (amendment D89-10); role: Opus; task: 918; subject: one listing card for grid and list, identical part styles; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner); library: docs/research/references/2026-10-04; live-checked pages: 17 (gr7-design.md rows) → unchanged, Kamr login works live; Rozetka home + catalogue (both tile views) → live in headed Chrome; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0, Rozetka 2/2/0; inspected in depth: the 17 pages at 1440 and 390; workflow states operated: Kamr sign-in, Omah grid→list toggle, 1440→390; options across references: same card ← Omah /property-list, Kamr ecom, Rozetka catalogue; table ← Lahomes; per-layout restyle ← Omah ecom; chosen 2026 best practice: one card, one source per part, only the photo position changes; absent or unverified: none; lero.al data map: ListingCard/MantineListingCardPattern × grid/list; owner decisions: D89-10, D89-2; evidence: docs/sessions/evidence/task741r3/rev3e/design/.`
+
+### 16.3 Requirements
+
+| ID | Source | Observable requirement | P |
+|---|---|---|---|
+| **R20** | D89-10 | **One source per part.** `MantineListingCardPattern` builds each part **once per render**, as a local JSX value, and both layouts place that same value. The parts are: <ul><li>the photo chrome: the badge stack, the overlay and the photo count;</li><li>the head row: the tile, the title and the address;</li><li>the chips;</li><li>the footer: the price block, the per-m² / original-price line, the ID and the date.</li></ul> The parts are not new components, and the pattern stays their canonical owner, proven by its Story. Each part's root carries `data-card-part="badges"`, `"overlay"`, `"photo-count"`, `"head"`, `"chips"` or `"footer"` as a test hook. The layouts may differ in only two ways: <ol><li>the arrangement: the photo `Card.Section` on top in grid, and a left photo column of width `theme.other.layout.listingCardListThumb` (R22) in list;</li><li>the favorite position, per D89-2: on the photo in grid, and inline at the end of the head row in list, outside the `head` part node.</li></ol> No class name, style prop or token appears in only one layout's part markup, and no layout-suffixed class pair remains. | P0 |
+| **R21** | D89-10 | The sold/rented overlay is part of the shared photo chrome, so it renders in **both** layouts. This replaces "grid only" in §3.3 and F1. The badge stack has the same direction (row, wrapping) and the same position (top-left, theme `xs` inset) in both layouts. The photo count has the same position (bottom-right) in both. | P0 |
+| **R22** | D89-10, GR-0 | **No literal visual value** in `MantineListingCardPattern.module.css`, `ListingCard.module.css` or `MantineListingCardPattern.tsx`. The rules, the replacements, and Task 734's reserved 12 card-module hits (734's row is re-scoped in `docs/backlog-reserved.md`) are listed below this table. | P0 |
+| **R23** | D89-10 | **One secondary-text colour.** Every secondary text in the pattern and in `ListingCard.tsx` uses `c="dimmed"`. `var(--muted-foreground)` no longer appears in `MantineListingCardPattern.tsx`, its module, `ListingCard.tsx` or `ListingCard.module.css`. | P0 |
+| **R24** | D89-10 | **Parity proof**, in two parts below this table: (a) a unit parity test and (b) a rendered parity probe. | P0 |
+
+**R22 rules.**
+- Neither CSS module keeps a `design-tokens-allow` marker, or a px, rem, ms, hex or `rgb()`/`rgba()` literal.
+- The TSX has no `style={{…}}` object.
+- Allowed, because they are not design values:
+  - unitless numbers (`scale(1.05)`, `opacity: 0.6`, `grayscale(1)`);
+  - keywords (`nowrap`, `pointer`, `hidden`);
+  - `rotate: -8deg` on the overlay label. Mantine has no prop for it, and the comment there says so.
+
+**R22 replacements.**
+- **Transitions:** `var(--motion-duration-slow)` (`:root`, `src/app/globals.css:340`). Not `--duration-slow`: that is an `@theme inline` name, never emitted at runtime (`AppImage.module.css:12`).
+- **Hover shadow:** `var(--mantine-shadow-lg)`.
+- **Hover lift:** `translateY(calc(var(--mantine-spacing-micro) * -1))`.
+- **Badge and photo-count position:** Mantine props `pos="absolute"` with theme `top`/`left`/`right`/`bottom` = `xs`.
+- **Photo count:** a Mantine `Badge`, with the size, radius and spacing taken from its theme entry, `variant="filled"` `color="dark"`, and the Solar camera in `leftSection`.
+  - This changes the 60% translucent black to opaque `dark`. It is an Opus decision, and the owner can return it in O89-1.
+- **List photo column width:** a new token `theme.other.layout.listingCardListThumb: { base: 128, sm: 176 }`, which keeps today's 8rem/11rem, read through `useMantineTheme` and `rem()`.
+  - Its type goes in the `MantineThemeOther` augmentation.
+  - It is the only `theme.ts` change.
+- **Favorite shadow:** `var(--mantine-shadow-xs)`.
+- **Margins:** `.inlineFavorite`'s negative margins are removed; the head row's `Group align` places it.
+- **Icon sizing:** `.featureIcon` is replaced by the Solar icon `size={theme.other.iconSize.standard}`.
+- **Inline styles:** the six `style` objects become Mantine props (`pos`, `Card.Section withBorder`) or keyword-only module classes (`cursor: pointer`, `white-space: nowrap`).
+
+**R24 parts.**
+- **(a) Unit parity.** `MantineListingCardPattern.smoke.test.tsx` renders the same props with `layout="grid"` and `layout="list"`, for:
+  - an open reduced listing;
+  - a sold listing;
+  - a premium listing.
+
+  For every `data-card-part` node, the normalised `outerHTML` (Mantine's generated ids stripped) is equal between the two layouts.
+- **(b) Rendered parity.** A Playwright probe on the built Storybook covers:
+  - the Stories `Patterns/Mantine/ListingCardPattern` and `Mantine/Primitives/ListingCard`;
+  - `en` and `uk`, at 768 and 1440;
+  - every state in both sections.
+
+  For every text leaf inside every `data-card-part` node, the computed `font-size`, `font-weight`, `line-height`, `color` and `letter-spacing` of the grid card equal those of the list card for the same state.
+
+### 16.4 Acceptance criteria
+
+`GR-4 AC AUDIT — 5 criteria; each states an observable property; absolutes: none.`
+
+- **AC16 [R20, R24a]** Given the final tree, the parity test passes. Given a plant (a temporary edit giving the list
+  title a different `fz`), it fails. The plant's restore is proven by the pre-plant `git hash-object` of the pattern
+  file and its final hash. Separately, a search of the pattern TSX and module for class names ending in `List` or `Grid`
+  returns no hit.
+- **AC17 [R21]** Given the two card Stories at 768 and 1440 in `uk`, every sold/rented card in the list section shows
+  the overlay label inside its photo column, with its 2px border uncut. This needs a GR-3g crop for the widest `uk` label
+  (*ОРЕНДОВАНО*) on the 128px/176px column. If the label does not fit inside the column, return
+  `BLOCKED — OVERLAY WIDTH` with the measurement; do not shrink or clip it.
+- **AC18 [R22]** Given the final tree, a read-only search of the two CSS modules for `design-tokens-allow`, a px/rem/ms
+  number, `#` followed by a hex digit, or `rgb` returns no hit. A search of the pattern TSX for `style={{` returns no
+  hit. `check:design-tokens` reports no violation in the changed files.
+- **AC19 [R23]** Given the final tree, a read-only search for `muted-foreground` in the four files named in R23 returns
+  no hit.
+- **AC20 [R24b]** Given the final Storybook build, the parity probe writes `task918/parity.json` with every tuple equal
+  and exits 0. On a build carrying the AC16 plant, it exits 1 and names the cell (`task918/parity-red.json`).
+
+### 16.5 Verification additions to §13.2
+
+Add these lines to the gate block, in this order, after `npm.cmd run build`:
+
+```powershell
+npm.cmd run build-storybook
+node.exe docs\sessions\evidence\task918\parity-probe.mjs
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.module.css,src\modules\listings\components\ListingCard.module.css -Pattern 'design-tokens-allow|\d(px|rem|ms)\b|#[0-9a-fA-F]|rgb'
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.tsx -Pattern 'style=\{\{|[A-Za-z](List|Grid)\b'
+Select-String -Path src\design-system\mantine\patterns\MantineListingCardPattern.tsx,src\design-system\mantine\patterns\MantineListingCardPattern.module.css,src\modules\listings\components\ListingCard.tsx,src\modules\listings\components\ListingCard.module.css -Pattern 'muted-foreground'
+git --no-optional-locks hash-object src/design-system/mantine/theme.ts src/modules/listings/components/ListingCard.module.css
+```
+
+Expected:
+- `build-storybook` and the probe exit 0;
+- the three `Select-String` lines print nothing;
+- the `layout`/`variant` prop values `'list'` and `'grid'` are string literals in quotes, not class names. If the
+  second search matches one, record it in the session log as not a class.
+
+Write the probe (`parity-probe.mjs`) under `docs/sessions/evidence/task918/`. It reads `storybook-static` the way
+`docs/sessions/evidence/task741r3/rev3c/review/review-probe.mjs` does.
+
+**Story receipts (§13.3) additionally include:**
+- a GR-3g corner check of the overlay label in the list section;
+- a GR-3b check that the list section stays hidden below 640 (Task 741 D46-3).
+
+### 16.6 GR-7 at execution
+
+Before the first write, Sonnet runs its own GR-7 audit (`docs/golden-rules.md` GR-7) into
+`docs/sessions/evidence/task918/research-exec/`. It reads the library rows named in §16.2 and in
+`docs/tailadmin-style-reference.md` §6w. It opens live every page in §16.2's table and §6w's Lahomes page at 1440 and
+390, and records `unchanged` or the difference. It emits the full receipt in the session log. If the audit contradicts
+§16.2's chosen practice, it stops with `BLOCKED — GR-7 KICKOFF CONFLICT`.
+
+### 16.7 Files added to §7 scope
+
+- `src/design-system/mantine/theme.ts` (R22: one token and its type only)
+- `docs/sessions/evidence/task918/parity-probe.mjs` (new)

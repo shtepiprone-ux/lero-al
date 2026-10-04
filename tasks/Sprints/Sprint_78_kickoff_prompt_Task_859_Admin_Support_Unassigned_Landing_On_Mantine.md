@@ -2,7 +2,8 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q3** (legacy admin surface → Mantine; no registered critical
 flow names it) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 📝 `KICKOFF FILED` 2026-09-29**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 1) — the only executable route is §16 (Revision 1).**
+§1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Precedents, read-only: **877** (container/View split, `AdminTable`/`AdminPageHeader` adapters, page wrapper), **858**
@@ -383,4 +384,235 @@ The owner ruled, verbatim: *"і це стосується всіх таблиц�
    - secondary columns appear from a breakpoint.
 
    Emit one `TABLE FIT CHECK` receipt per list export.
+
+---
+
+## 16. Revision 1 (review 1, 2026-10-04): `NEEDS REVISION`
+
+Review 1 inspected the real diff: `page.tsx`, `supportFilters.ts`, the container, the 3 new containers, the 4 Views, the
+registrations and the evidence directory. It also re-ran the census and T1–T8 natively (`win32 v22.22.3`: census FAIL
+lines = the 5 calibration lines; `15 passed`).
+
+**Correct and kept, not to be redone:**
+- the URL-filter module;
+- the container logic (identical to `HEAD`'s ranges, apart from R5's listener);
+- the list View;
+- the table fit;
+- the registrations;
+- T1–T8 and P1–P4.
+
+**Re-entry mode: `remediation`.** Start from the current tree. Preserve every `docs/sessions/evidence/task859/0*`–`2*`
+artifact, and write new ones as `r1-*`. Do not touch `docs/sessions/evidence/task859/research/` (Opus's GR-7 audit).
+
+### 16.1 Findings
+
+**F1 — P1, dialog anatomy (owner rules §23.6/§23.7, 2026-10-02).**
+- *Observed.* `TicketDetailDialogView.tsx:113-226` and `CreateTicketDialogView.tsx:72-154` are non-structured
+  `MantineModal`s:
+  - the detail dialog has a caption-over-value `SimpleGrid` (`:116-157`), which §23.7 names as forbidden ("No
+    caption-over-value grids");
+  - its primary action (`update_status_btn`) sits in the body inside a `Paper` (`:168-197`);
+  - the create dialog builds its own footer `Flex` (`:72-81`) instead of `MantineDialogFooter`.
+- *Expected.* `docs/mantine-responsive-design-system.md` §23.6/§23.7 (`:1299-1370`): every new or migrated popup uses
+  only the canonical parts (structured header, sections, facts, navigation, a choice, the equal-width footer pair).
+  §23.6 says *"a review applies this section to every dialog a task creates or changes"*.
+- *Cause.* A task-specification defect. This kickoff (2026-09-29) predates the rules and was not amended; the executor
+  followed it.
+- *Resolution.* §16.3 R13/R14.
+
+**F2 — P2, icon family (owner rule §26, 2026-10-02).**
+- *Observed.* The new Views import `lucide-react`: `AdminSupportView.tsx:5`, `TicketDetailDialogView.tsx:5`,
+  `UserPickerFieldView.tsx:4`. §26 (`:1475-1530`) requires every icon a task **adds or changes** to come from
+  `@solar-icons/react`. `package.json` does not contain it yet. Precedent: 919 and 918 add `@solar-icons/react` 2.3.2
+  when it is missing.
+- *Resolution.* §16.3 R15.
+
+**F3 — P2, clause 9 deletion audit (AC5).**
+- *Observed.* `20b-reference-audit-live.txt` still lists `docs/responsive-storybook-inventory.md:67, :148, :340, :367,
+  :378, :393`. That is a live inventory whose own convention retires removed Story ids in place (for example
+  `RETIRED-852-…`, `RETIRED-893-…`).
+- *Observed.* `scripts/governance/tailwind-entropy.allowlist.json:248` still holds an `AdminSupportManager.tsx` entry
+  whose utilities no longer exist. Clause 9 names allowlists explicitly.
+- *Ruling.* `scripts/task320-qa-i18n-fixes.mjs` is a historical one-off QA script (Task 320's evidence, not
+  automation). It is excluded like `docs/sessions/**`.
+- *Resolution.* §16.3 R16.
+
+### 16.2 Rulings on the executor's deviations (Opus, binding)
+
+1. **R8 / AC3: superseded.** The 2026-10-02 addendum (item 1) replaced R8's hand-written `Box` with `AdminPageFrame`,
+   the single owner of admin page widths since 857. `<AdminPageFrame width="page">` (64rem, as `/admin/reports`) is
+   the correct implementation. `adminPageWideMaxWidth` is **not** added: a wide variant for one page would be a
+   parallel width contract (GR-0). The 72rem → 64rem change is visible, so it is on the owner matrix (§16.6). AC3 now
+   reads: *`page.tsx` wraps its content in `<AdminPageFrame width="page">` and `theme.ts` gains no key from this
+   task.*
+2. **`blue` → `blueLight`: accepted.** `check:stories` rejects the unregistered `blue`. `blueLight` is the registered
+   info tone (`--status-info`, the same value `LISTING_STATUS_COLOR.sold` uses). R6's colour list is amended to match.
+3. **`governance:tailwind` exit 1: not 859's.** Its +5 HIGH violations sit in `MantineDashboardStatCard.tsx` and
+   `theme.ts`, which this task did not edit. Review 1 of 741 R3 (commit `edb6a4e30`) recorded it as pre-existing at
+   `HEAD`, owned by **897**. It stays out of AC8.
+4. **`check:surface-census:changed --base HEAD`: accepted.** It is the gate's required form for a working-tree run.
+   The §16.5 block uses it.
+
+### 16.3 Requirements (Revision 1)
+
+| ID | Source | Observable requirement | P | AC |
+|---|---|---|---|---|
+| R13 | §23.6/§23.7, F1 | `TicketDetailDialogView` is `MantineModal structured` (title = subject, description = the type label), built only from `MantineDialogSections`. **Details:** `MantineDetailList` of requester or reporter, reported (complaint), created by, type badge, complaint-type badge, status badge and created date; names as plain text (`—` when absent). **Reason** (when present): section titled `reason_section`, `Text size="sm"`. **Status:** section titled `status_change_label` with a `Radio.Group` of 4 `Radio.Card`s (one per status, label `support_status_<s>`; the canonical `RadioCard`/`RadioIndicator` theme entries, as `PremiumDialogView`), then the note `Textarea`. **Timeline** (when events exist): section titled `timeline_title`, rows as today with the localized labels. **Navigation:** one `MantineNavRowList` row per linked user (requester or reporter, reported, created by), each to `/admin/users/<id>`. **Footer:** `MantineDialogFooter` with secondary `cancel_btn` (closes) and primary `update_status_btn` (`loading` while updating; disabled while updating or when the chosen status equals the ticket's). The container is unchanged. | P1 | AC9 |
+| R14 | §23.6/§23.7, F1 | `CreateTicketDialogView` is `MantineModal structured` (title `dialog_create_title`), its fields grouped in `MantineDialogSections` in today's order. The type and complaint-type controls stay `MantineSelect` (§23.6 lists it for a mutually exclusive choice), with today's helper, errors and reset-on-switch. The footer is `MantineDialogFooter`: secondary `cancel_btn` (disabled while creating), primary `create_btn` (`loading`; disabled while creating or on the same user). | P1 | AC9 |
+| R15 | §26, F2 | Every icon in the 4 Views comes from `@solar-icons/react`, imported by name from a style subpath. Use `broken` for inline icons (badges, buttons, input sections, timeline, picker label, clear button, nav rows) and `bold-duotone` for the 3 stat-card tile icons (the tile role, D89-4). Sizes stay `theme.other.iconSize` keys and colour stays `currentColor`. If `package.json` lacks the package, install `@solar-icons/react@2.3.2`, and take the real export names from `node_modules/@solar-icons/react/dist`, never from an Iconify id. The 4 View files then have no `lucide-react` import. | P2 | AC10 |
+| R16 | clause 9, F3 | In `docs/responsive-storybook-inventory.md`, every live reference to `admin-adminsupportmanager--*` is retired in place, following the file's `RETIRED-<task>-…` convention (`RETIRED-859-…`, pointing at `patterns-mantine-adminsupportview--default`). The `AdminSupportManager.tsx` entry is removed from `scripts/governance/tailwind-entropy.allowlist.json`. | P2 | AC11 |
+| R17 | i18n clause 7 | New keys in `admin.support`, in `sq`/`en`/`uk`/`it` (translated, not copied): `details_section` (en "Details"), `nav_open_requester` ("Open requester profile"), `nav_open_reporter` ("Open reporter profile"), `nav_open_reported` ("Open reported user profile"), `nav_open_created_by` ("Open creator profile"). No other key changes. | P2 | AC12 |
+| R18 | GR-3/GR-3a/16c | Stories: `TicketDetailDialogView` keeps its 4 exports, now rendering R13. `CreateTicketDialogView` keeps its 5 exports, now rendering R14. No export is added or removed. | P1 | AC13 |
+
+### 16.4 Acceptance criteria (Revision 1)
+
+- **AC9 [R13, R14]**
+  - Both dialog Views pass `structured`, import `MantineDialogSections`/`MantineDialogFooter`, and contain no
+    `SimpleGrid`, no `Flex` footer and no `Button` outside `MantineDialogFooter`.
+  - The detail View imports `MantineDetailList` and `MantineNavRowList` and renders 4 `Radio.Card`s.
+  - The smoke test still passes T5 (now: select the `resolved` card, press the footer primary) and T6/T7 (now: the
+    footer primary).
+  - A new **T9** asserts that in the detail dialog the primary is disabled while the chosen status equals the
+    ticket's, and enabled after another card is chosen.
+- **AC10 [R15]**
+  - `git grep -n "lucide-react"` over the 4 View files prints nothing.
+  - Every Solar import is a style-subpath named import.
+  - `package.json` lists `@solar-icons/react` (the version recorded).
+- **AC11 [R16]**
+  - The §16.5 reference grep prints only the `RETIRED-859-…` lines.
+  - The allowlist has no `AdminSupportManager.tsx` entry.
+- **AC12 [R17]** `check:i18n` exits 0, and the 5 keys exist in the 4 files.
+- **AC13 [R18]** `check:story-coverage` and `check:stories` exit 0. The dialog Stories render §23.7's parts at 390
+  (bottom sheet, equal-width footer pair) and 1440.
+
+`GR-4 AC AUDIT — 5 criteria (AC9–AC13); each states an observable property; absolutes: AC10/AC11's empty greps over named live paths (deletion and icon audits).`
+
+### 16.5 Allowed write set and gate block (Revision 1)
+
+Writes allowed in Revision 1 (nothing else):
+- `src/components/admin/{AdminSupportView,TicketDetailDialogView,CreateTicketDialogView,UserPickerFieldView}.tsx`;
+- `src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx` (T5–T7 adjusted, T9 added);
+- the two dialog Story files and `src/stories/fixtures/admin.fixtures.ts` (only if a Story needs a field);
+- `messages/{sq,en,uk,it}.json` (R17 keys only);
+- `package.json`, `package-lock.json` (only if Solar is missing);
+- `docs/responsive-storybook-inventory.md` and `scripts/governance/tailwind-entropy.allowlist.json` (R16 only);
+- `scripts/i18n-dynamic-manifest.json` (re-point the 4 sites if their lines move);
+- the session log (append a "Revision 1" section with its own Files Changed table), `r1-*` evidence, and the 859
+  backlog cell.
+
+The containers, `supportFilters.ts`, `page.tsx` and every other registration are frozen. Record their hashes at re-entry
+and again at the end; each pair must be equal.
+
+```powershell
+$ev = "docs\sessions\evidence\task859"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()"
+git hash-object src\components\admin\AdminSupportManager.tsx src\components\admin\TicketDetailDialog.tsx src\components\admin\CreateTicketDialog.tsx src\components\admin\UserPickerField.tsx src\components\admin\supportFilters.ts src\app\admin\support\page.tsx
+npx.cmd vitest run src/components/admin/__tests__/supportFilters.test.ts src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx
+node.exe scripts\check-surface-census.mjs --surface src\app\admin\support\page.tsx
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run check:rendered-scope
+npm.cmd run check:surface-census:changed -- --base HEAD
+npm.cmd run check:design-tokens
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:i18n
+npm.cmd run check:i18n-dynamic
+npm.cmd run check:type-responsive
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+npm.cmd run build
+git --no-optional-locks grep --untracked -n -E "admin-adminsupportmanager|AdminSupportManager\.stories|\bUserCard\b" -- . ":!docs/sessions/**" ":!tasks/**" ":!docs/backlog-archive.md" ":!docs/reviews/**" ":!scripts/task320-qa-i18n-fixes.mjs"
+git --no-optional-locks grep -n "lucide-react" -- src/components/admin/AdminSupportView.tsx src/components/admin/TicketDetailDialogView.tsx src/components/admin/CreateTicketDialogView.tsx src/components/admin/UserPickerFieldView.tsx
+git --no-optional-locks status --porcelain
+```
+
+Save each output as `$ev\r1-<nn>-<name>.txt` with `EXIT_CODE=` appended, UTF-8 without BOM.
+
+Expected:
+- `win32`; frozen hashes equal at start and end.
+- 16+ tests pass, including T9.
+- Census FAIL lines = the 5 calibration lines.
+- Every `npm.cmd` command exits 0 (`build` is the hard gate).
+- The first grep prints only `RETIRED-859-…` lines, and the `lucide-react` grep prints nothing.
+
+Plant **P5**:
+- Use Node I/O, with a hash before and after.
+- Make the detail footer primary ignore `newStatus === ticket.status`. T9 must fail.
+- Restore, confirm the equal hash, and re-run: pass.
+
+### 16.6 Receipts and owner matrix (Revision 1)
+
+For the 2 dialog Stories (9 exports) and `AdminSupportView`/`UserPickerFieldView` (icons changed):
+- GR-3b and GR-3c at 320/390/1024/1440 (type at 320/390/768/1440);
+- GR-3d (dialogs `n/a: overlay-only`; `AdminSupportView` `n/a: own gutter (AdminPageFrame)`; picker `StoryPageGutter
+  all`);
+- GR-3e for every dialog export: 0 text buttons expected; nav rows have their own line by construction;
+- GR-3f for the 4 `Radio.Card` indicators: a DPR-1 10× crop, unchecked and checked;
+- GR-3g for the `Radio.Card` borders and the `MantineNavRowList` focus line inside the bottom sheet / modal: DPR-1
+  corner crops, first and last row, focus via Tab;
+- GR-0 and GR-3a receipts for R13–R15.
+
+`OWNER VISUAL QA REQUIRED — O78-13`: the §13.3 matrix stands. The two dialog rows now show R13/R14. Add one row,
+`Patterns/Mantine/AdminSupportView` `Default` · `sq` · **1440**: the page cap is now 64rem (§16.2 ruling 1), and
+the owner confirms or returns it.
+
+### 16.7 Reference research (GR-7), Revision 1
+
+Audit run in this session on 2026-10-04 (Playwright 1.60.0, `win32`). Scripts, logs and screenshots are in
+`docs/sessions/evidence/task859/research/` (`gr7-support-modals.mjs`, `gr7-log.json`).
+
+**Route inventory** (crawled the same day for Task 794: `docs/sessions/evidence/task794/research/inventory-*.json`):
+
+| Reference | Unique routes | Inspected | Blocked |
+|---|---|---|---|
+| TailAdmin | 87 (167 visits) | 167 | 0 |
+| Lahomes | 107 | 107 | 0 |
+| Kamr (demo login) | 61 (62 visits) | 62 | 0 |
+
+The routes for this artifact: TailAdmin `/support-tickets`, `/support-ticket-reply`, `/modals`; Lahomes
+`ui-modal.html` (no support page in the inventory); Kamr `/ui-modal` (no support page in the inventory).
+
+**Page-level evidence:**
+
+| Ref | URL | Operated / observed | Evidence | Supports |
+|---|---|---|---|---|
+| TailAdmin | `/support-tickets` | 3 stat cards with icon tiles (total / pending / solved); toolbar with an All/Solved/Pending segmented control, search and Filter; columns Ticket ID, Requested By, Subject, Create Date, Status, Action ("…"); status pills 12px (Solved green `rgb(2,122,72)` on `rgb(236,253,243)`, Pending orange on `rgb(255,250,235)`). The tabs were clicked; the demo's 10 rows did not change (static demo). A row click opens nothing. No horizontal overflow at 390. | `ta-support-tickets-1440.png`, `-390.png`, `ta-support-tickets-after-tabs.png`, `gr7-log.json` | the list View's stat cards, segmented filter and status badges, already shipped |
+| TailAdmin | `/support-ticket-reply` | Ticket detail: "Ticket Details" is a label-left / value-right list (Customer, Email, Ticket ID, Category, Created, Status pill); the status choice is a radio group (In-Progress / Solved / On-Hold) beside the Reply action; a message timeline. | `ta-ticket-reply-1440-full.png`, `ta-ticket-reply-390-full.png` | R13: facts as `MantineDetailList`; the status as a radio choice; the action as the primary |
+| TailAdmin | `/modals` | 4 triggers. The dialog has a title, a round gray close (44px), body, and footer Close (white, 1px border, secondary) + Save Changes (filled, primary) at the right. At 390 the pair is equal width (146 / 144). Esc did not close it. | `ta-modals-1440-0.png`…`-3.png`, `ta-modals-390-0.png`, `-1.png` | §23.7 footer pair (already the canon) |
+| Lahomes | `ui-modal.html` | 24 triggers. The static-backdrop modal: title, divider, body, divider, footer Close + Understood (primary) at the right. Esc does not close a static backdrop. | `lahomes-modals-1440-1.png` | same anatomy |
+| Kamr | `/ui-modal` | 8 triggers. The basic modal: title + close, divider, body, divider, footer Close (light) + Save changes (primary) at the right. | `kamr-modals-1440-1.png` | same anatomy |
+
+`absent or unverified`: none of the references has a support or complaint **create** dialog, or an async user picker.
+R14 follows §23.7 with today's fields; the picker keeps its owner-accepted composition. The Lahomes/Kamr anatomy
+probes in `gr7-log.json` measured the wrong node (a theme panel / the page body). Their screenshots are the evidence
+used; the probe numbers are not.
+
+**lero.al data map:**
+- *Entity.* `support_tickets` (subject, status ∈ open/in_progress/resolved/closed, ticket_type, complaint_type, reason,
+  assigned_to, reporter, reported, created_by_admin) and `support_ticket_events`.
+- *Actions.* `updateTicketStatus(id, status, note)`. It returns `{}` without writing when the status is unchanged
+  (`src/modules/admin/actions/index.ts:858`). That is why R13 keeps the choose-then-confirm flow, and why
+  `StatusChangeSelect`'s note-only resubmit, which would silently drop the note, is **not** reused. Also
+  `createSupportTicket` and `searchUsersForPicker`.
+- *Route.* `/admin/support` (admin only). The user profile route `/admin/users/[id]` exists, which is the NavRow
+  target.
+- *Gaps.* TailAdmin's Reply/Attach, the On-Hold status and the ticket prev/next have no lero.al capability. **Not
+  adopted.**
+
+`GR-7 REFERENCE RESEARCH — artifact: support ticket detail + create dialogs, list icons; references: TailAdmin, Lahomes, Kamr (no owner link for this task); route inventory: TailAdmin 87/167/0, Lahomes 107/107/0, Kamr 61/62/0; inspected live: TailAdmin support-tickets, support-ticket-reply, modals; Lahomes ui-modal; Kamr ui-modal; workflow states operated: status tabs, row click, ticket detail at 1440/390, modal open/Esc/close at 1440/390; chosen pattern: §23.7 anatomy + TailAdmin ticket-reply (facts list, radio status choice, primary action); absent or unverified: create-ticket dialog and async picker in any reference; Lahomes/Kamr probe numbers (screenshots used instead); lero.al data map: /admin/support × support_tickets/events, updateTicketStatus (no-op on unchanged status), createSupportTicket, searchUsersForPicker, /admin/users/[id]; owner decisions: §23.6/§23.7/§26 (2026-10-02); evidence: docs/sessions/evidence/task859/research/.`
+
+### 16.8 Completion (Revision 1)
+
+Append "Revision 1" to `docs/sessions/2026-10-04-task859-admin-support-mantine.md` with:
+- R13–R18 status;
+- every `r1-*` command and its exit code;
+- the frozen-hash pairs;
+- the P5 transcripts;
+- the receipts in §16.6.
+
+Update the 859 cell of `docs/backlog.md`. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
+`PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 

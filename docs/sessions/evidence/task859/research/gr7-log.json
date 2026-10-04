@@ -1,0 +1,2074 @@
+[
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "loaded-1440",
+    "ths": [
+      "Ticket ID",
+      "Requested By",
+      "Subject",
+      "Create Date",
+      "Status",
+      "Action"
+    ],
+    "badges": [
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      }
+    ],
+    "tabs": [
+      "⌘ K",
+      "Language English",
+      "English",
+      "Arabic (Saudi) RTL",
+      "Español",
+      "Deutsch",
+      "Sign out",
+      "All",
+      "Solved",
+      "Pending",
+      "Filter",
+      "Apply",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete"
+    ],
+    "stat": [
+      "Menu",
+      "Support",
+      "others",
+      "#1 Tailwind CSS Dashboard",
+      "5,347",
+      "1,230",
+      "4,117",
+      "Support Tickets"
+    ],
+    "inputs": [
+      "Search or type command...",
+      "Search...",
+      "Search category...",
+      "Search company...",
+      "checkbox",
+      "checkbox"
+    ],
+    "overflowX": false
+  },
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "tab-Pending",
+    "rows": 10,
+    "url": "https://demo.tailadmin.com/support-tickets"
+  },
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "tab-Solved",
+    "rows": 10,
+    "url": "https://demo.tailadmin.com/support-tickets"
+  },
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "tab-All",
+    "rows": 10,
+    "url": "https://demo.tailadmin.com/support-tickets"
+  },
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "row-click",
+    "url": "https://demo.tailadmin.com/support-tickets",
+    "dialog": false
+  },
+  {
+    "page": "tailadmin-support-tickets",
+    "step": "loaded-390",
+    "ths": [
+      "Ticket ID",
+      "Requested By",
+      "Subject",
+      "Create Date",
+      "Status",
+      "Action"
+    ],
+    "badges": [
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Pending",
+        "bg": "rgb(255, 250, 235)",
+        "color": "rgb(220, 104, 3)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      },
+      {
+        "text": "Solved",
+        "bg": "rgb(236, 253, 243)",
+        "color": "rgb(2, 122, 72)",
+        "radius": "3.35544e+07px",
+        "fs": "12px"
+      }
+    ],
+    "tabs": [
+      "⌘ K",
+      "Language English",
+      "English",
+      "Arabic (Saudi) RTL",
+      "Español",
+      "Deutsch",
+      "Sign out",
+      "All",
+      "Solved",
+      "Pending",
+      "Filter",
+      "Apply",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete",
+      "View More",
+      "Delete"
+    ],
+    "stat": [
+      "Menu",
+      "Support",
+      "others",
+      "#1 Tailwind CSS Dashboard",
+      "5,347",
+      "1,230",
+      "4,117",
+      "Support Tickets"
+    ],
+    "inputs": [
+      "Search or type command...",
+      "Search...",
+      "Search category...",
+      "Search company...",
+      "checkbox",
+      "checkbox"
+    ],
+    "overflowX": false
+  },
+  {
+    "page": "tailadmin-ticket-reply",
+    "step": "loaded-1440",
+    "headings": [
+      "Menu",
+      "Support",
+      "others",
+      "#1 Tailwind CSS Dashboard",
+      "Notification",
+      "Ticket Reply",
+      "Ticket #346520 - Sidebar not responsive on mobile",
+      "Ticket Details"
+    ],
+    "buttons": [
+      "⌘ K",
+      "Language English",
+      "English",
+      "Arabic (Saudi) RTL",
+      "Español",
+      "Deutsch",
+      "Sign out",
+      "Attach",
+      "Reply"
+    ],
+    "selects": [],
+    "textareas": 1,
+    "overflowX": false
+  },
+  {
+    "page": "tailadmin-ticket-reply",
+    "step": "loaded-390",
+    "headings": [
+      "Menu",
+      "Support",
+      "others",
+      "#1 Tailwind CSS Dashboard",
+      "Notification",
+      "Ticket Reply",
+      "Ticket #346520 - Sidebar not responsive on mobile",
+      "Ticket Details"
+    ],
+    "buttons": [
+      "⌘ K",
+      "Language English",
+      "English",
+      "Arabic (Saudi) RTL",
+      "Español",
+      "Deutsch",
+      "Sign out",
+      "Attach",
+      "Reply"
+    ],
+    "selects": [],
+    "textareas": 1,
+    "overflowX": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "triggers-1440",
+    "triggers": 4,
+    "labels": [
+      "Open Modal",
+      "Open Modal",
+      "Open Modal",
+      "Open Modal"
+    ]
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-1440-0",
+    "anatomy": {
+      "w": 1440,
+      "h": 900,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 44,
+          "h": 44,
+          "x": 952,
+          "y": 292,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 68,
+          "h": 46,
+          "x": 780,
+          "y": 546,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 120,
+          "h": 44,
+          "x": 860,
+          "y": 547,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-1440-0",
+    "closedByEsc": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-1440-1",
+    "anatomy": {
+      "w": 1440,
+      "h": 900,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 44,
+          "h": 44,
+          "x": 952,
+          "y": 292,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 68,
+          "h": 46,
+          "x": 780,
+          "y": 546,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 120,
+          "h": 44,
+          "x": 860,
+          "y": 547,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-1440-1",
+    "closedByEsc": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-1440-2",
+    "anatomy": {
+      "w": 1440,
+      "h": 900,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 44,
+          "h": 44,
+          "x": 952,
+          "y": 292,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 68,
+          "h": 46,
+          "x": 780,
+          "y": 546,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 120,
+          "h": 44,
+          "x": 860,
+          "y": 547,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-1440-2",
+    "closedByEsc": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-1440-3",
+    "anatomy": {
+      "w": 1440,
+      "h": 900,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 44,
+          "h": 44,
+          "x": 952,
+          "y": 292,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 68,
+          "h": 46,
+          "x": 780,
+          "y": 546,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 120,
+          "h": 44,
+          "x": 860,
+          "y": 547,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-1440-3",
+    "closedByEsc": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "triggers-390",
+    "triggers": 4,
+    "labels": [
+      "Open Modal",
+      "Open Modal",
+      "Open Modal",
+      "Open Modal"
+    ]
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-390-0",
+    "anatomy": {
+      "w": 390,
+      "h": 844,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 38,
+          "h": 38,
+          "x": 320,
+          "y": 220,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 146,
+          "h": 46,
+          "x": 44,
+          "y": 566,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 144,
+          "h": 44,
+          "x": 202,
+          "y": 567,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-390-0",
+    "closedByEsc": false
+  },
+  {
+    "page": "ta-modals",
+    "step": "open-390-1",
+    "anatomy": {
+      "w": 390,
+      "h": 844,
+      "radius": "0px",
+      "title": "Modal Heading",
+      "titleSize": "30px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "",
+          "w": 38,
+          "h": 38,
+          "x": 320,
+          "y": 220,
+          "bg": "rgb(242, 244, 247)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "3.35544e+07px"
+        },
+        {
+          "text": "Close",
+          "w": 146,
+          "h": 46,
+          "x": 44,
+          "y": 566,
+          "bg": "rgb(255, 255, 255)",
+          "border": "1px rgb(208, 213, 221)",
+          "radius": "8px"
+        },
+        {
+          "text": "Save Changes",
+          "w": 144,
+          "h": 44,
+          "x": 202,
+          "y": 567,
+          "bg": "rgb(70, 95, 255)",
+          "border": "0px rgb(228, 231, 236)",
+          "radius": "8px"
+        }
+      ],
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum aliquet a nec nulla. Aliquam bibendum ex sit amet ipsum rutrum feugiat ultrices enim quam. Lorem ipsum dolor sit amet, consectetur adipiscing"
+    }
+  },
+  {
+    "page": "ta-modals",
+    "step": "escape-390-1",
+    "closedByEsc": false
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "triggers-1440",
+    "triggers": 24,
+    "labels": [
+      "Launch demo modal",
+      "Launch static backdrop modal",
+      "Launch demo modal",
+      "Launch demo modal",
+      "Vertically centered modal",
+      "Vertically centered scrollable",
+      "Top Modal",
+      "Bottom Modal",
+      "Open first modal",
+      "Open\n                         ",
+      "Back to\n                      ",
+      "Extra large modal"
+    ]
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-1440-0",
+    "anatomy": {
+      "w": 1440,
+      "h": 4844,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 293,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1169,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1214,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 1259,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1304,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 1679,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 1460,
+          "y": 841,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 323,
+          "y": 221,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-1440-0",
+    "closedByEsc": true
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-1440-1",
+    "anatomy": {
+      "w": 1440,
+      "h": 4844,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 293,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1169,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1214,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 1259,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1304,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 1679,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 1460,
+          "y": 841,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 323,
+          "y": 221,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-1440-1",
+    "closedByEsc": false
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-1440-2",
+    "anatomy": {
+      "w": 1440,
+      "h": 4844,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 293,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1169,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1214,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 1259,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1304,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 1679,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 1460,
+          "y": 841,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 323,
+          "y": -503,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-1440-2",
+    "closedByEsc": true
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-1440-3",
+    "anatomy": {
+      "w": 1440,
+      "h": 4844,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 293,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1169,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1214,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 1259,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1304,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 1679,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 1460,
+          "y": 841,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 323,
+          "y": -503,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-1440-3",
+    "closedByEsc": true
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-1440-4",
+    "anatomy": {
+      "w": 1440,
+      "h": 4844,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 293,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1169,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1214,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 1259,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 1304,
+          "y": 19,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 1679,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 1460,
+          "y": 841,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 323,
+          "y": -1370,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-1440-4",
+    "closedByEsc": true
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "triggers-390",
+    "triggers": 24,
+    "labels": [
+      "Launch demo modal",
+      "Launch static backdrop modal",
+      "Launch demo modal",
+      "Launch demo modal",
+      "Vertically centered modal",
+      "Vertically centered scrollable",
+      "Top Modal",
+      "Bottom Modal",
+      "Open first modal",
+      "Open\n                         ",
+      "Back to\n                      ",
+      "Extra large modal"
+    ]
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-390-0",
+    "anatomy": {
+      "w": 390,
+      "h": 5541,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 30,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 222,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 267,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 629,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 410,
+          "y": 785,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 40,
+          "y": 253,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 340,
+          "y": 25,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Close",
+          "w": 69,
+          "h": 39,
+          "x": 163,
+          "y": 171,
+          "bg": "rgb(144, 53, 227)",
+          "border": "1px rgb(144, 53, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-390-0",
+    "closedByEsc": true
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "open-390-1",
+    "anatomy": {
+      "w": 390,
+      "h": 5541,
+      "radius": "0px",
+      "title": "Theme Settings",
+      "titleSize": "15px",
+      "titleWeight": "500",
+      "buttons": [
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 30,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 40,
+          "h": 52,
+          "x": 222,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "3unread messages",
+          "w": 40,
+          "h": 52,
+          "x": 267,
+          "y": 9,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(112, 119, 147)",
+          "radius": "50%"
+        },
+        {
+          "text": "",
+          "w": 31,
+          "h": 31,
+          "x": 629,
+          "y": 13,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "0px rgb(104, 125, 146)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Reset",
+          "w": 240,
+          "h": 39,
+          "x": 410,
+          "y": 785,
+          "bg": "rgb(233, 103, 103)",
+          "border": "1px rgb(233, 103, 103)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Launch demo modal",
+          "w": 161,
+          "h": 39,
+          "x": 40,
+          "y": 253,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        },
+        {
+          "text": "Copy",
+          "w": 52,
+          "h": 32,
+          "x": 277,
+          "y": 319,
+          "bg": "rgba(0, 0, 0, 0)",
+          "border": "1px rgb(92, 193, 132)",
+          "radius": "2.4px"
+        },
+        {
+          "text": "Launch static backdrop modal",
+          "w": 222,
+          "h": 39,
+          "x": 40,
+          "y": 751,
+          "bg": "rgb(96, 74, 227)",
+          "border": "1px rgb(96, 74, 227)",
+          "radius": "5.6px"
+        }
+      ],
+      "text": "3 unread messages Color Scheme Light Dark Topbar Color Light Dark Menu Color Light Dark Sidebar Size Default Condensed Hidden Small Hover Active Small Hover MENU Dashboards Property Agents Customers Orders Transactions Reviews Messages Inbox Post CUSTOM Pages Authentication Widgets Hot Layouts COMPO"
+    }
+  },
+  {
+    "page": "lahomes-modals",
+    "step": "escape-390-1",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "triggers-1440",
+    "triggers": 8,
+    "labels": [
+      "",
+      "Basic modal",
+      "Long content Modal",
+      "Modal centered",
+      "Modal with tooltip",
+      "Grid Inside Modal",
+      "Large modal",
+      "Small modal"
+    ]
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-1440-0",
+    "anatomy": {
+      "w": 1057,
+      "h": 113,
+      "radius": "0px",
+      "title": null,
+      "titleSize": null,
+      "titleWeight": null,
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 131,
+          "h": 49,
+          "x": 321,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 183,
+          "h": 49,
+          "x": 459,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 154,
+          "h": 49,
+          "x": 649,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 168,
+          "h": 49,
+          "x": 810,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 165,
+          "h": 49,
+          "x": 985,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 132,
+          "h": 49,
+          "x": 1158,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 132,
+          "h": 49,
+          "x": 321,
+          "y": 494,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        }
+      ],
+      "text": "Basic modalLong content ModalModal centeredModal with tooltipGrid Inside ModalLarge modalSmall modal"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-1440-0",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-1440-1",
+    "anatomy": {
+      "w": 1440,
+      "h": 995,
+      "radius": "0px",
+      "title": "modal",
+      "titleSize": "28px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 131,
+          "h": 49,
+          "x": 321,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 183,
+          "h": 49,
+          "x": 459,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 154,
+          "h": 49,
+          "x": 649,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 168,
+          "h": 49,
+          "x": 810,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 165,
+          "h": 49,
+          "x": 985,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 132,
+          "h": 49,
+          "x": 1158,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 132,
+          "h": 49,
+          "x": 321,
+          "y": 494,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Default",
+          "w": 71,
+          "h": 37,
+          "x": 1571,
+          "y": 139,
+          "bg": "rgb(255, 212, 130)",
+          "border": "1px rgb(255, 212, 130)",
+          "radius": "7px"
+        }
+      ],
+      "text": "NOTES ALERTS CHAT Chat List Show All A Archie Parker Kalid is online Alfie Mason Taherah left 7 mins ago AharlieKane Sami is online Athan Jacoby Nargis left 30 mins ago B Bashid Samim Rashid left 50 mins ago Breddie Ronan Kalid is online Ceorge Carson Taherah left 7 mins ago D Darry Parker Sami is o"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-1440-1",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-1440-2",
+    "anatomy": {
+      "w": 1440,
+      "h": 995,
+      "radius": "0px",
+      "title": "modal",
+      "titleSize": "28px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 131,
+          "h": 49,
+          "x": 321,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 183,
+          "h": 49,
+          "x": 459,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 154,
+          "h": 49,
+          "x": 649,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 168,
+          "h": 49,
+          "x": 810,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 165,
+          "h": 49,
+          "x": 985,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 132,
+          "h": 49,
+          "x": 1158,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 132,
+          "h": 49,
+          "x": 321,
+          "y": 494,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Default",
+          "w": 71,
+          "h": 37,
+          "x": 1571,
+          "y": 139,
+          "bg": "rgb(255, 212, 130)",
+          "border": "1px rgb(255, 212, 130)",
+          "radius": "7px"
+        }
+      ],
+      "text": "NOTES ALERTS CHAT Chat List Show All A Archie Parker Kalid is online Alfie Mason Taherah left 7 mins ago AharlieKane Sami is online Athan Jacoby Nargis left 30 mins ago B Bashid Samim Rashid left 50 mins ago Breddie Ronan Kalid is online Ceorge Carson Taherah left 7 mins ago D Darry Parker Sami is o"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-1440-2",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-1440-3",
+    "anatomy": {
+      "w": 1440,
+      "h": 995,
+      "radius": "0px",
+      "title": "modal",
+      "titleSize": "28px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 131,
+          "h": 49,
+          "x": 321,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 183,
+          "h": 49,
+          "x": 459,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 154,
+          "h": 49,
+          "x": 649,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 168,
+          "h": 49,
+          "x": 810,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 165,
+          "h": 49,
+          "x": 985,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 132,
+          "h": 49,
+          "x": 1158,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 132,
+          "h": 49,
+          "x": 321,
+          "y": 494,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Default",
+          "w": 71,
+          "h": 37,
+          "x": 1571,
+          "y": 139,
+          "bg": "rgb(255, 212, 130)",
+          "border": "1px rgb(255, 212, 130)",
+          "radius": "7px"
+        }
+      ],
+      "text": "NOTES ALERTS CHAT Chat List Show All A Archie Parker Kalid is online Alfie Mason Taherah left 7 mins ago AharlieKane Sami is online Athan Jacoby Nargis left 30 mins ago B Bashid Samim Rashid left 50 mins ago Breddie Ronan Kalid is online Ceorge Carson Taherah left 7 mins ago D Darry Parker Sami is o"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-1440-3",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-1440-4",
+    "anatomy": {
+      "w": 1440,
+      "h": 995,
+      "radius": "0px",
+      "title": "modal",
+      "titleSize": "28px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 131,
+          "h": 49,
+          "x": 321,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 183,
+          "h": 49,
+          "x": 459,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 154,
+          "h": 49,
+          "x": 649,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 168,
+          "h": 49,
+          "x": 810,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 165,
+          "h": 49,
+          "x": 985,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 132,
+          "h": 49,
+          "x": 1158,
+          "y": 438,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 132,
+          "h": 49,
+          "x": 321,
+          "y": 494,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Default",
+          "w": 71,
+          "h": 37,
+          "x": 1571,
+          "y": 139,
+          "bg": "rgb(255, 212, 130)",
+          "border": "1px rgb(255, 212, 130)",
+          "radius": "7px"
+        }
+      ],
+      "text": "NOTES ALERTS CHAT Chat List Show All A Archie Parker Kalid is online Alfie Mason Taherah left 7 mins ago AharlieKane Sami is online Athan Jacoby Nargis left 30 mins ago B Bashid Samim Rashid left 50 mins ago Breddie Ronan Kalid is online Ceorge Carson Taherah left 7 mins ago D Darry Parker Sami is o"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-1440-4",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "triggers-390",
+    "triggers": 8,
+    "labels": [
+      "",
+      "Basic modal",
+      "Long content Modal",
+      "Modal centered",
+      "Modal with tooltip",
+      "Grid Inside Modal",
+      "Large modal",
+      "Small modal"
+    ]
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-390-0",
+    "anatomy": {
+      "w": 334,
+      "h": 174,
+      "radius": "0px",
+      "title": null,
+      "titleSize": null,
+      "titleWeight": null,
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 101,
+          "h": 37,
+          "x": 28,
+          "y": 641,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 143,
+          "h": 37,
+          "x": 136,
+          "y": 641,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 120,
+          "h": 37,
+          "x": 28,
+          "y": 685,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 131,
+          "h": 37,
+          "x": 155,
+          "y": 685,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 129,
+          "h": 37,
+          "x": 28,
+          "y": 728,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 102,
+          "h": 37,
+          "x": 164,
+          "y": 728,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 102,
+          "h": 37,
+          "x": 28,
+          "y": 772,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        }
+      ],
+      "text": "Basic modalLong content ModalModal centeredModal with tooltipGrid Inside ModalLarge modalSmall modal"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-390-0",
+    "closedByEsc": false
+  },
+  {
+    "page": "kamr-modals",
+    "step": "open-390-1",
+    "anatomy": {
+      "w": 390,
+      "h": 937,
+      "radius": "0px",
+      "title": "modal",
+      "titleSize": "28px",
+      "titleWeight": "600",
+      "buttons": [
+        {
+          "text": "Basic modal",
+          "w": 101,
+          "h": 37,
+          "x": 28,
+          "y": 641,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Long content Modal",
+          "w": 143,
+          "h": 37,
+          "x": 136,
+          "y": 641,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal centered",
+          "w": 120,
+          "h": 37,
+          "x": 28,
+          "y": 685,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Modal with tooltip",
+          "w": 131,
+          "h": 37,
+          "x": 155,
+          "y": 685,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Grid Inside Modal",
+          "w": 129,
+          "h": 37,
+          "x": 28,
+          "y": 728,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Large modal",
+          "w": 102,
+          "h": 37,
+          "x": 164,
+          "y": 728,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Small modal",
+          "w": 102,
+          "h": 37,
+          "x": 28,
+          "y": 772,
+          "bg": "rgb(248, 133, 125)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+        },
+        {
+          "text": "Default",
+          "w": 71,
+          "h": 37,
+          "x": 521,
+          "y": 139,
+          "bg": "rgb(255, 212, 130)",
+          "border": "1px rgb(255, 212, 130)",
+          "radius": "7px"
+        }
+      ],
+      "text": "NOTES ALERTS CHAT Chat List Show All A Archie Parker Kalid is online Alfie Mason Taherah left 7 mins ago AharlieKane Sami is online Athan Jacoby Nargis left 30 mins ago B Bashid Samim Rashid left 50 mins ago Breddie Ronan Kalid is online Ceorge Carson Taherah left 7 mins ago D Darry Parker Sami is o"
+    }
+  },
+  {
+    "page": "kamr-modals",
+    "step": "escape-390-1",
+    "closedByEsc": false
+  }
+]

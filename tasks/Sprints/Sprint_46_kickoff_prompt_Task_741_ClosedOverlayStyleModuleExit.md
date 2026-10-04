@@ -1,9 +1,9 @@
 # Task 741 — Retire `CLOSED_OVERLAY_STYLE`'s Tailwind strings into `ListingCard.module.css`
 
-> **Status: `NEEDS REVISION` — Revision 3, 2026-10-04 (executor I0 block upheld). The ONLY executable route is §17 at
-> the end of this file.** §16 (Revision 2) is kept for its owner quote (§16.1) and findings (§16.2) only; §17.1 lists
-> which of its requirements are withdrawn, superseded or carried. §1–§15 are the closed 2026-08-15 migration, kept as
-> history.
+> **Status: `NEEDS REVISION` — Revision 3c, 2026-10-04 (review 1 of Revision 3b, §18.11). The ONLY executable route
+> is §18.11 at the end of this file**, on top of the implemented §18 (Revision 3b) and §17 (Revision 3/3a). §16
+> (Revision 2) is kept for its owner quote (§16.1) and findings (§16.2) only. §1–§15 are the closed 2026-08-15
+> migration, kept as history.
 
 **Sprint 46.6. Q4 — Release/Critical Flow** (it edits `ListingCard.tsx`, named in
 `docs/critical-flow-registry.md:57`).
@@ -997,6 +997,7 @@ Owner decisions, 2026-10-04:
 - **Evidence:** `src/stories/mantine/primitives/ListingCard.stories.tsx` `Default` (three grid cards and one list card);
   `ListingCard.tsx:80-112`.
 - **Corrected status:** `FACT`. Both reviews passed a primitive Story that does not prove the component's states.
+- **Partly retracted in §18.11:** the "New" sentence above is wrong for Storybook. The states claim stands.
 
 ### 18.2 Verified context (orchestrator, 2026-10-04, working tree)
 
@@ -1038,7 +1039,7 @@ Owner decisions, 2026-10-04:
 | `inactive` / `pending` card badge | none | the existing card badge (`MantineListingCardPattern` `badges`, `variant="filled"`), colour `LISTING_STATUS_COLOR[status]`, label `t('status_inactive')` / `t('status_pending')` | **REUSE** |
 | View reset below 640 | none | `ListingsShellView`: `useMatches({ base: true, sm: false })` (precedent `LightboxView.tsx:53`) + `useEffect` calling `onViewChange('grid')` when below sm and `view === 'list'`. The render branch uses grid whenever below sm, so no list frame paints | **REUSE** Mantine hook |
 | List section of both card Stories | rendered at every width | the section's `Stack` (title and cards) gets `visibleFrom="sm"`, mirroring `ListingsSortBar.tsx:162`, with a comment citing that line and D46-3 | **REUSE** Mantine prop |
-| "New" badge in the primitive Story | stale wall-clock comparison | a Story-level `beforeEach` on the `Mantine/Primitives/ListingCard` meta pins `Date.now` to `FIXTURE_NOW_MS` (`Date.parse('2026-07-30T00:00:00.000Z')`) and restores the original in its returned cleanup. Production is unchanged | fixture only |
+| "New" badge in the primitive Story | ~~stale wall-clock comparison~~ **withdrawn (§18.11):** `.storybook/preview-head.html:15-46` already freezes `Date.now` to 2026-07-30 for every Story | no Story-level pin | none |
 
 `GR-0 CANONICAL REUSE PREFLIGHT — request: inactive/pending card badges, list→grid reset below 640, every card state in the two card Stories; semantic queries: "getBadges", "LISTING_STATUS_COLOR", "status_inactive", "visibleFrom=\"sm\"", "useMatches", "view === 'list'"; inspected candidates: ListingCard.tsx:80-112, listingStatusTone.ts:21-29, ListingsSortBar.tsx:159-186, ListingsShellView.tsx:127-160, LightboxView.tsx:53, ListingCard.stories.tsx, ListingCardPattern.stories.tsx:139-251, ListingsShellView.stories.tsx:51-67; decision: REUSE; selected canonical owner: ListingCard getBadges + LISTING_STATUS_COLOR, ListingsShellView, Mantine useMatches/visibleFrom; Mantine/TailAdmin token path: theme colours gray/yellow via the existing filled card badge, theme breakpoint sm; new hardcoded visual values: NONE; rationale: both production changes are owner decisions D46-3/D46-4 expressed with existing sources.`
 
@@ -1057,7 +1058,7 @@ value is chosen. If the owner requires the audit anyway, this revision is not ex
 | **R36** | `getBadges`: `inactive` → `{ label: 'status_inactive', color: LISTING_STATUS_COLOR.inactive }`, `pending` → `{ label: 'status_pending', color: LISTING_STATUS_COLOR.pending }`. Each returns early, like the other non-active statuses, so neither gets `new` / `price_reduced`. Neither gets the overlay or `isArchived`. The comment above `getBadges` names D46-4. | P0 |
 | **R37** | `ListingsShellView`: below `sm`, with `view === 'list'`, it calls `onViewChange('grid')` once and renders the grid track (never the horizontal stack). At `sm` or more it renders what `view` says. The View never calls `onViewChange('list')`. Nothing else in the View changes. | P0 |
 | **R38** | `src/modules/listings/components/ListingsActionRow.tsx` is added to `scripts/mantine-migration-scope.json`. The entries it makes stale are removed: `surface-census-baseline.json` keys `…listings/page.tsx :: …ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried` and `…ListingsShellView.tsx :: …ListingsActionRow.tsx :: tier1-unenrolled-or-unstoried`, plus `rendered-scope-baseline.json` key `…ListingsShellView.tsx -> …ListingsActionRow.tsx`. Remove only what the gates report as stale, and edit through Node, not a hand-typed `Get-Content`. | P0 |
-| **R39** | `Mantine/Primitives/ListingCard` → `Default` renders the real `ListingCard` in every state below, in this order, first in the grid section and then in the list section. Each state gets its own fixture through `makeFixtureListing` options, and every visible string comes from `storyT`. The states: (1) active + New; (2) active, no badge (`created_at` 2026-07-01); (3) active + New + price reduced (`price_old` 92000); (4) premium; (5) inactive; (6) pending; (7) sold; (8) rented; (9) archived; (10) expired; (11) no image. The list section, with its title, has `visibleFrom="sm"`. The meta's `beforeEach` pins `Date.now` as in §18.3. `FavoritesComposition` is unchanged. No `style` object, fixed width or viewport pin is added. | P0 |
+| **R39** | `Mantine/Primitives/ListingCard` → `Default` renders the real `ListingCard` in every state below, in this order, first in the grid section and then in the list section. Each state gets its own fixture through `makeFixtureListing` options, and every visible string comes from `storyT`. The states: (1) active + New; (2) active, no badge (`created_at` 2026-07-01); (3) active + New + price reduced (`price_old` 92000); (4) premium; (5) inactive; (6) pending; (7) sold; (8) rented; (9) archived; (10) expired; (11) no image. The list section, with its title, has `visibleFrom="sm"`. No `Date.now` pin (withdrawn, §18.11). `FavoritesComposition` is unchanged. No `style` object, fixed width or viewport pin is added. | P0 |
 | **R40** | `Patterns/Mantine/ListingCardPattern` → `Default` renders the same eleven states in both sections. For new cards (New + reduced, inactive, pending, expired), `DemoCard` gains options. Badge labels come from `storyT(l, 'listing.status_*')` and colours from `LISTING_STATUS_COLOR`. The list section, with its title and its `Divider`, has `visibleFrom="sm"`. The existing play test (`consumer-overlay-hook`) stays green. | P0 |
 | **R41** | Tests, red on the pre-change tree first: <ul><li>`ListingCard.smoke.test.tsx`: `inactive` renders one badge with text *Inactive* and the gray filled colour; `pending` renders *Under review* in yellow; neither renders *New*.</li><li>New file `src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx` (mock `matchMedia`). Below sm with `view="list"`, `onViewChange` is called with `'grid'` and no `.listing-card--horizontal` renders. At sm or more with `view="list"`, it is not called and the horizontal cards render. After the switch, a re-render at sm or more with `view="grid"` never calls `onViewChange('list')`.</li></ul> | P0 |
 
@@ -1205,3 +1206,121 @@ Append `## Revision 3b` to the session log. It contains:
 Set the 741 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`
 or `BLOCKED`. No self-approval, no git. The reviewer measures every matrix Story (GR-3b–3g) and audits each Story
 against **every production state of the component** before the matrix reaches the owner.
+
+### 18.11 Review 1 of Revision 3b, 2026-10-04 — `NEEDS REVISION` → Revision 3c (one Story label fix, one test fix)
+
+**This subsection is the only executable route.** R36–R41 are implemented. Re-entry mode: **remediation**, on the
+current working tree. Evidence goes to `docs/sessions/evidence/task741r3/rev3c/`. The `rev3b/` files are kept and are
+not re-run, except where §18.11.4 says so.
+
+**Inspected:** `ListingCard.tsx`, `ListingsShellView.tsx`, both card Stories, both test files (diff and source);
+`scripts/mantine-migration-scope.json`, `surface-census-baseline.json` and `rendered-scope-baseline.json` (R38 hunks);
+every `rev3b/final/*.txt`; `probe-viewreset.json`; `probe-states.json`; `verify-states.mjs`;
+`.storybook/preview-head.html`; Mantine `use-media-query.mjs`; the session log's `## Revision 3b`. The reviewer re-ran,
+natively (`win32`): the two R41 test files (27 passed, exit 0) and the `ListingsShell.tsx` census (only
+`ListingsShell.tsx` FAILs, as baselined debt; `ListingsActionRow.tsx` is `manifest:yes story:yes`).
+
+**Verified, kept as is:** R36, R37, R38, R39. The executor's deviations 2 to 5 (session log) are accepted. AC35's
+`governance:tailwind` clause holds: the HIGH lines equal `rev3a/13_governance-tailwind.txt`.
+
+#### 18.11.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F29 | **P2** (R40, AC39) | **CONTRADICTION.** The report says both card Stories render the eleven states. In `uk`, the pattern Story's badges differ from production's for the same state, and its own probe recorded it (`rev3b/probe-states.json`, `A_real_clock`, `uk@1440`): primitive (production `getBadges` → `t(b.label)`) `Нове` · `Нове`+`Ціну знижено` · `Архів`; pattern `Нова` · `Нова`+`Ціна знижена` · `Архівовано`. `it` differs as well (`Nuovo` / `Nuova`). The cause is that `DemoCard` labels New, Price reduced and Archived from `storybook.mantine.card_badge_new` / `_reduced` / `_archived`, not from the `listing.*` keys production uses. For archived, that breaks R40 ("labels from `listing.status_*`"). `verify-states.mjs` compared badge text only for `en`, so it reported `AC39 OK`. | **R42**, **AC41** |
+| F30 | **P3** (R41) | R41's third assertion is "after the switch, a re-render **at sm or more** with `view="grid"` never calls `onViewChange('list')`". Test 4 of `ListingsShellView.viewReset.test.tsx` re-renders while still **below** sm, so the viewport change is never exercised. The Playwright probe AC37 covers the real resize, so production behaviour is verified. The unit test does not test the stated case. | **R43** |
+| F31 | NOTE, orchestrator kickoff defect | **RETRACTION (orchestrator).** **Invalid prior claim:** §18.1 said "The 'New' badge has not rendered since 2026-08-04, because … `getBadges` compares it with the real `Date.now()`", and §18.3 / R39 ordered a Story `Date.now` pin. **Why invalid:** `.storybook/preview-head.html:15-46` (Task 698) freezes `Date.now` and zero-argument `new Date()` to `2026-07-30T00:00:00.000Z` for every Story, so "New" rendered on the fixture all along. **Evidence:** `preview-head.html:38` (`if (prop === 'now')`); the executor's plant `rev3b/probe-states-plant.json` (pin removed, clock moved, "New" still rendered). **Corrected status:** `FACT`. The pin is withdrawn (§18.3, R39 amended). The rest of the §18.1 retraction stands: before 3b, no Story rendered archived, expired, inactive, pending, price-reduced or no-image through the real `ListingCard`. | Kickoff corrected; no executor action |
+
+#### 18.11.2 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R42** | In `src/stories/patterns/mantine/ListingCardPattern.stories.tsx` `DemoCard`, every badge label uses the key production uses: New `storyT(l, 'listing.new')`, Price reduced `storyT(l, 'listing.price_reduced')`, Archived `storyT(l, 'listing.status_archived')`. The other badges are unchanged. No other line in the file changes. Do **not** edit `messages/*.json`, because they carry Task 859's uncommitted hunks. The `storybook.mantine.card_badge_*` keys stay; `ListingDetailPattern.stories.tsx` still uses two of them. If any gate fails because `card_badge_archived` is now unused, stop and report it. | P1 |
+| **R43** | In `ListingsShellView.viewReset.test.tsx`, the `matchMedia` stub records each `change` listener that `addEventListener('change', cb)` receives. Test 4 then does the following: <ol><li>renders below sm with `view="list"` and asserts one call `onViewChange('grid')`;</li><li>sets the viewport to sm or more and fires every recorded listener with `{ matches: query.includes('min-width') }` inside `act()`;</li><li>re-renders with `view="grid"`;</li><li>asserts `onViewChange` was called exactly once in total, never with `'list'`, and that no `.listing-card--horizontal` renders.</li></ol> Mantine's `useMediaQuery` subscribes through `addEventListener('change', …)` and reads `event.matches` (`node_modules/@mantine/hooks/esm/use-media-query/use-media-query.mjs`). The other three tests are unchanged. | P2 |
+
+#### 18.11.3 Acceptance criteria
+
+`GR-4 AC AUDIT — 2 criteria; each states an observable property; absolutes: none.`
+
+- **AC41 [R42].** `verify-states.mjs` is copied to `rev3c/verify-states.mjs` and extended. For every pass and every
+  cell, the pattern Story's grid badge texts and list badge texts equal the primitive Story's for the same locale and
+  width, card by card. The existing `en` checks stay. `rev3c/probe-states.mjs` (a copy of the 3b probe) adds `sq` and
+  `it` at 1440. Expected: `rev3c/probe-states-verify.txt` ends `EXIT_CODE=0` with no failure lines. The red arm also
+  runs: the extended verifier on the **old** `rev3b/probe-states.json` must exit 1 and name the `uk` cells
+  (`rev3c/verify-red.txt`).
+- **AC42 [R43].** Run once without the listener firing in step 2 (a temporary edit, then reverted), test 4 fails
+  (`rev3c/r43-red.txt`, exit not 0). With the change, all four tests pass. The final file's `git hash-object` is
+  recorded.
+
+#### 18.11.4 Verification plan
+
+**I0, before any write.** `git --no-optional-locks status --porcelain`, plus `git hash-object` of the two §18.11.2
+files → `rev3c/00_i0.txt`. They must equal `rev3b/final/18_hashes.txt` (`4dc5a740…`, `7063470c…`). If either differs,
+stop and report it.
+
+**Gate block, after the writes.** One unpiped transcript per command under `rev3c/`, each ending `EXIT_CODE=`, written
+through Node or `Out-File -Encoding utf8`, never into a path with an unexpanded `$`. Strip any BOM from the `rev3c/`
+transcripts before `check:file-integrity`, as in 3b deviation 5.
+
+```powershell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+node.exe -p process.platform
+node.exe --version
+npx.cmd vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx src/modules/listings/lib/__tests__/listingStatusTone.test.ts
+npm.cmd run check:stories
+npm.cmd run check:story-coverage
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:i18n
+npm.cmd run build-storybook
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run build
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+git --no-optional-locks hash-object src/stories/patterns/mantine/ListingCardPattern.stories.tsx src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx src/stories/mantine/primitives/ListingCard.stories.tsx src/modules/listings/components/ListingCard.tsx src/modules/listings/components/ListingsShellView.tsx
+git --no-optional-locks status --porcelain
+```
+
+Expected: exit 0 for every command. The last three hashes equal `rev3b/final/18_hashes.txt`. Then run the AC41 probe
+and verifier on that `build-storybook` output.
+
+**Story receipts**, for `patterns-mantine-listingcardpattern--default` only, because it is the one changed Story:
+- GR-3b at 320/390/1024/1440;
+- GR-3c at 320/390/768/1440;
+- GR-3d at 320/390/1024/1440, all four sides (`StoryPageGutter all`);
+- GR-3e: n/a, no popup;
+- GR-3f: n/a;
+- GR-3g as in §18.7.
+
+Measure in `uk` at 320 as well: *Ціну знижено* next to *Нове* must stay inside the photo.
+
+**GR-7.** No reference audit is run. R42 makes a Story label equal to production's own label, and no layout, control
+or visual value is chosen.
+
+#### 18.11.5 Files in scope
+
+- `src/stories/patterns/mantine/ListingCardPattern.stories.tsx` (R42: three label keys)
+- `src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx` (R43: stub and test 4)
+- `docs/sessions/evidence/task741r3/rev3c/` (new)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3c`)
+- `docs/backlog.md` (the 741 state only)
+
+Do not edit anything else. If a gate needs another file, stop and report it.
+
+#### 18.11.6 Owner visual review — O46-2 (§18.9), unchanged
+
+The matrix in §18.9 goes to the owner only after the next review measures every row's Story (GR-3b–3g). Production
+`/uk/listings` and `/uk/favorites` need a deploy.
+
+#### 18.11.7 Completion
+
+Append `## Revision 3c` to the session log, with:
+- the I0 status and hashes;
+- the R43 red run and the AC41 red run;
+- the gate block;
+- `rev3c/probe-states.json` and `rev3c/probe-states-verify.txt`;
+- the receipts;
+- a `Files Changed` table.
+
+Set the 741 state in `docs/backlog.md`: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No self-approval, no git.

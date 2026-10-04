@@ -1,0 +1,1835 @@
+{
+  "ref": "lahomes",
+  "entry": "https://techzaa.in/lahomes/admin/",
+  "crawledAt": "2026-10-04T04:37:08.378Z",
+  "remainingQueue": [],
+  "rows": [
+    {
+      "url": "https://techzaa.in/lahomes/admin/",
+      "finalUrl": "https://techzaa.in/lahomes/admin/",
+      "status": 200,
+      "title": "Analytics | Lahomes - Real Estate Management Admin Template",
+      "h1": "Analytics",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-calendar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-calendar.html",
+      "status": 200,
+      "title": "Schedule | Lahomes - Real Estate Management Admin Template",
+      "h1": "Calendar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-pricing.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-pricing.html",
+      "status": 200,
+      "title": "Pricing | Lahomes - Real Estate Management Admin Template",
+      "h1": "Pricing",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-faqs.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-faqs.html",
+      "status": 200,
+      "title": "FAQs | Lahomes - Real Estate Management Admin Template",
+      "h1": "FAQs",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/auth-lock-screen.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-lock-screen.html",
+      "status": 200,
+      "title": "Lock Screen | Lahomes - Real Estate Management Admin Template",
+      "h1": "HI ! GASTON",
+      "imgCount": 2,
+      "galleryHits": [
+        {
+          "tag": "img",
+          "cls": "rounded-circle avatar-lg img-thumbnail",
+          "w": 72,
+          "h": 72,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/auth-signin.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-signin.html",
+      "status": 200,
+      "title": "Sign In | Lahomes - Real Estate Management Admin Template",
+      "h1": "SIGN IN",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/index.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/index.html",
+      "status": 200,
+      "title": "Analytics | Lahomes - Real Estate Management Admin Template",
+      "h1": "Analytics",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/dashboard-agent.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/dashboard-agent.html",
+      "status": 200,
+      "title": "Dashboard | Lahomes - Real Estate Management Admin Template",
+      "h1": "Agent",
+      "imgCount": 11,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/dashboard-customer.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/dashboard-customer.html",
+      "status": 200,
+      "title": "Dashboard | Lahomes - Real Estate Management Admin Template",
+      "h1": "Customers",
+      "imgCount": 14,
+      "galleryHits": [
+        {
+          "tag": "img",
+          "cls": "rounded avatar-xl img-thumbnail",
+          "w": 96,
+          "h": 96,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "status": 200,
+      "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+      "h1": "Listing Grid",
+      "imgCount": 11,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/property-list.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-list.html",
+      "status": 200,
+      "title": "Listing List | Lahomes - Real Estate Management Admin Template",
+      "h1": "Listing List",
+      "imgCount": 11,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/property-details.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-details.html",
+      "status": 200,
+      "title": "Property Overview | Lahomes - Real Estate Management Admin Template",
+      "h1": "Property Overview",
+      "imgCount": 3,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/property-add.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-add.html",
+      "status": 200,
+      "title": "Add Property | Lahomes - Real Estate Management Admin Template",
+      "h1": "Add Property",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/agents-list.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-list.html",
+      "status": 200,
+      "title": "Agent List | Lahomes - Real Estate Management Admin Template",
+      "h1": "Agent List",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/agents-grid.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-grid.html",
+      "status": 200,
+      "title": "Agent Grid | Lahomes - Real Estate Management Admin Template",
+      "h1": "Agent Grid",
+      "imgCount": 11,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "status": 200,
+      "title": "Agent Overview | Lahomes - Real Estate Management Admin Template",
+      "h1": "Agent Overview",
+      "imgCount": 8,
+      "galleryHits": [
+        {
+          "tag": "img",
+          "cls": "avatar-xl user-img img-thumbnail rounded-circle",
+          "w": 96,
+          "h": 96,
+          "imgs": 0
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 308,
+          "h": 206,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 308,
+          "h": 206,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 308,
+          "h": 206,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-caption d-none d-md-block bg-light rounded p-2 text-start",
+          "w": 216,
+          "h": 110,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "status": 200,
+      "title": "Add Agent | Lahomes - Real Estate Management Admin Template",
+      "h1": "Add Agent",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/customers-list.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/customers-list.html",
+      "status": 200,
+      "title": "Customer List | Lahomes - Real Estate Management Admin Template",
+      "h1": "Customer List",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/customers-grid.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/customers-grid.html",
+      "status": 200,
+      "title": "Customer Grid | Lahomes - Real Estate Management Admin Template",
+      "h1": "Customer Grid",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/customers-details.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/customers-details.html",
+      "status": 200,
+      "title": "Customer Overview | Lahomes - Real Estate Management Admin Template",
+      "h1": "Customer Overview",
+      "imgCount": 9,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 676,
+          "h": 295,
+          "imgs": 4
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 676,
+          "h": 295,
+          "imgs": 4
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 676,
+          "h": 295,
+          "imgs": 1
+        },
+        {
+          "tag": "button",
+          "cls": "carousel-control-prev",
+          "w": 101,
+          "h": 295,
+          "imgs": 0
+        },
+        {
+          "tag": "button",
+          "cls": "carousel-control-next",
+          "w": 101,
+          "h": 295,
+          "imgs": 0
+        },
+        {
+          "tag": "img",
+          "cls": "rounded-circle avatar-xl img-thumbnail",
+          "w": 96,
+          "h": 96,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/customers-add.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/customers-add.html",
+      "status": 200,
+      "title": "Customers Add | Lahomes - Real Estate Management Admin Template",
+      "h1": "Customers Add",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/orders.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/orders.html",
+      "status": 200,
+      "title": "Orders | Lahomes - Real Estate Management Admin Template",
+      "h1": "Orders",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/transactions.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/transactions.html",
+      "status": 200,
+      "title": "Transactions | Lahomes - Real Estate Management Admin Template",
+      "h1": "Transactions",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/reviews.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/reviews.html",
+      "status": 200,
+      "title": "Reviews | Lahomes - Real Estate Management Admin Template",
+      "h1": "Reviews",
+      "imgCount": 8,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/messages.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/messages.html",
+      "status": 200,
+      "title": "Messages | Lahomes - Real Estate Management Admin Template",
+      "h1": "Messages",
+      "imgCount": 35,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper mySwiper mx-3 swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight",
+          "w": 227,
+          "h": 48,
+          "imgs": 11
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 227,
+          "h": 48,
+          "imgs": 11
+        },
+        {
+          "tag": "img",
+          "cls": "img-thumbnail me-1",
+          "w": 121,
+          "h": 84,
+          "imgs": 0
+        },
+        {
+          "tag": "img",
+          "cls": "img-thumbnail me-1",
+          "w": 121,
+          "h": 84,
+          "imgs": 0
+        },
+        {
+          "tag": "img",
+          "cls": "img-thumbnail me-1",
+          "w": 121,
+          "h": 84,
+          "imgs": 0
+        },
+        {
+          "tag": "img",
+          "cls": "img-thumbnail avatar-lg rounded-circle mb-1",
+          "w": 72,
+          "h": 72,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/inbox.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/inbox.html",
+      "status": 200,
+      "title": "Inbox | Lahomes - Real Estate Management Admin Template",
+      "h1": "Inbox",
+      "imgCount": 15,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/post.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/post.html",
+      "status": 200,
+      "title": "Blog Grid | Lahomes - Real Estate Management Admin Template",
+      "h1": "Blog Grid",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/post-details.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/post-details.html",
+      "status": 200,
+      "title": "Blog Details | Lahomes - Real Estate Management Admin Template",
+      "h1": "Blog Details",
+      "imgCount": 21,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/post-create.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/post-create.html",
+      "status": 200,
+      "title": "Blog Create | Lahomes - Real Estate Management Admin Template",
+      "h1": "Blog Create",
+      "imgCount": 3,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-starter.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-starter.html",
+      "status": 200,
+      "title": "Welcome | Lahomes - Real Estate Management Admin Template",
+      "h1": "Welcome",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-invoice.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-invoice.html",
+      "status": 200,
+      "title": "Invoice Details | Lahomes - Real Estate Management Admin Template",
+      "h1": "Invoice",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-comingsoon.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-comingsoon.html",
+      "status": 200,
+      "title": "Coming Soon | Lahomes - Real Estate Management Admin Template",
+      "h1": "WE ARE LAUNCHING SOON...",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-timeline.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-timeline.html",
+      "status": 200,
+      "title": "Timeline | Lahomes - Real Estate Management Admin Template",
+      "h1": "FAQs",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-maintenance.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-maintenance.html",
+      "status": 200,
+      "title": "Maintenance | Lahomes - Real Estate Management Admin Template",
+      "h1": "We are currently performing maintenance",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-404.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-404.html",
+      "status": 200,
+      "title": "Page Not Found - 404 | Lahomes - Real Estate Management Admin Template",
+      "h1": "Page Not Found !",
+      "imgCount": 2,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/pages-404-alt.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/pages-404-alt.html",
+      "status": 200,
+      "title": "404 | Lahomes - Real Estate Management Admin Template",
+      "h1": "404",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "status": 200,
+      "title": "Sign Up | Lahomes - Real Estate Management Admin Template",
+      "h1": "FREE ACCOUNT",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/auth-password.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-password.html",
+      "status": 200,
+      "title": "Reset Password | Lahomes - Real Estate Management Admin Template",
+      "h1": "RESET PASSWORD",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/widgets.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/widgets.html",
+      "status": 200,
+      "title": "Widgets | Lahomes - Real Estate Management Admin Template",
+      "h1": "$59.6k",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-dark-sidenav.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-dark-sidenav.html",
+      "status": 200,
+      "title": "Dark Sidenav | Lahomes - Real Estate Management Admin Template",
+      "h1": "Dark Sidenav",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-dark-topnav.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-dark-topnav.html",
+      "status": 200,
+      "title": "Dark Topnav | Lahomes - Real Estate Management Admin Template",
+      "h1": "Dark Topnav",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-simple-sidenav.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-simple-sidenav.html",
+      "status": 200,
+      "title": "Dark Mode Layout | Lahomes - Real Estate Management Admin Template",
+      "h1": "Simple Sidenav",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-small-sidenav.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-small-sidenav.html",
+      "status": 200,
+      "title": "Small (Condensed) Sidenav Menu | Lahomes - Real Estate Management Admin Template",
+      "h1": "Small Sidenav",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-small-hover.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-small-hover.html",
+      "status": 200,
+      "title": "Hover Sidenav | Lahomes - Real Estate Management Admin Template",
+      "h1": "Small Hover",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-small-hover-active.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-small-hover-active.html",
+      "status": 200,
+      "title": "Hover Active Sidenav Menu | Lahomes - Real Estate Management Admin Template",
+      "h1": "Small Hover Active",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-hidden-sidenav.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-hidden-sidenav.html",
+      "status": 200,
+      "title": "Hidden Sidenav Menu | Lahomes - Real Estate Management Admin Template",
+      "h1": "Hidden Sidenav",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/layouts-dark.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/layouts-dark.html",
+      "status": 200,
+      "title": "Dark Mode Layout | Lahomes - Real Estate Management Admin Template",
+      "h1": "Dark Layout",
+      "imgCount": 3,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 216,
+          "h": 144,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 216,
+          "h": 144,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-accordion.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-accordion.html",
+      "status": 200,
+      "title": "Accordion | Lahomes - Real Estate Management Admin Template",
+      "h1": "Accordion",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-alerts.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-alerts.html",
+      "status": 200,
+      "title": "Alerts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Alerts",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-avatar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-avatar.html",
+      "status": 200,
+      "title": "Avatar | Lahomes - Real Estate Management Admin Template",
+      "h1": "Avatar",
+      "imgCount": 12,
+      "galleryHits": [
+        {
+          "tag": "img",
+          "cls": "img-fluid img-thumbnail",
+          "w": 200,
+          "h": 137,
+          "imgs": 0
+        },
+        {
+          "tag": "img",
+          "cls": "img-fluid rounded-circle img-thumbnail",
+          "w": 120,
+          "h": 120,
+          "imgs": 0
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-badge.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-badge.html",
+      "status": 200,
+      "title": "Badge | Lahomes - Real Estate Management Admin Template",
+      "h1": "Badge",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-breadcrumb.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-breadcrumb.html",
+      "status": 200,
+      "title": "Breadcrumb | Lahomes - Real Estate Management Admin Template",
+      "h1": "Breadcrumb",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-buttons.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-buttons.html",
+      "status": 200,
+      "title": "Buttons | Lahomes - Real Estate Management Admin Template",
+      "h1": "Buttons",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-card.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-card.html",
+      "status": 200,
+      "title": "Cards | Lahomes - Real Estate Management Admin Template",
+      "h1": "Cards",
+      "imgCount": 17,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-carousel.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-carousel.html",
+      "status": 200,
+      "title": "Carousel | Lahomes - Real Estate Management Admin Template",
+      "h1": "Carousel",
+      "imgCount": 9,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 384,
+          "h": 256,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 384,
+          "h": 256,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 384,
+          "h": 256,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 384,
+          "h": 256,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-item active",
+          "w": 384,
+          "h": 256,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": "lahomes-054.png",
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-collapse.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-collapse.html",
+      "status": 200,
+      "title": "Collapse | Lahomes - Real Estate Management Admin Template",
+      "h1": "Collapse",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-dropdown.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-dropdown.html",
+      "status": 200,
+      "title": "Dropdown | Lahomes - Real Estate Management Admin Template",
+      "h1": "Dropdowns",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-list-group.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-list-group.html",
+      "status": 200,
+      "title": "List Group | Lahomes - Real Estate Management Admin Template",
+      "h1": "List Group",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-modal.html",
+      "status": 200,
+      "title": "Modal | Lahomes - Real Estate Management Admin Template",
+      "h1": "Modals",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-tabs.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-tabs.html",
+      "status": 200,
+      "title": "Nav Tabs | Lahomes - Real Estate Management Admin Template",
+      "h1": "Tabs",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "status": 200,
+      "title": "Offcanvas | Lahomes - Real Estate Management Admin Template",
+      "h1": "Offcanvas",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-pagination.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-pagination.html",
+      "status": 200,
+      "title": "Pagination | Lahomes - Real Estate Management Admin Template",
+      "h1": "Pagination",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-placeholders.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-placeholders.html",
+      "status": 200,
+      "title": "Placeholder | Lahomes - Real Estate Management Admin Template",
+      "h1": "Placeholders",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-popovers.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-popovers.html",
+      "status": 200,
+      "title": "Popovers | Lahomes - Real Estate Management Admin Template",
+      "h1": "Popovers",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-progress.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-progress.html",
+      "status": 200,
+      "title": "Progress | Lahomes - Real Estate Management Admin Template",
+      "h1": "Progress",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-scrollspy.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-scrollspy.html",
+      "status": 200,
+      "title": "Scrollspy | Lahomes - Real Estate Management Admin Template",
+      "h1": "Scrollspy",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-spinners.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-spinners.html",
+      "status": 200,
+      "title": "Spinners | Lahomes - Real Estate Management Admin Template",
+      "h1": "Spinners",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-toasts.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-toasts.html",
+      "status": 200,
+      "title": "Toasts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Toasts",
+      "imgCount": 4,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/ui-tooltips.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-tooltips.html",
+      "status": 200,
+      "title": "Tooltips | Lahomes - Real Estate Management Admin Template",
+      "h1": "Tooltips",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/extended-ratings.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-ratings.html",
+      "status": 200,
+      "title": "Ratings | Lahomes - Real Estate Management Admin Template",
+      "h1": "Ratings",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "status": 200,
+      "title": "Sweet Alert | Lahomes - Real Estate Management Admin Template",
+      "h1": "Sweet Alerts",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/extended-swiper-silder.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-swiper-silder.html",
+      "status": 200,
+      "title": "Swiper Slider | Lahomes - Real Estate Management Admin Template",
+      "h1": "Swipper Slider",
+      "imgCount": 58,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper rounded swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden",
+          "w": 374,
+          "h": 249,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 374,
+          "h": 249,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-prev",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate-prev",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper rounded swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden",
+          "w": 374,
+          "h": 249,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 374,
+          "h": 249,
+          "imgs": 5
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-prev",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 374,
+          "h": 249,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": "lahomes-071.png",
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/extended-scrollbar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-scrollbar.html",
+      "status": 200,
+      "title": "Scrollbar | Lahomes - Real Estate Management Admin Template",
+      "h1": "Scrollbar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/extended-toastify.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-toastify.html",
+      "status": 200,
+      "title": "Toastify | Lahomes - Real Estate Management Admin Template",
+      "h1": "Toastify",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-area.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-area.html",
+      "status": 200,
+      "title": "Apex Area Chart | Lahomes - Real Estate Management Admin Template",
+      "h1": "Area",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-bar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-bar.html",
+      "status": 200,
+      "title": "Apex Bar Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Bar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-bubble.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-bubble.html",
+      "status": 200,
+      "title": "Apex Bubble Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Bubble",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-candlestick.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-candlestick.html",
+      "status": 200,
+      "title": "Apex Candlestick Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Candlestick",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-column.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-column.html",
+      "status": 200,
+      "title": "Apex Column Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Column",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-heatmap.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-heatmap.html",
+      "status": 200,
+      "title": "Apex Heatmap Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Heatmap",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-line.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-line.html",
+      "status": 200,
+      "title": "Apex Line Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Line",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-mixed.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-mixed.html",
+      "status": 200,
+      "title": "Apex Mixed Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Mixed",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-timeline.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-timeline.html",
+      "status": 200,
+      "title": "Apex Timeline Chart | Lahomes - Real Estate Management Admin Template",
+      "h1": "Timeline",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-boxplot.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-boxplot.html",
+      "status": 200,
+      "title": "Apex Boxplot Chart | Lahomes - Real Estate Management Admin Template",
+      "h1": "Boxplot",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-treemap.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-treemap.html",
+      "status": 200,
+      "title": "Apex Treemap Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Treemap",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-pie.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-pie.html",
+      "status": 200,
+      "title": "Apex Pie Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Pie",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-radar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-radar.html",
+      "status": 200,
+      "title": "Apex Radar Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Radar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-radialbar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-radialbar.html",
+      "status": 200,
+      "title": "Apex RadialBar Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "RadialBar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-scatter.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-scatter.html",
+      "status": 200,
+      "title": "Apex Scatter Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Scatter",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/charts-apex-polar-area.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/charts-apex-polar-area.html",
+      "status": 200,
+      "title": "Apex Polar Area Charts | Lahomes - Real Estate Management Admin Template",
+      "h1": "Polar",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-basic.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-basic.html",
+      "status": 200,
+      "title": "Form basics | Lahomes - Real Estate Management Admin Template",
+      "h1": "Basic Form",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-checkbox-radio.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-checkbox-radio.html",
+      "status": 200,
+      "title": "Checkbox & Radio | Lahomes - Real Estate Management Admin Template",
+      "h1": "Checkbox & Radio",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-choices.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-choices.html",
+      "status": 200,
+      "title": "Form Select | Lahomes - Real Estate Management Admin Template",
+      "h1": "Form Select",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-clipboard.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-clipboard.html",
+      "status": 200,
+      "title": "Clipboard | Lahomes - Real Estate Management Admin Template",
+      "h1": "Clipboard",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-flatepicker.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-flatepicker.html",
+      "status": 200,
+      "title": "Flatpicker | Lahomes - Real Estate Management Admin Template",
+      "h1": "Flatpicker",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-validation.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-validation.html",
+      "status": 200,
+      "title": "Form Validation | Lahomes - Real Estate Management Admin Template",
+      "h1": "Form Validation",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-wizard.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-wizard.html",
+      "status": 200,
+      "title": "Wizard | Lahomes - Real Estate Management Admin Template",
+      "h1": "Wizard",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-fileuploads.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-fileuploads.html",
+      "status": 200,
+      "title": "File Uploads | Lahomes - Real Estate Management Admin Template",
+      "h1": "File Uploads",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-editors.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-editors.html",
+      "status": 200,
+      "title": "Editors | Lahomes - Real Estate Management Admin Template",
+      "h1": "Editors",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-input-mask.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-input-mask.html",
+      "status": 200,
+      "title": "Input Mask | Lahomes - Real Estate Management Admin Template",
+      "h1": "Input Mask",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/forms-range-slider.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/forms-range-slider.html",
+      "status": 200,
+      "title": "Range Slider | Lahomes - Real Estate Management Admin Template",
+      "h1": "Range Slider",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/tables-basic.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/tables-basic.html",
+      "status": 200,
+      "title": "Basic Tables | Lahomes - Real Estate Management Admin Template",
+      "h1": "Basic Tables",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/tables-gridjs.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/tables-gridjs.html",
+      "status": 200,
+      "title": "Grid JS | Lahomes - Real Estate Management Admin Template",
+      "h1": "Grid JS",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/icons-remix.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/icons-remix.html",
+      "status": 200,
+      "title": "Boxicons | Lahomes - Real Estate Management Admin Template",
+      "h1": "Boxicons",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/icons-solar.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/icons-solar.html",
+      "status": 200,
+      "title": "Solar Icons | Lahomes - Real Estate Management Admin Template",
+      "h1": "Solar Icons",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/maps-google.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/maps-google.html",
+      "status": 200,
+      "title": "Google Maps | Lahomes - Real Estate Management Admin Template",
+      "h1": "Google Maps",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://techzaa.in/lahomes/admin/maps-vector.html",
+      "finalUrl": "https://techzaa.in/lahomes/admin/maps-vector.html",
+      "status": 200,
+      "title": "Vector Maps | Lahomes - Real Estate Management Admin Template",
+      "h1": "Vector Maps",
+      "imgCount": 1,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+[
+  {
+    "page": "kamr",
+    "step": "login",
+    "url": "https://kamr-vite.vercel.app/login"
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "loaded",
+    "url": "https://kamr-vite.vercel.app/login",
+    "imgs": []
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "thumb-count",
+    "count": 0
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "loaded",
+    "url": "https://kamr-vite.vercel.app/login",
+    "imgs": []
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "click-error",
+    "e": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a[data-src], a[href$=\".jpg"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "open",
+    "lb": null
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "arrow-right",
+    "counter": null
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "arrow-left",
+    "counter": null
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "escape",
+    "stillOpen": false
+  },
+  {
+    "page": "kamr-guest-details",
+    "step": "loaded",
+    "imgs": []
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "loaded-390",
+    "imgs": []
+  },
+  {
+    "page": "lahomes-property-details",
+    "step": "loaded",
+    "imgs": [
+      {
+        "src": "p-11.jpg",
+        "w": 768,
+        "h": 336,
+        "x": 599,
+        "y": 161,
+        "radius": "5.6px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(93, 113, 134)"
+      },
+      {
+        "src": "avatar-1.jpg",
+        "w": 96,
+        "h": 96,
+        "x": 383,
+        "y": 209,
+        "radius": "50%",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "2px rgb(238, 242, 247)"
+      },
+      {
+        "src": "logo-light.png",
+        "w": 118,
+        "h": 30,
+        "x": 24,
+        "y": 21,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "pointer",
+        "border": "0px rgb(132, 134, 167)"
+      }
+    ]
+  },
+  {
+    "page": "lahomes-property-details",
+    "step": "hero-click",
+    "dialog": false,
+    "url": "https://techzaa.in/lahomes/admin/property-details.html"
+  },
+  {
+    "page": "lahomes-property-details",
+    "step": "loaded-390",
+    "imgs": [
+      {
+        "src": "p-11.jpg",
+        "w": 310,
+        "h": 135,
+        "x": 40,
+        "y": 1218,
+        "radius": "5.6px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(93, 113, 134)"
+      },
+      {
+        "src": "avatar-1.jpg",
+        "w": 96,
+        "h": 96,
+        "x": 147,
+        "y": 228,
+        "radius": "50%",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "2px rgb(238, 242, 247)"
+      },
+      {
+        "src": "logo-light.png",
+        "w": 118,
+        "h": 30,
+        "x": -236,
+        "y": 21,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "pointer",
+        "border": "0px rgb(132, 134, 167)"
+      }
+    ]
+  },
+  {
+    "page": "lahomes-agents-details",
+    "step": "carousel-geometry",
+    "geo": {
+      "w": 308,
+      "h": 206,
+      "imgW": 308,
+      "imgH": 206,
+      "radius": "5.6px",
+      "indicators": 0,
+      "thumbIndicators": 0,
+      "controls": 2
+    },
+    "before": 0
+  },
+  {
+    "page": "lahomes-agents-details",
+    "step": "carousel-next",
+    "after": 1
+  },
+  {
+    "page": "lahomes-agents-details",
+    "step": "carousel-arrowkey",
+    "activeAfterKey": 2
+  },
+  {
+    "page": "lahomes-ui-carousel",
+    "step": "carousel-geometry",
+    "geo": {
+      "w": 384,
+      "h": 256,
+      "imgW": 384,
+      "imgH": 256,
+      "radius": "0px",
+      "indicators": 0,
+      "thumbIndicators": 0,
+      "controls": 0
+    },
+    "before": 0
+  },
+  {
+    "page": "lahomes-ui-carousel",
+    "step": "carousel-next",
+    "after": 0
+  },
+  {
+    "page": "lahomes-ui-carousel",
+    "step": "carousel-arrowkey",
+    "activeAfterKey": 0
+  },
+  {
+    "page": "lahomes-index",
+    "step": "carousel-geometry",
+    "geo": {
+      "w": 216,
+      "h": 144,
+      "imgW": 216,
+      "imgH": 144,
+      "radius": "5.6px",
+      "indicators": 0,
+      "thumbIndicators": 0,
+      "controls": 2
+    },
+    "before": 0
+  },
+  {
+    "page": "lahomes-index",
+    "step": "carousel-next",
+    "after": 1
+  },
+  {
+    "page": "lahomes-index",
+    "step": "carousel-arrowkey",
+    "activeAfterKey": 2
+  },
+  {
+    "page": "tailadmin-carousel",
+    "step": "geometry",
+    "geo": [
+      {
+        "cls": "swiper carouselOne rounded-lg border border-gray-200 dark:border-gray-800 swiper",
+        "w": 489,
+        "h": 300,
+        "radius": "8px",
+        "border": "1px rgb(228, 231, 236)",
+        "imgRadius": "0px",
+        "nav": 1,
+        "bullets": 0
+      },
+      {
+        "cls": "swiper carouselTwo rounded-lg border border-gray-200 dark:border-gray-800 swiper",
+        "w": 489,
+        "h": 300,
+        "radius": "8px",
+        "border": "1px rgb(228, 231, 236)",
+        "imgRadius": "0px",
+        "nav": 3,
+        "bullets": 0
+      },
+      {
+        "cls": "swiper carouselThree rounded-lg border border-gray-200 dark:border-gray-800 swip",
+        "w": 489,
+        "h": 300,
+        "radius": "8px",
+        "border": "1px rgb(228, 231, 236)",
+        "imgRadius": "0px",
+        "nav": 1,
+        "bullets": 4
+      },
+      {
+        "cls": "swiper carouselFour rounded-lg border border-gray-200 dark:border-gray-800 swipe",
+        "w": 489,
+        "h": 300,
+        "radius": "8px",
+        "border": "1px rgb(228, 231, 236)",
+        "imgRadius": "0px",
+        "nav": 3,
+        "bullets": 4
+      }
+    ]
+  },
+  {
+    "page": "tailadmin-carousel",
+    "step": "next",
+    "active": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "page": "tailadmin-carousel",
+    "step": "nav-button",
+    "navBtn": {
+      "w": 487,
+      "h": 298,
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)"
+    }
+  },
+  {
+    "page": "tailadmin-images",
+    "step": "loaded",
+    "imgs": [
+      {
+        "src": "image-01.png",
+        "w": 1052,
+        "h": 600,
+        "x": 339,
+        "y": 243,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "image-02.png",
+        "w": 516,
+        "h": 295,
+        "x": 339,
+        "y": 982,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "image-03.png",
+        "w": 516,
+        "h": 294,
+        "x": 875,
+        "y": 982,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "image-04.png",
+        "w": 337,
+        "h": 192,
+        "x": 339,
+        "y": 1416,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "image-05.png",
+        "w": 337,
+        "h": 192,
+        "x": 696,
+        "y": 1416,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "image-06.png",
+        "w": 337,
+        "h": 192,
+        "x": 1054,
+        "y": 1416,
+        "radius": "12px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "1px rgb(228, 231, 236)"
+      },
+      {
+        "src": "logo.svg",
+        "w": 154,
+        "h": 32,
+        "x": 20,
+        "y": 32,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "pointer",
+        "border": "0px rgb(228, 231, 236)"
+      },
+      {
+        "src": "owner.png",
+        "w": 44,
+        "h": 44,
+        "x": 1278,
+        "y": 16,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "pointer",
+        "border": "0px rgb(228, 231, 236)"
+      }
+    ]
+  },
+  {
+    "page": "tailadmin-images",
+    "step": "click-image",
+    "dialog": false
+  },
+  {
+    "page": "rozetka",
+    "step": "entry",
+    "status": 200,
+    "url": "https://rozetka.com.ua/",
+    "title": "Інтернет-магазин ROZETKA™: офіційний сайт онлайн-гіпермаркету Розетка в Україні"
+  },
+  {
+    "page": "rozetka",
+    "step": "product-link",
+    "productHref": null
+  }
+]

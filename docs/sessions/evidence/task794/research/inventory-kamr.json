@@ -1,0 +1,1177 @@
+{
+  "ref": "kamr",
+  "entry": "https://kamr-vite.vercel.app/dashboard",
+  "crawledAt": "2026-10-04T04:36:37.975Z",
+  "remainingQueue": [],
+  "rows": [
+    {
+      "url": "https://kamr-vite.vercel.app/dashboard",
+      "finalUrl": "https://kamr-vite.vercel.app/dashboard",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Dashboard",
+      "imgCount": 40,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper swiper-initialized swiper-horizontal swiper-pointer-events front-view-slider",
+          "w": 1111,
+          "h": 419,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 1111,
+          "h": 293,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-prev",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/dashboard-dark",
+      "finalUrl": "https://kamr-vite.vercel.app/dashboard-dark",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Dashboard",
+      "imgCount": 40,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper swiper-initialized swiper-horizontal swiper-pointer-events front-view-slider",
+          "w": 1111,
+          "h": 419,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 1111,
+          "h": 293,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-prev",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/guest-list",
+      "finalUrl": "https://kamr-vite.vercel.app/guest-list",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Guest List",
+      "imgCount": 15,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/guest-details",
+      "finalUrl": "https://kamr-vite.vercel.app/guest-details",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Guest Details",
+      "imgCount": 23,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper swiper-initialized swiper-horizontal swiper-pointer-events mySwiper2 swiper-backface-hidden",
+          "w": 731,
+          "h": 438,
+          "imgs": 6
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 731,
+          "h": 438,
+          "imgs": 6
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 731,
+          "h": 438,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": "kamr-003.png",
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/concierge",
+      "finalUrl": "https://kamr-vite.vercel.app/concierge",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Concierge",
+      "imgCount": 19,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/room",
+      "finalUrl": "https://kamr-vite.vercel.app/room",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Room",
+      "imgCount": 22,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/reviews",
+      "finalUrl": "https://kamr-vite.vercel.app/reviews",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Reviews",
+      "imgCount": 11,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/app-profile",
+      "finalUrl": "https://kamr-vite.vercel.app/app-profile",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Profile",
+      "imgCount": 21,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/post-details",
+      "finalUrl": "https://kamr-vite.vercel.app/post-details",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Post Details",
+      "imgCount": 19,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/email-compose",
+      "finalUrl": "https://kamr-vite.vercel.app/email-compose",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Compose",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/email-inbox",
+      "finalUrl": "https://kamr-vite.vercel.app/email-inbox",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Inbox",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/email-read",
+      "finalUrl": "https://kamr-vite.vercel.app/email-read",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Read",
+      "imgCount": 8,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/app-calender",
+      "finalUrl": "https://kamr-vite.vercel.app/app-calender",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Calender",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-product-grid",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-product-grid",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Product Grid",
+      "imgCount": 15,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-product-list",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-product-list",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Product List",
+      "imgCount": 13,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-product-detail",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-product-detail",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Product Detail",
+      "imgCount": 12,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-product-order",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-product-order",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Product Order",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-checkout",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-checkout",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Checkout",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-invoice",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-invoice",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Invoice",
+      "imgCount": 10,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-customers",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-customers",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Customers",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/chart-rechart",
+      "finalUrl": "https://kamr-vite.vercel.app/chart-rechart",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Rechart",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/chart-chartjs",
+      "finalUrl": "https://kamr-vite.vercel.app/chart-chartjs",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Chartjs",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/chart-sparkline",
+      "finalUrl": "https://kamr-vite.vercel.app/chart-sparkline",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Sparkline",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/chart-apexchart",
+      "finalUrl": "https://kamr-vite.vercel.app/chart-apexchart",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Apexchart",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-accordion",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-accordion",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Accordion",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-alert",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-alert",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Alert",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-badge",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-badge",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Badge",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-button",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-button",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Button",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-modal",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Modal",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-button-group",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-button-group",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Button Group",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-list-group",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-list-group",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "List Group",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-card",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-card",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Card",
+      "imgCount": 10,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-carousel",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-carousel",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Carousel",
+      "imgCount": 12,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "active carousel-item",
+          "w": 497,
+          "h": 248,
+          "imgs": 1
+        },
+        {
+          "tag": "a",
+          "cls": "carousel-control-prev",
+          "w": 74,
+          "h": 248,
+          "imgs": 0
+        },
+        {
+          "tag": "a",
+          "cls": "carousel-control-next",
+          "w": 74,
+          "h": 248,
+          "imgs": 0
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "active carousel-item",
+          "w": 497,
+          "h": 248,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": " d-none d-md-block carousel-caption",
+          "w": 348,
+          "h": 102,
+          "imgs": 0
+        },
+        {
+          "tag": "div",
+          "cls": "carousel slide",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "carousel-inner",
+          "w": 497,
+          "h": 248,
+          "imgs": 3
+        },
+        {
+          "tag": "div",
+          "cls": "active carousel-item",
+          "w": 497,
+          "h": 248,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": "kamr-032.png",
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-dropdown",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-dropdown",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Dropdown",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-popover",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-popover",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Popover",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-progressbar",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-progressbar",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Progressbar",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-tab",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-tab",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Tab",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-typography",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-typography",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Typography",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-pagination",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-pagination",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Pagination",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ui-grid",
+      "finalUrl": "https://kamr-vite.vercel.app/ui-grid",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Grid",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/uc-select2",
+      "finalUrl": "https://kamr-vite.vercel.app/uc-select2",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Select2",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "finalUrl": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Sweetalert",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/uc-toastr",
+      "finalUrl": "https://kamr-vite.vercel.app/uc-toastr",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Toastr",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/map-jqvmap",
+      "finalUrl": "https://kamr-vite.vercel.app/map-jqvmap",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Map Jqvmap",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/uc-lightgallery",
+      "finalUrl": "https://kamr-vite.vercel.app/uc-lightgallery",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Lightgallery",
+      "imgCount": 15,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/todo",
+      "finalUrl": "https://kamr-vite.vercel.app/todo",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Todo",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/widget-basic",
+      "finalUrl": "https://kamr-vite.vercel.app/widget-basic",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Widget",
+      "imgCount": 22,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/form-element",
+      "finalUrl": "https://kamr-vite.vercel.app/form-element",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Form Element",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/form-wizard",
+      "finalUrl": "https://kamr-vite.vercel.app/form-wizard",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Form Wizard",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/form-ckeditor",
+      "finalUrl": "https://kamr-vite.vercel.app/form-ckeditor",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Form Ckeditor",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/form-pickers",
+      "finalUrl": "https://kamr-vite.vercel.app/form-pickers",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Form Pickers",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/form-validation",
+      "finalUrl": "https://kamr-vite.vercel.app/form-validation",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Form Validation",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/table-filtering",
+      "finalUrl": "https://kamr-vite.vercel.app/table-filtering",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Filtering",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/table-sorting",
+      "finalUrl": "https://kamr-vite.vercel.app/table-sorting",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Sorting",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/table-bootstrap-basic",
+      "finalUrl": "https://kamr-vite.vercel.app/table-bootstrap-basic",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Bootstrap",
+      "imgCount": 7,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-error-400",
+      "finalUrl": "https://kamr-vite.vercel.app/page-error-400",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "400",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-error-403",
+      "finalUrl": "https://kamr-vite.vercel.app/page-error-403",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "403",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-error-404",
+      "finalUrl": "https://kamr-vite.vercel.app/page-error-404",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "404",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-error-500",
+      "finalUrl": "https://kamr-vite.vercel.app/page-error-500",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "500",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-error-503",
+      "finalUrl": "https://kamr-vite.vercel.app/page-error-503",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "503",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/page-lock-screen",
+      "finalUrl": "https://kamr-vite.vercel.app/dashboard",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Dashboard",
+      "imgCount": 40,
+      "galleryHits": [
+        {
+          "tag": "div",
+          "cls": "swiper swiper-initialized swiper-horizontal swiper-pointer-events front-view-slider",
+          "w": 1111,
+          "h": 419,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-wrapper",
+          "w": 1111,
+          "h": 293,
+          "imgs": 19
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-duplicate swiper-slide-prev",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-active",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide swiper-slide-next",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        },
+        {
+          "tag": "div",
+          "cls": "swiper-slide",
+          "w": 206,
+          "h": 293,
+          "imgs": 1
+        }
+      ],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "url": "https://kamr-vite.vercel.app/ecom-product-list/ecom-product-detail",
+      "finalUrl": "https://kamr-vite.vercel.app/ecom-product-list/ecom-product-detail",
+      "status": 200,
+      "title": "Kamr : Vite Hotel Admin Dashboard Template",
+      "h1": "Pick your style",
+      "imgCount": 6,
+      "galleryHits": [],
+      "state": "inspected",
+      "screenshot": null,
+      "error": null
+    }
+  ]
+}

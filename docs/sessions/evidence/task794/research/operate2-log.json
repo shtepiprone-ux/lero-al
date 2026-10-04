@@ -1,0 +1,238 @@
+[
+  {
+    "page": "kamr-product-detail",
+    "step": "geometry-1440",
+    "geom": [
+      {
+        "src": "1-C8cUxxch.jpg",
+        "x": 321,
+        "y": 219,
+        "w": 423,
+        "h": 482,
+        "radius": "0px",
+        "fit": "fill",
+        "ctrl": null,
+        "ctrlBorder": null
+      },
+      {
+        "src": "1-XlRN6Urk.jpg",
+        "x": 321,
+        "y": 714,
+        "w": 99,
+        "h": 99,
+        "radius": "0px",
+        "fit": "fill",
+        "ctrl": "A.nav-link active",
+        "ctrlBorder": "0px none rgb(0, 0, 0)"
+      },
+      {
+        "src": "2-dlTD6el0.jpg",
+        "x": 429,
+        "y": 714,
+        "w": 99,
+        "h": 99,
+        "radius": "0px",
+        "fit": "fill",
+        "ctrl": "A.nav-link",
+        "ctrlBorder": "0px none rgb(0, 0, 0)"
+      },
+      {
+        "src": "3-CPKZo_g0.jpg",
+        "x": 537,
+        "y": 714,
+        "w": 99,
+        "h": 99,
+        "radius": "0px",
+        "fit": "fill",
+        "ctrl": "A.nav-link",
+        "ctrlBorder": "0px none rgb(0, 0, 0)"
+      },
+      {
+        "src": "4-wZMRQozH.jpg",
+        "x": 645,
+        "y": 714,
+        "w": 99,
+        "h": 99,
+        "radius": "0px",
+        "fit": "fill",
+        "ctrl": "A.nav-link",
+        "ctrlBorder": "0px none rgb(0, 0, 0)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "thumb-2-click",
+    "mainAfter": [
+      "2-tjY2Y2C1.jpg"
+    ],
+    "activeTabBorder": " / 0px"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "open",
+    "open": true,
+    "counter": "1 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "ArrowRight",
+    "open": true,
+    "counter": "2 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "ArrowRight-2",
+    "open": true,
+    "counter": "3 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "ArrowLeft",
+    "open": true,
+    "counter": "2 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "next-button",
+    "open": true,
+    "counter": "3 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "thumb-6",
+    "open": true,
+    "counter": "6 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "past-end-wrap",
+    "open": true,
+    "counter": "2 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "Escape",
+    "open": false,
+    "counter": "2 / 8",
+    "thumbs": 8,
+    "bg": "rgba(30, 30, 30, 0.9)",
+    "controls": [
+      "Previous slide",
+      "Next slide",
+      "Close gallery",
+      "View actual size"
+    ]
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 0,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 1,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 2,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 3,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 4,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 5,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 6,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "wait",
+    "i": 7,
+    "title": "Трохи зачекайте…"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "final",
+    "url": "https://rozetka.com.ua/ua/samsung-sm-s741blggeuc/p613521086/",
+    "title": "Трохи зачекайте…",
+    "bigImgs": []
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "page": "rozetka",
+    "step": "entry",
+    "status": 200,
+    "url": "https://rozetka.com.ua/ua/mobile-phones/c80003/",
+    "title": "Мобільні телефони — купити телефон в Києві, Україні: ціна, відгуки | ROZETKA"
+  },
+  {
+    "page": "rozetka",
+    "step": "product-link",
+    "productHref": "https://rozetka.com.ua/ua/samsung-sm-s741blggeuc/p613521086/"
+  },
+  {
+    "page": "rozetka-product",
+    "step": "loaded",
+    "url": "https://rozetka.com.ua/ua/samsung-sm-s741blggeuc/p613521086/",
+    "title": "Трохи зачекайте…",
+    "imgs": []
+  },
+  {
+    "page": "rozetka-product",
+    "step": "thumbs",
+    "thumbInfo": []
+  },
+  {
+    "page": "rozetka-product",
+    "step": "main-click-modal",
+    "modal": null
+  },
+  {
+    "page": "rozetka-product",
+    "step": "escape",
+    "modalAfter": false
+  },
+  {
+    "page": "rozetka-product",
+    "step": "loaded-390",
+    "imgs": []
+  }
+]

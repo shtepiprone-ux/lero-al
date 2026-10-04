@@ -1,0 +1,442 @@
+[
+  {
+    "page": "kamr",
+    "step": "login",
+    "url": "https://kamr-vite.vercel.app/dashboard"
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "loaded",
+    "url": "https://kamr-vite.vercel.app/ecom-product-detail",
+    "imgs": [
+      {
+        "src": "1-C8cUxxch.jpg",
+        "w": 423,
+        "h": 482,
+        "x": 321,
+        "y": 219,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic1-BaK-1XIB.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 74,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic2-DDw_5hyd.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 308,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic3-Dhe_V1rQ.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 542,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic4-Mt1Lylsb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 775,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic5-DBTZtDFb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 1009,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic6-FaNpZYIC.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 1243,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "1-XlRN6Urk.jpg",
+        "w": 99,
+        "h": 99,
+        "x": 321,
+        "y": 714,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "pointer",
+        "border": "0px rgb(0, 0, 0)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "thumb-count",
+    "count": 5
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "after-thumb-2",
+    "imgs": [
+      {
+        "src": "1-C8cUxxch.jpg",
+        "w": 423,
+        "h": 482,
+        "x": 321,
+        "y": 219,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic1-BaK-1XIB.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 74,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic2-DDw_5hyd.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 308,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "loaded",
+    "url": "https://kamr-vite.vercel.app/uc-lightgallery",
+    "imgs": [
+      {
+        "src": "pic1-BaK-1XIB.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 74,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic2-DDw_5hyd.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 308,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic3-Dhe_V1rQ.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 542,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic4-Mt1Lylsb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 775,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic5-DBTZtDFb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 1009,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic6-FaNpZYIC.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 1470,
+        "y": 1243,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "click-error",
+    "e": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a[data-src], a[href$=\".jpg"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "open",
+    "lb": {
+      "cls": "lg-container  ",
+      "counter": "1  /\n                8",
+      "thumbs": 8,
+      "bg": "rgba(0, 0, 0, 0)"
+    }
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "arrow-right",
+    "counter": "1  /\n                8"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "next-button",
+    "counter": "1  /\n                8"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "arrow-left",
+    "counter": "1  /\n                8"
+  },
+  {
+    "page": "kamr-lightgallery",
+    "step": "escape",
+    "stillOpen": false
+  },
+  {
+    "page": "kamr-guest-details",
+    "step": "loaded",
+    "imgs": [
+      {
+        "src": "pic-1-tx-NEoCf.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 674,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-2-DFtptPmr.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 1415,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-3-9QiyLWbv.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 2156,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-4-CJhd-WX7.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 2897,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-1-tx-NEoCf.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 3638,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-2-DFtptPmr.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 4379,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-guest-details",
+    "step": "swiper-next",
+    "imgs": [
+      {
+        "src": "pic-1-tx-NEoCf.jpg",
+        "w": 731,
+        "h": 438,
+        "x": -81,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-2-DFtptPmr.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 660,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic-3-9QiyLWbv.jpg",
+        "w": 731,
+        "h": 438,
+        "x": 1401,
+        "y": 112,
+        "radius": "0px",
+        "fit": "cover",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      }
+    ]
+  },
+  {
+    "page": "kamr-ui-carousel",
+    "step": "next",
+    "active": 1
+  },
+  {
+    "page": "kamr-product-detail",
+    "step": "loaded-390",
+    "imgs": [
+      {
+        "src": "1-C8cUxxch.jpg",
+        "w": 334,
+        "h": 380,
+        "x": 28,
+        "y": 161,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic1-BaK-1XIB.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 420,
+        "y": 74,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic2-DDw_5hyd.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 420,
+        "y": 308,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic3-Dhe_V1rQ.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 420,
+        "y": 542,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic4-Mt1Lylsb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 420,
+        "y": 775,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      },
+      {
+        "src": "pic5-DBTZtDFb.jpg",
+        "w": 272,
+        "h": 170,
+        "x": 420,
+        "y": 1009,
+        "radius": "0px",
+        "fit": "fill",
+        "cursor": "auto",
+        "border": "0px rgb(113, 117, 121)"
+      }
+    ]
+  }
+]

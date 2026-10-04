@@ -1,0 +1,209 @@
+{
+ "generatedAt": "2026-10-04T12:15:32.871Z",
+ "refs": {
+  "lahomes": {
+   "loginNote": null,
+   "pages": 106,
+   "blocked": [],
+   "queueLeft": 0,
+   "pagesWithTables": 21,
+   "tables": 61,
+   "tablesCheckboxFirst": 16,
+   "tablesActionsLast": 22,
+   "tablesBoth": 16,
+   "selectAllBulkAppeared": [],
+   "rowActionResults": {
+    "no-visible-change": 52,
+    "dialog:Event": 2
+   },
+   "rowActionControls": {
+    "align-middle fs-18|bg rgb(238, 242, 247)|40x32|r 2.4px": 16,
+    "align-middle fs-18|bg rgba(96, 74, 227, 0.1)|40x32|r 2.4px": 16,
+    "align-middle fs-18|bg rgba(233, 103, 103, 0.1)|40x32|r 2.4px": 16,
+    "September 27, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "September 28, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "September 29, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "September 30, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "October 1, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "October 2, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "October 3, 2026|bg rgb(248, 249, 250)|20x20|r 50%": 1,
+    "Edit|bg rgb(96, 74, 227)|49x32|r 2.4px": 1,
+    "Edit|bg rgb(96, 74, 227)|50x32|r 2.4px": 1,
+    "Details|bg rgba(0, 0, 0, 0)|43x17|r 0px": 1,
+    "Details|bg rgb(238, 242, 247)|60x32|r 2.4px": 1
+   },
+   "dialogs": 45,
+   "dialogFooterOrders": {
+    " | Close | Save": 3,
+    "": 38,
+    "10:02": 1,
+    " |  | Send": 1,
+    "Close | Save changes": 2
+   },
+   "dialogsWithClose": 35,
+   "dialogsEscCloses": 7,
+   "dialogWidths": [
+    0,
+    350,
+    500,
+    800
+   ],
+   "overflow390": []
+  },
+  "kamr": {
+   "loginNote": "login failed with both credential sets",
+   "pages": 62,
+   "blocked": [],
+   "queueLeft": 0,
+   "pagesWithTables": 12,
+   "tables": 28,
+   "tablesCheckboxFirst": 5,
+   "tablesActionsLast": 12,
+   "tablesBoth": 5,
+   "selectAllBulkAppeared": [],
+   "rowActionResults": {
+    "menu:Edit/Delete": 4,
+    "no-visible-change": 9,
+    "menu:Completed/Processing/On Hold/Pending/Delete": 1,
+    "dialog:Add Contact": 1,
+    "not-clickable": 1,
+    "menu:Details/Cancel": 1
+   },
+   "rowActionControls": {
+    "div|bg rgba(0, 0, 0, 0)|25x24|r 0px": 1,
+    "div|bg rgba(0, 0, 0, 0)|24x24|r 0px": 1,
+    "September 27, 2026|bg rgba(0, 0, 0, 0)|22x26|r 0px": 1,
+    "September 28, 2026|bg rgba(0, 0, 0, 0)|23x26|r 0px": 1,
+    "September 29, 2026|bg rgba(0, 0, 0, 0)|23x26|r 0px": 1,
+    "September 30, 2026|bg rgba(0, 0, 0, 0)|23x26|r 0px": 1,
+    "October 1, 2026|bg rgba(0, 0, 0, 0)|12x26|r 0px": 1,
+    "October 2, 2026|bg rgba(0, 0, 0, 0)|15x26|r 0px": 1,
+    "October 3, 2026|bg rgba(0, 0, 0, 0)|15x26|r 0px": 1,
+    "button|bg rgba(0, 0, 0, 0)|35x35|r 7px": 2,
+    "button|bg rgba(0, 0, 0, 0)|38x35|r 7px": 1,
+    "fa fa-plus|bg rgb(248, 133, 125)|23x23|r 7px": 1,
+    "fas fa-pen|bg rgb(255, 212, 130)|23x23|r 7px": 1,
+    "fa fa-trash|bg rgb(247, 43, 80)|23x23|r 7px": 2,
+    "button|bg rgb(237, 250, 242)|35x35|r 7px": 1,
+    "fas fa-pencil-alt|bg rgb(248, 133, 125)|23x23|r 7px": 1,
+    "Edit|bg rgba(0, 0, 0, 0)|16x17|r 0px": 2,
+    "Close|bg rgba(0, 0, 0, 0)|8x17|r 0px": 2
+   },
+   "dialogs": 15,
+   "dialogFooterOrders": {
+    " | RATE": 7,
+    "Close | Save changes": 7,
+    "Add | Discard": 1
+   },
+   "dialogsWithClose": 15,
+   "dialogsEscCloses": 15,
+   "dialogWidths": [
+    300,
+    500,
+    800
+   ],
+   "overflow390": []
+  },
+  "omah": {
+   "loginNote": null,
+   "pages": 339,
+   "blocked": [],
+   "queueLeft": 0,
+   "pagesWithTables": 19,
+   "tables": 23,
+   "tablesCheckboxFirst": 3,
+   "tablesActionsLast": 15,
+   "tablesBoth": 3,
+   "selectAllBulkAppeared": [],
+   "rowActionResults": {
+    "menu:Accept order/Reject order/View Details": 1,
+    "no-visible-change": 19,
+    "not-clickable": 11,
+    "menu:Completed/Processing/On Hold/Pending/Delete": 1,
+    "menu:Edit/Edit/Delete/Delete": 2
+   },
+   "rowActionControls": {
+    "div|bg rgba(0, 0, 0, 0)|24x24|r 0px": 1,
+    "Sat|bg rgba(0, 0, 0, 0)|21x18|r 0px": 2,
+    "6|bg rgba(0, 0, 0, 0)|16x26|r 0px": 1,
+    "fa-solid fa-ellipsis-vertical|bg rgba(88, 103, 195, 0.2)|32x32|r 8px": 1,
+    "fa-solid fa-ellipsis|bg rgba(88, 103, 195, 0.2)|32x32|r 8px": 1,
+    "las la-copy fs-4|bg rgba(0, 0, 0, 0)|16x20|r 8px": 1,
+    "PDF|bg rgb(215, 216, 217)|51x35|r 8px": 1,
+    "View|bg rgb(215, 216, 217)|57x35|r 8px": 1,
+    "Options|bg rgb(215, 216, 217)|91x35|r 8px": 1,
+    "fa-solid fa-pen-to-square|bg rgb(255, 159, 15)|32x32|r 8px": 3,
+    "fa-solid fa-trash|bg rgb(255, 103, 70)|32x32|r 8px": 3,
+    "Edit|bg rgba(0, 0, 0, 0)|22x17|r 0px": 1,
+    "Up|bg rgba(0, 0, 0, 0)|17x17|r 0px": 1,
+    "Down|bg rgba(0, 0, 0, 0)|34x17|r 0px": 1,
+    "Delete|bg rgba(0, 0, 0, 0)|39x17|r 0px": 1,
+    "fa fa-pen|bg rgba(88, 103, 195, 0.2)|32x32|r 8px": 1,
+    "fa-solid fa-trash-can|bg rgba(255, 126, 98, 0.2)|32x32|r 8px": 1,
+    "fa fa-eye |bg rgba(88, 103, 195, 0.2)|32x32|r 8px": 1,
+    "fa-regular fa-trash-can|bg rgba(255, 126, 98, 0.2)|32x32|r 8px": 1
+   },
+   "dialogs": 22,
+   "dialogFooterOrders": {
+    "": 11,
+    "Close | Save": 2,
+    " | RATE": 7,
+    "Close | Save changes": 2
+   },
+   "dialogsWithClose": 22,
+   "dialogsEscCloses": 0,
+   "dialogWidths": [
+    0,
+    500
+   ],
+   "overflow390": []
+  },
+  "tailadmin": {
+   "loginNote": null,
+   "pages": 88,
+   "blocked": [],
+   "queueLeft": 0,
+   "pagesWithTables": 21,
+   "tables": 28,
+   "tablesCheckboxFirst": 5,
+   "tablesActionsLast": 14,
+   "tablesBoth": 4,
+   "selectAllBulkAppeared": [],
+   "rowActionResults": {
+    "no-visible-change": 8,
+    "menu:View More/Delete": 8,
+    "not-clickable": 16
+   },
+   "rowActionControls": {
+    "svg|bg rgba(0, 0, 0, 0)|20x20|r 0px": 3,
+    "path|bg rgba(0, 0, 0, 0)|15x17|r 0px": 3,
+    "fill-current|bg rgba(0, 0, 0, 0)|24x24|r 0px": 8,
+    "div|bg rgb(221, 233, 255)|24x17|r 1px": 1,
+    "button|bg rgba(0, 0, 0, 0)|36x36|r 8px": 2,
+    "fill-current|bg rgba(0, 0, 0, 0)|21x21|r 0px": 2
+   },
+   "dialogs": 13,
+   "dialogFooterOrders": {
+    "Close | Update Info": 1,
+    "": 2,
+    "Close | Add Event": 1,
+    "Close | Save Changes": 5,
+    "Cancel | Create Task": 2,
+    "Close | Generate API key": 1,
+    "Close | Add Integration": 1
+   },
+   "dialogsWithClose": 11,
+   "dialogsEscCloses": 0,
+   "dialogWidths": [
+    539,
+    558,
+    584,
+    600,
+    690,
+    700,
+    1360
+   ],
+   "overflow390": []
+  }
+ }
+}

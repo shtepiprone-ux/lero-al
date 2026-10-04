@@ -49,7 +49,7 @@ For every task:
    **GR-7 (owner rule 2026-10-04): before creating, executing, or reviewing EVERY task, Opus and Sonnet each audit live,
    in depth, every page of Lahomes (https://techzaa.in/lahomes/admin/index.html), Kamr
    (https://kamr-vite.vercel.app/dashboard, login `admin` / `123456`), Omah (https://omah.dexignzone.com/xhtml/index.html)
-   and TailAdmin (https://demo.tailadmin.com/), and use only the best 2026 UI/UX practice. No exemption.**
+   and TailAdmin (https://demo.tailadmin.com/), and use only the best 2026 UI/UX practice. No exemption.** Start from the shared library `docs/research/references/<newest date>/`, then live-check every page relied on (owner decision 2026-10-04).
 1. Read `docs/agent-contract.md`.
 2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
 3. Use `docs/qa-profiles.md` to choose validation depth.

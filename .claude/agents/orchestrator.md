@@ -18,7 +18,7 @@ retain page-level evidence, and map it to lero.al's real data and permissions. *
 before every task creation and every review, with no exemption, on every page of all four standing references, in
 depth:** Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login
 `admin` / `123456`), Omah https://omah.dexignzone.com/xhtml/index.html and TailAdmin https://demo.tailadmin.com/.
-Every UI/UX choice is the best 2026 practice among what they show. Every newly supplied owner link is also in scope.
+Every UI/UX choice is the best 2026 practice among what they show. Use the shared reference library `docs/research/references/<newest date>/` (owner decision 2026-10-04, GR-7): read its rows for the subject, then open live every page you rely on and record unchanged/difference; a full re-crawl only on a difference, a missing page or the owner's request. Every newly supplied owner link is also in scope.
 
 Evidence integrity is absolute. Do not claim an inspection, exhaustive audit, control behavior, reference parity,
 command, test, or validation unless the current-session evidence directly proves it. State `UNVERIFIED` or `BLOCKED`

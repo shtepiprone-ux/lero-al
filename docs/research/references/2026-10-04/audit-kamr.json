@@ -1,0 +1,3555 @@
+{
+ "ref": "kamr",
+ "entry": "https://kamr-vite.vercel.app/dashboard",
+ "scope": "https://kamr-vite.vercel.app/",
+ "loginNote": "login failed with both credential sets",
+ "updatedAt": "2026-10-04T11:57:35.664Z",
+ "remainingQueue": [],
+ "rows": [
+  {
+   "id": "000",
+   "url": "https://kamr-vite.vercel.app/dashboard",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/dashboard",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Dashboard",
+   "shot": "shots-kamr/000-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "001",
+   "url": "https://kamr-vite.vercel.app/dashboard-dark",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/dashboard-dark",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Dashboard",
+   "shot": "shots-kamr/001-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "002",
+   "url": "https://kamr-vite.vercel.app/guest-list",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/guest-list",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Guest List",
+   "shot": "shots-kamr/002-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 9,
+     "heads": [
+      "[checkbox]",
+      "Guest",
+      "Date Order",
+      "Check In",
+      "Check Out",
+      "Request",
+      "Room Type",
+      "Status",
+      ""
+     ],
+     "rows": 8,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 18,
+      "h": 18,
+      "borderRadius": "3.5px",
+      "borderTopColor": "rgb(231, 231, 231)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "div",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "btn-link i-false dropdown-toggle",
+       "style": {
+        "w": 25,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 133, 125)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(248, 133, 125)",
+        "paddingLeft": "0px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1109,
+      "h": 909,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 214,
+      "h": 61,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "15.75px",
+      "fontWeight": "500",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 214,
+      "h": 107,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "14px",
+      "paddingLeft": "14px",
+      "paddingTop": "10px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(45, 49, 52)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 13,
+      "total": 13,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Edit",
+         "Delete"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "dropdown-0",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "dropdown-1",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-2",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-3",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-4",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-5",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    }
+   ],
+   "shot390": "shots-kamr/002-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "003",
+   "url": "https://kamr-vite.vercel.app/guest-details",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/guest-details",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Guest Details",
+   "shot": "shots-kamr/003-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "[checkbox]",
+      "Room Name",
+      "Bed Type",
+      "Room Floor",
+      "Room Facility",
+      "Book Date",
+      ""
+     ],
+     "rows": 3,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 18,
+      "h": 18,
+      "borderRadius": "3.5px",
+      "borderTopColor": "rgb(231, 231, 231)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "div",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "btn-link i-false dropdown-toggle",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 133, 125)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(248, 133, 125)",
+        "paddingLeft": "0px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1068,
+      "h": 373,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 346,
+      "h": 61,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "15.75px",
+      "fontWeight": "500",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 346,
+      "h": 105,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "14px",
+      "paddingLeft": "14px",
+      "paddingTop": "10px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(238, 238, 238)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 3,
+      "total": 3,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Edit",
+         "Delete"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "dropdown-0",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-1",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-2",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    },
+    {
+     "label": "dropdown-3",
+     "result": "menu",
+     "menu": {
+      "items": [
+       "Edit",
+       "Delete"
+      ],
+      "w": 140
+     }
+    }
+   ],
+   "shot390": "shots-kamr/003-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "004",
+   "url": "https://kamr-vite.vercel.app/concierge",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/concierge",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Concierge",
+   "shot": "shots-kamr/004-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "005",
+   "url": "https://kamr-vite.vercel.app/room",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/room",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Room",
+   "shot": "shots-kamr/005-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "dropdown-0",
+     "result": "not-clickable"
+    },
+    {
+     "label": "dropdown-1",
+     "result": "not-clickable"
+    },
+    {
+     "label": "dropdown-2",
+     "result": "not-clickable"
+    },
+    {
+     "label": "dropdown-3",
+     "result": "not-clickable"
+    },
+    {
+     "label": "dropdown-4",
+     "result": "not-clickable"
+    },
+    {
+     "label": "dropdown-5",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "006",
+   "url": "https://kamr-vite.vercel.app/reviews",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/reviews",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Reviews",
+   "shot": "shots-kamr/006-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "007",
+   "url": "https://kamr-vite.vercel.app/app-profile",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/dashboard",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Dashboard",
+   "shot": "shots-kamr/007-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "008",
+   "url": "https://kamr-vite.vercel.app/post-details",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/post-details",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Post Details",
+   "shot": "shots-kamr/008-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "009",
+   "url": "https://kamr-vite.vercel.app/email-compose",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/email-compose",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Compose",
+   "shot": "shots-kamr/009-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "010",
+   "url": "https://kamr-vite.vercel.app/email-inbox",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/email-inbox",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Inbox",
+   "shot": "shots-kamr/010-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "011",
+   "url": "https://kamr-vite.vercel.app/email-read",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/email-read",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Read",
+   "shot": "shots-kamr/011-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "012",
+   "url": "https://kamr-vite.vercel.app/app-calender",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/app-calender",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Calender",
+   "shot": "shots-kamr/012-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 1,
+     "heads": [
+      "Sun\n\t\nMon\n\t\nTue\n\t\nWed\n\t\nThu\n\t\n"
+     ],
+     "rows": 7,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Sun\n\t\nMon\n\t\nTue\n\t\nWed\n\t\nThu\n\t\n",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "27",
+       "title": "September 27, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 22,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "28",
+       "title": "September 28, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 23,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "29",
+       "title": "September 29, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 23,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "30",
+       "title": "September 30, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 23,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "1",
+       "title": "October 1, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 12,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "2",
+       "title": "October 2, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 15,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 771,
+      "h": 674,
+      "borderTopWidth": "1px",
+      "fontSize": "12.25px"
+     },
+     "headCell": null,
+     "bodyCell": null,
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "cols": 7,
+     "heads": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+     ],
+     "rows": 0,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Sat",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 755,
+      "h": 47,
+      "borderTopWidth": "0px",
+      "fontSize": "14px"
+     },
+     "headCell": {
+      "w": 108,
+      "h": 47,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(181, 181, 195)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "7px"
+     },
+     "bodyCell": null,
+     "rowBg": null,
+     "actionsOperated": []
+    },
+    {
+     "index": 2,
+     "cols": 7,
+     "heads": [
+      "27",
+      "28",
+      "29",
+      "30",
+      "1",
+      "2",
+      "3"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "3",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "3",
+       "title": "October 3, 2026",
+       "icon": "",
+       "cls": "fc-daygrid-day-number",
+       "style": {
+        "w": 15,
+        "h": 26,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "4px",
+        "fontSize": "12.25px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 769,
+      "h": 603,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 110,
+      "h": 100,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "0px"
+     },
+     "bodyCell": {
+      "w": 110,
+      "h": 100,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "0px",
+      "paddingTop": "0px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(235, 237, 243)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/012-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "013",
+   "url": "https://kamr-vite.vercel.app/ecom-product-grid",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-grid",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Product Grid",
+   "shot": "shots-kamr/013-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "014",
+   "url": "https://kamr-vite.vercel.app/ecom-product-list",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-list",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Product List",
+   "shot": "shots-kamr/014-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    }
+   ],
+   "shot390": "shots-kamr/014-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "015",
+   "url": "https://kamr-vite.vercel.app/ecom-product-detail",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-detail",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Product Detail",
+   "shot": "shots-kamr/015-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "modal-trigger: Write a review?",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 494,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Review",
+       "fontSize": "14px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 26,
+       "h": 26,
+       "x": 453
+      },
+      "hasFooter": false,
+      "footerButtons": [
+       {
+        "text": "",
+        "x": 923,
+        "w": 26,
+        "h": 26,
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "border": "0px rgb(0, 0, 0)",
+        "radius": "10.5px"
+       },
+       {
+        "text": "RATE",
+        "x": 498,
+        "w": 444,
+        "h": 49,
+        "bg": "rgb(120, 214, 157)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(120, 214, 157)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Review RATE"
+     },
+     "escCloses": true
+    }
+   ],
+   "shot390": "shots-kamr/015-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "016",
+   "url": "https://kamr-vite.vercel.app/ecom-product-order",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-order",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Product Order",
+   "shot": "shots-kamr/016-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "[checkbox]",
+      "Order",
+      "Date",
+      "Ship To",
+      "Status",
+      "Amount",
+      ""
+     ],
+     "rows": 12,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 18,
+      "h": 18,
+      "borderRadius": "3.0625px",
+      "borderTopColor": "rgb(231, 231, 231)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "btn btn-primary i-false tp-btn-light sharp dropdown-toggle btn",
+       "style": {
+        "w": 35,
+        "h": 35,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 133, 125)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgba(0, 0, 0, 0)",
+        "paddingLeft": "6.125px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1074,
+      "h": 723,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 219,
+      "h": 58,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "14px"
+     },
+     "bodyCell": {
+      "w": 219,
+      "h": 55,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "7px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 12,
+      "total": 12,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Completed",
+         "Processing",
+         "On Hold",
+         "Pending",
+         "Delete"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/016-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "017",
+   "url": "https://kamr-vite.vercel.app/ecom-checkout",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-checkout",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Checkout",
+   "shot": "shots-kamr/017-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "018",
+   "url": "https://kamr-vite.vercel.app/ecom-invoice",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-invoice",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Invoice",
+   "shot": "shots-kamr/018-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "#",
+      "Item",
+      "Description",
+      "Unit Cost",
+      "Qty",
+      "Total"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Total",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 281,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 200,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 200,
+      "h": 56,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(253, 253, 253)",
+     "actionsOperated": []
+    },
+    {
+     "index": 1,
+     "cols": 2,
+     "heads": [
+      "Subtotal",
+      "$8.497,00"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "$8.497,00",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 332,
+      "h": 243,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 168,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 168,
+      "h": 56,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/018-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "019",
+   "url": "https://kamr-vite.vercel.app/ecom-customers",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-customers",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Customers",
+   "shot": "shots-kamr/019-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "[checkbox]",
+      "Name",
+      "Email",
+      "Phone",
+      "Billing Address",
+      "Joined",
+      "Active"
+     ],
+     "rows": 14,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 18,
+      "h": 18,
+      "borderRadius": "3.0625px",
+      "borderTopColor": "rgb(231, 231, 231)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Active",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "btn btn-primary tp-btn-light sharp i-false dropdown-toggle btn",
+       "style": {
+        "w": 38,
+        "h": 35,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 133, 125)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgba(0, 0, 0, 0)",
+        "paddingLeft": "6.125px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 918,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 243,
+      "h": 58,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 243,
+      "h": 59,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "14px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(253, 253, 253)",
+     "selectAll": {
+      "checked": 14,
+      "total": 14,
+      "selectedRowBg": "rgb(253, 253, 253)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Edit",
+         "Delete"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/019-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "020",
+   "url": "https://kamr-vite.vercel.app/chart-rechart",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/chart-rechart",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Rechart",
+   "shot": "shots-kamr/020-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "021",
+   "url": "https://kamr-vite.vercel.app/chart-chartjs",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/chart-chartjs",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Chartjs",
+   "shot": "shots-kamr/021-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "022",
+   "url": "https://kamr-vite.vercel.app/chart-sparkline",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/chart-sparkline",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Sparkline",
+   "shot": "shots-kamr/022-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "023",
+   "url": "https://kamr-vite.vercel.app/chart-apexchart",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/chart-apexchart",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Apexchart",
+   "shot": "shots-kamr/023-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "024",
+   "url": "https://kamr-vite.vercel.app/ui-accordion",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-accordion",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Accordion",
+   "shot": "shots-kamr/024-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "025",
+   "url": "https://kamr-vite.vercel.app/ui-alert",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-alert",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Alert",
+   "shot": "shots-kamr/025-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "026",
+   "url": "https://kamr-vite.vercel.app/ui-badge",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-badge",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Badge",
+   "shot": "shots-kamr/026-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "027",
+   "url": "https://kamr-vite.vercel.app/ui-button",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-button",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Button",
+   "shot": "shots-kamr/027-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Add to cart",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Add to wishlist",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Remove",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Add bookmark",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Add",
+     "result": "no-visible-change"
+    }
+   ]
+  },
+  {
+   "id": "028",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Modal",
+   "shot": "shots-kamr/028-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Basic modal",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 211,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 452
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 706,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 796,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Modal body text goes here. Close Save changes"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Long content Modal",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 1503,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 452
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 706,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 796,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Modal centered",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 273,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 452
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 706,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 796,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Modal with tooltip",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 363,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 452
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 706,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 796,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Popover in a modal This button triggers a popover on click. Tooltips in a modal This link and that link have tooltips on hover. Close Save changes"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Grid Inside Modal",
+     "result": "dialog",
+     "dialog": {
+      "w": 500,
+      "h": 376,
+      "x": 470,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 452
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 706,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 796,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title .col-md-4 .col-md-4 .ms-auto .col-md-3 .ms-auto .col-md-2 .ms-auto .col-md-6 .ms-auto Level 1: .col-sm-9 Level 2: .col-8 .col-sm-6 Level 2: .col-4 ."
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Large modal",
+     "result": "dialog",
+     "dialog": {
+      "w": 800,
+      "h": 211,
+      "x": 320,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 752
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 856,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 946,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Modal body text goes here. Close Save changes"
+     },
+     "escCloses": true
+    },
+    {
+     "label": "button: Small modal",
+     "result": "dialog",
+     "dialog": {
+      "w": 300,
+      "h": 211,
+      "x": 570,
+      "radius": "7px",
+      "padding": "0px",
+      "bg": "rgb(255, 255, 255)",
+      "title": {
+       "text": "Modal title",
+       "fontSize": "15.75px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 28,
+       "h": 28,
+       "x": 252
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 606,
+        "w": 83,
+        "h": 49,
+        "bg": "rgb(254, 230, 234)",
+        "color": "rgb(247, 43, 80)",
+        "border": "1px rgb(254, 230, 234)",
+        "radius": "7px"
+       },
+       {
+        "text": "Save changes",
+        "x": 696,
+        "w": 143,
+        "h": 49,
+        "bg": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "border": "1px rgb(248, 133, 125)",
+        "radius": "7px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal title Modal body text goes here. Close Save changes"
+     },
+     "escCloses": true
+    }
+   ],
+   "shot390": "shots-kamr/028-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "029",
+   "url": "https://kamr-vite.vercel.app/ui-button-group",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-button-group",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Button Group",
+   "shot": "shots-kamr/029-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "030",
+   "url": "https://kamr-vite.vercel.app/ui-list-group",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-list-group",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "List Group",
+   "shot": "shots-kamr/030-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "031",
+   "url": "https://kamr-vite.vercel.app/ui-card",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-card",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Card",
+   "shot": "shots-kamr/031-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "032",
+   "url": "https://kamr-vite.vercel.app/ui-carousel",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-carousel",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Carousel",
+   "shot": "shots-kamr/032-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "033",
+   "url": "https://kamr-vite.vercel.app/ui-dropdown",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-dropdown",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Dropdown",
+   "shot": "shots-kamr/033-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "034",
+   "url": "https://kamr-vite.vercel.app/ui-popover",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-popover",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Popover",
+   "shot": "shots-kamr/034-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "035",
+   "url": "https://kamr-vite.vercel.app/ui-progressbar",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-progressbar",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Progressbar",
+   "shot": "shots-kamr/035-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "036",
+   "url": "https://kamr-vite.vercel.app/ui-tab",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-tab",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Tab",
+   "shot": "shots-kamr/036-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "037",
+   "url": "https://kamr-vite.vercel.app/ui-typography",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-typography",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Typography",
+   "shot": "shots-kamr/037-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "038",
+   "url": "https://kamr-vite.vercel.app/ui-pagination",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-pagination",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Pagination",
+   "shot": "shots-kamr/038-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "039",
+   "url": "https://kamr-vite.vercel.app/ui-grid",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-grid",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Grid",
+   "shot": "shots-kamr/039-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "",
+      "Extra Small\n<576px",
+      "Small\n≥576px",
+      "Medium\n≥768px",
+      "Large\n≥992px",
+      "Extra Large\n≥1200px"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Extra Large\n≥1200px",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 412,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 177,
+      "h": 75,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(110, 110, 110)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 177,
+      "h": 56,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(253, 253, 253)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/039-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "040",
+   "url": "https://kamr-vite.vercel.app/uc-select2",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/uc-select2",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Select2",
+   "shot": "shots-kamr/040-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Open Dropdown",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Open Dropdown",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Open",
+     "result": "no-visible-change"
+    }
+   ]
+  },
+  {
+   "id": "041",
+   "url": "https://kamr-vite.vercel.app/uc-sweetalert",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/uc-sweetalert",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Sweetalert",
+   "shot": "shots-kamr/041-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "042",
+   "url": "https://kamr-vite.vercel.app/uc-toastr",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/uc-toastr",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Toastr",
+   "shot": "shots-kamr/042-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "043",
+   "url": "https://kamr-vite.vercel.app/map-jqvmap",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/map-jqvmap",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Map Jqvmap",
+   "shot": "shots-kamr/043-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "044",
+   "url": "https://kamr-vite.vercel.app/uc-lightgallery",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/uc-lightgallery",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Lightgallery",
+   "shot": "shots-kamr/044-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "045",
+   "url": "https://kamr-vite.vercel.app/todo",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/todo",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Todo",
+   "shot": "shots-kamr/045-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 8,
+     "heads": [
+      "",
+      "Name",
+      "Department",
+      "Gender",
+      "Education",
+      "Mobile",
+      "Email",
+      "Action"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "",
+       "title": "",
+       "icon": "fa fa-plus",
+       "cls": "btn btn-primary shadow btn-xs sharp me-2",
+       "style": {
+        "w": 23,
+        "h": 23,
+        "backgroundColor": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(248, 133, 125)",
+        "paddingLeft": "2.625px",
+        "fontSize": "10.5px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "",
+       "title": "",
+       "icon": "fas fa-pen",
+       "cls": "btn btn-secondary\t shadow btn-xs sharp me-2",
+       "style": {
+        "w": 23,
+        "h": 23,
+        "backgroundColor": "rgb(255, 212, 130)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(255, 212, 130)",
+        "paddingLeft": "2.625px",
+        "fontSize": "10.5px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "",
+       "title": "",
+       "icon": "fa fa-trash",
+       "cls": "btn btn-danger shadow btn-xs sharp",
+       "style": {
+        "w": 23,
+        "h": 23,
+        "backgroundColor": "rgb(247, 43, 80)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(247, 43, 80)",
+        "paddingLeft": "2.625px",
+        "fontSize": "10.5px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 390,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 136,
+      "h": 59,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "15.75px",
+      "fontWeight": "500",
+      "textTransform": "capitalize",
+      "paddingLeft": "13.125px"
+     },
+     "bodyCell": {
+      "w": 136,
+      "h": 56,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "14px",
+      "paddingLeft": "14px",
+      "paddingTop": "10px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(238, 238, 238)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "dialog",
+       "dialog": {
+        "w": 500,
+        "h": 725,
+        "x": 470,
+        "radius": "7px",
+        "padding": "0px",
+        "bg": "rgb(255, 255, 255)",
+        "title": {
+         "text": "Add Contact",
+         "fontSize": "17.5px",
+         "fontWeight": "500"
+        },
+        "close": {
+         "w": 26,
+         "h": 26,
+         "x": 454
+        },
+        "hasFooter": true,
+        "footerButtons": [
+         {
+          "text": "Add",
+          "x": 763,
+          "w": 72,
+          "h": 49,
+          "bg": "rgb(248, 133, 125)",
+          "color": "rgb(255, 255, 255)",
+          "border": "1px rgb(248, 133, 125)",
+          "radius": "7px"
+         },
+         {
+          "text": "Discard",
+          "x": 842,
+          "w": 97,
+          "h": 49,
+          "bg": "rgb(247, 43, 80)",
+          "color": "rgb(255, 255, 255)",
+          "border": "1px rgb(247, 43, 80)",
+          "radius": "7px"
+         }
+        ],
+        "inputs": 6,
+        "text": "Add Contact Name Department Gender Education Mobile Email Add Discard"
+       },
+       "escCloses": true
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/045-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "046",
+   "url": "https://kamr-vite.vercel.app/widget-basic",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/widget-basic",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Widget",
+   "shot": "shots-kamr/046-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Ward No.",
+      "Patient",
+      "Dr Name",
+      "Date",
+      "Status",
+      "Bills",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "btn sharp btn-primary tp-btn i-false dropdown-toggle btn btn-primary",
+       "style": {
+        "w": 35,
+        "h": 35,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 133, 125)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgba(0, 0, 0, 0)",
+        "paddingLeft": "6.125px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 420,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 166,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 166,
+      "h": 73,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Details",
+         "Cancel"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View Profile",
+     "result": "no-visible-change"
+    }
+   ],
+   "shot390": "shots-kamr/046-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "047",
+   "url": "https://kamr-vite.vercel.app/form-element",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/form-element",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Form Element",
+   "shot": "shots-kamr/047-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "048",
+   "url": "https://kamr-vite.vercel.app/form-wizard",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/form-wizard",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Form Wizard",
+   "shot": "shots-kamr/048-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "049",
+   "url": "https://kamr-vite.vercel.app/form-ckeditor",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/form-ckeditor",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Form Ckeditor",
+   "shot": "shots-kamr/049-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "050",
+   "url": "https://kamr-vite.vercel.app/form-pickers",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/form-pickers",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Form Pickers",
+   "shot": "shots-kamr/050-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "051",
+   "url": "https://kamr-vite.vercel.app/form-validation",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/form-validation",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Form Validation",
+   "shot": "shots-kamr/051-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "052",
+   "url": "https://kamr-vite.vercel.app/table-filtering",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/table-filtering",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Filtering",
+   "shot": "shots-kamr/052-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Id",
+      "First Name",
+      "Last Name",
+      "Email Id",
+      "Date Of Birth",
+      "Country",
+      "Phone"
+     ],
+     "rows": 10,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Phone",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 525,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 140,
+      "h": 115,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "15.75px",
+      "fontWeight": "500",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 140,
+      "h": 42,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "14px",
+      "paddingLeft": "14px",
+      "paddingTop": "10px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(238, 238, 238)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/052-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "053",
+   "url": "https://kamr-vite.vercel.app/table-sorting",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/table-sorting",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Sorting",
+   "shot": "shots-kamr/053-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Id",
+      "First Name",
+      "Last Name",
+      "Date Of Birth",
+      "Country",
+      "Phone",
+      "Age"
+     ],
+     "rows": 20,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Age",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 881,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 181,
+      "h": 61,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "15.75px",
+      "fontWeight": "500",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 181,
+      "h": 42,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "14px",
+      "paddingLeft": "14px",
+      "paddingTop": "10px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(238, 238, 238)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/053-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "054",
+   "url": "https://kamr-vite.vercel.app/table-bootstrap-basic",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/table-bootstrap-basic",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Bootstrap",
+   "shot": "shots-kamr/054-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "#",
+      "PATIENT",
+      "DR NAME",
+      "DATE",
+      "STATUS",
+      "PRICE",
+      ""
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "light sharp i-false dropdown-toggle btn btn-success",
+       "style": {
+        "w": 35,
+        "h": 35,
+        "backgroundColor": "rgb(237, 250, 242)",
+        "color": "rgb(120, 214, 157)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(237, 250, 242)",
+        "paddingLeft": "6.125px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 274,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 164,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 164,
+      "h": 73,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "menu": {
+        "items": [
+         "Edit",
+         "Delete"
+        ],
+        "w": 140
+       }
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "cols": 6,
+     "heads": [
+      "[checkbox]",
+      "ROLL NO.",
+      "NAME",
+      "Email",
+      "Date",
+      "Status"
+     ],
+     "rows": 3,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 21,
+      "h": 21,
+      "borderRadius": "3.0625px",
+      "borderTopColor": "rgb(231, 231, 231)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Status",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "",
+       "title": "",
+       "icon": "fas fa-pencil-alt",
+       "cls": "btn btn-primary shadow btn-xs sharp me-1",
+       "style": {
+        "w": 23,
+        "h": 23,
+        "backgroundColor": "rgb(248, 133, 125)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(248, 133, 125)",
+        "paddingLeft": "2.625px",
+        "fontSize": "10.5px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "",
+       "title": "",
+       "icon": "fa fa-trash",
+       "cls": "btn btn-danger shadow btn-xs sharp",
+       "style": {
+        "w": 23,
+        "h": 23,
+        "backgroundColor": "rgb(247, 43, 80)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "7px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(247, 43, 80)",
+        "paddingLeft": "2.625px",
+        "fontSize": "10.5px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 307,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 123,
+      "h": 61,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 123,
+      "h": 82,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 3,
+      "total": 3,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "cols": 5,
+     "heads": [
+      "#",
+      "Name",
+      "Status",
+      "Date",
+      "Price"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Price",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 238,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 405,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 405,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 3,
+     "cols": 5,
+     "heads": [
+      "#",
+      "Name",
+      "Status",
+      "Date",
+      "Price"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Price",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 238,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 408,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 408,
+      "h": 61,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(253, 253, 253)",
+     "actionsOperated": []
+    },
+    {
+     "index": 4,
+     "cols": 5,
+     "heads": [
+      "#",
+      "Name",
+      "Status",
+      "Date",
+      "Price"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Price",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 239,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 403,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 403,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 5,
+     "cols": 5,
+     "heads": [
+      "#",
+      "Name",
+      "Status",
+      "Date",
+      "Price"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Price",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 238,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 405,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 405,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 6,
+     "cols": 4,
+     "heads": [
+      "#",
+      "Product",
+      "Popularity",
+      "Sales"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Sales",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 359,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 387,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 387,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 7,
+     "cols": 5,
+     "heads": [
+      "Task",
+      "Progress",
+      "Deadline",
+      "Label",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "",
+       "title": "Edit",
+       "icon": "fas fa-pencil-alt color-muted",
+       "cls": "me-4",
+       "style": {
+        "w": 16,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "0px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "",
+       "title": "Close",
+       "icon": "fa fa-close color-danger",
+       "cls": "",
+       "style": {
+        "w": 8,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "0px",
+        "fontSize": "12.25px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 360,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 205,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 205,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 8,
+     "cols": 5,
+     "heads": [
+      "Task",
+      "Progress",
+      "Deadline",
+      "Label",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "a",
+       "text": "",
+       "title": "Edit",
+       "icon": "fas fa-pencil-alt color-muted",
+       "cls": "me-4",
+       "style": {
+        "w": 16,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "0px",
+        "fontSize": "12.25px"
+       }
+      },
+      {
+       "tag": "a",
+       "text": "",
+       "title": "Close",
+       "icon": "fa fa-close color-danger",
+       "cls": "",
+       "style": {
+        "w": 8,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(0, 0, 0)",
+        "paddingLeft": "0px",
+        "fontSize": "12.25px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 360,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 205,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 205,
+      "h": 61,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(253, 253, 253)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 9,
+     "cols": 6,
+     "heads": [
+      "Invoice",
+      "User",
+      "Date",
+      "Amount",
+      "Status",
+      "Country"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Country",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 298,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 218,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 218,
+      "h": 61,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 10,
+     "cols": 4,
+     "heads": [
+      "#",
+      "First",
+      "Last",
+      "Handle"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Handle",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 225,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 262,
+      "h": 56,
+      "backgroundColor": "rgb(180, 141, 211)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 262,
+      "h": 56,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 11,
+     "cols": 4,
+     "heads": [
+      "#",
+      "First",
+      "Last",
+      "Handle"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Handle",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 226,
+      "borderTopWidth": "1px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 261,
+      "h": 56,
+      "backgroundColor": "rgb(248, 133, 125)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 261,
+      "h": 56,
+      "color": "rgb(45, 49, 52)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 12,
+     "cols": 4,
+     "heads": [
+      "#",
+      "First",
+      "Last",
+      "Handle"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Handle",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 392,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 262,
+      "h": 55,
+      "backgroundColor": "rgb(209, 24, 11)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 262,
+      "h": 56,
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(248, 133, 125)"
+     },
+     "rowBg": "rgb(248, 133, 125)",
+     "actionsOperated": []
+    },
+    {
+     "index": 13,
+     "cols": 4,
+     "heads": [
+      "#",
+      "Column Heading",
+      "Column Heading",
+      "Column Heading"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Column Heading",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1057,
+      "h": 393,
+      "borderTopWidth": "0px",
+      "fontSize": "12.25px"
+     },
+     "headCell": {
+      "w": 320,
+      "h": 56,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "12.25px",
+      "fontWeight": "600",
+      "textTransform": "capitalize",
+      "paddingLeft": "15.75px"
+     },
+     "bodyCell": {
+      "w": 320,
+      "h": 56,
+      "color": "rgb(113, 117, 121)",
+      "fontSize": "12.25px",
+      "paddingLeft": "15.75px",
+      "paddingTop": "18.382px",
+      "borderBottomWidth": "1px",
+      "borderBottomColor": "rgb(211, 211, 211)"
+     },
+     "rowBg": "rgb(242, 244, 250)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-kamr/054-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "055",
+   "url": "https://kamr-vite.vercel.app/page-error-400",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/page-error-400",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "400",
+   "shot": "shots-kamr/055-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "056",
+   "url": "https://kamr-vite.vercel.app/page-error-403",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/page-error-403",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "403",
+   "shot": "shots-kamr/056-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "057",
+   "url": "https://kamr-vite.vercel.app/page-error-404",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/page-error-404",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "404",
+   "shot": "shots-kamr/057-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "058",
+   "url": "https://kamr-vite.vercel.app/page-error-500",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/page-error-500",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "500",
+   "shot": "shots-kamr/058-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "059",
+   "url": "https://kamr-vite.vercel.app/page-error-503",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/page-error-503",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "503",
+   "shot": "shots-kamr/059-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "060",
+   "url": "https://kamr-vite.vercel.app/page-lock-screen",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/dashboard",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Dashboard",
+   "shot": "shots-kamr/060-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "061",
+   "url": "https://kamr-vite.vercel.app/ecom-product-list/ecom-product-detail",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-product-list/ecom-product-detail",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "heading": "Pick your style",
+   "shot": "shots-kamr/061-1440.jpg",
+   "tables": [],
+   "popups": []
+  }
+ ]
+}

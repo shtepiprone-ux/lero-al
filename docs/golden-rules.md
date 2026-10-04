@@ -573,8 +573,22 @@ reference".
 | Task execution | Sonnet (executor) | the first write of the task |
 | Task review, including QA and owner-matrix handoff | Opus (reviewer, QA) | the first finding or verdict |
 
-- Each role runs **its own** audit in **its own** session.
-- An audit made by another role, by another session or on another day is context only, never evidence.
+- **Shared reference library. Owner decision 2026-10-04, options chosen verbatim:** *"One shared library
+  (Recommended)"* and *"Git: JSON only (Recommended)"*.
+  - **The library.** The full audit of all four references (every page, in depth) is stored once in
+    `docs/research/references/<YYYY-MM-DD>/`: `audit-<ref>.json`, `summary.md` (one evidence row per page),
+    `summary.json` and the crawler `gr7-deep.mjs`. The newest dated folder is the current library.
+  - **Git.** The JSON, the summary and the scripts are committed. The full-page screenshots (`shots-*/`) stay on disk
+    and are git-ignored. A screenshot that a kickoff or review cites is copied into that task's evidence folder and
+    committed there.
+  - **At every moment** (task creation, execution, review), the role reads the current library's rows for the task's
+    subject in every reference. It then opens **live, in its own session**, every reference page it relies on, re-operates
+    the relevant controls, and records `unchanged` or the difference. It also opens any reference page the library is
+    missing.
+  - **A full re-crawl** (a new dated folder) runs when a live check finds a difference, a page is missing, the owner adds
+    a reference, or the owner asks for one.
+  - The library replaces the per-task full crawl, but never the live check: a library row alone is not evidence for a
+    decision.
 - "This task has no UI", "it is a governance task" and "the reference has no such feature" are not exemptions. The
   audit runs, and the record states what each reference shows for the task's subject, or that it shows nothing.
 - Only the owner can narrow this rule, by a dated, verbatim decision.
@@ -664,7 +678,7 @@ data map, every blocked or unverified route, the evidence paths, and the owner d
 
 **Receipt — task creation, execution and review alike, one per moment:**
 
-`GR-7 REFERENCE RESEARCH — moment: <task creation | execution | review>; role: <Opus | Sonnet>; task: <N>; subject: <what>; references: Lahomes, Kamr, Omah, TailAdmin + <owner URLs | none>; route inventory: <per reference: enumerated / inspected / blocked>; inspected in depth: <every page, with its evidence row>; workflow states operated: <list>; options across references: <option ← pages>; chosen 2026 best practice: <option + why>; absent or unverified: <features/routes | none>; lero.al data map: <surfaces × entity/actions/routes>; owner decisions: <IDs | none>; evidence: <path>.`
+`GR-7 REFERENCE RESEARCH — moment: <task creation | execution | review>; role: <Opus | Sonnet>; task: <N>; subject: <what>; references: Lahomes, Kamr, Omah, TailAdmin + <owner URLs | none>; library: <docs/research/references/YYYY-MM-DD>; live-checked pages: <page → unchanged | difference>; route inventory: <per reference: enumerated / inspected / blocked>; inspected in depth: <every page, with its evidence row>; workflow states operated: <list>; options across references: <option ← pages>; chosen 2026 best practice: <option + why>; absent or unverified: <features/routes | none>; lero.al data map: <surfaces × entity/actions/routes>; owner decisions: <IDs | none>; evidence: <path>.`
 
 Sanctions:
 - **Task creation.** With no receipt, with fewer than four references, with an inventory where inspected < enumerated

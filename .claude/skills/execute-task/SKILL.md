@@ -71,7 +71,7 @@ Before the first write of **every** task, read `docs/golden-rules.md` **GR-7 in 
 3. https://omah.dexignzone.com/xhtml/index.html
 4. https://demo.tailadmin.com/
 
-Also audit every owner link the kickoff names.
+Also audit every owner link the kickoff names. Use the shared reference library `docs/research/references/<newest date>/` (owner decision 2026-10-04, GR-7): read its rows for the subject, then open live every page you rely on and record unchanged/difference; a full re-crawl only on a difference, a missing page or the owner's request.
 
 - **No exemption.** A governance task, a test-only task, a revision, or "the kickoff already did the research" is not an
   exemption. The kickoff's research is context; your own audit is the evidence.

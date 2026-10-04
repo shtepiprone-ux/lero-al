@@ -25,7 +25,7 @@ of all four references, plus every owner link the kickoff names:
 3. https://omah.dexignzone.com/xhtml/index.html
 4. https://demo.tailadmin.com/
 
-Save the evidence to `docs/sessions/evidence/task<N>/research-exec/` and emit the `GR-7 REFERENCE RESEARCH` receipt.
+Start from the shared library `docs/research/references/<newest date>/` and live-check every page you rely on (GR-7). Save the evidence to `docs/sessions/evidence/task<N>/research-exec/` and emit the `GR-7 REFERENCE RESEARCH` receipt.
 Only the best 2026 UI/UX practice is acceptable. Without the receipt you are `BLOCKED` (`execute-task` STOP gate).
 
 Implement only from a complete saved task under `tasks/`. Inspect source and evidence before editing; report a precise

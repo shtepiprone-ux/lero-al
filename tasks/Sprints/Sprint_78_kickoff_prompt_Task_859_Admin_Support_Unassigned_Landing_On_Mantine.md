@@ -1,8 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
-**Sprint 78** (Wave E — landings) · **P2** · QA profile **Q3** (legacy admin surface → Mantine; no registered critical
-flow names it) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 1) — the only executable route is §16 (Revision 1), as amended by §16.9 (owner return 2026-10-04).**
+**Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** since Revision 2 (it moves `MantineListingCardPattern`'s badges, critical flow; Q3 before) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 2, under GR-7 rewritten + GR-8) — the only executable route is §17 (Revision 2): one canonical badge and dialog anatomy migrated product-wide (D78-18, folds 915), the picker on `MantineCombobox`; the support table anatomy is 919's (D78-17). QA profile raised to Q4 (§17.7). Starts after 741 lands.**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -705,4 +704,270 @@ their width only.
 - `Patterns/Mantine/AdminReportsView`, `AdminCurrenciesView`, `AdminExchangeProvidersView`, `AdminInquiriesView`,
   `AdminPagesView` and `AdminUsersTable` `Default` × `sq` × 1440, each beside `AdminListingsView` `Default` × 1440:
   every list now has the same width and gutter.
+
+## 17. Revision 2 (review 2, 2026-10-04): `NEEDS REVISION` — one badge, one dialog anatomy, one picker, everywhere
+
+**This section is the only executable route.** It is written under the rules the owner set on 2026-10-04: GR-7
+(rewritten), GR-8 (new) and decisions D78-17…D78-19 (§17.1). §16 and §16.9 stay binding where §17 does not replace
+them.
+
+**Re-entry: `remediation`**, on the current tree. Evidence goes to `docs/sessions/evidence/task859/r2-*`.
+
+**Starts after Task 741 is approved and committed.** 741's uncommitted work holds five files this revision edits:
+- `src/modules/listings/lib/listingStatusTone.ts`;
+- `src/design-system/mantine/patterns/MantineListingCardPattern.tsx`;
+- `src/modules/listings/components/ListingCard.tsx`;
+- `src/modules/listings/components/ListingStatusBanner.tsx`;
+- `src/design-system/mantine/theme.ts`.
+
+At I0, if `git status --porcelain` lists any of those five, stop and report `BLOCKED — 741 not landed`.
+
+### 17.1 Owner return and decisions, verbatim (2026-10-04)
+
+**Return (O78-13):**
+- *"я не приймаю задачу. Я бачу, що таблиці в адмінці всі різні. Немає одного стилю таблиць, де спершу йде стовпчик
+  з чекбоксами, а потім йдуть стовпчики контенту таблиці, а після контенту йдуть стовпчики з опціями
+  редагувати,видалити."*
+- *"тупо … всюди хардкод, немає єдиного стилю, ні в таблицях, ні в попапах, ні в модальних вікнах, ніде …!"*
+- *"мають використовуватись лише канонічні компоненти, ніякого … хардкоду чи вигадувань. Має бути сторі з варіантами,
+  яка має використовуватись в різних компонентах!"*
+
+**Decisions (AskUserQuestion, options chosen verbatim):**
+
+| ID | Question | Chosen | Effect |
+|---|---|---|---|
+| **D78-17** | How should one table style (checkboxes → content → edit/delete) be delivered across the whole admin? | *"919 = every Mantine table (Recommended)"*: 919 builds the shared anatomy once in `MantineDataTableToCards` and applies it to all Mantine admin tables (the six, plus support tickets and inquiries); 859 is returned without its own table work; 916 moves onto the same anatomy after 919 | The support table's GR-8 anatomy is **919's**. 859 does not build or fake it. |
+| **D78-18** | Where are the canonical pieces built, and who moves the other components onto them? (one status badge with every status of every entity; Modal variants: detail, form, delete-confirm) | *"859 builds, migrates all (Recommended)"*: 859 creates the canonical status badge and Modal variant Stories and moves **every** consumer onto them in the same revision | R24–R30. **915 is folded into 859** (its reserved scope is §17.5 R29). |
+| **D78-20** | A user with status "inactive" is yellow on the profile and red in the users table. Which colour becomes canonical? | *"Gray — neutral"*: inactive is a dormant, neutral state; red for blocked, green for active | R24's registry: user `inactive` = `gray`. |
+| **D78-19** | Deleting a support ticket: what should Delete do? | *"Soft delete (Recommended)"*: hidden from the list, restorable, history and events kept; the same model as users (D78-16); always with the confirm modal; admin only | Executed by **919** with the table anatomy. Recorded here because the evidence is in §17.3. |
+
+### 17.2 Findings (review 2)
+
+The review reopened:
+- `AdminSupportView.tsx`, `TicketDetailDialogView.tsx`, `CreateTicketDialogView.tsx` and `UserPickerFieldView.tsx`;
+- the session log's Revision 1;
+- every production `<Badge` and `<MantineModal` consumer;
+- the canonical Stories `Mantine/Primitives/{Table,Modal,Badge,Combobox}`, `Patterns/Mantine/{AdminTable,DialogFooter,DialogSections}`.
+
+It did **not** re-run Revision 1's gate block. §17.7's block re-proves R13–R23.
+
+| # | Severity | Finding (FACT unless marked) | Disposition |
+|---|---|---|---|
+| F4 | P1, GR-8 | The support table has no checkbox column, no row actions column and no bulk delete. Row click is its only action (`AdminSupportView.tsx`, `AdminTable` with `onRowClick`). The reference's own support table has both (§17.3: TailAdmin `/support-tickets`, checkbox column + `⋯` → View More / Delete). | **D78-17: 919.** The support table is not offered to the owner as finished until 919 lands. `GR-8 TABLE ANATOMY — /admin/support tickets: checkbox column first + select-all no; actions column last none; bulk delete no; delete confirm no; cards keep checkbox + actions no; exception: D78-17 (2026-10-04), executed by 919.` |
+| F5 | P1, GR-0 / owner "no hardcode" | No canonical owner of status meaning exists. 31 production files render `Badge` from `@mantine/core` and choose its colour themselves. 9 separate colour maps exist, and they disagree. For example, user `inactive` is `yellow` in `AdminUserProfileView.tsx:80`, `red` in `AdminUsersTable.tsx:32-34`, and absent from `UserPickerFieldView.tsx:38`. The maps are `TICKET_STATUS_COLOR` / `TICKET_STATUS_ICON` (exported from a dialog View, `TicketDetailDialogView.tsx:18-31`), `REPORT_STATUS_COLOR` (`ReportDetailDialogView.tsx:29`), `STATUS_COLOR` (`AdminInquiriesView.tsx:24`), two `STATUS_COLOR`s and `ROLE_COLOR` (users), `USER_STATUS_COLOR`, `TONE_COLOR` (`MantineDashboardStatRows.tsx:39`), `BADGE_TONE_COLOR` (`MantineListingDetailPattern.tsx:109`), and `LISTING_STATUS_COLOR` / `VISIBILITY_TONE_COLOR` (`listingStatusTone.ts`). The *visual* contract is canonical already: the `Badge` theme entry (`theme.ts:1238`, pill, light, `sm` = 12px/500/padding 2×8) equals TailAdmin's measured status pill (§17.3). | R24–R26, R30 |
+| F6 | P1, GR-0 | `UserPickerFieldView` hand-builds a search field (`TextInput`), a result list (`Paper` + rows), a selected-user card (`Paper withBorder`) and a clear `ActionIcon variant="subtle"`. It imports no canonical component. `MantineCombobox` (`patterns/MantineCombobox.tsx:31-103`: `searchable`, `onInputChange`, option `description`, `clearLabel`, its own Story `Mantine/Primitives/Combobox`) is the canonical searchable picker. | R27 |
+| F7 | P1, §23.6/§23.7 + owner "Story with variants" | Of 20 `MantineModal` consumers, 15 hand-build their footer and body. Only `CreateTicketDialogView`, `TicketDetailDialogView`, `ListingPreviewDialogView` and `PremiumDialogView` use `MantineDialogFooter` / `structured`. The canonical `Mantine/Primitives/Modal` Story has `Default` and `Structured` only, with no detail, form or delete-confirm variant. A delete confirmation exists only hand-built (for example `AdminCurrenciesView.tsx:140-157`). | R28, R29 |
+| F8 | P2, GR-7 | Revision 1 was executed before GR-7 bound the executor (2026-10-04), so its session log has no execution-moment GR-7 receipt. | R31 |
+
+### 17.3 Reference research (GR-7)
+
+**Library.** `docs/research/references/2026-10-04/`, built in this review session (Playwright 1.60.0, `win32`, crawler
+`gr7-deep.mjs`). Every page: a full-page screenshot at 1440 (and 390 for pages with a table or dialog), every table's
+anatomy, select-all operated, first-row actions operated, every modal trigger and dropdown operated, dialog anatomy
+recorded. Kamr: the owner's `admin` / `123456` is refused by the field's `type="email"` validation; the prefilled
+`demo@example.com` / `123456` signs in (recorded in `audit-kamr.json` `loginNote`).
+
+| Reference | Entry | Pages inspected | Blocked | Tables | Checkbox first | Actions last | Dialogs opened |
+|---|---|---|---|---|---|---|---|
+| Lahomes | `techzaa.in/lahomes/admin/index.html` | 106 | 0 | 61 | 16 | 22 | 45 |
+| Kamr | `kamr-vite.vercel.app/dashboard` | 62 | 0 | 28 | 5 | 12 | 15 |
+| Omah | `omah.dexignzone.com/xhtml/index.html` | 339 | 0 | 23 | 3 | 15 | 22 |
+| TailAdmin | `demo.tailadmin.com/` | 88 | 0 | 28 | 5 | 14 | 13 |
+
+The table counts include calendar and date-picker grids. `summary.md` has one evidence row per page.
+
+**A defect in the audit itself, corrected.** The first TailAdmin run detected 0 dialogs, because TailAdmin's modals and
+menus are plain positioned `div`s. The crawler gained a generic overlay detector and TailAdmin was re-crawled.
+`audit-tailadmin.run1-superseded.json` is kept and marked superseded. Lahomes, Kamr and Omah use Bootstrap markup
+(`.modal.show`, `.dropdown-menu.show`, `role="dialog"`), which the original probes cover: they opened 45, 15 and 22
+dialogs plus their menus.
+
+**Live check, this session** (`docs/sessions/evidence/task859/research-review/live-check.mjs` → `live-check.json`,
+screenshots `live-*.png`). All 9 pages are `unchanged` against the library.
+
+| Ref | Page | Observed (live) | Supports |
+|---|---|---|---|
+| TailAdmin | `/support-tickets` | Columns Ticket ID · Requested By · Subject · Create Date · Status · Action. Checkbox in the first cell. `⋯` → View More / **Delete**. Status pills: *Solved* `rgb(2,122,72)` on `rgb(236,253,243)`, *Pending* `rgb(220,104,3)` on `rgb(255,250,235)`; 12px / 500 / padding 2×8 / full radius | F4 (→ 919), D78-19, F5 visual = theme |
+| TailAdmin | `/products-list` | `[checkbox]` first; `⋯` → View More / Delete; *In Stock* / *Out of Stock* pills, same metrics | GR-8 anatomy; badge metrics |
+| TailAdmin | `/support-ticket-reply` | ticket detail; facts list, status choice, reply (§16.7) | R13 (kept) |
+| TailAdmin | `/modals` (library) | 4 dialogs: title, 44×44 round close at top right, footer Close (secondary, white, 1px border) + Save Changes (primary); 24px radius. Esc does **not** close them | R28 anatomy; Esc → see 2026 practice |
+| Lahomes | `/customers-list.html`, `/orders.html` | `[checkbox]` first. Three 40×32 action buttons last: view `rgb(238,242,247)`, edit `rgba(96,74,227,.1)`, delete `rgba(233,103,103,.1)`, radius 2.4px (D78-14). Status badges solid fill, 11px / 600 / radius 4 | GR-8 (919); badge alternative |
+| Kamr | `/guest-list`, `/ecom-customers` | `[checkbox]` first; `⋯` → Edit / Delete. Status badges light tint, 13px / 500 / radius 7 (*Pending* `rgb(255,167,85)` on `rgb(255,233,213)`). Dialogs: Close + Save changes; **Esc closes all 15** | badge; dialog Esc |
+| Omah | `/ecom-customers.html`, `/ecom-product-order.html` | `[checkbox]` first; `⋯` → Edit / Delete; orders `⋯` → Completed / Processing / On Hold / Pending / Delete. Status badges solid, 11px / 400 / radius 4 | GR-8 (919) |
+
+**Comparison and the 2026 choice:**
+- **Status badge.** TailAdmin and Kamr use a light tint pill; Lahomes and Omah use a solid fill. **Chosen: the light tint pill**
+  (TailAdmin), already the `Badge` theme entry. Light tints keep WCAG AA contrast for the text colour on its tint
+  (TailAdmin's measured pair), and they don't compete with the row actions or the primary button for attention. Solid
+  fill stays only where a badge sits on a photo (`variant="filled"`, owner 2026-07-17, the listing card).
+- **Dialog.** All four references show title + close + footer secondary-then-primary. **Chosen: the §23.7 anatomy**
+  (`MantineModal structured` + `MantineDialogFooter`, secondary left, primary right; equal-width pair below 640). It
+  closes on Esc and on the close button, as Kamr does and as the WAI-ARIA dialog pattern requires. TailAdmin's Esc-proof
+  dialogs are not followed.
+- **Delete confirmation.** No reference page wires a confirmation to a table's Delete; their delete actions are demo
+  links. **Chosen:** a dedicated confirm dialog. Its title states the object, its body states the consequence, and its
+  footer has Cancel + a red destructive primary that shows `loading` while running. This is the 2026 practice for an
+  irreversible or data-hiding action. It is derived, not copied, and is labelled so.
+- **Bulk action after select-all.** No reference shows one (0 of 4). It remains the owner's own requirement (GR-8),
+  for 919.
+
+**Absent or unverified:**
+- No reference page was operated for a server-search user picker. R27 does not depend on a reference: it is GR-0 REUSE of
+  the existing canonical `MantineCombobox`.
+- No reference has a support *create* dialog (§16.7, unchanged).
+
+**lero.al data map:**
+- *Entities.* `support_tickets`, with `status` ∈ open / in_progress / resolved / closed, `ticket_type`, `complaint_type`,
+  `reporter`, `reported`, `created_by_admin`, `assigned_to`; and `support_ticket_events`.
+- *Actions.* `createSupportTicket` (`admin/actions/index.ts:749`), `updateTicketStatus` (`:840`, `resolveAdminActor`, a
+  no-op on an unchanged status), and `searchUsersForPicker`. **No delete action exists.** D78-19's soft delete is 919's.
+- *Routes.* `/admin/support`; `/admin/users/[id]` for the nav rows.
+- *Badge entities across the product*, all to be registered (R24): listing status and visibility, report status, ticket
+  status / type / complaint type, inquiry status, user status and role, currency and provider active state, page state,
+  dashboard stat tones, listing-detail badge tones, counts.
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: support table/dialogs/picker, status badges, dialog anatomy across the product; references: Lahomes, Kamr, Omah, TailAdmin (no extra owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list; Lahomes customers-list, orders; Kamr guest-list, ecom-customers; Omah ecom-customers, ecom-product-order → all unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0; inspected in depth: every page (summary.md rows); workflow states operated: select-all, first-row actions, every modal trigger, every dropdown, Esc, 390 re-render; options across references: badge light tint (TailAdmin, Kamr) vs solid (Lahomes, Omah); row actions tinted buttons (Lahomes) vs ⋯ menu (Kamr, Omah, TailAdmin); dialog Esc closes (Kamr) vs not (TailAdmin); chosen 2026 best practice: light tint pill = theme Badge; §23.7 dialog with Esc; dedicated destructive confirm; absent or unverified: bulk action on selection (no reference), server-search picker (not operated, R27 is GR-0 reuse), create-ticket dialog; lero.al data map: §17.3; owner decisions: D78-17, D78-18, D78-19; evidence: docs/research/references/2026-10-04, docs/sessions/evidence/task859/research-review/.`
+
+### 17.4 Canonical decision record (GR-0, GR-3a)
+
+| Visible artifact | Candidates inspected | Decision | Canonical owner and Story |
+|---|---|---|---|
+| Badge meaning (entity + value → colour, optional icon, label key) | `theme.ts:1238` `Badge` entry (visual only); the nine local maps of F5; `listingStatusTone.ts` (listing-only source since 741 R3) | **CREATE** one registry. **EXTEND** the visual (reuse the theme entry unchanged) | `src/design-system/mantine/badgeTones.ts` holds every map. `listingStatusTone.ts` becomes a re-export of its two maps from the registry, so 741's consumers and `listingStatusTone.test.ts` keep their import path. No other file defines a colour map. |
+| Badge component | `@mantine/core` `Badge` (31 direct consumers); no project component | **CREATE** `src/design-system/mantine/patterns/MantineBadge.tsx`, three variants: `status` (`entity`, `value`), `tone` (one semantic tone from the registry: neutral, info, success, warning, danger, brand, sale, purple, with children), `count` (`circle`, Mantine's native counter). Prop `onImage` selects `variant="filled"` (listing card). Size `xs` \| `sm` (default `sm`). No `color`, `style`, `className` or `styles` prop. | Story: **EXTEND** `Mantine/Primitives/Badge` (`src/stories/mantine/primitives/Badge.stories.tsx`). It now imports `MantineBadge` and has exports `Default` (every tone, both sizes, count, on-image) and `Statuses` (every entity × every value, with its label from `messages`). GR-3a: no new page. |
+| Delete confirmation | hand-built footers (F7); 919's planned `MantineDeleteConfirmModal` (not built) | **CREATE** `src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx`, built from `MantineModal structured` + `MantineDialogFooter`. Props: `opened`, `onClose`, `title`, `message`, `confirmLabel`, `cancelLabel`, `onConfirm`, `loading`. The primary is `color="red"`. 919 reuses it. | Story: **EXTEND** `Mantine/Primitives/Modal` with export `DeleteConfirm` |
+| Dialog variants | `Mantine/Primitives/Modal` (`Default`, `Structured`); `DialogFooter`, `DialogSections` Stories | **EXTEND** | `Mantine/Primitives/Modal` gains `Detail` (`MantineDetailList` + `MantineNavRowList` + `Radio.Card` choice + footer pair), `Form` (fields in `MantineDialogSections` + footer pair) and `DeleteConfirm`. Every Modal consumer composes these parts only. |
+| User picker | `MantineCombobox` + `Mantine/Primitives/Combobox`; `MantineSelect` | **REUSE** `MantineCombobox` (`searchable`, `onInputChange` for the server search, option `description` = email, `clearLabel`) | `Patterns/Mantine/UserPickerFieldView` keeps its 6 exports, now rendering the combobox |
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: status/tone/count badges product-wide, dialog variants + delete confirm, support user picker; semantic queries: "<Badge", "_COLOR: Record<", "STATUS_COLOR", "TONE_COLOR", "<MantineModal", "MantineDialogFooter", "confirm", "Combobox", "searchable"; inspected candidates: theme.ts:1238, listingStatusTone.ts, the 9 maps of F5, MantineModal.tsx, MantineDialogFooter.tsx, MantineDialogSections, Mantine/Primitives/{Badge,Modal,Combobox} Stories, MantineCombobox.tsx:31-103; decision: CREATE badgeTones.ts + MantineBadge + MantineDeleteConfirmModal, EXTEND the Badge and Modal Stories, REUSE MantineCombobox; selected canonical owner: those files; Mantine/TailAdmin token path: theme Badge entry (TailAdmin status pill, measured equal), theme colours only; new hardcoded visual values: NONE; rationale: the visual exists, the meaning does not, and 31 consumers re-decide it.`
+
+`GR-3a STORY PREFLIGHT — MantineBadge / MantineDeleteConfirmModal / dialog variants / picker × every variant and state; canonical candidates: mantine-primitives-badge--default, mantine-primitives-modal--default, mantine-primitives-modal--structured, mantine-primitives-combobox--default, patterns-mantine-userpickerfieldview--*; direct-import evidence: Badge.stories.tsx (imports @mantine/core Badge → now MantineBadge), Modal.stories.tsx:8-10, UserPickerFieldView.stories.tsx; toolbar coverage: locale=toolbar, viewport=toolbar; decision: EXTEND; target: the existing Badge and Modal Stories (new exports Statuses, Detail, Form, DeleteConfirm), the existing picker Story; rationale: no parallel page.`
+
+### 17.5 Requirements (Revision 2)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R24** | `badgeTones.ts` exports one typed map per entity (§17.3 list), each `value → { color: MantineColor; icon?: SolarIcon; labelKey: string }`, and `BADGE_TONES` (semantic tone → colour). Colours are theme colour names only. Every value of every DB/TS enum it covers has an entry, which is a type error otherwise (`Record<Enum, …>`). The nine maps of F5 are deleted from their files. `listingStatusTone.ts` only re-exports. The one disagreement between today's maps for the same entity was user `inactive` (`yellow` in `AdminUserProfileView.tsx:80`, `red` in `AdminUsersTable.tsx:33`). Owner decision **D78-20** (2026-10-04, option chosen verbatim: *"Gray — neutral"*) settles it as `gray`; blocked stays `red` and active `green`. If I0 finds any other value whose colour differs between two current consumers, stop and report it as an owner decision; do not choose. The session log lists every value that changed colour, for the owner matrix. | P1 | AC18 |
+| **R25** | `MantineBadge.tsx` as in §17.4. It is the only production file that imports `Badge` from `@mantine/core`. `Mantine/Primitives/Badge` has `Default` and `Statuses`, rendering every registry entry with its translated label. The file is added to `scripts/mantine-migration-scope.json` and exported from `patterns/index.ts`. | P1 | AC18, AC19 |
+| **R26** | All 31 files below render badges only through `MantineBadge`; none imports `Badge` from `@mantine/core`; the visible label, colour and icon of every badge equal today's, except the R24 colour-conflict list. Files: `components/admin/{AdminCurrenciesView, AdminDashboardRecentListings, AdminExchangeProvidersView, AdminHeader, AdminInquiriesView, AdminListingsView, AdminPagesView, AdminPermissionsView, AdminReportsView, AdminSidebar, AdminSupportView, AdminUserProfileView, AdminUsersTable, CurrencyDetailDialogView, ListingPreviewDialogView, ReportDetailDialogView, TicketDetailDialogView, UserPickerFieldView}.tsx`, `components/shared/FiltersPanel.tsx`, `design-system/mantine/patterns/{MantineAdminSurfacePattern, MantineCountButton, MantineDashboardCard, MantineDashboardHeader, MantineDashboardStatRows, MantineDashboardWorkList, MantineDataTableToCards, MantineListingCardPattern, MantineListingDetailPattern, MantineNotificationPattern}.tsx`, `modules/cabinet/statistics/components/AgentStatisticsView.tsx`, `modules/listings/components/ListingsFilters.tsx` (I0 re-checks whether anything imports it; if nothing does, report it as dead and leave it). **Not here, owned elsewhere:** the six legacy `@/components/ui/badge` consumers. `AdminLegalManager` and `AdminPropertyTypesManager` are 916's. `CabinetShell` and `ListingsTab` are 895's. `ImageUpload` is 906's. `steps/StepPreview` is dead and deleted by 905. | P1 | AC20 |
+| **R27** | `UserPickerFieldView` renders `MantineCombobox` (`searchable`, `onInputChange` → the existing search callback, options `{ value: id, label: name, description: email }`, the user status via `MantineBadge status entity="user"` in the option, `clearLabel` = `aria_clear_selection`). The hand-built `TextInput`, result `Paper`, selected `Paper` and `ActionIcon` are deleted. The container (`UserPickerField.tsx`) is unchanged. The 6 Story exports keep their states (empty, searching, results, selected, error, disabled). | P1 | AC21 |
+| **R28** | `MantineDeleteConfirmModal.tsx` as in §17.4. `Mantine/Primitives/Modal` gains `Detail`, `Form` and `DeleteConfirm`. Each renders only `MantineModal structured`, `MantineDialogSections`, `MantineDetailList`, `MantineNavRowList`, `Radio.Card`, `MantineDialogFooter` and canonical fields. Registered in the manifest and the barrel. | P1 | AC22 |
+| **R29** | **Ex-915 (D78-18): every one of the 20 `MantineModal` consumers** follows §23.6/§23.7, built only from R28's parts: `AdminCurrenciesView`, `AdminDashboardRecentListings`, `AdminExchangeProvidersView`, `AdminPagesView`, `AdminUserProfileDialogsView`, `CreateTicketDialogView`, `CurrencyDetailDialogView`, `CurrencyFormDialogView`, `InquiryDetailDialogView`, `ListingPreviewDialogView`, `PageEditorDialogView`, `PremiumDialogView`, `ProviderFormDialogView`, `ReportDetailDialogView`, `TicketDetailDialogView` (`components/admin/`), `components/shared/AvatarCropModal`, `patterns/MantineRichTextEditor`, `modules/listings/components/{CollectionsSection, SaveSearchButton, SaveToCollectionButton}`. In each dialog: one primary at most; secondary `default`; a destructive action is subtle red until its confirm step, and the confirm step is `MantineDeleteConfirmModal`; two or more text buttons never share a row (GR-3e); choices are controls (`Radio.Card` / select), not rows of buttons; i18n verbs only. Behaviour, server calls and props of the containers are unchanged. | P1 | AC23 |
+| **R30** | Two blocking gates, in `package.json` and in `.github/workflows/governance-pr.yml` after the story-coverage step. They print their scope on every run (GR-2). <ul><li>`check:badge-canonical` (`scripts/check-badge-canonical.mjs`) fails when a production `.tsx` / `.ts` under `src/` (Stories and tests excluded) imports `Badge` from `@mantine/core` outside `MantineBadge.tsx`, or declares a `Record<…>` / object literal whose name ends in `_COLOR` or `_TONE` outside `badgeTones.ts`.</li><li>`check:dialog-canonical` (`scripts/check-dialog-canonical.mjs`) fails when a production file renders `<MantineModal` without `structured`, or renders a `Button` inside a `MantineModal` that is not inside `MantineDialogFooter` (AST-based, TypeScript compiler API as `check-surface-census.mjs` does).</li></ul> Each gate has a self-test with two planted violations and their removal: red, then green, with hashes before and after. | P1 | AC24 |
+| **R31** | GR-7, execution moment: before the first write, the executor reads the library rows for the subject and live-checks the §17.3 pages, then emits the receipt (`moment: execution; role: Sonnet; library: docs/research/references/2026-10-04`). Evidence: `docs/sessions/evidence/task859/research-exec/`. | P1 | AC25 |
+
+### 17.6 Acceptance criteria (Revision 2)
+
+`GR-4 AC AUDIT — 8 criteria (AC18–AC25); each states an observable property; absolutes: the two gates' zero-violation exits, which are the gates' own contract with planted proof.`
+
+- **AC18 [R24, R25].** `npm.cmd run typecheck` passes with the registry's `Record<Enum, …>` maps, and removing one enum value's entry is a type error (plant, `r2-plant-registry.txt`). `git grep -nE "_(COLOR|TONE)\b.*(Record<|= \{)" -- src` lists only `badgeTones.ts` (and the re-export lines of `listingStatusTone.ts`).
+- **AC19 [R25].** `Mantine/Primitives/Badge` `Statuses` renders, in `en` and `uk`, one badge per registry entry. A probe counts them equal to the registry's entry total (`r2-probe-badges.json`).
+- **AC20 [R26].** `check:badge-canonical` exits 0. A probe of every changed Story records each badge's text and computed `background-color` / `color` before (`HEAD` build) and after. Every pair is equal, except the rows listed under R24 (`r2-badge-diff.json`).
+- **AC21 [R27].** The picker smoke tests (`AdminSupportManager.smoke.test.tsx`) still pass. A new **T11** types a query, asserts the search callback was called, selects a result and asserts `onChange` received the id. The picker Story at 390 opens the combobox's bottom-sheet branch (`MantineCombobox`'s own phone behaviour).
+- **AC22 [R28].** The three new Modal exports render at 390 (bottom sheet, equal-width footer pair) and 1440. In `DeleteConfirm`, Esc and the close button both call `onClose`, and the primary has `data-loading` while `loading`.
+- **AC23 [R29].** `check:dialog-canonical` exits 0. Every existing test of the 20 dialogs' containers passes unchanged (no assertion weakened, diff reviewed). Every dialog Story renders.
+- **AC24 [R30].** `r2-gate-plants.txt` shows each gate red on its two plants and green after the restore, with equal hashes. CI runs both (`governance-pr.yml` diff).
+- **AC25 [R31].** The session log carries the execution-moment GR-7 receipt before the first write's timestamp.
+
+### 17.7 Verification plan (Revision 2)
+
+**I0** → `r2-00-i0.txt`:
+- `git --no-optional-locks status --porcelain`, and stop if any 741 file of the header is listed;
+- `git hash-object` of every file in §17.8;
+- the GR-1 census of `src/app/admin/support/page.tsx`;
+- the GR-7 live check (R31).
+
+**Gate block** (one transcript per command, `r2-<nn>-<name>.txt`, UTF-8 without BOM, `EXIT_CODE=` appended):
+
+```powershell
+$ev = "docs\sessions\evidence\task859"
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()"
+npx.cmd vitest run src/components/admin src/design-system/mantine src/modules/listings src/modules/cabinet/statistics
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:badge-canonical
+npm.cmd run check:dialog-canonical
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run check:rendered-scope
+npm.cmd run check:rendered-scope:verify
+npm.cmd run check:surface-census:changed -- --base HEAD
+npm.cmd run check:surface-census:changed:verify
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:i18n
+npm.cmd run check:i18n-dynamic
+npm.cmd run check:type-responsive
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+npm.cmd run build
+git --no-optional-locks status --porcelain
+```
+
+Expected: `win32`, and every command exits 0. `build` is the hard gate. `build-storybook` runs after the last source write,
+and the AC19–AC23 probes run on that build.
+
+**Critical flow.** `ListingCard` → `MantineListingCardPattern` is `docs/critical-flow-registry.md:57/63`. Its badges move
+onto `MantineBadge`, so the profile is **Q4** (raised from Q3). The existing `ListingCard` / pattern smoke tests must
+pass unchanged, and AC20's before/after colour probe covers the card Stories in both layouts.
+
+**Receipts**, per changed Story (the Badge and Modal primitives, every dialog Story, `AdminSupportView`, the picker, and every
+Story of a file in R26):
+- GR-3b at 320/390/1024/1440;
+- GR-3c at 320/390/768/1440 (no text size changes: badge sizes and the dialog title exactly as today, measured before and after);
+- GR-3d (primitives `n/a: MantineStoryShell primitive`; dialogs `n/a: overlay-only`; admin Views `n/a: own gutter (AdminPageFrame)`; others as their current line);
+- GR-3e for every dialog;
+- GR-3f for the `count` badge circle and `Radio.Card` indicators;
+- GR-3g for `MantineNavRowList` in `Detail`;
+- GR-8 for the support table (exception D78-17), and for every other table these files render, recording its current state, the 919 exception.
+
+### 17.8 Write set (Revision 2)
+
+- **New:** `src/design-system/mantine/badgeTones.ts`, `patterns/MantineBadge.tsx`,
+  `patterns/MantineDeleteConfirmModal.tsx`, `scripts/check-badge-canonical.mjs`, `scripts/check-dialog-canonical.mjs`
+  (each with a `--verify` self-test), and a test file for each pattern.
+- **Edited:**
+  - the 31 files of R26 and the 20 dialog files of R29;
+  - `listingStatusTone.ts` (re-export only);
+  - `UserPickerFieldView.tsx`;
+  - `patterns/index.ts`;
+  - the Badge, Modal and picker Stories, and every Story whose component changed (no export added or removed, apart
+    from the four named in §17.4);
+  - `scripts/mantine-migration-scope.json` (the two new patterns);
+  - `package.json` (two scripts and their `:verify`);
+  - `.github/workflows/governance-pr.yml` (two steps);
+  - `messages/{sq,en,uk,it}.json` (only for a missing label key);
+  - the session log (`## Revision 2`) and the 859 backlog cell.
+- **Frozen,** with hashes at I0 and at the end:
+  - all containers (`AdminSupportManager`, `TicketDetailDialog`, `CreateTicketDialog`, `UserPickerField`, and every dialog container);
+  - `supportFilters.ts`, `page.tsx`, `theme.ts`;
+  - all server actions.
+
+**Any other file needed is a stop and report.** The R23 width work and every §16 item are not redone.
+
+### 17.9 Owner visual review — O78-13 (Revision 2)
+
+The owner sees only finished artifacts:
+- `Mantine/Primitives/Badge` `Default` and `Statuses` × `en`, `uk` × 390, 1440 (every badge in the product, from one source);
+- `Mantine/Primitives/Modal` `Detail`, `Form` and `DeleteConfirm` × `sq` × 390, 1440;
+- every migrated dialog Story × `sq` × 390, 1440 (20 dialogs);
+- the support dialogs and the picker × `sq` × 390, 1440;
+- the R24 colour-change list, each row beside its old screenshot.
+
+The `/admin/support` **table** row of the matrix waits for 919 (D78-17).
+
+### 17.10 Completion (Revision 2)
+
+Append `## Revision 2` to `docs/sessions/2026-10-04-task859-admin-support-mantine.md`, with:
+- the I0 status and hashes;
+- the GR-7 execution receipt;
+- R24–R31 with evidence;
+- the gate block;
+- the plants;
+- the probes (`r2-probe-badges.json`, `r2-badge-diff.json`);
+- the R24 colour-change list;
+- every Story receipt;
+- a `Files Changed` table.
+
+Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 

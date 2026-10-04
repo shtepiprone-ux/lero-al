@@ -81,3 +81,7 @@ Codex-tasks/
 tech-materials/
 .vercel
 .env*
+
+# GR-7 shared reference library: JSON, summaries and scripts are committed; full-page screenshots stay local
+# (owner decision 2026-10-04, "Git: JSON only"). A screenshot a kickoff or review cites is copied into its task evidence.
+docs/research/references/*/shots-*/

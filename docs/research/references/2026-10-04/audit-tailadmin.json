@@ -1,0 +1,4726 @@
+{
+ "ref": "tailadmin",
+ "entry": "https://demo.tailadmin.com/",
+ "scope": "https://demo.tailadmin.com/",
+ "loginNote": null,
+ "updatedAt": "2026-10-04T12:15:02.967Z",
+ "remainingQueue": [],
+ "rows": [
+  {
+   "id": "000",
+   "url": "https://demo.tailadmin.com/",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/",
+   "title": "eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/000-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 4,
+     "heads": [
+      "Products",
+      "Category",
+      "Price",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 583,
+      "h": 418,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 130,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 130,
+      "h": 75,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/000-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "001",
+   "url": "https://demo.tailadmin.com/index.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/",
+   "title": "eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/001-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 4,
+     "heads": [
+      "Products",
+      "Category",
+      "Price",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 583,
+      "h": 418,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 130,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 130,
+      "h": 75,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/001-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "002",
+   "url": "https://demo.tailadmin.com/analytics.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/analytics",
+   "title": "Analytics Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/002-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 5,
+     "heads": [
+      "Products",
+      "Category",
+      "Country",
+      "CR",
+      "Value"
+     ],
+     "rows": 7,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Value",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 631,
+      "h": 386,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 134,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 134,
+      "h": 49,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "14px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/002-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "003",
+   "url": "https://demo.tailadmin.com/marketing.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/marketing",
+   "title": "Marketing Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/003-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 3,
+     "heads": [
+      "Creator",
+      "Campaign",
+      "Status"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 677,
+      "h": 471,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 344,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "0px"
+     },
+     "bodyCell": {
+      "w": 344,
+      "h": 71,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "0px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/003-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "004",
+   "url": "https://demo.tailadmin.com/crm.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/crm",
+   "title": "CRM Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/004-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Deal ID",
+      "Customer",
+      "Product/Service",
+      "Deal Value",
+      "Close Date",
+      "Status",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "svg",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 20,
+        "h": 20,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      },
+      {
+       "tag": "path",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 15,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 400,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 265,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 265,
+      "h": 71,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/004-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "005",
+   "url": "https://demo.tailadmin.com/stocks.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/stocks",
+   "title": "Stocks Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/005-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 5,
+     "heads": [
+      "Name",
+      "Date",
+      "Price",
+      "Category",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1052,
+      "h": 330,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 231,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 231,
+      "h": 57,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/005-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "006",
+   "url": "https://demo.tailadmin.com/saas.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/saas",
+   "title": "SaaS Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/006-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 5,
+     "heads": [
+      "Serial No:",
+      "Close Date",
+      "User",
+      "Amount",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 648,
+      "h": 336,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 155,
+      "h": 52,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 155,
+      "h": 57,
+      "color": "rgb(52, 64, 84)",
+      "fontSize": "14px",
+      "paddingLeft": "24px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New Users",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/006-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "007",
+   "url": "https://demo.tailadmin.com/logistics.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/logistics",
+   "title": "Logistics Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/007-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Order ID",
+      "Category",
+      "Company",
+      "Arrival Time",
+      "Route",
+      "Price",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 335,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 133,
+      "h": 51,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "16px"
+     },
+     "bodyCell": {
+      "w": 133,
+      "h": 57,
+      "color": "rgb(29, 41, 57)",
+      "fontSize": "14px",
+      "paddingLeft": "16px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 5,
+      "total": 5,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/007-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "008",
+   "url": "https://demo.tailadmin.com/ai.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/ai",
+   "title": "AI Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/008-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "Paid By",
+      "Package Name",
+      "Price",
+      "Paid Date",
+      "Status",
+      "Actions"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Actions",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 410,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 238,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 238,
+      "h": 73,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/008-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "009",
+   "url": "https://demo.tailadmin.com/sales.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/sales",
+   "title": "Sales Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/009-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 12,
+     "heads": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "rows": 12,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "div",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "",
+       "style": {
+        "w": 24,
+        "h": 17,
+        "backgroundColor": "rgb(221, 233, 255)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "1px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 312,
+      "h": 256,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 24,
+      "h": 17,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "0px"
+     },
+     "bodyCell": {
+      "w": 24,
+      "h": 17,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "0px",
+      "paddingTop": "0px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "cols": 3,
+     "heads": [
+      "Channels",
+      "Metric",
+      "Total"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Total",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 278,
+      "h": 136,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 66,
+      "h": 28,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(152, 162, 179)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "0px"
+     },
+     "bodyCell": {
+      "w": 66,
+      "h": 36,
+      "color": "rgb(52, 64, 84)",
+      "fontSize": "14px",
+      "paddingLeft": "0px",
+      "paddingTop": "8px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 2,
+     "cols": 6,
+     "heads": [
+      "Product Name",
+      "Category",
+      "Sales",
+      "Earnings",
+      "Stocks",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1058,
+      "h": 377,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 154,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 154,
+      "h": 67,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "20px",
+      "paddingTop": "8px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/009-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "010",
+   "url": "https://demo.tailadmin.com/finance.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/finance",
+   "title": "Finance Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/010-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "Order ID",
+      "Activity",
+      "Price",
+      "Date",
+      "Status",
+      ""
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 360,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 261,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 261,
+      "h": 63,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: Add Card",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/010-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "011",
+   "url": "https://demo.tailadmin.com/text-generator.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/text-generator",
+   "title": "AI Text Generator | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/011-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: GPT 4.5\n                                ",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New Chat",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "012",
+   "url": "https://demo.tailadmin.com/image-generator.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/image-generator",
+   "title": "AI Image Generator | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/012-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New Chat",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Add Starred",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "013",
+   "url": "https://demo.tailadmin.com/code-generator.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/code-generator",
+   "title": "AI Code Generator | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/013-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: GPT 4.5\n                                ",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New Chat",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "014",
+   "url": "https://demo.tailadmin.com/video-generator.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/video-generator",
+   "title": "AI Video Generator | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/014-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New Chat",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove Starred",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "015",
+   "url": "https://demo.tailadmin.com/ai-settings.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/ai-settings",
+   "title": "AI Settings | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/015-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Create WorkSpace",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Credit and Billing",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Create WorkSpace",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Credit and Billing",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Add Memory",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Create Folder",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: OpenAI",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: New key",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "016",
+   "url": "https://demo.tailadmin.com/products-list.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/products-list",
+   "title": "E-commerce Products List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/016-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 8,
+     "heads": [
+      "[checkbox]",
+      "Products",
+      "Category",
+      "Brand",
+      "Price",
+      "Stock",
+      "Created At",
+      "Action"
+     ],
+     "rows": 7,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 617,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 328,
+      "h": 51,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 328,
+      "h": 81,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "20px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 7,
+      "total": 7,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/016-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "017",
+   "url": "https://demo.tailadmin.com/add-product.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/add-product",
+   "title": "E-commerce Add Products | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/017-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "018",
+   "url": "https://demo.tailadmin.com/billing.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/billing",
+   "title": "E-commerce Billing | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/018-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "Name",
+      "Date",
+      "Price",
+      "Plan",
+      "Status",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "shadow-theme-xs inline-flex h-9 w-9 items-center justify-center rounded-lg border border-g",
+       "style": {
+        "w": 36,
+        "h": 36,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "8px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(208, 213, 221)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      },
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "shadow-theme-xs inline-flex h-9 w-9 items-center justify-center rounded-lg border border-g",
+       "style": {
+        "w": 36,
+        "h": 36,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "8px",
+        "borderTopWidth": "1px",
+        "borderTopColor": "rgb(208, 213, 221)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1052,
+      "h": 350,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 201,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 201,
+      "h": 61,
+      "color": "rgb(52, 64, 84)",
+      "fontSize": "14px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: Update Billing Address",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 558,
+      "h": 610,
+      "x": 441,
+      "radius": "24px",
+      "padding": "40px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "New integration",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 490
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 773,
+        "w": 68,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Update Info",
+        "x": 853,
+        "w": 106,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 7,
+      "text": "New integration Set up an integration and add a brief explanation for the team. First Name Last Name Street Country Select Option USA UK BD EU ID Town/City Sele"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Add New Card",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Edit",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Delete",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Edit",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Delete",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Edit",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Delete",
+     "result": "no-visible-change"
+    }
+   ],
+   "shot390": "shots-tailadmin/018-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "019",
+   "url": "https://demo.tailadmin.com/invoices.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/invoices",
+   "title": "E-commerce Invoices | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/019-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Invoice Number",
+      "Customer",
+      "Creation Date",
+      "Due Date",
+      "Total",
+      "Status",
+      "Action"
+     ],
+     "rows": 10,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 620,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 175,
+      "h": 51,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(52, 64, 84)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "16px"
+     },
+     "bodyCell": {
+      "w": 175,
+      "h": 57,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "16px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 10,
+      "total": 10,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/019-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "020",
+   "url": "https://demo.tailadmin.com/single-invoice.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/single-invoice",
+   "title": "E-commerce Single Invoice | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/020-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "S.No.#",
+      "Products",
+      "Quantity",
+      "Unit Cost",
+      "Discount",
+      "Total"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Total",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1034,
+      "h": 224,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 263,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 263,
+      "h": 45,
+      "color": "rgb(29, 41, 57)",
+      "fontSize": "14px",
+      "paddingLeft": "20px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [],
+   "shot390": "shots-tailadmin/020-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "021",
+   "url": "https://demo.tailadmin.com/create-invoice.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/create-invoice",
+   "title": "E-commerce Create Invoice | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/021-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "S. No.",
+      "Products",
+      "Quantity",
+      "Unit Cost",
+      "Discount",
+      "Total",
+      "Actions"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Actions",
+     "lastCellControls": [
+      {
+       "tag": "svg",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 20,
+        "h": 20,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "14px"
+       }
+      },
+      {
+       "tag": "path",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 15,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "14px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1034,
+      "h": 264,
+      "borderTopWidth": "0px",
+      "fontSize": "14px"
+     },
+     "headCell": {
+      "w": 235,
+      "h": 53,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 235,
+      "h": 53,
+      "color": "rgb(29, 41, 57)",
+      "fontSize": "14px",
+      "paddingLeft": "20px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: Preview Invoice",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 690,
+      "h": 706,
+      "x": 375,
+      "radius": "0px",
+      "padding": "16px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "backdrop": true,
+      "title": {
+       "text": "Invoice: #34834",
+       "fontSize": "18px",
+       "fontWeight": "400"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 606
+      },
+      "hasFooter": false,
+      "footerButtons": [],
+      "inputs": 0,
+      "text": "Invoice: #34834 From Pimjo LLC 1280, Clair Street, Massachusetts, New York - 02543 Issued On: 11 March, 2027 To Albert Ward 355, Shobe Lane Colorado, Fort Colli"
+     },
+     "escCloses": false
+    }
+   ],
+   "shot390": "shots-tailadmin/021-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "022",
+   "url": "https://demo.tailadmin.com/transactions.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/transactions",
+   "title": "E-commerce Transactions | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/022-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 7,
+     "heads": [
+      "Order ID",
+      "Customer",
+      "Email",
+      "Total Amount",
+      "Due Date",
+      "Status",
+      "Action"
+     ],
+     "rows": 10,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 620,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 181,
+      "h": 51,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "16px"
+     },
+     "bodyCell": {
+      "w": 181,
+      "h": 57,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "16px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 10,
+      "total": 10,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/022-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "023",
+   "url": "https://demo.tailadmin.com/single-transaction.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/single-transaction",
+   "title": "E-commerce Single Transaction | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/023-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "S. No.",
+      "Products",
+      "Quantity",
+      "Unit Cost",
+      "Discount",
+      "Total"
+     ],
+     "rows": 4,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Total",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 675,
+      "h": 264,
+      "borderTopWidth": "0px",
+      "fontSize": "14px"
+     },
+     "headCell": {
+      "w": 175,
+      "h": 53,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 175,
+      "h": 53,
+      "color": "rgb(29, 41, 57)",
+      "fontSize": "14px",
+      "paddingLeft": "20px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View Receipt",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Preview",
+     "result": "no-visible-change"
+    }
+   ],
+   "shot390": "shots-tailadmin/023-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "024",
+   "url": "https://demo.tailadmin.com/calendar.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/calendar",
+   "title": "Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/024-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Add Event +",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 700,
+      "h": 584,
+      "x": 370,
+      "radius": "24px",
+      "padding": "44px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Add / Edit Event",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 636
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 842,
+        "w": 68,
+        "h": 42,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Add Event",
+        "x": 922,
+        "w": 96,
+        "h": 40,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 8,
+      "text": "Add / Edit Event Plan your next big moment: schedule or edit an event to stay on track Event Title Event Color Danger Success Primary Warning Enter Start Date E"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Add Event",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/024-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "025",
+   "url": "https://demo.tailadmin.com/profile.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/profile",
+   "title": "Profile | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/025-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Edit",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 700,
+      "h": 692,
+      "x": 370,
+      "radius": "24px",
+      "padding": "44px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Edit Personal Information",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 636
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 818,
+        "w": 68,
+        "h": 42,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Save Changes",
+        "x": 898,
+        "w": 120,
+        "h": 40,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 10,
+      "text": "Edit Personal Information Update your details to keep your profile up-to-date. Change Profile Picture Upload a square image (200×200 px) in JPEG or PNG format. "
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Edit",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 700,
+      "h": 402,
+      "x": 370,
+      "radius": "24px",
+      "padding": "44px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Edit Address",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 636
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 826,
+        "w": 68,
+        "h": 42,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Save Changes",
+        "x": 906,
+        "w": 120,
+        "h": 40,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 4,
+      "text": "Edit Address Update your details to keep your profile up-to-date. Country City/State Postal Code TAX ID Close Save Changes"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Delete account",
+     "result": "no-visible-change"
+    }
+   ],
+   "shot390": "shots-tailadmin/025-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "026",
+   "url": "https://demo.tailadmin.com/task-list.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/task-list",
+   "title": "Task List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/026-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Add New Task",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 700,
+      "h": 692,
+      "x": 370,
+      "radius": "24px",
+      "padding": "44px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Add a new task",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 636
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Cancel",
+        "x": 823,
+        "w": 77,
+        "h": 42,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Create Task",
+        "x": 912,
+        "w": 106,
+        "h": 40,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 7,
+      "text": "Add a new task Effortlessly manage your to-do list: add a new task Task Title Due Date Status To Do In Progress Completed Tags Marketing Template Development As"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/026-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "027",
+   "url": "https://demo.tailadmin.com/task-kanban.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/task-kanban",
+   "title": "Task Kanban | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/027-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Add New Task",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 700,
+      "h": 692,
+      "x": 370,
+      "radius": "24px",
+      "padding": "44px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Add a new task",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 636
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Cancel",
+        "x": 823,
+        "w": 77,
+        "h": 42,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Create Task",
+        "x": 912,
+        "w": 106,
+        "h": 40,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 7,
+      "text": "Add a new task Effortlessly manage your to-do list: add a new task Task Title Due Date Status To Do In Progress Completed Tags Marketing Template Development As"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Edit",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/027-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "028",
+   "url": "https://demo.tailadmin.com/form-elements.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/form-elements",
+   "title": "Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/028-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "029",
+   "url": "https://demo.tailadmin.com/form-layout.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/form-layout",
+   "title": "Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/029-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Create Account",
+     "result": "navigated",
+     "to": "https://demo.tailadmin.com/form-layout?"
+    }
+   ]
+  },
+  {
+   "id": "030",
+   "url": "https://demo.tailadmin.com/basic-tables.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/basic-tables",
+   "title": "Basic Tables | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/030-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 4,
+     "heads": [
+      "Products",
+      "Category",
+      "Price",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1002,
+      "h": 418,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 224,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 224,
+      "h": 75,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 1,
+     "cols": 5,
+     "heads": [
+      "Products",
+      "Category",
+      "Country",
+      "CR",
+      "Value"
+     ],
+     "rows": 7,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Value",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1050,
+      "h": 386,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 223,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 223,
+      "h": 49,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "14px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 2,
+     "cols": 3,
+     "heads": [
+      "Creator",
+      "Campaign",
+      "Status"
+     ],
+     "rows": 6,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1002,
+      "h": 471,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 509,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "0px"
+     },
+     "bodyCell": {
+      "w": 509,
+      "h": 71,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "0px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    },
+    {
+     "index": 3,
+     "cols": 7,
+     "heads": [
+      "Deal ID",
+      "Customer",
+      "Product/Service",
+      "Deal Value",
+      "Close Date",
+      "Status",
+      "Action"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "svg",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 20,
+        "h": 20,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      },
+      {
+       "tag": "path",
+       "text": "",
+       "title": "",
+       "icon": "",
+       "cls": "[object SVGAnimatedString]",
+       "style": {
+        "w": 15,
+        "h": 17,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1050,
+      "h": 400,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 253,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 253,
+      "h": 71,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      }
+     ]
+    },
+    {
+     "index": 4,
+     "cols": 5,
+     "heads": [
+      "Name",
+      "Date",
+      "Price",
+      "Category",
+      "Status"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Status",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1002,
+      "h": 330,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 220,
+      "h": 45,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 220,
+      "h": 57,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    },
+    {
+     "index": 5,
+     "cols": 5,
+     "heads": [
+      "User",
+      "Project Name",
+      "Team",
+      "Status",
+      "Budget"
+     ],
+     "rows": 5,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Budget",
+     "lastCellControls": [],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1102,
+      "h": 408,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 247,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "textTransform": "none",
+      "paddingLeft": "24px"
+     },
+     "bodyCell": {
+      "w": 247,
+      "h": 73,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "24px",
+      "paddingTop": "16px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": []
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/030-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "031",
+   "url": "https://demo.tailadmin.com/data-tables.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/data-tables",
+   "title": "Data Tables | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/031-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "032",
+   "url": "https://demo.tailadmin.com/file-manager.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/file-manager",
+   "title": "File Manager Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/032-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "033",
+   "url": "https://demo.tailadmin.com/pricing-tables.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/pricing-tables",
+   "title": "Pricing Tables Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/033-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "034",
+   "url": "https://demo.tailadmin.com/faq.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/faq",
+   "title": "FAQ Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/034-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "035",
+   "url": "https://demo.tailadmin.com/api-keys.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/api-keys",
+   "title": "API Keys Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/035-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "Name",
+      "Status",
+      "Created",
+      "Last used",
+      "Disable/Enable",
+      "Action"
+     ],
+     "rows": 3,
+     "headCheckbox": false,
+     "firstCellCheckbox": false,
+     "checkbox": null,
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "hover:text-error-500 dark:hover:text-error-500 text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 21,
+        "h": 21,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      },
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white/90",
+       "style": {
+        "w": 21,
+        "h": 21,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": true,
+     "table": {
+      "w": 1048,
+      "h": 340,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 109,
+      "h": 41,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(102, 112, 133)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "20px"
+     },
+     "bodyCell": {
+      "w": 109,
+      "h": 100,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "20px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "no-visible-change"
+      },
+      {
+       "label": "row-action-1",
+       "result": "no-visible-change"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: Add API Key",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 600,
+      "h": 382,
+      "x": 420,
+      "radius": "24px",
+      "padding": "40px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Generate API key",
+       "fontSize": "30px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 532
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 460,
+        "w": 255,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Generate API key",
+        "x": 727,
+        "w": 253,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 1,
+      "text": "Generate API key To enable secure access to the web services, your app requires an API key with permissions for resources such as the S3 bucket. Enter your appl"
+     },
+     "escCloses": false
+    }
+   ],
+   "shot390": "shots-tailadmin/035-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "036",
+   "url": "https://demo.tailadmin.com/integrations.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/integrations",
+   "title": "Integrations Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/036-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Add New Integration",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 558,
+      "h": 630,
+      "x": 441,
+      "radius": "24px",
+      "padding": "40px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "New integration",
+       "fontSize": "24px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 490
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 481,
+        "w": 234,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Add Integration",
+        "x": 727,
+        "w": 232,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 4,
+      "text": "New integration Set up an integration and add a brief explanation for the team. Select App Select Option Google Meet Mailchimp Zoom Loom Gmail Client ID Client "
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Add Integration",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Remove",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/036-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "037",
+   "url": "https://demo.tailadmin.com/blank.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/blank",
+   "title": "Blank Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/037-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "038",
+   "url": "https://demo.tailadmin.com/404.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/404",
+   "title": "404 Error Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "ERROR",
+   "shot": "shots-tailadmin/038-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "039",
+   "url": "https://demo.tailadmin.com/500.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/500",
+   "title": "500 Error Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "ERROR",
+   "shot": "shots-tailadmin/039-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "040",
+   "url": "https://demo.tailadmin.com/503.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/503",
+   "title": "503 Error Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "ERROR",
+   "shot": "shots-tailadmin/040-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "041",
+   "url": "https://demo.tailadmin.com/coming-soon.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/coming-soon",
+   "title": "Coming Soon Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Coming Soon",
+   "shot": "shots-tailadmin/041-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "042",
+   "url": "https://demo.tailadmin.com/maintenance.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/maintenance",
+   "title": "Maintenance Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MAINTENANCE",
+   "shot": "shots-tailadmin/042-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "043",
+   "url": "https://demo.tailadmin.com/success.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/success",
+   "title": "Success Page | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "SUCCESS !",
+   "shot": "shots-tailadmin/043-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "044",
+   "url": "https://demo.tailadmin.com/layout-one.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-one",
+   "title": "Layout 1 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/044-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "045",
+   "url": "https://demo.tailadmin.com/layout-two.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-two",
+   "title": "Layout 2 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "General",
+   "shot": "shots-tailadmin/045-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "046",
+   "url": "https://demo.tailadmin.com/layout-three.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-three",
+   "title": "Layout 3 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Get Started",
+   "shot": "shots-tailadmin/046-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "047",
+   "url": "https://demo.tailadmin.com/layout-four.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-four",
+   "title": "Layout 4 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": null,
+   "shot": "shots-tailadmin/047-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "048",
+   "url": "https://demo.tailadmin.com/layout-five.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-five",
+   "title": "Layout 5 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": null,
+   "shot": "shots-tailadmin/048-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "049",
+   "url": "https://demo.tailadmin.com/layout-six.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/layout-six",
+   "title": "Layout 6 Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": null,
+   "shot": "shots-tailadmin/049-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "050",
+   "url": "https://demo.tailadmin.com/chat.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/chat",
+   "title": "Chat | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/050-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "051",
+   "url": "https://demo.tailadmin.com/support-tickets.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/support-tickets",
+   "title": "Tickets List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/051-1440.jpg",
+   "tables": [
+    {
+     "index": 0,
+     "cols": 6,
+     "heads": [
+      "Ticket ID",
+      "Requested By",
+      "Subject",
+      "Create Date",
+      "Status",
+      "Action"
+     ],
+     "rows": 10,
+     "headCheckbox": true,
+     "firstCellCheckbox": true,
+     "checkbox": {
+      "w": 1,
+      "h": 1,
+      "borderRadius": "0px",
+      "borderTopColor": "rgb(102, 112, 133)",
+      "backgroundColor": "rgb(255, 255, 255)"
+     },
+     "lastHead": "Action",
+     "lastCellControls": [
+      {
+       "tag": "button",
+       "text": "",
+       "title": "",
+       "icon": "fill-current",
+       "cls": "text-gray-500 dark:text-gray-400",
+       "style": {
+        "w": 24,
+        "h": 24,
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(102, 112, 133)",
+        "borderRadius": "0px",
+        "borderTopWidth": "0px",
+        "borderTopColor": "rgb(228, 231, 236)",
+        "paddingLeft": "0px",
+        "fontSize": "16px"
+       }
+      }
+     ],
+     "actionsElsewhere": false,
+     "table": {
+      "w": 1100,
+      "h": 732,
+      "borderTopWidth": "0px",
+      "fontSize": "16px"
+     },
+     "headCell": {
+      "w": 232,
+      "h": 43,
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(52, 64, 84)",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "textTransform": "none",
+      "paddingLeft": "16px"
+     },
+     "bodyCell": {
+      "w": 232,
+      "h": 69,
+      "color": "rgb(0, 0, 0)",
+      "fontSize": "16px",
+      "paddingLeft": "16px",
+      "paddingTop": "12px",
+      "borderBottomWidth": "0px",
+      "borderBottomColor": "rgb(228, 231, 236)"
+     },
+     "rowBg": "rgba(0, 0, 0, 0)",
+     "selectAll": {
+      "checked": 10,
+      "total": 10,
+      "selectedRowBg": "rgba(0, 0, 0, 0)",
+      "appearedButtons": []
+     },
+     "actionsOperated": [
+      {
+       "label": "row-action-0",
+       "result": "menu",
+       "detector": "generic",
+       "menu": {
+        "items": [
+         "View More",
+         "Delete"
+        ],
+        "w": 160
+       },
+       "escCloses": false
+      },
+      {
+       "label": "row-action-1",
+       "result": "not-clickable"
+      },
+      {
+       "label": "row-action-2",
+       "result": "not-clickable"
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ],
+   "shot390": "shots-tailadmin/051-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "052",
+   "url": "https://demo.tailadmin.com/support-ticket-reply.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/support-ticket-reply",
+   "title": "Ticket Reply | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/052-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Reply",
+     "result": "no-visible-change"
+    }
+   ]
+  },
+  {
+   "id": "053",
+   "url": "https://demo.tailadmin.com/inbox.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/inbox",
+   "title": "Inbox | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/053-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: View More",
+     "result": "not-clickable"
+    },
+    {
+     "label": "button: Delete",
+     "result": "not-clickable"
+    }
+   ]
+  },
+  {
+   "id": "054",
+   "url": "https://demo.tailadmin.com/inbox-details.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/inbox-details",
+   "title": "Inbox Details | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/054-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Reply",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Reply all",
+     "result": "no-visible-change"
+    }
+   ]
+  },
+  {
+   "id": "055",
+   "url": "https://demo.tailadmin.com/line-chart.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/line-chart",
+   "title": "Line Chart | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/055-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "056",
+   "url": "https://demo.tailadmin.com/bar-chart.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/bar-chart",
+   "title": "Bar Chart | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/056-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "057",
+   "url": "https://demo.tailadmin.com/pie-chart.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/pie-chart",
+   "title": "Pie Chart | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/057-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "058",
+   "url": "https://demo.tailadmin.com/radar-chart.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/radar-chart",
+   "title": "Radar Chart | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/058-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "059",
+   "url": "https://demo.tailadmin.com/radial-chart.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/radial-chart",
+   "title": "Pie Chart | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/059-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "060",
+   "url": "https://demo.tailadmin.com/maps.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/maps",
+   "title": "Maps | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/060-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "061",
+   "url": "https://demo.tailadmin.com/vector-maps.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/vector-maps",
+   "title": "Vector Map | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/061-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "062",
+   "url": "https://demo.tailadmin.com/alerts.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/alerts",
+   "title": "Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/062-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "063",
+   "url": "https://demo.tailadmin.com/avatars.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/avatars",
+   "title": "Avatars | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/063-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "064",
+   "url": "https://demo.tailadmin.com/badge.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/badge",
+   "title": "Badge | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/064-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "065",
+   "url": "https://demo.tailadmin.com/breadcrumb.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/breadcrumb",
+   "title": "Breadcrumb | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/065-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "066",
+   "url": "https://demo.tailadmin.com/buttons.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/buttons",
+   "title": "Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/066-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "067",
+   "url": "https://demo.tailadmin.com/buttons-group.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/buttons-group",
+   "title": "Buttons Group | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/067-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "068",
+   "url": "https://demo.tailadmin.com/cards.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/cards",
+   "title": "Cards | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/068-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "069",
+   "url": "https://demo.tailadmin.com/carousel.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/carousel",
+   "title": "Carousel | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/069-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "070",
+   "url": "https://demo.tailadmin.com/dropdowns.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/dropdowns",
+   "title": "Dropdowns | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/070-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "071",
+   "url": "https://demo.tailadmin.com/images.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/images",
+   "title": "Images | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/071-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "072",
+   "url": "https://demo.tailadmin.com/links.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/links",
+   "title": "Links | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/072-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "073",
+   "url": "https://demo.tailadmin.com/list.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/list",
+   "title": "List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/073-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "074",
+   "url": "https://demo.tailadmin.com/modals.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/modals",
+   "title": "Modals | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/074-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Open Modal",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 600,
+      "h": 364,
+      "x": 420,
+      "radius": "24px",
+      "padding": "40px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Modal Heading",
+       "fontSize": "30px",
+       "fontWeight": "600"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 532
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 780,
+        "w": 68,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Save Changes",
+        "x": 860,
+        "w": 120,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 0,
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum a"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Open Modal",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 539,
+      "h": 284,
+      "x": 451,
+      "radius": "0px",
+      "padding": "16px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "backdrop": true,
+      "title": {
+       "text": "All Done! Success Confirmed",
+       "fontSize": "30px",
+       "fontWeight": "600"
+      },
+      "close": null,
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 620,
+        "w": 68,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Save Changes",
+        "x": 700,
+        "w": 120,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 0,
+      "text": "All Done! Success Confirmed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Close Save Changes"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Open Modal",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 584,
+      "h": 452,
+      "x": 428,
+      "radius": "24px",
+      "padding": "40px",
+      "bg": "rgb(255, 255, 255)",
+      "backdrop": true,
+      "title": {
+       "text": "Personal Information",
+       "fontSize": "18px",
+       "fontWeight": "500"
+      },
+      "close": {
+       "w": 44,
+       "h": 44,
+       "x": 516
+      },
+      "hasFooter": true,
+      "footerButtons": [
+       {
+        "text": "Close",
+        "x": 772,
+        "w": 68,
+        "h": 46,
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(52, 64, 84)",
+        "border": "1px rgb(208, 213, 221)",
+        "radius": "8px"
+       },
+       {
+        "text": "Save Changes",
+        "x": 852,
+        "w": 120,
+        "h": 44,
+        "bg": "rgb(70, 95, 255)",
+        "color": "rgb(255, 255, 255)",
+        "border": "0px rgb(228, 231, 236)",
+        "radius": "8px"
+       }
+      ],
+      "inputs": 5,
+      "text": "Personal Information First Name Last Name Email Address Phone Bio Close Save Changes"
+     },
+     "escCloses": false
+    },
+    {
+     "label": "button: Open Modal",
+     "result": "dialog",
+     "detector": "generic",
+     "dialog": {
+      "generic": true,
+      "w": 1360,
+      "h": 226,
+      "x": 40,
+      "radius": "0px",
+      "padding": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "backdrop": true,
+      "title": {
+       "text": "Modal Heading",
+       "fontSize": "30px",
+       "fontWeight": "600"
+      },
+      "close": null,
+      "hasFooter": false,
+      "footerButtons": [],
+      "inputs": 0,
+      "text": "Modal Heading Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod est quis mauris lacinia pharetra. Sed a ligula ac odio condimentum a"
+     },
+     "escCloses": false
+    }
+   ],
+   "shot390": "shots-tailadmin/074-390.jpg",
+   "overflow390": false
+  },
+  {
+   "id": "075",
+   "url": "https://demo.tailadmin.com/notifications.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/notifications",
+   "title": "Notifications | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/075-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "076",
+   "url": "https://demo.tailadmin.com/pagination.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/pagination",
+   "title": "Pagination | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/076-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "077",
+   "url": "https://demo.tailadmin.com/popovers.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/popovers",
+   "title": "Popovers | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/077-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "078",
+   "url": "https://demo.tailadmin.com/progress-bar.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/progress-bar",
+   "title": "Progress | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/078-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "079",
+   "url": "https://demo.tailadmin.com/ribbons.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/ribbons",
+   "title": "Ribbons | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/079-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "080",
+   "url": "https://demo.tailadmin.com/spinners.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/spinners",
+   "title": "Spinners | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/080-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "081",
+   "url": "https://demo.tailadmin.com/tabs.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/tabs",
+   "title": "Tabs | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/081-1440.jpg",
+   "tables": [],
+   "popups": [
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Overview\n8",
+     "result": "no-visible-change"
+    },
+    {
+     "label": "button: Overview",
+     "result": "no-visible-change"
+    }
+   ]
+  },
+  {
+   "id": "082",
+   "url": "https://demo.tailadmin.com/tooltips.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/tooltips",
+   "title": "Tooltips | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/082-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "083",
+   "url": "https://demo.tailadmin.com/videos.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/videos",
+   "title": "Videos | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "MENU",
+   "shot": "shots-tailadmin/083-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "084",
+   "url": "https://demo.tailadmin.com/signin.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/signin",
+   "title": "Sign In | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Sign In",
+   "shot": "shots-tailadmin/084-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "085",
+   "url": "https://demo.tailadmin.com/signup.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/signup",
+   "title": "Sign Up | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Sign Up",
+   "shot": "shots-tailadmin/085-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "086",
+   "url": "https://demo.tailadmin.com/reset-password.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/reset-password",
+   "title": "Reset Password | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Forgot Your Password?",
+   "shot": "shots-tailadmin/086-1440.jpg",
+   "tables": [],
+   "popups": []
+  },
+  {
+   "id": "087",
+   "url": "https://demo.tailadmin.com/two-step-verification.html",
+   "state": "inspected",
+   "status": 200,
+   "finalUrl": "https://demo.tailadmin.com/two-step-verification",
+   "title": "2 Step Verification | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "heading": "Two Step Verification",
+   "shot": "shots-tailadmin/087-1440.jpg",
+   "tables": [],
+   "popups": []
+  }
+ ]
+}

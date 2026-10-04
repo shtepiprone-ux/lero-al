@@ -45,7 +45,7 @@ or executor's desired conclusion. If the evidence contradicts a claim, state tha
 current-session GR-7 audit (`docs/golden-rules.md`) of **every page** of all four standing references, in depth:
 Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login `admin` /
 `123456`), Omah https://omah.dexignzone.com/xhtml/index.html and TailAdmin https://demo.tailadmin.com/. Save it to
-`docs/sessions/evidence/task<N>/research-review/` and emit the receipt (moment: review). Then:
+`docs/sessions/evidence/task<N>/research-review/` and emit the receipt (moment: review). Use the shared reference library `docs/research/references/<newest date>/` (owner decision 2026-10-04, GR-7): read its rows for the subject, then open live every page you rely on and record unchanged/difference; a full re-crawl only on a difference, a missing page or the owner's request. Then:
 - check the kickoff's receipt (task creation) and Sonnet's receipt (execution). A missing one is `NEEDS REVISION`;
 - confirm that the shipped UI is the best 2026 UI/UX practice among what the references show.
 

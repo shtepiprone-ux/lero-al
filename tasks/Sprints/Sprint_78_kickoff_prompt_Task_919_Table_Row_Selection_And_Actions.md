@@ -1,7 +1,7 @@
 # Task 919: admin tables get row checkboxes, a bulk-delete button and per-row edit/delete icons
 
 **Sprint 78** (admin and agent dashboards on canonical Mantine) · **P1** · QA profile **Q4** · **Status: ⛔ NOT EXECUTABLE — scope reopened 2026-10-04 by GR-8 (`docs/golden-rules.md`): every table of stored records gets this anatomy, and support tickets, inquiries, email templates and 916's five are no longer excluded. A current-session GR-7 audit and a redesign come first. Do not execute.** Filed `KICKOFF FILED`
-2026-10-03 · owner decisions **D78-13 … D78-16** · owner matrix **O78-14** · **Starts after 857 is approved and
+2026-10-03. **Inputs for the redesign (2026-10-04):** D78-17 (every Mantine admin table, support tickets and inquiries included), D78-19 (ticket soft delete), the GR-7 library `docs/research/references/2026-10-04/`, and 859 §17, which builds `MantineDeleteConfirmModal` and `MantineBadge` for 919 to reuse. 919 starts after 859 lands · owner decisions **D78-13 … D78-16** · owner matrix **O78-14** · **Starts after 857 is approved and
 committed.** 857 has uncommitted changes in `MantineDataTableToCards.tsx`, `AdminTable.tsx`, `AdminListingsView.tsx`
 and the table Stories, and this task edits the same files.
 

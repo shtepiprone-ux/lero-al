@@ -89,11 +89,15 @@ write a kickoff or issue a decision first.
    root prop: record its exact interface/type and access path before drawing a conclusion. A line-oriented grep,
    a JSX call with no direct prop, or a comment is discovery evidence only, never verification of an absence claim.
 5. State verified facts separately from assumptions and unresolved questions.
-6. **GR-7 reference research, blocking for every task, revision, or audit claim that relies on an owner-provided
-   reference (owner rule 2026-10-03).** Before choosing or describing a layout, control, action set, behavior,
-   visual value, permission expectation, or acceptance criterion, perform the current-session live audit in
-   `docs/golden-rules.md` GR-7. It applies to every owner-provided URL or example as well as TailAdmin, Lahomes,
-   and Kamr: resolve the entry URL; inventory every accessible first-party and supporting route; open each page;
+6. **GR-7 reference research, blocking for EVERY task and EVERY revision, with no exemption (owner rules
+   2026-10-03 and 2026-10-04).** Before the first line of a kickoff or revision, and before any AskUserQuestion
+   option, perform the current-session live audit in `docs/golden-rules.md` GR-7. It covers **every page** of all
+   four standing references, in depth: Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr
+   https://kamr-vite.vercel.app/dashboard (login `admin` / `123456`), Omah https://omah.dexignzone.com/xhtml/index.html
+   and TailAdmin https://demo.tailadmin.com/. It also covers every owner-provided URL or example. Every UI/UX
+   choice is the **best 2026 practice** among what they show, with the reason recorded. The kickoff must also
+   require Sonnet's own audit before its first write, and the reviewer's own audit before review. For each
+   reference: resolve the entry URL; inventory every accessible first-party and supporting route; open each page;
    operate every relevant control and workflow state; retain a page-level evidence row; compare the results; and
    map the chosen pattern onto lero.al's real entities, actions, permissions, and routes. A landing page, a single
    convenient screen, a screenshot, a prior session, or a summary is not reference research.

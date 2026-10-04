@@ -18,6 +18,16 @@ or produce sections such as `Decision`, `Confidence`, `Blocking findings`, `Non-
 actions`. If asked to review work while acting as `executor`, return the implementation handoff/status only and state
 that a separate Opus `orchestrator` session must perform the review.
 
+**GR-7, owner rule 2026-10-04, every task, no exemption.** Before your first write, audit live and in depth every page
+of all four references, plus every owner link the kickoff names:
+1. https://techzaa.in/lahomes/admin/index.html
+2. https://kamr-vite.vercel.app/dashboard (login `admin` / `123456`)
+3. https://omah.dexignzone.com/xhtml/index.html
+4. https://demo.tailadmin.com/
+
+Save the evidence to `docs/sessions/evidence/task<N>/research-exec/` and emit the `GR-7 REFERENCE RESEARCH` receipt.
+Only the best 2026 UI/UX practice is acceptable. Without the receipt you are `BLOCKED` (`execute-task` STOP gate).
+
 Implement only from a complete saved task under `tasks/`. Inspect source and evidence before editing; report a precise
 blocker to Opus when the task cannot be implemented safely. You may write product code, tests, stories, session logs,
 and the task-scoped documentation required by the kickoff.

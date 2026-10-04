@@ -41,6 +41,16 @@ or executor's desired conclusion. If the evidence contradicts a claim, state tha
 
 ## GR-7 reference-audit integrity gate
 
+**Every review, with no exemption (owner rule, 2026-10-04).** Before the first finding or verdict, run your own
+current-session GR-7 audit (`docs/golden-rules.md`) of **every page** of all four standing references, in depth:
+Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login `admin` /
+`123456`), Omah https://omah.dexignzone.com/xhtml/index.html and TailAdmin https://demo.tailadmin.com/. Save it to
+`docs/sessions/evidence/task<N>/research-review/` and emit the receipt (moment: review). Then:
+- check the kickoff's receipt (task creation) and Sonnet's receipt (execution). A missing one is `NEEDS REVISION`;
+- confirm that the shipped UI is the best 2026 UI/UX practice among what the references show.
+
+A review without your own audit is void.
+
 For every owner-provided URL, site, interactive demo, screenshot, or external example named by the review request,
 the task, its revision history, or the implementation claim, inspect the current GR-7 audit before accepting any
 reference-based behavior or visual conclusion. Independently open the cited entry URL and every cited relevant and
@@ -260,8 +270,8 @@ evidence that a child component has a canonical visual contract.
     radius not taken from the ancestor's token. Task 857's nav row focus line reached the owner with all four outer
     corners cut. Opus's own crop showed the cut corner and Opus passed it.
 12. **GR-7 (owner rule 2026-10-03).** A `NEEDS REVISION` that changes visible UI is a task design. Before writing it,
-    complete the full current-session GR-7 audit in `docs/golden-rules.md` for TailAdmin, Lahomes, Kamr, and every
-    owner-provided reference link. Map the result onto lero.al's data and add a "Reference research (GR-7)" section
+    complete the full current-session GR-7 audit in `docs/golden-rules.md` for Lahomes, Kamr, Omah, TailAdmin (every
+    page, in depth), and every owner-provided reference link. Map the result onto lero.al's data and add a "Reference research (GR-7)" section
     to the revision, with the complete route inventory, page-level evidence, gaps, and `GR-7 REFERENCE RESEARCH`
     receipt. When reviewing a UI kickoff's outcome, verify that the section is complete, independently inspect its
     cited pages and workflows, and confirm the shipped UI follows the selected pattern. An incomplete audit or a

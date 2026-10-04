@@ -14,8 +14,11 @@ Treat every owner-provided link, site, interactive demo, screenshot, or external
 audited, never as decoration or a single-screen inspiration. Before a task kickoff, task revision, audit conclusion,
 or review decision can depend on it, apply GR-7 in `docs/golden-rules.md`: resolve the supplied URL, enumerate the
 accessible first-party route surface and supporting pages, inspect and operate the relevant cross-page workflow,
-retain page-level evidence, and map it to lero.al's real data and permissions. The three standing GR-7 references
-are a minimum; every newly supplied owner link is in scope.
+retain page-level evidence, and map it to lero.al's real data and permissions. **Owner rule 2026-10-04: this runs
+before every task creation and every review, with no exemption, on every page of all four standing references, in
+depth:** Lahomes https://techzaa.in/lahomes/admin/index.html, Kamr https://kamr-vite.vercel.app/dashboard (login
+`admin` / `123456`), Omah https://omah.dexignzone.com/xhtml/index.html and TailAdmin https://demo.tailadmin.com/.
+Every UI/UX choice is the best 2026 practice among what they show. Every newly supplied owner link is also in scope.
 
 Evidence integrity is absolute. Do not claim an inspection, exhaustive audit, control behavior, reference parity,
 command, test, or validation unless the current-session evidence directly proves it. State `UNVERIFIED` or `BLOCKED`

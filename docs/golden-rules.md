@@ -541,7 +541,7 @@ turns a Sonnet backlog/session-log write into a Git-handoff demand.
 
 **Receipt:** `GR-6 HANDOFF EMITTED — <task-design | approved-review | none: no artifact written>.`
 
-## GR-7 — Exhaustively audit all references and map them onto lero.al's data before making a task or review decision
+## GR-7 — Every task, at every step, by every role: audit all four references in depth, then use only the best UI/UX practice of 2026
 
 **Owner rule, 2026-10-03.** The owner asked for row checkboxes, a bulk-delete button and per-row edit/delete icons in
 every table, and wrote, verbatim: *"Я бачу, що ти взагалі тупо не дослідив проект референсу, просто навмання пишеш
@@ -549,20 +549,65 @@ every table, and wrote, verbatim: *"Я бачу, що ти взагалі туп
 проекті lero.al і тільки потім пишеш задачу. Пропиши це у правило!"* … *"Шукаєш найкращий UI/UX візуал, підставляєш
 наші дані, і тільки потім пишеш задачу для Sonet!"*
 
-**Standing references (all pages of each):**
-- TailAdmin — https://demo.tailadmin.com/ (also the bundled copy, `docs/tailadmin-style-reference.md`);
-- Lahomes — https://techzaa.in/lahomes/admin/;
-- Kamr — https://kamr-vite.vercel.app/dashboard (the login form is prefilled with demo credentials).
+**Restated and widened by the owner, 2026-10-04, verbatim:** *"обов'язково, обов'язково …, і тільки спробуй пропустити
+перед створенням кожної задачі, перед виконанням кожної задачі, перед рев'ю кожної задачі - ти (як оркестратор,
+архітектор, дизайнер, рев'ювер, QA) і Sonnet (як виконавець) маєте завжди (обов'язково!) перевіряти референси та всі
+стоірнки на цих референсах (детальний аналіз, а не поверхневий!)"* and *"Обов'язкове правило - завжди використовувати
+тільки найкращі UI/UX практики 2026 року!"* The 2026-10-03 version had three defects. It named three references, not
+four. It bound only task design and review, so Sonnet never ran it. And it let Opus decide which tasks "rely on a
+reference".
+
+**Standing references. Every page of each, with no exception:**
+1. Lahomes — https://techzaa.in/lahomes/admin/index.html
+2. Kamr — https://kamr-vite.vercel.app/dashboard (login `admin`, password `123456`, a public demo account given by the
+   owner)
+3. Omah — https://omah.dexignzone.com/xhtml/index.html
+4. TailAdmin — https://demo.tailadmin.com/ (the bundled copy, `docs/tailadmin-style-reference.md`, is supplementary and
+   never replaces the live site)
+
+**When it runs. Every task, three times, no exemptions:**
+
+| Moment | Who | Before what |
+|---|---|---|
+| Task creation, including every revision and every `NEEDS REVISION` amendment | Opus (orchestrator, architect, designer) | the first line of the kickoff or revision, and before any AskUserQuestion option |
+| Task execution | Sonnet (executor) | the first write of the task |
+| Task review, including QA and owner-matrix handoff | Opus (reviewer, QA) | the first finding or verdict |
+
+- Each role runs **its own** audit in **its own** session.
+- An audit made by another role, by another session or on another day is context only, never evidence.
+- "This task has no UI", "it is a governance task" and "the reference has no such feature" are not exemptions. The
+  audit runs, and the record states what each reference shows for the task's subject, or that it shows nothing.
+- Only the owner can narrow this rule, by a dated, verbatim decision.
+
+**In depth, not on the surface.** A page counts as inspected only when its record has all of the following:
+- the URL, and how it was reached;
+- a full-page screenshot;
+- every control on it that the task's subject touches, operated (open, select, submit, cancel, the hover and focus
+  states);
+- the anatomy observed: layout, order, labels, states;
+- `getComputedStyle` values (size, radius, colour, gap) for every element comparable to the task's subject.
+
+A link list, a landing page, a sample of pages, a count of "pages crawled", or a summary is not an audit. Task 919's
+2026-10-03 research opened 43 of 88 TailAdmin links, 17 of 120 Lahomes links and 15 of 61 Kamr links. It is the
+example of what fails this rule.
+
+**Best UI/UX practice of 2026: mandatory.** Every UI/UX choice — layout, control, interaction, feedback,
+accessibility, responsive behaviour, visual value — is the best current (2026) practice among what the four
+references show, filled with lero.al's real data. Where the references differ, the record names each option, the
+reference pages that show it, and why the chosen one is the 2026 best practice. Examples of such reasons: WCAG 2.2 AA,
+a touch target ≥ 44px, a visible focus state, confirmation before a destructive action, no horizontal scroll, and
+consistency with lero.al's existing canonical pattern. A choice made for convenience, from memory, or because one
+reference happened to be opened first is forbidden.
 
 ### Universal owner-provided reference-link audit — blocking
 
 Every URL, site, page, interactive demo, screenshot, or embedded external example the owner supplies or names as a
-reference is an **owner-provided reference**. This rule applies to every task kickoff, task revision, audit, and
-implementation review that uses, compares against, or makes a claim about that reference — UI and functional
-behavior alike. The standing references above are a minimum, not a closed list.
+reference is an **owner-provided reference**. It joins the four standing references in every audit below. The audit
+runs at every task creation, execution and review ("When it runs" above), for UI and functional behaviour alike. The
+standing references are a minimum, not a closed list.
 
-**Forbidden:** writing a kickoff, a revision, an audit conclusion, a review decision, or a design decision that
-depends on a reference before the complete audit below is done in the current session. That includes choosing a
+**Forbidden:** writing a kickoff, a revision, an audit conclusion, a review decision or a design decision, or making
+the first write of an execution, before the complete audit below is done in the current session. That includes choosing a
 layout, control, action set, behavior, data flow, permission rule, visual style, or acceptance criterion from
 memory; from a landing page; from one convenient screen; from a search snippet; or from a previous session's notes.
 An earlier audit is context only, never proof for the current decision.
@@ -598,8 +643,8 @@ An earlier audit is context only, never proof for the current decision.
    invalid until its preflight is restarted. An apology, an excuse such as "I was not attentive", or a promise to
    check later is not a correction and does not permit work to continue.
 
-**Required, before any UI kickoff or UI revision:**
-1. Apply the universal audit to all three standing references **and** every owner-provided reference link in scope.
+**Required, before every kickoff, revision, execution and review (see "When it runs" above):**
+1. Apply the universal audit to all four standing references **and** every owner-provided reference link in scope.
 2. For every page carrying the artifact, additionally record visual values with `getComputedStyle`: size, radius,
    colours, and gap. Save the screenshots under `docs/sessions/evidence/task<N>/research/`.
 3. **Map onto lero.al.** For every lero.al surface the task touches, write down:
@@ -617,12 +662,75 @@ The kickoff carries the result as a section named **"Reference research (GR-7)"*
 the complete route inventory, the page-level evidence table, the comparison table, the chosen pattern, the lero.al
 data map, every blocked or unverified route, the evidence paths, and the owner decisions.
 
-**Receipt — task design (and any UI revision):**
+**Receipt — task creation, execution and review alike, one per moment:**
 
-`GR-7 REFERENCE RESEARCH — artifact: <what>; references: <owner URLs + standing references>; route inventory: <reference: enumerated / inspected / blocked counts>; inspected live: <page list>; workflow states operated: <list>; chosen pattern: <reference page + why>; absent or unverified: <features/routes | none>; lero.al data map: <surfaces × entity/actions/routes>; owner decisions: <IDs | none>; evidence: <path>.`
+`GR-7 REFERENCE RESEARCH — moment: <task creation | execution | review>; role: <Opus | Sonnet>; task: <N>; subject: <what>; references: Lahomes, Kamr, Omah, TailAdmin + <owner URLs | none>; route inventory: <per reference: enumerated / inspected / blocked>; inspected in depth: <every page, with its evidence row>; workflow states operated: <list>; options across references: <option ← pages>; chosen 2026 best practice: <option + why>; absent or unverified: <features/routes | none>; lero.al data map: <surfaces × entity/actions/routes>; owner decisions: <IDs | none>; evidence: <path>.`
 
-With no receipt, or with a UI kickoff missing the "Reference research (GR-7)" section, the kickoff is not publishable.
-The reviewer returns `NEEDS REVISION` on a revision that changed visible UI without it.
+Sanctions:
+- **Task creation.** With no receipt, with fewer than four references, with an inventory where inspected < enumerated
+  and no `blocked` reason, or with a kickoff missing its "Reference research (GR-7)" section, the kickoff is not
+  publishable.
+- **Execution.** Sonnet returns `BLOCKED — GR-7 REFERENCE AUDIT MISSING` and makes no write. Its audit goes to
+  `docs/sessions/evidence/task<N>/research-exec/`. Where the shipped result differs from the kickoff's chosen
+  pattern, Sonnet stops and reports the difference. It never picks a different pattern on its own.
+- **Review.** Before the first finding, the reviewer runs its own audit into
+  `docs/sessions/evidence/task<N>/research-review/`. A review without it is void, and a task whose kickoff or execution
+  lacks the receipt is `NEEDS REVISION`.
+
+## GR-8 — One table anatomy: checkboxes, then content, then edit/delete
+
+**Owner rule, 2026-10-04.** The owner returned Task 859 and wrote, verbatim: *"Я бачу, що таблиці в адмінці всі різні.
+Немає одного стилю таблиць, де спершу йде стовпчик з чекбоксами, а потім йдуть стовпчики контенту таблиці, а після
+контенту йдуть стовпчики з опціями редагувати,видалити. Я буквально вчора писав про це, і сьогодні я знову бачу цю
+хуйню!"* Then: *"я вчора сказав тобі щоб ти завів правило щодо таблиць і що треба перевірити референси, які я тобі
+вчора надавав, завжди … перевіряти їх перед написанням."*
+
+**Why this rule exists.** On 2026-10-03 the request became Task 919's kickoff and decisions D78-13…D78-16, and no
+rule. Opus then narrowed it twice:
+- 919 covers six tables;
+- the D78-15 option Opus wrote left out support tickets because the server has no delete action.
+
+The same day, 859's revision gave `/admin/support` a table without the anatomy. 916's five legacy managers, email
+templates and inquiries were bound by nothing, or by a later task.
+
+**Applies to:** every table of stored records in new or migrated UI. That means admin first, and every table in the
+project (owner, 2026-10-02: *"і це стосується всіх таблиць у проекті, а не тільки в адмінці"*). Two cases are not
+settled: a table whose rows are computed, not stored (statistics, dashboards), and a card-list layout of records (for
+example inquiries). Each is an **open owner decision**. Until the owner decides, a kickoff touching one stops there
+with bounded options.
+
+**Required anatomy, in this order:**
+1. **The first column is a row checkbox**, with select-all in the header.
+2. **Then the content columns.**
+3. **The last column is the row actions:** edit, then delete. Any other per-entity action goes in the same group, before
+   them. The look is owner D78-14, Lahomes tinted.
+4. **Bulk delete** is an icon button at the end of the filter row. It appears once a row is selected.
+5. **Delete always asks for confirmation** in the canonical confirm modal.
+6. **Below the card breakpoint,** the checkbox and the actions row stay on every card.
+
+The chrome lives in one canonical owner, `MantineDataTableToCards` (built by 919). A table never builds its own
+checkbox column or action icons.
+
+**Forbidden:**
+- a kickoff, revision, implementation or approval that leaves a table in scope without the anatomy;
+- a scope line, exclusion or AskUserQuestion option that drops a table from it, for any reason. Two examples are "no
+  delete action on the server" and "a later task". A missing server action is a lero.al data-map gap under GR-7.
+  The kickoff adds the action, or puts bounded options to the owner;
+- feature-local checkbox, action-icon or confirm chrome.
+
+**References first.** Every table decision is preceded by the full GR-7 audit: every page of all four references, in
+depth, in the current session, by the role making the decision. The chosen anatomy is the best 2026 practice among
+what they show. A kickoff that only cites an earlier session's research is not publishable.
+
+**Check, at task design and review:** list every table the touched surfaces render, and give each one a receipt. At
+review, verify the column order in the rendered Story at 1440 and the card at 390.
+
+**Receipt — task design, execution and review alike, one per table:**
+
+`GR-8 TABLE ANATOMY — <surface/table>: checkbox column first + select-all <yes | no>; actions column last <edit, delete, …>; bulk delete in the filter row <yes | no>; delete confirm <canonical modal | no>; cards keep checkbox + actions <yes | no>; exception: <owner decision ID with date | NONE>.`
+
+With no receipt, or with a `no` and no owner exception, the kickoff is not publishable, the executor returns
+`BLOCKED — GR-8`, and the reviewer returns `NEEDS REVISION`. No gate measures this yet (GR-2).
 
 ## Enforcement status
 
@@ -639,7 +747,8 @@ The reviewer returns `NEEDS REVISION` on a revision that changed visible UI with
 | GR-3e | executor + reviewer check at 390/1440 (no two text buttons share a row) + required receipt | **active** — no automated gate yet. |
 | GR-3f | executor + reviewer device-scale-1 pixel crop at 10×, saved as evidence + required receipt; canonical radio 20px / 10px dot in the `Radio` theme entry | **active** — no automated gate; computed styles cannot see rasterisation. |
 | GR-3g | executor + reviewer: a clipping-ancestor probe plus a device-scale-1 crop of each touching corner at 10×, saved as evidence + required receipt; the radius comes from the ancestor's token (`--paper-radius` / `--card-radius` / theme key) | **active** — no automated gate; computed styles cannot see a clipped line. |
-| GR-7 | Opus core policy + `create-task` gate: current-session exhaustive route and workflow audit for the standing references and every owner-provided reference link, page-level evidence, lero.al data map, `RETRACTION` for any invalid claim, "Reference research (GR-7)" section, and required receipt; `review-task` independently checks the cited pages and workflows | **active** — blocking for any reference-dependent kickoff, audit, revision, or review; enforced by rule and receipt; no automated gate can prove a live audit. |
+| GR-7 | Four standing references (Lahomes, Kamr, Omah, TailAdmin), every page, in depth; run three times per task (creation by Opus, execution by Sonnet, review by Opus) with one receipt each; best 2026 UI/UX practice for every choice. Gates: `create-task` step 6, the `execute-task` STOP gate, the `review-task` integrity gate, both agent files, the `CLAUDE.md` "Read first" item | **active for every task, no exemption (owner, 2026-10-04)** — enforced by rule and receipt; no automated gate can prove a live audit. |
+| GR-8 | task design + executor + reviewer: one receipt per table; column order checked in the rendered Story at 1440 and the card at 390; chrome only in `MantineDataTableToCards` | **active** — no automated gate yet. |
 | GR-4 | reviewer inspection + receipt | active |
 | GR-5 | **Opus-only `Stop` hook** `.claude/hooks/orchestrator-response-gate.ps1` — (a) on **every** Opus response it runs `scripts/check-backlog-active.mjs` over the whole `docs/backlog.md` and blocks on exit 1 (added 2026-09-27; two-armed proof of the script: a planted `✅ CLOSED` sprint line → exit 1, restored → exit 0, identical hash; **owner-native proof of the hook, 2026-09-27:** a synthetic Opus Stop event with a planted `CLOSED` sprint line → `PLANTED exit=2`, restored → `RESTORED exit=0`, `git status --short docs/backlog.md` empty); (b) it blocks when `docs/backlog.md` newly records a task approved/archived and `docs/backlog-archive.md` is unchanged | **enforced** |
 | GR-6 | **Opus-only `Stop` hook** — blocks an Opus task-design/review response when a `tasks/**` or governance doc is written and uncommitted with no required `git add` block, blocks `git push` outside an approved review, and blocks a `Co-Authored-By:` trailer in the handoff | **enforced** |

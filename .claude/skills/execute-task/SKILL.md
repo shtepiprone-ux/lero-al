@@ -58,6 +58,31 @@ required file was not read, discard all preliminary implementation conclusions a
 related write, complete the `GR-0 CANONICAL REUSE PREFLIGHT` receipt; a missing or invalid receipt is
 `BLOCKED — GR-0 CANONICAL REUSE PREFLIGHT MISSING`.
 
+## STOP — GR-7 reference audit before the first write (owner rule, 2026-10-04, every task)
+
+Owner, verbatim: *"перед виконанням кожної задачі … Sonnet (як виконавець) маєте завжди (обов'язково!) перевіряти
+референси та всі стоірнки на цих референсах (детальний аналіз, а не поверхневий!)"* and *"Обов'язкове правило -
+завжди використовувати тільки найкращі UI/UX практики 2026 року!"*
+
+Before the first write of **every** task, read `docs/golden-rules.md` **GR-7 in full**. Then audit live, in this session,
+**every page** of all four references, in depth (screenshot, controls operated, anatomy, `getComputedStyle`):
+1. https://techzaa.in/lahomes/admin/index.html
+2. https://kamr-vite.vercel.app/dashboard (login `admin`, password `123456`)
+3. https://omah.dexignzone.com/xhtml/index.html
+4. https://demo.tailadmin.com/
+
+Also audit every owner link the kickoff names.
+
+- **No exemption.** A governance task, a test-only task, a revision, or "the kickoff already did the research" is not an
+  exemption. The kickoff's research is context; your own audit is the evidence.
+- **Where the evidence goes.** Save it to `docs/sessions/evidence/task<N>/research-exec/`.
+- **Where the receipt goes.** Emit the `GR-7 REFERENCE RESEARCH` receipt (moment: execution, role: Sonnet) in the session
+  log before the first write.
+- **When your audit disagrees with the kickoff.** If the audit shows the kickoff's chosen pattern is not the best 2026
+  practice among the references, or that it misses a state the references show, do not change the pattern yourself.
+  Stop and report `BLOCKED — GR-7 KICKOFF CONFLICT`, naming the reference pages.
+- **No receipt.** With no receipt, the status is `BLOCKED — GR-7 REFERENCE AUDIT MISSING`, and no write may follow.
+
 ## Start gate
 
 Before editing code:

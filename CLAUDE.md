@@ -45,7 +45,11 @@ the first user prompt. It applies the executor evidence protocol to normal Sonne
 
 For every task:
 
-0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-1…GR-6, receipt-enforced, non-negotiable. A response missing a required receipt is void.**
+0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-0…GR-8, receipt-enforced, non-negotiable. A response missing a required receipt is void.**
+   **GR-7 (owner rule 2026-10-04): before creating, executing, or reviewing EVERY task, Opus and Sonnet each audit live,
+   in depth, every page of Lahomes (https://techzaa.in/lahomes/admin/index.html), Kamr
+   (https://kamr-vite.vercel.app/dashboard, login `admin` / `123456`), Omah (https://omah.dexignzone.com/xhtml/index.html)
+   and TailAdmin (https://demo.tailadmin.com/), and use only the best 2026 UI/UX practice. No exemption.**
 1. Read `docs/agent-contract.md`.
 2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
 3. Use `docs/qa-profiles.md` to choose validation depth.

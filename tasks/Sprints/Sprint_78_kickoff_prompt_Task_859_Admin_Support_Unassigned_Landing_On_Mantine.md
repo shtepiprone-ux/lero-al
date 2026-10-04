@@ -2,7 +2,7 @@
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q3** (legacy admin surface → Mantine; no registered critical
 flow names it) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 1) — the only executable route is §16 (Revision 1).**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 1) — the only executable route is §16 (Revision 1), as amended by §16.9 (owner return 2026-10-04).**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -615,4 +615,94 @@ Append "Revision 1" to `docs/sessions/2026-10-04-task859-admin-support-mantine.m
 
 Update the 859 cell of `docs/backlog.md`. End with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+
+### 16.9 Owner return, 2026-10-04: the page and the table follow the canonical admin list (amends Revision 1)
+
+**Owner, verbatim:**
+- *"звісно я не приймаю таку сторінку. Таблиця має бути шириною як і всі інші сторінки та таблиці у адмінці. Таблиця має
+  мати канонічний вигляд як і інші таблиці."*
+- Then: *"я взагалі бачу що в адмінці дуже багато неканонічних сторінок, компонентів, елементів, які ще необхідно
+  переробити на Minetine, але це будемо робити правильно, крок за кроком!"*
+
+**RETRACTION, §16.2 ruling 1.**
+- *Invalid claim:* "`<AdminPageFrame width="page">` (64rem, as `/admin/reports`) is the correct implementation."
+- *Why invalid:* it took the executor's single precedent (`/admin/reports`) as the admin norm, without measuring the
+  other list pages.
+- *Evidence now:* `AdminPageFrame` widths across `src/app/admin/**/page.tsx` (2026-10-04):
+  - `shell` 112rem: `listings`, `users` (the two canonical Mantine list pages);
+  - `page` 64rem: `reports`, `currency`, `inquiries/sales`, `inquiries/support`, `support`;
+  - `narrow` 56rem: `pages`;
+  - no frame: six legacy managers (916's).
+- *Corrected status:* FACT. The canonical admin list page is the `listings`/`users` shape. §16.2 ruling 1 and the
+  §16.6 extra matrix row are void.
+
+**The canonical admin list anatomy (FACT):**
+- `AdminListingsView.tsx:193-305` and `AdminUsersTable.tsx:414-535`, with the same `Tabs` idiom in
+  `AdminReportsView.tsx:78-100`.
+- Order: `AdminPageHeader` (create action in its `action` slot, `users/page.tsx:87-101`), then `Tabs` in a
+  `ScrollArea` (the primary segmentation), then the filter row.
+- The filter row is a `Flex direction={{ base: 'column', sm: 'row' }}` with a `MantineSelect` for the status, and a
+  binary filter as `SegmentedControl size="xs"` from `sm` and `MantineSelect` below (`AdminListingsView.tsx:203-240`).
+- Then `AdminTable` with stacked badges.
+- No `Checkbox.Group` and no free-floating button row.
+
+| ID | Requirement | P | AC |
+|---|---|---|---|
+| R19 | `page.tsx` uses `<AdminPageFrame width="shell">`, the same width and gutter props as `listings/page.tsx:116`. `theme.ts` gains no key. The `AdminSupportView` Story's `AdminPageFrame` uses the same props. | P1 | AC14 |
+| R20 | `AdminSupportView` follows the anatomy above. **(a) Header:** `AdminSupportView` renders `AdminPageHeader` (title `admin.pages.support_title`, subtitle `support_subtitle`), with the `new_ticket_btn` `Button` (Solar `broken` plus icon) in `action`; `page.tsx` stops rendering the header. **(b) Stats:** the 3 `MantineDashboardStatCard`s stay under the header (TailAdmin `/support-tickets` shows the same 3 ticket stats, §16.7). **(c) Tabs:** the type filter is `Tabs` in a `ScrollArea` (`filter_all`, `type_support`, `type_user_complaint`), not a `SegmentedControl`. **(d) Filter row:** `Flex` as `AdminListingsView.tsx:203`. Status is one `MantineSelect` with 6 options: all (`filter_all`), **active** (open + in progress, new key `filter_active`), and the 4 statuses. Assignment is `SegmentedControl size="xs"` from `sm` and `MantineSelect` below, with the same breakpoint mechanism as `AdminListingsView.tsx:221-240` (`filter_all`, `filter_unassigned`). **(e)** The `Checkbox.Group` and the toolbar `Flex` of §R6 are deleted. | P1 | AC15 |
+| R21 | `supportFilters.ts` (unfrozen for this): `parseSupportFilters` normalises `status` to a preset. `open,in_progress` in any order is `active`. One known status is that status. Anything else, unknown or another combination, is all. The `SupportFilters.status` type becomes the preset (`'all' \| 'active' \| TicketStatus`). `serializeSupportFilters` writes `active` as `open,in_progress`, so T2's ADM-06 round-trip still holds exactly. `matchesSupportFilters` expands the preset. | P1 | AC16 |
+| R22 | i18n: `admin.support.filter_active` in 4 locales (en *"Active"*; translated). | P2 | AC12 |
+
+**AC14 [R19]** `page.tsx` and the Story pass `width="shell"` with `listings/page.tsx:116`'s props. `git diff --
+src/design-system/mantine/theme.ts` shows nothing from 859. At 1440 the list's content width equals `/admin/listings`'
+on the same viewport (both measured in the Storybook `withAdminShell` frame, values recorded).
+
+**AC15 [R20]**
+- `AdminSupportView` contains `AdminPageHeader`, `Tabs`, and one status `MantineSelect`.
+- It contains no `Checkbox` and no type `SegmentedControl`.
+- `page.tsx` no longer imports `AdminPageHeader`.
+- T3 now reads: the ADM-06 landing shows the "active" status and "unassigned"; picking the `open` status calls
+  `router.replace` with `status=open` and keeps `assigned`.
+- A planted reversion (P6: restore `Checkbox.Group`) fails a new assertion **T10**, which checks that the status
+  control is a combobox with the 6 options.
+
+**AC16 [R21]**
+- T1 adds 3 cases: `status=in_progress,open` gives `active`; `status=resolved,closed` gives all; `status=closed` gives
+  `closed`.
+- T2 still round-trips `unassignedSupportHref()` exactly.
+- P1 still fails T1/T3.
+
+**Owner, verbatim, on scope (2026-10-04):** *"стоп! Яка нахуй нова задача? У цю задачу дописуй ревізію!"* The width
+alignment of the other Mantine list pages is therefore part of this revision (R23). No new number is filed.
+
+| ID | Requirement | P | AC |
+|---|---|---|---|
+| R23 | Every migrated admin **list** page uses one frame: `<AdminPageFrame width="shell">` with the default gutter, exactly `listings/page.tsx:116`. The route and its View Story change together, by one prop each: `reports/page.tsx:39` + `AdminReportsView.stories.tsx:74` (`page` → `shell`); `currency/page.tsx:22` + `AdminCurrenciesView.stories.tsx:51`, `AdminCurrencyTabs.stories.tsx:19`, `AdminExchangeProvidersView.stories.tsx:45` (`page` → `shell`); `inquiries/sales/page.tsx:44`, `inquiries/support/page.tsx:44` + `AdminInquiriesView.stories.tsx:47` and its comment at `:13` (`page` → `shell`); `pages/page.tsx:20` + `AdminPagesView.stories.tsx:98` (`narrow` → `shell`); `users/page.tsx:87` + `AdminUsersTable.stories.tsx:47` (drop `gutter="xl"`). Non-list pages keep their frames: `users/[id]` `page`, `users/new` `form`, `permissions` `panel`. No View, table, token or `AdminPageFrame` source changes. The `narrow` variant keeps no list consumer, so record its remaining consumers (`git grep -n 'width="narrow"'`) in the session log; it is not deleted here. | P1 | AC17 |
+
+**AC17 [R23]**
+- `git grep -n "<AdminPageFrame" -- src/app/admin` shows `width="shell"` with no `gutter` on `listings`, `users`,
+  `reports`, `currency`, both `inquiries` and `support`; and `page`/`form`/`panel` only on `users/[id]`, `users/new` and
+  `permissions`.
+- Each changed Story's `AdminPageFrame` equals its route's.
+- At 1024 and 1440, in `withAdminShell`, every list Story's frame content width equals `AdminListingsView`'s (values
+  recorded).
+- One `TABLE FIT CHECK` per changed list Story (§7.3, 768/1024/1440): horizontal scroll none.
+- GR-3d `n/a: own gutter (AdminPageFrame)` re-measured: the gutters equal `listings`' (32px from `lg`).
+
+**Write set additions:**
+- `src/app/admin/support/page.tsx`, `src/components/admin/supportFilters.ts`,
+  `src/components/admin/__tests__/supportFilters.test.ts`, the `AdminSupportView` Story and `messages/*.json`
+  (`filter_active`). Their frozen-hash rows in §16.5 are dropped; the other 4 containers stay frozen.
+- For R23 only: the seven route files and seven Story files named in R23. One prop each, plus the one Story comment.
+
+Out of scope here: the six legacy managers (still **916**'s) and the toolbars of the other list pages. R23 changes
+their width only.
+
+**Owner matrix O78-13:**
+- §13.3;
+- `Patterns/Mantine/AdminSupportView` `Default` and `UnassignedLanding` × `sq` × 390, 1024 and 1440 (the shell width;
+  the canonical toolbar; at 390 the tabs scroll, the filter row stacks and the binary filter becomes a select);
+- `Patterns/Mantine/AdminReportsView`, `AdminCurrenciesView`, `AdminExchangeProvidersView`, `AdminInquiriesView`,
+  `AdminPagesView` and `AdminUsersTable` `Default` × `sq` × 1440, each beside `AdminListingsView` `Default` × 1440:
+  every list now has the same width and gutter.
 

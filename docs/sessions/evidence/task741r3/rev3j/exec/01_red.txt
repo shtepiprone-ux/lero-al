@@ -1,0 +1,14 @@
+archived cards: 8; failures: 20
+FAIL patterns-mantine-listingcardpattern--default@390#0:grid badges 0.6
+FAIL patterns-mantine-listingcardpattern--default@390#0:grid photoCount 0.6
+FAIL patterns-mantine-listingcardpattern--default@390#0:grid favourite 0.6
+FAIL patterns-mantine-listingcardpattern--default@390#1:list badges 0.6
+FAIL patterns-mantine-listingcardpattern--default@390#1:list photoCount 0.6
+FAIL mantine-primitives-listingcard--default@390#0:grid badges 0.6
+FAIL mantine-primitives-listingcard--default@390#0:grid photoCount 0.6
+FAIL mantine-primitives-listingcard--default@390#0:grid favourite 0.6
+FAIL mantine-primitives-listingcard--default@390#1:list badges 0.6
+FAIL mantine-primitives-listingcard--default@390#1:list photoCount 0.6
+FAIL patterns-mantine-listingcardpattern--default@1440#0:grid badges 0.6
+FAIL patterns-mantine-listingcardpattern--default@1440#0:grid photoCount 0.6
+EXIT_CODE=1

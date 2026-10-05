@@ -1,0 +1,5066 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "cells": 8,
+ "compared": 424,
+ "diffs": [
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@768",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@en@1440",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@768",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@uk@1440",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@768",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@en@1440",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "For sale · Apartment",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Modern Apartment in Tirana",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Tirana, Albania",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@768",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 1,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 2,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 3,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 4,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 5,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 6,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 7,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 8,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 9,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 10,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@uk@1440",
+   "state": 11,
+   "part": "head",
+   "grid": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "14px",
+     "fontWeight": "600",
+     "lineHeight": "20.02px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.35px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ],
+   "list": [
+    {
+     "text": "Продаж · Квартира",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    },
+    {
+     "text": "Сучасна квартира в Тірані",
+     "fontSize": "18px",
+     "fontWeight": "600",
+     "lineHeight": "25.74px",
+     "color": "rgb(0, 0, 0)",
+     "letterSpacing": "-0.45px"
+    },
+    {
+     "text": "Тірана, Албанія",
+     "fontSize": "12px",
+     "fontWeight": "400",
+     "lineHeight": "18px",
+     "color": "rgb(71, 84, 103)",
+     "letterSpacing": "normal"
+    }
+   ]
+  }
+ ],
+ "tuples": {
+  "patterns-mantine-listingcardpattern--default@en@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@en@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@uk@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@uk@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@en@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@en@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@uk@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@uk@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  }
+ }
+}

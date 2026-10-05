@@ -1,0 +1,553 @@
+{
+  "lahomes-property-grid": {
+    "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+    "title": "Listing Grid | Lahomes - Real Estate Management Admin Template",
+    "n": 14,
+    "badges": [
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Default",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Condensed",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Hidden",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Small Hover Active",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Small Hover",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Hot",
+        "fs": "11.25px",
+        "fw": "600",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(233, 103, 103)",
+        "pad": "3px 6px"
+      },
+      {
+        "text": "1",
+        "fs": "11.25px",
+        "fw": "600",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(96, 74, 227)",
+        "pad": "3px 6px"
+      },
+      {
+        "text": "Properties Location",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      }
+    ]
+  },
+  "lahomes-ui-badge": {
+    "url": "https://techzaa.in/lahomes/admin/ui-badge.html",
+    "title": "Badge | Lahomes - Real Estate Management Admin Template",
+    "n": 14,
+    "badges": [
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Light",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Dark",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Default",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Condensed",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Hidden",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Small Hover Active",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Small Hover",
+        "fs": "14px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(93, 113, 134)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "Hot",
+        "fs": "11.25px",
+        "fw": "600",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(233, 103, 103)",
+        "pad": "3px 6px"
+      },
+      {
+        "text": "1",
+        "fs": "11.25px",
+        "fw": "600",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(96, 74, 227)",
+        "pad": "3px 6px"
+      },
+      {
+        "text": "New",
+        "fs": "27px",
+        "fw": "600",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(96, 74, 227)",
+        "pad": "3px 6px"
+      }
+    ]
+  },
+  "kamr-ui-badge": {
+    "url": "https://kamr-vite.vercel.app/ui-badge",
+    "n": 14,
+    "badges": [
+      {
+        "text": "Primary",
+        "fs": "8.75px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(248, 133, 125)",
+        "bg": "rgba(248, 133, 125, 0.1)"
+      },
+      {
+        "text": "Primary",
+        "fs": "9.625px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(248, 133, 125)",
+        "bg": "rgba(248, 133, 125, 0.1)"
+      },
+      {
+        "text": "Secondary",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(255, 212, 130)",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "Danger",
+        "fs": "12.25px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(247, 43, 80)",
+        "bg": "rgb(254, 230, 234)"
+      },
+      {
+        "text": "Warning",
+        "fs": "13.132px",
+        "fw": "500",
+        "radius": "12.25px",
+        "color": "rgb(255, 167, 85)",
+        "bg": "rgb(255, 233, 213)"
+      },
+      {
+        "text": "Primary",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(248, 133, 125)",
+        "bg": "rgba(248, 133, 125, 0.1)"
+      },
+      {
+        "text": "Secondary",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(255, 212, 130)",
+        "bg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "Success",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(120, 214, 157)",
+        "bg": "rgb(237, 250, 242)"
+      },
+      {
+        "text": "Danger",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(247, 43, 80)",
+        "bg": "rgb(254, 230, 234)"
+      },
+      {
+        "text": "Warning",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(255, 167, 85)",
+        "bg": "rgb(255, 233, 213)"
+      },
+      {
+        "text": "Info",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(180, 141, 211)",
+        "bg": "rgb(241, 233, 247)"
+      },
+      {
+        "text": "Light",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(200, 200, 200)"
+      },
+      {
+        "text": "Dark",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(110, 110, 110)",
+        "bg": "rgb(238, 238, 238)"
+      },
+      {
+        "text": "1",
+        "fs": "9.1875px",
+        "fw": "500",
+        "radius": "7px",
+        "color": "rgb(248, 133, 125)",
+        "bg": "rgba(248, 133, 125, 0.1)"
+      }
+    ]
+  },
+  "omah-property-list": {
+    "url": "https://omah.dexignzone.com/xhtml/property-list.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "n": 9,
+    "badges": [
+      {
+        "text": "Sort by:",
+        "fs": "11.375px",
+        "fw": "500",
+        "radius": "0px",
+        "color": "rgb(34, 43, 64)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "pad": "0px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      },
+      {
+        "text": "For Rent",
+        "fs": "11px",
+        "fw": "400",
+        "radius": "4px",
+        "color": "rgb(255, 255, 255)",
+        "bg": "rgb(59, 76, 184)",
+        "pad": "5px 8px"
+      }
+    ]
+  },
+  "tailadmin-badge": {
+    "url": "https://demo.tailadmin.com/badge",
+    "title": "Badge | TailAdmin - Tailwind CSS Admin Dashboard Template",
+    "n": 8,
+    "badges": [
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      },
+      {
+        "text": "new",
+        "fs": "12px",
+        "fw": "500",
+        "radius": "3.35544e+07px",
+        "color": "rgb(3, 152, 85)",
+        "bg": "rgb(236, 253, 243)",
+        "pad": "2px 10px"
+      }
+    ]
+  }
+}

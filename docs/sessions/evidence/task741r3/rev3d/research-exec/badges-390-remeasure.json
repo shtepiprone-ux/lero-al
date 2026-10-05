@@ -1,0 +1,102 @@
+{
+ "390": [
+  {
+   "text": "For Rent",
+   "cls": "badge bg-success text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "Sold",
+   "cls": "badge bg-danger text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(233, 103, 103)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "For Sale",
+   "cls": "badge bg-warning text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(240, 147, 78)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "For Rent",
+   "cls": "badge bg-success text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  }
+ ],
+ "1440": [
+  {
+   "text": "For Rent",
+   "cls": "badge bg-success text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "Sold",
+   "cls": "badge bg-danger text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(233, 103, 103)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "For Sale",
+   "cls": "badge bg-warning text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(240, 147, 78)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  },
+  {
+   "text": "For Rent",
+   "cls": "badge bg-success text-white fs-13",
+   "onPhoto": true,
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "pad": "3px 6px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  }
+ ]
+}

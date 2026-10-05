@@ -1,0 +1,822 @@
+{
+ "default@en@390": {
+  "tab": "Active listings",
+  "cards": 6,
+  "cardBadges": [
+   "New",
+   "-",
+   "New+Price reduced",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": {
+   "text": "Show more",
+   "variant": "filled",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(236, 84, 71)"
+  },
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 258,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "default@en@1440": {
+  "tab": "Active listings",
+  "cards": 6,
+  "cardBadges": [
+   "New",
+   "-",
+   "New+Price reduced",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": {
+   "text": "Show more",
+   "variant": "filled",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 109,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(236, 84, 71)"
+  },
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 131,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 295,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "default@uk@390": {
+  "tab": "Активні оголошення",
+  "cards": 6,
+  "cardBadges": [
+   "Нове",
+   "-",
+   "Нове+Ціну знижено",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 258,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "default@uk@1440": {
+  "tab": "Активні оголошення",
+  "cards": 6,
+  "cardBadges": [
+   "Нове",
+   "-",
+   "Нове+Ціну знижено",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 165,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 295,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-tab@en@390": {
+  "tab": "Sold & Rented",
+  "cards": 2,
+  "cardBadges": [
+   "Sold",
+   "Rented"
+  ],
+  "overlays": 2,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "2 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-tab@en@1440": {
+  "tab": "Sold & Rented",
+  "cards": 2,
+  "cardBadges": [
+   "Sold",
+   "Rented"
+  ],
+  "overlays": 2,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 131,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "2 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-tab@uk@390": {
+  "tab": "Продані та здані",
+  "cards": 2,
+  "cardBadges": [
+   "Продано",
+   "Орендовано"
+  ],
+  "overlays": 2,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "2 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-tab@uk@1440": {
+  "tab": "Продані та здані",
+  "cards": 2,
+  "cardBadges": [
+   "Продано",
+   "Орендовано"
+  ],
+  "overlays": 2,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 165,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "2 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-empty@en@390": {
+  "tab": "Sold & Rented",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 listings",
+   "No sold or rented listings found"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-empty@en@1440": {
+  "tab": "Sold & Rented",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 131,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 listings",
+   "No sold or rented listings found"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-empty@uk@390": {
+  "tab": "Продані та здані",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 оголошень",
+   "Продані та здані оголошення не знайдено"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "closed-empty@uk@1440": {
+  "tab": "Продані та здані",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 165,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 оголошень",
+   "Продані та здані оголошення не знайдено"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "empty@en@390": {
+  "tab": "Active listings",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 listings",
+   "No listings found"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "empty@en@1440": {
+  "tab": "Active listings",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 131,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 listings",
+   "No listings found"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "empty@uk@390": {
+  "tab": "Активні оголошення",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 оголошень",
+   "Оголошень не знайдено"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 194,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "empty@uk@1440": {
+  "tab": "Активні оголошення",
+  "cards": 0,
+  "cardBadges": [],
+  "overlays": 0,
+  "placeholders": 0,
+  "favourites": 0,
+  "chips": 0,
+  "paginationPages": null,
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 165,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "0 оголошень",
+   "Оголошень не знайдено"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 231,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "loading-more@en@390": {
+  "tab": "Active listings",
+  "cards": 6,
+  "cardBadges": [
+   "New",
+   "-",
+   "New+Price reduced",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": {
+   "text": "Show more",
+   "variant": "filled",
+   "size": "sm",
+   "loading": true,
+   "disabled": true,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(236, 84, 71)"
+  },
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 258,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "loading-more@en@1440": {
+  "tab": "Active listings",
+  "cards": 6,
+  "cardBadges": [
+   "New",
+   "-",
+   "New+Price reduced",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": {
+   "text": "Show more",
+   "variant": "filled",
+   "size": "sm",
+   "loading": true,
+   "disabled": true,
+   "h": 44,
+   "w": 109,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(236, 84, 71)"
+  },
+  "saveSearch": {
+   "text": "Save search",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 131,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 listings"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 295,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "loading-more@uk@390": {
+  "tab": "Активні оголошення",
+  "cards": 6,
+  "cardBadges": [
+   "Нове",
+   "-",
+   "Нове+Ціну знижено",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 358,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 258,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ },
+ "loading-more@uk@1440": {
+  "tab": "Активні оголошення",
+  "cards": 6,
+  "cardBadges": [
+   "Нове",
+   "-",
+   "Нове+Ціну знижено",
+   "-",
+   "-",
+   "-"
+  ],
+  "overlays": 0,
+  "placeholders": 1,
+  "favourites": 1,
+  "chips": 2,
+  "paginationPages": "1,2,3,3",
+  "showMore": null,
+  "saveSearch": {
+   "text": "Зберегти пошук",
+   "variant": "default",
+   "size": "sm",
+   "loading": false,
+   "disabled": false,
+   "h": 44,
+   "w": 165,
+   "fs": "14px",
+   "radius": "8px",
+   "bg": "rgb(255, 255, 255)"
+  },
+  "empty": [
+   "18 оголошень"
+  ],
+  "emoji": false,
+  "sortLine": {
+   "cls": "m_3eebeb36 mantine-Divider-root",
+   "h": 1,
+   "y": 295,
+   "color": "rgb(228, 231, 236)",
+   "bw": "1px"
+  },
+  "overflow": false
+ }
+}

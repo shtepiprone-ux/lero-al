@@ -76,3 +76,45 @@ export function makeCardListingFixtures(locale: string): CardListingData[] {
     }
   })
 }
+
+// Task 741 Revision 3e (R50): one card-state factory for every Story that shows production card states
+// (`Mantine/Primitives/ListingCard`, `Patterns/Mantine/ListingsShellView`). Moved from `ListingCard.stories.tsx`
+// (`makeFixtureListing`) with the same signature and output.
+// Frozen "created 2 days ago" (no Date.now()/new Date() wall-clock in fixtures per Storybook governance §14, Task 697):
+// `getBadges` reads `Date.now()`, which the preview freezes to 2026-07-30 (`.storybook/preview-head.html`, Task 698),
+// so FIXTURE_CREATED_AT is inside the "New" window (LISTING_NEW_DAYS=7, docs/domain-rules.md:106) and
+// FIXTURE_OLD_CREATED_AT (29 days earlier) is outside it.
+export const FIXTURE_CREATED_AT = '2026-07-28T00:00:00.000Z'
+export const FIXTURE_OLD_CREATED_AT = '2026-07-01T00:00:00.000Z'
+
+export interface StateListingOpts {
+  status?: CardListingData['status']
+  createdAt?: string
+  priceOld?: number
+  premium?: boolean
+  noImage?: boolean
+}
+
+export function makeStateListing(l: string, key: string, { status = 'active', createdAt = FIXTURE_CREATED_AT, priceOld, premium = false, noImage = false }: StateListingOpts = {}): CardListingData {
+  return {
+    id: `story-listing-001-${key}`,
+    public_id: 1234,
+    slug: 'modern-apartment-tirana-center',
+    title: storyT(l, 'storybook.mantine.card_title_1'),
+    price: 80000,
+    price_old: priceOld,
+    currency: 'EUR',
+    listing_type: 'sale',
+    property_type: 'apartment',
+    is_premium: premium,
+    status,
+    created_at: createdAt,
+    images: noImage
+      ? []
+      : [{ url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop', is_cover: true, order: 0 }],
+    location: { id: 1, name_al: storyT(l, 'storybook.mantine.card_location_tirana'), slug: 'tirane', type: 'city' },
+    area_gross: 85,
+    bedrooms: 3,
+    bathrooms: 2,
+  }
+}

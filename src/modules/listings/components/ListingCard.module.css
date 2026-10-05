@@ -1,72 +1,27 @@
 /*
- * ListingCard.module.css — Task 702 (D28 de-Tailwind, Sprint 46.2). Reproduces the 8 prior
- * Tailwind utility sites' OWN compiled output exactly (verified against the built
- * `.next/static/css` bundle AND a live `getComputedStyle` capture on the canonical
- * `Mantine/Primitives/ListingCard` story, Task 702 §3.4/§3.5/§10 I2), same reproduce-the-
- * compiled-output convention as `PopularLocationsView.module.css` (Task 688) and
- * `MantineHomeSection.module.css` (Task 662).
+ * ListingCard.module.css — Task 702 (D28 de-Tailwind), reduced by Task 741 Revision 3h.
  *
- * D34 (2026-08-05): a D28 de-Tailwind module reproduces the utility's own cascade LAYER, so
- * every rule below is wrapped in `@layer utilities` — same as `HeroSearchView.module.css`
- * (709-R) and `MobileBottomNavView.module.css` (713).
+ * D34: a de-Tailwind module reproduces the utility's own cascade layer, so every rule below sits in
+ * `@layer utilities` and keeps losing to Mantine's unlayered component CSS exactly as the utility it replaced did.
+ * The two modules closest to this one, `FavoriteButton.module.css` and `MantineListingCardPattern.module.css`, are
+ * unlayered on purpose (they fix a cascade trap), and `.overlayFavorite` below contends with neither on any property.
  *
- * The two modules sitting closest to this one — `FavoriteButton.module.css` (653) and
- * `MantineListingCardPattern.module.css` (602) — are correctly UNLAYERED, and that is not an
- * inconsistency to "fix": D34 distinguishes by intent. A D28 migration (this file) reproduces
- * a utility's own losing cascade standing, so it must stay layered to keep losing to Mantine's
- * unlayered component CSS exactly as the utility it replaces did. FavoriteButton/
- * MantineListingCardPattern instead fix a CASCADE-TRAP utility that never actually took effect
- * against Mantine's own unlayered CSS — those must stay unlayered so the fix can win. Task 702
- * §3.7 measured that `.inlineFavorite`/`.overlayFavorite` below do not contend with
- * FavoriteButton.module.css on any property (no shared background-color/color/opacity/cursor),
- * so layering this module does not reopen that fix.
- *
- * `.overlayFavorite`'s box-shadow used to reproduce Tailwind's own `--tw-inset-shadow,
- * --tw-inset-ring-shadow,--tw-ring-offset-shadow,--tw-ring-shadow,--tw-shadow` composition by
- * referencing those custom properties directly. Task 762 Revision 1 (O-1, D762-1) measured that a
- * `var()` read of a Tailwind-registered bookkeeping property with no local declaration and no
- * fallback is invalid at computed-value time once Tailwind's compiler-generated `@property`
- * registration is gone — the whole `box-shadow` declaration drops, not merely degrades (two
- * Chromium documents differing only in the presence of those registrations, box-shadow: none vs.
- * the value below). Flattened to the literal it resolves to today, captured live via
- * `getComputedStyle`: the three registered-invisible (fully transparent) layers contribute nothing visible
- * and are dropped; the two `shadow-sm` layers (from the locally-set `--tw-shadow`, now inlined)
- * remain.
+ * Revision 3h removed the feature icon size (now the `size` prop on `ListingFeatureIcon`) and the inline favourite's
+ * negative margins (the head row's `Group` places it). The favourite's shadow is the theme's own `xs` shadow.
  */
 
 @layer utilities {
-  /* Sites #4/#8 — the two <Link> wrappers (Task 702 §3.1). Markers (`listing-card
-     listing-card--horizontal`/`listing-card--vertical`) stay literal Tailwind-adjacent strings
-     on the element via `cn()`, untouched by this module — see ListingCard.tsx. */
+  /* The two `<Link>` wrappers. The `listing-card` markers stay literal strings on the element via `cn()`. */
   .card {
-    display: block; /* block — I1 */
+    display: block;
   }
 
   .cardVertical {
-    height: 100%; /* h-full — I1 */
+    height: 100%;
   }
 
-  /* Sites #3/#7 — ListingFeatureIcon svg sizing (`:173`, `:271`). Forwarded as the icon's ONLY
-     className (ListingFeatureIcon.tsx has no default/merge), so this class alone must size it. */
-  .featureIcon {
-    height: .875rem; /* design-tokens-allow: height: .875rem — h-3.5, resolved from Tailwind's own --spacing multiplier (.25rem × 3.5); no --space-* token matches this fractional step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
-    width: .875rem; /* design-tokens-allow: width: .875rem — w-3.5, same resolution */
-  }
-
-  /* Site #2 — inline FavoriteButton self-position, horizontal/list card (`:166`). Merged with
-     FavoriteButton's own `styles.control` via `cn()` inside FavoriteButton.tsx — does not
-     contend with it on any property (§3.7: control sets background-color/color/opacity/cursor
-     only). */
-  .inlineFavorite {
-    flex-shrink: 0; /* shrink-0 — I1 */
-    margin-top: -.125rem; /* design-tokens-allow: margin-top: -.125rem — -mt-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × -0.5); no --space-* token expresses a negative half-step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
-    margin-right: calc(var(--homepage-runtime-space-1) * -1); /* Task 770 — was @theme inline --space-1 (§22.1); -mr-1 — I1 */
-  }
-
-  /* Site #6 — overlay FavoriteButton shadow, vertical card (`:259`). See header comment for the
-     composition this reproduces — same `--tw-shadow`-plus-var()-composition technique as
-     `MobileBottomNavView.module.css` (713) `.navBar`/`.fab`. */
+  /* The overlay favourite button's shadow, on the vertical card. */
   .overlayFavorite {
-    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 2px -1px; /* design-tokens-allow: rgba( — shadow-sm, flattened from the Tailwind --tw-shadow/--tw-ring-* composition; captured live via getComputedStyle (Task 762 Revision 1), not hand-derived — the three registered-invisible (fully transparent) layers are dropped, confirmed absent from this capture */ /* design-tokens-allow: box-shadow: 1px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 3px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: 2px — same flattened shadow-sm layer */ /* design-tokens-allow: box-shadow: -1px — same flattened shadow-sm layer */
+    box-shadow: var(--mantine-shadow-xs);
   }
 }

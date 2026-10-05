@@ -1,0 +1,49 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "cells": 8,
+ "compared": 424,
+ "diffs": [],
+ "tuples": {
+  "patterns-mantine-listingcardpattern--default@en@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@en@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@uk@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "patterns-mantine-listingcardpattern--default@uk@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@en@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@en@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@uk@768": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  },
+  "mantine-primitives-listingcard--default@uk@1440": {
+   "grid": 11,
+   "list": 11,
+   "compared": 11
+  }
+ }
+}

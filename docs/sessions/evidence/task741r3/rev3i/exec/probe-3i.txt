@@ -1,0 +1,36 @@
+AC56 patterns-mantine-listingcardpattern--default@uk@768 ["ПРОДАНО col176 label105x50 inside true room 36/36","ОРЕНДОВАНО col176 label133x54 inside true room 21/21"]
+AC56 patterns-mantine-listingcardpattern--default@uk@1440 ["ПРОДАНО col176 label105x50 inside true room 36/36","ОРЕНДОВАНО col176 label133x54 inside true room 21/21"]
+AC56 mantine-primitives-listingcard--default@uk@768 ["ПРОДАНО col176 label105x50 inside true room 36/36","ОРЕНДОВАНО col176 label133x54 inside true room 21/21"]
+AC56 mantine-primitives-listingcard--default@uk@1440 ["ПРОДАНО col176 label105x50 inside true room 36/36","ОРЕНДОВАНО col176 label133x54 inside true room 21/21"]
+patterns-mantine-listingcardpattern--default@320 ok {"top":24,"right":16,"bottom":37,"left":16} {"h1":"","h2":"","h3":"14px","h4":"18px"} 12px/14px/16px
+patterns-mantine-listingcardpattern--default@390 ok {"top":24,"right":16,"bottom":37,"left":16} {"h1":"","h2":"","h3":"14px","h4":"18px"} 12px/14px/16px
+patterns-mantine-listingcardpattern--default@768 ok {"top":24,"right":24,"bottom":37,"left":24} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+patterns-mantine-listingcardpattern--default@1024 ok {"top":24,"right":32,"bottom":37,"left":32} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+patterns-mantine-listingcardpattern--default@1440 ok {"top":24,"right":32,"bottom":37,"left":32} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+mantine-primitives-listingcard--default@320 ok {"top":16,"right":16,"bottom":29,"left":16} {"h1":"","h2":"","h3":"14px","h4":"18px"} 12px/14px/16px
+mantine-primitives-listingcard--default@390 ok {"top":16,"right":16,"bottom":29,"left":16} {"h1":"","h2":"","h3":"14px","h4":"18px"} 12px/14px/16px
+mantine-primitives-listingcard--default@768 ok {"top":49,"right":49,"bottom":62,"left":49} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+mantine-primitives-listingcard--default@1024 ok {"top":49,"right":49,"bottom":62,"left":49} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+mantine-primitives-listingcard--default@1440 ok {"top":49,"right":49,"bottom":62,"left":49} {"h1":"","h2":"","h3":"14px","h4":"24px"} 12px/14px/16px
+patterns-mantine-listingsshellview--default@320 ok {"top":60,"right":16,"bottom":56,"left":16} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--default@390 ok {"top":60,"right":16,"bottom":56,"left":16} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--default@768 ok {"top":36,"right":24,"bottom":56,"left":24} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--default@1024 ok {"top":36,"right":32,"bottom":56,"left":32} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--default@1440 ok {"top":36,"right":32,"bottom":56,"left":32} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--closed-tab@320 ok {"top":60,"right":16,"bottom":37,"left":16} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--closed-tab@390 ok {"top":60,"right":16,"bottom":37,"left":16} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--closed-tab@768 ok {"top":36,"right":24,"bottom":101,"left":24} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--closed-tab@1024 ok {"top":36,"right":32,"bottom":186,"left":32} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+patterns-mantine-listingsshellview--closed-tab@1440 ok {"top":36,"right":32,"bottom":220,"left":32} {"h1":"","h2":"","h3":"14px","h4":""} 12px/14px/16px
+mantine-primitives-pagination--in-centered-group@320 ok {"top":16,"right":16,"bottom":626,"left":16} {"h1":"","h2":"","h3":"","h4":""} 12px
+mantine-primitives-pagination--in-centered-group@390 ok {"top":16,"right":16,"bottom":626,"left":16} {"h1":"","h2":"","h3":"","h4":""} 12px
+mantine-primitives-pagination--in-centered-group@768 ok {"top":49,"right":49,"bottom":629,"left":49} {"h1":"","h2":"","h3":"","h4":""} 12px
+mantine-primitives-pagination--in-centered-group@1024 ok {"top":49,"right":49,"bottom":629,"left":49} {"h1":"","h2":"","h3":"","h4":""} 12px
+mantine-primitives-pagination--in-centered-group@1440 ok {"top":49,"right":49,"bottom":629,"left":49} {"h1":"","h2":"","h3":"","h4":""} 12px
+patterns-mantine-listingsactionrow--default@320 ok {"top":28,"right":16,"bottom":693,"left":16} {"h1":"","h2":"","h3":"","h4":""} 12px/14px
+patterns-mantine-listingsactionrow--default@390 ok {"top":28,"right":16,"bottom":745,"left":16} {"h1":"","h2":"","h3":"","h4":""} 12px/14px
+patterns-mantine-listingsactionrow--default@768 ok {"top":28,"right":41,"bottom":815,"left":24} {"h1":"","h2":"","h3":"","h4":""} 12px/14px/16px
+patterns-mantine-listingsactionrow--default@1024 ok {"top":28,"right":49,"bottom":815,"left":32} {"h1":"","h2":"","h3":"","h4":""} 12px/14px/16px
+patterns-mantine-listingsactionrow--default@1440 ok {"top":28,"right":65,"bottom":815,"left":48} {"h1":"","h2":"","h3":"","h4":""} 12px/14px/16px
+GR3f {"dpr1":{"x":439,"y":76.90625,"w":32,"h":32,"radius":"9999px","shadow":"rgba(16, 24, 40, 0.05) 0px 1px 2px 0px","crop":"crops/gr3f-favourite-dpr1-10x.png"},"dpr1.25":{"x":439,"y":76.90625,"w":32,"h":32,"radius":"9999px","shadow":"rgba(16, 24, 40, 0.05) 0px 1px 2px 0px","crop":"crops/gr3f-favourite-dpr1.25-10x.png"}}
+EXIT_CODE=0

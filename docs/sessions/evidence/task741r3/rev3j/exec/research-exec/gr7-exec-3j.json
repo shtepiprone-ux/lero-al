@@ -1,0 +1,164 @@
+{
+ "platform": "win32",
+ "at": "2026-10-05T05:46:03.559Z",
+ "pages": {
+  "lahomes@1440": {
+   "found": true,
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "labelRadius": "0px",
+   "labelOpacity": 1,
+   "imgOpacity": 1,
+   "imgFilter": "none",
+   "cardOpacity": 1,
+   "cardRadius": "5.6px",
+   "cardBorder": "0px rgb(234, 237, 241)"
+  },
+  "tailadmin-cards@1440": [
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Lorem ipsum dolor sit am",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   }
+  ],
+  "tailadmin-badge@1440": [
+   {
+    "text": "Primary",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(236, 243, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Success",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(236, 253, 243)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Error",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(254, 243, 242)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Warning",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(255, 250, 235)",
+    "effOpacity": 1,
+    "filter": "none"
+   }
+  ],
+  "lahomes@390": {
+   "found": true,
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "labelRadius": "0px",
+   "labelOpacity": 1,
+   "imgOpacity": 1,
+   "imgFilter": "none",
+   "cardOpacity": 1,
+   "cardRadius": "5.6px",
+   "cardBorder": "0px rgb(234, 237, 241)"
+  },
+  "tailadmin-cards@390": [
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Lorem ipsum dolor sit am",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Card title\n        \n\n   ",
+    "radius": "12px",
+    "border": "1px rgb(228, 231, 236)",
+    "bg": "rgb(255, 255, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   }
+  ],
+  "tailadmin-badge@390": [
+   {
+    "text": "Primary",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(236, 243, 255)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Success",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(236, 253, 243)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Error",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(254, 243, 242)",
+    "effOpacity": 1,
+    "filter": "none"
+   },
+   {
+    "text": "Warning",
+    "radius": "3.35544e+07px",
+    "border": "0px rgb(228, 231, 236)",
+    "bg": "rgb(255, 250, 235)",
+    "effOpacity": 1,
+    "filter": "none"
+   }
+  ]
+ }
+}

@@ -1,0 +1,364 @@
+{
+  "cards": {
+    "mantine-primitives-listingcard--default@1440": [
+      {
+        "text": "SOLD",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlaySold_1i85u_420"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 240)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      },
+      {
+        "text": "RENTED",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlayRented_1i85u_425"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 295)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      }
+    ],
+    "mantine-primitives-listingcard--default@320": [
+      {
+        "text": "SOLD",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlaySold_1i85u_420"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 240)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      },
+      {
+        "text": "RENTED",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlayRented_1i85u_425"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 295)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      }
+    ],
+    "patterns-mantine-listingcardpattern--default@1440": [
+      {
+        "text": "SOLD",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlaySold_1i85u_420",
+          "consumer-overlay-hook"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 240)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      },
+      {
+        "text": "RENTED",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlayRented_1i85u_425"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 295)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      }
+    ],
+    "patterns-mantine-listingcardpattern--default@320": [
+      {
+        "text": "SOLD",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlaySold_1i85u_420",
+          "consumer-overlay-hook"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 240)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      },
+      {
+        "text": "RENTED",
+        "toneClasses": [
+          "_overlayLabel_1i85u_399",
+          "_overlayRented_1i85u_425"
+        ],
+        "label": {
+          "background-color": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+          "border-top-width": "2px",
+          "border-top-style": "solid",
+          "border-top-color": "oklch(0.577 0.174 295)",
+          "border-right-width": "2px",
+          "border-bottom-width": "2px",
+          "border-left-width": "2px",
+          "color": "oklch(1 0 0)",
+          "font-size": "14px",
+          "font-weight": "700",
+          "line-height": "20px",
+          "padding-top": "6px",
+          "padding-right": "12px",
+          "padding-bottom": "6px",
+          "padding-left": "12px",
+          "rotate": "-8deg",
+          "border-top-left-radius": "18px",
+          "border-top-right-radius": "18px",
+          "border-bottom-left-radius": "18px",
+          "border-bottom-right-radius": "18px"
+        },
+        "labelInsidePhoto": true,
+        "scrim": {
+          "background-color": "oklab(0 0 0 / 0.3)",
+          "z-index": "auto",
+          "position": "absolute"
+        },
+        "favouriteHit": {
+          "sameAsFavOrInside": true,
+          "tag": "svg"
+        }
+      }
+    ]
+  },
+  "banner": [
+    {
+      "text": "This property has been sold. See similar",
+      "background": "rgb(240, 249, 255)",
+      "color": "rgb(0, 134, 201)",
+      "borderColor": "rgb(11, 165, 236)"
+    },
+    {
+      "text": "This property has been rented. See simil",
+      "background": "rgb(244, 242, 254)",
+      "color": "rgb(101, 71, 214)",
+      "borderColor": "rgb(146, 128, 248)"
+    },
+    {
+      "text": "This listing is archived and no longer a",
+      "background": "rgb(249, 250, 251)",
+      "color": "rgb(52, 64, 84)",
+      "borderColor": "rgb(102, 112, 133)"
+    },
+    {
+      "text": "This listing has expired. The owner can ",
+      "background": "rgb(255, 250, 235)",
+      "color": "rgb(181, 71, 8)",
+      "borderColor": "rgb(247, 144, 9)"
+    },
+    {
+      "text": "This listing is under review and is not ",
+      "background": "rgb(255, 250, 235)",
+      "color": "rgb(181, 71, 8)",
+      "borderColor": "rgb(247, 144, 9)"
+    },
+    {
+      "text": "This listing has been hidden by its owne",
+      "background": "rgb(255, 250, 235)",
+      "color": "rgb(181, 71, 8)",
+      "borderColor": "rgb(247, 144, 9)"
+    }
+  ]
+}

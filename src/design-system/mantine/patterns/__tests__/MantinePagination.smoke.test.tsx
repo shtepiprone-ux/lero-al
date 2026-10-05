@@ -28,7 +28,7 @@
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest'
 import { render, fireEvent, renderHook } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { usePagination } from '@mantine/hooks'
@@ -110,6 +110,25 @@ describe('computeShedRange — asymmetric shed (Rule 3)', () => {
     expect(computeShedRange(10, 10, 0, 0, 0)).toEqual([10])
   })
 
+  it('fill levels (Task 741 R58/R61, D46-8): the pages are 1, total, the current page and up to `fill` neighbours', () => {
+    expect(computeShedRange(10, 1, 0, 1, 1, 2)).toEqual([1, 2, 3, 'dots', 10])
+    expect(computeShedRange(10, 10, 0, 1, 1, 2)).toEqual([1, 'dots', 8, 9, 10])
+    expect(computeShedRange(5, 1, 0, 1, 1, 2)).toEqual([1, 2, 3, 4, 5]) // a gap of exactly one page shows that page
+    expect(computeShedRange(50, 25, 0, 1, 1, 1)).toEqual([1, 'dots', 25, 26, 'dots', 50])
+  })
+
+  it('SHED_LEVELS holds the seven levels in order: full, fill 3, fill 2, fill 1, drop siblings, drop trailing, floor', () => {
+    expect(SHED_LEVELS).toEqual([
+      { siblings: 1, leadingBoundaries: 1, trailingBoundaries: 1 },
+      { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 3 },
+      { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 2 },
+      { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 1 },
+      { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1 },
+      { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 0 },
+      { siblings: 0, leadingBoundaries: 0, trailingBoundaries: 0 },
+    ])
+  })
+
   it('SHED_LEVELS ladder is defined in the documented order (full → floor)', () => {
     expect(SHED_LEVELS[0]).toEqual({ siblings: 1, leadingBoundaries: 1, trailingBoundaries: 1 })
     expect(SHED_LEVELS[SHED_LEVELS.length - 1]).toEqual({ siblings: 0, leadingBoundaries: 0, trailingBoundaries: 0 })
@@ -161,9 +180,14 @@ describe('MantinePagination — never-wraps CSS invariant (Rule 1)', () => {
     const { container } = render(withProvider(<MantinePagination total={total} value={value} onChange={() => {}} />))
     const row = container.querySelector('.mantine-Pagination-root > div') as HTMLElement
     expect(row).toBeTruthy()
-    const cs = getComputedStyle(row)
-    expect(cs.flexWrap).toBe('nowrap')
-    expect(cs.overflow).toBe('hidden')
+    // Task 741 R53: the row is a Mantine `Group` (no `style` object). jsdom loads no stylesheet, so the declarations
+    // are asserted at their source: the Group's own CSS variables and `max-width` prop (`flex-wrap: nowrap` and the
+    // `gap` come from them). The row carries no `overflow: hidden` (Task 741 R57: it clipped the keyboard focus ring); the
+    // computed values are measured in the real browser (Task 741 Revision 3g, AC52).
+    expect(row.classList.contains('mantine-Group-root')).toBe(true)
+    expect(row.style.getPropertyValue('--group-wrap')).toBe('nowrap')
+    expect(row.style.getPropertyValue('--group-gap')).toBe('var(--mantine-spacing-xs)')
+    expect(row.style.maxWidth).toBe('100%')
   })
 
   it('single page (total=1) renders without crashing', () => {
@@ -201,10 +225,10 @@ describe('MantinePagination — hidden measuring probe (Task 784 Revision 3, D69
     const probe = container.querySelector('[aria-hidden="true"]') as HTMLElement
     expect(probe).toBeTruthy()
     expect(probe).toHaveAttribute('tabindex', '-1')
-    const cs = getComputedStyle(probe)
-    expect(cs.pointerEvents).toBe('none')
-    expect(cs.visibility).toBe('hidden')
-    expect(cs.position).toBe('fixed')
+    // Task 741 R53: `position: fixed` is the `pos` style prop; `visibility: hidden` and `pointer-events: none` are the
+    // module class (jsdom loads no stylesheet; the computed values are measured in the real browser, AC50).
+    expect(probe.style.position).toBe('fixed')
+    expect(probe.className).toMatch(/_probe_/)
   })
 
   it('the probe carries no off-screen coordinate (left/top) — only visibility/pointer-events/position hide it', async () => {
@@ -213,5 +237,77 @@ describe('MantinePagination — hidden measuring probe (Task 784 Revision 3, D69
     const probe = container.querySelector('[aria-hidden="true"]') as HTMLElement
     expect(probe.style.left).toBe('')
     expect(probe.style.top).toBe('')
+  })
+})
+
+describe('MantinePagination — width budget is the consumer wrapper, not Pagination.Root (Task 741 R52/R54)', () => {
+  // Production consumers wrap the pagination in a flex `Group`, where `Pagination.Root` hugs its content. In jsdom
+  // there is no layout, so the wrapper reports 1000px and the root 100px, and the probe is 32px wide. Page buttons
+  // 1, 2 and 3 render only when the budget comes from the wrapper; from the root (160px needed > 100px) the ladder
+  // stays at its floor and renders only the current page.
+  let restore: Array<() => void> = []
+  beforeAll(() => {
+    // jsdom defines `clientWidth` on `Element.prototype`, so `HTMLElement.prototype` normally has no own descriptor.
+    const clientWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth')
+    const rect = HTMLElement.prototype.getBoundingClientRect
+    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+      configurable: true,
+      get(this: HTMLElement) {
+        if (this.dataset.testid === 'consumer-wrapper') return 1000
+        if (this.dataset.testid === 'consumer-wrapper-230') return 230
+        if (this.classList.contains('mantine-Pagination-root')) return 100
+        return 0
+      },
+    })
+    HTMLElement.prototype.getBoundingClientRect = function (this: HTMLElement) {
+      const width = this.getAttribute('aria-hidden') === 'true' ? 32 : 0
+      return { width, height: 0, top: 0, left: 0, right: width, bottom: 0, x: 0, y: 0, toJSON: () => ({}) } as DOMRect
+    }
+    restore = [
+      () => {
+        if (clientWidth) Object.defineProperty(HTMLElement.prototype, 'clientWidth', clientWidth)
+        else delete (HTMLElement.prototype as { clientWidth?: number }).clientWidth
+      },
+      () => { HTMLElement.prototype.getBoundingClientRect = rect },
+    ]
+  })
+  afterAll(() => restore.forEach(fn => fn()))
+
+  it('renders pages 1, 2 and 3 for total=3 inside a wide consumer wrapper', async () => {
+    const { container, findByText } = render(
+      withProvider(
+        <div data-testid="consumer-wrapper">
+          <MantinePagination total={3} value={1} onChange={() => {}} />
+        </div>,
+      ),
+    )
+    await findByText('3', { selector: '[aria-hidden="true"]' }) // the mounted probe: the measurement has run
+    const pages = [...container.querySelectorAll<HTMLElement>('.mantine-Pagination-control')]
+      .filter(el => el.getAttribute('aria-hidden') !== 'true')
+      .map(el => el.textContent)
+      .filter(text => /^\d+$/.test(text ?? ''))
+    expect(pages).toEqual(['1', '2', '3'])
+  })
+
+  it('fills the width: total=10 value=1 in a 230px wrapper (probe 32, gap 0) shows 1 2 3 10, not only 1 10 (Task 741 R58/R61)', async () => {
+    const { container, findByText } = render(
+      withProvider(
+        <div data-testid="consumer-wrapper-230">
+          <MantinePagination total={10} value={1} onChange={() => {}} />
+        </div>,
+      ),
+    )
+    await findByText('10', { selector: '[aria-hidden="true"]' })
+    const pages = [...container.querySelectorAll<HTMLElement>('.mantine-Pagination-control')]
+      .filter(el => el.getAttribute('aria-hidden') !== 'true')
+      .map(el => el.textContent)
+      .filter(text => /^\d+$/.test(text ?? ''))
+    expect(pages).toEqual(['1', '2', '3', '10'])
+  })
+})
+
+describe('MantinePagination — the R54 clientWidth stub is removed afterwards (Task 741 R60)', () => {
+  it('HTMLElement.prototype has no own clientWidth again', () => {
+    expect(Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth')).toBeUndefined()
   })
 })

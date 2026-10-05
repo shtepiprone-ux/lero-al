@@ -76,7 +76,9 @@ declare module '@mantine/core' {
     // string. `hairline` is a second, distinct role for the generic 1px demo border AC17's audit
     // found in `UnstyledButton.stories.tsx` — a different value from `galleryThumbActive`, so no
     // rule-3 collision. Grows the same way `boxSize`/`iconSize` did, one documented role at a time.
-    borderWidth: Record<'galleryThumbActive' | 'hairline', string>
+    // Task 741 Revision 3 — `statusOverlay` is the third role: the 2px border of the rotated sold/rented
+    // label on `MantineListingCardPattern`. Same value as `galleryThumbActive`, different owner (rule 3).
+    borderWidth: Record<'galleryThumbActive' | 'hairline' | 'statusOverlay', string>
     boxSize: Record<
       // Task 825 (§3.2) — `LightboxView`'s desktop media column, migrated exactly from the
       // pre-825 `max-w-5xl`/`mx-16` Tailwind utility values (64rem/4rem).
@@ -270,6 +272,9 @@ declare module '@mantine/core' {
       notificationPanelWidth: number
       notificationPanelMaxHeight: number
       heroSearchFallbackHeight: { base: number; sm: number; md: number }
+      // Task 741 Revision 3h (R64) — the list layout's photo column width in `MantineListingCardPattern`: today's 8rem
+      // (128px) below 640px and 11rem (176px) from 640px; replaces two rem literals in the pattern's CSS module.
+      listingCardListThumb: { base: number; sm: number }
       appShellNavbarWidth: number
       appShellHeaderHeight: number
       adminTopBarHeight: number
@@ -765,6 +770,7 @@ export const theme = createTheme({
     borderWidth: {
       galleryThumbActive: '0.125rem', // 2px
       hairline: '0.0625rem',          // 1px — Task 824 R17 revision, D824-4/AC17 audit
+      statusOverlay: '0.125rem',      // 2px — Task 741 Revision 3, the sold/rented overlay label border
     },
     // Task 782 — canonical layout/container dimension scale (D69-6). Rem strings — see the
     // `MantineThemeOther` augmentation above for the full role-name rationale.
@@ -847,6 +853,7 @@ export const theme = createTheme({
       iconButtonIndicatorSize: 20,
       notificationPanelWidth: 320,
       notificationPanelMaxHeight: 480,
+      listingCardListThumb: { base: 128, sm: 176 }, // Task 741 R64: MantineListingCardPattern list photo column (8rem / 11rem)
       heroSearchFallbackHeight: { base: 279, sm: 175, md: 123 }, // Task 797: HeroSearchFallback.tsx
                                                                   // Skeleton h — measured (see the
                                                                   // component's own docblock)

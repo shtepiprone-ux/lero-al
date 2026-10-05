@@ -1,6 +1,6 @@
 # Session — Task 741: Retire `CLOSED_OVERLAY_STYLE`'s Tailwind strings into `ListingCard.module.css`
 
-**Task path:** `tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md`
+**Task path:** `tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md`
 (companion: `tasks/Sprints/Sprint_46_task741-preflight-ledger-and-contract.md`)
 
 **Executor status at handoff: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**

@@ -1,0 +1,93 @@
+{
+  "r": [
+    {
+      "card": 1,
+      "badges": [
+        {
+          "t": "Нове",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 2,
+      "badges": []
+    },
+    {
+      "card": 3,
+      "badges": [
+        {
+          "t": "Нове",
+          "inside": true
+        },
+        {
+          "t": "Ціну знижено",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 4,
+      "badges": []
+    },
+    {
+      "card": 5,
+      "badges": [
+        {
+          "t": "Неактивне",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 6,
+      "badges": [
+        {
+          "t": "На модерації",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 7,
+      "badges": [
+        {
+          "t": "Продано",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 8,
+      "badges": [
+        {
+          "t": "Орендовано",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 9,
+      "badges": [
+        {
+          "t": "Архів",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 10,
+      "badges": [
+        {
+          "t": "Прострочене",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "card": 11,
+      "badges": []
+    }
+  ],
+  "bad": []
+}

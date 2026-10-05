@@ -1,0 +1,61 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx (30 tests | 2 failed) 425ms
+     × renders pages 1, 2 and 3 for total=3 inside a wide consumer wrapper 36ms
+     × fills the width: total=10 value=1 in a 230px wrapper (probe 32, gap 0) shows 1 2 3 10, not only 1 10 (Task 741 R58/R61) 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx > MantinePagination — width budget is the consumer wrapper, not Pagination.Root (Task 741 R52/R54) > renders pages 1, 2 and 3 for total=3 inside a wide consumer wrapper
+AssertionError: expected [ '1' ] to deeply equal [ '1', '2', '3' ]
+
+- Expected
++ Received
+
+  [
+    "1",
+-   "2",
+-   "3",
+  ]
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx:289:19
+    287|       .map(el => el.textContent)
+    288|       .filter(text => /^\d+$/.test(text ?? ''))
+    289|     expect(pages).toEqual(['1', '2', '3'])
+       |                   ^
+    290|   })
+    291|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx > MantinePagination — width budget is the consumer wrapper, not Pagination.Root (Task 741 R52/R54) > fills the width: total=10 value=1 in a 230px wrapper (probe 32, gap 0) shows 1 2 3 10, not only 1 10 (Task 741 R58/R61)
+AssertionError: expected [ '1' ] to deeply equal [ '1', '2', '3', '10' ]
+
+- Expected
++ Received
+
+  [
+    "1",
+-   "2",
+-   "3",
+-   "10",
+  ]
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx:305:19
+    303|       .map(el => el.textContent)
+    304|       .filter(text => /^\d+$/.test(text ?? ''))
+    305|     expect(pages).toEqual(['1', '2', '3', '10'])
+       |                   ^
+    306|   })
+    307| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 28 passed (30)
+   Start at  20:01:20
+   Duration  2.38s (transform 132ms, setup 97ms, import 804ms, tests 425ms, environment 796ms)
+
+EXIT_CODE=1

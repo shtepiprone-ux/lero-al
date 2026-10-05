@@ -1,0 +1,27 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx (4 tests | 1 failed) 407ms
+     × after the switch, a re-render at sm or more with view="grid" never calls onViewChange("list") 99ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx > ListingsShellView — list view never renders below sm (Task 741 R37, D46-3) > after the switch, a re-render at sm or more with view="grid" never calls onViewChange("list")
+AssertionError: expected null not to be null
+ ❯ src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx:171:70
+    169|     // Proof the hook now sees sm or more: the list view the parent st…
+    170|     rerenderWith(buildProps({ view: 'list', onViewChange }))
+    171|     expect(container.querySelector('.listing-card--horizontal')).not.t…
+       |                                                                      ^
+    172|
+    173|     rerenderWith(buildProps({ view: 'grid', onViewChange }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  15:41:24
+   Duration  4.17s (transform 942ms, setup 89ms, import 2.68s, tests 407ms, environment 740ms)
+
+EXIT_CODE=1

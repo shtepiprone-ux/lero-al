@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { Group, Text } from '@mantine/core'
+import { Group, Text, useMantineTheme } from '@mantine/core'
 import { AppImage } from '@/design-system/media/AppImage'
 import { MantineListingCardPattern, MantineCopyIdButton } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
@@ -16,6 +16,7 @@ import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { convertPrice as convertPriceMulti } from '@/lib/getExchangeRate'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { cn } from '@/lib/utils'
+import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
 import styles from './ListingCard.module.css'
 
 export interface CardListingData extends ListingSnapshot {
@@ -54,7 +55,9 @@ interface ListingCardProps {
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
 // The sold/rented overlay colour is owned by `MantineListingCardPattern` (`overlay.tone`, Task 886 R40).
 
-// Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —
+// Tone -> Mantine theme color name (Task 617). The four closed-status colours (sold/rented/archived/expired) come
+// from `LISTING_STATUS_COLOR` (`listingStatusTone.ts`) — the one source shared with `ListingStatusBanner` (Task 741 R3).
+// Replaces the legacy `className` color override —
 // Mantine's `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules, so a Tailwind
 // `@layer utilities` className on a Mantine `Badge` can never win (Task 602/606/612/616/617
 // cascade-layer trap). `new`=green, `price_reduced`=`sale` (Task 619 — a dedicated owner-provided
@@ -67,6 +70,7 @@ interface ListingCardProps {
 // — `MantineListingCardPattern` always renders these `variant="filled"` (opaque, safe on the
 // photo these badges sit on top of; the theme's default `variant="light"` is translucent and
 // unreadable over a photo, owner-caught 2026-07-17).
+// `status_inactive`=gray and `status_pending`=yellow come from the same map (Task 741 R3b, owner D46-4).
 // One predicate for the struck old price and the "price reduced" badge (Task 912): a price is
 // struck through only when the owner lowered it.
 function isListingPriceReduced(listing: CardListingData): boolean {
@@ -79,20 +83,32 @@ function getBadges(listing: CardListingData) {
   // Status badges take priority for non-active listings
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'sold') {
-    badges.push({ label: 'status_sold', color: 'blueLight' })
+    badges.push({ label: 'status_sold', color: LISTING_STATUS_COLOR.sold })
     return badges
   }
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'rented') {
-    badges.push({ label: 'status_rented', color: 'purple' })
+    badges.push({ label: 'status_rented', color: LISTING_STATUS_COLOR.rented })
     return badges
   }
   if (isListingArchived(listing.status as ListingStatus)) {
-    badges.push({ label: 'status_archived', color: 'gray' })
+    badges.push({ label: 'status_archived', color: LISTING_STATUS_COLOR.archived })
     return badges
   }
   if (listing.status === 'expired') {
-    badges.push({ label: 'status_expired', color: 'yellow' })
+    badges.push({ label: 'status_expired', color: LISTING_STATUS_COLOR.expired })
+    return badges
+  }
+  // Task 741 R3b (owner D46-4, 2026-10-04): inactive and pending are labelled from the same map, gray / yellow.
+  // They return early like the other non-active statuses, so neither gets `new` / `price_reduced`.
+  // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes inactive vs pending individually; isListingHidden() merges them (and expired) and cannot be used here
+  if (listing.status === 'inactive') {
+    badges.push({ label: 'status_inactive', color: LISTING_STATUS_COLOR.inactive })
+    return badges
+  }
+  // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes inactive vs pending individually; isListingHidden() merges them (and expired) and cannot be used here
+  if (listing.status === 'pending') {
+    badges.push({ label: 'status_pending', color: LISTING_STATUS_COLOR.pending })
     return badges
   }
 
@@ -111,6 +127,7 @@ function getBadges(listing: CardListingData) {
 export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
+  const theme = useMantineTheme()
   const badges = getBadges(listing)
   const isClosed = isListingClosed(listing.status as ListingStatus)
   const closedLabel = isClosed ? t(`action_disabled_${listing.status}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
@@ -138,119 +155,12 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     ? Math.round(displayPrice / listing.area_gross)
     : null
 
-  if (variant === 'horizontal') {
-    // ── Horizontal (List view) card — thin data-mapper over
-    // MantineListingCardPattern layout="list" (Task 608), mirroring the vertical branch's
-    // split below: the pattern owns ALL list-row chrome (border/radius/hover, type-label+
-    // inline-favorite row, title, price(+old)+per-sqm, features row, location+footer row);
-    // this container only converts/formats real listing data into the pattern's data props
-    // and builds the 2 behavior-bearing nodes (image/favorite; footerActions) it cannot own
-    // itself (presentational-split gate). No overlay/photoCount/onContact — the ported
-    // legacy list design never had them (badges already convey sold/rented).
+  const isHorizontal = variant === 'horizontal'
 
-    const thumbImage = (
-      <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive />
-    )
-
-    const inlineFavorite = (
-      <FavoriteButton
-        listingId={listing.id}
-        isFavorited={isFavorited}
-        onToggled={onFavoriteToggled}
-        disabled={isClosed}
-        disabledLabel={closedLabel}
-        className={styles.inlineFavorite}
-      />
-    )
-
-    const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
-
-    const listFeatures = getCardFeatures(listing).map(f => ({
-      icon: <ListingFeatureIcon name={f.icon} className={styles.featureIcon} />,
-      value: f.value,
-    }))
-
-    const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
-
-    // Copy-ID + date cluster — the canonical MantineCopyIdButton owns the clipboard write
-    // and the copied-state toggle internally; this container only supplies the real id,
-    // display label, and translated aria strings. Both flow left like every other text
-    // element in the row (no forced right-alignment) so they read naturally whether they
-    // share the location's line or shed onto their own (Task 656).
-    const listFooterActions = (
-      <>
-        <MantineCopyIdButton
-          id={listing.id}
-          label={copyIdLabel}
-          copyLabel={t('copy_id')}
-          copiedLabel={t('id_copied')}
-        />
-        <Text component="span" size="xs" c="var(--muted-foreground)" style={{ whiteSpace: 'nowrap' }}>
-          {formatListingDate(listing.created_at, locale)}
-        </Text>
-      </>
-    )
-
-    return (
-      <Link
-        href={`/${locale}/listings/${listing.slug}`}
-        className={cn('listing-card listing-card--horizontal', styles.card)}
-        data-track="listing_click"
-        data-listing-slug={listing.slug}
-        onClick={() => onBeforeNavigate?.(listing.slug)}
-      >
-        <MantineListingCardPattern
-          layout="list"
-          data={{
-            id: listing.id,
-            title: listing.title,
-            location: locationName,
-            price: formatPrice(displayPrice, activeCurrency, locale),
-            priceOld: isListingPriceReduced(listing) && displayPriceOld != null ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
-          }}
-          image={thumbImage}
-          favorite={inlineFavorite}
-          typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
-          badges={patternBadges}
-          photoCount={imageCount}
-          features={listFeatures}
-          originalPriceStr={originalPriceStr}
-          pricePerSqmStr={pricePerSqmStr}
-          footerActions={listFooterActions}
-          isPremium={listing.is_premium}
-          isArchived={isListingArchived(listing.status as ListingStatus)}
-        />
-      </Link>
-    )
-  }
-
-  // ── Vertical card — thin data-mapper over MantineListingCardPattern (Task 602, completed
-  // as the single source of truth in Task 605) ── The pattern owns ALL card structure/layout/
-  // chrome (badges, sold/rented overlay, photo counter, features row, footer layout, premium/
-  // archived, hover); this container only translates/converts/formats real listing data into
-  // the pattern's data props and builds the 3 behavior-bearing nodes (image/favorite/
-  // footerActions) it cannot own itself (presentational-split gate).
-
-  // The real photo element — the no-image / failed-load fallback is AppImage's canonical
-  // `MediaPlaceholder` (Task 886 R22), not a card-local icon.
-  const image = (
-    <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive />
-  )
-
-  // Real favorite control — self-positions via className (contract with the pattern).
-  const favorite = (
-    <FavoriteButton
-      listingId={listing.id}
-      isFavorited={isFavorited}
-      onToggled={onFavoriteToggled}
-      disabled={isClosed}
-      disabledLabel={closedLabel}
-      overlay
-      className={styles.overlayFavorite}
-    />
-  )
-
-  // Badges + overlay — pre-translated here (pattern stays hook-free/no i18n).
+  // ── Everything the card shows is built ONCE here and passed to `MantineListingCardPattern` for both variants
+  // (Task 741 Revision 3h, owner D46-9): the container is a thin data-mapper, so the grid and the list card cannot
+  // drift. Only the photo (a different delivery variant), the favourite control (its position) and the wrapper class
+  // differ between the two variants.
   const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
   const overlay = isClosed
     ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), tone: listing.status as 'sold' | 'rented' }
@@ -258,48 +168,71 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
 
   // Features — icons pre-rendered as nodes so the pattern needs no app-specific icon map.
   const features = getCardFeatures(listing).map(f => ({
-    icon: <ListingFeatureIcon name={f.icon} className={styles.featureIcon} />,
+    icon: <ListingFeatureIcon name={f.icon} size={theme.other.iconSize.compact} />,
     value: f.value,
   }))
 
   const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
 
-  // Copy-ID + date cluster — the canonical MantineCopyIdButton owns the clipboard write
-  // and the copied-state toggle internally; this container only supplies the real id,
-  // display label, and translated aria strings.
+  // Copy-ID + date cluster — the canonical MantineCopyIdButton owns the clipboard write and the copied-state toggle
+  // internally; this container only supplies the real id, display label, and translated aria strings.
   const footerActions = (
-    <Group justify="flex-end" gap="xs" wrap="nowrap" fz="xs" c="var(--muted-foreground)">
+    <Group justify="flex-end" gap="xs" wrap="nowrap" fz="xs" c="dimmed">
       <MantineCopyIdButton
         id={listing.id}
         label={copyIdLabel}
         copyLabel={t('copy_id')}
         copiedLabel={t('id_copied')}
       />
-      <Text component="span" size="xs" c="var(--muted-foreground)" style={{ whiteSpace: 'nowrap' }}>
+      <Text component="span" size="xs" c="dimmed" miw="max-content">
         {formatListingDate(listing.created_at, locale)}
       </Text>
     </Group>
   )
 
+  const data = {
+    id: listing.id,
+    title: listing.title,
+    location: locationName,
+    price: formatPrice(displayPrice, activeCurrency, locale),
+    priceOld: isListingPriceReduced(listing) && displayPriceOld != null ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
+  }
+  const typeLabel = `${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`
+
+  // The real photo element — the no-image / failed-load fallback is AppImage's canonical `MediaPlaceholder`
+  // (Task 886 R22), not a card-local icon. The list row uses the `listing-thumb` delivery variant.
+  const image = isHorizontal
+    ? <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive />
+    : <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive />
+
+  // Real favourite control. Vertical: floats on the photo (self-positions via className, the contract with the
+  // pattern). Horizontal: sits inline at the end of the head row.
+  const favorite = (
+    <FavoriteButton
+      listingId={listing.id}
+      isFavorited={isFavorited}
+      onToggled={onFavoriteToggled}
+      disabled={isClosed}
+      disabledLabel={closedLabel}
+      overlay={!isHorizontal}
+      className={isHorizontal ? undefined : styles.overlayFavorite}
+    />
+  )
+
   return (
     <Link
       href={`/${locale}/listings/${listing.slug}`}
-      className={cn('listing-card listing-card--vertical', styles.card, styles.cardVertical)}
+      className={cn('listing-card', isHorizontal ? 'listing-card--horizontal' : 'listing-card--vertical', styles.card, !isHorizontal && styles.cardVertical)}
       data-track="listing_click"
       data-listing-slug={listing.slug}
       onClick={() => onBeforeNavigate?.(listing.slug)}
     >
       <MantineListingCardPattern
-        data={{
-          id: listing.id,
-          title: listing.title,
-          location: locationName,
-          price: formatPrice(displayPrice, activeCurrency, locale),
-          priceOld: isListingPriceReduced(listing) && displayPriceOld != null ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
-        }}
+        layout={isHorizontal ? 'list' : 'grid'}
+        data={data}
         image={image}
         favorite={favorite}
-        typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
+        typeLabel={typeLabel}
         badges={patternBadges}
         overlay={overlay}
         photoCount={imageCount}

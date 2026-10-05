@@ -1,0 +1,42 @@
+{
+  "320": {
+    "titles": [
+      "18px",
+      "18px"
+    ],
+    "h3": [
+      "14px"
+    ],
+    "hOverflow": false
+  },
+  "390": {
+    "titles": [
+      "18px",
+      "18px"
+    ],
+    "h3": [
+      "14px"
+    ],
+    "hOverflow": false
+  },
+  "768": {
+    "titles": [
+      "24px",
+      "24px"
+    ],
+    "h3": [
+      "14px"
+    ],
+    "hOverflow": false
+  },
+  "1440": {
+    "titles": [
+      "24px",
+      "24px"
+    ],
+    "h3": [
+      "14px"
+    ],
+    "hOverflow": false
+  }
+}

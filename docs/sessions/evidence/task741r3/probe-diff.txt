@@ -1,0 +1,49 @@
+label | mantine-primitives-listingcard--default@1440 | SOLD | line-height | 20px | 20.02px
+label | mantine-primitives-listingcard--default@1440 | SOLD | border-top-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | SOLD | border-top-right-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | SOLD | border-bottom-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | SOLD | border-bottom-right-radius | 18px | 16px
+scrim | mantine-primitives-listingcard--default@1440 | SOLD | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | mantine-primitives-listingcard--default@1440 | RENTED | line-height | 20px | 20.02px
+label | mantine-primitives-listingcard--default@1440 | RENTED | border-top-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | RENTED | border-top-right-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | RENTED | border-bottom-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@1440 | RENTED | border-bottom-right-radius | 18px | 16px
+scrim | mantine-primitives-listingcard--default@1440 | RENTED | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | mantine-primitives-listingcard--default@320 | SOLD | line-height | 20px | 20.02px
+label | mantine-primitives-listingcard--default@320 | SOLD | border-top-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | SOLD | border-top-right-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | SOLD | border-bottom-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | SOLD | border-bottom-right-radius | 18px | 16px
+scrim | mantine-primitives-listingcard--default@320 | SOLD | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | mantine-primitives-listingcard--default@320 | RENTED | line-height | 20px | 20.02px
+label | mantine-primitives-listingcard--default@320 | RENTED | border-top-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | RENTED | border-top-right-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | RENTED | border-bottom-left-radius | 18px | 16px
+label | mantine-primitives-listingcard--default@320 | RENTED | border-bottom-right-radius | 18px | 16px
+scrim | mantine-primitives-listingcard--default@320 | RENTED | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | patterns-mantine-listingcardpattern--default@1440 | SOLD | line-height | 20px | 20.02px
+label | patterns-mantine-listingcardpattern--default@1440 | SOLD | border-top-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | SOLD | border-top-right-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | SOLD | border-bottom-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | SOLD | border-bottom-right-radius | 18px | 16px
+scrim | patterns-mantine-listingcardpattern--default@1440 | SOLD | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | patterns-mantine-listingcardpattern--default@1440 | RENTED | line-height | 20px | 20.02px
+label | patterns-mantine-listingcardpattern--default@1440 | RENTED | border-top-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | RENTED | border-top-right-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | RENTED | border-bottom-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@1440 | RENTED | border-bottom-right-radius | 18px | 16px
+scrim | patterns-mantine-listingcardpattern--default@1440 | RENTED | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | patterns-mantine-listingcardpattern--default@320 | SOLD | line-height | 20px | 20.02px
+label | patterns-mantine-listingcardpattern--default@320 | SOLD | border-top-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | SOLD | border-top-right-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | SOLD | border-bottom-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | SOLD | border-bottom-right-radius | 18px | 16px
+scrim | patterns-mantine-listingcardpattern--default@320 | SOLD | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+label | patterns-mantine-listingcardpattern--default@320 | RENTED | line-height | 20px | 20.02px
+label | patterns-mantine-listingcardpattern--default@320 | RENTED | border-top-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | RENTED | border-top-right-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | RENTED | border-bottom-left-radius | 18px | 16px
+label | patterns-mantine-listingcardpattern--default@320 | RENTED | border-bottom-right-radius | 18px | 16px
+scrim | patterns-mantine-listingcardpattern--default@320 | RENTED | background-color | oklab(0 0 0 / 0.3) | color(srgb 0 0 0 / 0.3)
+banner | This listing has been hidden by its owne | rgb(255, 250, 235) -> rgb(249, 250, 251) | rgb(247, 144, 9) -> rgb(102, 112, 133)

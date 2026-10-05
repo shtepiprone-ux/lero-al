@@ -1,0 +1,9 @@
+lero-pagination-active-rest                r 8 diag 54/85/54 ideal 60/75/60 
+lero-pagination-inactive-hover             r 8 diag 53/93/53 ideal 60/75/60 
+lero-pagination-edge-enabled-rest          r 8 diag 41/45/43 ideal 60/75/60 
+lero-pagination-edge-enabled-hover         r 8 diag 41/45/43 ideal 60/75/60 
+lero-pagination-edge-disabled              r 8 diag 41/45/43 ideal 60/75/60 opacity 1
+lero-pagination-active-focus-visible       r undefined diag  ideal  
+lero-pagination-active-focus               r 8 diag 58/86/99 ideal 60/75/60 
+{"activeLero":"54/85/54","activeTailAdmin":"n/a","edgeDisabledLero":"41/45/43","edgeEnabledLero":"41/45/43","activeWithin10":false,"edgeDisabledWithin10OfEnabled":true}
+EXIT_CODE=1

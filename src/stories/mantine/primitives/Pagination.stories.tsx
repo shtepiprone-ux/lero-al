@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Stack, Text } from '@mantine/core'
+import { Group, Stack, Text } from '@mantine/core'
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantinePagination } from '@/design-system/mantine/patterns/MantinePagination'
@@ -122,6 +122,51 @@ export const Default: Story = {
             />
           </Stack>
 
+        </Stack>
+      </MantineStoryShell>
+    )
+  },
+}
+
+/**
+ * Task 741 Revision 3f (R54) — the consumer contract every production paginator uses: `MantinePagination` centred in
+ * a flex `Group` (`ListingsPagination.tsx`, `AdminListingsView.tsx`). There `Pagination.Root` hugs its content, so
+ * the width budget must come from the wrapper, not the root. `Default` wraps each row in a `Stack`, where the root is
+ * full width, which is why that defect was invisible there.
+ */
+export const InCenteredGroup: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+
+    const previousLabel = t('pagination_aria_prev')
+    const nextLabel = t('pagination_aria_next')
+    const getPageAriaLabel = (page: number) => t('pagination_aria_page').replace('{page}', String(page))
+
+    return (
+      <MantineStoryShell>
+        <Stack gap="xl">
+          {[
+            { total: 3, value: 1 },
+            { total: 10, value: 1 },
+            { total: 50, value: 25 },
+          ].map(({ total, value }) => (
+            <Stack key={total} gap="xs">
+              <Text size="xs" c="gray.5" fw={500}>
+                in a centred Group — total={total}, value={value}
+              </Text>
+              <Group justify="center">
+                <MantinePagination
+                  total={total}
+                  value={value}
+                  onChange={() => {}}
+                  previousLabel={previousLabel}
+                  nextLabel={nextLabel}
+                  getPageAriaLabel={getPageAriaLabel}
+                />
+              </Group>
+            </Stack>
+          ))}
         </Stack>
       </MantineStoryShell>
     )

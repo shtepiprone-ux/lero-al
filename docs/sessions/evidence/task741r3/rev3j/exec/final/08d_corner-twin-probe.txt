@@ -1,0 +1,35 @@
+objects 33; size checks 33 (33 ok); failures 0
+card-grid-root-rest                r 6 obj 25.8 twin 25 | 1.25: obj 31.4 twin 30.5
+card-list-root-rest                r 6 obj 25.8 twin 25.1 | 1.25: obj 36.2 twin 38
+card-grid-premium-rest             r 6 obj 22 twin 21.8 | 1.25: obj 21.4 twin 24
+card-grid-archived-rest            r 6 obj 25.4 twin 25 | 1.25: obj 32.1 twin 31.4
+card-list-archived-rest            r 6 obj 25.4 twin 25.2 | 1.25: obj 27.4 twin 31.2
+card-grid-root-hover               r 6 obj 31.2 twin 29.8 | 1.25: obj 38.3 twin 37.8
+card-list-root-hover               r 6 obj 31.1 twin 29.7 | 1.25: obj 43 twin 41.6
+grid-badge-new                     r 12 obj 72.6 twin 78.3 | 1.25: obj 79.2 twin 85.8
+grid-badge-price-reduced           r 12 obj 72.1 twin 78.3 | 1.25: obj 73.7 twin 80.3
+grid-badge-sold                    r 12 obj 76.3 twin 78.3 | 1.25: obj 84.2 twin 84.3
+grid-badge-rented                  r 12 obj 77.4 twin 78.4 | 1.25: obj 86.3 twin 84.4
+grid-badge-archived                r 12 obj 75.2 twin 78.3 | 1.25: obj 81.9 twin 84.4
+grid-badge-expired                 r 12 obj 72.5 twin 78.3 | 1.25: obj 77.4 twin 84.5
+grid-badge-inactive                r 12 obj 73.4 twin 78.3 | 1.25: obj 81.6 twin 84.5
+grid-badge-pending                 r 12 obj 73.3 twin 78.3 | 1.25: obj 81.7 twin 84.5
+grid-photo-count                   r 12 obj 75.7 twin 78.3 | 1.25: obj 79.4 twin 82
+grid-overlay-label-sold            r 16 obj 65.8 twin 66 | 1.25: obj 69.8 twin 70.4
+grid-overlay-label-rented          r 16 obj 66.4 twin 66.1 | 1.25: obj 66.2 twin 66.8
+grid-favourite                     r 16 obj 71 twin 77.6 | 1.25: obj 75.2 twin 82
+grid-favourite-hover               r 16 obj 77.3 twin 77.7 | 1.25: obj 80.1 twin 80.5
+list-badge-new                     r 12 obj 78.1 twin 78.4 | 1.25: obj 86.9 twin 84.5
+list-badge-price-reduced           r 12 obj 78.1 twin 78.3 | 1.25: obj 78.9 twin 78.9
+list-badge-sold                    r 12 obj 78.2 twin 78.2 | 1.25: obj 84.8 twin 84.3
+list-badge-rented                  r 12 obj 78.2 twin 78.2 | 1.25: obj 83.8 twin 84.2
+list-badge-archived                r 12 obj 77.5 twin 78.4 | 1.25: obj 85.5 twin 84.6
+list-badge-expired                 r 12 obj 76.9 twin 78.4 | 1.25: obj 84.6 twin 83.4
+list-badge-inactive                r 12 obj 78.4 twin 78.4 | 1.25: obj 87.1 twin 84.5
+list-badge-pending                 r 12 obj 77.2 twin 78.4 | 1.25: obj 85.2 twin 84.4
+list-photo-count                   r 12 obj 75.9 twin 78.4 | 1.25: obj 83 twin 85.7
+list-overlay-label-sold            r 16 obj 66.4 twin 66 | 1.25: obj 74 twin 72.6
+list-overlay-label-rented          r 16 obj 66.2 twin 65.7 | 1.25: obj 65.7 twin 65.3
+list-favourite                     r 16 obj 0 twin 0 | 1.25: obj 0 twin 0
+list-favourite-hover               r 16 obj 0 twin 0 | 1.25: obj 0 twin 0
+EXIT_CODE=0

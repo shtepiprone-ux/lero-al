@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Pagination, type MantineColor, type MantineSize } from '@mantine/core'
+import { Group, Pagination, type MantineColor, type MantineSize } from '@mantine/core'
+import styles from './MantinePagination.module.css'
 
 export interface MantinePaginationProps {
   /** Total number of pages, must be an integer. */
@@ -99,6 +100,39 @@ function computeAsymmetricRange(total: number, active: number, leading: 0 | 1, t
 }
 
 /**
+ * Fill range (Task 741 R58, owner D46-8: "fill to width"): the pages are 1, `total`, the current page and up to `fill`
+ * neighbours of the current page, tried in the order active+1, active−1, active+2, active−2, … A page below 1, above
+ * `total` or already present is skipped and does not count. A gap that hides exactly one page shows that page instead
+ * of `dots` (the same item count, and no dots standing in for a single number); a larger gap shows `dots`.
+ */
+function computeFillRange(total: number, active: number, fill: number): RangeItem[] {
+  const _total = Math.max(Math.trunc(total), 0)
+  if (_total === 0) return []
+  const clampedActive = Math.min(Math.max(Math.trunc(active), 1), _total)
+  const pages = new Set<number>([1, _total, clampedActive])
+  let added = 0
+  for (let step = 1; added < fill && step <= _total; step++) {
+    for (const candidate of [clampedActive + step, clampedActive - step]) {
+      if (added >= fill) break
+      if (candidate < 1 || candidate > _total || pages.has(candidate)) continue
+      pages.add(candidate)
+      added++
+    }
+  }
+  const sorted = Array.from(pages).sort((a, b) => a - b)
+  const result: RangeItem[] = []
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0) {
+      const gap = sorted[i] - sorted[i - 1]
+      if (gap === 2) result.push(sorted[i] - 1)
+      else if (gap > 2) result.push('dots')
+    }
+    result.push(sorted[i])
+  }
+  return result
+}
+
+/**
  * Computes the visible range for a given shed level. Level 0 (siblings=1, both boundaries)
  * uses the exact Mantine algorithm (`computeFullRange`); every shed level (siblings=0) uses
  * the simpler `computeAsymmetricRange`, which is what makes the asymmetric drop-one-side shed
@@ -111,7 +145,9 @@ export function computeShedRange(
   siblings: number,
   leadingBoundaries: 0 | 1,
   trailingBoundaries: 0 | 1,
+  fill = 0,
 ): RangeItem[] {
+  if (fill > 0) return computeFillRange(total, active, fill)
   if (siblings === 1 && leadingBoundaries === 1 && trailingBoundaries === 1) {
     return computeFullRange(total, active, siblings)
   }
@@ -119,22 +155,30 @@ export function computeShedRange(
 }
 
 // Rule 3 shed ladder (Task 535 kickoff): applied in order until the row fits.
+// Levels 1–3 fill the width with as many neighbouring pages as fit (owner D46-8, Task 741 R58).
 // Level 0 = the prior Mantine stock default (siblings=1, boundaries=1 both sides) — the
 // SAME visual density MantineAdminSurfacePattern rendered before this task, so wide desktop
-// is unaffected. Level 3 = the floor (Prev·current·Next), never shed further.
-export const SHED_LEVELS: ReadonlyArray<{ siblings: number; leadingBoundaries: 0 | 1; trailingBoundaries: 0 | 1 }> = [
+// is unaffected. The last level = the floor (Prev·current·Next), never shed further.
+export const SHED_LEVELS: ReadonlyArray<{ siblings: number; leadingBoundaries: 0 | 1; trailingBoundaries: 0 | 1; fill?: number }> = [
   { siblings: 1, leadingBoundaries: 1, trailingBoundaries: 1 }, // 0 — full
-  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1 }, // 1 — drop siblings
-  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 0 }, // 2 — drop trailing boundary + its dots
-  { siblings: 0, leadingBoundaries: 0, trailingBoundaries: 0 }, // 3 — floor: leading boundary dropped too
+  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 3 }, // 1 — fill: 1, last, current + 3 neighbours
+  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 2 }, // 2 — fill: + 2 neighbours
+  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1, fill: 1 }, // 3 — fill: + 1 neighbour
+  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 1 }, // 4 — drop siblings
+  { siblings: 0, leadingBoundaries: 1, trailingBoundaries: 0 }, // 5 — drop trailing boundary + its dots
+  { siblings: 0, leadingBoundaries: 0, trailingBoundaries: 0 }, // 6 — floor: leading boundary dropped too
 ]
 const FLOOR_LEVEL = SHED_LEVELS.length - 1
 
 /**
  * Canonical single-line, shed-to-fit Pagination (Task 535).
  *
- * Rule 1 — NEVER wraps, NEVER h-scrolls: the controls row is `flex-nowrap` +
- * `overflow:hidden`; it is physically impossible to reach a 2nd line or a scrollbar.
+ * Rule 1 — NEVER wraps, NEVER h-scrolls: the controls row is `flex-nowrap`, and the shed ladder below picks the
+ * first level whose estimated width fits the consumer wrapper. The row carries no `overflow: hidden`, because that
+ * clipped the keyboard focus ring (Task 741 R57, WCAG 2.2 2.4.7). It is safe by construction: the estimate gives
+ * every control the probe's width (`String(total)`, the widest label that can appear) and the edge controls and dots
+ * are never wider, so the estimate is at least the rendered width; and the floor (Prev·current·Next, 3 controls) fits
+ * the narrowest wrapper in use.
  *
  * Rule 2 — dynamic shed-to-fit: a `ResizeObserver` on the component's own DOM parent
  * (NOT itself — the row is intrinsically content-width so it can stay centered/right-
@@ -205,10 +249,13 @@ export function MantinePagination({
     const row = rowRef.current
     const probe = probeRef.current
     if (!row) return
-    // Available width = the DOM parent's content width (the consumer's own `Group`/`Stack`
-    // wrapper), NOT this row's own width — the row is intrinsically content-sized so it can
-    // remain centered/right-aligned exactly as the bare `<Pagination>` did before this task.
-    const parent = row.parentElement
+    // Available width = the CONSUMER wrapper's content width. The row sits inside `Pagination.Root`, which hugs its
+    // content when the consumer wraps this component in a flex `Group`; measuring the root made the budget the
+    // floor's own width, so the ladder never grew past the floor (Task 741 R52). The consumer wrapper is the root's
+    // parent; the root itself is the fallback when it has none. The row is intrinsically content-sized so it can stay
+    // centered/right-aligned exactly as the bare `<Pagination>` did before this task.
+    const root = row.parentElement
+    const parent = root?.parentElement ?? root
     if (!parent) return
 
     const measureAndSet = () => {
@@ -220,7 +267,7 @@ export function MantinePagination({
       let chosen = FLOOR_LEVEL
       for (let i = 0; i < SHED_LEVELS.length; i++) {
         const lvl = SHED_LEVELS[i]
-        const items = computeShedRange(total, activePage, lvl.siblings, lvl.leadingBoundaries, lvl.trailingBoundaries)
+        const items = computeShedRange(total, activePage, lvl.siblings, lvl.leadingBoundaries, lvl.trailingBoundaries, lvl.fill)
         const itemCount = items.length + 2 // + Prev + Next
         const estimatedWidth = itemCount * controlW + Math.max(itemCount - 1, 0) * gapPx
         if (estimatedWidth <= available) {
@@ -241,7 +288,7 @@ export function MantinePagination({
   if (total <= 0) return null
 
   const lvl = SHED_LEVELS[level]
-  const items = computeShedRange(total, activePage, lvl.siblings, lvl.leadingBoundaries, lvl.trailingBoundaries)
+  const items = computeShedRange(total, activePage, lvl.siblings, lvl.leadingBoundaries, lvl.trailingBoundaries, lvl.fill)
 
   return (
     <Pagination.Root
@@ -253,17 +300,7 @@ export function MantinePagination({
       radius="lg"
       disabled={disabled}
     >
-      <div
-        ref={rowRef}
-        style={{
-          display: 'flex',
-          flexWrap: 'nowrap',
-          alignItems: 'center',
-          gap: 'var(--mantine-spacing-xs)',
-          overflow: 'hidden',
-          maxWidth: '100%',
-        }}
-      >
+      <Group ref={rowRef} gap="xs" wrap="nowrap" align="center" maw="100%">
         <Pagination.Previous aria-label={previousLabel} />
         {items.map((item, i) =>
           item === 'dots' ? (
@@ -290,12 +327,13 @@ export function MantinePagination({
             ref={probeRef}
             aria-hidden
             tabIndex={-1}
-            style={{ position: 'fixed', visibility: 'hidden', pointerEvents: 'none' }}
+            pos="fixed"
+            className={styles.probe}
           >
             {String(total)}
           </Pagination.Control>
         )}
-      </div>
+      </Group>
     </Pagination.Root>
   )
 }

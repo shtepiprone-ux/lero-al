@@ -1,0 +1,12 @@
+
+> lero-al@0.1.0 check:surface-census:changed
+> node scripts/check-surface-census-changed.mjs
+
+npm.cmd : FAIL  check:surface-census:changed — --base <ref> is required.
+At line:5 char:3
++   npm.cmd run $c *> $f
++   ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL  check:sur...f> is required.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=1

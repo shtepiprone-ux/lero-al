@@ -1,0 +1,37 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx (26 tests | 1 failed) 395ms
+     × renders pages 1, 2 and 3 for total=3 inside a wide consumer wrapper 37ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx > MantinePagination — width budget is the consumer wrapper, not Pagination.Root (Task 741 R52/R54) > renders pages 1, 2 and 3 for total=3 inside a wide consumer wrapper
+AssertionError: expected [ '1' ] to deeply equal [ '1', '2', '3' ]
+
+- Expected
++ Received
+
+  [
+    "1",
+-   "2",
+-   "3",
+  ]
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx:266:19
+    264|       .map(el => el.textContent)
+    265|       .filter(text => /^\d+$/.test(text ?? ''))
+    266|     expect(pages).toEqual(['1', '2', '3'])
+       |                   ^
+    267|   })
+    268| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 25 passed (26)
+   Start at  18:58:59
+   Duration  2.24s (transform 135ms, setup 97ms, import 771ms, tests 395ms, environment 749ms)
+
+EXIT_CODE=1

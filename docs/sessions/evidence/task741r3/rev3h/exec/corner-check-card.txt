@@ -1,0 +1,21 @@
+lero-pagination-active-rest                r 8 diag 54/85/54 ideal 60/75/60 
+lero-pagination-inactive-hover             r 8 diag 53/93/53 ideal 60/75/60 
+lero-pagination-edge-enabled-rest          r 8 diag 41/45/43 ideal 60/75/60 
+lero-pagination-edge-enabled-hover         r 8 diag 41/45/43 ideal 60/75/60 
+lero-pagination-edge-disabled              r 8 diag 41/45/43 ideal 60/75/60 opacity 1
+lero-pagination-active-focus-visible       r undefined diag  ideal  
+lero-pagination-active-focus               r 8 diag 58/86/99 ideal 60/75/60 
+tailadmin-pagination-active-rest           r 8 diag 54/85/54 ideal 60/75/60 
+tailadmin-pagination-inactive-hover        r 8 diag 54/85/54 ideal 60/75/60 
+tailadmin-pagination-edge-rest             r 8 diag 41/45/43 ideal 60/75/60 
+tailadmin-pagination-edge-hover            r 8 diag 41/45/43 ideal 60/75/60 
+tailadmin-pagination-edge-prev-page1       r 8 diag 41/45/43 ideal 60/75/60 opacity 1
+lero-card-root-grid                        r 6 diag 0/0/0 ideal 3/11/3 
+lero-card-root-list                        r 6 diag 0/0/0 ideal 3/11/3 
+lero-card-status-badge                     r 12 diag NaN/NaN/NaN ideal 36/47/36 
+lero-card-photo-count-badge                r 12 diag 82/100/94 ideal 36/47/36 
+lero-card-overlay-label-grid               r 16 diag 0/0/0 ideal 14/20/14 
+lero-card-overlay-label-list               r 16 diag 0/0/0 ideal 14/20/14 
+lero-card-favourite-button                 r 16 diag 81/85/78 ideal 14/20/14 
+{"activeLero":"54/85/54","activeTailAdmin":"54/85/54","edgeDisabledLero":"41/45/43","edgeEnabledLero":"41/45/43","activeWithin10":true,"edgeDisabledWithin10OfEnabled":true}
+EXIT_CODE=0

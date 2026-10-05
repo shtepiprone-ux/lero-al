@@ -1,0 +1,218 @@
+{
+ "ac56": {
+  "patterns-mantine-listingcardpattern--default@uk@768": [
+   {
+    "card": 7,
+    "text": "ПРОДАНО",
+    "colW": 176,
+    "labelW": 105,
+    "labelH": 50,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 36,
+    "roomR": 36,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   },
+   {
+    "card": 8,
+    "text": "ОРЕНДОВАНО",
+    "colW": 176,
+    "labelW": 133,
+    "labelH": 54,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 21,
+    "roomR": 21,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   }
+  ],
+  "patterns-mantine-listingcardpattern--default@uk@1440": [
+   {
+    "card": 7,
+    "text": "ПРОДАНО",
+    "colW": 176,
+    "labelW": 105,
+    "labelH": 50,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 36,
+    "roomR": 36,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   },
+   {
+    "card": 8,
+    "text": "ОРЕНДОВАНО",
+    "colW": 176,
+    "labelW": 133,
+    "labelH": 54,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 21,
+    "roomR": 21,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   }
+  ],
+  "mantine-primitives-listingcard--default@uk@768": [
+   {
+    "card": 7,
+    "text": "ПРОДАНО",
+    "colW": 176,
+    "labelW": 105,
+    "labelH": 50,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 36,
+    "roomR": 36,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   },
+   {
+    "card": 8,
+    "text": "ОРЕНДОВАНО",
+    "colW": 176,
+    "labelW": 133,
+    "labelH": 54,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 21,
+    "roomR": 21,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   }
+  ],
+  "mantine-primitives-listingcard--default@uk@1440": [
+   {
+    "card": 7,
+    "text": "ПРОДАНО",
+    "colW": 176,
+    "labelW": 105,
+    "labelH": 50,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 36,
+    "roomR": 36,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   },
+   {
+    "card": 8,
+    "text": "ОРЕНДОВАНО",
+    "colW": 176,
+    "labelW": 133,
+    "labelH": 54,
+    "insideX": true,
+    "insideY": true,
+    "roomL": 21,
+    "roomR": 21,
+    "border": "2px solid",
+    "rotate": "-8deg"
+   }
+  ]
+ },
+ "receipts": {
+  "mantine-primitives-favoritebutton--default@320": {
+   "overflow": false,
+   "edges": {
+    "top": 16,
+    "right": 16,
+    "bottom": 16,
+    "left": 16
+   },
+   "h": {
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": ""
+   },
+   "body": "12px/16px"
+  },
+  "mantine-primitives-favoritebutton--default@390": {
+   "overflow": false,
+   "edges": {
+    "top": 16,
+    "right": 16,
+    "bottom": 16,
+    "left": 16
+   },
+   "h": {
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": ""
+   },
+   "body": "12px/16px"
+  },
+  "mantine-primitives-favoritebutton--default@768": {
+   "overflow": false,
+   "edges": {
+    "top": 49,
+    "right": 49,
+    "bottom": 284,
+    "left": 49
+   },
+   "h": {
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": ""
+   },
+   "body": "12px/16px"
+  },
+  "mantine-primitives-favoritebutton--default@1024": {
+   "overflow": false,
+   "edges": {
+    "top": 49,
+    "right": 49,
+    "bottom": 224,
+    "left": 49
+   },
+   "h": {
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": ""
+   },
+   "body": "12px/16px"
+  },
+  "mantine-primitives-favoritebutton--default@1440": {
+   "overflow": false,
+   "edges": {
+    "top": 49,
+    "right": 49,
+    "bottom": 86,
+    "left": 49
+   },
+   "h": {
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": ""
+   },
+   "body": "12px/16px"
+  }
+ },
+ "gr3f": {
+  "dpr1": {
+   "x": 439,
+   "y": 76.90625,
+   "w": 32,
+   "h": 32,
+   "radius": "9999px",
+   "shadow": "rgba(16, 24, 40, 0.05) 0px 1px 2px 0px",
+   "crop": "crops/gr3f-favourite-dpr1-10x.png"
+  },
+  "dpr1.25": {
+   "x": 439,
+   "y": 76.90625,
+   "w": 32,
+   "h": 32,
+   "radius": "9999px",
+   "shadow": "rgba(16, 24, 40, 0.05) 0px 1px 2px 0px",
+   "crop": "crops/gr3f-favourite-dpr1.25-10x.png"
+  }
+ }
+}

@@ -1,0 +1,5314 @@
+{
+  "platform": "win32",
+  "node": "v22.22.3",
+  "passes": {
+    "A_real_clock": {
+      "mantine-primitives-listingcard--default": {
+        "en@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "en@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "sq@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "E re"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "E re",
+                "Çmim i ulur"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Joaktiv"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Nën shqyrtim"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Shitur"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Dhënë me qira"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Arkivuar"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Skaduar"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "E re"
+            ],
+            [],
+            [
+              "E re",
+              "Çmim i ulur"
+            ],
+            [],
+            [
+              "Joaktiv"
+            ],
+            [
+              "Nën shqyrtim"
+            ],
+            [
+              "Shitur"
+            ],
+            [
+              "Dhënë me qira"
+            ],
+            [
+              "Arkivuar"
+            ],
+            [
+              "Skaduar"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "it@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Nuovo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Nuovo",
+                "Prezzo ridotto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Non attivo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "In revisione"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Venduto"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Affittato"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archiviato"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Scaduto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Nuovo"
+            ],
+            [],
+            [
+              "Nuovo",
+              "Prezzo ridotto"
+            ],
+            [],
+            [
+              "Non attivo"
+            ],
+            [
+              "In revisione"
+            ],
+            [
+              "Venduto"
+            ],
+            [
+              "Affittato"
+            ],
+            [
+              "Archiviato"
+            ],
+            [
+              "Scaduto"
+            ],
+            []
+          ],
+          "overflow": false
+        }
+      },
+      "patterns-mantine-listingcardpattern--default": {
+        "en@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "en@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "sq@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "E re"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "E re",
+                "Çmim i ulur"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Joaktiv"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Nën shqyrtim"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Shitur"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Dhënë me qira"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Arkivuar"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Skaduar"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "E re"
+            ],
+            [],
+            [
+              "E re",
+              "Çmim i ulur"
+            ],
+            [],
+            [
+              "Joaktiv"
+            ],
+            [
+              "Nën shqyrtim"
+            ],
+            [
+              "Shitur"
+            ],
+            [
+              "Dhënë me qira"
+            ],
+            [
+              "Arkivuar"
+            ],
+            [
+              "Skaduar"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "it@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Nuovo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Nuovo",
+                "Prezzo ridotto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Non attivo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "In revisione"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Venduto"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Affittato"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archiviato"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Scaduto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Nuovo"
+            ],
+            [],
+            [
+              "Nuovo",
+              "Prezzo ridotto"
+            ],
+            [],
+            [
+              "Non attivo"
+            ],
+            [
+              "In revisione"
+            ],
+            [
+              "Venduto"
+            ],
+            [
+              "Affittato"
+            ],
+            [
+              "Archiviato"
+            ],
+            [
+              "Scaduto"
+            ],
+            []
+          ],
+          "overflow": false
+        }
+      }
+    },
+    "B_clock_2027-03-01": {
+      "mantine-primitives-listingcard--default": {
+        "en@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "en@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "sq@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "E re"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "E re",
+                "Çmim i ulur"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Joaktiv"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Nën shqyrtim"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Shitur"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Dhënë me qira"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Arkivuar"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Skaduar"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "E re"
+            ],
+            [],
+            [
+              "E re",
+              "Çmim i ulur"
+            ],
+            [],
+            [
+              "Joaktiv"
+            ],
+            [
+              "Nën shqyrtim"
+            ],
+            [
+              "Shitur"
+            ],
+            [
+              "Dhënë me qira"
+            ],
+            [
+              "Arkivuar"
+            ],
+            [
+              "Skaduar"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "it@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Nuovo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Nuovo",
+                "Prezzo ridotto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Non attivo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "In revisione"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Venduto"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Affittato"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archiviato"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Scaduto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Nuovo"
+            ],
+            [],
+            [
+              "Nuovo",
+              "Prezzo ridotto"
+            ],
+            [],
+            [
+              "Non attivo"
+            ],
+            [
+              "In revisione"
+            ],
+            [
+              "Venduto"
+            ],
+            [
+              "Affittato"
+            ],
+            [
+              "Archiviato"
+            ],
+            [
+              "Scaduto"
+            ],
+            []
+          ],
+          "overflow": false
+        }
+      },
+      "patterns-mantine-listingcardpattern--default": {
+        "en@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "en@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "en@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "New"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "New",
+                "Price reduced"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Inactive"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Under review"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Sold"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Rented"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archived"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Expired"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "New"
+            ],
+            [],
+            [
+              "New",
+              "Price reduced"
+            ],
+            [],
+            [
+              "Inactive"
+            ],
+            [
+              "Under review"
+            ],
+            [
+              "Sold"
+            ],
+            [
+              "Rented"
+            ],
+            [
+              "Archived"
+            ],
+            [
+              "Expired"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@320": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@390": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": false,
+          "listCards": 0,
+          "listOverlays": 0,
+          "listBadges": [],
+          "overflow": false
+        },
+        "uk@768": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "uk@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Нове"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Нове",
+                "Ціну знижено"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Неактивне"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "На модерації"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Продано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Орендовано"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Архів"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Прострочене"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Нове"
+            ],
+            [],
+            [
+              "Нове",
+              "Ціну знижено"
+            ],
+            [],
+            [
+              "Неактивне"
+            ],
+            [
+              "На модерації"
+            ],
+            [
+              "Продано"
+            ],
+            [
+              "Орендовано"
+            ],
+            [
+              "Архів"
+            ],
+            [
+              "Прострочене"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "sq@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "E re"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "E re",
+                "Çmim i ulur"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Joaktiv"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "Nën shqyrtim"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Shitur"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Dhënë me qira"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Arkivuar"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Skaduar"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "E re"
+            ],
+            [],
+            [
+              "E re",
+              "Çmim i ulur"
+            ],
+            [],
+            [
+              "Joaktiv"
+            ],
+            [
+              "Nën shqyrtim"
+            ],
+            [
+              "Shitur"
+            ],
+            [
+              "Dhënë me qira"
+            ],
+            [
+              "Arkivuar"
+            ],
+            [
+              "Skaduar"
+            ],
+            []
+          ],
+          "overflow": false
+        },
+        "it@1440": {
+          "gridCount": 11,
+          "gridCards": [
+            {
+              "i": 1,
+              "badges": [
+                "Nuovo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 2,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 3,
+              "badges": [
+                "Nuovo",
+                "Prezzo ridotto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 4,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": true,
+              "placeholder": false
+            },
+            {
+              "i": 5,
+              "badges": [
+                "Non attivo"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 6,
+              "badges": [
+                "In revisione"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 7,
+              "badges": [
+                "Venduto"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 8,
+              "badges": [
+                "Affittato"
+              ],
+              "overlay": true,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 9,
+              "badges": [
+                "Archiviato"
+              ],
+              "overlay": false,
+              "dimmed": true,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 10,
+              "badges": [
+                "Scaduto"
+              ],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": false
+            },
+            {
+              "i": 11,
+              "badges": [],
+              "overlay": false,
+              "dimmed": false,
+              "premium": false,
+              "placeholder": true
+            }
+          ],
+          "listVisible": true,
+          "listCards": 11,
+          "listOverlays": 0,
+          "listBadges": [
+            [
+              "Nuovo"
+            ],
+            [],
+            [
+              "Nuovo",
+              "Prezzo ridotto"
+            ],
+            [],
+            [
+              "Non attivo"
+            ],
+            [
+              "In revisione"
+            ],
+            [
+              "Venduto"
+            ],
+            [
+              "Affittato"
+            ],
+            [
+              "Archiviato"
+            ],
+            [
+              "Scaduto"
+            ],
+            []
+          ],
+          "overflow": false
+        }
+      }
+    }
+  }
+}

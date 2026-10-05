@@ -2,6 +2,7 @@ import { Info } from 'lucide-react'
 import Link from 'next/link'
 import { Alert, Anchor, Stack, Text } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
+import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
 import type { ListingStatus } from '@/types/database'
 
 // Task 793 F3 — widened from 4 to all 6 non-active statuses (`isListingVisible` returns true
@@ -18,25 +19,12 @@ interface Props {
   href: string
 }
 
-// Task 792 — colour provenance preserved from the pre-migration `STYLES` Tailwind record, mapped
-// onto the SAME Mantine colours ListingCard.tsx's Task 617 status-badge migration already
-// established for this exact 6-status family: sold→blueLight (--status-info), rented→purple
-// (--status-rented), archived→gray (--muted/--border neutral), expired→yellow (--status-warning).
-// `pending`/`inactive` reuse `--status-warning` (yellow) verbatim — the same deliberate reuse this
-// file's STYLES record already documented, not re-decided here. No new colour, no new token.
-const COLORS: Record<Props['status'], string> = {
-  sold: 'blueLight',
-  rented: 'purple',
-  archived: 'gray',
-  expired: 'yellow',
-  pending: 'yellow',
-  inactive: 'yellow',
-}
-
+// Task 741 Revision 3 — the colour comes from `LISTING_STATUS_COLOR` (`listingStatusTone.ts`), the one
+// source `ListingCard` also reads; this file keeps no copy. Owner D46-1 (2026-10-04): `inactive` is gray.
 export function ListingStatusBanner({ status, message, similarLabel, href }: Props) {
   return (
     <Alert
-      color={COLORS[status]}
+      color={LISTING_STATUS_COLOR[status]}
       icon={<Info size={theme.other!.iconSize!.roomy} />}
       mb="xl"
     >

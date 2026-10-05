@@ -1,0 +1,628 @@
+{
+  "platform": "win32",
+  "node": "v22.22.3",
+  "stories": {
+    "mantine-primitives-listingcard--default": {
+      "320": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 16,
+          "right": 16,
+          "bottom": 16,
+          "left": 16
+        },
+        "fonts": {
+          "h4.Title": [
+            "18px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 1,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "390": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 16,
+          "right": 16,
+          "bottom": 16,
+          "left": 16
+        },
+        "fonts": {
+          "h4.Title": [
+            "18px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 1,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "768": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 49,
+          "right": 49,
+          "bottom": 49,
+          "left": 49
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      },
+      "1024": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 49,
+          "right": 49,
+          "bottom": 49,
+          "left": 49
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      },
+      "1440": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 49,
+          "right": 49,
+          "bottom": 49,
+          "left": 49
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      }
+    },
+    "patterns-mantine-listingcardpattern--default": {
+      "320": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 24,
+          "right": 16,
+          "bottom": 24,
+          "left": 16
+        },
+        "fonts": {
+          "h4.Title": [
+            "18px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 1,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "390": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 24,
+          "right": 16,
+          "bottom": 24,
+          "left": 16
+        },
+        "fonts": {
+          "h4.Title": [
+            "18px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 1,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "768": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 24,
+          "right": 24,
+          "bottom": 24,
+          "left": 24
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      },
+      "1024": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 24,
+          "right": 32,
+          "bottom": 24,
+          "left": 32
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      },
+      "1440": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 24,
+          "right": 32,
+          "bottom": 24,
+          "left": 32
+        },
+        "fonts": {
+          "h4.Title": [
+            "24px"
+          ],
+          "span": [
+            "12px",
+            "10px",
+            "14px",
+            "16px"
+          ],
+          "p": [
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 240)",
+            "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+            "w": 70
+          },
+          {
+            "fs": "14px",
+            "radius": "16px",
+            "border": "2px solid oklch(0.577 0.174 295)",
+            "bg": "oklab(0.577 0.0735356 -0.157698 / 0.8)",
+            "w": 87
+          }
+        ],
+        "visibleTitles": 2,
+        "sectionsStacked": true,
+        "maxFont": 24
+      }
+    },
+    "patterns-mantine-listingsshellview--default": {
+      "320": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 45,
+          "right": 16,
+          "bottom": 24,
+          "left": 16
+        },
+        "fonts": {
+          "span": [
+            "14px",
+            "12px",
+            "10px",
+            "18px"
+          ],
+          "p": [
+            "14px",
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [],
+        "visibleTitles": 0,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "390": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 45,
+          "right": 16,
+          "bottom": 24,
+          "left": 16
+        },
+        "fonts": {
+          "span": [
+            "14px",
+            "12px",
+            "10px",
+            "18px"
+          ],
+          "p": [
+            "14px",
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [],
+        "visibleTitles": 0,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "768": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 36,
+          "right": 24,
+          "bottom": 24,
+          "left": 24
+        },
+        "fonts": {
+          "span": [
+            "14px",
+            "12px",
+            "10px",
+            "18px"
+          ],
+          "p": [
+            "14px",
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [],
+        "visibleTitles": 0,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "1024": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 36,
+          "right": 32,
+          "bottom": 24,
+          "left": 32
+        },
+        "fonts": {
+          "span": [
+            "14px",
+            "12px",
+            "10px",
+            "18px"
+          ],
+          "p": [
+            "14px",
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [],
+        "visibleTitles": 0,
+        "sectionsStacked": null,
+        "maxFont": 18
+      },
+      "1440": {
+        "overflow": false,
+        "rootW": 0,
+        "gutter": {
+          "top": 36,
+          "right": 32,
+          "bottom": 24,
+          "left": 32
+        },
+        "fonts": {
+          "span": [
+            "14px",
+            "12px",
+            "10px",
+            "18px"
+          ],
+          "p": [
+            "14px",
+            "12px",
+            "16px"
+          ],
+          "h3": [
+            "14px"
+          ]
+        },
+        "labels": [],
+        "visibleTitles": 0,
+        "sectionsStacked": null,
+        "maxFont": 18
+      }
+    }
+  }
+}

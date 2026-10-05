@@ -12,11 +12,9 @@ import type { ListingStatus } from '@/types/database'
  * neutral/inactive/archived → neutral): `active` → `green`, `pending` → `yellow`,
  * `inactive` → `gray`.
  *
- * `ListingCard.tsx` keeps its own local copy for now — Task 741 Revision 2 (Sprint 46, reopened
- * by the owner 2026-09-17) already owns those exact lines for an unrelated hardcode fix, and
- * editing them here would collide with that open task. Task 844 (this module) records in
- * `docs/backlog.md`'s 741 row that Revision 2 must switch `ListingCard` to this module. Until
- * then the two agree by value, not by import.
+ * This is the ONE source: `ListingCard.tsx` (`getBadges`) and `ListingStatusBanner.tsx` both read
+ * it since Task 741 Revision 3, and neither keeps a local copy. Owner D46-1 (2026-10-04): `inactive`
+ * is `gray` on the listing-page banner too.
  */
 export const LISTING_STATUS_COLOR: Record<ListingStatus, MantineColor> = {
   active: 'green',

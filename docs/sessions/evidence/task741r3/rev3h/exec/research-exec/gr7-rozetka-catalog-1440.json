@@ -1,0 +1,475 @@
+{
+ "home": {
+  "status": "loaded",
+  "title": "Інтернет-магазин ROZETKA™: офіційний сайт онлайн-гіпермаркету Розетка в Україні",
+  "tiles": [
+   {
+    "price": "634₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": -1006,
+    "x": 381,
+    "card": "153x327",
+    "title": "Сковорода 3 літра глиняна (кер | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "423₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": -988,
+    "x": 381,
+    "card": "153x327",
+    "title": "Сковорода 3 літра глиняна (кер | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "800₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": -1006,
+    "x": 551,
+    "card": "153x327",
+    "title": "Ортопедична туристична подушка | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "599₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": -988,
+    "x": 551,
+    "card": "153x327",
+    "title": "Ортопедична туристична подушка | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "1 400₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": -1000,
+    "x": 721,
+    "card": "153x303",
+    "title": "Розпалювач вогню Zeus Ecolight | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "1 899₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": -1000,
+    "x": 891,
+    "card": "153x303",
+    "title": "Портативна колонка JBL Go 5 4. | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "840₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": -1006,
+    "x": 1061,
+    "card": "153x309",
+    "title": "Презентаційний мега набір у пр | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "795₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": -988,
+    "x": 1061,
+    "card": "153x309",
+    "title": "Презентаційний мега набір у пр | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "504₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": -1000,
+    "x": 1231,
+    "card": "153x239",
+    "title": "Пластівці вівсяні Сквирянка 40 | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "1 050₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": -662,
+    "x": 381,
+    "card": "153x327",
+    "title": "Шампунь для волосся Основне жи | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "895₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": -644,
+    "x": 381,
+    "card": "153x327",
+    "title": "Шампунь для волосся Основне жи | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "500₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": -662,
+    "x": 551,
+    "card": "153x309",
+    "title": "Форма для випікання багетів 38 | 14px/400 rgb(34, 31, 31)"
+   }
+  ]
+ },
+ "catalog": {
+  "url": "https://rozetka.com.ua/ua/notebooks/c80004/",
+  "title": "Ноутбуки - ROZETKA | Купити ноутбук у Києві, Україні: ціна, відгуки, продаж",
+  "toggles": [
+   {
+    "text": "",
+    "aria": null,
+    "title": "Списки порівнянь",
+    "cls": "reset-btn d-block relative rounded-1 hover:bg-black-80 trans"
+   },
+   {
+    "text": "",
+    "aria": null,
+    "title": "Крупна плитка",
+    "cls": "view-button reset-btn p-3 rounded-2 bg-white leading-0"
+   },
+   {
+    "text": "",
+    "aria": null,
+    "title": "Мала плитка",
+    "cls": "view-button reset-btn p-3 rounded-2 bg-white leading-0 activ"
+   },
+   {
+    "text": "",
+    "aria": "Перемістити в список бажань",
+    "title": null,
+    "cls": "wishlist-button js-wish-button"
+   },
+   {
+    "text": "",
+    "aria": "Перемістити у список порівняння",
+    "title": null,
+    "cls": "compare-button"
+   },
+   {
+    "text": "",
+    "aria": null,
+    "title": "Ноутбук ASUS VivoBook 16 X1607CA-MB058 (90NB15A1-M00660) Quiet Blue / 16\" IPS WUXGA / Intel Core Ultra 5 225H / RAM 16 ГБ / SSD 512 ГБ / Підсвітка клавіатури / Зарядка по USB",
+    "cls": "tile-image-host"
+   },
+   {
+    "text": "Ноутбук ASUS VivoBook 16 X1607",
+    "aria": null,
+    "title": "Ноутбук ASUS VivoBook 16 X1607CA-MB058 (90NB15A1-M00660) Quiet Blue / 16\" IPS WUXGA / Intel Core Ultra 5 225H / RAM 16 ГБ / SSD 512 ГБ / Підсвітка клавіатури / Зарядка по USB",
+    "cls": "tile-title black-link text-base"
+   },
+   {
+    "text": "",
+    "aria": "Перемістити в список бажань",
+    "title": null,
+    "cls": "wishlist-button js-wish-button"
+   },
+   {
+    "text": "",
+    "aria": "Перемістити у список порівняння",
+    "title": null,
+    "cls": "compare-button"
+   },
+   {
+    "text": "",
+    "aria": null,
+    "title": "Ноутбук Acer Aspire Lite AL15-46P-R4DH (NX.JXVEU.001) Light Silver / 15.6\" IPS / AMD Ryzen 3 5400U / RAM 8 ГБ / SSD 512 ГБ",
+    "cls": "tile-image-host"
+   }
+  ],
+  "view1": [
+   {
+    "price": "48 499₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 969,
+    "x": 290,
+    "card": "205x548",
+    "title": "Ноутбук ASUS VivoBook 16 X1607 | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "40 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 987,
+    "x": 290,
+    "card": "205x548",
+    "title": "Ноутбук ASUS VivoBook 16 X1607 | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "29 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 969,
+    "x": 512,
+    "card": "205x548",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "25 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 987,
+    "x": 512,
+    "card": "205x548",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "24 949₴",
+    "fs": "12px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 1047,
+    "x": 533,
+    "card": "205x548",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "33 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 975,
+    "x": 734,
+    "card": "205x542",
+    "title": "Ноутбук Lenovo IdeaPad Slim 3  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "40 999₴",
+    "fs": "14px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 969,
+    "x": 957,
+    "card": "205x536",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "45 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 969,
+    "x": 1022,
+    "card": "205x536",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "38 129₴",
+    "fs": "20px",
+    "fw": "500",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 991,
+    "x": 961,
+    "card": "205x536",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "23 999₴",
+    "fs": "14px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 967,
+    "x": 1179,
+    "card": "205x534",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "29 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 967,
+    "x": 1242,
+    "card": "205x534",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "22 799₴",
+    "fs": "20px",
+    "fw": "500",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 989,
+    "x": 1183,
+    "card": "205x534",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   }
+  ],
+  "toggled": true,
+  "view2": [
+   {
+    "price": "48 499₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 1041,
+    "x": 290,
+    "card": "261x620",
+    "title": "Ноутбук ASUS VivoBook 16 X1607 | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "40 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 1059,
+    "x": 290,
+    "card": "261x620",
+    "title": "Ноутбук ASUS VivoBook 16 X1607 | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "29 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 1041,
+    "x": 568,
+    "card": "261x620",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "25 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 1059,
+    "x": 568,
+    "card": "261x620",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "24 949₴",
+    "fs": "12px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 1119,
+    "x": 589,
+    "card": "261x620",
+    "title": "Ноутбук Acer Aspire Lite AL15- | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "33 999₴",
+    "fs": "20px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 1047,
+    "x": 846,
+    "card": "261x614",
+    "title": "Ноутбук Lenovo IdeaPad Slim 3  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "40 999₴",
+    "fs": "14px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 1041,
+    "x": 1123,
+    "card": "261x608",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "45 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 1041,
+    "x": 1188,
+    "card": "261x608",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "38 129₴",
+    "fs": "20px",
+    "fw": "500",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 1063,
+    "x": 1127,
+    "card": "261x608",
+    "title": "Ноутбук Apple MacBook Neo 13\"  | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "23 999₴",
+    "fs": "14px",
+    "fw": "700",
+    "color": "rgb(34, 31, 31)",
+    "td": "none",
+    "y": 1696,
+    "x": 290,
+    "card": "261x606",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "29 999₴",
+    "fs": "14px",
+    "fw": "400",
+    "color": "rgb(121, 120, 120)",
+    "td": "line-through",
+    "y": 1696,
+    "x": 353,
+    "card": "261x606",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   },
+   {
+    "price": "22 799₴",
+    "fs": "20px",
+    "fw": "500",
+    "color": "rgb(248, 65, 71)",
+    "td": "none",
+    "y": 1718,
+    "x": 294,
+    "card": "261x606",
+    "title": "Ноутбук Dell Latitude 5420 (Gr | 14px/400 rgb(34, 31, 31)"
+   }
+  ]
+ }
+}

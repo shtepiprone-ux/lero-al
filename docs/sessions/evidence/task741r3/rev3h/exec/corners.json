@@ -1,0 +1,821 @@
+{
+ "objects": {
+  "lero-pagination-active-rest": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-rest-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-rest-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-rest-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-rest-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 252,
+   "diag": [
+    54,
+    85,
+    54
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "border": "1px solid rgba(0, 0, 0, 0); bg rgb(236, 84, 71)"
+  },
+  "lero-pagination-inactive-hover": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-inactive-hover-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-inactive-hover-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-inactive-hover-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-inactive-hover-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 9,
+   "diag": [
+    53,
+    93,
+    53
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "lero-pagination-edge-enabled-rest": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-rest-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-rest-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-rest-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-rest-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "lero-pagination-edge-enabled-hover": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-hover-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-hover-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-hover-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-enabled-hover-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "lero-pagination-edge-disabled": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-disabled-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-disabled-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-disabled-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-edge-disabled-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "opacity": "1",
+   "color": "rgb(152, 162, 179)"
+  },
+  "lero-pagination-active-focus-visible": {
+   "focusVisible": true,
+   "outline": "solid 2px offset 2px"
+  },
+  "lero-pagination-active-focus": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-focus-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-focus-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-focus-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-pagination-active-focus-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    0,
+    2
+   ],
+   "edgeContrast": 252,
+   "diag": [
+    58,
+    86,
+    99
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "tailadmin-pagination-active-rest": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-active-rest-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-active-rest-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-active-rest-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-active-rest-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 245,
+   "diag": [
+    54,
+    85,
+    54
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "tailadmin-pagination-inactive-hover": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-inactive-hover-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-inactive-hover-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-inactive-hover-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-inactive-hover-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 245,
+   "diag": [
+    54,
+    85,
+    54
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "tailadmin-pagination-edge-rest": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-rest-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-rest-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-rest-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-rest-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "tailadmin-pagination-edge-hover": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-hover-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-hover-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-hover-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-hover-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    3,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  "tailadmin-pagination-edge-prev-page1": {
+   "radius": 8,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-prev-page1-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-prev-page1-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-prev-page1-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-pagination-edge-prev-page1-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    2
+   ],
+   "edgeContrast": 72,
+   "diag": [
+    41,
+    45,
+    43
+   ],
+   "idealDiag": [
+    60,
+    75,
+    60
+   ],
+   "cells": [
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "opacity": "1"
+  },
+  "lero-card-root-grid": {
+   "radius": 6,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-grid-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-grid-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-grid-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-grid-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    3
+   ],
+   "edgeContrast": 138,
+   "diag": [
+    0,
+    0,
+    0
+   ],
+   "idealDiag": [
+    3,
+    11,
+    3
+   ],
+   "cells": [
+    [
+     2,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ]
+   ]
+  },
+  "lero-card-root-list": {
+   "radius": 6,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-list-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-list-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-list-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-root-list-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    3
+   ],
+   "edgeContrast": 98,
+   "diag": [
+    0,
+    0,
+    0
+   ],
+   "idealDiag": [
+    3,
+    11,
+    3
+   ],
+   "cells": [
+    [
+     2,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     2
+    ]
+   ]
+  },
+  "lero-card-status-badge": {
+   "radius": 12,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-status-badge-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-status-badge-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-status-badge-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-status-badge-dpr1.25-10x.png"
+    }
+   },
+   "requestedRadius": 9999,
+   "edgeAt": [
+    2,
+    25
+   ],
+   "edgeContrast": 0,
+   "diag": [
+    null,
+    null,
+    null
+   ],
+   "idealDiag": [
+    36,
+    47,
+    36
+   ],
+   "cells": [
+    [
+     4,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  "lero-card-photo-count-badge": {
+   "radius": 12,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-photo-count-badge-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-photo-count-badge-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-photo-count-badge-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-photo-count-badge-dpr1.25-10x.png"
+    }
+   },
+   "requestedRadius": 9999,
+   "edgeAt": [
+    2,
+    2
+   ],
+   "edgeContrast": 104,
+   "diag": [
+    82,
+    100,
+    94
+   ],
+   "idealDiag": [
+    36,
+    47,
+    36
+   ],
+   "cells": [
+    [
+     4,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  "lero-card-overlay-label-grid": {
+   "radius": 16,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-grid-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-grid-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-grid-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-grid-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    4,
+    8
+   ],
+   "edgeContrast": 0,
+   "diag": [
+    0,
+    0,
+    0
+   ],
+   "idealDiag": [
+    14,
+    20,
+    14
+   ],
+   "cells": [
+    [
+     5,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     3,
+     5
+    ]
+   ]
+  },
+  "lero-card-overlay-label-list": {
+   "radius": 16,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-list-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-list-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-list-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-overlay-label-list-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    4,
+    7
+   ],
+   "edgeContrast": 94,
+   "diag": [
+    0,
+    0,
+    0
+   ],
+   "idealDiag": [
+    14,
+    20,
+    14
+   ],
+   "cells": [
+    [
+     5,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     3,
+     5
+    ]
+   ]
+  },
+  "lero-card-favourite-button": {
+   "radius": 16,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-favourite-button-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-favourite-button-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-favourite-button-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/lero-card-favourite-button-dpr1.25-10x.png"
+    }
+   },
+   "requestedRadius": 9999,
+   "edgeAt": [
+    2,
+    4
+   ],
+   "edgeContrast": 128,
+   "diag": [
+    81,
+    85,
+    78
+   ],
+   "idealDiag": [
+    14,
+    20,
+    14
+   ],
+   "cells": [
+    [
+     5,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     3,
+     5
+    ]
+   ]
+  },
+  "tailadmin-card": {
+   "radius": 12,
+   "dpr": {
+    "1": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-card-dpr1.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-card-dpr1-10x.png"
+    },
+    "1.25": {
+     "crop": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-card-dpr1.25.png",
+     "crop10x": "docs/sessions/evidence/task741r3/rev3h/exec/corners/tailadmin-card-dpr1.25-10x.png"
+    }
+   },
+   "edgeAt": [
+    2,
+    2
+   ],
+   "edgeContrast": 41,
+   "diag": [
+    10,
+    16,
+    10
+   ],
+   "idealDiag": [
+    36,
+    47,
+    36
+   ],
+   "cells": [
+    [
+     4,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  }
+ },
+ "ac59": {
+  "activeLero": "54/85/54",
+  "activeTailAdmin": "54/85/54",
+  "edgeDisabledLero": "41/45/43",
+  "edgeEnabledLero": "41/45/43",
+  "activeWithin10": true,
+  "edgeDisabledWithin10OfEnabled": true
+ }
+}

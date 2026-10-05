@@ -1,0 +1,8 @@
+
+> lero-al@0.1.0 check:backlog-active
+> node scripts/check-backlog-active.mjs
+
+check:backlog-active — scope: docs/backlog.md, the sprint plans it names, and the archive ledger's single-task rows. It cannot judge whether an open row's prose is still accurate.
+notice (non-blocking): 19 closed sprint plan(s) still sit in tasks/Sprints/ without being named by the backlog — physical archive owed.
+✅ check:backlog-active PASSED — docs/backlog.md holds active state only.
+EXIT_CODE=0

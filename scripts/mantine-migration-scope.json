@@ -25,6 +25,7 @@
   "src/modules/listings/components/ListingsSortBar.tsx",
   "src/modules/listings/components/SaveSearchButton.tsx",
   "src/modules/listings/components/ListingsShellView.tsx",
+  "src/modules/listings/components/ListingsActionRow.tsx",
   "src/modules/listings/components/ListingDetailView.tsx",
   "src/modules/listings/components/ListingContact.tsx",
   "src/modules/listings/components/ListingBackButton.tsx",

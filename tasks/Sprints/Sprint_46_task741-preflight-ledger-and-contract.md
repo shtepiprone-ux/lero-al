@@ -1,6 +1,6 @@
 # Task 741 — preflight evidence artifact: rule-compliance ledger + executable-route contract
 
-Companion to `tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md`.
+Companion to `tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md`.
 Retained per `.claude/skills/create-task/SKILL.md` ("retain both completed artifacts with the
 kickoff"). Precedent for the combined form: `tasks/task674-preflight-ledger-and-contract.md`.
 

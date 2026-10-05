@@ -1,0 +1,354 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx (4 tests | 2 failed) 167ms
+     × below sm with view="list": calls onViewChange("grid") and renders no horizontal card 90ms
+     × after the switch, a re-render with view="grid" never calls onViewChange("list") 20ms
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx (23 tests | 2 failed) 715ms
+     × inactive listing renders one gray filled "Inactive" badge and no New badge 19ms
+     × pending listing renders one yellow filled "Under review" badge and no New badge 19ms
+npx.cmd : 
+At line:3 char:1
++ npx.cmd vitest run src/modules/listings/components/__tests__/ListingC ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine 
+pattern, default) > inactive listing renders one gray filled "Inactive" badge and no New badge
+TestingLibraryElementError: Unable to find an element with the text: Inactive. This could be because the text is 
+broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher 
+more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<a[39m
+      [33mclass[39m=[32m"listing-card listing-card--vertical _card_1c40bf _cardVertical_1c40bf"[39m
+      [33mdata-listing-slug[39m=[32m"modern-apartment-tirana"[39m
+      [33mdata-track[39m=[32m"listing_click"[39m
+      [33mhref[39m=[32m"/en/listings/modern-apartment-tirana"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_card_c737cc _cardGrid_c737cc m_e615b15f mantine-Card-root m_1b7284a3 
+mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-2); --paper-radius: 
+var(--mantine-radius-md); --card-padding: 0rem;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_599a2148 mantine-Card-section _imageSection_c737cc"[39m
+          [33mdata-first-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"position: relative; overflow: hidden;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_frame_f1ba10 _frameRatio4x3_f1ba10 _frameWidth_f1ba10 _frameClip_f1ba10 
+_framePlaceholder_f1ba10"[39m
+            [33mstyle[39m=[32m"background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5
+vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjMiPjxyZWN0IGZpbGw9IiNlMmU4ZjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjMiLz48L3N2Zz4=\"); 
+background-size: cover; background-position: center center;"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Modern Apartment in Tirana"[39m
+              [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitCover_f1ba10"[39m
+              [33mdecoding[39m=[32m"async"[39m
+              [33mfetchpriority[39m=[32m"auto"[39m
+              [33mloading[39m=[32m"lazy"[39m
+              [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_badgesGrid_c737cc"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"filled"[39m
+              [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 
+0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); 
+--badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: var(--mantine-color-green-filled); --badge-color: var(--mantine-color-white); 
+--badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+              [36m>[39m
+                [0mNew[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_photoCountGrid_c737cc m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-camera _cardIcon_c737cc"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 
+1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"13"[39m
+                [33mr[39m=[32m"3"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m2[0m
+          [36m</div>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Add to favorites"[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mclass[39m=[32m"mantine-focus-auto mantine-active _control_f765a8 _overlayFavorite_1c40bf m_8d3f4000 
+mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"[39m
+            [33mdata-favorited[39m=[32m"false"[39m
+            [33mdata-variant[39m=[32m"subtle"[39m
+            [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; position: 
+absolute; top: var(--mantine-spacing-xs); right: var(--mantine-spacing-xs);"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-heart"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 
+2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</span>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
+          [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-tight); --stack-align: stretch; --stack-justify: 
+flex-start; padding: var(--mantine-spacing-sm);"[39m
+        [36m>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"manti...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:250:26
+    248|     renderCard({ ...BASE_LISTING, status: 'inactive', created_at: new …
+    249|
+    250|     const badge = screen.getByText('Inactive')
+       |                          ^
+    251|     expect(badge.closest('[data-variant="filled"]')?.getAttribute('sty…
+    252|     expect(screen.queryByText('New')).not.toBeInTheDocument()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine 
+pattern, default) > pending listing renders one yellow filled "Under review" badge and no New badge
+TestingLibraryElementError: Unable to find an element with the text: Under review. This could be because the text is 
+broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher 
+more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<a[39m
+      [33mclass[39m=[32m"listing-card listing-card--vertical _card_1c40bf _cardVertical_1c40bf"[39m
+      [33mdata-listing-slug[39m=[32m"modern-apartment-tirana"[39m
+      [33mdata-track[39m=[32m"listing_click"[39m
+      [33mhref[39m=[32m"/en/listings/modern-apartment-tirana"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_card_c737cc _cardGrid_c737cc m_e615b15f mantine-Card-root m_1b7284a3 
+mantine-Paper-root"[39m
+        [33mdata-with-border[39m=[32m"true"[39m
+        [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-2); --paper-radius: 
+var(--mantine-radius-md); --card-padding: 0rem;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"m_599a2148 mantine-Card-section _imageSection_c737cc"[39m
+          [33mdata-first-section[39m=[32m"true"[39m
+          [33mstyle[39m=[32m"position: relative; overflow: hidden;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_frame_f1ba10 _frameRatio4x3_f1ba10 _frameWidth_f1ba10 _frameClip_f1ba10 
+_framePlaceholder_f1ba10"[39m
+            [33mstyle[39m=[32m"background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5
+vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjMiPjxyZWN0IGZpbGw9IiNlMmU4ZjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjMiLz48L3N2Zz4=\"); 
+background-size: cover; background-position: center center;"[39m
+          [36m>[39m
+            [36m<img[39m
+              [33malt[39m=[32m"Modern Apartment in Tirana"[39m
+              [33mclass[39m=[32m"_imageLayer_f1ba10 _fade_f1ba10 _hidden_f1ba10 _fitCover_f1ba10"[39m
+              [33mdecoding[39m=[32m"async"[39m
+              [33mfetchpriority[39m=[32m"auto"[39m
+              [33mloading[39m=[32m"lazy"[39m
+              [33msrc[39m=[32m"https://example.com/photo-1.jpg"[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_badgesGrid_c737cc"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"filled"[39m
+              [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 
+0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); 
+--badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: var(--mantine-color-green-filled); --badge-color: var(--mantine-color-white); 
+--badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+              [36m>[39m
+                [0mNew[0m
+              [36m</span>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+              [33mdata-size[39m=[32m"sm"[39m
+              [33mdata-variant[39m=[32m"filled"[39m
+              [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 
+0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); 
+--badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: 
+var(--mantine-radius-pill); --badge-bg: var(--mantine-color-sale-filled); --badge-color: var(--mantine-color-white); 
+--badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+              [36m>[39m
+                [0mPrice reduced[0m
+              [36m</span>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_photoCountGrid_c737cc m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-camera _cardIcon_c737cc"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 
+1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"13"[39m
+                [33mr[39m=[32m"3"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0m2[0m
+          [36m</div>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Add to favorites"[39m
+            [33maria-pressed[39m=[32m"false"[39m
+            [33mclass[39m=[32m"mantine-focus-auto mantine-active _control_f765a8 _overlayFavorite_1c40bf m_8d3f4000 
+mantine-ActionIcon-root m_87cf2631 mantine-UnstyledButton-root"[39m
+            [33mdata-favorited[39m=[32m"false"[39m
+            [33mdata-variant[39m=[32m"subtle"[39m
+            [33mstyle[39m=[32m"--ai-size: calc(2rem * var(--mantine-scale)); --ai-radius: 
+var(--mantine-radius-pill); --ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); --ai-color: 
+var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; position: 
+absolute; top: var(--mantine-spacing-xs); right: var(--mantine-spacing-xs);"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-heart"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[3...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:259:26
+    257|     renderCard({ ...BASE_LISTING, status: 'pending', created_at: new D…
+    258|
+    259|     const badge = screen.getByText('Under review')
+       |                          ^
+    260|     expect(badge.closest('[data-variant="filled"]')?.getAttribute('sty…
+    261|     expect(screen.queryByText('New')).not.toBeInTheDocument()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx > ListingsShellView — list view 
+never renders below sm (Task 741 R37, D46-3) > below sm with view="list": calls onViewChange("grid") and renders no 
+horizontal card
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'grid' ]
+
+Number of calls: 0
+
+ ❯ src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx:129:26
+    127|     const { container } = renderView(buildProps({ view: 'list', onView…
+    128|
+    129|     expect(onViewChange).toHaveBeenCalledWith('grid')
+       |                          ^
+    130|     expect(onViewChange).not.toHaveBeenCalledWith('list')
+    131|     expect(container.querySelector('.listing-card--horizontal')).toBeN…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx > ListingsShellView — list view 
+never renders below sm (Task 741 R37, D46-3) > after the switch, a re-render with view="grid" never calls 
+onViewChange("list")
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 23 passed (27)
+   Start at  13:01:40
+   Duration  4.86s (transform 1.13s, setup 183ms, import 6.31s, tests 881ms, environment 1.52s)
+
+ ❯ src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx:155:26
+    153|     const onViewChange = vi.fn()
+    154|     const { rerenderWith, container } = renderView(buildProps({ view: …
+    155|     expect(onViewChange).toHaveBeenCalledTimes(1)
+       |                          ^
+    156|
+    157|     rerenderWith(buildProps({ view: 'grid', onViewChange }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+EXIT_CODE=1

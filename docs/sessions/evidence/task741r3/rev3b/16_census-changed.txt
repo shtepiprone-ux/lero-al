@@ -1,0 +1,61 @@
+check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+    Base: HEAD  Head: (working tree)  Merge base: 719d79a45d65c8550e8af736c3fe57b34ad89813
+    Changed paths seen: 42
+    Excluded (28):
+      docs/responsive-storybook-inventory.md  [outside-src]
+      messages/en.json  [outside-src]
+      messages/it.json  [outside-src]
+      messages/sq.json  [outside-src]
+      messages/uk.json  [outside-src]
+      package-lock.json  [outside-src]
+      package.json  [outside-src]
+      scripts/check-stories-rendered.mjs  [outside-src]
+      scripts/governance/tailwind-entropy.allowlist.json  [outside-src]
+      scripts/i18n-dynamic-manifest.json  [outside-src]
+      scripts/mantine-migration-scope.json  [outside-src]
+      scripts/rendered-scope-baseline.json  [outside-src]
+      scripts/surface-census-baseline.json  [outside-src]
+      scripts/type-responsive-baseline.json  [outside-src]
+      src/components/admin/AdminSupportManager.stories.tsx  [deleted]
+      src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx  [story-or-test-file]
+      src/design-system/mantine/patterns/MantineListingCardPattern.module.css  [not-ts-tsx]
+      src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx  [story-or-test-file]
+      src/stories/fixtures/admin.fixtures.ts  [non-production-directory]
+      src/stories/mantine/primitives/ListingCard.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminInquiriesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminPagesView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminReportsView.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/AdminUsersTable.stories.tsx  [story-or-test-file]
+      src/stories/patterns/mantine/ListingCardPattern.stories.tsx  [story-or-test-file]
+    Included surfaces (13):
+      src/app/admin/currency/page.tsx
+      src/app/admin/inquiries/sales/page.tsx
+      src/app/admin/inquiries/support/page.tsx
+      src/app/admin/pages/page.tsx
+      src/app/admin/reports/page.tsx
+      src/app/admin/support/page.tsx
+      src/app/admin/users/page.tsx
+      src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+      src/design-system/mantine/theme.ts
+      src/modules/listings/components/ListingCard.tsx
+      src/modules/listings/components/ListingStatusBanner.tsx
+      src/modules/listings/components/ListingsShellView.tsx
+      src/modules/listings/lib/listingStatusTone.ts
+    Re-censused parent surfaces (0):
+    Rule: a baseline row <parent> :: <node> re-censuses <parent> when <node> is a changed file or an
+    included surface and <parent> is not itself included (one hop; a missing parent retires its rows).
+    Surfaces censused: 13
+    Blocks baselined (recorded debt, does not fail): 18
+    Blocks carried (baseline entries for a surface this run did NOT census — neither stale nor new): 323
+    Blocks new (not in baseline): 0
+    Stale baseline entries (censused surface, no matching measured block): 0
+    Limits: maxChangedFiles=300 maxSurfaces=60
+    Cannot see: dynamic import(), React.lazy(), a surface reached only through a route convention
+    this mapper does not model, a file changed outside src/, or a component rendered only from a
+    .stories.tsx file (check-surface-census.mjs's own blind spot, unchanged by this task).
+
+PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+EXIT_CODE=0

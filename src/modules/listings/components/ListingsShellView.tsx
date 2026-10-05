@@ -1,9 +1,11 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Box, Button, Center, Group, Loader, Stack, Text, ThemeIcon, useMantineTheme } from '@mantine/core'
+import { Box, Button, Group, Stack, useMantineTheme, useMatches } from '@mantine/core'
+import { Home } from 'lucide-react'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
+import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { ListingsActionRow } from '@/modules/listings/components/ListingsActionRow'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
@@ -71,6 +73,15 @@ export function ListingsShellView({
   const t = useTranslations('listing')
   const theme = useMantineTheme()
 
+  // Task 741 R3b (owner D46-3, 2026-10-04): the List toggle is `visibleFrom="sm"` (`ListingsSortBar.tsx`), so below
+  // 640px the list layout is never shown. A List choice made at 640px+ is switched to `grid` here, once; back at
+  // 640px+ `grid` stays selected and the earlier List choice is not restored. `getInitialValueInEffect: false`
+  // reads the real viewport on the first client render, so a desktop `list` is never reset by the pre-effect default.
+  const isBelowSm = useMatches({ base: true, sm: false }, { getInitialValueInEffect: false })
+  useEffect(() => {
+    if (isBelowSm && view === 'list') onViewChange('grid')
+  }, [isBelowSm, view, onViewChange])
+
   return (
     <Stack gap={0} className="listings-shell">
       {/* ── Horizontal filter bar (sm+, 640px); hidden below sm, where the compact drawer-trigger
@@ -107,24 +118,15 @@ export function ListingsShellView({
         />
 
         {listings.length === 0 ? (
-          <Center py="xl">
-            <Stack align="center" gap="md" ta="center">
-              <ThemeIcon size="colossal" radius="2xl" color="gray" variant="light">
-                <Text size="xl" component="span">🏠</Text>
-              </ThemeIcon>
-              <Box>
-                <Text component="h3" fw={600} size="lg">
-                  {tab === 'closed' ? t('no_results_closed') : t('no_results_title')}
-                </Text>
-                {tab === 'active' && (
-                  <Text c="gray.5" size="sm" mt="xs">{t('no_results_desc')}</Text>
-                )}
-              </Box>
-            </Stack>
-          </Center>
+          <MantineEmptyLoadingErrorState
+            state="empty"
+            icon={<Home size={theme.other.iconSize.decorative} />}
+            title={tab === 'closed' ? t('no_results_closed') : t('no_results_title')}
+            description={tab === 'active' ? t('no_results_desc') : undefined}
+          />
         ) : (
           <>
-            {view === 'grid' ? (
+            {view === 'grid' || isBelowSm ? (
               <Box pt="lg">
                 <MantineListingCardTrack mode="grid">
                   {listings.map(listing => (
@@ -162,12 +164,11 @@ export function ListingsShellView({
             {showLoadMore && (
               <Group justify="center" pt="2xl">
                 <Button
-                  variant="outline"
-                  size="lg"
+                  variant="filled"
+                  color="brand"
                   onClick={onShowMore}
-                  disabled={isLoadingMore}
+                  loading={isLoadingMore}
                   w={{ base: '100%', sm: 'auto' }}
-                  leftSection={isLoadingMore ? <Loader size={theme.other.iconSize.standard} color="gray" /> : undefined}
                 >
                   {t('show_more')}
                 </Button>

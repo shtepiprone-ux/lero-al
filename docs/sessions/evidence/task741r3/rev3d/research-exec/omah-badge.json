@@ -1,0 +1,102 @@
+{
+ "390": [
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  }
+ ],
+ "1440": [
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  },
+  {
+   "text": "For Rent",
+   "cls": "status badge badge-sm bg-primary",
+   "onPhoto": true,
+   "pos": "absolute",
+   "fs": "11px",
+   "fw": "400",
+   "radius": "4px",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "h": 25
+  }
+ ]
+}

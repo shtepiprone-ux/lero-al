@@ -1,0 +1,2 @@
+{"grid":[{"text":"New","top":8,"left":8},{"text":"NewPrice reduced","top":8,"left":8}],"list":{"horizontal":6,"badges":["New","NewPrice reduced"]},"archived":[{"rootOpacity":"1","rootFilter":"grayscale(1)","rootBorder":"1px rgb(208, 213, 221)","photoOpacity":"0.6"},{"rootOpacity":"1","rootFilter":"grayscale(1)","rootBorder":"1px rgb(208, 213, 221)","photoOpacity":"0.6"}]}
+EXIT_CODE=0

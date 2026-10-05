@@ -1,0 +1,40 @@
+{
+ "390": {
+  "buttons": [
+   {
+    "text": "Cancel",
+    "variant": "subtle",
+    "x": 16,
+    "y": 840,
+    "w": 358
+   },
+   {
+    "text": "Save",
+    "variant": null,
+    "x": 16,
+    "y": 788,
+    "w": 358
+   }
+  ],
+  "textButtons": 1
+ },
+ "1440": {
+  "buttons": [
+   {
+    "text": "Cancel",
+    "variant": "subtle",
+    "x": 756,
+    "y": 495,
+    "w": 78
+   },
+   {
+    "text": "Save",
+    "variant": null,
+    "x": 843,
+    "y": 495,
+    "w": 82
+   }
+  ],
+  "textButtons": 1
+ }
+}

@@ -31,6 +31,29 @@
   border: 1px solid var(--mantine-color-gray-3);   /* §6l — 1px gray-300 */
 }
 
+/* Task 741 Revision 3h (R67, owner rule GR-11) — round corners. A filled control draws no border of its own: Mantine
+   gives the active page the same colour for its fill and its 1px border, and that doubled edge renders as a notched
+   corner (measured 37/50/38 against 53/85/53 on TailAdmin's fill-only control, 8px radius, DPR 1). A transparent
+   border keeps the box the same size and lets the fill reach the edge. This is the one rule scoped to `[data-active]`,
+   and it touches no colour that Mantine's active rule sets. */
+.mantine-Pagination-control[data-active] {
+  border-color: transparent;
+}
+
+/* Edge (Prev/Next) controls carry TailAdmin's `shadow-theme-xs`, as its "Previous" button does. */
+.mantine-Pagination-edgeControl {
+  box-shadow: var(--mantine-shadow-xs);
+}
+
+/* A disabled control is not faded with `opacity` (Mantine's default is 0.4, which makes a 1px border and its corner
+   almost vanish: measured 13/15 against 38/39). The disabled look is the lighter text colour; the border stays
+   gray-300 and the corner keeps its contrast. `cursor: not-allowed` stays. */
+.mantine-Pagination-control:disabled,
+.mantine-Pagination-control[data-disabled] {
+  opacity: 1;
+  color: var(--mantine-color-gray-4);
+}
+
 /* Task 535 Rule 5 — ≥44px mobile tap target. Below 640px EVERY Pagination control (number,
    edge, and the dots slot's own box) gets a 44px floor regardless of the consumer's `size`
    prop (mobile-only floor; desktop stays size-agnostic — MantineAdminSurfacePattern's

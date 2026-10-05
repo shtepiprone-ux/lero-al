@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Stack, Divider, Title, Group } from '@mantine/core';
+import { SimpleGrid, Stack, Divider, Title, Group, Text } from '@mantine/core';
 import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
 import { theme } from '@/design-system/mantine/theme';
 import { expect } from 'storybook/test';
@@ -12,6 +12,9 @@ import { AppImage } from '@/design-system/media/AppImage';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
 import { AuthContext } from '@/modules/auth/context/AuthContext';
 import { StoryPageGutter } from '@/stories/_StoryPageGutter';
+import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone';
+// Production's own favourite-chrome classes, so the Story writes no value of its own (Task 741 R3).
+import styles from '@/modules/listings/components/ListingCard.module.css';
 import { TITLE_FZ } from '@/design-system/mantine/typography';
 import type { User } from '@/types/database';
 
@@ -88,75 +91,71 @@ function demoFeatures(l: string) {
   ];
 }
 
-// Footer actions — the REAL canonical `MantineCopyIdButton` + date cluster. Structurally
-// mirrors ListingCard.tsx exactly: grid layout wraps in the same flex div; list layout is a
-// bare fragment (the pattern's own `layout="list"` footer row already supplies the flex
-// wrapper), so the story is a truthful rendering of production markup, not an approximation.
-function DemoFooterActions({ locale, id, layout }: { locale: string; id: string; layout: 'grid' | 'list' }) {
-  const copyButton = (
-    <MantineCopyIdButton
-      id={id}
-      label={`#${id}`}
-      copyLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copy')}
-      copiedLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copied')}
-    />
-  );
-  const dateLabel = <span className="whitespace-nowrap">{storyT(locale, 'storybook.mantine.card_footer_date')}</span>;
-
-  if (layout === 'list') {
-    return (
-      <>
-        {copyButton}
-        {dateLabel}
-      </>
-    );
-  }
-
+// Footer actions — the REAL canonical `MantineCopyIdButton` + date cluster. One node for both layouts, exactly as
+// `ListingCard.tsx` builds it (Task 741 Revision 3h: grid and list card share every part).
+function DemoFooterActions({ locale, id }: { locale: string; id: string }) {
   return (
-    <Group gap="xs" justify="flex-end" wrap="nowrap" className="text-xs text-muted-foreground">
-      {copyButton}
-      {dateLabel}
+    <Group gap="xs" justify="flex-end" wrap="nowrap" fz="xs" c="dimmed">
+      <MantineCopyIdButton
+        id={id}
+        label={`#${id}`}
+        copyLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copy')}
+        copiedLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copied')}
+      />
+      <Text component="span" size="xs" c="dimmed" miw="max-content">{storyT(locale, 'storybook.mantine.card_footer_date')}</Text>
     </Group>
   );
 }
+
+type DemoStatus = 'active' | 'inactive' | 'pending' | 'sold' | 'rented' | 'archived' | 'expired'
 
 interface DemoCardOpts {
   l: string
   id: string
   layout?: 'grid' | 'list'
+  status?: DemoStatus
+  isNew?: boolean
   reduced?: boolean
   premium?: boolean
-  archived?: boolean
-  sold?: boolean
-  rented?: boolean
   noImage?: boolean
   favorited?: boolean
   photoCount?: number
 }
 
-function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, rented = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
+function DemoCard({ l, id, layout = 'grid', status = 'active', isNew = false, reduced = false, premium = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
+  const sold = status === 'sold';
+  const rented = status === 'rented';
+  const archived = status === 'archived';
   // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
   // new=green, reduced=sale (Task 619 — dedicated owner-provided crimson #dd0939, replacing
   // brand; matches the detail pattern's reduced badge so the signal reads the same color across
-  // the whole product), sold=blueLight (globals.css --status-info), archived=gray. Pattern always
-  // renders these variant="filled" (opaque, safe over the photo) — no `variant` field needed on
-  // the badge data itself.
+  // the whole product). Every non-active status reads LISTING_STATUS_COLOR, as production does.
+  // Pattern always renders these variant="filled" (opaque, safe over the photo) — no `variant`
+  // field needed on the badge data itself.
   const badges: MantineListingCardBadge[] = [];
-  if (!sold && !rented && !archived) {
-    badges.push({
-      label: reduced ? storyT(l, 'storybook.mantine.card_badge_reduced') : storyT(l, 'storybook.mantine.card_badge_new'),
-      color: reduced ? 'sale' : 'green',
-    });
+  if (status === 'active') {
+    if (isNew) badges.push({ label: storyT(l, 'listing.new'), color: 'green' });
+    if (reduced) badges.push({ label: storyT(l, 'listing.price_reduced'), color: 'sale' });
   }
   if (sold) {
-    badges.push({ label: storyT(l, 'storybook.mantine.card_overlay_sold'), color: 'blueLight' });
+    badges.push({ label: storyT(l, 'listing.status_sold'), color: LISTING_STATUS_COLOR.sold });
   }
   // Task 886 R40 — rented, as production `ListingCard.tsx` maps it (`status_rented` -> `purple`).
   if (rented) {
-    badges.push({ label: storyT(l, 'listing.status_rented'), color: 'purple' });
+    badges.push({ label: storyT(l, 'listing.status_rented'), color: LISTING_STATUS_COLOR.rented });
   }
   if (archived) {
-    badges.push({ label: storyT(l, 'storybook.mantine.card_badge_archived'), color: 'gray' });
+    badges.push({ label: storyT(l, 'listing.status_archived'), color: LISTING_STATUS_COLOR.archived });
+  }
+  // Task 741 R3b (R40, owner D46-4): expired, inactive and pending are labelled from the same map.
+  if (status === 'expired') {
+    badges.push({ label: storyT(l, 'listing.status_expired'), color: LISTING_STATUS_COLOR.expired });
+  }
+  if (status === 'inactive') {
+    badges.push({ label: storyT(l, 'listing.status_inactive'), color: LISTING_STATUS_COLOR.inactive });
+  }
+  if (status === 'pending') {
+    badges.push({ label: storyT(l, 'listing.status_pending'), color: LISTING_STATUS_COLOR.pending });
   }
 
   // Task 741 — `overlay.className` is a pass-through, proven with a non-Tailwind hook class the scanner
@@ -188,7 +187,7 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
           listingId={id}
           isFavorited={favorited}
           overlay={layout === 'grid'}
-          className={layout === 'list' ? 'shrink-0 -mt-0.5 -mr-1' : 'shadow-sm'}
+          className={layout === 'grid' ? styles.overlayFavorite : undefined}
         />
       }
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
@@ -197,7 +196,7 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
       photoCount={noImage ? 0 : photoCount}
       features={demoFeatures(l)}
       pricePerSqmStr={storyT(l, 'storybook.mantine.card_price_per_sqm_1')}
-      footerActions={<DemoFooterActions locale={l} id={id} layout={layout} />}
+      footerActions={<DemoFooterActions locale={l} id={id} />}
       isPremium={premium}
       isArchived={archived}
     />
@@ -214,40 +213,64 @@ export const Default: Story = {
           <Stack gap="sm">
             <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
             <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-              {/* Regular listing — favorite (unfavorited), new badge, photo counter */}
-              <DemoCard l={l} id="1" photoCount={5} />
-              {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
+              {/* The same eleven states as `Mantine/Primitives/ListingCard` (Task 741 R3b, R40), in the same order. */}
+              {/* 1 Active + New badge — favorite (unfavorited), photo counter */}
+              <DemoCard l={l} id="1" isNew photoCount={5} />
+              {/* 2 Active, no badge */}
+              <DemoCard l={l} id="14" photoCount={5} />
+              {/* 3 New + reduced-price — old price struck through + new price, both badges */}
+              <DemoCard l={l} id="3" isNew reduced photoCount={3} />
+              {/* 4 Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited, no badge */}
               <DemoCard l={l} id="2" premium favorited photoCount={8} />
-              {/* Reduced-price — old price struck through + new price, reduced badge */}
-              <DemoCard l={l} id="3" reduced photoCount={3} />
-              {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
-              <DemoCard l={l} id="4" sold photoCount={4} />
-              {/* Rented — purple badge + the same coloured centered overlay, as production (Task 886 R40) */}
-              <DemoCard l={l} id="13" rented photoCount={4} />
-              {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
+              {/* 5 Inactive — gray status badge (owner D46-4) */}
+              <DemoCard l={l} id="15" status="inactive" photoCount={4} />
+              {/* 6 Pending — yellow status badge (owner D46-4) */}
+              <DemoCard l={l} id="16" status="pending" photoCount={4} />
+              {/* 7 Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
+              <DemoCard l={l} id="4" status="sold" photoCount={4} />
+              {/* 8 Rented — purple badge + the same coloured centered overlay, as production (Task 886 R40) */}
+              <DemoCard l={l} id="13" status="rented" photoCount={4} />
+              {/* 9 Archived — grayscale/dimmed whole card + archived badge */}
+              <DemoCard l={l} id="6" status="archived" photoCount={2} />
+              {/* 10 Expired — yellow status badge, no overlay */}
+              <DemoCard l={l} id="17" status="expired" photoCount={4} />
+              {/* 11 No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
               <DemoCard l={l} id="5" noImage />
-              {/* Archived — grayscale/dimmed whole card + archived badge */}
-              <DemoCard l={l} id="6" archived photoCount={2} />
             </SimpleGrid>
           </Stack>
 
-          <Divider />
+          {/* List layout is not used below 640px (owner D46-3, 2026-10-04): hidden below `sm`, as
+              `ListingsSortBar.tsx` hides its List toggle (`visibleFrom="sm"`). */}
+          <Stack gap="xl" visibleFrom="sm">
+            <Divider />
 
-          <Stack gap="sm">
-            <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
             <Stack gap="sm">
-              {/* Regular — favorite inline (unfavorited), new badge, photo counter bottom-left (Task 656); no overlay (never had one — the badge already conveys sold/rented) */}
-              <DemoCard l={l} id="7" layout="list" photoCount={5} />
-              {/* Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
-              <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />
-              {/* Reduced-price — old price struck through + new price, reduced badge */}
-              <DemoCard l={l} id="9" layout="list" reduced photoCount={3} />
-              {/* Sold — badge conveys status (no centered overlay in list mode) */}
-              <DemoCard l={l} id="10" layout="list" sold photoCount={4} />
-              {/* No-image fallback */}
-              <DemoCard l={l} id="11" layout="list" noImage />
-              {/* Archived — grayscale/dimmed whole row + archived badge */}
-              <DemoCard l={l} id="12" layout="list" archived photoCount={2} />
+              <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+              <Stack gap="sm">
+                {/* The sold/rented overlay renders in list too (Task 741 R63): it is part of the shared photo chrome */}
+                {/* 1 Active + New badge — favorite inline (unfavorited), photo counter bottom-right */}
+                <DemoCard l={l} id="7" layout="list" isNew photoCount={5} />
+                {/* 2 Active, no badge */}
+                <DemoCard l={l} id="18" layout="list" photoCount={5} />
+                {/* 3 New + reduced-price — old price struck through + new price, both badges */}
+                <DemoCard l={l} id="9" layout="list" isNew reduced photoCount={3} />
+                {/* 4 Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
+                <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />
+                {/* 5 Inactive */}
+                <DemoCard l={l} id="19" layout="list" status="inactive" photoCount={4} />
+                {/* 6 Pending */}
+                <DemoCard l={l} id="20" layout="list" status="pending" photoCount={4} />
+                {/* 7 Sold — badge + centered rotated overlay, as in grid */}
+                <DemoCard l={l} id="10" layout="list" status="sold" photoCount={4} />
+                {/* 8 Rented — purple badge + the same coloured centered overlay */}
+                <DemoCard l={l} id="21" layout="list" status="rented" photoCount={4} />
+                {/* 9 Archived — grayscale/dimmed whole row + archived badge */}
+                <DemoCard l={l} id="12" layout="list" status="archived" photoCount={2} />
+                {/* 10 Expired */}
+                <DemoCard l={l} id="22" layout="list" status="expired" photoCount={4} />
+                {/* 11 No-image fallback */}
+                <DemoCard l={l} id="11" layout="list" noImage />
+              </Stack>
             </Stack>
           </Stack>
         </Stack>

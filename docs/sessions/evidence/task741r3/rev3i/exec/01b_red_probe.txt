@@ -1,0 +1,22 @@
+badge-visible: 12 cells, 226 badges/photo counts, 226 hidden or outside their photo
+FAIL patterns-mantine-listingcardpattern--default@390 card 1 badges "New" topmost=false inside=false box=0,267,44,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 1 photo-count "5" topmost=false inside=false box=0,267,41,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 2 photo-count "5" topmost=false inside=false box=0,267,41,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 3 badges "New" topmost=false inside=false box=0,267,44,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 3 badges "Price reduced" topmost=false inside=false box=48,267,96,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 3 photo-count "3" topmost=false inside=false box=0,267,41,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 4 photo-count "8" topmost=false inside=false box=0,267,41,24 photo=356,267
+FAIL patterns-mantine-listingcardpattern--default@390 card 5 badges "Inactive" topmost=false inside=false box=0,267,62,24 photo=356,267
+patterns-mantine-listingcardpattern--default@390 {"badges":19,"failing":19}
+patterns-mantine-listingcardpattern--default@768 {"badges":38,"failing":38}
+patterns-mantine-listingcardpattern--default@1440 {"badges":38,"failing":38}
+mantine-primitives-listingcard--default@390 {"badges":19,"failing":19}
+mantine-primitives-listingcard--default@768 {"badges":38,"failing":38}
+mantine-primitives-listingcard--default@1440 {"badges":38,"failing":38}
+patterns-mantine-listingsshellview--default@390 {"badges":8,"failing":8}
+patterns-mantine-listingsshellview--default@768 {"badges":8,"failing":8}
+patterns-mantine-listingsshellview--default@1440 {"badges":8,"failing":8}
+patterns-mantine-listingsshellview--closed-tab@390 {"badges":4,"failing":4}
+patterns-mantine-listingsshellview--closed-tab@768 {"badges":4,"failing":4}
+patterns-mantine-listingsshellview--closed-tab@1440 {"badges":4,"failing":4}
+EXIT_CODE=1

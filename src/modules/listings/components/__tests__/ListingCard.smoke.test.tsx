@@ -243,6 +243,25 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
     expect(link.querySelector('[class*="archived"]')).toBeInTheDocument()
   })
 
+  // Task 741 R3b (R36 / D46-4): inactive and pending are labelled from LISTING_STATUS_COLOR (gray / yellow).
+  it('inactive listing renders one gray filled "Inactive" badge and no New badge', () => {
+    renderCard({ ...BASE_LISTING, status: 'inactive', created_at: new Date().toISOString() })
+
+    const badge = screen.getByText('Inactive')
+    expect(badge.closest('[data-variant="filled"]')?.getAttribute('style')).toContain('--mantine-color-gray-filled')
+    expect(screen.queryByText('New')).not.toBeInTheDocument()
+    expect(screen.queryByText('Price reduced')).not.toBeInTheDocument()
+  })
+
+  it('pending listing renders one yellow filled "Under review" badge and no New badge', () => {
+    renderCard({ ...BASE_LISTING, status: 'pending', created_at: new Date().toISOString(), price_old: 92000 })
+
+    const badge = screen.getByText('Under review')
+    expect(badge.closest('[data-variant="filled"]')?.getAttribute('style')).toContain('--mantine-color-yellow-filled')
+    expect(screen.queryByText('New')).not.toBeInTheDocument()
+    expect(screen.queryByText('Price reduced')).not.toBeInTheDocument()
+  })
+
   it('favorite, photo counter, features, and footer actions all render through the pattern (Task 605 single-source proof)', () => {
     renderCard(BASE_LISTING)
 

@@ -1,0 +1,20 @@
+parity: 8 cells, 424 part comparisons, 88 differences
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 1 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 2 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 3 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 4 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 5 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 6 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 7 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 8 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 9 part head
+DIFF patterns-mantine-listingcardpattern--default@en@768 state 10 part head
+patterns-mantine-listingcardpattern--default@en@768 {"grid":11,"list":11,"compared":11}
+patterns-mantine-listingcardpattern--default@en@1440 {"grid":11,"list":11,"compared":11}
+patterns-mantine-listingcardpattern--default@uk@768 {"grid":11,"list":11,"compared":11}
+patterns-mantine-listingcardpattern--default@uk@1440 {"grid":11,"list":11,"compared":11}
+mantine-primitives-listingcard--default@en@768 {"grid":11,"list":11,"compared":11}
+mantine-primitives-listingcard--default@en@1440 {"grid":11,"list":11,"compared":11}
+mantine-primitives-listingcard--default@uk@768 {"grid":11,"list":11,"compared":11}
+mantine-primitives-listingcard--default@uk@1440 {"grid":11,"list":11,"compared":11}
+EXIT_CODE=1

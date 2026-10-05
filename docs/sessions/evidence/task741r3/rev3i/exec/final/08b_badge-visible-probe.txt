@@ -1,0 +1,14 @@
+badge-visible: 12 cells, 226 badges/photo counts, 0 hidden or outside their photo
+patterns-mantine-listingcardpattern--default@390 {"badges":19,"failing":0}
+patterns-mantine-listingcardpattern--default@768 {"badges":38,"failing":0}
+patterns-mantine-listingcardpattern--default@1440 {"badges":38,"failing":0}
+mantine-primitives-listingcard--default@390 {"badges":19,"failing":0}
+mantine-primitives-listingcard--default@768 {"badges":38,"failing":0}
+mantine-primitives-listingcard--default@1440 {"badges":38,"failing":0}
+patterns-mantine-listingsshellview--default@390 {"badges":8,"failing":0}
+patterns-mantine-listingsshellview--default@768 {"badges":8,"failing":0}
+patterns-mantine-listingsshellview--default@1440 {"badges":8,"failing":0}
+patterns-mantine-listingsshellview--closed-tab@390 {"badges":4,"failing":0}
+patterns-mantine-listingsshellview--closed-tab@768 {"badges":4,"failing":0}
+patterns-mantine-listingsshellview--closed-tab@1440 {"badges":4,"failing":0}
+EXIT_CODE=0

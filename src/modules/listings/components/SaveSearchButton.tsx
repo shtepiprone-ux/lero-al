@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Bookmark } from 'lucide-react'
-import { Button, Flex, Loader, TextInput, useMantineTheme } from '@mantine/core'
+import { Button, Flex, TextInput, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
 import { MantineModal } from '@/design-system/mantine/patterns'
 import { saveSavedSearch } from '@/modules/cabinet/actions'
@@ -93,8 +93,8 @@ export function SaveSearchButton() {
             <Button
               w={FULL_BELOW_SM}
               onClick={handleSave}
-              disabled={isPending}
-              leftSection={isPending ? <Loader size={theme.other.iconSize.compact} color="white" /> : <Bookmark size={theme.other.iconSize.compact} />}
+              loading={isPending}
+              leftSection={<Bookmark size={theme.other.iconSize.compact} />}
             >
               {t('save')}
             </Button>

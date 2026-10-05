@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
-import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
+import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { MantineListingCardTrack } from '@/design-system/mantine/patterns/MantineListingCardTrack'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import type { User } from '@/types/database'
 import { MantineStoryShell } from '../_MantineStoryShell'
+import { TITLE_FZ } from '@/design-system/mantine/typography'
+import { FIXTURE_OLD_CREATED_AT, makeStateListing, type StateListingOpts } from '@/stories/fixtures/cardListingData.fixture'
 
 /**
  * Title under `Mantine/Primitives/` (Task 656) — statically imports the REAL production
@@ -29,12 +31,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const FIXTURE_RATES: ExchangeRates = { ALL: 1, EUR: 100 }
-
-// Frozen "created 2 days ago" (no Date.now()/new Date() wall-clock in fixtures per Storybook
-// governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
-// 2026-07-30 (Task 697 kickoff date); keeps the "New" badge (LISTING_NEW_DAYS=7,
-// docs/domain-rules.md:106) in its current visible state.
-const FIXTURE_CREATED_AT = '2026-07-28T00:00:00.000Z'
 
 const FIXTURE_USER: User = {
   id: 'story-user-001',
@@ -76,57 +72,54 @@ const MOCK_SIGNED_IN_AUTH = {
   refreshUser: () => {},
 }
 
-function makeFixtureListing(l: string, status: CardListingData['status'] = 'active'): CardListingData {
-  return {
-    id: `story-listing-001-${status}`,
-    public_id: 1234,
-    slug: 'modern-apartment-tirana-center',
-    title: storyT(l, 'storybook.mantine.card_title_1'),
-    price: 80000,
-    currency: 'EUR',
-    listing_type: 'sale',
-    property_type: 'apartment',
-    is_premium: false,
-    status,
-    created_at: FIXTURE_CREATED_AT,
-    images: [
-      { url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop', is_cover: true, order: 0 },
-    ],
-    location: { id: 1, name_al: storyT(l, 'storybook.mantine.card_location_tirana'), slug: 'tirane', type: 'city' },
-    area_gross: 85,
-    bedrooms: 3,
-    bathrooms: 2,
-  }
-}
+// Every production state of the card, in this order (Task 741 R3b, R39 — the primitive proves ALL of them):
+// (1) active + New · (2) active, no badge · (3) active + New + price reduced · (4) premium · (5) inactive ·
+// (6) pending · (7) sold · (8) rented · (9) archived · (10) expired · (11) no image.
+// Sold and rented are the only states that draw the centred overlay (`ListingCard.tsx` `isClosed`).
+const CARD_STATES: { key: string; opts: StateListingOpts }[] = [
+  { key: 'new', opts: {} },
+  { key: 'plain', opts: { createdAt: FIXTURE_OLD_CREATED_AT } },
+  { key: 'new-reduced', opts: { priceOld: 92000 } },
+  { key: 'premium', opts: { createdAt: FIXTURE_OLD_CREATED_AT, premium: true } },
+  { key: 'inactive', opts: { status: 'inactive' } },
+  { key: 'pending', opts: { status: 'pending' } },
+  { key: 'sold', opts: { status: 'sold' } },
+  { key: 'rented', opts: { status: 'rented' } },
+  { key: 'archived', opts: { status: 'archived' } },
+  { key: 'expired', opts: { status: 'expired' } },
+  { key: 'no-image', opts: { createdAt: FIXTURE_OLD_CREATED_AT, noImage: true } },
+]
 
 export const Default: Story = {
   render: (_args, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
-    const listing = makeFixtureListing(l)
-    // Task 741 §3.8 — production rendered proof of the migrated sold/rented overlay colours.
-    // `ListingCard.tsx`'s `isClosed` branch (`:267-269`) is the in-scope production consumer;
-    // authorised as a permanent `Default` export extension (single-export rule, governance §8)
-    // by the quoted 2026-08-14 owner decision (see the kickoff's canonical UI decision record).
-    // Sold then rented, in that DOM order, so a structural (never text) selector can find both.
-    const soldListing = makeFixtureListing(l, 'sold')
-    const rentedListing = makeFixtureListing(l, 'rented')
+    // Task 741 §3.8 / R3b — production rendered proof of every card state through the real `ListingCard`.
+    // Authorised as a permanent `Default` export extension (single-export rule, governance §8) by the
+    // quoted 2026-08-14 owner decision and the 2026-10-04 return (O46-1 row 1) — no second export.
+    const listings = CARD_STATES.map(({ key, opts }) => makeStateListing(l, key, opts))
 
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
         <MantineStoryShell>
           <Stack gap="xl">
             <Stack gap="sm">
-              <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
+              <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
               <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
-                <ListingCard listing={listing} variant="vertical" rates={FIXTURE_RATES} />
-                <ListingCard listing={soldListing} variant="vertical" rates={FIXTURE_RATES} />
-                <ListingCard listing={rentedListing} variant="vertical" rates={FIXTURE_RATES} />
+                {listings.map(listing => (
+                  <ListingCard key={listing.id} listing={listing} variant="vertical" rates={FIXTURE_RATES} />
+                ))}
               </SimpleGrid>
             </Stack>
 
-            <Stack gap="sm">
-              <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
-              <ListingCard listing={listing} variant="horizontal" rates={FIXTURE_RATES} />
+            {/* List layout is not used below 640px (owner D46-3, 2026-10-04): hidden below `sm`, as
+                `ListingsSortBar.tsx` hides its List toggle (`visibleFrom="sm"`). */}
+            <Stack gap="sm" visibleFrom="sm">
+              <Title order={4} fz={TITLE_FZ.h4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+              <Stack gap="sm">
+                {listings.map(listing => (
+                  <ListingCard key={listing.id} listing={listing} variant="horizontal" rates={FIXTURE_RATES} />
+                ))}
+              </Stack>
             </Stack>
           </Stack>
         </MantineStoryShell>
@@ -146,7 +139,7 @@ export const Default: Story = {
 export const FavoritesComposition: Story = {
   render: (_args, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
-    const listing = makeFixtureListing(l)
+    const listing = makeStateListing(l, 'favorited')
 
     return (
       <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>

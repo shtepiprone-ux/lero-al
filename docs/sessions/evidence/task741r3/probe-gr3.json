@@ -1,0 +1,462 @@
+{
+  "Mantine/Primitives/ListingCard@320": {
+    "hOverflow": false,
+    "scrollWidth": 320,
+    "edgeGaps": {
+      "top": 16,
+      "right": 16,
+      "bottom": 16,
+      "left": 16
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 108,
+        "gapR": 108,
+        "gapT": 85,
+        "gapB": 85
+      },
+      {
+        "gapL": 100,
+        "gapR": 100,
+        "gapT": 84,
+        "gapB": 84
+      }
+    ]
+  },
+  "Mantine/Primitives/ListingCard@390": {
+    "hOverflow": false,
+    "scrollWidth": 390,
+    "edgeGaps": {
+      "top": 16,
+      "right": 16,
+      "bottom": 16,
+      "left": 16
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 143,
+        "gapR": 143,
+        "gapT": 111,
+        "gapB": 111
+      },
+      {
+        "gapL": 135,
+        "gapR": 135,
+        "gapT": 110,
+        "gapB": 110
+      }
+    ]
+  },
+  "Mantine/Primitives/ListingCard@768": {
+    "hOverflow": false,
+    "scrollWidth": 768,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 236,
+      "left": 49
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 71,
+        "gapR": 71,
+        "gapT": 57,
+        "gapB": 57
+      },
+      {
+        "gapL": 62,
+        "gapR": 62,
+        "gapT": 55,
+        "gapB": 55
+      }
+    ]
+  },
+  "Mantine/Primitives/ListingCard@1024": {
+    "hOverflow": false,
+    "scrollWidth": 1024,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 172,
+      "left": 49
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 113,
+        "gapR": 113,
+        "gapT": 89,
+        "gapB": 89
+      },
+      {
+        "gapL": 105,
+        "gapR": 105,
+        "gapT": 87,
+        "gapB": 87
+      }
+    ]
+  },
+  "Mantine/Primitives/ListingCard@1440": {
+    "hOverflow": false,
+    "scrollWidth": 1440,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 68,
+      "left": 49
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 183,
+        "gapR": 183,
+        "gapT": 141,
+        "gapB": 141
+      },
+      {
+        "gapL": 174,
+        "gapR": 174,
+        "gapT": 139,
+        "gapB": 139
+      }
+    ]
+  },
+  "Patterns/Mantine/ListingCardPattern@320": {
+    "hOverflow": false,
+    "scrollWidth": 320,
+    "edgeGaps": {
+      "top": 24,
+      "right": 16,
+      "bottom": 24,
+      "left": 16
+    },
+    "titleFontSizes": [
+      "18px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 108,
+        "gapR": 108,
+        "gapT": 85,
+        "gapB": 85
+      },
+      {
+        "gapL": 100,
+        "gapR": 100,
+        "gapT": 84,
+        "gapB": 84
+      }
+    ]
+  },
+  "Patterns/Mantine/ListingCardPattern@390": {
+    "hOverflow": false,
+    "scrollWidth": 390,
+    "edgeGaps": {
+      "top": 24,
+      "right": 16,
+      "bottom": 24,
+      "left": 16
+    },
+    "titleFontSizes": [
+      "18px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 143,
+        "gapR": 143,
+        "gapT": 111,
+        "gapB": 111
+      },
+      {
+        "gapL": 135,
+        "gapR": 135,
+        "gapT": 110,
+        "gapB": 110
+      }
+    ]
+  },
+  "Patterns/Mantine/ListingCardPattern@768": {
+    "hOverflow": false,
+    "scrollWidth": 768,
+    "edgeGaps": {
+      "top": 24,
+      "right": 24,
+      "bottom": 24,
+      "left": 24
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 79,
+        "gapR": 79,
+        "gapT": 63,
+        "gapB": 63
+      },
+      {
+        "gapL": 70,
+        "gapR": 70,
+        "gapT": 62,
+        "gapB": 62
+      }
+    ]
+  },
+  "Patterns/Mantine/ListingCardPattern@1024": {
+    "hOverflow": false,
+    "scrollWidth": 1024,
+    "edgeGaps": {
+      "top": 24,
+      "right": 32,
+      "bottom": 24,
+      "left": 32
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 119,
+        "gapR": 119,
+        "gapT": 93,
+        "gapB": 93
+      },
+      {
+        "gapL": 110,
+        "gapR": 110,
+        "gapT": 92,
+        "gapB": 92
+      }
+    ]
+  },
+  "Patterns/Mantine/ListingCardPattern@1440": {
+    "hOverflow": false,
+    "scrollWidth": 1440,
+    "edgeGaps": {
+      "top": 24,
+      "right": 32,
+      "bottom": 24,
+      "left": 32
+    },
+    "titleFontSizes": [
+      "24px"
+    ],
+    "overlayLabelFontSize": [
+      "14px"
+    ],
+    "cardTitleFontSize": [
+      "14px"
+    ],
+    "badgeFontSize": [
+      "12px"
+    ],
+    "alertTextFontSize": [],
+    "overlayLabelGaps": [
+      {
+        "gapL": 188,
+        "gapR": 188,
+        "gapT": 145,
+        "gapB": 145
+      },
+      {
+        "gapL": 180,
+        "gapR": 180,
+        "gapT": 144,
+        "gapB": 144
+      }
+    ]
+  },
+  "Mantine/Primitives/ListingStatusBanner@320": {
+    "hOverflow": false,
+    "scrollWidth": 320,
+    "edgeGaps": {
+      "top": 16,
+      "right": 16,
+      "bottom": 40,
+      "left": 16
+    },
+    "titleFontSizes": [],
+    "overlayLabelFontSize": [],
+    "cardTitleFontSize": [],
+    "badgeFontSize": [],
+    "alertTextFontSize": [
+      "14px"
+    ],
+    "overlayLabelGaps": []
+  },
+  "Mantine/Primitives/ListingStatusBanner@390": {
+    "hOverflow": false,
+    "scrollWidth": 390,
+    "edgeGaps": {
+      "top": 16,
+      "right": 16,
+      "bottom": 44,
+      "left": 16
+    },
+    "titleFontSizes": [],
+    "overlayLabelFontSize": [],
+    "cardTitleFontSize": [],
+    "badgeFontSize": [],
+    "alertTextFontSize": [
+      "14px"
+    ],
+    "overlayLabelGaps": []
+  },
+  "Mantine/Primitives/ListingStatusBanner@768": {
+    "hOverflow": false,
+    "scrollWidth": 768,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 131,
+      "left": 49
+    },
+    "titleFontSizes": [],
+    "overlayLabelFontSize": [],
+    "cardTitleFontSize": [],
+    "badgeFontSize": [],
+    "alertTextFontSize": [
+      "14px"
+    ],
+    "overlayLabelGaps": []
+  },
+  "Mantine/Primitives/ListingStatusBanner@1024": {
+    "hOverflow": false,
+    "scrollWidth": 1024,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 131,
+      "left": 49
+    },
+    "titleFontSizes": [],
+    "overlayLabelFontSize": [],
+    "cardTitleFontSize": [],
+    "badgeFontSize": [],
+    "alertTextFontSize": [
+      "14px"
+    ],
+    "overlayLabelGaps": []
+  },
+  "Mantine/Primitives/ListingStatusBanner@1440": {
+    "hOverflow": false,
+    "scrollWidth": 1440,
+    "edgeGaps": {
+      "top": 49,
+      "right": 49,
+      "bottom": 131,
+      "left": 49
+    },
+    "titleFontSizes": [],
+    "overlayLabelFontSize": [],
+    "cardTitleFontSize": [],
+    "badgeFontSize": [],
+    "alertTextFontSize": [
+      "14px"
+    ],
+    "overlayLabelGaps": []
+  }
+}

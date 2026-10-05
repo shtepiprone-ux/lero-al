@@ -1,0 +1,19 @@
+{
+ "cells": 90,
+ "overflow": [],
+ "scrollNotOk": [],
+ "focus": {
+  "controls": 99,
+  "clipped": [],
+  "noAncestor": 93,
+  "minRoom": 21
+ },
+ "level": {
+  "checked": 84,
+  "bad": []
+ },
+ "same1024_1440": {
+  "checked": 45,
+  "diff": []
+ }
+}

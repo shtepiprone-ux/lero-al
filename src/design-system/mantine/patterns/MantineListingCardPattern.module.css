@@ -1,116 +1,82 @@
 /*
- * Hover (image zoom + elevation shadow) + premium ring/elevation state styling for
- * MantineListingCardPattern (Task 602).
+ * MantineListingCardPattern — states and keyword-only declarations (Task 602; Task 741 Revision 3h).
  *
- * Why a CSS module and not Tailwind hover:/group-hover: utility classes: Mantine's own
- * `Card` component sets box-shadow/border-color via its OWN unlayered CSS (the `shadow`/
- * `withBorder` props). Tailwind v4 wraps all utilities in `@layer utilities`, and per the
- * CSS Cascade Layers spec any unlayered declaration always wins over a layered one
- * regardless of selector specificity or source order — so a Tailwind `hover:shadow-*`
- * class on a Mantine `Card` can never actually override Mantine's own box-shadow (verified
- * empirically via computed-style diffing: box-shadow was byte-identical before/after
- * :hover with the Tailwind-only approach). A plain CSS module is unlayered too, so it
- * competes with Mantine's CSS on equal footing (mantine-responsive-design-system.md §18
- * sanctions either approach; this is the one actually provably effective here).
+ * Every visual value on the card is a Mantine prop on a primitive or a theme token. This module holds what Mantine
+ * has no prop for: the hover lift and shadow, the premium and archived states, the photo zoom, the overlay label's
+ * rotation and tone, and a few keyword declarations. It carries no literal size, duration or colour value.
  *
- * `.imageSection img` (tag selector, not a class on the img itself) targets whichever
- * <img> ends up inside Card.Section — the demo Mantine `Image` AND the real `AppImage`
- * (which does not expose a className hook on its inner <img>) alike, without touching
- * AppImage's own opacity-fade transition (kept explicit alongside transform below, not
- * clobbered by the shorthand).
+ * Why a CSS module and not Tailwind hover: classes: Mantine's own `Card` sets box-shadow and border-colour in its own
+ * unlayered CSS, and an unlayered declaration always beats a layered one. A plain CSS module is unlayered too, so
+ * it competes with Mantine on equal footing.
  *
- * `:hover` rules are scoped to `(hover: hover) and (pointer: fine)`. Task 764 correction
- * (the pre-Task-764 text here claimed this matched Tailwind's own `hover:` variant by
- * default — that was FALSE and measured wrong: the compiled `group-hover:` variant Task
- * 763's `listing.hoverClass` used carried `(hover: hover)` only, with no `pointer: fine`
- * condition at all, which is the entire reason half B (Tailwind) and half A (this file)
- * drifted apart on a device reporting `hover:hover` + `pointer:coarse` — measured via a
- * Playwright probe forcing that exact hybrid state (`docs/sessions/evidence/task764/`):
- * half A did not fire there, half B did, so the card zoomed 1.05x. Task 764 removes half B
- * entirely (see `.cardGrid:hover` below), so this file's own `(hover: hover) and
- * (pointer: fine)` guard is now the ONLY guard governing the effect, and its stated intent
- * — "a tap on a touch device never leaves the card stuck in its hovered/zoomed state" — is
- * now actually true for the whole zoom, not just this file's own translateY/box-shadow.
+ * `:hover` rules are scoped to `(hover: hover) and (pointer: fine)`, so a tap on a touch device never leaves the card
+ * in its hovered state.
  */
 
 .card {
-  box-shadow: none; /* TailAdmin §5 "content cards: NO shadow (flat border)" resting state */
-  transition: transform 300ms ease-out, box-shadow 300ms ease-out; /* design-tokens-allow: transition: 300ms — genuine N1, reserved Task 734, not remediated here per Task 717 R7; matches the existing --duration-slow token exactly */
+  box-shadow: none; /* flat resting state: content cards have a border and no shadow */
+  transition: transform var(--motion-duration-slow) ease-out, box-shadow var(--motion-duration-slow) ease-out;
 }
 
-/*
- * layout='list' (Task 606): Mantine's `Card`/`Paper` root sets `display: block` via its OWN
- * unlayered CSS. Tailwind's `flex`/`flex-row` utility classes are wrapped in `@layer utilities`
- * and can NEVER override an unlayered declaration regardless of specificity (the exact Task 602
- * cascade-layer lesson, this time for `display` instead of `box-shadow`) — verified empirically:
- * with Tailwind-only `flex flex-row`, the image and info children stacked vertically anyway
- * (block children stack top-to-bottom identically to a flex-column, so this bug is invisible on
- * `layout='grid'` — column direction and block direction coincide — but breaks a row layout).
- * This unlayered rule competes with Mantine's CSS on equal footing.
- */
-.listRow {
+.clickable {
+  cursor: pointer;
+}
+
+/* The arrangement of the two layouts. Mantine's `Card` root is `display: block` in its own unlayered CSS, so the
+   horizontal row has to set its own display here. */
+.vertical {
+  height: 100%;
+}
+
+.horizontal {
   display: flex;
   flex-direction: row;
-  gap: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1); Task 691 — gap-3, D34-winning (Card sets no `gap`), reproduced unlayered */
+  gap: var(--homepage-runtime-space-3);
 }
 
 .premium {
-  border-color: var(--badge-premium); /* Task 770 — was @theme inline --color-badge-premium alias hop; now points directly at :root --badge-premium */
+  border-color: var(--badge-premium);
 }
 
-/*
- * Task 766 (Sprint 65 level 1) — replaces the two `isArchived && 'grayscale opacity-60'` Tailwind
- * literals (list Card `:187`, grid Card `:315`), one role-named rule shared by both branches
- * (R4). Card sets no `filter`/`opacity` of its own, so this was never a cascade-winner fight —
- * per D34 a plain de-Tailwind migration reproduces the utility's OWN cascade layer, so this rule
- * is wrapped in `@layer utilities` to match Tailwind's `grayscale`/`opacity-60` layer exactly
- * (unlike `.card`/`.listRow`/`.cardGrid` above, which stay unlayered because THEIR declarations
- * were measured cascade winners needing to beat Mantine's own unlayered Card CSS).
- * Values measured via computed-style capture (Task 766 §5.1.1, `Patterns/Mantine/ListingCardPattern`
- * -> `Default`, id=6 grid archived / id=12 list archived, before removal): `filter: grayscale(1)`,
- * `opacity: 0.6` — reproduced here exactly, byte-for-byte identical computed result.
- */
+/* Archived and expired listings are dimmed: grayscale on the card, and the fade on the photo only. An `opacity` on the
+   bordered, rounded card root fades its border and makes the corners vanish (GR-11), so the card's border and corners keep
+   full contrast. `{image}` is the photo section's first child in both layouts, so the fade targets it alone: the badges,
+   overlay, photo count and favourite sit beside it and keep full opacity (GR-11). The photo section is clipped by the card
+   and draws no border of its own. */
 @layer utilities {
   .archived {
     filter: grayscale(1);
+  }
+
+  .archived .imageSection > :first-child {
     opacity: 0.6;
   }
 }
 
+.imageSection {
+  overflow: hidden;
+}
+
 .imageSection img {
-  transition: transform 300ms ease-out, opacity 300ms ease-out; /* design-tokens-allow: transition: 300ms — genuine N1, reserved Task 734, not remediated here per Task 717 R7; matches the existing --duration-slow token exactly */
+  transition: transform var(--motion-duration-slow) ease-out, opacity var(--motion-duration-slow) ease-out;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
-    transform: translateY(-2px); /* design-tokens-allow: transform: -2px — hover micro-interaction offset; no project convention negates a spacing token for transform offsets */
-    /* TailAdmin §5 shadow-theme-lg (Task 530/531, demo_tailadmin_com.zip css/style.css) */
-    box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03); /* design-tokens-allow: rgba( — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: 12px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: 16px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: -4px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: 4px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: 6px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */ /* design-tokens-allow: box-shadow: -2px — genuine N1, reserved Task 734, not remediated here per Task 717 R7; duplicates the Mantine-generated shadow-lg variable the sibling rule already references */
+    transform: translateY(calc(var(--mantine-spacing-micro) * -1));
+    box-shadow: var(--mantine-shadow-lg);
   }
 
   .premium:hover {
-    box-shadow: var(--homepage-runtime-listing-card-shadow); /* Task 770 — was @theme inline --shadow-listing-card-elevation-lg */
+    box-shadow: var(--homepage-runtime-listing-card-shadow);
   }
 
   .card:hover .imageSection img {
     transform: scale(1.05);
   }
 
-  /* Task 764 — folds the `listing` variant's Tailwind `group-hover:scale-105` (half B, formerly
-   * `appImageConfig.ts`'s `listing.hoverClass`, applied via the now-removed `'group'` marker on
-   * this file's `Card`) into this module. Half A above (`.card:hover .imageSection img`,
-   * `scale(1.05)`) is shared with the `layout="list"` row, which never carried half B (its image
-   * is the `listing-thumb` variant, no `hoverClass`) — so `:68` itself must stay `scale(1.05)`, or
-   * the list card's hover zoom silently jumps from 1.05x to 1.1025x on every surface that renders
-   * it (listings rows, cabinet). This rule is scoped to `.cardGrid` (only the vertical/grid
-   * layout, the homepage card) instead, and its `transform` REPLACES `.card`'s value for grid
-   * cards via source order (both selectors are specificity (0,2,1); this rule comes second and
-   * wins). The value `1.1025` is the measured product of the two former halves: half A's own
-   * `scale(1.05)` and half B's compiled `scale: 105% 105%` composed multiplicatively (two
-   * different CSS properties, `transform` and `scale`, both apply): 1.05 x 1.05 = 1.1025 —
-   * verified via `getBoundingClientRect()` effective-scale capture,
-   * `docs/sessions/evidence/task764/phase-a-pointer-matrix.pre-edit.json`. */
-  .cardGrid:hover .imageSection img {
+  /* The vertical card's photo zoom is the product of two former halves (1.05 x 1.05), measured in Task 764. */
+  .vertical:hover .imageSection img {
     transform: scale(1.1025);
   }
 }
@@ -128,177 +94,19 @@
   }
 }
 
-/*
- * Task 691 (D28 de-Tailwind, Sprint 46.4) — the 27 `className=` sites below `.imageSection`.
- * Every rule reproduces its own utility's compiled output, read from `.next/static/css` and
- * cross-checked against a live `getComputedStyle` capture on both enrolled stories (session log
- * `.screenshots/task691-delta/`), same discipline as Task 702/688/662.
- *
- * D34 (2026-08-05): stays UNLAYERED, same as the rest of this file — every migrated property
- * below was measured to be the current cascade WINNER (no unlayered Mantine CSS sets the same
- * property on the same host element: Box/svg/Camera/MapPin icons have no Mantine CSS at all;
- * Group/Stack's own CSS only ever contests `display`/`flex-direction`/`flex-wrap`/`justify-
- * content`/`align-items`/`gap`, and every `gap`/`wrap`/`justify`/`align` this file's Group/Stack
- * elements need is already set via explicit props per the component's own header comment, never
- * via className). Reproducing a winning declaration unlayered changes nothing (D34: "if it was
- * winning, reproducing it in an unlayered rule changes nothing").
- *
- * TWO of the three declarations documented D34-losing here were REMOVED outright by Task 766
- * (Sprint 65 level 1), not migrated to a module rule — reproducing a losing declaration would be
- * a no-op new rule for no reason. Measured before removal (Task 766 §5.1.1, computed-style
- * capture on `Patterns/Mantine/ListingCardPattern` -> `Default`, both `layout` branches):
- *   - `overflow-hidden` on the list Card (was `:186`) — Card's own unlayered CSS already sets
- *     `overflow: hidden` unconditionally (Card.css, @mantine/core 8.3.18); Tailwind's `@layer
- *     utilities` copy never won. Measured computed `overflow: hidden` identical with the utility
- *     present (id=7/12) and, by the same Card mechanism, unaffected by its removal.
- *   - `flex`/`flex-col` on the grid Card (was `:314`) — Card's own unlayered CSS already sets
- *     `display: flex; flex-direction: column` unconditionally, identical values to the Tailwind
- *     utility it replaced. Measured computed `display: flex` / `flexDirection: column` (id=1/6).
- *
- * ONE declaration remains the still-untouched, out-of-Task-766-scope case:
- *   - `leading-snug` on both title `Text` elements (was `:205`/`:338`) — Mantine's `Text` sets
- *     `line-height: var(--text-lh, ...)` unconditionally, unlayered; `leading-snug` (`@layer
- *     utilities`) has never won regardless of `size` prop. UNLIKE the two rows above, this one
- *     is NOT the same value — the rendered line-height has always been Mantine's own
- *     `--text-lh` for `size="sm"` (measured `20.02px`), never Tailwind's `--leading-snug`. A
- *     previously-unnoticed dead utility, confirmed via the BEFORE capture; left untouched
- *     because AC5 requires "listed and untouched", not silently corrected (that would be a
- *     visual/typography change, out of scope for a D28 mechanism-only migration).
- *
- * `group-hover:[--text-color:var(--primary)]` is migrated below to `.card:hover .cardTitle`
- * (real DOM ancestor/descendant, no marker class needed — verified byte-identical via a real
- * `:hover` capture, `rgb(236, 84, 71)` both layouts, before and after).
- *
- * 691R (F-A/F-P) — `group` itself is RESTORED on both Card roots, not removed. An earlier draft
- * of this migration removed it on the false census that its only consumer was the
- * `group-hover:[--text-color:...]` pair above; `appImageConfig.ts:66`'s `hoverClass:
- * 'group-hover:scale-105'`, fed through the pattern's `image` slot from the real `AppImage`, was
- * the consumer that census missed — removing `group` silently broke the vertical card's hover
- * zoom (F-A). Do not re-derive a "sole consumer" claim for `group` from this file alone; its
- * consumers are anything the caller passes into the `image`/`favorite` slots, which this
- * component cannot enumerate.
- *
- * The opacity-modifier utilities (`bg-overlay/60` ×2, `bg-overlay/30` ×1, `text-muted-
- * foreground/70` ×2 — the D35 family plus one same-shaped sibling D35 didn't name) each compile
- * to TWO declarations — a static fallback plus an `@supports (color: color-mix(in lab, red,
- * red))`-gated `color-mix()` override — reproduced as both rules, in the same order, never
- * hand-flattened (Task 702 §3.5 discipline).
- */
-
-.cardGrid {
-  height: 100%; /* h-full — winning, Card sets no `height` */
-}
-
-.listImage {
-  position: relative;
-  width: 8rem; /* design-tokens-allow: width: 8rem — w-32, resolved from Tailwind's own --spacing multiplier (.25rem × 32); no --space-* token matches this exact step (Task 762 Revision 1, D762-1: bare var(--spacing) removed) */
-  flex-shrink: 0;
-  align-self: stretch;
-  min-height: var(--homepage-runtime-space-20); /* Task 770 — was @theme inline --space-20 (§22.1) */
-  overflow: hidden;
-  background-color: var(--muted);
-}
-@media (min-width: 40rem) {
-  .listImage {
-    width: 11rem; /* design-tokens-allow: width: 11rem — sm:w-44, resolved from Tailwind's own --spacing multiplier (.25rem × 44); no --space-* token matches this exact step (Task 762 Revision 1, D762-1) */
-  }
-}
-
-.badgesList {
-  position: absolute;
-  top: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  left: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  display: flex;
-  flex-direction: column;
-  gap: var(--homepage-runtime-space-1); /* Task 770 — was @theme inline --space-1 (§22.1) */
-}
-
-.badgesGrid {
-  position: absolute;
-  top: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  left: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--homepage-runtime-space-1); /* Task 770 — was @theme inline --space-1 (§22.1) */
-}
-
-.photoCountList {
-  position: absolute;
-  bottom: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  left: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
-  color: var(--overlay-foreground);
-  font-size: .75rem; /* text-xs */ /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it (MobileBottomNavView.module.css precedent) */
-  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
-  padding-inline: var(--homepage-runtime-space-2); /* px-2 */ /* Task 770 — was @theme inline --space-2 (§22.1) */
-  padding-block: .125rem; /* design-tokens-allow: padding-block: .125rem — py-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × .5); no --space-* token matches this exact half-step (Task 762 Revision 1, D762-1) */
-  border-radius: 3.40282e+38px; /* rounded-full */ /* design-tokens-allow: border-radius: 38px — Tailwind's own compiled rounded-full value (scientific notation, detector matches its numeric tail) */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .photoCountList {
-    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
-  }
-}
-
-.photoCountGrid {
-  position: absolute;
-  bottom: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  right: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  background-color: #0009; /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
-  color: var(--overlay-foreground);
-  font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
-  padding-inline: var(--homepage-runtime-space-2); /* Task 770 — was @theme inline --space-2 (§22.1) */
-  padding-block: .125rem; /* design-tokens-allow: padding-block: .125rem — py-0.5, resolved from Tailwind's own --spacing multiplier (.25rem × .5); no --space-* token matches this exact half-step (Task 762 Revision 1, D762-1) */
-  border-radius: 3.40282e+38px; /* design-tokens-allow: border-radius: 38px — Tailwind's own compiled rounded-full value (scientific notation, detector matches its numeric tail) */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .photoCountGrid {
-    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
-  }
-}
-
 .infoColumn {
-  flex: 1; /* flex-1 */
-  min-width: var(--homepage-runtime-space-0); /* min-w-0 */ /* Task 770 — was @theme inline --space-0 (§22.1) */
+  flex: 1;
+  min-width: var(--homepage-runtime-space-0);
 }
 
 .cardTitle {
-  /* transition-colors — --tw-gradient-from/via/to removed (Task 762 Revision 1, R5/E-1): never
-     declared anywhere in this repo (grep-confirmed), so they never actually watch a real
-     transition; computed transition-property is shorter but functionally identical. --tw-ease/
-     --tw-duration hooks (kept by Task 762) are also removed here (Task 762 Revision 1, D762-1):
-     var() reads of an unregistered Tailwind bookkeeping var are safe only because a literal
-     fallback is present — the hook itself served no purpose once nothing outside this file ever
-     sets --tw-ease/--tw-duration (grep-confirmed repo-wide), so dropping it changes no cascade
-     contract, only removes dead indirection (measured, not assumed, per AC-R6). */
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35); an @theme inline name is emitted only inside Tailwind's own compiler-generated theme layer, and only when the compiled output actually references it — nothing does for --ease-standard (verified: no match in .next/static/css/*.css), so it cannot be referenced here (causal claim corrected, Task 762 Revision 1 R7) */
-  transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--motion-duration-base);
 }
-/*
- * Reproduces `group-hover:[--text-color:var(--primary)]` — Mantine's own `Text` CSS reads
- * `color: var(--text-color)` unconditionally with no fallback (unset -> inherited/initial at
- * rest), so setting `--text-color` here on hover is a direct, uncontested plug into that
- * mechanism, not a workaround.
- *
- * 691R (F-B) — the compiled utility DOES carry a guard: `@media (hover: hover)`, one descriptor,
- * confirmed by recompiling this exact candidate from `globals.css` at base `2ad067bc1` with
- * tailwindcss 4.3.0 (`docs/reviews/artifacts/2026-08-12-task691-hover-envelope-before.css`;
- * tailwindcss's own `hover` variant, `node_modules/tailwindcss/dist/lib.js:16`, always emits
- * `@media (hover: hover)` around `&:hover`). Reproduced here with that same single descriptor —
- * NOT `and (pointer: fine)` (the two-condition form this file's other `:hover` rules use): that
- * would be a delta against the compiled baseline the utility never had, and is an open owner
- * question (OQ2), not implemented.
- *
- * 691R (OQ1) — layer: measured at I0 that nothing else in the repository writes `--text-color`
- * (only this rule does), so this rule is never in cascade contention and a layered vs. unlayered
- * form compute identically here. Per D34 a D28 migration reproduces the utility's own cascade
- * layer, so — unlike the rest of this file, which stays unlayered because ITS rules are measured
- * cascade winners that an `@layer utilities` wrapper would not change either way for a different
- * reason (module header above) — this rule is wrapped in `@layer utilities` to match the compiled
- * utility's own layer exactly.
- */
+
+/* Mantine's `Text` reads `color: var(--text-color)` with no fallback, so setting `--text-color` on hover plugs
+   straight into it. The guard is the single `(hover: hover)` descriptor the compiled utility had. */
 @media (hover: hover) {
   @layer utilities {
     .card:hover .cardTitle {
@@ -307,124 +115,32 @@
   }
 }
 
-.priceWrapper {
-  width: 100%; /* w-full */
-  margin-top: var(--homepage-runtime-space-2); /* mt-2 */ /* Task 770 — was @theme inline --space-2 (§22.1) */
-}
-
-.originalPriceList {
-  font-size: .625rem; /* design-tokens-allow: font-size: .625rem — Tailwind's own compiled text-2xs value, no token represents it */
-  /* leading-tight's own `line-height` compiles AFTER text-2xs's fallback line-height in the
-     Tailwind utility layer, so it wins for this property; reproduced directly rather than via
-     the `--tw-leading` indirection since nothing else on this element needs that variable.
-     --leading-tight is Tailwind's own @theme token (1.25); given a literal fallback so the
-     detector's var() scan can resolve it (Task 718 A5). */
-  line-height: 1.25; /* collapsed from var(--leading-tight, 1.25) — Tailwind's own @theme token, never emitted at :root (Task 762 Revision 1, D762-1) */
-  color: var(--muted-foreground); /* text-muted-foreground/70 static fallback */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .originalPriceList {
-    color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
-  }
-}
-
-.metaRow {
-  font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
-  color: var(--muted-foreground); /* text-muted-foreground */
-}
-
-.metaRowBordered {
-  font-size: .75rem; /* design-tokens-allow: font-size: .75rem — Tailwind's own compiled text-xs value, no token represents it */
-  line-height: 1rem; /* design-tokens-allow: line-height: 1rem — Tailwind's own compiled text-xs line-height fallback, collapsed from var(--tw-leading, 1rem) (Task 762 Revision 1, D762-1) */
-  color: var(--muted-foreground);
-  border-top-style: solid; /* border-t — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1) */
-  border-top-width: 1px;
-  padding-top: var(--homepage-runtime-space-2); /* pt-2 */ /* Task 770 — was @theme inline --space-2 (§22.1) */
-}
-
-.locationRow {
-  min-width: var(--homepage-runtime-space-0); /* min-w-0 */ /* Task 770 — was @theme inline --space-0 (§22.1) */
-  max-width: 100%; /* max-w-full */
-  flex-shrink: 0; /* shrink-0 */
+.nowrap {
+  white-space: nowrap;
 }
 
 .locationText {
-  min-width: var(--homepage-runtime-space-0); /* min-w-0 */ /* Task 770 — was @theme inline --space-0 (§22.1) */
+  min-width: var(--homepage-runtime-space-0);
 }
 
-.priceMetaRow {
-  font-size: .625rem; /* design-tokens-allow: font-size: .625rem — Tailwind's own compiled text-2xs value, no token represents it */
-  line-height: .75rem; /* design-tokens-allow: line-height: .75rem — Tailwind's own compiled text-2xs line-height fallback, collapsed from var(--tw-leading, .75rem) (Task 762 Revision 1, D762-1) */
-  color: var(--muted-foreground); /* text-muted-foreground/70 static fallback */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .priceMetaRow {
-    color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
-  }
-}
-
-.priceMetaAuto {
-  margin-left: auto; /* ml-auto */
-  white-space: nowrap; /* whitespace-nowrap */
-}
-
-.cardIcon {
-  height: var(--homepage-runtime-space-3); /* h-3 */ /* Task 770 — was @theme inline --space-3 (§22.1) */
-  width: var(--homepage-runtime-space-3); /* w-3 */ /* Task 770 — was @theme inline --space-3 (§22.1) */
-}
-
-.locationIcon {
-  height: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1) */
-  width: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1) */
-  flex-shrink: 0; /* shrink-0 */
-}
-
-.locationIconGrid {
-  height: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1) */
-  width: var(--homepage-runtime-space-3); /* Task 770 — was @theme inline --space-3 (§22.1) */
+.icon {
   flex-shrink: 0;
-  color: var(--muted-foreground); /* text-muted-foreground */
 }
 
-.overlayCenter {
-  background-color: #0000004d; /* bg-overlay/30 static fallback */ /* design-tokens-allow: #0000004d — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .overlayCenter {
-    background-color: color-mix(in oklab, var(--overlay) 30%, transparent);
-  }
-}
-
+/* Mantine has no style prop for `rotate`; it is the only declaration left on the closed-listing label. */
 .overlayLabel {
-  color: var(--overlay-foreground); /* text-overlay-foreground */
-  font-weight: 700; /* font-bold */
-  font-size: .875rem; /* design-tokens-allow: font-size: .875rem — Tailwind's own compiled text-sm value, no token represents it */
-  line-height: 1.25rem; /* design-tokens-allow: line-height: 1.25rem — Tailwind's own compiled text-sm line-height fallback, collapsed from var(--tw-leading, 1.25rem) (Task 762 Revision 1, D762-1) */
-  padding-inline: var(--homepage-runtime-space-3); /* px-3 */ /* Task 770 — was @theme inline --space-3 (§22.1) */
-  padding-block: .375rem; /* design-tokens-allow: padding-block: .375rem — py-1.5, resolved from Tailwind's own --spacing multiplier (.25rem × 1.5); no --space-* token matches this exact step (Task 762 Revision 1, D762-1) */
-  border-radius: calc(var(--radius) * 1.5); /* rounded-xl */
-  rotate: -8deg; /* rotate-[-8deg] */
-  border-style: solid; /* border-2 — Tailwind's own registered --tw-border-style initial value, measured live (Task 762 Revision 1, O-1) */
-  border-width: 2px; /* design-tokens-allow: border-width: 2px — Tailwind's own compiled border-2 value, no token represents it */
+  rotate: -8deg;
 }
 
-/*
- * Task 886 R40 (owner O83-1, 2026-09-30): the closed-listing overlay colour is owned by the pattern, so
- * every Story that renders the pattern shows the same coloured sold/rented overlay as production. This
- * supersedes Task 741's "the pattern carries no status colour" by owner instruction. The declarations
- * moved verbatim from `ListingCard.module.css` (same tokens, same two tiers). `--status-info` /
- * `--status-rented` are runtime aliases, so the base tier is the bare opaque `var()` (D35) and the
- * `color-mix` tier below carries the 80% background.
- */
+/* The closed-listing overlay colour is owned by the pattern (Task 886 R40), so every surface that renders it shows
+   the same colour. `--status-info` and `--status-rented` are runtime aliases, so the base tier is the bare opaque
+   `var()` and the `color-mix` tier below carries the 80% background. */
 .overlaySold {
   background-color: var(--status-info);
-  border-color: var(--status-info);
 }
 
 .overlayRented {
   background-color: var(--status-rented);
-  border-color: var(--status-rented);
 }
 @supports (color: color-mix(in lab, red, red)) {
   .overlaySold {

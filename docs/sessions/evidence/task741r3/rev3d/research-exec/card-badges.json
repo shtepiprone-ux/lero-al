@@ -1,0 +1,214 @@
+{
+ "lahomes-grid@1440": [
+  {
+   "text": "New York",
+   "pos": "relative",
+   "fs": "14px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 41
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "14px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 21
+  },
+  {
+   "text": "For Sale",
+   "pos": "static",
+   "fs": "14px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 21
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  }
+ ],
+ "lahomes-grid@390": [
+  {
+   "text": "New York",
+   "pos": "relative",
+   "fs": "14px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 41
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "14px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 21
+  },
+  {
+   "text": "For Sale",
+   "pos": "static",
+   "fs": "14px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "h": 21
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(92, 193, 132)",
+   "color": "rgb(255, 255, 255)",
+   "h": 19
+  }
+ ],
+ "lahomes-list@1440": [
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  },
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  },
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  }
+ ],
+ "lahomes-list@390": [
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  },
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  },
+  {
+   "text": "Sold",
+   "pos": "static",
+   "fs": "13px",
+   "fw": "600",
+   "radius": "4px",
+   "bg": "rgb(251, 225, 225)",
+   "color": "rgb(233, 103, 103)",
+   "h": 23
+  }
+ ],
+ "omah-list@1440": [
+  {
+   "text": "New order placed..",
+   "pos": "static",
+   "fs": "15px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(0, 0, 0)",
+   "h": 0
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "12.25px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(34, 43, 64)",
+   "h": 0
+  },
+  {
+   "text": "For Sale",
+   "pos": "static",
+   "fs": "12.25px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(34, 43, 64)",
+   "h": 0
+  }
+ ],
+ "omah-list@390": [
+  {
+   "text": "New order placed..",
+   "pos": "static",
+   "fs": "15px",
+   "fw": "500",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(0, 0, 0)",
+   "h": 0
+  },
+  {
+   "text": "For Rent",
+   "pos": "static",
+   "fs": "12.25px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(34, 43, 64)",
+   "h": 0
+  },
+  {
+   "text": "For Sale",
+   "pos": "static",
+   "fs": "12.25px",
+   "fw": "400",
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(34, 43, 64)",
+   "h": 0
+  }
+ ]
+}

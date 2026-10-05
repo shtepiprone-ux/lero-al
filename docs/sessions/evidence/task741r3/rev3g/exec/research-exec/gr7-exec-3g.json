@@ -1,0 +1,104 @@
+[
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/ui-pagination",
+  "w": 1440,
+  "items": [
+   "1(current)",
+   "2",
+   "3",
+   "4"
+  ],
+  "text": "1 (current) 2 3 4",
+  "overflow": false,
+  "focus": {
+   "tag": "A",
+   "text": "2",
+   "outline": "3px none rgb(110, 110, 110) off 0px",
+   "shadow": "none"
+  },
+  "shot": "exec-00-kamr-1440.png"
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/ui-pagination",
+  "w": 390,
+  "items": [
+   "1(current)",
+   "2",
+   "3",
+   "4"
+  ],
+  "text": "1 (current) 2 3 4",
+  "overflow": false,
+  "focus": {
+   "tag": "A",
+   "text": "2",
+   "outline": "3px none rgb(110, 110, 110) off 0px",
+   "shadow": "none"
+  },
+  "shot": "exec-01-kamr-390.png"
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/pagination",
+  "w": 1440,
+  "items": [],
+  "text": "",
+  "overflow": false,
+  "focus": null,
+  "shot": "exec-02-tailadmin-1440.png"
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/pagination",
+  "w": 390,
+  "items": [],
+  "text": "",
+  "overflow": false,
+  "focus": null,
+  "shot": "exec-03-tailadmin-390.png"
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-pagination.html",
+  "w": 1440,
+  "items": [
+   "Previous",
+   "1",
+   "2",
+   "3",
+   "Next"
+  ],
+  "text": "Previous 1 2 3 Next",
+  "overflow": false,
+  "focus": {
+   "tag": "A",
+   "text": "2",
+   "outline": "0px none rgb(66, 78, 90) off 1px",
+   "shadow": "none"
+  },
+  "shot": "exec-04-lahomes-1440.png"
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-pagination.html",
+  "w": 390,
+  "items": [
+   "Previous",
+   "1",
+   "2",
+   "3",
+   "Next"
+  ],
+  "text": "Previous 1 2 3 Next",
+  "overflow": false,
+  "focus": {
+   "tag": "A",
+   "text": "2",
+   "outline": "0px none rgb(66, 78, 90) off 1px",
+   "shadow": "none"
+  },
+  "shot": "exec-05-lahomes-390.png"
+ }
+]

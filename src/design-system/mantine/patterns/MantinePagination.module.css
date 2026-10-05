@@ -1,0 +1,10 @@
+/*
+ * Task 741 Revision 3f (R53) / 3g (R57) — keyword-only chrome for `MantinePagination`'s measuring probe. These two
+ * declarations have no Mantine style prop; every other value (flex, nowrap, gap, max-width) comes from the Mantine
+ * `Group` props in the component, and the row carries no `overflow: hidden` (it clipped the focus ring).
+ * No literal value here.
+ */
+.probe {
+  visibility: hidden;
+  pointer-events: none;
+}

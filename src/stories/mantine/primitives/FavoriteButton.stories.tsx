@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Group, Stack, Text } from '@mantine/core'
+import { Box, Group, SimpleGrid, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import cardStyles from '@/modules/listings/components/ListingCard.module.css'
+import { AppImage } from '@/design-system/media/AppImage'
 import { AuthContext } from '@/modules/auth/context/AuthContext'
 import type { User } from '@/types/database'
 import { MantineStoryShell } from '../_MantineStoryShell'
@@ -23,8 +24,8 @@ import { MantineStoryShell } from '../_MantineStoryShell'
  * `useEffect` mount (forbidden in stories) while still exercising the real button.
  *
  * `disabled`/`disabledLabel` and every `className`/`overlay` value below are the exact real
- * production call sites, not invented: `ListingCard.tsx:171-178` (list/inline,
- * `styles.inlineFavorite`, no `overlay`, rendered in the first section below), `ListingCard.tsx:263-271`
+ * production call sites, not invented: `ListingCard.tsx` (list/inline, no
+ * `className`, no `overlay` since Task 741 Revision 3h removed `styles.inlineFavorite`; rendered in the first section below), `ListingCard.tsx:263-271`
  * (grid, `overlay` + `styles.overlayFavorite`, rendered in the second section below), and
  * `ListingDetailView.tsx:248-254` (no `className`, no `overlay`,
  * `disabledLabel` from the `action_disabled_*` translations `favoriteDisabledLabel` resolves to),
@@ -97,35 +98,33 @@ export const Default: Story = {
           <Stack gap="xl">
             <Stack gap="sm">
               <Text size="xs" c="gray.5" fw={500}>
-                Icon shape, inline (`ListingCard.tsx`&apos;s list variant, `styles.inlineFavorite`) — the
+                Icon shape, inline (`ListingCard.tsx`&apos;s list variant, no className) — the
                 4 states AC4 requires: unsaved/saved × enabled/disabled.
               </Text>
               <Group gap="xl" wrap="wrap">
-                <Stack gap={4} align="center">
-                  <FavoriteButton listingId="story-1" isFavorited={false} className={cardStyles.inlineFavorite} />
+                <Stack gap="tight" align="center">
+                  <FavoriteButton listingId="story-1" isFavorited={false} />
                   <Text size="xs" c="dimmed">unsaved, enabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
-                  <FavoriteButton listingId="story-2" isFavorited className={cardStyles.inlineFavorite} />
+                <Stack gap="tight" align="center">
+                  <FavoriteButton listingId="story-2" isFavorited />
                   <Text size="xs" c="dimmed">saved, enabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton
                     listingId="story-3"
                     isFavorited={false}
                     disabled
                     disabledLabel={disabledLabel}
-                    className={cardStyles.inlineFavorite}
                   />
                   <Text size="xs" c="dimmed">unsaved, disabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton
                     listingId="story-4"
                     isFavorited
                     disabled
                     disabledLabel={disabledLabel}
-                    className={cardStyles.inlineFavorite}
                   />
                   <Text size="xs" c="dimmed">saved, disabled</Text>
                 </Stack>
@@ -137,20 +136,24 @@ export const Default: Story = {
                 Icon shape, `overlay` (`ListingCard.tsx`&apos;s grid variant, `overlay` + `styles.overlayFavorite`)
                 — the real production floating-corner contract, over a representative image area.
               </Text>
-              <Group gap="xl" wrap="wrap">
-                <Stack gap={4} align="center">
-                  <Box pos="relative" w={160} h={100} bg="gray.1">
+              <SimpleGrid cols={{ base: 1, sm: 2 }}>
+                <Stack gap="tight">
+                  {/* The production photo contract: the card's own `listing` image frame (the canonical MediaPlaceholder
+                      with no source), fluid in its grid column. */}
+                  <Box pos="relative">
+                    <AppImage variant="listing" src={null} alt="" />
                     <FavoriteButton listingId="story-5" isFavorited={false} overlay className={cardStyles.overlayFavorite} />
                   </Box>
                   <Text size="xs" c="dimmed">overlay, unsaved</Text>
                 </Stack>
-                <Stack gap={4} align="center">
-                  <Box pos="relative" w={160} h={100} bg="gray.1">
+                <Stack gap="tight">
+                  <Box pos="relative">
+                    <AppImage variant="listing" src={null} alt="" />
                     <FavoriteButton listingId="story-6" isFavorited overlay className={cardStyles.overlayFavorite} />
                   </Box>
                   <Text size="xs" c="dimmed">overlay, saved</Text>
                 </Stack>
-              </Group>
+              </SimpleGrid>
             </Stack>
 
             <Stack gap="sm">
@@ -159,19 +162,19 @@ export const Default: Story = {
                 the 4 states: unsaved/saved × enabled/disabled.
               </Text>
               <Group gap="xl" wrap="wrap">
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton listingId="story-9" isFavorited={false} />
                   <Text size="xs" c="dimmed">unsaved, enabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton listingId="story-10" isFavorited />
                   <Text size="xs" c="dimmed">saved, enabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton listingId="story-11" isFavorited={false} disabled disabledLabel={disabledLabel} />
                   <Text size="xs" c="dimmed">unsaved, disabled</Text>
                 </Stack>
-                <Stack gap={4} align="center">
+                <Stack gap="tight" align="center">
                   <FavoriteButton listingId="story-12" isFavorited disabled disabledLabel={disabledLabel} />
                   <Text size="xs" c="dimmed">saved, disabled</Text>
                 </Stack>

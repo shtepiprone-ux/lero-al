@@ -1,0 +1,722 @@
+{
+ "objects": {
+  "lero-card-grid-root-rest": {
+   "dpr": {
+    "1": "corners/lero-card-grid-root-rest-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-root-rest-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 39.5,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 63
+  },
+  "lero-card-list-root-rest": {
+   "dpr": {
+    "1": "corners/lero-card-list-root-rest-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-root-rest-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 86.4,
+   "edge": [
+    4,
+    5
+   ],
+   "edgeContrast": 225
+  },
+  "lero-card-grid-premium-rest": {
+   "dpr": {
+    "1": "corners/lero-card-grid-premium-rest-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-premium-rest-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 21.6,
+   "edge": [
+    3,
+    3
+   ],
+   "edgeContrast": 277
+  },
+  "lero-card-grid-archived-rest": {
+   "dpr": {
+    "1": "corners/lero-card-grid-archived-rest-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-archived-rest-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 23,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 64
+  },
+  "lero-card-list-archived-rest": {
+   "dpr": {
+    "1": "corners/lero-card-list-archived-rest-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-archived-rest-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 88.3,
+   "edge": [
+    4,
+    4
+   ],
+   "edgeContrast": 132
+  },
+  "lero-card-grid-root-hover": {
+   "dpr": {
+    "1": "corners/lero-card-grid-root-hover-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-root-hover-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 39.5,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 63
+  },
+  "lero-card-list-root-hover": {
+   "dpr": {
+    "1": "corners/lero-card-list-root-hover-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-root-hover-dpr1.25-10x.png"
+   },
+   "radius": 6,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(255, 255, 255)",
+   "areaRatio": 86.4,
+   "edge": [
+    4,
+    5
+   ],
+   "edgeContrast": 225
+  },
+  "lero-card-grid-badge-new": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-new-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-new-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(2, 122, 72)",
+   "areaRatio": 72.6,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 318
+  },
+  "lero-card-grid-badge-price-reduced": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-price-reduced-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-price-reduced-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(221, 9, 57)",
+   "areaRatio": 72.1,
+   "edge": [
+    4,
+    4
+   ],
+   "edgeContrast": 298
+  },
+  "lero-card-grid-badge-sold": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-sold-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-sold-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(0, 134, 201)",
+   "areaRatio": 76.3,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 176
+  },
+  "lero-card-grid-badge-rented": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-rented-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-rented-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(101, 71, 214)",
+   "areaRatio": 77.4,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 127
+  },
+  "lero-card-grid-badge-archived": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-archived-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-archived-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(52, 64, 84)",
+   "areaRatio": 75.6,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 187
+  },
+  "lero-card-grid-badge-expired": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-expired-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-expired-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(181, 71, 8)",
+   "areaRatio": 77.3,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 296
+  },
+  "lero-card-grid-badge-inactive": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-inactive-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-inactive-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(52, 64, 84)",
+   "areaRatio": 79.5,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 305
+  },
+  "lero-card-grid-badge-pending": {
+   "dpr": {
+    "1": "corners/lero-card-grid-badge-pending-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-badge-pending-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(181, 71, 8)",
+   "areaRatio": 79.4,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 296
+  },
+  "lero-card-list-badge-new": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-new-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-new-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(2, 122, 72)",
+   "areaRatio": 78.1,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 127
+  },
+  "lero-card-list-badge-price-reduced": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-price-reduced-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-price-reduced-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(221, 9, 57)",
+   "areaRatio": 78.1,
+   "edge": [
+    4,
+    4
+   ],
+   "edgeContrast": 163
+  },
+  "lero-card-list-badge-sold": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-sold-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-sold-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(0, 134, 201)",
+   "areaRatio": 78.2,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 153
+  },
+  "lero-card-list-badge-rented": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-rented-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-rented-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(101, 71, 214)",
+   "areaRatio": 78.2,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 133
+  },
+  "lero-card-list-badge-archived": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-archived-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-archived-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(52, 64, 84)",
+   "areaRatio": 83.5,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 61
+  },
+  "lero-card-list-badge-expired": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-expired-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-expired-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(181, 71, 8)",
+   "areaRatio": 83,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 137
+  },
+  "lero-card-list-badge-inactive": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-inactive-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-inactive-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(52, 64, 84)",
+   "areaRatio": 78.4,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 95
+  },
+  "lero-card-list-badge-pending": {
+   "dpr": {
+    "1": "corners/lero-card-list-badge-pending-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-badge-pending-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(181, 71, 8)",
+   "areaRatio": 77.2,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 137
+  },
+  "lero-card-grid-photo-count": {
+   "dpr": {
+    "1": "corners/lero-card-grid-photo-count-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-photo-count-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(16, 24, 40)",
+   "areaRatio": 81.2,
+   "edge": [
+    4,
+    3
+   ],
+   "edgeContrast": 373
+  },
+  "lero-card-grid-overlay-label": {
+   "dpr": {
+    "1": "corners/lero-card-grid-overlay-label-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-overlay-label-dpr1.25-10x.png"
+   },
+   "radius": 16,
+   "opacity": "1",
+   "border": "2px solid",
+   "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+   "areaRatio": 65.8,
+   "edge": [
+    3,
+    3
+   ],
+   "edgeContrast": 179
+  },
+  "lero-card-grid-favourite": {
+   "dpr": {
+    "1": "corners/lero-card-grid-favourite-dpr1-10x.png",
+    "1.25": "corners/lero-card-grid-favourite-dpr1.25-10x.png"
+   },
+   "radius": 16,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "color(srgb 0.999871 1.00005 1.00007 / 0.8)",
+   "areaRatio": 78,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 17
+  },
+  "lero-card-list-photo-count": {
+   "dpr": {
+    "1": "corners/lero-card-list-photo-count-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-photo-count-dpr1.25-10x.png"
+   },
+   "radius": 12,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "rgb(16, 24, 40)",
+   "areaRatio": 75.9,
+   "edge": [
+    3,
+    4
+   ],
+   "edgeContrast": 163
+  },
+  "lero-card-list-overlay-label": {
+   "dpr": {
+    "1": "corners/lero-card-list-overlay-label-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-overlay-label-dpr1.25-10x.png"
+   },
+   "radius": 16,
+   "opacity": "1",
+   "border": "2px solid",
+   "bg": "oklab(0.577 -0.087 -0.150688 / 0.8)",
+   "areaRatio": 66.4,
+   "edge": [
+    3,
+    3
+   ],
+   "edgeContrast": 160
+  },
+  "lero-card-list-favourite": {
+   "dpr": {
+    "1": "corners/lero-card-list-favourite-dpr1-10x.png",
+    "1.25": "corners/lero-card-list-favourite-dpr1.25-10x.png"
+   },
+   "radius": 16,
+   "opacity": "1",
+   "border": "1px solid",
+   "bg": "color(srgb 0.999871 1.00005 1.00007 / 0.8)",
+   "areaRatio": 33.6,
+   "edge": [
+    13,
+    14
+   ],
+   "edgeContrast": 0
+  },
+  "tailadmin-badge": {
+   "dpr": {
+    "1": "corners/tailadmin-badge-dpr1-10x.png",
+    "1.25": "corners/tailadmin-badge-dpr1.25-10x.png"
+   },
+   "radius": 10,
+   "opacity": "1",
+   "border": "0px solid",
+   "bg": "rgb(236, 253, 243)",
+   "areaRatio": 63.4,
+   "edge": [
+    14,
+    9
+   ],
+   "edgeContrast": 92
+  }
+ },
+ "ideal": 78.5,
+ "references": {
+  "badge": 63.4
+ },
+ "verdicts": {
+  "lero-card-grid-root-rest": {
+   "areaRatio": 39.5,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": false,
+   "vsIdeal": false
+  },
+  "lero-card-list-root-rest": {
+   "areaRatio": 86.4,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-grid-premium-rest": {
+   "areaRatio": 21.6,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": false,
+   "vsIdeal": false
+  },
+  "lero-card-grid-archived-rest": {
+   "areaRatio": 23,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": false,
+   "vsIdeal": false
+  },
+  "lero-card-list-archived-rest": {
+   "areaRatio": 88.3,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-grid-root-hover": {
+   "areaRatio": 39.5,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": false,
+   "vsIdeal": false
+  },
+  "lero-card-list-root-hover": {
+   "areaRatio": 86.4,
+   "radius": 6,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-new": {
+   "areaRatio": 72.6,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-price-reduced": {
+   "areaRatio": 72.1,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-sold": {
+   "areaRatio": 76.3,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-rented": {
+   "areaRatio": 77.4,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-archived": {
+   "areaRatio": 75.6,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-expired": {
+   "areaRatio": 77.3,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-inactive": {
+   "areaRatio": 79.5,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-badge-pending": {
+   "areaRatio": 79.4,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-new": {
+   "areaRatio": 78.1,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-price-reduced": {
+   "areaRatio": 78.1,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-sold": {
+   "areaRatio": 78.2,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-rented": {
+   "areaRatio": 78.2,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-archived": {
+   "areaRatio": 83.5,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-expired": {
+   "areaRatio": 83,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-inactive": {
+   "areaRatio": 78.4,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-badge-pending": {
+   "areaRatio": 77.2,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-photo-count": {
+   "areaRatio": 81.2,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-grid-overlay-label": {
+   "areaRatio": 65.8,
+   "radius": 16,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": true,
+   "vsIdeal": false
+  },
+  "lero-card-grid-favourite": {
+   "areaRatio": 78,
+   "radius": 16,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": true,
+   "vsIdeal": true
+  },
+  "lero-card-list-photo-count": {
+   "areaRatio": 75.9,
+   "radius": 12,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": false,
+   "vsIdeal": true
+  },
+  "lero-card-list-overlay-label": {
+   "areaRatio": 66.4,
+   "radius": 16,
+   "opacity": "1",
+   "vsReference": 63.4,
+   "within10": true,
+   "vsIdeal": false
+  },
+  "lero-card-list-favourite": {
+   "areaRatio": 33.6,
+   "radius": 16,
+   "opacity": "1",
+   "vsReference": 78.5,
+   "within10": false,
+   "vsIdeal": false
+  }
+ }
+}

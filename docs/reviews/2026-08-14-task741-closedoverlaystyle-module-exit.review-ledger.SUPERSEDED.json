@@ -617,12 +617,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
           }
         ],
@@ -784,12 +784,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
           }
         ],
@@ -957,12 +957,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
           }
         ],
@@ -1124,12 +1124,12 @@
         "allowedSemanticDeltas": [
           {
             "field": "selector",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "The change from a Tailwind utility class to a colocated CSS Modules class IS the task: the D28 module exit, owner-authorised 2026-08-14 in the kickoff. The consuming element is unchanged (MantineListingCardPattern.tsx:320, cn(styles.overlayLabel, overlay.className)); only the class name reaching it changes."
           },
           {
             "field": "sourceOrder",
-            "ownerDecisionArtifact": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
+            "ownerDecisionArtifact": "tasks/Archive/Sprint_46_kickoff_prompt_Task_741_ClosedOverlayStyleModuleExit.md",
             "reason": "Relocating the rule from the Tailwind stylesheet to the module stylesheet necessarily changes its position inside @layer utilities. D34 authorises the layered placement so the migrated rule keeps its cascade standing, and nothing contends for either declaration in either position: MantineListingCardPattern.module.css:348-359 .overlayLabel (unlayered) sets neither background-color nor border-color, re-measured by the reviewer."
           }
         ],

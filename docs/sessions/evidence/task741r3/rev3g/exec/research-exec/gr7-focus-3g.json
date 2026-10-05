@@ -1,0 +1,93 @@
+[
+ {
+  "ref": "kamr",
+  "w": 1440,
+  "row": null,
+  "focus": {
+   "text": "2",
+   "fv": true,
+   "outline": "3px none rgb(110, 110, 110) off 0px",
+   "shadow": "none",
+   "r": {
+    "x": 390.359375,
+    "y": 301.9375,
+    "w": 38.0625,
+    "h": 38.375
+   }
+  }
+ },
+ {
+  "ref": "kamr",
+  "w": 390,
+  "row": null,
+  "focus": {
+   "text": "2",
+   "fv": true,
+   "outline": "3px none rgb(110, 110, 110) off 0px",
+   "shadow": "none",
+   "r": {
+    "x": 97.234375,
+    "y": 252.9375,
+    "w": 38.0625,
+    "h": 38.375
+   }
+  }
+ },
+ {
+  "ref": "tailadmin",
+  "w": 1440,
+  "row": "Previous 1 2 3 ... 8 9 10 Next",
+  "focus": {
+   "text": "1",
+   "fv": true,
+   "outline": "1px auto rgb(16, 16, 16) off 1px",
+   "shadow": "none",
+   "r": {
+    "x": 453.890625,
+    "y": 260,
+    "w": 40,
+    "h": 40
+   }
+  }
+ },
+ {
+  "ref": "tailadmin",
+  "w": 390,
+  "row": "Page 1 of 10",
+  "focus": null
+ },
+ {
+  "ref": "lahomes",
+  "w": 1440,
+  "row": "Previous 1 2 3 Next",
+  "focus": {
+   "text": "1",
+   "fv": true,
+   "outline": "0px none rgb(255, 255, 255) off 1px",
+   "shadow": "none",
+   "r": {
+    "x": 401.234375,
+    "y": 220.59375,
+    "w": 31.796875,
+    "h": 35
+   }
+  }
+ },
+ {
+  "ref": "lahomes",
+  "w": 390,
+  "row": "Previous 1 2 3 Next",
+  "focus": {
+   "text": "1",
+   "fv": true,
+   "outline": "0px none rgb(255, 255, 255) off 1px",
+   "shadow": "none",
+   "r": {
+    "x": 118.234375,
+    "y": 231.59375,
+    "w": 31.796875,
+    "h": 35
+   }
+  }
+ }
+]

@@ -1,0 +1,355 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx (12 tests | 5 failed) 299ms
+     × renders the overlay in list mode too (Task 741 R63: the overlay is part of the shared photo chrome) 19ms
+     × 'an open reduced listing': every data-card-part node is identical in grid and list 29ms
+     × 'a sold listing': every data-card-part node is identical in grid and list 26ms
+     × 'a premium listing': every data-card-part node is identical in grid and list 21ms
+     × renders the sold overlay in list too (R63) 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — layout="list" (Task 606, ported legacy horizontal design) > renders the overlay in list mode too (Task 741 R63: the overlay is part of the shared photo chrome)
+TestingLibraryElementError: Unable to find an element with the text: SOLD. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_card_c737cc _listRow_c737cc m_e615b15f mantine-Card-root m_1b7284a3 mantine-Paper-root"[39m
+      [33mdata-with-border[39m=[32m"true"[39m
+      [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-2); --paper-radius: var(--mantine-radius-md); --card-padding: 0rem;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_imageSection_c737cc _listImage_c737cc"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Modern Apartment"[39m
+          [33msrc[39m=[32m"https://example.com/photo.jpg"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_badgesList_c737cc"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-variant[39m=[32m"filled"[39m
+            [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: var(--mantine-color-green-filled); --badge-color: var(--mantine-color-white); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+            [36m>[39m
+              [0mNew[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_photoCountList_c737cc m_4081bf90 mantine-Group-root"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-camera _cardIcon_c737cc"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"[39m
+            [36m/>[39m
+            [36m<circle[39m
+              [33mcx[39m=[32m"12"[39m
+              [33mcy[39m=[32m"13"[39m
+              [33mr[39m=[32m"3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [0m5[0m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_infoColumn_c737cc m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: 0rem; --stack-align: stretch; --stack-justify: space-between; padding-block: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: flex-start; --group-justify: space-between; --group-wrap: nowrap; margin-bottom: var(--mantine-spacing-tight);"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"xs"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--muted-foreground);"[39m
+            [36m>[39m
+              [0mFor sale · Apartment[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Add to favorites"[39m
+              [33maria-pressed[39m=[32m"false"[39m
+            [36m>[39m
+              [0mheart[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<h3[39m
+            [33mclass[39m=[32m"mantine-focus-auto _cardTitle_c737cc m_b6d8b162 mantine-Text-root"[39m
+            [33mdata-line-clamp[39m=[32m"true"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); --text-line-clamp: 2; font-weight: 600;"[39m
+          [36m>[39m
+            [0mModern Apartment[0m
+          [36m</h3>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_priceWrapper_c737cc"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-micro) var(--mantine-spacing-sm); --group-align: baseline; --group-justify: space-between; --group-wrap: wrap;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: baseline; --group-justify: flex-start; --group-wrap: wrap;"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                  [33mdata-size[39m=[32m"md"[39m
+                  [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-md); --text-lh: var(--mantine-line-height-md); white-space: nowrap; color: var(--mantine-color-brand-text); font-weight: 700;"[39m
+                [36m>[39m
+                  [0m80,000 EUR[0m
+                [36m</span>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_metaRow_c737cc m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight) var(--mantine-spacing-sm); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; margin-top: var(--mantine-spacing-compact);"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spaci...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:106:19
+    104|   it('renders the overlay in list mode too (Task 741 R63: the overlay …
+    105|     renderPattern({ ...baseProps('list'), overlay: { label: 'SOLD', cl…
+    106|     expect(screen.getByText('SOLD')).toBeInTheDocument()
+       |                   ^
+    107|   })
+    108| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — one source per part in grid and list (Task 741 R62/R66a) > 'an open reduced listing': every data-card-part node is identical in grid and list
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — one source per part in grid and list (Task 741 R62/R66a) > 'a premium listing': every data-card-part node is identical in grid and list
+AssertionError: expected [] to deeply equal [ 'badges', 'chips', 'footer', …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "badges",
+-   "chips",
+-   "footer",
+-   "head",
+-   "photo-count",
+- ]
++ []
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:172:43
+    170|     const listParts = partsOf(list.container)
+    171|
+    172|     expect(Object.keys(gridParts).sort()).toEqual([...parts].sort())
+       |                                           ^
+    173|     expect(Object.keys(listParts).sort()).toEqual([...parts].sort())
+    174|     for (const part of parts) expect(listParts[part], `part "${part}" …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — one source per part in grid and list (Task 741 R62/R66a) > 'a sold listing': every data-card-part node is identical in grid and list
+AssertionError: expected [] to deeply equal [ 'badges', 'chips', 'footer', …(3) ]
+
+- Expected
++ Received
+
+- [
+-   "badges",
+-   "chips",
+-   "footer",
+-   "head",
+-   "overlay",
+-   "photo-count",
+- ]
++ []
+
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:172:43
+    170|     const listParts = partsOf(list.container)
+    171|
+    172|     expect(Object.keys(gridParts).sort()).toEqual([...parts].sort())
+       |                                           ^
+    173|     expect(Object.keys(listParts).sort()).toEqual([...parts].sort())
+    174|     for (const part of parts) expect(listParts[part], `part "${part}" …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx > MantineListingCardPattern — one source per part in grid and list (Task 741 R62/R66a) > renders the sold overlay in list too (R63)
+TestingLibraryElementError: Unable to find an element with the text: SOLD. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"_card_c737cc _listRow_c737cc m_e615b15f mantine-Card-root m_1b7284a3 mantine-Paper-root"[39m
+      [33mdata-with-border[39m=[32m"true"[39m
+      [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-2); --paper-radius: var(--mantine-radius-md); --card-padding: 0rem;"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_imageSection_c737cc _listImage_c737cc"[39m
+      [36m>[39m
+        [36m<img[39m
+          [33malt[39m=[32m"Modern Apartment"[39m
+          [33msrc[39m=[32m"https://example.com/photo.jpg"[39m
+        [36m/>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_badgesList_c737cc"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_347db0ec mantine-Badge-root"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mdata-variant[39m=[32m"filled"[39m
+            [33mstyle[39m=[32m"font-weight: 500; text-transform: none; letter-spacing: normal; font-size: 0.75rem; line-height: 1.125rem; height: auto; padding: 0.125rem 0.5rem; --badge-height: var(--badge-height-sm); --badge-padding-x: var(--badge-padding-x-sm); --badge-fz: var(--badge-fz-sm); --badge-radius: var(--mantine-radius-pill); --badge-bg: var(--mantine-color-green-filled); --badge-color: var(--mantine-color-white); --badge-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_5add502a mantine-Badge-label"[39m
+            [36m>[39m
+              [0mNew[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"_photoCountList_c737cc m_4081bf90 mantine-Group-root"[39m
+          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: center; --group-justify: flex-start; --group-wrap: wrap;"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-camera _cardIcon_c737cc"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"[39m
+            [36m/>[39m
+            [36m<circle[39m
+              [33mcx[39m=[32m"12"[39m
+              [33mcy[39m=[32m"13"[39m
+              [33mr[39m=[32m"3"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [0m5[0m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"_infoColumn_c737cc m_6d731127 mantine-Stack-root"[39m
+        [33mstyle[39m=[32m"--stack-gap: 0rem; --stack-align: stretch; --stack-justify: space-between; padding-block: var(--mantine-spacing-sm); padding-right: var(--mantine-spacing-sm);"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight); --group-align: flex-start; --group-justify: space-between; --group-wrap: nowrap; margin-bottom: var(--mantine-spacing-tight);"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+              [33mdata-size[39m=[32m"xs"[39m
+              [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--muted-foreground);"[39m
+            [36m>[39m
+              [0mFor sale · Apartment[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Add to favorites"[39m
+              [33maria-pressed[39m=[32m"false"[39m
+            [36m>[39m
+              [0mheart[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<h3[39m
+            [33mclass[39m=[32m"mantine-focus-auto _cardTitle_c737cc m_b6d8b162 mantine-Text-root"[39m
+            [33mdata-line-clamp[39m=[32m"true"[39m
+            [33mdata-size[39m=[32m"sm"[39m
+            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); --text-line-clamp: 2; font-weight: 600;"[39m
+          [36m>[39m
+            [0mModern Apartment[0m
+          [36m</h3>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m""[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_priceWrapper_c737cc"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-micro) var(--mantine-spacing-sm); --group-align: baseline; --group-justify: space-between; --group-wrap: wrap;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+                [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: baseline; --group-justify: flex-start; --group-wrap: wrap;"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
+                  [33mdata-size[39m=[32m"md"[39m
+                  [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-md); --text-lh: var(--mantine-line-height-md); white-space: nowrap; color: var(--mantine-color-brand-text); font-weight: 700;"[39m
+                [36m>[39m
+                  [0m80,000 EUR[0m
+                [36m</span>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"_metaRow_c737cc m_4081bf90 mantine-Group-root"[39m
+            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-tight) var(--mantine-spacing-sm); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; margin-top: var(--mantine-spacing-compact);"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
+              [33mstyle[39m=[32m"--group-gap: var(--mantine-spaci...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx:179:19
+    177|   it('renders the sold overlay in list too (R63)', () => {
+    178|     renderPattern({ ...baseProps('list'), overlay: { label: 'SOLD', to…
+    179|     expect(screen.getByText('SOLD')).toBeInTheDocument()
+       |                   ^
+    180|   })
+    181| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 7 passed (12)
+   Start at  21:50:33
+   Duration  2.14s (transform 140ms, setup 98ms, import 807ms, tests 299ms, environment 785ms)
+
+EXIT_CODE=1

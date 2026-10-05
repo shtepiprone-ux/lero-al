@@ -1,0 +1,33 @@
+lero-card-grid-root-rest                 r 6 ratio 39.5 op 1 
+lero-card-list-root-rest                 r 6 ratio 86.4 op 1 
+lero-card-grid-premium-rest              r 6 ratio 21.6 op 1 
+lero-card-grid-archived-rest             r 6 ratio 23 op 1 
+lero-card-list-archived-rest             r 6 ratio 88.3 op 1 
+lero-card-grid-root-hover                r 6 ratio 39.5 op 1 
+lero-card-list-root-hover                r 6 ratio 86.4 op 1 
+lero-card-grid-badge-new                 r 12 ratio 72.6 op 1 
+lero-card-grid-badge-price-reduced       r 12 ratio 72.1 op 1 
+lero-card-grid-badge-sold                r 12 ratio 76.3 op 1 
+lero-card-grid-badge-rented              r 12 ratio 77.4 op 1 
+lero-card-grid-badge-archived            r 12 ratio 75.6 op 1 
+lero-card-grid-badge-expired             r 12 ratio 77.3 op 1 
+lero-card-grid-badge-inactive            r 12 ratio 79.5 op 1 
+lero-card-grid-badge-pending             r 12 ratio 79.4 op 1 
+lero-card-list-badge-new                 r 12 ratio 78.1 op 1 
+lero-card-list-badge-price-reduced       r 12 ratio 78.1 op 1 
+lero-card-list-badge-sold                r 12 ratio 78.2 op 1 
+lero-card-list-badge-rented              r 12 ratio 78.2 op 1 
+lero-card-list-badge-archived            r 12 ratio 83.5 op 1 
+lero-card-list-badge-expired             r 12 ratio 83 op 1 
+lero-card-list-badge-inactive            r 12 ratio 78.4 op 1 
+lero-card-list-badge-pending             r 12 ratio 77.2 op 1 
+lero-card-grid-photo-count               r 12 ratio 81.2 op 1 
+lero-card-grid-overlay-label             r 16 ratio 65.8 op 1 
+lero-card-grid-favourite                 r 16 ratio 78 op 1 
+lero-card-list-photo-count               r 12 ratio 75.9 op 1 
+lero-card-list-overlay-label             r 16 ratio 66.4 op 1 
+lero-card-list-favourite                 r 16 ratio 33.6 op 1 
+tailadmin-badge                          r 10 ratio 63.4 op 1 
+references {"badge":63.4}
+outside 10 points of reference and of the ideal arc: lero-card-grid-root-rest=39.5, lero-card-grid-premium-rest=21.6, lero-card-grid-archived-rest=23, lero-card-grid-root-hover=39.5, lero-card-list-favourite=33.6
+EXIT_CODE=0

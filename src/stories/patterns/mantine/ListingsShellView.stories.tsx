@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 import { ListingsShellView, type ListingsShellViewProps } from '@/modules/listings/components/ListingsShellView';
 import { SaveSearchButton } from '@/modules/listings/components/SaveSearchButton';
-import { makeCardListingFixtures } from '@/stories/fixtures/cardListingData.fixture';
+import { FIXTURE_OLD_CREATED_AT, makeStateListing } from '@/stories/fixtures/cardListingData.fixture';
 
 /**
  * Task 781 Phase 4 — `/listings` shell presentation: shell root, empty state, grid/list layout
@@ -47,27 +47,50 @@ const meta: Meta<typeof ListingsShellView> = {
 export default meta;
 type Story = StoryObj<typeof ListingsShellView>;
 
+// Task 741 Revision 3e (R50, owner D46-6): every state below is one `/listings` can render
+// (`page.tsx:46-49`, `ListingsShell.tsx:167`, `ListingsPagination.tsx:21`). Inactive, pending, archived and expired
+// never reach this page; they stay in the `Mantine/Primitives/ListingCard` Story. Cards come from the shared
+// `makeStateListing`, strings from the existing keys, and the URL query drives tabs and chips like production.
+const FAVOURITE_KEY = 'favourite';
+
+const ACTIVE_STATES = (l: string) => [
+  makeStateListing(l, 'new'),
+  makeStateListing(l, 'plain', { createdAt: FIXTURE_OLD_CREATED_AT }),
+  makeStateListing(l, 'new-reduced', { priceOld: 92000 }),
+  makeStateListing(l, 'premium', { createdAt: FIXTURE_OLD_CREATED_AT, premium: true }),
+  makeStateListing(l, 'no-image', { createdAt: FIXTURE_OLD_CREATED_AT, noImage: true }),
+  makeStateListing(l, FAVOURITE_KEY, { createdAt: FIXTURE_OLD_CREATED_AT }),
+];
+
+const CLOSED_STATES = (l: string) => [
+  makeStateListing(l, 'sold', { status: 'sold', createdAt: FIXTURE_OLD_CREATED_AT }),
+  makeStateListing(l, 'rented', { status: 'rented', createdAt: FIXTURE_OLD_CREATED_AT }),
+];
+
+const ACTIVE_QUERY = { type: 'sale', rooms: '2' };
+const CLOSED_QUERY = { tab: 'closed' };
+
 function ShellDemo(props: Partial<ListingsShellViewProps> & { locale: string }) {
   const [view, setView] = useState<'grid' | 'list'>('grid');
-  const listings = makeCardListingFixtures(props.locale);
+  const { locale, ...overrides } = props;
 
   return (
     <StoryPageGutter>
       <ListingsShellView
-        listings={props.listings ?? listings}
-        total={props.total ?? listings.length}
+        listings={ACTIVE_STATES(locale)}
+        total={18}
         page={1}
-        perPage={20}
+        perPage={6}
         locations={[]}
         tab="active"
         activeFiltersCount={2}
         displayCurrency="EUR"
         rates={null}
-        favoriteIds={new Set()}
+        favoriteIds={new Set([`story-listing-001-${FAVOURITE_KEY}`])}
         view={view}
         filtersOpen={false}
         isLoadingMore={false}
-        showLoadMore={props.showLoadMore ?? true}
+        showLoadMore
         onViewChange={setView}
         onFiltersOpenChange={() => {}}
         onFiltersOpen={() => {}}
@@ -76,21 +99,49 @@ function ShellDemo(props: Partial<ListingsShellViewProps> & { locale: string }) 
         onFavoriteToggled={() => {}}
         filtersSlot={null}
         saveSearchSlot={<SaveSearchButton />}
+        {...overrides}
       />
     </StoryPageGutter>
   );
 }
 
+const localeOf = (context?: { globals?: Record<string, unknown> }) => (context?.globals?.locale as string) ?? 'en';
+
+const queryParams = (query: Record<string, string>) => ({ nextjs: { navigation: { pathname: '/listings', query } } });
+
+/** Active tab: new, plain, price reduced, premium, no photo and favourite cards; 2 filter chips; "Show more" and 3 pages. */
 export const Default: Story = {
+  parameters: queryParams(ACTIVE_QUERY),
+  render: (_, context) => <ShellDemo locale={localeOf(context)} />,
+};
+
+/** Closed tab: a sold and a rented card with the overlay; everything is loaded, so no "Show more" and no pagination. */
+export const ClosedTab: Story = {
+  parameters: queryParams(CLOSED_QUERY),
   render: (_, context) => {
-    const l = (context?.globals?.locale as string) ?? 'en';
-    return <ShellDemo locale={l} />;
+    const l = localeOf(context);
+    return <ShellDemo locale={l} tab="closed" activeFiltersCount={0} listings={CLOSED_STATES(l)} total={2} perPage={20} showLoadMore={false} />;
   },
 };
 
+/** Closed tab with no sold or rented listing: the canonical empty state, no description. */
+export const ClosedEmpty: Story = {
+  parameters: queryParams(CLOSED_QUERY),
+  render: (_, context) => (
+    <ShellDemo locale={localeOf(context)} tab="closed" activeFiltersCount={0} listings={[]} total={0} perPage={20} showLoadMore={false} />
+  ),
+};
+
+/** Active tab with no result: the canonical empty state with title and description. */
 export const Empty: Story = {
-  render: (_, context) => {
-    const l = (context?.globals?.locale as string) ?? 'en';
-    return <ShellDemo locale={l} listings={[]} total={0} showLoadMore={false} />;
-  },
+  parameters: queryParams({}),
+  render: (_, context) => (
+    <ShellDemo locale={localeOf(context)} activeFiltersCount={0} listings={[]} total={0} perPage={20} showLoadMore={false} />
+  ),
+};
+
+/** `Default`'s data while "Show more" is fetching: the button shows Mantine's own loading state. */
+export const LoadingMore: Story = {
+  parameters: queryParams(ACTIVE_QUERY),
+  render: (_, context) => <ShellDemo locale={localeOf(context)} isLoadingMore />,
 };

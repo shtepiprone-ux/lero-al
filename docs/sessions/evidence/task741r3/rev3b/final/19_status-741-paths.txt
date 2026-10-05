@@ -1,0 +1,16 @@
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/surface-census-baseline.json
+ M src/design-system/mantine/patterns/MantineListingCardPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+ M src/modules/listings/components/ListingCard.tsx
+ M src/modules/listings/components/ListingStatusBanner.tsx
+ M src/modules/listings/components/ListingsShellView.tsx
+ M src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+ M src/modules/listings/lib/listingStatusTone.ts
+ M src/stories/mantine/primitives/ListingCard.stories.tsx
+ M src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+?? docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md
+?? docs/sessions/evidence/task741r3/
+?? src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx

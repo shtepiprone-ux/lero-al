@@ -1,0 +1,38 @@
+{
+  "id": "patterns-mantine-listingsshellview--default",
+  "platform": "win32",
+  "steps": {
+    "1_1440_initial": {
+      "innerWidth": 1440,
+      "horizontalCards": 0,
+      "verticalCards": 8,
+      "toggleVisible": true,
+      "gridButtonVariant": "filled",
+      "listButtonVariant": "subtle"
+    },
+    "2_1440_after_click_List": {
+      "innerWidth": 1440,
+      "horizontalCards": 8,
+      "verticalCards": 0,
+      "toggleVisible": true,
+      "gridButtonVariant": "subtle",
+      "listButtonVariant": "filled"
+    },
+    "3_390": {
+      "innerWidth": 390,
+      "horizontalCards": 0,
+      "verticalCards": 8,
+      "toggleVisible": false,
+      "gridButtonVariant": "filled",
+      "listButtonVariant": "subtle"
+    },
+    "4_1440_back": {
+      "innerWidth": 1440,
+      "horizontalCards": 0,
+      "verticalCards": 8,
+      "toggleVisible": true,
+      "gridButtonVariant": "filled",
+      "listButtonVariant": "subtle"
+    }
+  }
+}

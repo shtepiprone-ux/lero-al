@@ -1,0 +1,197 @@
+2026-10-05T07:46:32+0200
+ M docs/research/references/2026-10-04/gr7-deep.mjs
+ M docs/responsive-storybook-inventory.md
+ M messages/en.json
+ M messages/it.json
+ M messages/sq.json
+ M messages/uk.json
+ M package-lock.json
+ M package.json
+ M scripts/check-stories-rendered.mjs
+ M scripts/governance/tailwind-entropy.allowlist.json
+ M scripts/i18n-dynamic-manifest.json
+ M scripts/mantine-migration-scope.json
+ M scripts/rendered-scope-baseline.json
+ M scripts/surface-census-baseline.json
+ M scripts/type-responsive-baseline.json
+ M src/app/admin/currency/page.tsx
+ M src/app/admin/inquiries/sales/page.tsx
+ M src/app/admin/inquiries/support/page.tsx
+ M src/app/admin/pages/page.tsx
+ M src/app/admin/reports/page.tsx
+ M src/app/admin/support/page.tsx
+ M src/app/admin/users/page.tsx
+ D src/components/admin/AdminSupportManager.stories.tsx
+ M src/components/admin/AdminSupportManager.tsx
+ M src/design-system/mantine/pagination-chrome.css
+ M src/design-system/mantine/patterns/MantineListingCardPattern.module.css
+ M src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+ M src/design-system/mantine/patterns/MantinePagination.tsx
+ M src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+ M src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx
+ M src/design-system/mantine/theme.ts
+ M src/modules/listings/components/ListingCard.module.css
+ M src/modules/listings/components/ListingCard.tsx
+ M src/modules/listings/components/ListingStatusBanner.tsx
+ M src/modules/listings/components/ListingsShellView.tsx
+ M src/modules/listings/components/ListingsSortBar.tsx
+ M src/modules/listings/components/SaveSearchButton.tsx
+ M src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+ M src/modules/listings/lib/listingStatusTone.ts
+ M src/stories/fixtures/admin.fixtures.ts
+ M src/stories/fixtures/cardListingData.fixture.ts
+ M src/stories/mantine/primitives/FavoriteButton.stories.tsx
+ M src/stories/mantine/primitives/ListingCard.stories.tsx
+ M src/stories/mantine/primitives/ListingFeatureIcon.stories.tsx
+ M src/stories/mantine/primitives/Pagination.stories.tsx
+ M src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+ M src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx
+ M src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx
+ M src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+ M src/stories/patterns/mantine/AdminPagesView.stories.tsx
+ M src/stories/patterns/mantine/AdminReportsView.stories.tsx
+ M src/stories/patterns/mantine/AdminUsersTable.stories.tsx
+ M src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+ M src/stories/patterns/mantine/ListingsShellView.stories.tsx
+?? docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md
+?? docs/sessions/2026-10-04-task859-admin-support-mantine.md
+?? docs/sessions/evidence/task741r3/00_build-storybook-before.txt
+?? docs/sessions/evidence/task741r3/01_red.txt
+?? docs/sessions/evidence/task741r3/02_green_vitest.txt
+?? docs/sessions/evidence/task741r3/03_typecheck.txt
+?? docs/sessions/evidence/task741r3/10_check-stories.txt
+?? docs/sessions/evidence/task741r3/11_check-story-coverage.txt
+?? docs/sessions/evidence/task741r3/12_design-tokens-strict.txt
+?? docs/sessions/evidence/task741r3/13_governance-tailwind.txt
+?? docs/sessions/evidence/task741r3/14_lint.txt
+?? docs/sessions/evidence/task741r3/15_build-storybook.txt
+?? docs/sessions/evidence/task741r3/16_build.txt
+?? docs/sessions/evidence/task741r3/17_file-integrity.txt
+?? docs/sessions/evidence/task741r3/18_mojibake.txt
+?? docs/sessions/evidence/task741r3/19_greps_hashes.txt
+?? docs/sessions/evidence/task741r3/probe-after.json
+?? docs/sessions/evidence/task741r3/probe-before.json
+?? docs/sessions/evidence/task741r3/probe-diff.txt
+?? docs/sessions/evidence/task741r3/probe-gr3.json
+?? docs/sessions/evidence/task741r3/probe-gr3.mjs
+?? docs/sessions/evidence/task741r3/probe.mjs
+?? docs/sessions/evidence/task741r3/rev3a/
+?? docs/sessions/evidence/task741r3/rev3b/
+?? docs/sessions/evidence/task741r3/rev3c/00_i0.txt
+?? docs/sessions/evidence/task741r3/rev3c/final/
+?? docs/sessions/evidence/task741r3/rev3c/probe-gr3.json
+?? docs/sessions/evidence/task741r3/rev3c/probe-gr3.mjs
+?? docs/sessions/evidence/task741r3/rev3c/probe-states-verify.txt
+?? docs/sessions/evidence/task741r3/rev3c/probe-states.json
+?? docs/sessions/evidence/task741r3/rev3c/probe-states.mjs
+?? docs/sessions/evidence/task741r3/rev3c/probe-uk320.json
+?? docs/sessions/evidence/task741r3/rev3c/probe-uk320.mjs
+?? docs/sessions/evidence/task741r3/rev3c/r43-green.txt
+?? docs/sessions/evidence/task741r3/rev3c/r43-red.txt
+?? docs/sessions/evidence/task741r3/rev3c/research-exec/
+?? docs/sessions/evidence/task741r3/rev3c/verify-red.txt
+?? docs/sessions/evidence/task741r3/rev3c/verify-states.mjs
+?? docs/sessions/evidence/task741r3/rev3d/
+?? docs/sessions/evidence/task741r3/rev3e/exec/
+?? docs/sessions/evidence/task741r3/rev3f/exec/
+?? docs/sessions/evidence/task741r3/rev3g/exec/
+?? docs/sessions/evidence/task741r3/rev3h/exec/
+?? docs/sessions/evidence/task741r3/rev3i/exec/
+?? docs/sessions/evidence/task741r3/rev3j/
+?? docs/sessions/evidence/task859/01-status-hashes.txt
+?? docs/sessions/evidence/task859/02-census-before.txt
+?? docs/sessions/evidence/task859/09-platform.txt
+?? docs/sessions/evidence/task859/10-tests.txt
+?? docs/sessions/evidence/task859/11-census-after.txt
+?? docs/sessions/evidence/task859/12-plants.txt
+?? docs/sessions/evidence/task859/12-typecheck.txt
+?? docs/sessions/evidence/task859/13-lint.txt
+?? docs/sessions/evidence/task859/14-story-coverage.txt
+?? docs/sessions/evidence/task859/15-rendered-scope.txt
+?? docs/sessions/evidence/task859/16-census-changed.txt
+?? docs/sessions/evidence/task859/17-design-tokens.txt
+?? docs/sessions/evidence/task859/17b-enrolled-tailwind.txt
+?? docs/sessions/evidence/task859/17c-i18n.txt
+?? docs/sessions/evidence/task859/17d-i18n-dynamic.txt
+?? docs/sessions/evidence/task859/18-file-integrity.txt
+?? docs/sessions/evidence/task859/18b-mojibake.txt
+?? docs/sessions/evidence/task859/18c-type-responsive.txt
+?? docs/sessions/evidence/task859/18d-governance-tailwind.txt
+?? docs/sessions/evidence/task859/18e-check-stories.txt
+?? docs/sessions/evidence/task859/19-storybook-build.txt
+?? docs/sessions/evidence/task859/19b-build.txt
+?? docs/sessions/evidence/task859/20-baseline-diff.txt
+?? docs/sessions/evidence/task859/20b-reference-audit-live.txt
+?? docs/sessions/evidence/task859/20b-reference-audit.txt
+?? docs/sessions/evidence/task859/21-status-after.txt
+?? docs/sessions/evidence/task859/22-hash-object.txt
+?? docs/sessions/evidence/task859/30-measure.mjs
+?? docs/sessions/evidence/task859/30-measurements.json
+?? docs/sessions/evidence/task859/31-probe-320.json
+?? docs/sessions/evidence/task859/31-probe-320.mjs
+?? docs/sessions/evidence/task859/32-probe-chain.json
+?? docs/sessions/evidence/task859/32-probe-chain.mjs
+?? docs/sessions/evidence/task859/plants.mjs
+?? docs/sessions/evidence/task859/r1-00-platform.txt
+?? docs/sessions/evidence/task859/r1-01-frozen-hashes-start.txt
+?? docs/sessions/evidence/task859/r1-03-tests.txt
+?? docs/sessions/evidence/task859/r1-04-census.txt
+?? docs/sessions/evidence/task859/r1-05-typecheck.txt
+?? docs/sessions/evidence/task859/r1-06-lint.txt
+?? docs/sessions/evidence/task859/r1-07-story-coverage.txt
+?? docs/sessions/evidence/task859/r1-08-check-stories.txt
+?? docs/sessions/evidence/task859/r1-09-rendered-scope.txt
+?? docs/sessions/evidence/task859/r1-10-census-changed.txt
+?? docs/sessions/evidence/task859/r1-12-plants.txt
+?? docs/sessions/evidence/task859/r1-13-design-tokens.txt
+?? docs/sessions/evidence/task859/r1-14-enrolled-tailwind.txt
+?? docs/sessions/evidence/task859/r1-15-i18n.txt
+?? docs/sessions/evidence/task859/r1-16-i18n-dynamic.txt
+?? docs/sessions/evidence/task859/r1-17-type-responsive.txt
+?? docs/sessions/evidence/task859/r1-18-file-integrity.txt
+?? docs/sessions/evidence/task859/r1-19-mojibake.txt
+?? docs/sessions/evidence/task859/r1-20-storybook-build.txt
+?? docs/sessions/evidence/task859/r1-21-build.txt
+?? docs/sessions/evidence/task859/r1-22-reference-audit.txt
+?? docs/sessions/evidence/task859/r1-23-lucide.txt
+?? docs/sessions/evidence/task859/r1-24-frozen-hashes-end.txt
+?? docs/sessions/evidence/task859/r1-25-status.txt
+?? docs/sessions/evidence/task859/r1-30-measure.mjs
+?? docs/sessions/evidence/task859/r1-30-measurements.json
+?? docs/sessions/evidence/task859/r1-gr3f-radio-0-unchecked-10x.png
+?? docs/sessions/evidence/task859/r1-gr3f-radio-1-checked-10x.png
+?? docs/sessions/evidence/task859/r1-gr3f-radio-2-unchecked-10x.png
+?? docs/sessions/evidence/task859/r1-gr3f-radio-3-unchecked-10x.png
+?? docs/sessions/evidence/task859/r1-gr3g-navrow-first-tl-focus-10x.png
+?? docs/sessions/evidence/task859/r1-gr3g-navrow-first-tr-focus-10x.png
+?? docs/sessions/evidence/task859/r1-gr3g-navrow-last-bl-focus-10x.png
+?? docs/sessions/evidence/task859/r1-gr3g-navrow-last-br-focus-10x.png
+?? docs/sessions/evidence/task859/r1-narrow-after.txt
+?? docs/sessions/evidence/task859/r1-narrow-before.txt
+?? docs/sessions/evidence/task859/r1-picker-gutter.json
+?? docs/sessions/evidence/task859/r1-picker-gutter.mjs
+?? docs/sessions/evidence/task859/r1-plants.mjs
+?? src/components/admin/AdminSupportView.tsx
+?? src/components/admin/CreateTicketDialog.tsx
+?? src/components/admin/CreateTicketDialogView.tsx
+?? src/components/admin/TicketDetailDialog.tsx
+?? src/components/admin/TicketDetailDialogView.tsx
+?? src/components/admin/UserPickerField.tsx
+?? src/components/admin/UserPickerFieldView.tsx
+?? src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx
+?? src/components/admin/__tests__/supportFilters.test.ts
+?? src/components/admin/supportFilters.ts
+?? src/design-system/mantine/patterns/MantinePagination.module.css
+?? src/modules/listings/components/__tests__/ListingsShellView.smoke.test.tsx
+?? src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx
+?? src/stories/patterns/mantine/AdminSupportView.stories.tsx
+?? src/stories/patterns/mantine/CreateTicketDialogView.stories.tsx
+?? src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx
+?? src/stories/patterns/mantine/UserPickerFieldView.stories.tsx
+7621695ea068d4dc2469674e16952fbf49a15b0d
+0c5bd039a97b5cd33630eedbe63b8a776524e29b
+a6228d012b922d7e24b466887a9bcf18175c5db6
+3356145a8e52e85fee623a53114a6824324ab164
+6499eb22bd8f1e79eeda56defb6b42ce79c65f2a
+70960337438edcf13489f088701689f8204fcde9
+EXIT_CODE=0

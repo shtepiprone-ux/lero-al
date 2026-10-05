@@ -1,0 +1,13 @@
+ERROR lero-card-status-badge page.setContent: Target page, context or browser has been closed
+Call log:
+[2m  - setting frame content, waiting until 
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+elementHandle.evaluate: Target page, context or browser has been closed
+    at crad (C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3h\exec\corner-check.mjs:141:46)
+    at C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3h\exec\corner-check.mjs:146:68
+
+Node.js v22.22.3
+EXIT_CODE=1

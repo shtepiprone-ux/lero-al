@@ -1,0 +1,4124 @@
+{
+ "cells": 12,
+ "badges": 226,
+ "bad": [
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 1,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 2,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    267,
+    96,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 3,
+   "text": "3",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 4,
+   "text": "8",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    62,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 5,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    94,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 6,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    42,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 7,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    59,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 8,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    68,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 9,
+   "text": "2",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    61,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@390",
+   "card": 10,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    44,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 1,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 2,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    44,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    170,
+    96,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 3,
+   "text": "3",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 4,
+   "text": "8",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    62,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 5,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    94,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 6,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    42,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 7,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    59,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 8,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    68,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 9,
+   "text": "2",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    61,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 10,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    170,
+    41,
+    24
+   ],
+   "photo": [
+    227,
+    170
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 12,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 12,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 13,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 14,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 14,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    191,
+    96,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 14,
+   "text": "3",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 15,
+   "text": "8",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 16,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    62,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 16,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 17,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    94,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 17,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 18,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    42,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 18,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 19,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    59,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 19,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 20,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    68,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 20,
+   "text": "2",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 21,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    61,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@768",
+   "card": 21,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    44,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 1,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 2,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    44,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    335,
+    96,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 3,
+   "text": "3",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 4,
+   "text": "8",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    62,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 5,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    94,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 6,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    42,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 7,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    59,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 8,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    68,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 9,
+   "text": "2",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    61,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 10,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    335,
+    41,
+    24
+   ],
+   "photo": [
+    446,
+    335
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 12,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 12,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 13,
+   "text": "5",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 14,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 14,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    191,
+    96,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 14,
+   "text": "3",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 15,
+   "text": "8",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 16,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    62,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 16,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 17,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    94,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 17,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 18,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    42,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 18,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 19,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    59,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 19,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 20,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    68,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 20,
+   "text": "2",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 21,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    61,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingcardpattern--default@1440",
+   "card": 21,
+   "text": "4",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    267,
+    96,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    62,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 5,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    94,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    42,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 7,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    59,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 8,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    68,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 9,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    61,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@390",
+   "card": 10,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    44,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    44,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    158,
+    96,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    62,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 5,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    94,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    42,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 7,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    59,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 8,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    68,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 9,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    61,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 10,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    158,
+    41,
+    24
+   ],
+   "photo": [
+    211,
+    158
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 12,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 12,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 13,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 14,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 14,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    191,
+    96,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 14,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 15,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 16,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    62,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 16,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 17,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    94,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 17,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 18,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    42,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 18,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 19,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    59,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 19,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 20,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    68,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 20,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 21,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    61,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@768",
+   "card": 21,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    44,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    44,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    326,
+    96,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 5,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    62,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 5,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 6,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    94,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 7,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    42,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 7,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 8,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    59,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 8,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 9,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    68,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 9,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 10,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    61,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 10,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    326,
+    41,
+    24
+   ],
+   "photo": [
+    435,
+    326
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 12,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 12,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 13,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 14,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    44,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 14,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    191,
+    96,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 14,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 15,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 16,
+   "text": "Inactive",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    62,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 16,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 17,
+   "text": "Under review",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    94,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 17,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 18,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    42,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 18,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 19,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    59,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 19,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 20,
+   "text": "Archived",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    68,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 20,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 21,
+   "text": "Expired",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    61,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "mantine-primitives-listingcard--default@1440",
+   "card": 21,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    191,
+    41,
+    24
+   ],
+   "photo": [
+    176,
+    191
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    44,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    267,
+    96,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@390",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    44,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    44,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    263,
+    96,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@768",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 1,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    44,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 3,
+   "text": "New",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    44,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 3,
+   "text": "Price reduced",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    48,
+    248,
+    96,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 3,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 4,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--default@1440",
+   "card": 6,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@390",
+   "card": 1,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    42,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@390",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@390",
+   "card": 2,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    59,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@390",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    267,
+    41,
+    24
+   ],
+   "photo": [
+    356,
+    267
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@768",
+   "card": 1,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    42,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@768",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@768",
+   "card": 2,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    59,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@768",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    263,
+    41,
+    24
+   ],
+   "photo": [
+    350,
+    263
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@1440",
+   "card": 1,
+   "text": "Sold",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    42,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@1440",
+   "card": 1,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@1440",
+   "card": 2,
+   "text": "Rented",
+   "part": "badges",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    59,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  },
+  {
+   "cell": "patterns-mantine-listingsshellview--closed-tab@1440",
+   "card": 2,
+   "text": "1",
+   "part": "photo-count",
+   "topmost": false,
+   "inside": false,
+   "box": [
+    0,
+    248,
+    41,
+    24
+   ],
+   "photo": [
+    330,
+    248
+   ]
+  }
+ ],
+ "tuples": {
+  "patterns-mantine-listingcardpattern--default@390": {
+   "badges": 19,
+   "failing": 19
+  },
+  "patterns-mantine-listingcardpattern--default@768": {
+   "badges": 38,
+   "failing": 38
+  },
+  "patterns-mantine-listingcardpattern--default@1440": {
+   "badges": 38,
+   "failing": 38
+  },
+  "mantine-primitives-listingcard--default@390": {
+   "badges": 19,
+   "failing": 19
+  },
+  "mantine-primitives-listingcard--default@768": {
+   "badges": 38,
+   "failing": 38
+  },
+  "mantine-primitives-listingcard--default@1440": {
+   "badges": 38,
+   "failing": 38
+  },
+  "patterns-mantine-listingsshellview--default@390": {
+   "badges": 8,
+   "failing": 8
+  },
+  "patterns-mantine-listingsshellview--default@768": {
+   "badges": 8,
+   "failing": 8
+  },
+  "patterns-mantine-listingsshellview--default@1440": {
+   "badges": 8,
+   "failing": 8
+  },
+  "patterns-mantine-listingsshellview--closed-tab@390": {
+   "badges": 4,
+   "failing": 4
+  },
+  "patterns-mantine-listingsshellview--closed-tab@768": {
+   "badges": 4,
+   "failing": 4
+  },
+  "patterns-mantine-listingsshellview--closed-tab@1440": {
+   "badges": 4,
+   "failing": 4
+  }
+ }
+}

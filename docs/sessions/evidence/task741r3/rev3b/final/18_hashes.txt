@@ -1,0 +1,16 @@
+28bd431009d7ab60f993c2c6847a4b8dcf67dfca  src/modules/listings/components/ListingCard.tsx
+1907dd729e8c79386201ec5a19762a6c15ba455f  src/modules/listings/components/ListingsShellView.tsx
+cfd74494f064b1361055c0aa701663d9686a2308  src/stories/mantine/primitives/ListingCard.stories.tsx
+4dc5a74037156e17c952a945a6d8135fc81cb119  src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+09991c9e4e8c7bc6b38488105d1463a4544ea115  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx
+7063470c47b431ef39a11010296a62701b0e81d5  src/modules/listings/components/__tests__/ListingsShellView.viewReset.test.tsx
+006e0f58449ee17aa0bd052590637decffa6c52a  scripts/mantine-migration-scope.json
+1d8da2ae41edeea71690a7038593ae4566d8879b  scripts/surface-census-baseline.json
+77f04d839c15d8dcdcb509adf90fd10235ebefee  scripts/rendered-scope-baseline.json
+--- earlier eight (19_greps_hashes.txt) re-hashed:
+298d9f335a73f5747e581a5697f3713204618585  src/design-system/mantine/theme.ts
+1f57735bf76743bf0586b69acf304324b42c8c0c  src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+d29e0b7bff28129ff0c110f7d7d2978d6f60b057  src/design-system/mantine/patterns/MantineListingCardPattern.module.css
+b56ae973f82aaaeffc6d87b7fd3e2fe4c142b9c1  src/modules/listings/components/ListingStatusBanner.tsx
+b13a6a803d20c7a9b6dd55074ca4469aeb67e84e  src/modules/listings/lib/listingStatusTone.ts
+71e42dd5bff4a71427901267f0493aa061ed003e  src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx

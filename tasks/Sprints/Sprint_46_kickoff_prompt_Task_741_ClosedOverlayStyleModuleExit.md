@@ -2408,7 +2408,8 @@ Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 
 ### 18.20 Review of Revision 3h, 2026-10-04 — `NEEDS REVISION` → Revision 3i (the card badges are invisible; archived fade; corner receipts)
 
-**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
+**Implemented and reviewed in §18.21; the route is now §18.21 (Revision 3j). R70's `.archived .imageSection` selector and
+R71's probe method are replaced there.** Original text: **this subsection was the only executable route.** Re-entry mode: **remediation**, on the current working tree. Evidence
 goes to `docs/sessions/evidence/task741r3/rev3i/exec/`. `rev3h/review/` belongs to Opus.
 
 **Inspected.**
@@ -2531,6 +2532,134 @@ source.
 Append `## Revision 3i` with:
 - I0, red and green, and the gates;
 - AC60–AC62;
+- the receipts;
+- a `Files Changed` table.
+
+Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No self-approval, no git.
+
+### 18.21 Review of Revision 3i, 2026-10-05 — `NEEDS REVISION` → Revision 3j (archived chrome at full opacity; a real corner probe)
+
+**This subsection is the only executable route.** Re-entry mode: **remediation**, on the current working tree (3i stays;
+nothing is reverted). Evidence goes to `docs/sessions/evidence/task741r3/rev3j/exec/`. `rev3i/review/` belongs to Opus.
+
+**Inspected** (`win32`, Node v22.22.3, the final 3i `storybook-static`; record `rev3i/review/review-3i.md`): the 3i
+source in full, the R73a diff, gate transcripts `rev3i/exec/final/00–22`, the badge, corner, favourite and shell
+probes with their outputs, and the executor's GR-7 record. Own probes: `rev3i/review/review-probe.mjs` (archived
+opacity chain; card-root corners in real DPR 1 and 1.25 contexts beside the live TailAdmin `/cards` card) and
+`rev3i/review/research-review/` (GR-7).
+
+**Verified, kept.**
+- R69 / R73: the offsets resolve to `var(--mantine-spacing-xs)`; the unit test is red 2/14 on 3h and green on 3i; the
+  rendered probe finds 226/226 badges hidden on 3h and 0/226 on 3i.
+- The executor's overlay-order change (`{image}{overlayPart}{badgesPart}{photoCountPart}` in both layouts) is
+  **accepted**: the parts are unchanged and parity stays 424/0.
+- R70 on the root: both archived roots compute `opacity: 1` and `grayscale(1)`.
+- R72 / AC62, and every gate in the block.
+
+#### 18.21.1 Findings
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F62 | **P1** (GR-11; production) | **The archived fade reaches the chrome on the photo.** `MantineListingCardPattern.module.css` `.archived .imageSection { opacity: 0.6 }` fades every child of the photo section. Measured in both card Stories, grid and list (`rev3i/review/review-probe.json` → `archived`): the *Archived* badge and the photo count have an effective opacity of **0.6**, and so does the grid favourite. GR-11 forbids an `opacity` fade on a filled rounded shape, and the label loses contrast. Reference: on Lahomes `/property-grid` the "Sold" card keeps its label, photo and card at opacity 1 (`rev3i/review/research-review/lahomes-sold.json`). **Orchestrator error:** §18.20.3 R70 prescribed this selector. | **R74, R76** |
+| F63 | **P1** (CONTRADICTION; R71, AC61) | **The R71 corner receipts rest on crops that do not exist.** `rev3i/exec/corner-check-r71.mjs` opens one page at `deviceScaleFactor: 1`, and its `for (const dpr of [1, 1.25])` loop never changes the scale. 26 of the 30 `*-dpr1.25.png` files are byte-identical to their `*-dpr1.png` (md5); the other 4 differ only by re-render. The probe always ends `process.exit(0)`. Its area ratio scores a 1px ring against a filled quarter circle, so the card roots read 21–40 by construction. Its TailAdmin card selector found nothing, so no reference number exists. Five objects are outside 10 points. AC61 is not met. Opus's own real-DPR crops of the card root (`rev3i/review/crops/grid-root-bl-dpr{1,1.25}-10x.png`, beside `tailadmin-card-bl-dpr1-10x.png`, viewed) show a smooth arc, so the fault found so far is in the evidence, not in the corner. | **R75** |
+| — | NOTE | The executor's GR-7 record did not open TailAdmin `/cards` live, although R71 names it as the reference. R75's probe opens it. | R75 |
+
+**RETRACTION (orchestrator).**
+- **Invalid prior claim:** §18.20.3 R70: "the fade moves to the photo only: `.archived .imageSection { opacity: 0.6 }`".
+- **Why invalid:** the photo section also holds the badges, the overlay, the photo count and the grid favourite, so the
+  selector fades them all. It was written without checking what the section contains.
+- **Evidence:** `rev3i/review/review-probe.json`.
+- **Corrected status:** `CONTRADICTION`. R74 replaces it.
+
+#### 18.21.2 Reference research (GR-7)
+
+Opus's live check, this session, at 1440 and 390 (`rev3i/review/research-review/gr7-review-3i.json`, `shots/`):
+- Lahomes `/property-grid.html`: labels on the photo; the "Sold" card is not faded.
+- Omah `/property-list.html` and `/ecom-product-grid.html`: 12px cards.
+- TailAdmin `/cards`: `rounded-xl border border-gray-200` (12px, 1px `rgb(228,231,236)`). `/badge`: pill badges at opacity 1.
+- Kamr `/ecom-product-grid` (logged in): 7px, 1px border.
+
+The library rows are unchanged.
+
+`GR-7 REFERENCE RESEARCH — moment: review (741 Revision 3i) and task creation (Revision 3j); role: Opus; task: 741; subject: archived card look, card-chrome corners; references: Lahomes, Kamr, Omah, TailAdmin + Rozetka (owner, record of §18.19.4); library: docs/research/references/2026-10-04; live-checked pages: Lahomes /property-grid, Omah /property-list + /ecom-product-grid, TailAdmin /cards + /badge, Kamr /ecom-product-grid → unchanged; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library), Rozetka 2/2/0; inspected in depth: the six pages above at 1440 and 390 (full-page shots, computed radius/border/opacity of cards and labels); workflow states operated: Kamr login, scroll to the Lahomes Sold card; options across references: a closed listing keeps its label and photo at full opacity ← Lahomes /property-grid; no reference fades a label; chosen 2026 best practice: keep lero.al's archived photo fade (existing behaviour), never on the badges, photo count, label or favourite (GR-11; label contrast, WCAG 1.4.3); absent or unverified: none; lero.al data map: ListingCard → MantineListingCardPattern isArchived (archived/expired) on /favorites, the cabinet and the card Stories; owner decisions: D46-9, D90-1; evidence: docs/sessions/evidence/task741r3/rev3i/review/.`
+
+**Execution.** Before the first write, Sonnet re-checks Lahomes `/property-grid` (the Sold card) and TailAdmin `/cards`
+and `/badge` live, into `rev3j/exec/research-exec/`, and emits the full receipt. If the audit contradicts this
+section, it stops with `BLOCKED — GR-7 KICKOFF CONFLICT`.
+
+`GR-0 CANONICAL REUSE PREFLIGHT — request: archived fade on the photo node only; semantic queries: archived, imageSection, opacity, first-child, AppImage frame; inspected candidates: MantineListingCardPattern.module.css .archived, MantineListingCardPattern.tsx photo sections (:274-287, :306-312), AppImage listing / listing-thumb frames (appImageConfig.ts:145); decision: EXTEND (.archived in the pattern module); selected canonical owner: src/design-system/mantine/patterns/MantineListingCardPattern.module.css; Mantine/TailAdmin token path: NONE (the existing unitless opacity value moves selector); new hardcoded visual values: NONE; rationale: the image node is the section's first child in both layouts, so a child selector fades it alone, without a wrapper that would break the listing-thumb frame's height: 100% chain.`
+
+#### 18.21.3 Requirements
+
+| ID | Observable requirement | P |
+|---|---|---|
+| **R74** | `.archived .imageSection { opacity: 0.6 }` becomes `.archived .imageSection > :first-child { opacity: 0.6 }`, still inside `@layer utilities`. Its comment says that `{image}` is the photo section's first child in both layouts, and that the badges, overlay, photo count and favourite keep full opacity (GR-11). `MantineListingCardPattern.tsx` keeps `{image}` first in both `Card.Section`s, with a one-line comment there that the archived rule depends on that order. No wrapper is added around `{image}`. | P1 |
+| **R75** | **A real corner probe**, `rev3j/exec/corner-twin-probe.mjs`, replaces `rev3i/exec/corner-check-r71.mjs` as the R71 evidence. <ul><li>**Real scale.** Each DPR runs in its own `browser.newContext({ deviceScaleFactor })`, 1 and 1.25. The probe fails (exit 1) unless every DPR 1.25 crop is 1.25 times its DPR 1 crop's pixel size (±1px).</li><li>**Twin reference.** For each object and state, the probe appends in the browser only (never in source) a plain `<div>` twin: same computed width, height, `border-radius`, border width/style/colour and `background-color`, on the same backdrop. That is TailAdmin's painting method (a plain bordered or filled CSS box) at the object's own radius. Photo-chrome objects sit on the flat photo fill of 3i's `page.addStyleTag`. The overlay label is measured un-rotated in the browser, and its rotated crop is also saved.</li><li>**Metric.** Per-pixel coverage of the object's colour over the backdrop, normalised by the straight-edge contrast, summed over the r×r corner square. It passes when the object and its twin differ by **10 points or less**, at DPR 1 and at DPR 1.25.</li><li>**Objects and states**, in grid and list: the card root (rest, hover, premium, archived); every status-badge colour; the photo count; the overlay label (sold, rented); the grid favourite (GR-3f). The list favourite is recorded as `n/a: no painted shape` only if it paints no background or border at rest and on hover; otherwise it is measured.</li><li>**Live references beside them**, opened by the probe at the same DPR: the TailAdmin `/cards` card (`.rounded-xl.border` with an `img`) and a TailAdmin `/badge` pill. They are saved, not scored.</li><li>**Contact sheets.** It writes `corners-sheet-dpr1.png` and `corners-sheet-dpr1.25.png`: per row, the object's 10× crop, its twin's and the TailAdmin crop.</li><li>**Exit code.** It exits 1 on any failing object.</li><li>**Plant.** With `--plant`, it injects in the browser only `opacity: 0.4` on the first status badge and a 1px border in the fill colour on the photo count, and it must exit 1 naming both.</li></ul> | P1 |
+| **R76** | **An archived-opacity probe**, `rev3j/exec/archived-opacity-probe.mjs`, on both card Stories, grid and list, 390 and 1440. For every archived card it records the effective opacity (the product over ancestors) of the root, the image node, every badge, the photo count, the overlay label and the favourite. It exits 1 unless the root, the badges, the photo count, the label and the favourite are 1, and the image node is 0.6. | P1 |
+
+#### 18.21.4 Acceptance criteria
+
+`GR-4 AC AUDIT — 3 criteria; each states an observable property; absolutes: none.`
+
+- **AC63 [R74, R76]** The archived-opacity probe exits 1 on the 3i build (red, the badges at 0.6) and 0 on the final
+  build. `primitive-archived-1440.png`, re-shot into `rev3j/exec/`, shows the *Archived* badge and the photo count at
+  full contrast on a faded grey photo.
+- **AC64 [R75]**
+  - The twin probe exits 0 on the final build and 1 with `--plant`, naming both planted objects.
+  - Every DPR 1.25 crop passes the size check.
+  - The two contact sheets have been viewed; the session log says so per sheet and names any row that does not read as
+    a smooth curve.
+  - One `GR-11 CORNER CHECK` per object and state, with the twin's numbers in place of the reference.
+- **AC65 [R69–R73 kept]** The 3i results still hold: the badge-visible probe reports 0 failing, the parity probe 0
+  differences, and the R73a test is green.
+
+#### 18.21.5 Verification plan
+
+**I0** (before any write; `Get-Date -Format o`, porcelain, and the hashes of the §18.21.6 source files, written without
+BOM) → `rev3j/exec/00_i0.txt`. **Red** → `01_red.txt`: `archived-opacity-probe.mjs` on the unchanged 3i
+`storybook-static` (exit 1). Then `corner-twin-probe.mjs --plant` on the same build (exit 1).
+
+**Gate block.** The §18.19.8 block, run in PowerShell, with transcripts in `rev3j/exec/final/`. Before running it, point
+the parity probe's and the badge-visible probe's outputs at `rev3j/exec/`, so that the 3h and 3i files stay untouched.
+Add these lines after the parity probe:
+
+```powershell
+node.exe docs\sessions\evidence\task741r3\rev3i\exec\badge-visible-probe.mjs
+node.exe docs\sessions\evidence\task741r3\rev3j\exec\archived-opacity-probe.mjs
+node.exe docs\sessions\evidence\task741r3\rev3j\exec\corner-twin-probe.mjs
+node.exe docs\sessions\evidence\task741r3\rev3j\exec\corner-twin-probe.mjs --plant
+```
+
+Expected:
+- `win32`;
+- the census lists only `ListingsShell.tsx` as FAIL;
+- the `--plant` run exits 1, and every other command exits 0;
+- the three `Select-String` lines print nothing.
+
+**Receipts.** For every Story in §18.19.10: GR-9, GR-10, GR-11 (R75), GR-3b/3c/3d, GR-3e for "Save search", GR-3f for
+the favourite, and GR-3g for the overlay label and the focus ring. Where a receipt is unchanged from 3i, say so and cite
+the 3i file.
+
+#### 18.21.6 Files in scope
+
+- `src/design-system/mantine/patterns/MantineListingCardPattern.module.css` (R74)
+- `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` (R74: the one-line order comment only)
+- `docs/sessions/evidence/task741r3/rev3j/exec/` (new)
+- `docs/sessions/evidence/task741r3/rev3i/exec/badge-visible-probe.mjs` and `rev3h/exec/parity-probe.mjs` (their output
+  paths only)
+- `docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md` (append `## Revision 3j`)
+- `docs/backlog.md` (the 741 state only)
+
+#### 18.21.7 Owner visual review — `OWNER VISUAL QA REQUIRED` (O46-4)
+
+The §18.19.10 table and §18.20.7 stand. In row 2, the owner also checks that an archived card shows its *Archived*
+badge and photo count at full contrast on the faded photo.
+
+#### 18.21.8 Completion
+
+Append `## Revision 3j` with:
+- I0, red and green, and the gates;
+- AC63–AC65;
 - the receipts;
 - a `Files Changed` table.
 

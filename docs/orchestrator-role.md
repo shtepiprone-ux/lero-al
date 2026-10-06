@@ -175,6 +175,16 @@ Every kickoff must be executable by a fresh Sonnet session with no hidden chat c
 Every kickoff must select pre-read files from `docs/rule-index.md`. Never write "read all docs."
 Save implementation kickoffs under `tasks/` using the project naming/location rules; do not hand off only in chat.
 
+### Governance regression contract for every implementation kickoff
+
+Every kickoff that changes a governance-scanned input must make the governance gate an explicit acceptance criterion.
+It names `npm.cmd run governance` as a final Windows-native check, requires the executor to record the pre-write and
+final per-scanner HIGH/CRITICAL counts, and states that no count may exceed its baseline. The task must remediate any
+increment in its own scope before completion; it may not defer it to a scheduled scan, a migration follow-up, or a
+baseline update. If a deliberate exception is genuinely needed, the kickoff must quote the owner's decision and
+require a narrow, machine-enforced, expiring exception plus a negative test. A comment that merely defeats a regex,
+or an unreviewed baseline/allowlist increase, is a governance defect rather than an exception.
+
 For every UI task, Opus must add a canonical UI decision record before handing work to Sonnet. For each changed
 visible artifact, it records the searches and inspected paths, the canonical Mantine Story (when one exists), the
 component/pattern/token that owns the style, and one disposition: `reuse`, `extend`, or `create canonical`. A
@@ -257,6 +267,13 @@ frontend work only when the owner explicitly asks for one.
     compiler proof all pass the review-ledger gate. `EQUIVALENT` needs owner authorization for each changed field;
     `MISMATCH_RECORDED` needs an open primary finding for each unapproved changed field. A structural pass alone is
     not semantic approval.
+13. **Governance regression proof is present.** Independently inspect a current final-diff or exact-commit CI
+    `npm.cmd run governance` receipt, including the per-scanner HIGH/CRITICAL counts and baseline comparison. An
+    executor summary, an older weekly report, or a partial single-scanner result is not proof. Any non-zero result,
+    count above baseline, unreviewed exception, or missing receipt requires `NEEDS REVISION`, `PARTIALLY VERIFIED`,
+    or `BLOCKED`; it cannot be approved with notes. Amend the kickoff with the concrete remediation before returning
+    a `NEEDS REVISION` verdict. On a dirty worktree, require owner-native or CI evidence for the exact reviewed
+    commit rather than inferring attribution from aggregate counts.
 
 ## Owner-native validation handoff
 

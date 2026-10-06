@@ -118,6 +118,23 @@ Every future UI task MUST verify ALL of the following before marking complete:
 - [ ] **SSR safety** — no `suppressHydrationWarning`, no `typeof window` branches
 - [ ] **i18n completeness** — all four locale files updated, runtime locale switch tested
 
+### Mandatory governance regression gate
+
+Every implementation task that changes a file covered by governance scans must treat the following as an acceptance
+criterion, not a weekly-maintenance follow-up:
+
+1. Before the first relevant write, record the current full-scan result and per-scanner HIGH/CRITICAL counts.
+2. After the final relevant write, run `npm.cmd run governance` in native Windows PowerShell on the final worktree or
+   obtain the same receipt from CI for the exact commit.
+3. A HIGH or CRITICAL count above `scripts/governance/baseline.json`, a non-zero exit, or missing final receipt blocks
+   completion and review approval. Remediate the increment in the same task or return it as incomplete.
+4. A dirty worktree is not an exemption: retain the initial snapshot and prove that the task did not add a governed
+   regression. If that comparison is not possible, use exact-commit CI or stop for review.
+
+A scheduled report that catches a regression after merge is a governance-process incident, not accepted technical
+debt. The reviewer must return the responsible work to remediation, record why the preflight/final gate failed to
+prevent it, and prohibit further completion claims for the affected scope until the gate is green.
+
 ---
 
 ## §3 — GOVERNANCE ESCALATION RULES
@@ -151,6 +168,19 @@ Every future UI task MUST verify ALL of the following before marking complete:
 | Arbitrary Tailwind value growth (>5 new) | MEDIUM | Utility entropy signal |
 | Duplicate filter adapter logic | HIGH | Architecture integrity violation |
 | `window.location.href` for navigation | HIGH | Next.js router contract violation |
+
+### Exception and baseline policy
+
+- A migration plan, a future cleanup task, or a claim that a finding is intentional is **not** a governance
+  exception.
+- Never increase `scripts/governance/baseline.json` to accept a new finding. Baselines may only move downward after
+  the corresponding finding is actually removed and the reduced counts are verified.
+- Never silence a finding with an inline comment, broad directory exclusion, or a scanner loophole. If a scanner can
+  be bypassed that way, treat the bypass as a governance-tooling defect.
+- A temporary exception is allowed only through a scanner-enforced, path-and-rule-specific allowlist containing the
+  owner's written decision, safety rationale, expiry, and a negative test proving unrelated findings still fail.
+  If the scanner cannot enforce all of those fields, it has no valid exception mechanism and the task remains
+  blocking until fixed or until governance tooling is changed in a separately reviewed task.
 
 ---
 
@@ -507,8 +537,11 @@ File: `scripts/governance/baseline.json`
 
 - Pre-existing violations are in baseline (technical debt, not blocking)
 - New violations above baseline fail CI immediately
-- Run `npm run governance:update-baseline` after fixing violations (reduces counts)
-- NEVER increase baseline to accommodate new violations
+- Run `npm run governance:update-baseline` only after fixing violations, when the resulting count is lower; review
+  the before/after counts and the exact changed findings before accepting the update
+- NEVER increase baseline to accommodate new violations, a migration, or a scheduled-scan failure
+- No code comment, source-level suppression, or broad exclusion is an exception mechanism. Use only the narrowly
+  scoped, machine-enforced exception process in §3, or leave the gate blocking
 
 ### Report Locations
 

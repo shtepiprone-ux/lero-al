@@ -9,8 +9,12 @@ Status: PERMANENT GOVERNANCE REFERENCE
 
 ### Weekly Governance Scan
 **Scope:** Detect new primitive violations and Tailwind entropy growth.
-**Trigger:** After any UI task completion, or at end of each weekly sprint.
-**Output:** `docs/governance-reports/weekly/weekly-YYYY-MM-DD.md`
+**Trigger:** After any UI task completion, or at end of each weekly sprint. CI runs it every Monday
+(`governance-scheduled.yml`) **and** the same scans run on every push to `main` (`governance-pr.yml`, §9).
+**Output:** `docs/governance-reports/weekly/weekly-YYYY-MM-DD.md` locally (`npm run governance:report`). In CI the
+report is the run summary plus the `governance-report-<run id>` artifact — it is **not** committed to `main`
+(2026-10-07: the former weekly bot commit made the owner's local `main` diverge every Monday). A red scheduled run is
+read and classified by the next orchestrator session (`docs/orchestrator-procedures.md` → "Main-branch CI receipt").
 
 Checks:
 - New raw `<button>` elements (grep `<button` in src/)
@@ -126,8 +130,9 @@ criterion, not a weekly-maintenance follow-up:
 1. Before the first relevant write, record the current full-scan result and per-scanner HIGH/CRITICAL counts.
 2. After the final relevant write, run `npm.cmd run governance` in native Windows PowerShell on the final worktree or
    obtain the same receipt from CI for the exact commit.
-3. A HIGH or CRITICAL count above `scripts/governance/baseline.json`, a non-zero exit, or missing final receipt blocks
-   completion and review approval. Remediate the increment in the same task or return it as incomplete.
+3. A HIGH or CRITICAL finding not in the per-finding baseline `scripts/governance/baseline.json`, a stale baseline
+   entry, a non-zero exit, or a missing final receipt blocks completion and review approval. Remediate the increment
+   in the same task or return it as incomplete.
 4. A dirty worktree is not an exemption: retain the initial snapshot and prove that the task did not add a governed
    regression. If that comparison is not possible, use exact-commit CI or stop for review.
 
@@ -181,6 +186,33 @@ prevent it, and prohibit further completion claims for the affected scope until 
   owner's written decision, safety rationale, expiry, and a negative test proving unrelated findings still fail.
   If the scanner cannot enforce all of those fields, it has no valid exception mechanism and the task remains
   blocking until fixed or until governance tooling is changed in a separately reviewed task.
+
+### Scanner correctness (2026-10-07)
+
+The scheduled scan failed on 2026-09-21, 09-28 and 10-05, and **all 87 HIGH findings on `main` were false**: 34
+comments (TailAdmin provenance notes such as `bg-gray-100` in a JSDoc block), 9 `import` lines, 35 test fixtures,
+and 9 `useMediaQuery` calls from `@mantine/hooks`, which `docs/mantine-responsive-design-system.md` sanctions. A gate
+that cries wolf trains everyone to ignore it, so these rules bind every governance scanner:
+
+1. **A scanner judges code, never prose.** Line-based scanners read sources through
+   `scripts/governance/source-lines.mjs` → `codeLines()`, which blanks comments (line, block, JSDoc, JSX) and keeps
+   strings and template literals, where class names live. An `import` line is not a use site; a test fixture never
+   ships. This is scanner correctness, not an exemption — the "no inline-comment silencing" rule above is unchanged,
+   because a comment still cannot suppress a finding on a code line.
+2. **A rule must match the current source of truth.** When a rule written for the legacy shadcn/Tailwind stack
+   contradicts `docs/mantine-responsive-design-system.md` or `docs/tailadmin-style-reference.md` for Mantine code, the
+   rule is wrong. Example: R1 now blocks `useWindowSize` / `useViewportSize` and a non-Mantine media-query hook, and
+   reports Mantine `useMediaQuery` / `useMatches` as MEDIUM ("verify the SSR caveat is documented").
+3. **A false positive is a scanner defect: fix the scanner, never the baseline.** Classify every new finding against
+   the real line before acting. Raising the baseline to absorb a false finding launders the next real one.
+4. **Every scanner change ships with a self-test that can fail.** `npm run governance:verify`
+   (`scripts/governance/governance-selftest.mjs`) plants real violations in code — which must fail — next to a twin
+   carrying the same text only in comments, which must not. It runs in both workflows before the scans.
+
+**Known remaining legacy debt (not blocking, not yet re-specified):** `scan-primitives.mjs` still phrases its advice
+for shadcn (`Use Button from @/components/ui/button`, lucide-only icons), and §4/§8/§9's primitive matrices still
+name shadcn sources. Re-specifying them for Mantine needs its own task; until then a HIGH primitives finding on a
+Mantine file is classified against `docs/mantine-responsive-design-system.md` before it is acted on.
 
 ---
 
@@ -420,7 +452,8 @@ A whitespace wasteland is a viewport condition where:
 | Locale key count mismatch | Script JSON analysis | HIGH | ✅ | No | NONE |
 | Dynamic i18n key unresolved in any locale (`check:i18n-dynamic`, Task 323) | Script (manifest-driven, resolved-key coverage) | HIGH | ✅ | No | NONE |
 | `fixed inset-0` non-Sheet/Dialog | Script regex | HIGH | ✅ | No | LOW |
-| `useWindowSize`/viewport hooks | Script regex + ESLint | HIGH | ✅ | No | LOW |
+| `useWindowSize`/`useViewportSize` hooks, non-Mantine media-query hook | Script regex (code lines only) + ESLint | HIGH | ✅ | No | LOW |
+| Mantine `useMediaQuery`/`useMatches` (sanctioned; verify SSR caveat) | Script regex (code lines only) | MEDIUM | ❌ | No | LOW |
 | `useLayoutEffect` | Script regex | HIGH | ✅ | No | LOW |
 | Hardcoded hex colors | Script regex | MEDIUM | ❌ | No | LOW |
 | Arbitrary `max-w-[Npx]` | Script regex | MEDIUM | ❌ | No | MEDIUM |
@@ -466,14 +499,25 @@ npm run governance:localization
 
 # Generate weekly report to docs/governance-reports/weekly/
 npm run governance:report
+
+# Self-test: planted code violations must fail, comment-only twins must pass
+npm run governance:verify
+
+# Record paid-down debt (remove-only; refuses while any new finding exists)
+npm run governance:update-baseline
 ```
 
 ### CI Workflow Reference
 
 | Workflow | Trigger | Scope | Blocking |
 |---|---|---|---|
-| `.github/workflows/governance-pr.yml` | PR to main | All governance scans + ESLint + TypeScript | ✅ |
-| `.github/workflows/governance-scheduled.yml` | Weekly Monday 09:00 UTC | Full scan + report generation | ✅ on violations |
+| `.github/workflows/governance-pr.yml` | PR to main **and every push to main** (same path filter; owner decision 2026-10-07) | All governance scans + self-tests + ESLint + TypeScript + build + regression suites | ✅ |
+| `.github/workflows/governance-scheduled.yml` | Weekly Monday 09:00 UTC, manual dispatch | Self-test + full scan; report as run summary and artifact (read-only, never committed) | ✅ on violations |
+
+On a push, the review-ledger step validates every retained ledger (no PR base to diff) and the diff-mapped surface
+census uses the pushed range (`github.event.before` → `github.sha`). A newer push to `main` cancels the older run;
+the tip of `main` is what must be green. Reading that result is an orchestrator duty, not an optional check
+(`docs/orchestrator-procedures.md` → "Main-branch CI receipt").
 
 | Drift Type | Detection Method | Severity | Escalation Path | Recommended Action |
 |---|---|---|---|---|
@@ -533,13 +577,20 @@ File: `scripts/governance/tailwind-entropy.allowlist.json`
 
 ### Baseline Policy
 
-File: `scripts/governance/baseline.json`
+File: `scripts/governance/baseline.json` — **version 2, a remove-only per-finding debt ledger** (2026-10-07; same
+convention as `scripts/enrolled-tailwind-baseline.json`).
 
-- Pre-existing violations are in baseline (technical debt, not blocking)
-- New violations above baseline fail CI immediately
-- Run `npm run governance:update-baseline` only after fixing violations, when the resulting count is lower; review
-  the before/after counts and the exact changed findings before accepting the update
-- NEVER increase baseline to accommodate new violations, a migration, or a scheduled-scan failure
+- Key: `"<scan> :: <file> :: <rule pattern>"`; value: the HIGH/CRITICAL occurrence count in that file. Only
+  HIGH/CRITICAL findings are ledgered; MEDIUM/LOW never block.
+- A key absent from the baseline, or a count above it, is a **new** finding and fails CI immediately.
+- A key whose count is now lower or gone is **stale** (debt paid down but not recorded) and also fails, until
+  `npm run governance:update-baseline` records it. That writer is remove-only: it refuses while any new finding
+  exists and only runs on the full scan.
+- Why not counts (version 1, retired): a per-scan count let a fix in one file pay for a new violation in another, and
+  left silent headroom — primitives sat 21 below its cap and localization 15, room for that many unseen regressions.
+- Seeded 2026-10-07 with **zero entries**: after the scanner-correctness fix (§3) no HIGH/CRITICAL finding remains in
+  code on any of the five scans.
+- NEVER add an entry to accommodate a new violation, a migration, or a scheduled-scan failure
 - No code comment, source-level suppression, or broad exclusion is an exception mechanism. Use only the narrowly
   scoped, machine-enforced exception process in §3, or leave the gate blocking
 

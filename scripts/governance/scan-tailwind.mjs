@@ -18,6 +18,7 @@ import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { codeLines, isTestSource } from './source-lines.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -78,11 +79,13 @@ function finding(severity, file, line, message, pattern) {
 
 for (const file of walkTsx(SRC)) {
   const content = readFileSync(file, 'utf-8');
-  const lines = content.split('\n');
+  // Code only: a TailAdmin provenance note such as `bg-gray-100` in a comment is documentation,
+  // not a shipped class (2026-10-07, docs/governance-enforcement.md §3 "Scanner correctness").
+  const lines = codeLines(content);
   const relPath = relative(ROOT, file);
 
   // Skip shadcn UI internals and test files
-  if (/src[/\\]components[/\\]ui[/\\]|\.test\.(ts|tsx)$/.test(relPath)) continue;
+  if (/src[/\\]components[/\\]ui[/\\]/.test(relPath) || isTestSource(relPath)) continue;
 
   // Storybook demo files are exempt from the raw-palette rule (T6) only:
   // their literal color swatches illustrate visual concepts, not shipped UI.

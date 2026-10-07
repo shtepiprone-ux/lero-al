@@ -10,8 +10,9 @@
  *   node scripts/governance/governance.mjs l10n       — run only localization scan
  *
  * Exit codes:
- *   0 — No HIGH or CRITICAL findings
- *   1 — HIGH or CRITICAL findings found (blocks CI)
+ *   0 — No HIGH/CRITICAL finding outside the per-finding baseline, and no stale baseline entry
+ *   1 — New HIGH/CRITICAL finding, or paid-down debt not yet recorded (blocks CI)
+ *   2 — baseline.json is not a version 2 per-finding baseline
  */
 
 import { dirname, join } from 'path';
@@ -21,20 +22,42 @@ import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 
-// Load baseline for regression detection
+// ── Baseline: REMOVE-ONLY per-finding debt ledger (version 2, 2026-10-07) ─────
+// One entry per `"<scan> :: <file> :: <rule pattern>"` key with the HIGH/CRITICAL occurrence count
+// in that file. A key absent from the baseline, or a count above it, is a NEW finding and fails the
+// gate. A key whose count is now lower or gone is STALE (paid-down debt) and also fails until it is
+// recorded with `--update-baseline`, which refuses to write while any new finding exists — so the
+// baseline can only shrink. Same convention as scripts/enrolled-tailwind-baseline.json.
+//
+// Why not per-scan counts (version 1): a count lets a fix in one file pay for a new violation in
+// another, and leaves silent headroom (primitives sat 21 below its count, localization 15). See
+// docs/governance-enforcement.md §9 "Baseline Policy".
 const BASELINE_PATH = join(__dirname, 'baseline.json');
 const baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, 'utf-8')) : null;
+if (baseline && baseline.version !== 2) {
+  console.error(`❌ ${BASELINE_PATH} is not a version 2 per-finding baseline. Count baselines are retired.`);
+  process.exit(2);
+}
+const baselineEntries = baseline?.entries ?? {};
 
 const scanArg = process.argv[2] ?? 'all';
 const generateReport = process.argv.includes('--report');
+const updateBaseline = process.argv.includes('--update-baseline');
+
+const BLOCKING = new Set(['CRITICAL', 'HIGH']);
+const toPosix = p => String(p).replace(/\\/g, '/');
+const findingKey = (scanKey, f) => `${scanKey} :: ${toPosix(f.file)} :: ${f.pattern ?? f.message}`;
 
 // ── Import scan modules ────────────────────────────────────────────────────────
 const allFindings = [];
 let hasCritical = false;
 let hasHigh = false;
 
-// Track per-scan counts for baseline comparison
+// Track per-scan counts and per-finding ledgers for baseline comparison
 const scanCounts = {};
+const currentEntries = {};
+const newFindings = [];
+const staleEntries = [];
 
 async function runScan(name, modulePath, scanKey) {
   process.stdout.write(`\nRunning ${name} scan...`);
@@ -46,30 +69,42 @@ async function runScan(name, modulePath, scanKey) {
   findings.forEach(f => counts[f.severity]++);
   scanCounts[scanKey] = counts;
 
-  // Check against baseline: fail only if count EXCEEDS baseline
-  let regressionFound = false;
-  if (baseline?.[scanKey]) {
-    const base = baseline[scanKey];
-    if (counts.CRITICAL > (base.CRITICAL ?? 0)) {
-      hasCritical = true;
-      regressionFound = true;
+  // Per-finding ledger of this scan's blocking findings
+  const ledger = {};
+  for (const f of findings.filter(f => BLOCKING.has(f.severity))) {
+    const key = findingKey(scanKey, f);
+    ledger[key] ??= { count: 0, severity: f.severity, examples: [] };
+    ledger[key].count++;
+    if (f.severity === 'CRITICAL') ledger[key].severity = 'CRITICAL';
+    ledger[key].examples.push(`${toPosix(f.file)}:${f.line}`);
+  }
+  Object.assign(currentEntries, ledger);
+
+  let scanNew = 0;
+  for (const [key, cur] of Object.entries(ledger)) {
+    const allowed = baselineEntries[key]?.count ?? 0;
+    if (cur.count > allowed) {
+      scanNew += cur.count - allowed;
+      newFindings.push({ key, ...cur, allowed });
+      if (cur.severity === 'CRITICAL') hasCritical = true;
+      else hasHigh = true;
     }
-    if (counts.HIGH > (base.HIGH ?? 0)) {
-      hasHigh = true;
-      regressionFound = true;
+  }
+  let scanStale = 0;
+  for (const [key, base] of Object.entries(baselineEntries)) {
+    if (!key.startsWith(`${scanKey} :: `)) continue;
+    const now = ledger[key]?.count ?? 0;
+    if (now < base.count) {
+      scanStale++;
+      staleEntries.push({ key, was: base.count, now });
     }
-  } else {
-    // No baseline: use absolute counts
-    if (counts.CRITICAL > 0) hasCritical = true;
-    if (counts.HIGH > 0) hasHigh = true;
-    if (counts.CRITICAL > 0 || counts.HIGH > 0) regressionFound = true;
   }
 
-  const status = regressionFound
-    ? counts.CRITICAL > (baseline?.[scanKey]?.CRITICAL ?? 0)
-      ? `🔴 CRITICAL REGRESSION (+${counts.CRITICAL - (baseline?.[scanKey]?.CRITICAL ?? 0)})`
-      : `🟠 HIGH REGRESSION (+${counts.HIGH - (baseline?.[scanKey]?.HIGH ?? 0)})`
-    : `✅ PASS (${counts.CRITICAL}C ${counts.HIGH}H ${counts.MEDIUM}M)`;
+  const status = scanNew > 0
+    ? `🟠 REGRESSION (+${scanNew} new HIGH/CRITICAL not in baseline)`
+    : scanStale > 0
+      ? `🟡 STALE BASELINE (${scanStale} paid-down entr${scanStale === 1 ? 'y' : 'ies'} — run governance:update-baseline)`
+      : `✅ PASS (${counts.CRITICAL}C ${counts.HIGH}H ${counts.MEDIUM}M)`;
   console.log(` ${status}`);
 }
 
@@ -152,8 +187,21 @@ if (generateReport) {
     }
   }
 
+  if (newFindings.length > 0) {
+    lines.push('## New HIGH/CRITICAL findings not in baseline (blocking)');
+    lines.push('');
+    newFindings.forEach(n => lines.push(`- \`${n.key}\` — ${n.count} now, ${n.allowed} in baseline (${n.examples.join(', ')})`));
+    lines.push('');
+  }
+  if (staleEntries.length > 0) {
+    lines.push('## Stale baseline entries (paid-down debt — run `npm run governance:update-baseline`)');
+    lines.push('');
+    staleEntries.forEach(s => lines.push(`- \`${s.key}\` — ${s.now} now, ${s.was} in baseline`));
+    lines.push('');
+  }
+
   lines.push('## Governance Status');
-  lines.push(hasCritical ? '❌ **FAIL** — CRITICAL violations found.' : hasHigh ? '⚠️ **ATTENTION** — HIGH violations found.' : '✅ **PASS** — No blocking violations.');
+  lines.push(hasCritical ? '❌ **FAIL** — new CRITICAL findings not in baseline.' : hasHigh ? '❌ **FAIL** — new HIGH findings not in baseline.' : staleEntries.length > 0 ? '⚠️ **STALE BASELINE** — paid-down debt must be recorded.' : '✅ **PASS** — No new blocking findings.');
   lines.push('');
   lines.push('*Generated by `npm run governance -- --report`*');
 
@@ -161,41 +209,59 @@ if (generateReport) {
   console.log(`\n📄 Report written to: ${reportPath}`);
 }
 
-// ── Exit code ─────────────────────────────────────────────────────────────────
 // ── Baseline comparison summary ───────────────────────────────────────────────
-if (baseline) {
-  console.log('\nBaseline comparison:');
-  for (const [key, counts] of Object.entries(scanCounts)) {
-    const base = baseline[key] ?? { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
-    const critDelta = counts.CRITICAL - (base.CRITICAL ?? 0);
-    const highDelta = counts.HIGH - (base.HIGH ?? 0);
-    const status = (critDelta > 0 || highDelta > 0)
-      ? `❌ REGRESSION (C:${critDelta > 0 ? '+' : ''}${critDelta} H:${highDelta > 0 ? '+' : ''}${highDelta})`
-      : `✅ OK`;
-    console.log(`  ${key.padEnd(12)} ${status} | current: C${counts.CRITICAL}/H${counts.HIGH}/M${counts.MEDIUM} | baseline: C${base.CRITICAL}/H${base.HIGH}/M${base.MEDIUM}`);
-  }
+console.log('\nBaseline comparison (per finding, remove-only):');
+for (const [key, counts] of Object.entries(scanCounts)) {
+  const added = newFindings.filter(n => n.key.startsWith(`${key} :: `)).reduce((s, n) => s + n.count - n.allowed, 0);
+  const stale = staleEntries.filter(s => s.key.startsWith(`${key} :: `)).length;
+  const debt = Object.entries(baselineEntries).filter(([k]) => k.startsWith(`${key} :: `)).reduce((s, [, e]) => s + e.count, 0);
+  const status = added > 0 ? `❌ +${added} NEW` : stale > 0 ? `🟡 ${stale} STALE` : '✅ OK';
+  console.log(`  ${key.padEnd(12)} ${status} | current: C${counts.CRITICAL}/H${counts.HIGH}/M${counts.MEDIUM} | baselined debt: ${debt}`);
+}
+if (newFindings.length > 0) {
+  console.log('\nNew HIGH/CRITICAL findings not in baseline:');
+  newFindings.forEach(n => console.log(`  ${n.key} — ${n.count} now, ${n.allowed} in baseline (${n.examples.join(', ')})`));
+}
+if (staleEntries.length > 0) {
+  console.log('\nStale baseline entries (paid-down debt):');
+  staleEntries.forEach(s => console.log(`  ${s.key} — ${s.now} now, ${s.was} in baseline`));
 }
 
-// ── Update baseline mode ──────────────────────────────────────────────────────
-if (process.argv.includes('--update-baseline')) {
-  const newBaseline = {
-    _comment: baseline?._comment ?? 'Governance baseline. Update when violations are fixed.',
-    _docs: baseline?._docs ?? 'See docs/governance-enforcement.md §9.',
-  };
-  for (const [key, counts] of Object.entries(scanCounts)) {
-    newBaseline[key] = counts;
+// ── Update baseline mode (remove-only) ────────────────────────────────────────
+if (updateBaseline) {
+  if (scanArg !== 'all') {
+    console.error('\n❌ --update-baseline requires the full scan (`all`), so no scan\'s entries are dropped by omission.');
+    process.exit(1);
   }
-  writeFileSync(BASELINE_PATH, JSON.stringify(newBaseline, null, 2));
-  console.log(`\n📄 Baseline updated: ${BASELINE_PATH}`);
+  if (newFindings.length > 0) {
+    console.error('\n❌ Baseline NOT updated — it is remove-only and new findings exist. Fix them; never baseline them.');
+    process.exit(1);
+  }
+  const entries = {};
+  for (const key of Object.keys(currentEntries).sort()) {
+    entries[key] = { count: currentEntries[key].count, severity: currentEntries[key].severity };
+  }
+  writeFileSync(BASELINE_PATH, JSON.stringify({
+    version: 2,
+    _comment: baseline?._comment ?? 'Governance baseline. Remove-only per-finding debt ledger.',
+    _docs: baseline?._docs ?? 'See docs/governance-enforcement.md §9 "Baseline Policy".',
+    entries,
+  }, null, 2) + '\n');
+  console.log(`\n📄 Baseline updated (remove-only): ${staleEntries.length} paid-down entr${staleEntries.length === 1 ? 'y' : 'ies'} recorded.`);
+  process.exit(0);
 }
 
 // ── Exit code ─────────────────────────────────────────────────────────────────
 if (hasCritical || hasHigh) {
-  console.log('\n❌ Governance check FAILED — violation count exceeds baseline.');
-  console.log('   New HIGH or CRITICAL violations introduced. Fix before merging.');
-  console.log('   See docs/governance-enforcement.md §3 for escalation rules.');
+  console.log('\n❌ Governance check FAILED — new HIGH/CRITICAL findings not in the baseline.');
+  console.log('   Fix them before pushing. A scanner false positive is a scanner defect: fix the scanner,');
+  console.log('   never the baseline. See docs/governance-enforcement.md §3.');
+  process.exit(1);
+} else if (staleEntries.length > 0) {
+  console.log('\n❌ Governance check FAILED — stale baseline: debt was paid down but not recorded.');
+  console.log('   Run `npm run governance:update-baseline` and commit scripts/governance/baseline.json.');
   process.exit(1);
 } else {
-  console.log('\n✅ Governance check PASSED — no regressions above baseline.');
+  console.log('\n✅ Governance check PASSED — no new findings, baseline current.');
   process.exit(0);
 }

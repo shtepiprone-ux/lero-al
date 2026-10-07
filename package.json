@@ -23,6 +23,7 @@
     "governance:ssr": "node scripts/governance/governance.mjs ssr",
     "governance:report": "node scripts/governance/governance.mjs all --report",
     "governance:update-baseline": "node scripts/governance/governance.mjs all --update-baseline",
+    "governance:verify": "node scripts/governance/governance-selftest.mjs",
     "typecheck": "tsc --noEmit",
     "check:schema-drift": "node scripts/check-schema-drift.mjs",
     "check:i18n": "node scripts/check-i18n-parity.mjs",

@@ -6,6 +6,7 @@ import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { codeLines, isTestSource } from './source-lines.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -47,18 +48,20 @@ function finding(severity, file, line, message, pattern) {
 // ── Scan all TSX/TS files ─────────────────────────────────────────────────────
 for (const file of walkTsx(SRC)) {
   const content = readFileSync(file, 'utf-8');
-  const lines = content.split('\n');
+  const rawLines = content.split('\n');
+  // Code only (2026-10-07, docs/governance-enforcement.md §3 "Scanner correctness"): a `<button>`
+  // named in a comment is documentation, not markup.
+  const lines = codeLines(content);
   const relPath = relative(ROOT, file);
 
-  // Skip shadcn UI primitives themselves
-  if (/src[/\\]components[/\\]ui[/\\]/.test(relPath)) continue;
+  // Skip shadcn UI primitives themselves and test sources (test fixtures never ship)
+  if (/src[/\\]components[/\\]ui[/\\]/.test(relPath) || isTestSource(relPath)) continue;
 
   lines.forEach((line, i) => {
     const lineNum = i + 1;
-    const trimmed = line.trim();
 
     // ── Rule P1: Raw <button> elements (not shadcn internal) ─────────────────
-    if (/<button[\s>]/.test(line) && !/\/\/ eslint-disable/.test(line) && !isAllowlisted(relPath, lineNum)) {
+    if (/<button[\s>]/.test(line) && !/\/\/ eslint-disable/.test(rawLines[i]) && !isAllowlisted(relPath, lineNum)) {
       finding(
         'HIGH',
         file, lineNum,

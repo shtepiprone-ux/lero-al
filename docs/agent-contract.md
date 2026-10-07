@@ -117,7 +117,8 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     ```
 
     The completion report records the exact command, platform, exit code, per-scanner HIGH/CRITICAL counts, and the
-    applicable baseline comparison. A non-zero result, a HIGH/CRITICAL count above baseline, or a required scan that
+    applicable baseline comparison. A non-zero result, a HIGH/CRITICAL finding not in the per-finding baseline, a
+    stale baseline entry, or a required scan that
     was not run means the task is not complete: fix the increment in the same task, or return `PARTIALLY IMPLEMENTED`
     / `BLOCKED`. A planned migration, an expected weekly scan, an assertion that a finding is pre-existing, or a
     future cleanup task never converts a failing governance result into a completion claim.

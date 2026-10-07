@@ -1,0 +1,86 @@
+--- a/.github/workflows/governance-pr.yml
++++ b/.github/workflows/governance-pr.yml
+@@ -20,6 +20,33 @@
+       - 'docs/reviews/**'
+       - 'messages/**'
+       - '.github/workflows/**'
++  # Owner decision 2026-10-07: work reaches main by direct push, so the gate must run on every push
++  # to main, not only on PRs. No PR had been opened since 2026-08-16, which left this whole gate
++  # unexecuted for seven weeks while the weekly scan failed unseen (docs/governance-enforcement.md §9).
++  push:
++    branches: [main]
++    paths:
++      - 'src/**'
++      - 'scripts/**'
++      - 'eslint.config.mjs'
++      - 'package.json'
++      - 'tasks/**'
++      - 'docs/agent-contract.md'
++      - 'docs/orchestrator-procedures.md'
++      - 'docs/orchestrator-role.md'
++      - 'docs/review-ledger.schema.json'
++      - 'docs/review-ledger-template.json'
++      - 'docs/qa-profiles.md'
++      - 'docs/storybook-governance.md'
++      - 'docs/critical-flow-registry.md'
++      - 'docs/reviews/**'
++      - 'messages/**'
++      - '.github/workflows/**'
++
++# A newer push to the same ref supersedes an older run: main's latest commit is what must be green.
++concurrency:
++  group: governance-${{ github.ref }}
++  cancel-in-progress: true
+ 
+ jobs:
+   governance:
+@@ -49,10 +76,17 @@
+         run: npm run lint
+ 
+       - name: Review-ledger gate (fail-closed approval evidence)
++        if: github.event_name == 'pull_request'
+         env:
+           REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+         run: npm run check:review-ledger -- --ci
+ 
++      # On a direct push to main there is no PR base to diff, and task-design / NEEDS REVISION commits
++      # legitimately carry no ledger, so validate every retained ledger instead of requiring a new one.
++      - name: Review-ledger gate (retained ledgers, push to main)
++        if: github.event_name == 'push'
++        run: npm run check:review-ledger
++
+       - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
+         run: npm run check:review-ledger:verify
+ 
+@@ -88,6 +122,9 @@
+       - name: Storybook governance gate
+         run: npm run check:stories
+ 
++      - name: Governance scan self-test (planted code violations fail, comment-only twins pass)
++        run: npm run governance:verify
++
+       - name: Primitive governance scan
+         run: npm run governance:primitives
+ 
+@@ -132,8 +169,9 @@
+ 
+       - name: Diff-mapped per-surface GR-1 census gate (Task 819 — blocking, baselined fail-on-new)
+         env:
+-          SURFACE_CENSUS_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+-          SURFACE_CENSUS_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
++          # PR: base/head of the PR. Push to main: the pushed range (previous tip → new tip).
++          SURFACE_CENSUS_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
++          SURFACE_CENSUS_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+         run: npm run check:surface-census:changed
+ 
+       - name: Diff-mapped surface census gate self-test (verifies gate detects violations — CI-safe, Task 819)
+--- a/package.json
++++ b/package.json
+@@ -23,6 +23,7 @@
+     "governance:ssr": "node scripts/governance/governance.mjs ssr",
+     "governance:report": "node scripts/governance/governance.mjs all --report",
+     "governance:update-baseline": "node scripts/governance/governance.mjs all --update-baseline",
++    "governance:verify": "node scripts/governance/governance-selftest.mjs",
+     "typecheck": "tsc --noEmit",
+     "check:schema-drift": "node scripts/check-schema-drift.mjs",
+     "check:i18n": "node scripts/check-i18n-parity.mjs",

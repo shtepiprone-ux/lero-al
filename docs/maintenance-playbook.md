@@ -425,12 +425,13 @@ For each entry in `scripts/governance/tailwind-entropy.allowlist.json`:
 ### Baseline Burn-Down Process
 
 When violations are fixed:
-1. Verify the fix: run `npm run governance` — count must have decreased
-2. Update baseline: `npm run governance:update-baseline`
+1. Verify the fix: run `npm run governance` — it fails with `STALE BASELINE` naming the paid-down entries
+2. Update baseline: `npm run governance:update-baseline` (remove-only; refuses while any new finding exists)
 3. Commit updated `scripts/governance/baseline.json`
 4. Update `docs/tailwind-entropy-audit.md §1` summary counts
 
-Target: reduce HIGH findings from current 52 (primitives) toward 0 over upcoming sprints.
+Status 2026-10-07: the per-finding baseline holds zero HIGH/CRITICAL entries (`docs/governance-enforcement.md` §9
+"Baseline Policy"); any new HIGH/CRITICAL finding fails CI.
 
 ### Escalation Rules
 

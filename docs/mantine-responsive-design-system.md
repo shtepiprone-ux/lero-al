@@ -250,7 +250,7 @@ story exports.
 | Touch targets | Every mobile-reachable text button: `size="lg"` (50px) or `styles.root.minHeight: '2.75rem'` |
 | No Tailwind responsive | New Mantine components must NOT use Tailwind `sm:` / `md:` responsive class prefixes |
 | No `.container-wide` | New Mantine pattern components must NOT depend on `.container-wide` for responsive layout |
-| `useMediaQuery` caveat | Only use `useMediaQuery` when Mantine responsive props cannot solve the requirement. Always document the SSR/hydration caveat (returns `initialValue=false` until hydration) |
+| `useMediaQuery` caveat | Only use `useMediaQuery` when Mantine responsive props cannot solve the requirement. Always document the SSR/hydration caveat (returns `initialValue=false` until hydration). Governance (`npm run governance:responsive`, rule R1): a Mantine `useMediaQuery`/`useMatches` call is reported MEDIUM as a reminder to verify that caveat; `useWindowSize`/`useViewportSize` or a non-Mantine media-query hook is HIGH and blocks (`docs/governance-enforcement.md` §3 "Scanner correctness") |
 
 ### §7.1 — Spacing rhythm (Task 483 REWORK — codified 2026-06-24)
 

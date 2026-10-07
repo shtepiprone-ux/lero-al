@@ -333,7 +333,9 @@ For non-frontend work, persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-sh
 retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, derived coverage
 totals, gate receipt consistency, decision consistency, finding-to-requirement links, and the non-approved handoff
 ban. CI requires a changed **approved** valid ledger for any reviewable task, source, workflow, or review-governance
-change.
+change **in a pull request**. On a direct push to `main` (the owner's normal path) CI validates every retained ledger
+instead, because task-design and `NEEDS REVISION` commits legitimately carry none; the per-approval ledger duty on a
+push is therefore enforced by this review, not by CI.
 `requiredScope.notApplicable` is the only allowed way to declare a dimension not applicable, and it requires a
 concrete reason; leaving the dimension out is an evidence gap. Only evidence with `coverageRole: "COVERS"` closes a
 tuple. If it leaves any tuple uncovered, enumerate the exact complement in `coverageGaps`, link it to an open
@@ -400,6 +402,30 @@ These decision rules are fail-closed: an unmet, changed, or unverified P0/P1/P2 
 converted into an approval by asserting that its intent was met, by a likely-cause explanation, or by promising a
 follow-up. Use `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED` as the evidence warrants. A requirement may be
 changed only by an explicit owner decision recorded before the verdict.
+
+### Main-branch CI receipt (mandatory, owner decision 2026-10-07)
+
+Work reaches `main` by direct owner push, so `.github/workflows/governance-pr.yml` runs on **every push to `main`** as
+well as on pull requests. A gate that never executes protects nothing: from 2026-08-16 to 2026-10-07 no PR was opened,
+the full gate did not run once, and the weekly scan failed three weeks running without anyone reading it.
+
+1. **At the start of every review, and again before any `APPROVED` / `APPROVED WITH NOTES` verdict**, read the live
+   CI state of `main` (read-only `gh`, authenticated as the owner — agents never use `gh` to write):
+
+   ```powershell
+   gh run list --repo shtepiprone-ux/lero-al --branch main --limit 5
+   ```
+
+   Record the newest `Governance Validation (PR)` and `Scheduled Governance Scan` conclusions and their head SHAs in
+   the review. If `gh` cannot be run, say so in one line and ask the owner for the same output; never assume green.
+2. **A red or cancelled-without-successor run on the current `main` tip is a governance-process incident**
+   (`docs/governance-enforcement.md` §2). Name the failing step in the very next response to the owner. Restoring
+   green takes precedence over new task design, and no review may cite CI as evidence for any scope while it is red.
+3. **After the owner pushes an approved handoff**, the next session confirms that the push-triggered run for that
+   exact SHA concluded `success`. A failure is attributed to the pushed work until proved otherwise.
+4. A scheduled-scan failure is read the same way: open the run summary or the `governance-report-*` artifact, and
+   classify every new finding as a real violation or a scanner defect before any other action
+   (`docs/governance-enforcement.md` §3 "Scanner correctness").
 
 ### Approved-review closure - archive before handoff
 
@@ -635,3 +661,11 @@ If any answer exposes a gap, revise before returning.
 ⚠️ **Never record divergence counts or tree cleanliness in any document** — stale within one commit. Read from `git status` / `git rev-list`. **After every push, confirm it actually published** — do not infer it from the command not erroring in your scrollback. If a future fetch shows any remote-only commit, `--force-with-lease` is no longer safe; stop and re-measure. Bridge sessions must use `git --no-optional-locks …`; a plain `git status` there leaves an `index.lock` the sandbox cannot unlink, which then blocks the owner's next `git add`
 
 **The durable lesson is the failure mode, not the fix:** a plain `git push` had been rejected on every attempt and nothing surfaced it, so approved work sat unpublished while the backlog asserted `origin` contained it.
+
+**Corollary (2026-10-07) — a push that publishes is still not a push that passed.** Every push since 2026-08-16 went
+straight to `main` while the full gate was wired to `pull_request` only, so for seven weeks nothing ran on the code
+that shipped, and the only remaining check (the weekly scan) failed three Mondays in a row with nobody reading it.
+Its failure was itself false — 87 of 87 HIGH findings were comments, `import` lines, test fixtures or sanctioned
+Mantine `useMediaQuery` calls — which is exactly why it must be read: an unread red hides real regressions behind
+false ones and the reverse. **Confirm the push-triggered CI run for the pushed SHA, not just the push**
+("Main-branch CI receipt" above).

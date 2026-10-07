@@ -1,34 +1,6 @@
 {
-  "_comment": "Governance baseline \u2014 established 2026-05-18 (Phase 2), updated 2026-05-18 (Phase 3 entropy integration), updated 2026-05-18 (Task 66A: +5 pre-existing primitives). Updated 2026-05-20 (Task 111): tailwind M:14\u2192M:0 (all py-10 + bg-black violations fixed), tailwind L:42\u2192L:31 (text-[11px] migrated to text-xs; text-[10px] badge/micro-label uses remain as canonical allowed values). CI fails if any category EXCEEDS these counts. Updated 2026-05-21 (Task 121 review follow-up): hardcoded-color rules promoted to HIGH (T3 hex text, T4 hex/bg-white/bg-black) and NEW T6 (raw Tailwind palette colors e.g. text-green-500) added \u2014 all gate-blocking. Updated 2026-08-05: reconciled responsive C0/H30/M10/L8 and tailwind C0/H10/M0/L4 with identical pre-existing main-branch findings, which had been hidden because earlier PR steps failed first. New findings above these counts remain blocking.",
-  "_docs": "See docs/governance-enforcement.md \u00a79 for CI governance matrix. Phase 3 entropy: tailwind-entropy.mjs deep analysis, allowlist at tailwind-entropy.allowlist.json.",
-  "primitives": {
-    "CRITICAL": 0,
-    "HIGH": 57,
-    "MEDIUM": 8,
-    "LOW": 0
-  },
-  "ssr": {
-    "CRITICAL": 0,
-    "HIGH": 0,
-    "MEDIUM": 0,
-    "LOW": 0
-  },
-  "responsive": {
-    "CRITICAL": 0,
-    "HIGH": 30,
-    "MEDIUM": 10,
-    "LOW": 8
-  },
-  "tailwind": {
-    "CRITICAL": 0,
-    "HIGH": 10,
-    "MEDIUM": 0,
-    "LOW": 4
-  },
-  "localization": {
-    "CRITICAL": 0,
-    "HIGH": 0,
-    "MEDIUM": 18,
-    "LOW": 3
-  }
+  "version": 2,
+  "_comment": "Governance baseline v2 — REMOVE-ONLY per-finding debt ledger, seeded 2026-10-07 after the scheduled-scan false-positive fix (comments, imports and tests no longer scanned; Mantine useMediaQuery/useMatches reclassified MEDIUM per docs/mantine-responsive-design-system.md). Key: \"<scan> :: <file> :: <rule pattern>\", value: HIGH/CRITICAL occurrence count in that file. A new key or a higher count fails CI; a lower count is stale and fails until `npm run governance:update-baseline` records it. Never add entries: fix the code, or fix the scanner if the finding is false. Replaces the version 1 per-scan counts (HIGH caps: primitives 57, responsive 30, tailwind 10, ssr 0, localization 0).",
+  "_docs": "See docs/governance-enforcement.md §3 \"Scanner correctness\" and §9 \"Baseline Policy\".",
+  "entries": {}
 }

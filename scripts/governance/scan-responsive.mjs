@@ -1,11 +1,21 @@
 /**
  * Governance scan: Responsive governance violations
  * Detects missing 2xl: steps, viewport JS, arbitrary breakpoints, forbidden responsive hacks.
+ *
+ * 2026-10-07 (scheduled-scan false-positive fix, docs/governance-enforcement.md §3 "Scanner
+ * correctness"): rules match code only (comments blanked by `codeLines`), test sources are not
+ * scanned (they never ship; same scope as scan-tailwind.mjs), and R1 follows the current source of
+ * truth, docs/mantine-responsive-design-system.md: `useMediaQuery` / `useMatches` from
+ * Mantine (`@mantine/hooks` / `@mantine/core`) are sanctioned when responsive props cannot solve
+ * the requirement and the SSR caveat is documented, so they are reported as MEDIUM (verify the
+ * caveat), not HIGH. JS viewport-size hooks (`useWindowSize`, `useViewportSize`) and a media-query
+ * hook that does not come from Mantine stay HIGH.
  */
 import { readFileSync, readdirSync } from 'fs';
 import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { codeLines, isTestSource } from './source-lines.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -30,23 +40,46 @@ function finding(severity, file, line, message, pattern) {
 
 for (const file of walkTsx(SRC)) {
   const content = readFileSync(file, 'utf-8');
-  const lines = content.split('\n');
+  const lines = codeLines(content);
   const relPath = relative(ROOT, file);
 
-  // Skip shadcn UI internals
-  if (/src[/\\]components[/\\]ui[/\\]/.test(relPath)) continue;
+  // Skip shadcn UI internals and test sources
+  if (/src[/\\]components[/\\]ui[/\\]/.test(relPath) || isTestSource(relPath)) continue;
+
+  const code = lines.join('\n');
+  // `useMediaQuery` ships in @mantine/hooks, `useMatches` in @mantine/core.
+  const mantineMediaHooks = /import\s*\{[^}]*\b(useMediaQuery|useMatches)\b[^}]*\}\s*from\s*['"]@mantine\/(hooks|core)['"]/.test(code);
 
   lines.forEach((line, i) => {
     const lineNum = i + 1;
 
-    // ── Rule R1: useWindowSize hook ───────────────────────────────────────────
-    if (/useWindowSize|useViewportSize|useMediaQuery/.test(line) && !/\/\//.test(line)) {
+    // Imports declare a hook; only a call site is a finding (one finding per use, not two).
+    if (/^\s*import\b/.test(line)) return;
+
+    // ── Rule R1: JS viewport-size detection ───────────────────────────────────
+    if (/\b(useWindowSize|useViewportSize)\s*\(/.test(line)) {
       finding(
         'HIGH',
         file, lineNum,
-        'Viewport-size hook detected. Use CSS Tailwind breakpoints instead of JS viewport detection.',
-        'useWindowSize/useMediaQuery'
+        'JS viewport-size hook detected. Use Mantine responsive props / CSS breakpoints instead.',
+        'useWindowSize/useViewportSize'
       );
+    } else if (/\b(useMediaQuery|useMatches)\s*\(/.test(line)) {
+      if (mantineMediaHooks) {
+        finding(
+          'MEDIUM',
+          file, lineNum,
+          'Mantine media-query hook. Allowed only when responsive props cannot solve it; document the SSR caveat (docs/mantine-responsive-design-system.md).',
+          'mantine useMediaQuery/useMatches'
+        );
+      } else {
+        finding(
+          'HIGH',
+          file, lineNum,
+          'Media-query hook not imported from Mantine. Use Mantine responsive props, or the Mantine hook with a documented SSR caveat.',
+          'non-mantine useMediaQuery'
+        );
+      }
     }
 
     // ── Rule R2: Arbitrary inline breakpoint min/max-width ────────────────────

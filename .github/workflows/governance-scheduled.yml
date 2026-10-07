@@ -16,29 +16,32 @@ on:
           - weekly
           - monthly
 
+# Read-only (2026-10-07): the report is published as a workflow artifact and the run summary, never
+# committed. The former bot commit to main made the owner's local main diverge every Monday.
+permissions:
+  contents: read
+
 jobs:
   weekly-governance-scan:
     name: Weekly Governance Scan
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: write
-      pull-requests: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Governance gate self-test (planted violations must still fail)
+        run: npm run governance:verify
 
       - name: Run full governance scan with report
         id: governance
@@ -46,20 +49,14 @@ jobs:
           npm run governance:report || echo "GOVERNANCE_FAILED=true" >> $GITHUB_ENV
         continue-on-error: true
 
-      - name: Commit governance report to branch
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          TODAY=$(date +%Y-%m-%d)
-          REPORT_PATH="docs/governance-reports/weekly/weekly-${TODAY}.md"
-          if [ -f "$REPORT_PATH" ]; then
-            git add "$REPORT_PATH"
-            git diff --staged --quiet || git commit -m "chore(governance): weekly scan report ${TODAY}"
-            git push
-          else
-            echo "No report file found — governance script may not have generated it."
-          fi
-        continue-on-error: true
+      - name: Upload governance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-report-${{ github.run_id }}
+          path: docs/governance-reports/weekly/
+          if-no-files-found: warn
+          retention-days: 90
 
       - name: Post summary to workflow
         if: always()
@@ -76,6 +73,6 @@ jobs:
       - name: Fail if governance violations found
         if: env.GOVERNANCE_FAILED == 'true'
         run: |
-          echo "❌ Governance scan found HIGH or CRITICAL violations."
-          echo "   Review the report and fix violations."
+          echo "❌ Governance scan found new HIGH/CRITICAL findings or a stale baseline."
+          echo "   Review the report artifact / run summary and fix them."
           exit 1

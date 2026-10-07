@@ -1172,3 +1172,203 @@ with the governance start and end counts; R33's receipts; `r3-badge-diff.json`; 
 `Files Changed` table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 
+## 19. Revision 4 (review 4, 2026-10-07): `NEEDS REVISION` — badge text below AA in three colours, one stacked confirm left exposed
+
+**This section is the only executable route.** §18 stays binding where §19 does not replace it. Everything Revision 3
+built stays.
+
+**Re-entry: `remediation`**, on the current tree (Revisions 0–3 are uncommitted; do not discard them). Evidence goes to
+`docs/sessions/evidence/task859/r4-*`. Do not overwrite any `r3-*` artifact or anything under `review-4/` (the
+reviewer's evidence).
+
+### 19.1 Owner decision, verbatim (2026-10-07, AskUserQuestion during review 4)
+
+| ID | Question | Chosen | Effect |
+|---|---|---|---|
+| **D78-23** | D78-21's "AA text" is not met for blue-light (3.75:1), orange (2.82:1) and brand (3.14:1). TailAdmin defines no blue-light shade darker than -600 (`#0086C9`). Which text colour do the blue (info) badges use? | *"Blue-light-700 #026AA2 (Recommended)"* | `blueLight` index 7 becomes `#026AA2` (blue-light-700 of the Untitled UI palette TailAdmin derives from; 5.49:1 on blue-light-50). R41. |
+
+Orange and brand need no new decision: D78-21 already requires AA text, and both have sourced values. Orange-700
+`#C4320A` is defined in TailAdmin's live stylesheet (`review-4/r4-tailadmin-tokens.txt`, 5.16:1). Brand-800 `#BD4339`
+is `brand[8]` in `src/design-system/brand.ts` (4.63:1).
+
+### 19.2 RETRACTION (Opus, review 3, the D78-21 question)
+
+- *Invalid claim:* "text stays index 7 (the -700 shade), which keeps WCAG AA 4.5:1" (§18.1 D78-21, and the question put
+  to the owner).
+- *Why invalid:* index 7 is the -700 shade only for `green`, `yellow`, `red` and `gray`. In `blueLight` it is a
+  placeholder copy of -600 (`#0086C9`), in `orange` a copy of -500 (`#FB6514`), and in `brand` it is the brand primary
+  (`#EC5447`). Review 3 never measured the contrast.
+- *Evidence now:* `review-4/r4-contrast.json` (storybook-static rebuilt in review 4, `win32`, Node v22.22.3).
+  blueLight 3.75:1, orange 2.82:1, brand 3.14:1; gray 10.01, green 5.13, yellow 5.2, red 6.05, sale 4.54, purple 5.54.
+  10 light badges in `Statuses` / `Default` are below 4.5:1: *Sold*, *In progress* (ticket and inquiry), *Support*,
+  *Agent*, *Moderator*, *Brand*, *Info*.
+- *Corrected status:* CONTRADICTION. AA holds for 6 of the 9 colours. Fixed by D78-23 and R41.
+
+**Correction to §18.3 F13 (wording, not ruling).** Only `ReportDetailDialogView` and `ListingPreviewDialogView` open
+the confirm over a live dialog. Currencies close the detail first (`AdminCurrenciesManager.tsx:191`). Providers, pages,
+collections and the user profile open it from the page. The F13 ruling stands: one confirm component,
+`MantineDeleteConfirmModal`.
+
+### 19.3 Findings (review 4)
+
+The review reopened §18, the session log `# Revision 3`, the Revision 3 diff (`theme.ts`, `MantineModal.tsx`,
+`responsiveBottomSheet.tsx`, `ListingPreviewDialogView.tsx`, `badgeTones.ts`, the d69-18 test, the four locale files,
+`AdminHeader.tsx`, `AdminSidebar.tsx`), `r3-26-head-preexisting-failures.txt`, `r3-badge-diff.json` and its classifier,
+`r3-gr11.json` with its crops, and every `r3-*` gate transcript. It also rebuilt Storybook (`review-4/r4-build-storybook.txt`,
+exit 0) and ran its own probes on that build (`review-4/r4-probe*.json`, `r4-contrast.json`). Verified in review 4:
+- AC28: 37 of 37 light badges, en and uk, fill = index 0 and text = index 7.
+- AC29: `Detail` / `Form` / `DeleteConfirm` / `Structured` / `Default` at 1440: 24px corners; the close button is
+  44×44; at 390 the sheet's top corners are 24px.
+- Lightbox `fullScreen` is still 0px.
+- AC31, AC33 and R40 hold.
+- Governance: `npm.cmd run governance` exit 0, C0/H0 for every scanner.
+- The 4 vitest failures fail identically in the clean `HEAD` worktree. Both trees were run this session; d69-18 fails
+  only in `HEAD`.
+- Six frozen files hash equal to Revision 2's I0 list (`r2-00-i0.txt`): `page.tsx`, `AdminSupportManager.tsx`,
+  `CreateTicketDialog.tsx`, `TicketDetailDialog.tsx`, `UserPickerField.tsx`, `supportFilters.ts`.
+
+| # | Severity | Finding (FACT unless marked) | Disposition |
+|---|---|---|---|
+| F19 | P1, D78-21 / GR-10 | Light badge text is below WCAG AA 4.5:1 in `blueLight`, `orange` and `brand` (§19.2). The affected production badges include ticket *In progress* and *Support* on `/admin/support`. | R41 (D78-23) |
+| F20 | P2, R36 / WAI-ARIA | `covered` is passed only by `ListingPreviewDialogView`. `ReportDetailDialogView.tsx:177-261` stacks the same confirm over a live dialog without it. In `patterns-mantine-reportdetaildialogview--delete-confirm`, 2 dialogs and 8 buttons are exposed to assistive technology at 1440, and 2 dialogs and 6 buttons at 390; the `ListingPreviewDialogView` equivalent exposes 1 dialog (`review-4/r4-probe.json`). The same confirm behaves two ways. | R42 |
+| F21 | P2, GR-10 / AC27 | Two GR-10 receipts end in `UNVERIFIED`: the count badge variants, and the combobox dropdown and option. GR-10 accepts `NONE` or a STOP; it has no `UNVERIFIED`. The references do have both elements. Dropdown lists: TailAdmin `/form-elements` (the multiselect), Omah `/account/settings.html` (library 034, select menu), Lahomes `/index.html` (library 000, menus). Counts: inbox and sidebar counters on Lahomes `/inbox.html` (024), Kamr `/email-inbox` (010) and Omah `/email-inbox.html` (002). | R43 |
+| F22 | P3 | `docs/mantine-responsive-design-system.md` §23.6, the "Destructive (confirm step)" row, still says "The confirm step replaces the footer". D78-18 and R36 made it `MantineDeleteConfirmModal`, stacked over the dialog. | R44 |
+
+**Rulings on the Revision 3 deviations (binding):**
+- 1 (`covered` on `MantineModal` and `ResponsiveBottomSheet`, outside §18.7): accepted as a GR-0 EXTEND of the canonical
+  owner. WAI-ARIA requires what lies under a modal to be inert. It must now be applied to every stacked confirm (R42).
+- 2 (the sheet's 24px top corners for every `ResponsiveBottomSheet` consumer): accepted. There is one sheet corner.
+  Those Stories join O78-13 (§19.8).
+- 3 (`radius: '3xl'` for the plain `Modal`): accepted. One dialog corner; `fullScreen` stays 0px (review 4).
+- 4 (AC26): accepted as a **kickoff defect**. §18.5 required the whole suite to exit 0 without first checking that it
+  exits 0 at `HEAD`. This is corollary 724: never require an aggregate gate while fencing off the artifact that turns it
+  red. **AC26 is re-stated** in §19.5: no failure outside the four `HEAD` failures, and d69-18 green. Those four
+  (`css-var-resolvability` `--width-content`, `mantine-story-scope`, two `task763` evidence assertions) are the
+  `main`-branch CI incident the owner holds (the `css-vars` job is red on `main`). They are not 859's.
+- 5 (R38 scope: 14 Stories with no `HEAD` pair, D78-20 with no rendered user `inactive`): accepted. The rows that
+  `r3-badge-diff.mjs` classifies by Story id (`story-rewritten`, `R36`, `R2-extension`) were inspected one by one in
+  review 4. Each is the Badge Story rewrite (R39), a Revision 2 addition, or R36.
+- 6 (placeholder public Supabase variables for the `HEAD` build): accepted.
+- 7 (the GR-11 method): accepted. The two `Radio.Card` corners at DPR 1.25 (20 and 11 points) equal the plain-element
+  control of the same geometry (`plant-ring6frac2`, 22), and the 10× crop reads as a smooth curve (inspected).
+  **AC27's threshold is re-stated:** within 10 points, or within the same-geometry plain-element control.
+- 8 (frozen hashes not captured at I0): closed by review 4's content witness above. Revision 4 captures them at I0
+  and at the end.
+
+**GR-10 rulings on the dialog (Revision 3 receipt).** For dialog anatomy the original is the owner's reference set of
+§23.7 (owner rule 2026-10-02; TailAdmin `/modals` is one of its six references). The 18px / 600 title, the icon tile,
+the full-bleed dividers and the equal-width footer pair are what §23.7 specifies, so they are not differences from the
+original. Esc closes, as on Kamr and Lahomes and as the WAI-ARIA dialog pattern requires (§17.3). The dialog's GR-10
+line is therefore `missing or differing: NONE`.
+
+### 19.4 Requirements (Revision 4)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R41** | D78-21 + D78-23 in `theme.ts` and nowhere else. **(a)** `blueLight[7] = '#026aa2'` (comment: blue-light-700, Untitled UI, D78-23). **(b)** `orange[7] = '#c4320a'` (comment: TailAdmin orange-700, live `style.css` 2026-10-07). Correct the stale orange comments that say TailAdmin has no orange-600 (it defines `#ec4a0a`); index 6 is unchanged. **(c)** The `Badge` entry's light text is no longer hard-wired to index 7. It is the first index from 7 to 9 whose WCAG contrast on index 0 is at least 4.5:1, computed from `theme.colors[color]` by one small exported helper (for example `badgeLightTextShade`) in the design-system folder. After (a) and (b) this gives 7 for every registry colour except `brand`, which gets 8. No per-colour table, no new hex outside (a)/(b). **(d)** A unit test asserts that for every colour in `BADGE_TONES` plus `orange`, the text shade's contrast on index 0 is ≥ 4.5:1. Plant: restore `blueLight[7]` to `#0086c9` → the test fails; restore → it passes (hash witness). **(e)** Blast radius: every other consumer of `blueLight.7` / `orange.7` gets a before/after render recorded in the log: filled and outline `Badge`; `AdminUsersTable.tsx:460` (`color="orange"`); `MantineNotificationPattern.tsx:83` and `AuthSheet.tsx:102` (`blueLight`). | P1 | AC34 |
+| **R42** | `ReportDetailDialogView` passes `covered={showDeleteConfirm}` to its `MantineModal`, as `ListingPreviewDialogView` does. In each of the two Views, a test opens the confirm and asserts exactly one exposed `dialog` (`getAllByRole('dialog')` has length 1, and it is the confirm). Plant: remove `covered` in `ReportDetailDialogView` → its test fails. The containers and their existing tests are unchanged. | P2 | AC35 |
+| **R43** | Replace the two `UNVERIFIED` GR-10 lines. Operate the pages F21 names at 1440 (and 390 where the element renders). Measure each element against ours, part by part: radius, padding, font size and weight, height, colours, and hover / selected states. Ours are the count badge variants `circle` / `neutral` / `onBrand` / `onImage`, the `MantineCombobox` dropdown and its option. Save the crops side by side (`r4-gr10-*.png`, numbers in `r4-gr10.json`). A difference is either fixed in its canonical source (`theme.ts` entry, `MantineBadge`, `MantineCombobox`), recorded in the log first, or raised as `STOP — GR-10` with the measured options for the owner. No `UNVERIFIED` remains. | P2 | AC36 |
+| **R44** | §23.6, row "Destructive (confirm step)": replace "The confirm step replaces the footer." with "The confirm step is `MantineDeleteConfirmModal`, opened over the dialog, which is `covered` while it is open (D78-18; Task 859 R36, R42)." Nothing else in the file changes. | P3 | AC37 |
+
+### 19.5 Verification (Revision 4)
+
+**I0** → `r4-00-i0.txt`:
+- `node.exe -p "process.platform + ' ' + process.version"` (`win32` only).
+- `git --no-optional-locks status --porcelain`: every Revision 0–3 path is still present.
+- The `HEAD` worktree `..\lero-al-859-head` still exists. `HEAD` has moved since review 3 (governance commits), so the
+  check is now content, not SHA: `git diff --stat <worktree SHA> HEAD -- src messages` prints nothing. If it prints
+  anything, report `BLOCKED — HEAD worktree stale`.
+- `git hash-object` of the six frozen files of §19.3 and of every §17.8 container.
+- The GR-7 execution moment: re-run `review-4/r4-live-check.mjs` with its output redirected to `research-exec/r4-*`,
+  plus the R43 pages; emit the receipt before the first write.
+
+**Gate block**: §18.5's block, unchanged in its commands, plus the R41 and R42 tests (already inside the vitest run).
+Run `governance` once before the first write and the whole block after the last write. Each transcript is UTF-8
+without a BOM and ends `EXIT_CODE=`.
+
+- **AC26 (re-stated) [R32].** `npx.cmd vitest run --maxWorkers=3`. Every failing test is one of the four named in
+  `r3-26-head-preexisting-failures.txt`, by file and test name. d69-18, R41's test and R42's tests pass. Any other
+  failure blocks.
+- **AC34 [R41].** On the final `storybook-static`, run `review-4/r4-contrast.mjs` (output to `r4-contrast-final.json`):
+  every light badge in `Statuses` and `Default`, en and uk, is ≥ 4.5:1, and AC28's fill = index 0 still holds. A
+  rendered diff against `r3-probe-final-en.json` (`r4-badge-diff.json`) shows text-colour changes only in `blueLight`,
+  `orange` and `brand` badges, plus the filled / outline badges of those two palettes. Any other change is fixed or
+  reported. The unit test and its plant are in `r4-plants.txt`.
+- **AC35 [R42].** `review-4/r4-probe.mjs`, re-run on the final build: `reportdetaildialogview--delete-confirm` and
+  `listingpreviewdialogview--delete-confirm` each expose exactly one dialog at 1440 and 390. The tests and the plant are
+  in `r4-plants.txt`.
+- **AC36 [R43].** Each GR-10 line ends `missing or differing: NONE`, or carries a `STOP — GR-10` for the owner.
+- **AC37 [R44].** `git diff -- docs/mantine-responsive-design-system.md` shows the one row only.
+- **Governance:** `npm.cmd run governance` exits 0 at the end. Record per-scanner counts at start and end.
+- Re-run GR-3b/3c/3d/3e only where a pixel changed: the Badge primitive Stories and the R41 blast-radius Stories.
+
+`GR-4 AC AUDIT — 4 new criteria (AC34–AC37) plus AC26 re-stated; each states an observable property; absolutes: the contrast floor (WCAG's own threshold) and "exactly one exposed dialog" (the WAI-ARIA modal contract).`
+
+### 19.6 Reference research (GR-7), review 4
+
+**Library:** `docs/research/references/2026-10-04/` (unchanged). **Live, this session:** `review-4/r4-live-check.mjs` →
+`r4-live-check.json`, `r4-live-*.png` (Playwright, `win32`, Node v22.22.3, exit 0). TailAdmin's colour tokens were
+captured from the live `style.css` (`r4-tailadmin-tokens.txt`).
+
+| Ref | Page | Live result | Supports |
+|---|---|---|---|
+| TailAdmin | `/support-tickets`, `/products-list` | unchanged (library 051, 016) | D78-21 fill |
+| TailAdmin | `/support-ticket-reply` | opened; no multi-row table, as in the library (052) | — |
+| TailAdmin | `/modals` | **operated** at 1440 and 390: radius 24px, title 30px / 600, Close + Save Changes; Esc does not close | D78-22 (verified shipped) |
+| TailAdmin | `style.css` | blue-light defined 50–600 only; orange-600 `#ec4a0a`, orange-700 `#c4320a` | D78-23, R41 |
+| Kamr | `/guest-list`, `/ecom-customers` | unchanged (002, 019) | GR-8 (919) |
+| Kamr | `/ui-modal` | **operated** at 1440 and 390: content radius 0, title 15.75px / 500; Esc closes | Esc (§17.3) |
+| Lahomes | `/customers-list.html`, `/orders.html` | unchanged (016, 020) | GR-8 (919) |
+| Lahomes | `/ui-modal.html` | **operated** at 1440 and 390: title 15px / 500; Esc closes | Esc |
+| Omah | `/ecom-customers.html`, `/ecom-product-order.html` | unchanged (025, 022) | GR-8 (919) |
+
+**Options and the 2026 choice.**
+- Badge text: TailAdmin's own text shades (blue-light-500/600, warning/error-600) fail AA at 12px. A darker stop of the
+  same hue keeps TailAdmin's fill and hue and meets WCAG 2.2 AA. Chosen: D78-21 + D78-23.
+- A confirm over a dialog: hide the dialog underneath from assistive technology (WAI-ARIA APG modal dialog). Mantine's
+  native `Modal.Stack` fades the lower dialog to `opacity: 0` (`data-hidden`, `Modal.css`), which removes the context
+  the owner wants visible. Hence `covered`.
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: badge text contrast, dialog shell (shipped), stacked confirm, count badge and dropdown originals (R43), table anatomy (919); references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals, style.css; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal; Omah ecom-customers, ecom-product-order → the 9 table pages unchanged, the 3 modal pages operated (all opened, Esc recorded); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0; inspected in depth: every page (library summary.md rows) + the live pages above; workflow states operated: modal open at 1440/390, Esc, table first-row checkbox, badge computed styles and contrast; options across references: TailAdmin text shades (fail AA) vs a darker stop of the same hue; Modal.Stack fade vs covered; chosen 2026 best practice: D78-21 + D78-23, covered on every stacked confirm; absent or unverified: count badge and dropdown originals (R43 operates them); lero.al data map: §17.3 (unchanged); owner decisions: D78-23; evidence: docs/sessions/evidence/task859/review-4/.`
+
+### 19.7 Write set (Revision 4)
+
+- `src/design-system/mantine/theme.ts`: `blueLight[7]`, `orange[7]`, their comments, and the `Badge` entry (R41);
+- one new helper file and one new test under `src/design-system/mantine/` (R41);
+- `src/components/admin/ReportDetailDialogView.tsx`, plus a new or existing test for each of the two stacked Views
+  (R42);
+- the canonical source that an R43 difference names (`theme.ts` entry, `MantineBadge.tsx`, `MantineCombobox.tsx`),
+  recorded in the log first;
+- `docs/mantine-responsive-design-system.md` §23.6, one row (R44);
+- probes and evidence under `docs/sessions/evidence/task859/r4-*` and `research-exec/r4-*`;
+- the session log (`# Revision 4`) and the 859 backlog cell.
+
+Frozen, with hashes at I0 and at the end: the six files of §19.3, every §17.8 container, and the server actions.
+**Any other file needed is a stop and report.**
+
+### 19.8 Owner visual review — O78-13 (Revision 4)
+
+§18.8's matrix, with these additions:
+- every badge row shows the R41 text colour;
+- blast-radius rows: `Mantine/Primitives/ResponsiveBottomSheet` `Default`, `Primitives/Select` `Mobile Bottom Sheet`,
+  and every menu or navigation sheet Story (the 24px top corners), at 390;
+- the R41 consumers of `blueLight` / `orange`;
+- `ReportDetailDialogView` `Delete Confirm`, beside `ListingPreviewDialogView` `Delete Confirm`.
+
+The `/admin/support` table row still waits for 919.
+
+### 19.9 Completion (Revision 4)
+
+Append `# Revision 4` to the session log with:
+- I0 and the GR-7 execution receipt;
+- R41–R44 with evidence;
+- the gate block, with the governance start and end counts;
+- the AC26 failing-set comparison;
+- `r4-contrast-final.json`, `r4-badge-diff.json` and `r4-plants.txt`;
+- the R43 GR-10 receipts;
+- the re-run GR-3 receipts;
+- a `Files Changed` table.
+
+Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No Git.
+

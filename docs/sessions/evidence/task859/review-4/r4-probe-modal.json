@@ -1,0 +1,158 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "rows": [
+  {
+   "id": "mantine-primitives-modal--detail",
+   "width": 1440,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "modal",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "24px",
+    "close": "44x44",
+    "closeLabel": "Close"
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "width": 390,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "sheet",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "0px",
+    "close": null,
+    "closeLabel": null
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--form",
+   "width": 1440,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "modal",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "24px",
+    "close": "44x44",
+    "closeLabel": "Close"
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--form",
+   "width": 390,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "sheet",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "0px",
+    "close": null,
+    "closeLabel": null
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--delete-confirm",
+   "width": 1440,
+   "triggers": [
+    "Delete"
+   ],
+   "r": {
+    "kind": "modal",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "24px",
+    "close": "44x44",
+    "closeLabel": "Close"
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--delete-confirm",
+   "width": 390,
+   "triggers": [
+    "Delete"
+   ],
+   "r": {
+    "kind": "sheet",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "0px",
+    "close": null,
+    "closeLabel": null
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--default",
+   "width": 1440,
+   "triggers": [
+    "Open modal",
+    "Open long content"
+   ],
+   "r": {
+    "kind": "modal",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "24px",
+    "close": null,
+    "closeLabel": null
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--default",
+   "width": 390,
+   "triggers": [
+    "Open modal",
+    "Open long content"
+   ],
+   "r": {
+    "kind": "sheet",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "0px",
+    "close": null,
+    "closeLabel": null
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--structured",
+   "width": 1440,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "modal",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "24px",
+    "close": "44x44",
+    "closeLabel": "Close"
+   }
+  },
+  {
+   "id": "mantine-primitives-modal--structured",
+   "width": 390,
+   "triggers": [
+    "Open modal"
+   ],
+   "r": {
+    "kind": "sheet",
+    "tl": "24px",
+    "tr": "24px",
+    "bl": "0px",
+    "close": null,
+    "closeLabel": null
+   }
+  }
+ ]
+}

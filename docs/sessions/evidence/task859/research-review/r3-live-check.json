@@ -1,0 +1,898 @@
+{
+ "checkedAt": "2026-10-07T16:41:59.374Z",
+ "platform": "win32",
+ "node": "v22.22.3",
+ "library": "docs/research/references/2026-10-04",
+ "results": [
+  {
+   "kind": "table",
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/support-tickets",
+   "finalUrl": "https://demo.tailadmin.com/support-tickets",
+   "libraryRow": "051",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "Ticket ID",
+     "Requested By",
+     "Subject",
+     "Create Date",
+     "Status",
+     "Action"
+    ],
+    "firstCellCheckbox": true,
+    "badges": [
+     {
+      "text": "Solved",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     },
+     {
+      "text": "Pending",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(255, 250, 235)",
+      "color": "rgb(220, 104, 3)"
+     },
+     {
+      "text": "Pending",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(255, 250, 235)",
+      "color": "rgb(220, 104, 3)"
+     },
+     {
+      "text": "Solved",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     },
+     {
+      "text": "Pending",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(255, 250, 235)",
+      "color": "rgb(220, 104, 3)"
+     },
+     {
+      "text": "Solved",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-00-tailadmin.png"
+  },
+  {
+   "kind": "table",
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/support-ticket-reply",
+   "finalUrl": "https://demo.tailadmin.com/support-ticket-reply",
+   "libraryRow": "052",
+   "unchanged": null,
+   "live": {
+    "badges": [
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     },
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     },
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     },
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     },
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     },
+     {
+      "text": "NEW",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 10px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(3, 152, 85)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-01-tailadmin.png"
+  },
+  {
+   "kind": "table",
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/products-list",
+   "finalUrl": "https://demo.tailadmin.com/products-list",
+   "libraryRow": "016",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Products",
+     "Category",
+     "Brand",
+     "Price",
+     "Stock",
+     "Created At",
+     "Action"
+    ],
+    "firstCellCheckbox": true,
+    "badges": [
+     {
+      "text": "Out of Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "oklch(0.971 0.013 17.38)",
+      "color": "oklch(0.505 0.213 27.518)"
+     },
+     {
+      "text": "In Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     },
+     {
+      "text": "Out of Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "oklch(0.971 0.013 17.38)",
+      "color": "oklch(0.505 0.213 27.518)"
+     },
+     {
+      "text": "In Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     },
+     {
+      "text": "In Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     },
+     {
+      "text": "In Stock",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "padding": "2px 8px",
+      "radius": "3.35544e+07px",
+      "bg": "rgb(236, 253, 243)",
+      "color": "rgb(2, 122, 72)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-02-tailadmin.png"
+  },
+  {
+   "kind": "table",
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/customers-list.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/customers-list.html",
+   "libraryRow": "016",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Customer Photo & Name",
+     "Email",
+     "Contact",
+     "Property Type",
+     "Interested Properties",
+     "Status",
+     "Last Contacted",
+     "Action"
+    ],
+    "firstCellCheckbox": true,
+    "badges": []
+   },
+   "screenshot": "r3-live-03-lahomes.png"
+  },
+  {
+   "kind": "table",
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/orders.html",
+   "finalUrl": "https://techzaa.in/lahomes/admin/orders.html",
+   "libraryRow": "020",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Customer Photo & Name",
+     "Purchase Date",
+     "Contact",
+     "Property Type",
+     "Amount",
+     "Purchase Properties",
+     "Amount Status",
+     "Action"
+    ],
+    "firstCellCheckbox": true,
+    "badges": [
+     {
+      "text": "Paid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(92, 193, 132)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Paid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(92, 193, 132)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Unpaid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(233, 103, 103)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Paid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(92, 193, 132)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Unpaid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(233, 103, 103)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Unpaid",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "padding": "3px 6px",
+      "radius": "4px",
+      "bg": "rgb(233, 103, 103)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-04-lahomes.png"
+  },
+  {
+   "kind": "table",
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/guest-list",
+   "finalUrl": "https://kamr-vite.vercel.app/guest-list",
+   "libraryRow": "002",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Guest",
+     "Date Order",
+     "Check In",
+     "Check Out",
+     "Request",
+     "Room Type",
+     "Status",
+     ""
+    ],
+    "firstCellCheckbox": true,
+    "badges": [
+     {
+      "text": "Pending",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgb(255, 233, 213)",
+      "color": "rgb(255, 167, 85)"
+     },
+     {
+      "text": "Booked",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgb(237, 250, 242)",
+      "color": "rgb(120, 214, 157)"
+     },
+     {
+      "text": "Refund",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgba(248, 133, 125, 0.1)",
+      "color": "rgb(248, 133, 125)"
+     },
+     {
+      "text": "Canceled",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgb(254, 230, 234)",
+      "color": "rgb(247, 43, 80)"
+     },
+     {
+      "text": "Pending",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgb(255, 233, 213)",
+      "color": "rgb(255, 167, 85)"
+     },
+     {
+      "text": "Booked",
+      "fontSize": "13.132px",
+      "fontWeight": "500",
+      "padding": "11.382px 24.5px",
+      "radius": "7px",
+      "bg": "rgb(237, 250, 242)",
+      "color": "rgb(120, 214, 157)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-05-kamr.png"
+  },
+  {
+   "kind": "table",
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ecom-customers",
+   "finalUrl": "https://kamr-vite.vercel.app/ecom-customers",
+   "libraryRow": "019",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Name",
+     "Email",
+     "Phone",
+     "Billing Address",
+     "Joined",
+     "Active"
+    ],
+    "firstCellCheckbox": true,
+    "badges": []
+   },
+   "screenshot": "r3-live-06-kamr.png"
+  },
+  {
+   "kind": "table",
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/ecom-customers.html",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/ecom-customers.html",
+   "libraryRow": "025",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Name",
+     "Email",
+     "Phone",
+     "Billing Address",
+     "Joined",
+     ""
+    ],
+    "firstCellCheckbox": true,
+    "badges": []
+   },
+   "screenshot": "r3-live-07-omah.png"
+  },
+  {
+   "kind": "table",
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/ecom-product-order.html",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/ecom-product-order.html",
+   "libraryRow": "022",
+   "unchanged": true,
+   "live": {
+    "heads": [
+     "[checkbox]",
+     "Order",
+     "Date",
+     "Ship To",
+     "Status",
+     "Amount",
+     ""
+    ],
+    "firstCellCheckbox": true,
+    "badges": [
+     {
+      "text": "Completed",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(55, 209, 89)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Processing",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(59, 76, 184)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "On Hold",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(182, 85, 228)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Pending",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(255, 159, 15)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "On Hold",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(182, 85, 228)",
+      "color": "rgb(255, 255, 255)"
+     },
+     {
+      "text": "Processing",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "padding": "5px 8px",
+      "radius": "4px",
+      "bg": "rgb(59, 76, 184)",
+      "color": "rgb(255, 255, 255)"
+     }
+    ]
+   },
+   "screenshot": "r3-live-08-omah.png"
+  },
+  {
+   "kind": "modal",
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "width": 1440,
+   "finalUrl": "https://demo.tailadmin.com/modals",
+   "triggers": 4,
+   "triggerText": "Open Modal",
+   "opened": true,
+   "dialog": {
+    "w": 600,
+    "h": 364,
+    "radius": "24px",
+    "bg": "rgb(255, 255, 255)",
+    "title": {
+     "text": "Modal Heading",
+     "fontSize": "30px",
+     "fontWeight": "600"
+    },
+    "buttons": [
+     {
+      "text": "",
+      "w": 44,
+      "h": 44,
+      "x": 952,
+      "y": 292,
+      "bg": "rgb(242, 244, 247)",
+      "color": "rgb(152, 162, 179)",
+      "border": "0px rgb(228, 231, 236)",
+      "radius": "3.35544e+07px"
+     },
+     {
+      "text": "Close",
+      "w": 68,
+      "h": 46,
+      "x": 780,
+      "y": 546,
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(52, 64, 84)",
+      "border": "1px rgb(208, 213, 221)",
+      "radius": "8px"
+     },
+     {
+      "text": "Save Changes",
+      "w": 120,
+      "h": 44,
+      "x": 860,
+      "y": 547,
+      "bg": "rgb(70, 95, 255)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px rgb(228, 231, 236)",
+      "radius": "8px"
+     }
+    ]
+   },
+   "escCloses": false,
+   "screenshots": [
+    "r3-live-09-tailadmin-1440.png",
+    "r3-live-09-tailadmin-1440-modal.png"
+   ]
+  },
+  {
+   "kind": "modal",
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "width": 390,
+   "finalUrl": "https://demo.tailadmin.com/modals",
+   "triggers": 4,
+   "triggerText": "Open Modal",
+   "opened": true,
+   "dialog": {
+    "w": 350,
+    "h": 428,
+    "radius": "24px",
+    "bg": "rgb(255, 255, 255)",
+    "title": {
+     "text": "Modal Heading",
+     "fontSize": "30px",
+     "fontWeight": "600"
+    },
+    "buttons": [
+     {
+      "text": "",
+      "w": 38,
+      "h": 38,
+      "x": 320,
+      "y": 248,
+      "bg": "rgb(242, 244, 247)",
+      "color": "rgb(152, 162, 179)",
+      "border": "0px rgb(228, 231, 236)",
+      "radius": "3.35544e+07px"
+     },
+     {
+      "text": "Close",
+      "w": 146,
+      "h": 46,
+      "x": 44,
+      "y": 594,
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(52, 64, 84)",
+      "border": "1px rgb(208, 213, 221)",
+      "radius": "8px"
+     },
+     {
+      "text": "Save Changes",
+      "w": 144,
+      "h": 44,
+      "x": 202,
+      "y": 595,
+      "bg": "rgb(70, 95, 255)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px rgb(228, 231, 236)",
+      "radius": "8px"
+     }
+    ]
+   },
+   "escCloses": false,
+   "screenshots": [
+    "r3-live-10-tailadmin-390.png",
+    "r3-live-10-tailadmin-390-modal.png"
+   ]
+  },
+  {
+   "kind": "modal",
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "width": 1440,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+   "triggers": 7,
+   "triggerText": "Basic modal",
+   "opened": true,
+   "dialog": {
+    "w": 1440,
+    "h": 900,
+    "radius": "0px",
+    "bg": "rgba(0, 0, 0, 0)",
+    "title": {
+     "text": "Modal title",
+     "fontSize": "15.75px",
+     "fontWeight": "500"
+    },
+    "buttons": [
+     {
+      "text": "",
+      "w": 28,
+      "h": 28,
+      "x": 922,
+      "y": 37,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "border": "0px rgb(0, 0, 0)",
+      "radius": "7px"
+     },
+     {
+      "text": "Close",
+      "w": 83,
+      "h": 49,
+      "x": 706,
+      "y": 168,
+      "bg": "rgb(254, 230, 234)",
+      "color": "rgb(247, 43, 80)",
+      "border": "1px rgb(254, 230, 234)",
+      "radius": "7px"
+     },
+     {
+      "text": "Save changes",
+      "w": 143,
+      "h": 49,
+      "x": 796,
+      "y": 168,
+      "bg": "rgb(248, 133, 125)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(248, 133, 125)",
+      "radius": "7px"
+     }
+    ]
+   },
+   "escCloses": true,
+   "screenshots": [
+    "r3-live-11-kamr-1440.png",
+    "r3-live-11-kamr-1440-modal.png"
+   ]
+  },
+  {
+   "kind": "modal",
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "width": 390,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+   "triggers": 7,
+   "triggerText": "Basic modal",
+   "opened": true,
+   "dialog": {
+    "w": 390,
+    "h": 900,
+    "radius": "0px",
+    "bg": "rgba(0, 0, 0, 0)",
+    "title": {
+     "text": "Modal title",
+     "fontSize": "15.75px",
+     "fontWeight": "500"
+    },
+    "buttons": [
+     {
+      "text": "",
+      "w": 25,
+      "h": 25,
+      "x": 337,
+      "y": 21,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "border": "0px rgb(0, 0, 0)",
+      "radius": "7px"
+     },
+     {
+      "text": "Close",
+      "w": 62,
+      "h": 37,
+      "x": 173,
+      "y": 150,
+      "bg": "rgb(254, 230, 234)",
+      "color": "rgb(247, 43, 80)",
+      "border": "1px rgb(254, 230, 234)",
+      "radius": "7px"
+     },
+     {
+      "text": "Save changes",
+      "w": 111,
+      "h": 37,
+      "x": 242,
+      "y": 150,
+      "bg": "rgb(248, 133, 125)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(248, 133, 125)",
+      "radius": "7px"
+     }
+    ]
+   },
+   "escCloses": true,
+   "screenshots": [
+    "r3-live-12-kamr-390.png",
+    "r3-live-12-kamr-390-modal.png"
+   ]
+  },
+  {
+   "kind": "modal",
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "width": 1440,
+   "finalUrl": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "triggers": 24,
+   "triggerText": "Launch demo modal",
+   "opened": true,
+   "dialog": {
+    "w": 1440,
+    "h": 900,
+    "radius": "0px",
+    "bg": "rgba(0, 0, 0, 0)",
+    "title": {
+     "text": "Modal title",
+     "fontSize": "15px",
+     "fontWeight": "500"
+    },
+    "buttons": [
+     {
+      "text": "Close",
+      "w": 31,
+      "h": 31,
+      "x": 928,
+      "y": 45,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(104, 125, 146)",
+      "border": "0px rgb(104, 125, 146)",
+      "radius": "5.6px"
+     },
+     {
+      "text": "Close",
+      "w": 69,
+      "h": 39,
+      "x": 751,
+      "y": 191,
+      "bg": "rgb(144, 53, 227)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(144, 53, 227)",
+      "radius": "5.6px"
+     },
+     {
+      "text": "Save changes",
+      "w": 121,
+      "h": 39,
+      "x": 828,
+      "y": 191,
+      "bg": "rgb(96, 74, 227)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(96, 74, 227)",
+      "radius": "5.6px"
+     }
+    ]
+   },
+   "escCloses": true,
+   "screenshots": [
+    "r3-live-13-lahomes-1440.png",
+    "r3-live-13-lahomes-1440-modal.png"
+   ]
+  },
+  {
+   "kind": "modal",
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "width": 390,
+   "finalUrl": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "triggers": 24,
+   "triggerText": "Launch demo modal",
+   "opened": true,
+   "dialog": {
+    "w": 390,
+    "h": 900,
+    "radius": "0px",
+    "bg": "rgba(0, 0, 0, 0)",
+    "title": {
+     "text": "Modal title",
+     "fontSize": "15px",
+     "fontWeight": "500"
+    },
+    "buttons": [
+     {
+      "text": "Close",
+      "w": 31,
+      "h": 31,
+      "x": 340,
+      "y": 25,
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(104, 125, 146)",
+      "border": "0px rgb(104, 125, 146)",
+      "radius": "5.6px"
+     },
+     {
+      "text": "Close",
+      "w": 69,
+      "h": 39,
+      "x": 163,
+      "y": 171,
+      "bg": "rgb(144, 53, 227)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(144, 53, 227)",
+      "radius": "5.6px"
+     },
+     {
+      "text": "Save changes",
+      "w": 121,
+      "h": 39,
+      "x": 240,
+      "y": 171,
+      "bg": "rgb(96, 74, 227)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px rgb(96, 74, 227)",
+      "radius": "5.6px"
+     }
+    ]
+   },
+   "escCloses": true,
+   "screenshots": [
+    "r3-live-14-lahomes-390.png",
+    "r3-live-14-lahomes-390-modal.png"
+   ]
+  }
+ ]
+}

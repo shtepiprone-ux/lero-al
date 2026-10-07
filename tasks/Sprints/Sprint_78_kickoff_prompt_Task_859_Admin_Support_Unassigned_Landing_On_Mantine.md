@@ -971,3 +971,204 @@ Append `## Revision 2` to `docs/sessions/2026-10-04-task859-admin-support-mantin
 
 Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 
+## 18. Revision 3 (review 3, 2026-10-07): `NEEDS REVISION` — a red suite, two missing receipts, and a canonical that is not yet the original
+
+**This section is the only executable route.** §17 stays binding where §18 does not replace it. Everything Revision 2
+built stays; nothing is rebuilt from scratch.
+
+**Re-entry: `remediation`**, on the current tree (Revisions 0–2 are uncommitted; do not discard them). Evidence goes to
+`docs/sessions/evidence/task859/r3-*`. Do not overwrite any `r2-*` artifact.
+
+### 18.1 Owner decisions, verbatim (2026-10-07, AskUserQuestion during review 3)
+
+| ID | Question | Chosen | Effect |
+|---|---|---|---|
+| **D78-21** | The badge fill is a 10% tint of the text colour; TailAdmin's is the solid -50 shade, and TailAdmin's warning/error text (-600) fails WCAG AA at 12px. What does the one `MantineBadge` match? | *"TailAdmin fill, AA text (Recommended)"* | Light badge fill = palette index 0 (the -50 shade, solid), exactly as TailAdmin; text stays index 7 (the -700 shade), which keeps WCAG AA 4.5:1. Set once in the theme `Badge` entry. R34. |
+| **D78-22** | `MantineModal` has a 16px corner and a 36px close button; TailAdmin `/modals` has 24px and 44px. Which does the canonical dialog use? | *"TailAdmin 24px + 44px (Recommended)"* | A 24px theme radius key for the dialog content; the round close button 44×44. Set once in the theme / `MantineModal`. R35. |
+
+### 18.2 RETRACTION (Opus, review 2, §17.2 F5)
+
+- *Invalid claim:* "The *visual* contract is canonical already: the `Badge` theme entry … equals TailAdmin's measured
+  status pill (§17.3)."
+- *Why invalid:* review 2 compared font size, weight, padding and radius only. It never compared the colours.
+- *Evidence now:* TailAdmin `/support-tickets`, live 2026-10-07 (`research-review/r3-live-check.json`): *Solved* text
+  `rgb(2,122,72)` on `rgb(236,253,243)`; *Pending* `rgb(220,104,3)` on `rgb(255,250,235)`. The built
+  `Mantine/Primitives/Badge` `Statuses` (`r2-probe-badges-en.json`, `research-review/r3-gr11-probe.json`): *Active*
+  `rgb(2,122,72)` on `rgba(2,122,72,0.1)`; *Pending* `rgb(181,71,8)` on `rgba(181,71,8,0.1)`. `theme.ts:395` documents
+  it: "Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex".
+- *Corrected status:* CONTRADICTION. The fill differs for every tone. Decided by D78-21 → R34.
+
+### 18.3 Findings (review 3)
+
+The review reopened the Revision 2 diff (86 tracked files plus the untracked 859 files), the session log
+`## Revision 2`, every `r2-*` transcript it cites, `badgeTones.ts`, `MantineBadge.tsx`, `MantineDeleteConfirmModal.tsx`,
+both gates and their plants, the picker View, `ReportDetailDialogView.tsx`, and the built Storybook (`storybook-static`,
+2026-10-07 16:25). GR-7 review audit: §18.6.
+
+| # | Severity | Finding (FACT unless marked) | Disposition |
+|---|---|---|---|
+| F9 | P1, clause 9 | `r2-02-tests.txt` ends `Tests 1 failed / 1408 passed`, `EXIT_CODE=1`. `theme.d69-18.test.tsx:207-209` requires `var(--mantine-spacing-micro)` in `MantineListingCardPattern.tsx`. Task 741's `7b4b81f8c` removed that consumption (`git log -S`), so the row is stale and the suite is red at `HEAD` too. A known non-zero required gate is part of the task (clause 9). | R32 |
+| F10 | P1, GR-10 / GR-11 | Revision 2's log has no `GR-10 CANONICAL MATCH` and no `GR-11 CORNER CHECK` receipt. Both rules bind every execution since 2026-10-04 21:48 (`68f0fb5cd`); this revision ran 2026-10-05…07. §17.7 omitted them because it was written at 15:36 the same day (orchestrator defect, corrected here). | R33 |
+| F11 | P1, GR-10 | The badge light fill is not TailAdmin's (§18.2). | R34 (D78-21) |
+| F12 | P1, GR-10 | `Mantine/Primitives/Modal` `DeleteConfirm` / `Form` at 1440: `.mantine-Modal-content` radius **16px**, close `ActionIcon` **36×36** (`size="input-sm"`, `MantineModal.tsx:111`; `research-review/r3-modal-probe.json`). TailAdmin `/modals` live: **24px**, close **44×44** (`r3-live-check.json`). | R35 (D78-22) |
+| F13 | P2, R29 / D78-18 "one dialog anatomy" | Two delete-confirm mechanisms now ship. `ReportDetailDialogView` and the currencies, providers, pages, collections and user-profile dialogs open `MantineDeleteConfirmModal` over the detail dialog; `ListingPreviewDialogView` swaps its own footer (deviation 5). `ReportDetailDialogView.tsx:250-261` already proves that a confirm stacked over a live detail dialog works in this code base. | R36. **Ruling on deviation 5: rejected.** |
+| F14 | P2, GR-7 2026 practice | The registry makes an action verb a state label: currency `inactive` → `admin.currency.currencies.deactivate` = *"Deactivate"*, provider `disabled` → `admin.currency.providers.disable` = *"Disable"* (`badgeTones.ts`; consumers `AdminCurrenciesView.tsx:69`, `CurrencyDetailDialogView.tsx:103`, `AdminExchangeProvidersView.tsx:76`). Pre-existing at `HEAD`, now canonised in the `Statuses` Story. A status badge names a state, not a command. | R37 |
+| F15 | P2, AC20 | CONTRADICTION. Deviation 7 says a `HEAD` Storybook build "is not available to an agent". The owner can create a `HEAD` worktree and the executor can build in it (§18.5 I0). The substitute (`r2-badge-diff.json`) compares colour maps only, so it cannot see a changed variant, size, icon or label. AC20 is `NOT VERIFIED`. The O78-13 matrix also needs those "before" screenshots (§17.9). | R38 |
+| F16 | P2, GR-9 step 2 | Production passes `MantineBadge` values that `Mantine/Primitives/Badge` does not render: `size="lg"` (`MantineAdminSurfacePattern.tsx:77`), `shape="soft"` (`AdminHeader.tsx:54`, `AdminSidebar.tsx:94`), `emphasis="onBrand"` (`MantineCountButton.tsx:115`), `emphasis="onImage"` (`MantineListingCardPattern.tsx:171`), a caller `leftSection` (`MantineDashboardWorkList.tsx:144`, `AdminUserProfileView.tsx:499`). The two "Admin" chips print a literal, not a message key (pre-existing at `HEAD`; both files are in R26, clause 7). | R39 |
+| F17 | P2, orchestrator-role approval item 13 | §17.7's gate block has no `npm.cmd run governance` (orchestrator defect). Revision 0 recorded `governance:tailwind` exit 1 (`18d-governance-tailwind.txt`). No per-scanner baseline comparison exists for Revision 2. | §18.5 gate block |
+| F18 | P3 | `r2-30-measure.mjs` hard-codes `registryTotal = 37` instead of counting the registry, so AC19 cannot fail when the registry grows. | R40 |
+
+**Rulings on the other Revision 2 deviations (binding):**
+- 1 (meaning props on the card, work-list and table cell): accepted; it is what "no colour prop" requires.
+- 2 (`lg`, `soft`, `outline`, `emphasis`): accepted; their Story coverage is R39.
+- 3 (`MantineCombobox` `adornment` + `triggerAriaLabel`): accepted as a GR-0 EXTEND of the canonical owner.
+- 4 (four edited tests): accepted; each keeps its assertion's intent (diff reviewed).
+- 6 (report Review / Dismiss as `MantineNavRowList` rows, Apply as a row): accepted under §23.7, "a third action is a
+  `MantineNavRowList` row".
+- 8: accepted; review 3 operated both dialogs (§18.6).
+- R27's `description = email` was a kickoff defect: `PickerUser` carries no e-mail (`AdminSupportManager.tsx:46-54`).
+  The phone / short-id description stands.
+
+### 18.4 Requirements (Revision 3)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R32** | `theme.d69-18.test.tsx`'s `MantineListingCardPattern.tsx` row requires only what the file consumes now: `['"tight"', '"compact"']`. A comment on the row cites `7b4b81f8c` (741 R3 removed the `micro` gap). No other row changes. The full suite exits 0. | P1 | AC26 |
+| **R33** | One `GR-10 CANONICAL MATCH` receipt per surface: `Mantine/Primitives/Badge` (`Default`, `Statuses`), `Mantine/Primitives/Modal` (`Detail`, `Form`, `DeleteConfirm`), `Mantine/Primitives/Combobox`, `Patterns/Mantine/UserPickerFieldView`, and every dialog Story of R29. The original per element: TailAdmin `/support-tickets` (badge), TailAdmin `/modals` (dialog shell, close, footer buttons, title), TailAdmin `/form-elements` (fields). One `GR-11 CORNER CHECK` per changed rounded object and state: every `MantineBadge` variant (status, tone, `onImage`, `outline`, `soft`, count `circle`, count `neutral`, count `onBrand`, count `onImage`); the dialog content (desktop corners, bottom-sheet top corners); the close button (rest, hover, focus-visible); the footer buttons (default, primary, red confirm; rest, hover, focus-visible, `loading`, disabled); `Radio.Card` (rest, checked, focus-visible); the combobox dropdown and its option (hover, selected). DPR 1 and 1.25 crops at 10×, beside the reference at the same DPR, with diagonal coverage (model: `docs/sessions/evidence/task741r3/rev3g/owner-return/corner-pixels.mjs`). A failing corner is fixed in its canonical source within this revision. | P1 | AC27 |
+| **R34** | D78-21, in the theme `Badge` entry only (`theme.ts`, unfrozen for this entry): for `variant="light"`, the background is `var(--mantine-color-<color>-0)` and the text `var(--mantine-color-<color>-7)`, through the entry's `vars` (no consumer change, no new hex). It applies to every theme colour the registry uses (`gray`, `blueLight`, `green`, `yellow`, `red`, `brand`, `sale`, `purple`, `orange`). Update the stale comments at `theme.ts:389-428` that describe the alpha tint. `filled`, `outline` and `white` are unchanged. | P1 | AC28 |
+| **R35** | D78-22: add `theme.radius['3xl'] = '1.5rem'` (24px). The desktop dialog content takes it through the theme `Modal` entry: find the source of today's 16px with a computed-style trace and replace it there; no `radius` prop in a consumer. The bottom sheet's top corners take the same key. `MantineModal`'s structured close `ActionIcon` is 44×44 through a theme size key, not a literal; its icon stays `theme.other.iconSize.standard`. | P1 | AC29 |
+| **R36** | `ListingPreviewDialogView`'s delete confirmation is `MantineDeleteConfirmModal`, opened over the preview, as `ReportDetailDialogView.tsx:250-261` does. The container's props, callbacks and server calls are unchanged; the existing test ids are kept (pass them through `confirmTestId` / `bodyTestId`). | P2 | AC30 |
+| **R37** | New state labels in 4 locales: `admin.currency.currencies.status_inactive` (en *"Inactive"*) and `admin.currency.providers.status_disabled` (en *"Disabled"*). The registry's `currency.inactive` and `provider.disabled` entries point at them, and the three consumers render them. The toggle buttons keep their verbs. `badgeTones.test.ts` still finds every key in every locale. | P2 | AC31 |
+| **R38** | AC20 re-proved rendered: the same badge probe runs on the `HEAD` worktree's Storybook build and on the final build, over the Stories of every R26 file. For each badge it records text, computed `background-color`, `color`, `font-size`, height and whether an icon is present. `r3-badge-diff.json` lists every pair. Expected differences only: D78-20 (user `inactive`), D78-21 (every light fill) and R37's two labels. Any other difference is fixed, or reported before handoff. The `HEAD` screenshots of each changed row are saved for O78-13 (`r3-before-*.png`). | P2 | AC32 |
+| **R39** | `Mantine/Primitives/Badge` `Default` renders every production value: `size` `xs` / `sm` / `lg`, `shape="soft"`, `outline`, `onImage`, count `circle` / `neutral` / `onBrand` (inside a filled brand `Button`) / `onImage` (on a dark surface), and a caller `leftSection`. The two "Admin" chips use a new key `admin.sidebar.admin_badge` (the namespace both files already read, `AdminHeader.tsx:15`, `AdminSidebar.tsx:22`) in 4 locales (the value stays *"Admin"* unless a locale file already translates the word). | P2 | AC33 |
+| **R40** | The AC19 probe reads the registry total from `badgeTones.ts` (the sum of entries across `BADGE_STATUS_REGISTRY`), not a literal. | P3 | AC19 |
+
+### 18.5 Verification (Revision 3)
+
+**I0** → `r3-00-i0.txt`:
+- `node.exe -p "process.platform + ' ' + process.version"` (`win32` only);
+- `git --no-optional-locks status --porcelain`: every Revision 0–2 path is still present;
+- the `HEAD` worktree exists at `..\lero-al-859-head`, and `git -C ..\lero-al-859-head rev-parse HEAD` equals this
+  checkout's `git rev-parse HEAD`. If not, report `BLOCKED — HEAD worktree missing` (the owner creates it; see the
+  review 3 handoff);
+- the GR-7 execution moment (§18.6): read the library rows, re-run `research-review/r3-live-check.mjs` with its output
+  redirected to `research-exec/r3-*`, and emit the receipt before the first write.
+
+**Gate block** (one transcript per command, `r3-<nn>-<name>.txt`, UTF-8 without BOM, `EXIT_CODE=` appended). Run the
+`governance` line once before any write (start counts), then the whole block after the last write:
+
+```powershell
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()"
+npm.cmd run governance
+npx.cmd vitest run --maxWorkers=3
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:badge-canonical
+npm.cmd run check:badge-canonical:verify
+npm.cmd run check:dialog-canonical
+npm.cmd run check:dialog-canonical:verify
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run check:rendered-scope
+npm.cmd run check:rendered-scope:verify
+npm.cmd run check:surface-census:changed -- --base HEAD
+npm.cmd run check:surface-census:changed:verify
+npm.cmd run check:design-tokens:strict
+npm.cmd run check:enrolled-tailwind
+npm.cmd run check:i18n
+npm.cmd run check:i18n-dynamic
+npm.cmd run check:type-responsive
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+npm.cmd run build
+git --no-optional-locks status --porcelain
+```
+
+Expected: `win32`, and every command exits 0. The vitest line is the whole repository, not §17.7's subset.
+`governance`: record the per-scanner HIGH/CRITICAL counts at start and at end. No count may exceed its start value or
+the baseline. An increase inside this task's files is fixed here; one outside them is reported with its file list and
+the `git log -1` of each file.
+
+**Probes**, on the final `storybook-static` (and on the `HEAD` build for R38): R33's crops and receipts; R38's diff;
+AC19 with R40; and §17.7's GR-3b/3c/3d/3e receipts, re-run for the Badge and Modal primitives and every dialog Story,
+because R34/R35 change their pixels.
+
+- **AC26 [R32].** `npx.cmd vitest run --maxWorkers=3` exits 0 (`r3-02-tests.txt`).
+- **AC27 [R33].** Every receipt R33 lists is in the log, with crops under `r3-gr11/` and numbers in `r3-gr11.json`. No
+  corner is more than 10 points from its reference. Every GR-10 line ends `missing or differing: NONE`, or the
+  difference is raised as a STOP for the owner.
+- **AC28 [R34].** In `Statuses`, every light badge's computed `background-color` equals its colour's index 0 and its
+  `color` equals index 7 (`r3-probe-badges-{en,uk}.json`). `git diff -- src/design-system/mantine/theme.ts` touches only
+  the `Badge` entry and its palette comments (R34), the `radius` scale, and the `Modal` / close-size entries (R35).
+- **AC29 [R35].** In `Modal` `Detail` / `Form` / `DeleteConfirm` at 1440, `.mantine-Modal-content` has a 24px radius and
+  the close button is 44×44; at 390 the sheet's top corners are 24px. `git grep -n "radius=" -- src/components
+  src/modules` shows no new dialog radius.
+- **AC30 [R36].** In `ListingPreviewDialogView`'s delete Story, pressing Delete opens a second dialog whose primary is
+  red and has `data-loading` while running; Esc closes only the confirm. The container's tests pass unchanged.
+- **AC31 [R37].** The `Statuses` Story shows *"Inactive"* / *"Disabled"* (en) and their translations (uk); `check:i18n`
+  exits 0.
+- **AC32 [R38].** `r3-badge-diff.json` has one row per rendered badge in both builds; every non-equal row belongs to one
+  of the three expected classes.
+- **AC33 [R39].** A probe of `Default` finds one badge for each value R39 lists; `git grep -n ">Admin<" --
+  src/components` returns nothing.
+
+`GR-4 AC AUDIT — 8 criteria (AC26–AC33) plus AC19 re-proved; each states an observable property; absolutes: the zero exits of required gates and the no-literal grep, each a gate's own contract.`
+
+### 18.6 Reference research (GR-7), review 3
+
+**Library:** `docs/research/references/2026-10-04/` (unchanged; route inventory Lahomes 106/106/0, Kamr 62/62/0, Omah
+339/339/0, TailAdmin 88/88/0). **Live, this session:** `research-review/r3-live-check.mjs` → `r3-live-check.json`, with
+screenshots `r3-live-*.png` (Playwright, `win32`, Node v22.22.3, exit 0).
+
+| Ref | Page | Live result | Supports |
+|---|---|---|---|
+| TailAdmin | `/support-tickets`, `/products-list` | unchanged (library 051, 016): checkbox first; pills 12px / 500 / 2×8 / full radius; *Solved* `rgb(2,122,72)` on `rgb(236,253,243)` | D78-21, §18.2 |
+| TailAdmin | `/support-ticket-reply` | opened; no multi-row table (as in the library) | R13 (kept) |
+| TailAdmin | `/modals` | **operated** at 1440 and 390: dialog 600 / 350 wide, radius **24px**, close **44×44** (38 at 390), title 30px / 600, footer Close (white, bordered) + Save Changes (filled); Esc does **not** close | D78-22 |
+| Kamr | `/guest-list`, `/ecom-customers` | unchanged (002, 019) | GR-8 (919) |
+| Kamr | `/ui-modal` | **operated** at 1440 and 390: close 28 / 25px, footer Close + Save changes, 7px button radius; Esc closes | Esc choice (§17.3) |
+| Lahomes | `/customers-list.html`, `/orders.html` | unchanged (016, 020) | GR-8 (919) |
+| Lahomes | `/ui-modal.html` | **operated** at 1440 and 390: close 31px, footer Close + Save changes; Esc closes this demo | Esc choice |
+| Omah | `/ecom-customers.html`, `/ecom-product-order.html` | unchanged (025, 022) | GR-8 (919) |
+
+**Options and the 2026 choice.**
+- Badge fill: TailAdmin's solid -50, Lahomes / Omah's solid fill, or our alpha tint. Chosen: TailAdmin's -50 (D78-21),
+  with -700 text for WCAG AA.
+- Dialog shell: TailAdmin's 24px corner and 44px close, or Kamr / Lahomes's small close. Chosen: TailAdmin (D78-22).
+  The 44px target is the 2026 touch practice, and TailAdmin is the visual source.
+- Esc closes the dialog (Kamr, Lahomes, WAI-ARIA), unchanged from §17.3.
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: status badge colours, dialog shell, delete confirm, table anatomy (919); references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal; Omah ecom-customers, ecom-product-order → the 9 table pages unchanged, the 3 modal pages operated (all opened, Esc recorded); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0; inspected in depth: every page (library summary.md rows) + the 12 live pages above; workflow states operated: modal open at 1440/390, Esc, table first-row checkbox, badge computed styles; options across references: badge -50 solid (TailAdmin) vs solid fill (Lahomes, Omah) vs alpha tint (ours); close 44 (TailAdmin) vs 25–31 (Kamr, Lahomes); chosen 2026 best practice: D78-21, D78-22; absent or unverified: none for this revision's subject; lero.al data map: §17.3 (unchanged) + currencies/providers state labels (F14); owner decisions: D78-21, D78-22; evidence: docs/sessions/evidence/task859/research-review/r3-*.`
+
+### 18.7 Write set (Revision 3)
+
+- `src/design-system/mantine/__tests__/theme.d69-18.test.tsx`: one row (R32);
+- `src/design-system/mantine/theme.ts`: the `Badge` entry and its palette comments (R34), the `radius` scale, the
+  `Modal` entry and the close size key (R35); nothing else;
+- `src/design-system/mantine/patterns/MantineModal.tsx` (close size key only), and `responsiveBottomSheet.tsx` only if
+  the sheet's corner radius lives there (R35);
+- `src/components/admin/ListingPreviewDialogView.tsx` and its Story (R36);
+- `src/design-system/mantine/badgeTones.ts`, `AdminCurrenciesView.tsx`, `CurrencyDetailDialogView.tsx`,
+  `AdminExchangeProvidersView.tsx`, `AdminHeader.tsx`, `AdminSidebar.tsx`, `messages/{sq,en,uk,it}.json` (R37, R39);
+- `src/stories/mantine/primitives/Badge.stories.tsx` (R39);
+- the R33/R38/R40 probe scripts and evidence under `docs/sessions/evidence/task859/`;
+- a canonical source that a failing R33 corner names (record it in the log first, then fix it there);
+- the session log (`## Revision 3`) and the 859 backlog cell.
+
+Frozen, with hashes at I0 and at the end: every container of §17.8, `supportFilters.ts`, `page.tsx` and the server
+actions. **Any other file needed is a stop and report.**
+
+### 18.8 Owner visual review — O78-13 (Revision 3)
+
+§17.9's matrix, with these changes: every badge row shows the `HEAD` screenshot beside the final one (R38); the Modal
+rows show the 24px corner and the 44px close; `ListingPreviewDialogView`'s delete is a stacked confirm. The
+`/admin/support` table row still waits for 919.
+
+### 18.9 Completion (Revision 3)
+
+Append `## Revision 3` to the session log with: I0; the GR-7 execution receipt; R32–R40 with evidence; the gate block,
+with the governance start and end counts; R33's receipts; `r3-badge-diff.json`; the re-run GR-3 receipts; and a
+`Files Changed` table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
+`PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+

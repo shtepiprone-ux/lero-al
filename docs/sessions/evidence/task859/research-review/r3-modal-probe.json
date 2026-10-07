@@ -1,0 +1,64 @@
+[
+ {
+  "id": "mantine-primitives-modal--delete-confirm",
+  "m": {
+   "radius": "16px",
+   "w": 440,
+   "title": "16px",
+   "buttons": [
+    {
+     "t": "Close",
+     "w": 36,
+     "h": 36,
+     "r": "9999px",
+     "bg": "rgba(52, 64, 84, 0.1)"
+    },
+    {
+     "t": "Cancel",
+     "w": 198,
+     "h": 44,
+     "r": "8px",
+     "bg": "rgb(255, 255, 255)"
+    },
+    {
+     "t": "Delete",
+     "w": 198,
+     "h": 44,
+     "r": "8px",
+     "bg": "rgb(180, 35, 24)"
+    }
+   ]
+  }
+ },
+ {
+  "id": "mantine-primitives-modal--form",
+  "m": {
+   "radius": "16px",
+   "w": 440,
+   "title": "16px",
+   "buttons": [
+    {
+     "t": "Close",
+     "w": 36,
+     "h": 36,
+     "r": "9999px",
+     "bg": "rgba(52, 64, 84, 0.1)"
+    },
+    {
+     "t": "Cancel",
+     "w": 198,
+     "h": 44,
+     "r": "8px",
+     "bg": "rgb(255, 255, 255)"
+    },
+    {
+     "t": "Confirm",
+     "w": 198,
+     "h": 44,
+     "r": "8px",
+     "bg": "rgb(236, 84, 71)"
+    }
+   ]
+  }
+ }
+]

@@ -1,6 +1,6 @@
 # Sprint 77 — the full test suite is red, and no gate runs it (widened 2026-09-18: the unsprinted reserved work)
 
-**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (790 R1) · **Active tasks:** 0 · **Reserved:** 7 (790 rest · 786 · 799 · 800 · 798 · 801 · 802)
+**Opened:** 2026-09-18 · **Status:** 🟠 **OPEN** · **Landed tasks:** 1 (790 R1) · **Active tasks:** 1 (790 rest) · **Reserved:** 6 (786 · 799 · 800 · 798 · 801 · 802)
 
 > **Opened by owner instruction, 2026-09-18:** *"напиши задачу для Sonnet в рамках Task 790, як revision 1, щоб
 > Sonnet виправила тест, після виправлень нехай запустить тести"*.
@@ -68,7 +68,7 @@ case — a substring check that a type-only `!` defeats (false red), sitting bes
 | # | Title | Priority | QA | State |
 |---|---|---|---|---|
 | **790 · R1** | `theme.d69-18` contract check tolerates TypeScript non-null assertions — `FooterView` `footerGridGap` false red | **P1** | **Q1** | ✅ **ARCHIVED** 2026-09-18 — `APPROVED`, review 2 (evidence-only Revision 1) → [`Sprint_77_kickoff_prompt_Task_790_R1_…`](Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md) |
-| **790 · rest** | Every other full-suite failure, per-failure test-vs-source decision; the comment-only `theme.breakpoints.lg` needle; the non-deterministic group; the standing-gate decision | **P1** | TBD | reserved — kickoff not yet written. Scope in `docs/backlog.md` → registry row **790**. |
+| **790 · rest** | `main` CI goes green: every red step of the push-triggered gate (vitest F1/F2/F3/F5, `check:css-vars` snapshot drift, card-track self-test, locale-leak timeout), per-failure test-vs-source decision; census of every gate step unrun since 2026-08-16. `theme.d69-18` stays 859's (R32); its comment-only `theme.breakpoints.lg` needle follows 859. Owner O790-1 (2026-10-07): exclude `docs/**` from vitest | **P1** | **Q1** | **KICKOFF FILED** 2026-10-07 → [`Sprint_77_kickoff_prompt_Task_790_Rest_…`](Sprint_77_kickoff_prompt_Task_790_Rest_Main_CI_Green.md) |
 | **786** | Detector: a React hook called in a Server Component fails a gate (two-armed plant) | **P1** | Q1 (gate) | reserved — kickoff not yet written |
 | **799** | Storybook viewport switcher resizes the preview (two-armed reflow check) | **P1** | TBD | reserved — kickoff not yet written |
 | **800** | One listing-detail view-model builder shared by both routes and the Story; Story states for the real production variants; local fixture images | **P1** | TBD | reserved — kickoff not yet written |

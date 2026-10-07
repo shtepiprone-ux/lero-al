@@ -179,7 +179,8 @@ Save implementation kickoffs under `tasks/` using the project naming/location ru
 
 Every kickoff that changes a governance-scanned input must make the governance gate an explicit acceptance criterion.
 It names `npm.cmd run governance` as a final Windows-native check, requires the executor to record the pre-write and
-final per-scanner HIGH/CRITICAL counts, and states that no count may exceed its baseline. The task must remediate any
+final per-scanner HIGH/CRITICAL counts, and states that no HIGH/CRITICAL finding may be absent from the per-finding
+baseline and no baseline entry may be stale (`docs/governance-enforcement.md` §9 "Baseline Policy"). The task must remediate any
 increment in its own scope before completion; it may not defer it to a scheduled scan, a migration follow-up, or a
 baseline update. If a deliberate exception is genuinely needed, the kickoff must quote the owner's decision and
 require a narrow, machine-enforced, expiring exception plus a negative test. A comment that merely defeats a regex,
@@ -270,7 +271,7 @@ frontend work only when the owner explicitly asks for one.
 13. **Governance regression proof is present.** Independently inspect a current final-diff or exact-commit CI
     `npm.cmd run governance` receipt, including the per-scanner HIGH/CRITICAL counts and baseline comparison. An
     executor summary, an older weekly report, or a partial single-scanner result is not proof. Any non-zero result,
-    count above baseline, unreviewed exception, or missing receipt requires `NEEDS REVISION`, `PARTIALLY VERIFIED`,
+    new finding outside the per-finding baseline, stale baseline entry, unreviewed exception, or missing receipt requires `NEEDS REVISION`, `PARTIALLY VERIFIED`,
     or `BLOCKED`; it cannot be approved with notes. Amend the kickoff with the concrete remediation before returning
     a `NEEDS REVISION` verdict. On a dirty worktree, require owner-native or CI evidence for the exact reviewed
     commit rather than inferring attribution from aggregate counts.

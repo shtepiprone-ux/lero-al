@@ -333,9 +333,9 @@ For non-frontend work, persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-sh
 retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, derived coverage
 totals, gate receipt consistency, decision consistency, finding-to-requirement links, and the non-approved handoff
 ban. CI requires a changed **approved** valid ledger for any reviewable task, source, workflow, or review-governance
-change **in a pull request**. On a direct push to `main` (the owner's normal path) CI validates every retained ledger
-instead, because task-design and `NEEDS REVISION` commits legitimately carry none; the per-approval ledger duty on a
-push is therefore enforced by this review, not by CI.
+change **in a pull request**. On a direct push to `main` (the owner's normal path) CI runs `--ci --push`: it validates
+every ledger changed in the pushed range and requires none, because task-design and `NEEDS REVISION` commits
+legitimately carry none; the per-approval ledger duty on a push is therefore enforced by this review, not by CI.
 `requiredScope.notApplicable` is the only allowed way to declare a dimension not applicable, and it requires a
 concrete reason; leaving the dimension out is an evidence gap. Only evidence with `coverageRole: "COVERS"` closes a
 tuple. If it leaves any tuple uncovered, enumerate the exact complement in `coverageGaps`, link it to an open

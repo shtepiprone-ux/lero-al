@@ -514,8 +514,10 @@ npm run governance:update-baseline
 | `.github/workflows/governance-pr.yml` | PR to main **and every push to main** (same path filter; owner decision 2026-10-07) | All governance scans + self-tests + ESLint + TypeScript + build + regression suites | ✅ |
 | `.github/workflows/governance-scheduled.yml` | Weekly Monday 09:00 UTC, manual dispatch | Self-test + full scan; report as run summary and artifact (read-only, never committed) | ✅ on violations |
 
-On a push, the review-ledger step validates every retained ledger (no PR base to diff) and the diff-mapped surface
-census uses the pushed range (`github.event.before` → `github.sha`). A newer push to `main` cancels the older run;
+On a push, the review-ledger step validates the ledgers changed in the pushed range and requires none
+(`check:review-ledger -- --ci --push`; validating every retained ledger cannot pass, because historical ledgers cite
+paths later work moved or deleted), and the diff-mapped surface census uses the pushed range
+(`github.event.before` → `github.sha`). A newer push to `main` cancels the older run;
 the tip of `main` is what must be green. Reading that result is an orchestrator duty, not an optional check
 (`docs/orchestrator-procedures.md` → "Main-branch CI receipt").
 

@@ -1,0 +1,47 @@
+--- a/.github/workflows/governance-pr.yml
++++ b/.github/workflows/governance-pr.yml
+@@ -81,11 +81,14 @@
+           REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+         run: npm run check:review-ledger -- --ci
+ 
+-      # On a direct push to main there is no PR base to diff, and task-design / NEEDS REVISION commits
+-      # legitimately carry no ledger, so validate every retained ledger instead of requiring a new one.
+-      - name: Review-ledger gate (retained ledgers, push to main)
++      # On a direct push to main, task-design / NEEDS REVISION commits legitimately carry no ledger, so
++      # validate only the ledgers changed in the pushed range and require none. (Validating every retained
++      # ledger fails forever: historical ledgers cite paths later work moved or deleted.)
++      - name: Review-ledger gate (ledgers changed in the push)
+         if: github.event_name == 'push'
+-        run: npm run check:review-ledger
++        env:
++          REVIEW_LEDGER_BASE_SHA: ${{ github.event.before }}
++        run: npm run check:review-ledger -- --ci --push
+ 
+       - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
+         run: npm run check:review-ledger:verify
+@@ -374,8 +377,10 @@
+         # Redirected to a file, exit code captured as its own statement — never trust a
+         # piped command's exit code (this project's evidence-capture rule).
+         run: |
+-          npm run check:css-vars > css-vars.log 2>&1
+-          exit_code=$?
++          # `|| exit_code=$?`: under the runner's `bash -e` a bare failing command aborts the step
++          # before `cat`, hiding the log (first push-triggered run 37661186435, 2026-10-07).
++          exit_code=0
++          npm run check:css-vars > css-vars.log 2>&1 || exit_code=$?
+           cat css-vars.log
+           exit $exit_code
+ 
+@@ -409,8 +414,10 @@
+         # artifact independent of the ephemeral job log; the shell's real exit code still fails
+         # the step because it is not piped through anything.
+         run: |
+-          npm run check:click-shield > click-shield.log 2>&1
+-          exit_code=$?
++          # `|| exit_code=$?`: under the runner's `bash -e` a bare failing command aborts the step
++          # before `cat`, hiding the log (first push-triggered run 37661186435, 2026-10-07).
++          exit_code=0
++          npm run check:click-shield > click-shield.log 2>&1 || exit_code=$?
+           cat click-shield.log
+           exit $exit_code
+ 

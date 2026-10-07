@@ -58,6 +58,18 @@ branch protection or weekly-only.
   `HEAD + this fix` (the remaining worktree difference is only Task 859's four gate steps / four scripts / one
   dependency).
 
+## First push-triggered run (37661186435, `dc58dc97d`) — red, follow-up fix
+
+| Job | Failed step | Cause | Disposition |
+|---|---|---|---|
+| Governance Check | Review-ledger gate (push) | **This session's defect.** The push step validated every retained ledger; 3 historical ledgers (691R, 741 rev1, 757R) cite paths later work moved or deleted and can never pass. All ~40 later steps were skipped. | Fixed: `check-review-ledger.mjs --ci --push` validates only ledgers changed in the pushed range (`a4406a4..HEAD` → pass; a range containing a changed ledger still validates it; PR mode and `:verify` unchanged) |
+| Click-Shield Gate | CSS var() resolvability gate | Unknown — the step's `exit_code=$?` pattern never runs under the runner's `bash -e`, so the log was never printed | Logging fixed (`\|\| exit_code=$?`) for css-vars and click-shield; cause to read on the next run |
+| Homepage Grid Validation | Card-track monotonicity gate self-test (Task 815) | Pre-existing: plant arms no longer apply (`produced width 960px, expected 864px`; `936px` vs `1000px`) — the plant's expected widths predate later card/grid changes | Open — needs its own task |
+| Locale Leak Detection | `check:locale-leak:mantine-only` | Pre-existing: job hit its 45-minute limit | Open — needs its own task |
+
+`docs/sessions/evidence/governance-2026-10-07/governance-fix-2.patch` carries the workflow part (the file still also
+holds uncommitted Task 859 steps); dry-run against the committed blob applies cleanly.
+
 ## Not verified / open
 
 - **The full gate has not run on `main` since 2026-08-16.** The first push after this commit runs it; its result is

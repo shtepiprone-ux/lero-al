@@ -12,7 +12,14 @@
  *   npm run check:review-ledger -- --file docs/reviews/<task>.review-ledger.json
  *   npm run check:review-ledger                         # validate all retained ledgers
  *   npm run check:review-ledger -- --ci                 # validate PR ledgers and require one
+ *   npm run check:review-ledger -- --ci --push          # push to main: validate ledgers changed in
+ *                                                       # the pushed range, require none
  *   npm run check:review-ledger:verify                  # in-memory failing-arm self-test
+ *
+ * Why `--push` (2026-10-07): on a direct push to main, task-design and NEEDS REVISION commits carry
+ * no ledger, so `--ci`'s "require one" cannot apply; and the no-flag mode cannot either — retained
+ * ledgers cite paths that later work legitimately moved or deleted, so 3 historical ledgers fail it
+ * forever (first push-triggered run, 37661186435). A ledger is checked when it changes, as in a PR.
  *
  * Rule: docs/agent-contract.md §9a; docs/orchestrator-procedures.md
  *       "Approval-closure gate".
@@ -1306,11 +1313,12 @@ function runValidation() {
       .filter(path => path.startsWith('docs/reviews/') && path.endsWith('.review-ledger.json'))
       .map(path => resolve(ROOT, path));
     const reviewable = changed.filter(isReviewableChange);
-    if (reviewable.length > 0 && changedLedgers.length === 0) {
+    const pushMode = args.includes('--push');
+    if (!pushMode && reviewable.length > 0 && changedLedgers.length === 0) {
       throw new Error(`reviewable PR changes require a changed docs/reviews/*.review-ledger.json; found: ${reviewable.join(', ')}`);
     }
     ledgerPaths = changedLedgers;
-    requireApproval = reviewable.length > 0;
+    requireApproval = !pushMode && reviewable.length > 0;
   } else {
     ledgerPaths = walkLedgers(REVIEW_DIR);
   }

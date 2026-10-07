@@ -1,0 +1,188 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "out": [
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--unsaved",
+   "width": 1440,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Divider-root",
+     "y": 76,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Divider-root",
+     "y": 159,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-adminuserprofiledialogsview-1440.png"
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--unsaved",
+   "width": 390,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Drawer-header",
+     "y": 0,
+     "edge": "bottom"
+    },
+    {
+     "cls": "DIV",
+     "y": 170,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-adminuserprofiledialogsview-390.png"
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--new",
+   "width": 1440,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Divider-root",
+     "y": 76,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 211,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Divider-root",
+     "y": 275,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 325,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 410,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 495,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 580,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Divider-root",
+     "y": 644,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-currencyformdialogview-1440.png"
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--new",
+   "width": 390,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Drawer-header",
+     "y": 0,
+     "edge": "bottom"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 120,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 209,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 294,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Divider-root",
+     "y": 358,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 408,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 493,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 578,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 663,
+     "edge": "top"
+    },
+    {
+     "cls": "DIV",
+     "y": 733,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-currencyformdialogview-390.png"
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-dialog-open",
+   "width": 1440,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Divider-root",
+     "y": 76,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 97,
+     "edge": "top"
+    },
+    {
+     "cls": "mantine-Divider-root",
+     "y": 161,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-collectionssection-1440.png"
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-dialog-open",
+   "width": 390,
+   "fullWidthLines": [
+    {
+     "cls": "mantine-Drawer-header",
+     "y": 0,
+     "edge": "bottom"
+    },
+    {
+     "cls": "mantine-Input-input",
+     "y": 92,
+     "edge": "top"
+    },
+    {
+     "cls": "DIV",
+     "y": 172,
+     "edge": "top"
+    }
+   ],
+   "screenshot": "r5-parity-collectionssection-390.png"
+  }
+ ]
+}

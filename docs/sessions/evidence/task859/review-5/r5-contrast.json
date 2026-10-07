@@ -1,0 +1,567 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "colours": [
+  {
+   "n": "gray",
+   "c0": "rgb(249, 250, 251)",
+   "c7": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "n": "blueLight",
+   "c0": "rgb(240, 249, 255)",
+   "c7": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "n": "green",
+   "c0": "rgb(236, 253, 243)",
+   "c7": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "n": "yellow",
+   "c0": "rgb(255, 250, 235)",
+   "c7": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "n": "red",
+   "c0": "rgb(254, 243, 242)",
+   "c7": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "n": "brand",
+   "c0": "rgb(253, 238, 237)",
+   "c7": "rgb(236, 84, 71)",
+   "ratio": 3.14,
+   "aa": false
+  },
+  {
+   "n": "sale",
+   "c0": "rgb(253, 240, 243)",
+   "c7": "rgb(221, 9, 57)",
+   "ratio": 4.54,
+   "aa": true
+  },
+  {
+   "n": "purple",
+   "c0": "rgb(244, 242, 254)",
+   "c7": "rgb(101, 71, 214)",
+   "ratio": 5.54,
+   "aa": true
+  },
+  {
+   "n": "orange",
+   "c0": "rgb(255, 246, 237)",
+   "c7": "rgb(196, 50, 10)",
+   "ratio": 5.16,
+   "aa": true
+  }
+ ],
+ "failingBadges": [],
+ "badges": [
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Inactive",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Sold",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Rented",
+   "colour": "purple",
+   "bg": "rgb(244, 242, 254)",
+   "fg": "rgb(101, 71, 214)",
+   "ratio": 5.54,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Archived",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Under review",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Expired",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Visible",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Hidden — status not public",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Pending",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Under review",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Resolved",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Dismissed",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Open",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "In progress",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Resolved",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Closed",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Support",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Complaint",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "New",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "In progress",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Closed",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Blocked",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Inactive",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "User",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Agent",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Moderator",
+   "colour": "orange",
+   "bg": "rgb(255, 246, 237)",
+   "fg": "rgb(196, 50, 10)",
+   "ratio": 5.16,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Administrator",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Email confirmed",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Email not confirmed",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Inactive",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Enabled",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Disabled",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Published",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--statuses",
+   "text": "Draft",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Pending",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Blocked",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Archived",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Brand",
+   "colour": "brand",
+   "bg": "rgb(253, 238, 237)",
+   "fg": "rgb(189, 67, 57)",
+   "ratio": 4.63,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Info",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Purple",
+   "colour": "purple",
+   "bg": "rgb(244, 242, 254)",
+   "fg": "rgb(101, 71, 214)",
+   "ratio": 5.54,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Sale",
+   "colour": "sale",
+   "bg": "rgb(253, 240, 243)",
+   "fg": "rgb(221, 9, 57)",
+   "ratio": 4.54,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Active",
+   "colour": "green",
+   "bg": "rgb(236, 253, 243)",
+   "fg": "rgb(2, 122, 72)",
+   "ratio": 5.13,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Brand",
+   "colour": "brand",
+   "bg": "rgb(253, 238, 237)",
+   "fg": "rgb(189, 67, 57)",
+   "ratio": 4.63,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Info",
+   "colour": "blueLight",
+   "bg": "rgb(240, 249, 255)",
+   "fg": "rgb(2, 106, 162)",
+   "ratio": 5.49,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Blocked",
+   "colour": "red",
+   "bg": "rgb(254, 243, 242)",
+   "fg": "rgb(180, 35, 24)",
+   "ratio": 6.05,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Pending",
+   "colour": "yellow",
+   "bg": "rgb(255, 250, 235)",
+   "fg": "rgb(181, 71, 8)",
+   "ratio": 5.2,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "Archived",
+   "colour": "gray",
+   "bg": "rgb(249, 250, 251)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 10.01,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "3",
+   "colour": "brand",
+   "bg": "rgb(228, 231, 236)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 8.44,
+   "aa": true
+  },
+  {
+   "story": "mantine-primitives-badge--default",
+   "text": "3",
+   "colour": "brand",
+   "bg": "rgb(228, 231, 236)",
+   "fg": "rgb(52, 64, 84)",
+   "ratio": 8.44,
+   "aa": true
+  }
+ ]
+}

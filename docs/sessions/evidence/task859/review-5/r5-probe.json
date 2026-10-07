@@ -1,0 +1,306 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "builtAt": "2026-10-07T20:35:13.621Z",
+ "rows": [
+  {
+   "probe": "AC28",
+   "locale": "en",
+   "n": 37,
+   "failing": [],
+   "sample": [
+    {
+     "text": "Active",
+     "name": "green",
+     "bg": "rgb(236, 253, 243)",
+     "color": "rgb(2, 122, 72)",
+     "ok": true
+    },
+    {
+     "text": "Inactive",
+     "name": "gray",
+     "bg": "rgb(249, 250, 251)",
+     "color": "rgb(52, 64, 84)",
+     "ok": true
+    },
+    {
+     "text": "Sold",
+     "name": "blueLight",
+     "bg": "rgb(240, 249, 255)",
+     "color": "rgb(2, 106, 162)",
+     "ok": true
+    },
+    {
+     "text": "Rented",
+     "name": "purple",
+     "bg": "rgb(244, 242, 254)",
+     "color": "rgb(101, 71, 214)",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "probe": "AC28",
+   "locale": "uk",
+   "n": 37,
+   "failing": [],
+   "sample": [
+    {
+     "text": "Активне",
+     "name": "green",
+     "bg": "rgb(236, 253, 243)",
+     "color": "rgb(2, 122, 72)",
+     "ok": true
+    },
+    {
+     "text": "Неактивне",
+     "name": "gray",
+     "bg": "rgb(249, 250, 251)",
+     "color": "rgb(52, 64, 84)",
+     "ok": true
+    },
+    {
+     "text": "Продано",
+     "name": "blueLight",
+     "bg": "rgb(240, 249, 255)",
+     "color": "rgb(2, 106, 162)",
+     "ok": true
+    },
+    {
+     "text": "Орендовано",
+     "name": "purple",
+     "bg": "rgb(244, 242, 254)",
+     "color": "rgb(101, 71, 214)",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--detail",
+   "width": 1440,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--detail",
+   "width": 390,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--form",
+   "width": 1440,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--form",
+   "width": 390,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--delete-confirm",
+   "width": 1440,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--delete-confirm",
+   "width": 390,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--default",
+   "width": 1440,
+   "r": null
+  },
+  {
+   "probe": "AC29",
+   "id": "mantine-primitives-modal--default",
+   "width": 390,
+   "r": null
+  },
+  {
+   "probe": "AC30",
+   "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+   "width": 1440,
+   "roots": [
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": []
+    },
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": "true",
+     "inert": true,
+     "buttons": [
+      "Close",
+      "Manage premium\nActive until Jun 15, 2027",
+      "Delete"
+     ]
+    },
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": [
+      "Close",
+      "Cancel",
+      "Delete"
+     ]
+    }
+   ],
+   "dialogsExposed": 1,
+   "buttonsExposed": [
+    "Close",
+    "Cancel",
+    "Delete"
+   ]
+  },
+  {
+   "probe": "AC30",
+   "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+   "width": 390,
+   "roots": [
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": []
+    },
+    {
+     "cls": "mantine-Drawer-root",
+     "ariaHidden": "true",
+     "inert": true,
+     "buttons": [
+      "Manage premium\nActive until Jun 15, 2027",
+      "Delete"
+     ]
+    },
+    {
+     "cls": "mantine-Drawer-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": [
+      "Cancel",
+      "Delete"
+     ]
+    },
+    {
+     "cls": "mantine-Drawer-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": []
+    }
+   ],
+   "dialogsExposed": 1,
+   "buttonsExposed": [
+    "Cancel",
+    "Delete"
+   ]
+  },
+  {
+   "probe": "AC30",
+   "id": "patterns-mantine-reportdetaildialogview--delete-confirm",
+   "width": 1440,
+   "roots": [
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": []
+    },
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": "true",
+     "inert": true,
+     "buttons": [
+      "Close",
+      "Mark as reviewing",
+      "Dismiss",
+      "Delete",
+      "Resolve"
+     ]
+    },
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": [
+      "Close",
+      "Cancel",
+      "Confirm delete"
+     ]
+    }
+   ],
+   "dialogsExposed": 1,
+   "buttonsExposed": [
+    "Close",
+    "Cancel",
+    "Confirm delete"
+   ]
+  },
+  {
+   "probe": "AC30",
+   "id": "patterns-mantine-reportdetaildialogview--delete-confirm",
+   "width": 390,
+   "roots": [
+    {
+     "cls": "mantine-Modal-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": []
+    },
+    {
+     "cls": "mantine-Drawer-root",
+     "ariaHidden": "true",
+     "inert": true,
+     "buttons": [
+      "Mark as reviewing",
+      "Dismiss",
+      "Delete",
+      "Resolve"
+     ]
+    },
+    {
+     "cls": "mantine-Drawer-root",
+     "ariaHidden": null,
+     "inert": false,
+     "buttons": [
+      "Cancel",
+      "Confirm delete"
+     ]
+    }
+   ],
+   "dialogsExposed": 1,
+   "buttonsExposed": [
+    "Cancel",
+    "Confirm delete"
+   ]
+  },
+  {
+   "probe": "lightbox-radius",
+   "r": "0px"
+  },
+  {
+   "probe": "sheet-radius",
+   "id": "mantine-primitives-responsivebottomsheet--default",
+   "r": "24px"
+  },
+  {
+   "probe": "sheet-radius",
+   "id": "primitives-select--mobile-bottom-sheet",
+   "r": null
+  },
+  {
+   "probe": "sheet-radius",
+   "id": "mantine-primitives-select--default",
+   "r": null
+  }
+ ]
+}

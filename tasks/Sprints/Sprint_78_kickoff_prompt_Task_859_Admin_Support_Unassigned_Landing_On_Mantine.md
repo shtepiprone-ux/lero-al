@@ -1372,3 +1372,158 @@ Append `# Revision 4` to the session log with:
 Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`. No Git.
 
+## 20. Revision 5 (review 5, 2026-10-07): `NEEDS REVISION` — matrix Stories that do not show their dialog
+
+**This section is the only executable route.** §19 stays binding where §20 does not replace it. Everything Revisions
+0–4 built stays. **This revision changes Story files only. No production file changes.**
+
+**Re-entry: `remediation`**, on the current tree. Evidence goes to `docs/sessions/evidence/task859/r5-*`. Do not
+overwrite any `r4-*` artifact or anything under `review-4/` or `review-5/` (the reviewer's evidence).
+
+### 20.1 Owner decisions, verbatim (2026-10-07, AskUserQuestion during review 5)
+
+| ID | Question | Chosen | Effect |
+|---|---|---|---|
+| **D78-24** | Count badges: TailAdmin has no counter. Lahomes, Kamr and Omah use a 4–8px rounded rectangle; ours are pills and circles, the TailAdmin badge family. Which shape is canonical? | *"Keep pill and circle (Recommended)"* | No change. The count GR-10 line is closed: the owner names the pill and the circle as the original. |
+| **D78-25** | Dropdown list: our panel equals TailAdmin's `/dropdowns` menu; the rows differ slightly from it (400 vs 500, gray-50 vs gray-100 hover); TailAdmin's multiselect is flat with dividers. Which way? | *"Keep as is (Recommended)"* | No change. The dropdown GR-10 line is closed the same way. |
+
+R43 is therefore **closed**. Its two `STOP — GR-10` lines become `missing or differing: NONE (owner D78-24 / D78-25)`.
+
+### 20.2 Correction (Opus, review 4, §19.8)
+
+§19.8 listed `Primitives/Select` `Mobile Bottom Sheet` as a blast-radius row for the 24px sheet corner. That is a
+legacy Story: Tailwind classes, no `ResponsiveBottomSheet`, and no sheet found at 390 (`review-5/r5-gr9-census.json`,
+`review-5/r5-probe.json`). It is removed from the matrix. The Mantine consumers of `ResponsiveBottomSheet` replace it
+(R47).
+
+### 20.3 Findings (review 5)
+
+The review covered §19, the session log `# Revision 4`, the Revision 4 diff (`theme.ts`, `badgeTextShade.ts` and its
+test, `ReportDetailDialogView.tsx`, `StackedConfirmDialogs.test.tsx`, §23.6), `r4-plants.txt`, `r4-04b-ac26-failing-set.txt`,
+every `r4-*` gate transcript, and the two R43 side-by-side sheets. It rebuilt Storybook (`review-5/r5-build-storybook.txt`,
+exit 0) and re-ran the reviewer probes on it:
+- **AC34:** all 55 light badges ≥ 4.5:1 (`r5-contrast.json`).
+- **AC28:** 37 of 37 light badges have fill = index 0, en and uk (`r5-probe.json`).
+- **AC35:** both stacked confirms expose one dialog at 1440 and 390 (`r5-probe.json`).
+- **AC29:** 24px corners and a 44×44 close button (`r5-probe-modal.json`). This closes Revision 4's deviation 3.
+- **AC26:** the whole-repository vitest fails exactly the four `HEAD` tests (`r5-vitest.txt`).
+- **Governance:** exit 0, C0/H0.
+
+**GR-9 census** of every matrix Story (`review-5/r5-gr9-census.mjs` → `r5-gr9-census.json`: 110 Stories, sq, 1440 and
+390):
+- *Authored non-canonical values:* NONE. The inline styles found are Mantine and library runtime geometry (autosize,
+  `SegmentedControl` indicator, positioning, the crop frame), theme-token style props, the global Storybook preview
+  wrapper, and the legacy Select Story of §20.2.
+- *GR-3e:* text buttons sharing a row: 0 at both widths.
+- *Parity, 390 against 1440:* the only differences are the desktop close button and the sheet's header and footer
+  lines, which are drawn as borders rather than `Divider`s (`r5-parity.json`, screenshots). Both are by design (§23.7).
+- *State coverage:* the gaps below.
+
+| # | Severity | Finding (FACT) | Disposition |
+|---|---|---|---|
+| F23 | P2, AC23 ("every dialog Story renders") / GR-9 step 3 | `patterns-mantine-admindashboardrecentlistings--modal-open` never opens its dialog. Its `play` throws `TestingLibraryElementError: Found multiple elements with the text …` in en and sq, at 1440 and 390 (`review-5/r5-modalopen.json`), because `findByText(title)` matches more than one node. It fails the same way on the `HEAD` build (`r5-modalopen-HEAD.json`), but the dialog is one of R29's 20, so 859 owns it. The owner's matrix row for this dialog would show no dialog. | R45 |
+| F24 | P2, GR-9 step 3 / clause 16c | `CollectionsSection` renders three dialogs (create, rename, delete confirm); Stories render only create. No Story renders the rename dialog, the delete confirm, or a create/rename error (`createError`, `renameError`). `AvatarCropModal` has only `Default`; its saving state (`loading={saving}`) is rendered by no Story. | R46 |
+| F25 | P3, §19.8 / deviation 2 of Revision 3 | The 24px sheet corner reaches every `ResponsiveBottomSheet` consumer, but only `ResponsiveBottomSheet` `Default` was measured (24px). The consumers' own Stories were never opened at 390. | R47 |
+
+**Rulings on the Revision 4 notes:**
+- 1 (R43): closed by D78-24 / D78-25.
+- 2 (R41 side effects): accepted. They are in the matrix (§20.8).
+- 3 (AC29): closed by review 5.
+- 4 (backlog): the Last Session line is Opus's to keep, and review 5 updated it.
+
+### 20.4 Requirements (Revision 5)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R45** | `src/stories/patterns/mantine/AdminDashboardRecentListings.stories.tsx` `ModalOpen`: the `play` clicks the first visible match of the listing title (`findAllByText(...)` plus a visibility filter, or the row element), then asserts the dialog. No production change. | P2 | AC38 |
+| **R46** | Story-only additions, each rendering the real production component, with the dialog opened by a `play` the way `CreateDialogOpen` does. `CollectionsSection.stories.tsx`: `RenameDialogOpen`, `DeleteConfirmOpen`, and one error state (`CreateError` or `RenameError`, through the existing fixture's failing action). `AvatarCropModal.stories.tsx`: `Saving`, where `onConfirm` returns a promise that never resolves and the `play` presses Save. Each new Story passes `check:stories`, and its `play` asserts the dialog it opened. No production change. If a state cannot be reached without a production change, stop and report it. | P2 | AC39 |
+| **R47** | At 390, `sq`, open the sheet in one Mantine Story per `ResponsiveBottomSheet` consumer: `mantine-primitives-select--default`, `-combobox--default`, `-dropdownmenu--default`, `-navigationmenu--default`, `-popover--default`, `-drawer--default`, `-rangedatepicker--default`, `-tooltip--default` (if it uses the sheet at 390), and `patterns-mantine-authsheet--login`. Record the content's top-left and top-right radius and a DPR 1 corner crop (`r5-sheets.json`, `r5-sheet-*.png`). Every sheet shows 24px. A consumer that does not open a sheet at 390 is recorded as such, with the reason. | P3 | AC40 |
+
+### 20.5 Verification (Revision 5)
+
+**I0** → `r5-00-i0.txt`:
+- the platform (`win32` only);
+- `git --no-optional-locks status --porcelain`: every Revision 0–4 path is still present;
+- the frozen hashes of §19.7;
+- the GR-7 execution receipt: re-run `review-5/r5-live-check.mjs`, output redirected to `research-exec/r5-*`.
+
+**Gate block** (UTF-8 without a BOM, each transcript ending `EXIT_CODE=`). Run `governance` before the first write.
+After the last write, run:
+
+```powershell
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()"
+npm.cmd run governance
+npx.cmd vitest run --maxWorkers=3
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run check:rendered-scope
+npm.cmd run check:i18n
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+npm.cmd run build
+git --no-optional-locks status --porcelain
+```
+
+Expected: `win32`, and every command exits 0, except vitest, which fails only the four `HEAD` tests (AC26 as
+re-stated in §19.5).
+
+- **AC38 [R45].** `review-5/r5-modalopen.mjs` (output to `r5-modalopen-final.json`): `dialog open: true` in en and sq,
+  at 1440 and 390.
+- **AC39 [R46].** `review-5/r5-gr9-census.mjs`, re-run on the final build with output to `r5-gr9-census-final.json`:
+  every new Story has `dialogOpen: true` at both widths, and no new authored non-canonical value appears.
+- **AC40 [R47].** `r5-sheets.json` has one row per consumer: 24px, or the recorded reason.
+
+`GR-4 AC AUDIT — 3 new criteria (AC38–AC40); each states an observable property; absolutes: none beyond the gates' own exit contracts.`
+
+### 20.6 Reference research (GR-7), review 5
+
+**Library:** `docs/research/references/2026-10-04/` (unchanged). **Live, this session:** `review-5/r5-live-check.mjs` →
+`r5-live-check.json`, `r5-live-*.png` (Playwright, `win32`, Node v22.22.3, exit 0):
+- the 9 table pages are unchanged (library 051, 052, 016, 016, 020, 002, 019, 025, 022);
+- the 3 modal pages were operated at 1440 and 390: TailAdmin 24px with a 30px / 600 title, where Esc does not close;
+  Kamr and Lahomes, where Esc closes.
+
+R43's references were re-read from Sonnet's live capture and its two side-by-side sheets (`research-exec/r4-gr10-*`)
+and put to the owner (D78-24, D78-25).
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: Revision 4 outcome (badge text contrast, stacked confirm), count badge and dropdown originals (R43 → D78-24/25), matrix Story coverage; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal; Omah ecom-customers, ecom-product-order → unchanged, modals operated; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0; inspected in depth: every page (library summary.md rows) + the live pages above + Sonnet's R43 captures (TailAdmin form-elements, dropdowns, badge, inbox; Lahomes index, inbox; Kamr email-inbox; Omah account/settings, email-inbox); workflow states operated: modal open at 1440/390, Esc, table first-row checkbox; options across references: counter pill/circle (TailAdmin badge family) vs 4–8px rectangle (Lahomes, Kamr, Omah); dropdown menu chrome (TailAdmin /dropdowns) vs flat divided list (TailAdmin multiselect); chosen 2026 best practice: owner D78-24, D78-25 (keep); absent or unverified: none; lero.al data map: §17.3 (unchanged); owner decisions: D78-24, D78-25; evidence: docs/sessions/evidence/task859/review-5/.`
+
+### 20.7 Write set (Revision 5)
+
+- `src/stories/patterns/mantine/AdminDashboardRecentListings.stories.tsx` (R45);
+- `src/stories/mantine/primitives/CollectionsSection.stories.tsx` and `src/stories/patterns/mantine/AvatarCropModal.stories.tsx` (R46);
+- probes and evidence under `docs/sessions/evidence/task859/r5-*` and `research-exec/r5-*`;
+- the session log (`# Revision 5`) and the 859 backlog cell.
+
+Every production file is frozen; hash the §19.7 set and the three Stories' components at I0 and at the end. **Any
+other file needed is a stop and report.**
+
+### 20.8 Owner visual review — O78-13 (final matrix)
+
+All in `sq` unless stated, at 390 and 1440:
+- `Mantine/Primitives/Badge` `Default` and `Statuses`, in `en` and `uk`: the D78-21 fill and the R41 text, with the
+  `HEAD` screenshot beside each (`r3-before-*` / `r3-after-*`);
+- `Mantine/Primitives/Modal` `Detail`, `Form`, `DeleteConfirm`: 24px corners and the 44px close button;
+- every dialog Story of R29's 20 dialogs, including R45's `ModalOpen` and R46's new Stories, with
+  `ReportDetailDialogView` `Delete Confirm` beside `ListingPreviewDialogView` `Delete Confirm`;
+- the support dialogs and the picker;
+- R41's consumers: `AdminUsersTable` `Default` and `Location Filter`, and `MantineNotificationPattern` `Default`,
+  each beside its `r4-blast-*` before;
+- R47's sheet consumers, at 390 only.
+
+The `/admin/support` table row still waits for 919.
+
+### 20.9 Completion (Revision 5)
+
+Append `# Revision 5` to the session log with:
+- I0 and the GR-7 execution receipt;
+- R45–R47 with evidence and the gate block;
+- the GR-3b/3c/3d/3e receipts for each new Story;
+- a `Files Changed` table.
+
+Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No Git.
+

@@ -1,0 +1,38 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "out": [
+  {
+   "locale": "en",
+   "width": 1440,
+   "open": false,
+   "errors": [
+    "TestingLibraryElementError: Found multiple elements with the text: Modern Apartment in Tirana Center\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n<p\n  class=\"mantine-focus-"
+   ]
+  },
+  {
+   "locale": "en",
+   "width": 390,
+   "open": false,
+   "errors": [
+    "TestingLibraryElementError: Found multiple elements with the text: Modern Apartment in Tirana Center\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n<p\n  class=\"mantine-focus-"
+   ]
+  },
+  {
+   "locale": "sq",
+   "width": 1440,
+   "open": false,
+   "errors": [
+    "TestingLibraryElementError: Found multiple elements with the text: Apartament Modern në Qendër të Tiranës\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n<p\n  class=\"mantine-f"
+   ]
+  },
+  {
+   "locale": "sq",
+   "width": 390,
+   "open": false,
+   "errors": [
+    "TestingLibraryElementError: Found multiple elements with the text: Apartament Modern në Qendër të Tiranës\n\nHere are the matching elements:\n\nIgnored nodes: comments, script, style\n<p\n  class=\"mantine-f"
+   ]
+  }
+ ]
+}

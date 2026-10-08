@@ -1,6 +1,7 @@
-> **P0 source of truth: `docs/agent-contract.md`.** Every Sonnet task must read it first. This file
-> (`docs/ai-behavior.md`) is the long-form executor reference — read the sections relevant to
-> your task, not the whole file every time.
+> **P0 source of truth: `docs/agent-contract.md`.** Every Sonnet task follows the exact contract fragment selected by
+> the compact `execute-task` parent; it does not read the full historical contract first. This file
+> (`docs/ai-behavior.md`) is the long-form executor reference — read the sections relevant to your task, not the
+> whole file every time.
 >
 > **Pre-read selection: `docs/rule-index.md`.** Every kickoff lists only the docs that match the task
 > type. "Read all docs" is forbidden — it is the failure mode Task 253 was filed for.
@@ -22,13 +23,14 @@ Opus then validates those records against the real diff, corrects or consolidate
 
 ### Execution Protocol (to avoid compliance paralysis)
 - Do not re-read all /docs on every task. Read only the docs relevant to the current task — see `docs/rule-index.md` for the task-type bundle.
-- Always obey `docs/agent-contract.md`.
+- Always obey the Agent Contract fragment selected by the execution phase and `docs/rule-index.md`.
 - For env, RLS, component, UI, data-access, analytics, performance, or other domain rules, read and obey the relevant docs selected by `docs/rule-index.md` for the current task type.
 - For UI work, classify the surface as current Mantine, legacy, or mixed and load the matching UI bundle from
   `docs/rule-index.md`. For DB work use the DB/RLS bundle; for analytics/SEO use the analytics bundle.
 - Do not ask “what should I build?” if a task is specified (backlog or user request). Proceed.
 - If blocked by rules, apply the smallest safe fix to unblock, then refactor into the correct component structure.
-- If docs were already read in this session, do not re-read them again; proceed with execution.
+- A current phase's required read always wins over a prior summary or session memory. Re-read its exact fragment when
+  the phase requires it; do not re-read unrelated long-form documents.
 
 ### Pre-Task Mandatory Checklist
 Before writing any code, the agent MUST confirm:

@@ -4,7 +4,9 @@
 # this is a gate. It blocks the response when a task/doc artifact was written and no owner-run
 # git handoff was emitted, or when a task was marked closed without an archive row.
 #
-# FAIL-OPEN BY DESIGN: any unexpected error exits 0. It must never wedge a session.
+# FAIL-CLOSED AFTER ROLE IDENTIFICATION: unexpected gate errors block the Opus response instead of silently
+# publishing unverified governance artifacts. Unknown role signals still exit 0 so this Opus-only gate never creates
+# a prohibited Git handoff demand for Sonnet.
 # LOOP-SAFE: honours stop_hook_active and never blocks twice in a row.
 
 $ErrorActionPreference = 'Stop'
@@ -77,7 +79,7 @@ try {
     $paths = @($status | ForEach-Object { ($_ -replace '^..\s+','').Trim() })
 
     # Artifacts whose authorship is task design / governance - GR-6 demands a commit block.
-    $designRe = '^(tasks/|CLAUDE\.md|\.claude/skills/|docs/(backlog\.md|backlog-archive\.md|golden-rules\.md|agent-contract\.md|orchestrator-role\.md|orchestrator-procedures\.md|rule-index\.md|component-catalog\.md|qa-profiles\.md))'
+    $designRe = '^(tasks/|CLAUDE\.md|\.claude/|docs/(?:rules/|backlog\.md|backlog-archive\.md|golden-rules\.md|agent-contract\.md|orchestrator-role\.md|orchestrator-procedures\.md|rule-index\.md|component-catalog\.md|qa-profiles\.md))'
     $design = @($paths | Where-Object { $_ -match $designRe })
     if ($design.Count -eq 0 -and -not $backlogProblem) { exit 0 }
 
@@ -120,4 +122,7 @@ try {
     }
     exit 0
 }
-catch { exit 0 }
+catch {
+    [Console]::Error.WriteLine("BLOCKED by .claude/hooks/orchestrator-response-gate.ps1: the Opus governance gate could not complete safely: " + $_.Exception.Message)
+    exit 2
+}

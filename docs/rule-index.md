@@ -1,19 +1,28 @@
 # Rule Index
 
-This file selects the minimal rule bundle for each task type. It replaces "read all docs."
+This file selects the minimal rule bundle for each task type. It replaces "read all docs." The role parent workflow
+in `.claude/skills/` is read first; its numbered `.claude/rules/` phase files establish the order. This index then
+selects detailed source documents. Do not duplicate a policy in a kickoff or load a long document that the task does
+not use.
 
 ## How to use
 
-1. Classify the task type.
+1. Classify the role and task type; read the matching compact parent and its current phase file.
 2. Read the Always Required bundle.
-3. Read only the matching task bundle and relevant optional files.
-4. Select a QA profile from `docs/qa-profiles.md`.
-5. If a task spans multiple types, include each matching bundle and state the boundary.
+3. For visible UI, tokens, Stories, or visual review, read `.claude/rules/shared/ui-token-contract.md`; for Story
+   work also read `.claude/rules/shared/storybook-proof.md`.
+4. Read only the matching task bundle and relevant optional files.
+5. Select a QA profile from `docs/qa-profiles.md`.
+6. If a task spans multiple types, include each matching bundle and state the boundary.
 
 ## Always Required
 
-- `docs/golden-rules.md` - **GR-1…GR-7, receipt-enforced. A response missing a required receipt is void. GR-7 blocks every reference-dependent kickoff, audit, revision, and review until the current-session reference audit is complete.**
-- `docs/agent-contract.md`
+- `.claude/rules/shared/role-boundaries.md`
+- `docs/golden-rules.md` - open the exact GR section required by the role phase or selected task bundle; do not read
+  the entire historical document by default. A required receipt remains mandatory.
+- `docs/agent-contract.md` - use its linked fragment for the clause named by the phase/task bundle. Visible UI always
+  opens [P0 16–16c](rules/agent-contract/p0-16-16c-ui-canonical.md) and
+  [P0 16d](rules/agent-contract/p0-16d-surface-census.md).
 - `docs/governance-enforcement.md` - required whenever implementation changes a governance-scanned input; read §2, §3, and §9 before task design, execution, or approval.
 - `docs/rule-index.md`
 - `docs/qa-profiles.md`

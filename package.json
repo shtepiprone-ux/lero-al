@@ -92,6 +92,8 @@
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:report": "node scripts/check-design-tokens.mjs --report",
     "check:design-tokens:update-allowlist": "node scripts/check-design-tokens.mjs --update-allowlist",
+    "check:ui-contract": "node scripts/check-ui-contract.mjs",
+    "check:ui-contract:verify": "node scripts/check-ui-contract.mjs --verify-gate",
     "check:hydration": "node scripts/check-hydration-console.mjs",
     "check:hydration:verify": "node scripts/check-hydration-console.mjs --verify-gate",
     "check:hydration:admin-config": "node scripts/check-hydration-console.mjs --verify-admin-config",

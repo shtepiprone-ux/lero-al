@@ -1,5 +1,5 @@
 param(
-  [ValidateRange(1, 3)][int]$Part = 1
+  [ValidateRange(1, 1)][int]$Part = 1
 )
 
 Set-StrictMode -Version Latest
@@ -81,17 +81,17 @@ try {
 $startupGate = ''
 if ($skillName -eq 'review-task') {
   $startupGate = @'
-STOP — MANDATORY IMPLEMENTATION-REVIEW STARTUP GATE
+STOP - MANDATORY IMPLEMENTATION-REVIEW STARTUP GATE
 
 Classification is the only permitted action before this gate. Before opening the implementation task, diff, source,
 executor report, validation evidence, or writing review analysis, open these files in the current session, in order:
 1. `.claude/skills/review-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
+2. `.claude/rules/shared/role-boundaries.md`
+3. `.claude/rules/review/01-preflight.md`
 
 This injected text is not a substitute for opening those source files. The first substantive review response must
 begin exactly:
-`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+`REVIEW PREFLIGHT COMPLETE - loaded: review-task; review/01-preflight; shared/role-boundaries; selected Agent Contract fragments; rule index; QA profile.`
 
 If any file is unavailable, return `BLOCKED` naming the path and stop. If the receipt was omitted or a file was unread,
 discard all preliminary review conclusions and restart this gate before issuing a finding or decision.
@@ -99,17 +99,17 @@ discard all preliminary review conclusions and restart this gate before issuing 
 '@
 } elseif ($skillName -eq 'create-task') {
   $startupGate = @'
-STOP — MANDATORY TASK-DESIGN STARTUP GATE
+STOP - MANDATORY TASK-DESIGN STARTUP GATE
 
 Classification is the only permitted action before this gate. Before opening an existing task, source, diff, executor
 report, validation evidence, or writing task analysis or a kickoff, open these files in the current session, in order:
 1. `.claude/skills/create-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
+2. `.claude/rules/shared/role-boundaries.md`
+3. `.claude/rules/create/01-preflight.md`
 
 This injected text is not a substitute for opening those source files. The first substantive task-design response must
 begin exactly:
-`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+`TASK-DESIGN PREFLIGHT COMPLETE - loaded: create-task; create/01-preflight; shared/role-boundaries; selected Agent Contract fragments; rule index; QA profile.`
 
 If any file is unavailable, return `BLOCKED` naming the path and stop. If the receipt was omitted or a file was unread,
 discard all preliminary task-design conclusions and restart this gate before writing a kickoff or issuing a decision.
@@ -132,7 +132,7 @@ if ($Part -gt $partCount) {
 $offset = ($Part - 1) * $contextChunkSize
 $length = [Math]::Min($contextChunkSize, $context.Length - $offset)
 $contextPart = $context.Substring($offset, $length)
-$additionalContext = "Lero.al automatic orchestration workflow [$mode], segment $Part of $partCount. Apply all segments as one mandatory workflow.`n`n$contextPart"
+$additionalContext = "Lero.al automatic orchestration workflow [$mode]. Apply this compact parent workflow, then open each named phase file at its gate.`n`n$contextPart"
 
 @{
   hookSpecificOutput = @{

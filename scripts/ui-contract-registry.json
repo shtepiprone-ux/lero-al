@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "canonicalTokenSources": [
+    "src/app/globals.css",
+    "src/design-system/mantine/theme.ts"
+  ],
+  "components": [
+    {
+      "id": "mantine-badge-status",
+      "component": "src/design-system/mantine/patterns/MantineBadge.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/Badge.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/badgeTones.ts"
+      ],
+      "parity": [
+        {
+          "element": "status badge",
+          "storyExports": [
+            "Default",
+            "Statuses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mantine-modal-structured-dialog",
+      "component": "src/design-system/mantine/patterns/MantineModal.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/Modal.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/responsiveBottomSheet.tsx"
+      ],
+      "parity": [
+        {
+          "element": "structured dialog shell",
+          "storyExports": [
+            "Default",
+            "LongContent"
+          ]
+        }
+      ]
+    }
+  ]
+}

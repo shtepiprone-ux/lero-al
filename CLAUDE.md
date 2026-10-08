@@ -1,240 +1,65 @@
-# Lero.al Project Intelligence
+# Lero.al agent entry point
 
-Lero.al is a real estate marketplace for the Albanian market.
+Lero.al is an Albanian real-estate marketplace using Next.js App Router, Supabase, legacy Tailwind/shadcn surfaces,
+and an active Mantine migration.
 
-Stack: Next.js App Router, Supabase, Tailwind legacy surfaces, and an active migration to Mantine for new and migrated UI.
+## Roles
 
-## Operating model
-
-| Layer | Role |
+| Role | Authority |
 |---|---|
-| Opus | Orchestrator, task architect, reviewer, critic, QA gatekeeper. |
-| Sonnet | Executor that implements scoped tasks and produces evidence. |
-| Owner | Runs mutating git natively in PowerShell and makes final product decisions when rules conflict. |
+| Opus | task design, adversarial implementation review, sole approval authority |
+| Sonnet | implement one saved task and provide factual evidence |
+| Owner | product decisions when evidence/rules conflict and all mutating Git |
 
-## Automatic Opus routing
+## Start here — compact workflow tree
 
-The project `UserPromptSubmit` hook classifies clear task-design and implementation-review prompts, then injects the
-full matching project skill before Opus responds. The user does not need to type a skill name for ordinary task or
-review work.
+Read [`.claude/rules/README.md`](.claude/rules/README.md), then use exactly one role parent:
 
-- Task-design prompts receive `.claude/skills/create-task/SKILL.md`.
-- Review, QA, Storybook, validation, or release-readiness prompts receive `.claude/skills/review-task/SKILL.md`.
-- Explicit `/create-task` and `/review-task` commands retain Claude Code's native skill loading and are not injected
-  twice.
-- If a prompt is ambiguous or the hook is unavailable, Opus must classify the mode before its first substantive
-  response and invoke the matching skill itself.
+- Opus task design: `.claude/skills/create-task/SKILL.md` → `.claude/rules/create/`
+- Opus review/QA/release readiness: `.claude/skills/review-task/SKILL.md` → `.claude/rules/review/`
+- Sonnet execution: `.claude/skills/execute-task/SKILL.md` → `.claude/rules/execute/`
 
-Injected workflow context is not a substitute for opening the required source files in the current session. The
-task-design and implementation-review startup gates below remain mandatory even when the router selected and injected
-`create-task` or `review-task`.
+Each parent is a short, ordered checklist. Read its numbered phase file immediately before the named phase. For visible
+UI, tokens, Stories, or visual review, always read `.claude/rules/shared/ui-token-contract.md`, then
+`.claude/rules/shared/enforcement-model.md`, and, before Story work, `.claude/rules/shared/storybook-proof.md`. The
+parent workflow tells each role when to do this.
 
-## Automatic Sonnet execution
+Do not load all rules by default. Select the exact detailed documents using `docs/rule-index.md`; the longer `docs/`
+files remain the complete policy record and historical evidence, while the `.claude/rules/` tree is the executable
+workflow.
 
-On every Sonnet session start, the project `SessionStart` hook injects `.claude/skills/execute-task/SKILL.md` before
-the first user prompt. It applies the executor evidence protocol to normal Sonnet sessions; the dedicated
-`.claude/agents/executor.md` agent preloads the same skill without duplicate hook context.
+## Non-negotiable visual invariant
 
-- Use `@executor` for an explicit Sonnet implementation handoff from a saved task under `tasks/`.
-- Sonnet implements, updates concise task state in `docs/backlog.md`, and writes the session log; Opus checks those
-  records against the real diff, corrects or consolidates the backlog when needed, and approves or rejects.
-- A Sonnet task is never self-approved. Its strongest valid completion status is
-  `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+One semantic element has one visual contract. Use an existing semantic token and canonical component; if either is
+missing, add it at the shared owner and its direct Story before a consumer uses it. Do not encode visual decisions in a
+feature, route, wrapper, or Story. Stories pass data and documented public props only. All same-meaning Story variants
+must pass the built-Storybook parity census, or have a dated owner decision explaining the difference.
 
-## Read first
+## Evidence, scope, and Git
 
-For every task:
+- A report is not proof. Inspect current source/diff/evidence before claiming a fact or approving work.
+- Every task has one saved kickoff, selected QA profile, explicit acceptance criteria, and one implementation route.
+- New/migrated UI uses canonical Mantine behavior plus the approved token/provenance path; legacy styling may be
+  preserved only when the selected task explicitly retains the legacy surface.
+- Agents use read-only Git inspection only. The owner makes mutations. Sonnet never emits mutating Git commands;
+  Opus emits explicit owner commands only when its selected workflow permits them.
+- Sonnet cannot edit policy/governance or `.claude/**`; it reports a policy issue to Opus. Opus does not implement
+  product code while designing or reviewing.
 
-0. Read [`docs/golden-rules.md`](docs/golden-rules.md) — **GR-0…GR-11, receipt-enforced, non-negotiable. A response missing a required receipt is void.** GR-10 (owner, 2026-10-04): no canonical component, or a canonical that differs from the original, means the work is not accepted. GR-11 (owner, 2026-10-04): every rounded corner renders as a smooth curve like the reference; no same-colour border on a fill, no `opacity` fade, radius from a token.
-   **GR-7 (owner rule 2026-10-04): before creating, executing, or reviewing EVERY task, Opus and Sonnet each audit live,
-   in depth, every page of Lahomes (https://techzaa.in/lahomes/admin/index.html), Kamr
-   (https://kamr-vite.vercel.app/dashboard, login `demo@example.com` / `123456`), Omah (https://omah.dexignzone.com/xhtml/index.html)
-   and TailAdmin (https://demo.tailadmin.com/), and use only the best 2026 UI/UX practice. No exemption.** Start from the shared library `docs/research/references/<newest date>/`, then live-check every page relied on (owner decision 2026-10-04).
-1. Read `docs/agent-contract.md`.
-2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
-3. Use `docs/qa-profiles.md` to choose validation depth.
-4. Read `docs/backlog.md` for current project state when planning, creating, or closing tasks.
-5. Before any action on a reserved number (kickoff, sprint assignment, fold, close, archive), read
-   `docs/backlog-reserved.md` **first**: the backlog row is only an index to it. Procedure and receipt:
-   `docs/orchestrator-procedures.md` → "STOP — reserved-number preflight".
+## Automation
 
-For Opus orchestration or review, also read:
+The project router injects the compact `create-task` or `review-task` parent for Opus. The SessionStart hook injects
+the compact `execute-task` parent for ordinary Sonnet sessions. The dedicated executor agent preloads the same skill.
+These injections never replace the current-session reads required by a phase file.
 
-- `docs/orchestrator-role.md`
-- `docs/orchestrator-procedures.md`
-- `.claude/skills/create-task/SKILL.md` when designing an implementation task.
-- `.claude/skills/review-task/SKILL.md` when reviewing implementation, Storybook/UI evidence, or release readiness.
+## Detailed sources
 
-### STOP — task-design startup gate
+- `docs/golden-rules.md` — compact index for GR-0…GR-12 receipt fragments.
+- `docs/agent-contract.md` — compact index for P0 invariant and role-authority fragments.
+- `docs/orchestrator-role.md` / `docs/orchestrator-procedures.md` — Opus evidence and handoff protocol.
+- `docs/rule-index.md` — task-specific policy routing.
+- `docs/qa-profiles.md` — validation depth.
+- `docs/backlog.md` / `docs/backlog-reserved.md` — current task and reservation state.
 
-After reading only enough of the request to identify task design, and before opening an existing task, source files,
-diff, executor report, evidence, or writing task analysis or a kickoff, Opus must open all of these files in the
-current session:
-
-1. `.claude/skills/create-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
-4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
-
-The first substantive task-design response must begin with exactly:
-
-`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
-
-Do not continue from a prior-session read, an injected excerpt, a summary, or an assumed workflow. If any file cannot
-be opened, stop before task design and return `BLOCKED`, naming the unavailable path. If this receipt was omitted or
-any required file was not read, discard all preliminary task-design conclusions and restart the preflight before
-writing a kickoff or issuing a decision.
-
-### STOP — implementation-review startup gate
-
-After reading only enough of the request to identify a review, and before opening the implementation task, diff,
-source files, executor report, evidence, or writing any review analysis, Opus must open all of these files in the
-current session:
-
-1. `.claude/skills/review-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
-4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
-
-The first substantive review response must begin with exactly:
-
-`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
-
-Do not continue from a prior-session read, an injected excerpt, a summary, or an assumed workflow. If any file cannot
-be opened, stop before reviewing and return `BLOCKED`, naming the unavailable path. If this receipt was omitted or
-any required file was not read, discard all preliminary review conclusions and restart the preflight before issuing a
-finding or decision.
-
-For Sonnet implementation, use the automatically loaded `.claude/skills/execute-task/SKILL.md` and the task's
-pre-read bundle.
-
-Do not read all docs by default.
-
-## Git policy
-
-Agents may use only these read-only Git subcommands for inspection:
-
-- `git status`
-- `git diff`
-- `git show`
-- `git log`
-- `git grep`
-- `git hash-object` (without `-w` / `--write`)
-- `git rev-list`, `git rev-parse`, `git ls-files`, `git ls-tree`, `git cat-file`, and `git merge-base`
-- `git check-attr`, `git check-ignore`, `git describe`, `git blame`, `git shortlog`, `git for-each-ref`, and `git name-rev`
-- `git remote` only to list remotes (`-v`) or read a URL (`get-url`), and `git branch --show-current`
-
-Any other Git subcommand is owner-only unless this policy is explicitly amended first.
-
-Mutating git is owner-only and native PowerShell only, including:
-
-- `git add`
-- `git commit`
-- `git push`
-- `git reset`
-- `git restore`
-- `git checkout`
-- `git stash`
-- `git merge`
-- `git rebase`
-- `git rm`
-- `git apply`
-- `git clean`
-- `git config`
-
-## Agent Git enforcement
-
-Within Claude Code, no agent may execute a Git mutation, regardless of role, model, shell, executable spelling,
-path, alias, or wrapper. This includes `git`, `git.exe`, an absolute path to Git, and invocations routed through
-PowerShell, `cmd`, Bash, or another process launcher. A command that cannot be established as one of the read-only
-inspection commands above is forbidden to agents. The owner performs permitted Git mutations manually, outside
-Claude Code, in native PowerShell.
-
-The repository's `PreToolUse` Git gate enforces this boundary before Bash or PowerShell commands run. It is a
-defence-in-depth control; agents must still follow this policy and must not hide Git behind aliases, scripts, or
-other executables.
-
-After verified task design that changed task/docs artifacts, Opus must emit an explicit-path owner-run **commit**
-handoff for exactly those artifacts, including the `create-task` skill's stale `.git/index.lock` cleanup preflight.
-**A task-design handoff must never include `git push`.** After Opus has completed an `APPROVED` / `APPROVED WITH
-NOTES` implementation review, it must emit the corresponding owner-run **commit and push** handoff for the verified
-implementation and review artifacts. Sonnet has no approval authority and must not emit, suggest, or run mutating git
-commands, including any form of `git push`.
-
-**ALWAYS-DO (owner rule, 2026-09-11):** every review that returns `APPROVED` or `APPROVED WITH NOTES` MUST first archive the closed task and every confirmed stale closed/superseded active-backlog row, then end with the owner-run **commit + push** handoff for the approved work, in the same response as the verdict. The handoff stages both changed backlog files. An approval without that cleanup and the commands is unfinished. **A tooling failure is never an excuse to defer it:** if read-only `git status` cannot be run (bridge timeout, sandbox, anything), say so in one line, emit the handoff built from the paths the review actually inspected, and ask the owner to eyeball `git status` before pasting — never postpone the block to a later turn. A `NEEDS REVISION` review instead must amend the existing kickoff, sync active task state, and end with an explicit-path **commit-only** handoff for those Opus-authored task artifacts; it never stages implementation paths or emits `git push`.
-
-**ALWAYS-DO (owner rule):** every task-design response that creates or edits a task/docs artifact MUST end with the
-explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a task-creation
-response without those commit commands, and never append `git push`. A verified-remote `git push` handoff is mandatory
-only after an `APPROVED` / `APPROVED WITH NOTES` implementation review. This is mandatory, not optional.
-
-## UI rule split
-
-New or migrated UI:
-
-- Mantine provides behavior, component mechanism, accessibility, and responsive props.
-- TailAdmin provides visual chrome, spacing, typography, radius, shadow, density, and component styling.
-- Source docs: `docs/mantine-responsive-design-system.md` and `docs/tailadmin-style-reference.md`.
-
-Existing legacy UI:
-
-- shadcn/Tailwind/Base UI rules remain valid only for surfaces not yet migrated.
-- Source docs: `docs/ui-rules.md`, `docs/design-system.md`, and `docs/component-rules.md`.
-
-Do not apply legacy implementation details to new Mantine work unless the task is explicitly a migration bridge.
-
-## Task and review rules
-
-- Every implementation task must be concrete enough for a fresh Sonnet session to execute without hidden chat context.
-- **Every task belongs to a sprint (owner rule, 2026-08-01).** A task may not be created without one. The kickoff is
-  saved as `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` — **never** at the root of `tasks/`. If no open
-  sprint fits, open the next one with its own plan file before writing the kickoff. Binds Task **706** onward; Sprints
-  **45** is not a planned sprint — it is the name given after the fact to the unsprinted 621–705 period, and those
-  kickoffs stay at their original paths. Discipline restarts at 46.
-  **Do not enumerate open sprints here.** This list rotted: it named **49** and **50** as open for three days after
-  both were archived, and never learned about **52**, **54** or **55**. `docs/backlog.md` → "Sprints" is the single
-  source — read the 🟠 OPEN lines there and pick the sprint whose **goal** the task actually fits. If none fits,
-  open the next number with its own plan file first. Do not treat "the highest number" as "the current one", and
-  do not infer that a sprint is open from a task in it still being reserved.
-- Every implementation kickoff must be saved under `tasks/`; a chat-only handoff is not sufficient.
-- Every kickoff must include current behavior to preserve, required after behavior, positive flow, applicable negative flows, acceptance criteria, QA profile, and verification plan.
-- The executor's report is not proof. Approval requires inspecting the real changed files, diff, and validation evidence required by the selected QA profile.
-- Critical flows listed in `docs/critical-flow-registry.md` require automated regression evidence.
-
-## Documentation map
-
-- `docs/golden-rules.md` - **GR-0…GR-11, receipt-enforced, non-negotiable.** Read first, every task.
-- `docs/agent-contract.md` - short P0 invariants.
-- `docs/orchestrator-role.md` - Opus role, git policy, review expectations.
-- `docs/orchestrator-procedures.md` - task design and implementation review procedures.
-- `docs/rule-index.md` - task-type rule routing.
-- `docs/qa-profiles.md` - risk-based validation depth.
-- `docs/ai-behavior.md` - long-form Sonnet executor behavior rules and task template.
-- `docs/backlog.md` - active state only.
-- `docs/backlog-archive.md` - historical ledger.
-- `docs/binding-decisions.md` - closed, binding owner/orchestrator decisions (D19-D37). Open decisions stay in `docs/backlog.md`.
-- `docs/mantine-responsive-design-system.md` - current UI/responsive source of truth.
-- `docs/tailadmin-style-reference.md` - visual source of truth.
-- `docs/ui-rules.md` - UI routing plus legacy rules.
-- `docs/component-rules.md` - component quality, i18n, no-duplicate, and container/presentational split.
-- `docs/qa-rules.md` - validation, encoding, error handling, and manual QA rules.
-- `docs/data-access-rules.md` - data access and Supabase patterns.
-- `docs/rls-rules.md` - RLS and permission boundaries.
-- `docs/domain-rules.md` - marketplace domain rules.
-- `docs/env.md` - environment and deployment configuration.
-- `docs/integrations.md` - external service setup.
-- `docs/performance.md` - Core Web Vitals and performance rules.
-- `docs/state-authority.md` - SSR/client state authority.
-- `.claude/agents/orchestrator.md` - dedicated Opus task architect and review agent.
-- `.claude/agents/executor.md` - dedicated Sonnet implementation agent.
-- `.claude/skills/create-task/SKILL.md` - task-design quality gate.
-- `.claude/skills/review-task/SKILL.md` - evidence-based review quality gate.
-- `.claude/skills/execute-task/SKILL.md` - Sonnet implementation and self-validation protocol.
-- `.claude/hooks/orchestrator-router.ps1` - automatic task/review skill router for normal Opus sessions.
-- `.claude/hooks/orchestrator-response-gate.ps1` - **`Stop` hook. Blocks the response on a missing owner-run git handoff (GR-6), a backlog close without an archive row (GR-5), or — on every Opus response — a backlog that is not active-state only (`npm run check:backlog-active`, GR-5, 2026-09-27).** Fail-open on script errors, loop-safe.
-- `.claude/hooks/sonnet-executor-bootstrap.ps1` - automatic executor skill loader for normal Sonnet sessions.
-
-## Documentation update rule
-
-When changing project rules, update the most specific file in `docs/` instead of expanding this file.
-Use `CLAUDE.md` only as the project entry point and navigation index.
+When changing rules, keep the role parent short; put phase-specific policy in the smallest `.claude/rules/` file that
+owns it, update affected workflows together, and avoid duplicating detailed rules across roles.

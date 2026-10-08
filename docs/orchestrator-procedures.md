@@ -22,11 +22,14 @@ State the mode briefly in the output unless the user asked for a tiny direct ans
 
 Before planning, assigning, reviewing, or approving work:
 
-1. Read `CLAUDE.md`, `docs/agent-contract.md`, this file, `docs/rule-index.md`, and `docs/backlog.md`.
-2. Select the task-type bundle from `docs/rule-index.md`.
-3. Read only the relevant rule files for that bundle.
-4. Inspect affected source files, tests, existing patterns, and task history as needed.
-5. Inspect the current diff when reviewing implementation work.
+1. Read the compact role parent and current `.claude/rules/` phase first.
+2. Read `CLAUDE.md`, the Agent Contract index plus the phase-selected fragment, `docs/rule-index.md`, and the relevant
+   backlog state.
+3. Select the task-type bundle from `docs/rule-index.md`.
+4. Open this document by exact section only when that phase or bundle needs a procedure; do not load its full history
+   as startup context.
+5. Inspect affected source files, tests, existing patterns, and task history as needed.
+6. Inspect the current diff when reviewing implementation work.
 
 Do not rely on filenames, task titles, prior summaries, or a worker's completion report as proof.
 

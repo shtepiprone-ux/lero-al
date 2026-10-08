@@ -32,6 +32,24 @@
   "hooks": {
     "PreToolUse": [
       {
+        "matcher": "Edit|Write|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/phase-write-gate.ps1"
+            ],
+            "timeout": 5,
+            "statusMessage": "Verifying required UI preflight"
+          }
+        ]
+      },
+      {
         "matcher": "Bash|PowerShell",
         "hooks": [
           {
@@ -67,36 +85,6 @@
             ],
             "timeout": 5,
             "statusMessage": "Loading Sonnet executor workflow"
-          },
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
-              "-Part",
-              "2"
-            ],
-            "timeout": 5,
-            "statusMessage": "Loading Sonnet executor workflow"
-          },
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
-              "-Part",
-              "3"
-            ],
-            "timeout": 5,
-            "statusMessage": "Loading Sonnet executor workflow"
           }
         ]
       }
@@ -116,36 +104,6 @@
               "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
               "-Part",
               "1"
-            ],
-            "timeout": 5,
-            "statusMessage": "Routing Opus task/review workflow"
-          },
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
-              "-Part",
-              "2"
-            ],
-            "timeout": 5,
-            "statusMessage": "Routing Opus task/review workflow"
-          },
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
-              "-Part",
-              "3"
             ],
             "timeout": 5,
             "statusMessage": "Routing Opus task/review workflow"

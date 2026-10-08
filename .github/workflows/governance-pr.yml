@@ -6,10 +6,14 @@ on:
     paths:
       - 'src/**'
       - 'scripts/**'
+      - '.claude/**'
+      - 'CLAUDE.md'
       - 'eslint.config.mjs'
       - 'package.json'
       - 'tasks/**'
       - 'docs/agent-contract.md'
+      - 'docs/golden-rules.md'
+      - 'docs/rules/**'
       - 'docs/orchestrator-procedures.md'
       - 'docs/orchestrator-role.md'
       - 'docs/review-ledger.schema.json'
@@ -28,10 +32,14 @@ on:
     paths:
       - 'src/**'
       - 'scripts/**'
+      - '.claude/**'
+      - 'CLAUDE.md'
       - 'eslint.config.mjs'
       - 'package.json'
       - 'tasks/**'
       - 'docs/agent-contract.md'
+      - 'docs/golden-rules.md'
+      - 'docs/rules/**'
       - 'docs/orchestrator-procedures.md'
       - 'docs/orchestrator-role.md'
       - 'docs/review-ledger.schema.json'
@@ -200,6 +208,15 @@ jobs:
 
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
+
+      - name: UI contract gate (GR-12 — no changed Story-local styling; new components have token/Story/parity ownership)
+        env:
+          UI_CONTRACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          UI_CONTRACT_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run check:ui-contract
+
+      - name: UI contract gate self-test (planted Story styling and missing contract must fail)
+        run: npm run check:ui-contract:verify
 
       - name: Tailwind runtime-token gate (blocking — CSS Module var() references owned by Tailwind, not this project)
         run: npm run check:tailwind-runtime-tokens

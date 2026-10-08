@@ -66,6 +66,10 @@ playwright/.auth/
 
 # Local Settings
 .claude/
+!.claude/
+.claude/*
+!.claude/rules/
+!.claude/rules/**
 .codex/
 docs/chat-gpt-reports/
 

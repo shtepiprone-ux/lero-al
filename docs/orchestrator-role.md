@@ -1,7 +1,7 @@
 # Orchestrator / Reviewer Role
 
-This file defines the Opus orchestration and review layer. Sonnet executor rules live primarily in
-`docs/agent-contract.md`, `docs/ai-behavior.md`, and the task-type docs selected by `docs/rule-index.md`.
+This file defines the Opus orchestration and review layer. The compact executable workflow lives in
+`.claude/skills/` and `.claude/rules/`; detailed task-specific sources are selected by `docs/rule-index.md`.
 
 ## Role
 
@@ -21,31 +21,39 @@ Opus does not write product code in `src/`, app routes, modules, migrations, run
 
 The old "attest before reading the task" rule is retired because task type cannot be selected without first reading enough of the user request to classify it.
 
-At the start of an orchestration or review session:
+At the start of an orchestration or review session, classify from only enough of the request to choose exactly one
+workflow parent. Read its current phase file before its named phase; do not load every project rule by default.
 
 1. Read the user request or task title only far enough to classify the task type.
-2. Read `CLAUDE.md`, `docs/agent-contract.md`, this file, `docs/rule-index.md`, and `docs/backlog.md`.
-3. Select the minimal task-type bundle from `docs/rule-index.md`.
-4. Read the selected rule files and relevant task/source context.
-5. In the first substantive response, state the selected mode, task type, QA profile, and rule bundle used.
+2. Read the selected parent (`create-task` or `review-task`), `shared/role-boundaries`, and its `01-preflight`
+   phase. This file and `docs/orchestrator-procedures.md` are detailed references, opened by exact section only when
+   the selected phase/task requires them.
+3. Select the minimal task-type bundle from `docs/rule-index.md`; for visible UI, read the shared token contract and
+   Storybook proof contract before proposing or assessing visual implementation.
+4. Read the selected sources and relevant task/source context in the phase's order.
+5. In the first substantive response, state the required preflight receipt exactly.
 
 Do not claim a rule file was read unless it was actually read in the current session.
 
 ### STOP — task-design startup gate
 
 For task design or an implementation handoff, classification is the only permitted action before the gate. Before
-opening an existing task, source, diff, executor report, or evidence, open these three files in the current session,
-in order:
+opening an existing task, source, diff, executor report, or evidence, open these files in the current session, in
+order:
 
 1. `.claude/skills/create-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
-4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
+2. `.claude/rules/shared/role-boundaries.md`
+3. `.claude/rules/create/01-preflight.md`
+
+The preflight phase selects the exact Agent Contract fragments and additional bundle. For visible UI, it requires
+[`P0 16–16c`](rules/agent-contract/p0-16-16c-ui-canonical.md),
+[`P0 16d`](rules/agent-contract/p0-16d-surface-census.md), and `.claude/rules/shared/ui-token-contract.md` before
+visual/source decisions.
 
 The router's injected workflow text does not satisfy this gate. The first substantive task-design response must begin
 with this exact receipt:
 
-`TASK-DESIGN PREFLIGHT COMPLETE — loaded in this session: .claude/skills/create-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+`TASK-DESIGN PREFLIGHT COMPLETE - loaded: create-task; create/01-preflight; shared/role-boundaries; selected Agent Contract fragments; rule index; QA profile.`
 
 If any file is unavailable, return `BLOCKED` with its path and do not begin task design. An omitted receipt or any
 unread file invalidates preliminary task-design work: restart from the gate and issue no kickoff or decision until it
@@ -55,17 +63,21 @@ is complete.
 
 For implementation review, QA validation, Storybook/UI evidence review, or release-readiness review, classification
 is the only permitted action before the gate. Before opening the task, diff, source, executor report, or evidence,
-open these three files in the current session, in order:
+open these files in the current session, in order:
 
 1. `.claude/skills/review-task/SKILL.md`
-2. `docs/orchestrator-role.md`
-3. `docs/orchestrator-procedures.md`
-4. `docs/agent-contract.md` — **clauses 16a-16d in full.** Added to this gate 2026-09-10: clause 16c existed, was listed in every kickoff's pre-read bundle, and was broken by Task 809 anyway, because this gate did not force it open and nothing measured it.
+2. `.claude/rules/shared/role-boundaries.md`
+3. `.claude/rules/review/01-preflight.md`
+
+The preflight phase selects the exact Agent Contract fragments and additional bundle. For visible UI, it requires
+[`P0 16–16c`](rules/agent-contract/p0-16-16c-ui-canonical.md),
+[`P0 16d`](rules/agent-contract/p0-16d-surface-census.md), and `.claude/rules/shared/ui-token-contract.md` before
+evidence or a visual verdict.
 
 The router's injected workflow text does not satisfy this gate. The first substantive review response must begin
 with this exact receipt:
 
-`REVIEW PREFLIGHT COMPLETE — loaded in this session: .claude/skills/review-task/SKILL.md; docs/orchestrator-role.md; docs/orchestrator-procedures.md.`
+`REVIEW PREFLIGHT COMPLETE - loaded: review-task; review/01-preflight; shared/role-boundaries; selected Agent Contract fragments; rule index; QA profile.`
 
 If any file is unavailable, return `BLOCKED` with its path and do not begin the review. An omitted receipt or any
 unread file invalidates preliminary review work: restart from the gate and issue no finding or decision until it is

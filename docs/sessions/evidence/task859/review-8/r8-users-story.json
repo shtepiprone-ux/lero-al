@@ -1,0 +1,100 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "out": {
+  "shield": {
+   "verifyButtons": 1,
+   "rowsBefore": 7,
+   "rowsAfter": 3,
+   "text": "",
+   "log": [
+    "warning:  \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m Runtime config is deprecated and will be removed in Next.js 16. Please remove the usage of \"next/config\" from your project.",
+    "error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "error: Error: unauthenticated\n    at p (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:953)\n    at async d (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:1216)\n    at async h (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:1248)\n    at async http://127.0.0.1:6177/assets/AdminUsersTable.stories-C5uCw",
+    "error: Error rendering story 'patterns-mantine-adminuserstable--default':",
+    "error: Error: unauthenticated\n    at p (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:953)\n    at async d (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:1216)\n    at async h (http://127.0.0.1:6177/assets/index-CUkpjNxQ.js:1:1248)\n    at async http://127.0.0.1:6177/assets/AdminUsersTable.stories-C5uCw"
+   ]
+  },
+  "filters": {
+   "inputs": [
+    {
+     "ph": "Kërko sipas emrit, telefonit, kompanisë...",
+     "ro": false,
+     "type": "text",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    },
+    {
+     "ph": "",
+     "ro": false,
+     "type": "radio",
+     "aria": null
+    }
+   ],
+   "rowsBefore": 7,
+   "rowsAfterSearch": 7,
+   "selects": 0,
+   "options": null,
+   "afterPick": null,
+   "log": [
+    "warning:  \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m Runtime config is deprecated and will be removed in Next.js 16. Please remove the usage of \"next/config\" from your project.",
+    "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  },
+  "locationFilter": {
+   "rows": 7,
+   "text": "Përdorues\n\nLero\n\n.al\n\nAdmin\n\nVËSHTRIM\n\nDashboard\n\nMENAXHIM\n\nNjoftime\n\nPërdorues\n\nTiketat e brendshme\n\nMbështetje\n\nShitje\n\nRaportet\n\nPËRMBAJTJE\n\nVendndodhje\n\nVendndodhjet Populare\n\nKompanitë\n\nFaqe\n\nLlojet e pronës\n\nValuta\n\nShablonet e emailit\n\nFooter\n\nSISTEM\n\nCilësimet e faqes\n\nLejet\n\nGJUHË\n\nSQ Shqip\nHap faqen\nDil\nTë gjithë përdoruesit\n✓ Agjentë të verifikuar\nTë gjitha\nPërdorues\nAgjent\nModerator\nAd",
+   "log": [
+    "warning:  \u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m Runtime config is deprecated and will be removed in Next.js 16. Please remove the usage of \"next/config\" from your project.",
+    "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ]
+  }
+ }
+}

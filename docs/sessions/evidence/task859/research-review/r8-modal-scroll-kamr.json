@@ -1,0 +1,65 @@
+{
+ "checkedAt": "2026-10-08T08:10:30.408Z",
+ "platform": "win32",
+ "node": "v22.22.3",
+ "results": [
+  {
+   "w": 1440,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+   "triggers": [
+    "Basic modal",
+    "Long content Modal",
+    "Modal centered",
+    "Modal with tooltip",
+    "Grid Inside Modal",
+    "Large modal",
+    "Small modal"
+   ],
+   "scrollableClasses": 0
+  },
+  {
+   "w": 1440,
+   "trigger": "Long content Modal",
+   "shot": "r8-modal-scroll-kamr-1440-0.png",
+   "opened": true,
+   "scrollers": [
+    {
+     "cls": "fade fade modal show",
+     "clientH": 420,
+     "scrollH": 1552,
+     "holdsHeader": true,
+     "holdsFooter": true
+    }
+   ]
+  },
+  {
+   "w": 390,
+   "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+   "triggers": [
+    "Basic modal",
+    "Long content Modal",
+    "Modal centered",
+    "Modal with tooltip",
+    "Grid Inside Modal",
+    "Large modal",
+    "Small modal"
+   ],
+   "scrollableClasses": 0
+  },
+  {
+   "w": 390,
+   "trigger": "Long content Modal",
+   "shot": "r8-modal-scroll-kamr-390-0.png",
+   "opened": true,
+   "scrollers": [
+    {
+     "cls": "fade fade modal show",
+     "clientH": 420,
+     "scrollH": 1901,
+     "holdsHeader": true,
+     "holdsFooter": true
+    }
+   ]
+  }
+ ]
+}

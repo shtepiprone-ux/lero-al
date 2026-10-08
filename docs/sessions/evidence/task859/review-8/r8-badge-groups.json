@@ -1,0 +1,930 @@
+{
+ "0": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-dashboardstatrows--default"
+  ]
+ },
+ "1": {
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-countbutton--default",
+   "patterns-mantine-listingsfilterbar--one-active-filter"
+  ],
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-favoritesshell--populated",
+   "mantine-primitives-listingcard--default",
+   "mantine-primitives-listingcard--favorites-composition",
+   "mantine-primitives-recentlyviewedgridview--populated",
+   "mantine-primitives-similarlistingsview--default",
+   "mantine-primitives-similarlistingsview--fewer-than-eight",
+   "patterns-mantine-homepagelistinggrids--default",
+   "patterns-mantine-listingcardtrack--grid",
+   "patterns-mantine-listingcardtrack--rail",
+   "patterns-mantine-listingcardtrack--grid-single-item",
+   "patterns-mantine-listingcardtrack--rail-single-item",
+   "patterns-mantine-listingcardtrack--rail-no-overflow",
+   "patterns-mantine-listingcardtrack--rail-mixed-title-lengths",
+   "patterns-mantine-listingcardtrack--grid-mixed-title-lengths",
+   "patterns-mantine-listingsshellview--default",
+   "patterns-mantine-listingsshellview--closed-tab",
+   "patterns-mantine-listingsshellview--loading-more"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminreportsview--default",
+   "patterns-mantine-adminreportsview--all-tab"
+  ],
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-dashboardstatrows--default"
+  ]
+ },
+ "2": {
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-countbutton--default",
+   "mantine-primitives-herosearch--default",
+   "patterns-mantine-listingsshellview--default",
+   "patterns-mantine-listingsshellview--loading-more"
+  ],
+  "filled | rgb(236, 84, 71) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-filterspanelshell--default"
+  ],
+  "white | rgb(255, 255, 255) | rgb(236, 84, 71) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-filterspanelshell--default"
+  ],
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-10-filtered-empty",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views"
+  ],
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-10-filtered-empty",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views"
+  ],
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "3": {
+  "filled | rgb(236, 84, 71) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "patterns-mantine-adminreportsview--default",
+   "patterns-mantine-listingsfilters--default"
+  ],
+  "filled | rgb(236, 84, 71) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 1000px | 18 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 1000px | 18 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "white | rgb(255, 255, 255) | rgb(236, 84, 71) | 1px solid rgba(0, 0, 0, 0) | 1000px | 18 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "patterns-mantine-listingcardpattern--default"
+  ],
+  "white | rgb(255, 255, 255) | rgb(236, 84, 71) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-countbutton--default"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminreportsview--all-tab"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 26 | 13px | 500 | none": [
+   "patterns-mantine-adminsurfacepattern--default"
+  ],
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-10-filtered-empty",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views",
+   "patterns-mantine-dashboardstatrows--default"
+  ]
+ },
+ "4": {
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "5": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminreportsview--default"
+  ],
+  "filled | rgb(236, 84, 71) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminreportsview--all-tab"
+  ],
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "7": {
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-countbutton--default"
+  ]
+ },
+ "8": {
+  "filled | rgb(16, 24, 40) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "11": {
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingsfilterbar--many-active-filters"
+  ]
+ },
+ "12": {
+  "light | rgb(228, 231, 236) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-countbutton--default"
+  ]
+ },
+ "15": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other"
+  ]
+ },
+ "25": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other"
+  ]
+ },
+ "Active": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "mantine-primitives-badge--statuses",
+   "mantine-primitives-table--default",
+   "mantine-primitives-table--cards-below-md",
+   "mantine-primitives-table--cards-below-lg",
+   "mantine-primitives-table--row-click",
+   "mantine-primitives-table--responsive-columns",
+   "mantine-primitives-table--sticky-column",
+   "mantine-primitives-table--card-detail",
+   "patterns-mantine-admincurrenciesview--default",
+   "patterns-mantine-admincurrenciesview--delete-confirm",
+   "patterns-mantine-admindashboardrecentlistings--default",
+   "patterns-mantine-admincurrencytabs--default",
+   "patterns-mantine-admincurrenciesview--detail",
+   "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--premium-tab",
+   "patterns-mantine-adminlistingsview--visible-filter",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-adminsurfacepattern--default",
+   "patterns-mantine-admintable--default",
+   "patterns-mantine-admintable--synthesized",
+   "patterns-mantine-admintable--row-click",
+   "patterns-mantine-adminuserprofileview--view",
+   "patterns-mantine-adminuserprofileview--view-location-request",
+   "patterns-mantine-adminuserprofileview--view-agent",
+   "patterns-mantine-adminuserprofileview--view-no-history-controls",
+   "patterns-mantine-adminuserprofileview--edit",
+   "patterns-mantine-adminuserprofileview--edit-errors",
+   "patterns-mantine-adminuserprofileview--saving",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--location-filter",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views",
+   "patterns-mantine-currencydetaildialogview--default-currency",
+   "patterns-mantine-currencydetaildialogview--default",
+   "patterns-mantine-userpickerfieldview--results"
+  ],
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 26 | 13px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(2, 122, 72) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admintable--wrapped-title-column"
+  ]
+ },
+ "Pending": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "mantine-primitives-badge--statuses",
+   "mantine-primitives-table--default",
+   "mantine-primitives-table--cards-below-md",
+   "mantine-primitives-table--cards-below-lg",
+   "mantine-primitives-table--row-click",
+   "mantine-primitives-table--responsive-columns",
+   "mantine-primitives-table--sticky-column",
+   "mantine-primitives-table--card-detail",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other",
+   "patterns-mantine-adminreportsview--default",
+   "patterns-mantine-adminreportsview--all-tab",
+   "patterns-mantine-adminsurfacepattern--default",
+   "patterns-mantine-dashboardworklist--default",
+   "patterns-mantine-reportdetaildialogview--pending",
+   "patterns-mantine-reportdetaildialogview--full-management",
+   "patterns-mantine-reportdetaildialogview--owner-missing",
+   "patterns-mantine-reportdetaildialogview--delete-confirm",
+   "patterns-mantine-reportdetaildialogview--saving"
+  ],
+  "filled | rgb(181, 71, 8) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Blocked": {
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminuserprofileview--view-blocked",
+   "patterns-mantine-adminuserprofileview--edit-blocked",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--location-filter",
+   "patterns-mantine-userpickerfieldview--results"
+  ],
+  "filled | rgb(180, 35, 24) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Archived": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "mantine-primitives-badge--statuses",
+   "mantine-primitives-table--default",
+   "mantine-primitives-table--cards-below-md",
+   "mantine-primitives-table--cards-below-lg",
+   "mantine-primitives-table--row-click",
+   "mantine-primitives-table--responsive-columns",
+   "mantine-primitives-table--sticky-column",
+   "mantine-primitives-table--card-detail",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-adminsurfacepattern--default"
+  ],
+  "filled | rgb(52, 64, 84) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default",
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default"
+  ],
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Brand": {
+  "light | rgb(253, 238, 237) | rgb(189, 67, 57) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "light | rgb(253, 238, 237) | rgb(189, 67, 57) | 1px solid rgba(0, 0, 0, 0) | 4px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(236, 84, 71) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Info": {
+  "light | rgb(240, 249, 255) | rgb(2, 106, 162) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(2, 106, 162) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Purple": {
+  "light | rgb(244, 242, 254) | rgb(101, 71, 214) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(101, 71, 214) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Sale": {
+  "light | rgb(253, 240, 243) | rgb(221, 9, 57) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ],
+  "filled | rgb(221, 9, 57) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--default"
+  ]
+ },
+ "Inactive": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admincurrenciesview--default",
+   "patterns-mantine-admincurrenciesview--delete-confirm",
+   "patterns-mantine-admincurrencytabs--default",
+   "patterns-mantine-admincurrenciesview--detail",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-admintable--wrapped-title-column",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views",
+   "patterns-mantine-currencydetaildialogview--inactive",
+   "patterns-mantine-userpickerfieldview--results"
+  ],
+  "filled | rgb(52, 64, 84) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "Sold": {
+  "light | rgb(240, 249, 255) | rgb(2, 106, 162) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admindashboardrecentlistings--default",
+   "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--hidden-eligible",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views"
+  ],
+  "filled | rgb(2, 106, 162) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default",
+   "patterns-mantine-listingsshellview--closed-tab"
+  ]
+ },
+ "Rented": {
+  "light | rgb(244, 242, 254) | rgb(101, 71, 214) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views"
+  ],
+  "filled | rgb(101, 71, 214) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default",
+   "patterns-mantine-listingsshellview--closed-tab"
+  ]
+ },
+ "Under review": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admindashboardrecentlistings--default",
+   "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--filtered-pending",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admintable--wrapped-title-column"
+  ],
+  "filled | rgb(181, 71, 8) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "Expired": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses"
+  ],
+  "filled | rgb(181, 71, 8) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default"
+  ]
+ },
+ "Visible": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--premium-tab",
+   "patterns-mantine-adminlistingsview--visible-filter",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-agentstatisticsview--default",
+   "patterns-mantine-agentstatisticsview--agt-01-all-zero",
+   "patterns-mantine-agentstatisticsview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-error",
+   "patterns-mantine-agentstatisticsview--no-activity",
+   "patterns-mantine-agentstatisticsview--sorted-by-views",
+   "patterns-mantine-detaillist--default",
+   "patterns-mantine-listingpreviewdialogview--active",
+   "patterns-mantine-listingpreviewdialogview--delete-confirm",
+   "patterns-mantine-listingpreviewdialogview--premium"
+  ]
+ },
+ "Hidden — status not public": {
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--hidden-eligible",
+   "patterns-mantine-adminlistingsview--filtered-pending",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+   "patterns-mantine-listingpreviewdialogview--hidden"
+  ]
+ },
+ "Resolved": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminreportsview--all-tab",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-reportdetaildialogview--terminal-reopen"
+  ]
+ },
+ "Dismissed": {
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminreportsview--all-tab"
+  ]
+ },
+ "Open": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-adminsupportview--unassigned-landing",
+   "patterns-mantine-ticketdetaildialogview--support"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other"
+  ]
+ },
+ "In progress": {
+  "light | rgb(240, 249, 255) | rgb(2, 106, 162) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admininquiriesview--default",
+   "patterns-mantine-admininquiriesview--long-subject",
+   "patterns-mantine-admininquiriesview--unscoped",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "patterns-mantine-ticketdetaildialogview--complaint",
+   "patterns-mantine-ticketdetaildialogview--updating"
+  ],
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other"
+  ]
+ },
+ "Closed": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admininquiriesview--default",
+   "patterns-mantine-admininquiriesview--long-subject",
+   "patterns-mantine-admininquiriesview--unscoped",
+   "patterns-mantine-adminsupportview--default"
+  ]
+ },
+ "Support": {
+  "light | rgb(240, 249, 255) | rgb(2, 106, 162) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-adminsupportview--unassigned-landing",
+   "patterns-mantine-ticketdetaildialogview--support"
+  ]
+ },
+ "Complaint": {
+  "light | rgb(254, 243, 242) | rgb(180, 35, 24) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "patterns-mantine-ticketdetaildialogview--complaint",
+   "patterns-mantine-ticketdetaildialogview--updating"
+  ]
+ },
+ "New": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-admininquiriesview--default",
+   "patterns-mantine-admininquiriesview--long-subject",
+   "patterns-mantine-admininquiriesview--unscoped"
+  ],
+  "filled | rgb(2, 122, 72) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-favoritesshell--populated",
+   "mantine-primitives-listingcard--default",
+   "mantine-primitives-listingcard--favorites-composition",
+   "mantine-primitives-recentlyviewedgridview--populated",
+   "mantine-primitives-similarlistingsview--default",
+   "mantine-primitives-similarlistingsview--fewer-than-eight",
+   "patterns-mantine-homepagelistinggrids--default",
+   "patterns-mantine-listingcardpattern--default",
+   "patterns-mantine-listingcardtrack--grid",
+   "patterns-mantine-listingcardtrack--rail",
+   "patterns-mantine-listingcardtrack--grid-single-item",
+   "patterns-mantine-listingcardtrack--rail-single-item",
+   "patterns-mantine-listingcardtrack--rail-no-overflow",
+   "patterns-mantine-listingcardtrack--rail-mixed-title-lengths",
+   "patterns-mantine-listingcardtrack--grid-mixed-title-lengths",
+   "patterns-mantine-listingsshellview--default",
+   "patterns-mantine-listingsshellview--loading-more"
+  ],
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailpattern--default"
+  ]
+ },
+ "User": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--location-filter",
+   "patterns-mantine-userpickerfieldview--results"
+  ]
+ },
+ "Agent": {
+  "light | rgb(240, 249, 255) | rgb(2, 106, 162) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--location-filter",
+   "patterns-mantine-userpickerfieldview--results"
+  ],
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-table--default",
+   "mantine-primitives-table--cards-below-md",
+   "mantine-primitives-table--cards-below-lg",
+   "mantine-primitives-table--row-click",
+   "mantine-primitives-table--responsive-columns",
+   "mantine-primitives-table--sticky-column",
+   "mantine-primitives-table--card-detail",
+   "patterns-mantine-adminuserprofileview--view-agent",
+   "patterns-mantine-adminuserprofileview--edit-errors",
+   "patterns-mantine-adminuserprofileview--saving"
+  ]
+ },
+ "Moderator": {
+  "light | rgb(255, 246, 237) | rgb(196, 50, 10) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--location-filter",
+   "patterns-mantine-userpickerfieldview--results"
+  ]
+ },
+ "Administrator": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses"
+  ]
+ },
+ "Email confirmed": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminuserprofileview--view",
+   "patterns-mantine-adminuserprofileview--view-location-request",
+   "patterns-mantine-adminuserprofileview--view-blocked",
+   "patterns-mantine-adminuserprofileview--view-agent",
+   "patterns-mantine-adminuserprofileview--view-no-history-controls",
+   "patterns-mantine-adminuserprofileview--edit",
+   "patterns-mantine-adminuserprofileview--edit-blocked",
+   "patterns-mantine-adminuserprofileview--edit-errors",
+   "patterns-mantine-adminuserprofileview--saving"
+  ]
+ },
+ "Email not confirmed": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses"
+  ]
+ },
+ "Enabled": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending"
+  ]
+ },
+ "Disabled": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending"
+  ]
+ },
+ "Published": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminpagesview--migration-pending",
+   "patterns-mantine-adminpagesview--default",
+   "patterns-mantine-adminpagesview--deleting",
+   "patterns-mantine-adminpagesview--delete-confirm"
+  ]
+ },
+ "Draft": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-badge--statuses",
+   "patterns-mantine-adminpagesview--migration-pending",
+   "patterns-mantine-adminpagesview--default",
+   "patterns-mantine-adminpagesview--deleting",
+   "patterns-mantine-adminpagesview--delete-confirm"
+  ]
+ },
+ "Price reduced": {
+  "filled | rgb(221, 9, 57) | rgb(255, 255, 255) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "mantine-primitives-listingcard--default",
+   "patterns-mantine-listingcardpattern--default",
+   "patterns-mantine-listingsshellview--default",
+   "patterns-mantine-listingsshellview--loading-more"
+  ],
+  "light | rgb(253, 240, 243) | rgb(221, 9, 57) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailpattern--default",
+   "patterns-mantine-listingdetailview--public-listing",
+   "patterns-mantine-listingdetailview--staff-preview-unpublished",
+   "patterns-mantine-listingdetailview--staff-preview-published",
+   "patterns-mantine-listingdetailview--archived-listing"
+  ]
+ },
+ "Admin": {
+  "light | rgb(253, 238, 237) | rgb(189, 67, 57) | 1px solid rgba(0, 0, 0, 0) | 4px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admincurrenciesview--empty",
+   "patterns-mantine-admincurrenciesview--default",
+   "patterns-mantine-admincurrenciesview--delete-confirm",
+   "patterns-mantine-admincurrencytabs--default",
+   "patterns-mantine-admincurrenciesview--detail",
+   "patterns-mantine-admindashboardview--adm-02-error",
+   "patterns-mantine-admindashboardview--default",
+   "patterns-mantine-admindashboardview--all-queues-zero",
+   "patterns-mantine-admindashboardview--adm-09-zero",
+   "patterns-mantine-admindashboardview--no-location-requests",
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-admindashboardview--activity-error",
+   "patterns-mantine-admindashboardview--activity-empty-period",
+   "patterns-mantine-admindashboardview--trends-error",
+   "patterns-mantine-admindashboardview--cities-only-other",
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--empty",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending",
+   "patterns-mantine-admininquiriesview--default",
+   "patterns-mantine-admininquiriesview--empty",
+   "patterns-mantine-admininquiriesview--long-subject",
+   "patterns-mantine-admininquiriesview--unscoped",
+   "patterns-mantine-adminlistingsview--default",
+   "patterns-mantine-adminlistingsview--premium-tab",
+   "patterns-mantine-adminlistingsview--hidden-eligible",
+   "patterns-mantine-adminlistingsview--visible-filter",
+   "patterns-mantine-adminlistingsview--filtered-pending",
+   "patterns-mantine-adminlistingsview--audit-zero",
+   "patterns-mantine-adminlistingsview--empty",
+   "patterns-mantine-adminlistingsview--paginated",
+   "patterns-mantine-adminpageframe--page",
+   "patterns-mantine-adminpageframe--shell",
+   "patterns-mantine-adminpageframe--shell-fixed-gutter",
+   "patterns-mantine-adminpageframe--narrow",
+   "patterns-mantine-adminpageframe--form",
+   "patterns-mantine-adminpageframe--panel",
+   "patterns-mantine-adminpagesview--empty",
+   "patterns-mantine-adminpagesview--migration-pending",
+   "patterns-mantine-adminpagesview--default",
+   "patterns-mantine-adminpagesview--deleting",
+   "patterns-mantine-adminpermissionsview--all-allowed",
+   "patterns-mantine-adminpermissionsview--default",
+   "patterns-mantine-adminpagesview--delete-confirm",
+   "patterns-mantine-adminpermissionsview--saving",
+   "patterns-mantine-adminpermissionsview--audit-empty",
+   "patterns-mantine-adminreportsview--default",
+   "patterns-mantine-adminpermissionsview--audit-unavailable",
+   "patterns-mantine-adminreportsview--all-tab",
+   "patterns-mantine-adminshell--default",
+   "patterns-mantine-adminshell--drawer-open",
+   "patterns-mantine-adminreportsview--empty",
+   "patterns-mantine-adminsidebar--default",
+   "patterns-mantine-adminsidebar--management-active",
+   "patterns-mantine-adminsidebar--content-active",
+   "patterns-mantine-adminsidebar--system-active",
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-adminsupportview--unassigned-landing",
+   "patterns-mantine-adminsupportview--empty",
+   "patterns-mantine-adminuserprofileview--view",
+   "patterns-mantine-adminuserprofileview--view-location-request",
+   "patterns-mantine-adminuserprofileview--view-blocked",
+   "patterns-mantine-adminuserprofileview--view-agent",
+   "patterns-mantine-adminuserprofileview--view-no-history-controls",
+   "patterns-mantine-adminuserprofileview--edit",
+   "patterns-mantine-adminuserprofileview--edit-blocked",
+   "patterns-mantine-adminuserprofileview--edit-errors",
+   "patterns-mantine-adminuserprofileview--create",
+   "patterns-mantine-adminuserstable--verified-tab",
+   "patterns-mantine-adminuserprofileview--saving",
+   "patterns-mantine-adminuserstable--default",
+   "patterns-mantine-adminuserstable--empty",
+   "patterns-mantine-adminuserstable--location-filter"
+  ]
+ },
+ "Default": {
+  "light | rgb(253, 238, 237) | rgb(189, 67, 57) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admincurrenciesview--default",
+   "patterns-mantine-admincurrenciesview--delete-confirm",
+   "patterns-mantine-admincurrencytabs--default",
+   "patterns-mantine-admincurrenciesview--detail",
+   "patterns-mantine-admintable--default",
+   "patterns-mantine-admintable--synthesized",
+   "patterns-mantine-admintable--row-click",
+   "patterns-mantine-currencydetaildialogview--default-currency"
+  ]
+ },
+ "Data updated at 09/16/2026, 10:00 AM": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admindashboardview--activity-stale",
+   "patterns-mantine-agentstatisticsview--activity-stale"
+  ]
+ },
+ "Auto": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending"
+  ]
+ },
+ "Hybrid": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending"
+  ]
+ },
+ "Manual": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminexchangeprovidersview--default",
+   "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "patterns-mantine-adminexchangeprovidersview--pending"
+  ]
+ },
+ "13 of 13 allowed": {
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminpermissionsview--all-allowed"
+  ]
+ },
+ "2 of 13 allowed": {
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminpermissionsview--default",
+   "patterns-mantine-adminpermissionsview--saving",
+   "patterns-mantine-adminpermissionsview--audit-empty",
+   "patterns-mantine-adminpermissionsview--audit-unavailable"
+  ]
+ },
+ "Fake listing or profile": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminsupportview--default",
+   "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "patterns-mantine-ticketdetaildialogview--complaint",
+   "patterns-mantine-ticketdetaildialogview--updating"
+  ]
+ },
+ "Harassment or abuse": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminsupportview--default"
+  ]
+ },
+ "Deactivate": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-admintable--default",
+   "patterns-mantine-admintable--synthesized",
+   "patterns-mantine-admintable--row-click"
+  ]
+ },
+ "Private person": {
+  "light | rgb(249, 250, 251) | rgb(52, 64, 84) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminuserprofileview--view",
+   "patterns-mantine-adminuserprofileview--view-location-request",
+   "patterns-mantine-adminuserprofileview--view-blocked",
+   "patterns-mantine-adminuserprofileview--view-no-history-controls",
+   "patterns-mantine-adminuserprofileview--edit",
+   "patterns-mantine-adminuserprofileview--edit-blocked"
+  ]
+ },
+ "Verified": {
+  "light | rgb(236, 253, 243) | rgb(2, 122, 72) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-adminuserprofileview--view-agent",
+   "patterns-mantine-adminuserprofileview--edit-errors",
+   "patterns-mantine-adminuserprofileview--saving"
+  ]
+ },
+ "Updated at 14:32": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-dashboardcard--default"
+  ]
+ },
+ "Data may be outdated": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-dashboardheader--default",
+   "patterns-mantine-dashboardheader--without-period-control"
+  ]
+ },
+ "Premium": {
+  "light | rgb(255, 250, 235) | rgb(181, 71, 8) | 1px solid rgba(0, 0, 0, 0) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailpattern--default",
+   "patterns-mantine-listingdetailview--public-listing",
+   "patterns-mantine-listingdetailview--public-listing-not-reduced",
+   "patterns-mantine-listingdetailview--public-listing-converted",
+   "patterns-mantine-listingdetailview--staff-preview-unpublished",
+   "patterns-mantine-listingdetailview--staff-preview-published",
+   "patterns-mantine-listingdetailview--archived-listing"
+  ]
+ },
+ "Sale · Apartment": {
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailpattern--default"
+  ]
+ },
+ "For sale": {
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailview--public-listing",
+   "patterns-mantine-listingdetailview--public-listing-not-reduced",
+   "patterns-mantine-listingdetailview--public-listing-converted",
+   "patterns-mantine-listingdetailview--staff-preview-unpublished",
+   "patterns-mantine-listingdetailview--staff-preview-published",
+   "patterns-mantine-listingdetailview--archived-listing"
+  ]
+ },
+ "Apartment": {
+  "outline | rgba(0, 0, 0, 0) | rgb(52, 64, 84) | 1px solid rgb(52, 64, 84) | 9999px | 24 | 12px | 500 | none": [
+   "patterns-mantine-listingdetailview--public-listing",
+   "patterns-mantine-listingdetailview--public-listing-not-reduced",
+   "patterns-mantine-listingdetailview--public-listing-converted",
+   "patterns-mantine-listingdetailview--staff-preview-unpublished",
+   "patterns-mantine-listingdetailview--staff-preview-published",
+   "patterns-mantine-listingdetailview--archived-listing"
+  ]
+ }
+}

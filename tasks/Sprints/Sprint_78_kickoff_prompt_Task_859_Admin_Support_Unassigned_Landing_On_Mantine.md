@@ -1725,3 +1725,181 @@ and Lahomes Esc closes, as in reviews 5 and 6.
 - **O78-13**: the owner's visual review of §20.8, every row at the stated locales and widths. Until the owner returns it,
   the visual criterion is `NOT VERIFIABLE`. A returned row becomes a revision; all rows accepted → the closing review.
 - The `/admin/support` table row of §20.8 waits for 919 (D78-17), as before.
+
+## 23. Revision 7 (review 8, 2026-10-08): `NEEDS REVISION` — owner return of O78-13: every badge on one type (site and admin), modals that scroll their header and footer, a users table that does not work in Storybook
+
+**This section is the only executable route.** §21 stays binding where §23 does not replace it. §22's
+`PARTIALLY VERIFIED` is superseded: the owner returned the matrix. **Re-entry: `remediation`** on the current tree.
+Evidence goes to `docs/sessions/evidence/task859/r7-*` (Sonnet). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `docs/rules/golden/gr-12-no-hardcode.md`, `docs/rules/golden/gr-12-parity-census.md`,
+`docs/rules/golden/gr-9-review-depth.md` (step 6, operate every control), `.claude/rules/shared/ui-token-contract.md`,
+`.claude/rules/shared/storybook-proof.md`. GR-12 was written on 2026-10-08 because of this return.
+
+### 23.1 Owner return, verbatim (2026-10-08)
+
+- Badge `Default` / `Statuses`: *"не приймаю. Чомусь один бейдж з більш квадратними кутами, аніж всі інші. Відчуваю, що
+  хардкод у бейджах soft · leftSection! Також у long label / no clip бейдж Archived має білий бекграунд, або взагалі без
+  бекграунду, хоча в ListingCard Story цей бейдж має вірний колір. Одже, я бачу, що ця сторі взагалі має бейджі не такі
+  як вже ми маємо на картках. … всі інші статуси також мають інші кольорові гамми, аніж ми маємо у інших сторісах."* And,
+  in the same session: *"я ж тобі показав, що в ListingCard Story Archived badge має вірний стиль!"*
+- Modal `Detail` / `Form` / `DeleteConfirm`: *"візуально все ок, поведінка ок. Але через те, що у модальних вікон
+  скруглені кути, повзунок скролу завжди упирається у скруглений кут … Необхідно скрол обмежувати висотою контенту, який
+  скролиться, тобто скрол не має потрапляти на шапку модального вікна і на контейнер з кнопками … Це стосується усіх
+  модальних вікон … її необхідно вирішити у цій задачі."* Every dialog Story: *"те саме з повзунками скролу"*.
+- `AdminUsersTable` `Default`: *"сторі зломана коли я натискаю на іконку щита … Фільтри не клікабельні взагалі. Пошук
+  не працює."* `Location Filter`: *"що це взагалі таке? … Де блядь взагалі в адмінці фільтр по локаціям … чи він
+  прив'язаний до чогось конкретного?"*
+- All badges, same session: *"також перевіряй всі бейджі, бо вони … всі якісь хардкодні і мають різні типи, а мають
+  мати однаковий тип і для сайту, і для адмінки"*.
+
+### 23.2 Owner decision
+
+| ID | Decision | Effect |
+|---|---|---|
+| **D78-26** (2026-10-08, O78-13 return, verbatim above) | The `ListingCard` Story's status badge is the correct style. | The canonical status/tone badge is the card's look (solid fill at the colour's index-7 stop, white text) on **every** surface. D78-21's light tint is withdrawn. One meaning, one look (GR-12). |
+
+### 23.3 RETRACTION (Opus, reviews 2–7)
+
+- **Invalid prior claims:** reviews 3–5 passed `Mantine/Primitives/Badge` and the D78-21 tint; review 7's GR-9 receipts
+  said "no authored value" for the Stories it measured; no review operated a Story control.
+- **Why invalid:** no review compared the badge with the Stories that already render the same status, and none clicked
+  a control. Measured on 2026-10-08 (`review-8/r8-badge-census.json`, all 569 Stories, en, 1440): **22 of 65 badge
+  labels render more than one look**. Every listing status is a tint in tables and the Badge Story and solid on cards.
+  `Archived`/`Inactive` have a `rgb(249, 250, 251)` fill, invisible on white. `Under review` is orange (listing
+  `pending`) and grey (report `reviewed`, same English text). `AdminTable.stories.tsx` renders raw Mantine `Badge` with
+  colours chosen in the Story (`:47–68`, `:179`). Clicking the shield in `AdminUsersTable` `Default` throws
+  `Error: unauthenticated` and puts Storybook into "Error rendering story". Search leaves 7 of 7 rows
+  (`review-8/r8-users-story.json`).
+- **Corrected status:** R24–R26 (badge), R35 (dialog shell) and the R41 consumers are `INCORRECT` until §23 lands.
+
+### 23.4 Findings (review 8)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| F28 | P1, GR-12 | One meaning, two or three looks: 22 of 65 labels (`r8-badge-groups.json`). | R49 |
+| F29 | P1, GR-12 §1 | Hardcode. `Badge.stories.tsx:70`, `:81`: raw captions "soft · leftSection", "long label / no clip". `MantineBadge.tsx`: count `neutral` uses `styles={{ root: { backgroundColor: 'var(--mantine-color-gray-2)', color: 'var(--mantine-color-gray-7)' } }}`; count `onImage` uses `color="gray.9"`. `AdminTable.stories.tsx:47–68`, `:179`: raw `Badge` with Story colours. `AdminUsersTable.tsx:215`, `:258`: `c="orange.6"`. | R49, R50, R53 |
+| F30 | P2, owner return | `shape="soft"` (radius `sm`) is the only non-pill badge: `AdminHeader.tsx:54`, `AdminSidebar.tsx:94`. | R50 |
+| F31 | P1, owner return, every dialog | At 1440 the scroller is the whole `.mantine-Modal-content`, header and footer included, in **21** matrix Stories (`review-8/r8-scroll.json`). The structured path wraps the footer in a `pos="sticky"` box inside `Modal.Body` (`MantineModal.tsx:77–89`). At 390 the sheet already scrolls only its body (`responsiveBottomSheet.tsx:34`). | R51 |
+| F32 | P1, GR-9 step 6 | `AdminUsersTable` is a container rendered by its Story: real `toggleUserVerified` (`:12`, `:138–143`, `:312–317`), and filters/search/tabs only `router.push` (`:97–112`, `:406–476`). The shield throws; search, role, status, tabs and the location chip do nothing. `LocationFilter` shows all 4 users with the filter on. | R52 |
+| F34 | P1, GR-12, owner "one type for site and admin" | Badges outside `MantineBadge` (source inventory, review 8): the legacy shadcn `@/components/ui/badge` in `AdminLegalManager.tsx:180`, `AdminPropertyTypesManager.tsx:326`, `:397`, `CabinetShell.tsx:88`, `:91`, `ListingsTab.tsx:310`, `:325` (`bg-badge-premium`), `ImageUpload.tsx:111`, `StepPreview.tsx:36`, `:45`, `:49`; hand-made pills `CabinetShell.tsx:122` (`rounded-full px-1.5` counter) and `AdminLocationsManager.tsx:331`; raw Mantine `Badge` in `Table.stories.tsx`, `AdminSurfacePattern.stories.tsx`, `AdminTable.stories.tsx`, `DetailList.stories.tsx`. The rendered census of R49 counted only `.mantine-Badge-root`, so these were not in it. | R54 |
+| F33 | P2, GR-12 | The active location filter is a full-width `Button variant="light" color="orange"` labelled `… ×` (`AdminUsersTable.tsx:457–469`). It reads as an error. The removable chip already exists only inside listings' `ActiveFilterChips.tsx:184–199` (light brand pill `xs`, `X` right). | R53 |
+
+**Location filter, what it is (answer to the owner):** a production feature since May 2026. A user may ask for a city
+that is not in the list (`users.location_request {city, region}`). The admin dashboard card "Location requests"
+(`AdminDashboardView.tsx:581–596`) links "View all" to `/admin/users?location_request=1`, which lists only those users
+(`src/app/admin/users/page.tsx:111`). The admin assigns the location or dismisses the request in the user's profile
+(`AdminUserProfileView.tsx:519`; actions `src/modules/admin/actions/index.ts:666`, `:683`). It stays; its chip and its
+Story are fixed (R52, R53).
+
+### 23.5 Requirements (Revision 7)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R49** | **One status/tone look (D78-26).** In the canonical source only (`theme.ts` `Badge` entry and `MantineBadge.tsx`), every `status` and `tone` badge renders the solid look that cards render today: fill = the colour's index-7 stop, white text. It is the same on white, gray-50 and photo surfaces. `onImage` is removed (no longer meaningful); its consumers (`AdminReportsView.tsx`, `MantineListingCardPattern.tsx`, tests) stop passing it. `outline` stays only if a production consumer uses it; otherwise remove it. Report `reviewed` takes the `warning` tone, like listing `pending` (same text "Under review"). Every white-on-fill pair is ≥ 4.5:1: adapt `badgeTones.test.ts` / `badgeTextShade.test.ts` to assert it for every registry colour, and delete `badgeTextShade.ts` if nothing uses it after the change (whole-repo reference audit, clause 9). | P1 | AC43 |
+| **R50** | **No hardcode in badges.** `Badge.stories.tsx`: every caption via `storyT` (new keys in all four locales). `MantineBadge.tsx`: no `styles`, no `color="gray.9"`; the count variants read their colours from the theme `Badge` entry (a `vars`/variant there) or the registry. `shape` is removed: every badge is a pill, and `AdminHeader`/`AdminSidebar` lose `shape="soft"`. `AdminTable.stories.tsx` renders `MantineBadge` with the registry (`entity`/`value`), never a raw `Badge` or a Story colour. | P1 | AC43, AC44 |
+| **R51** | **A dialog scrolls only its content.** In `MantineModal.tsx` (structured and plain desktop paths) and the theme `Modal` entry, reuse the bottom sheet's split (`responsiveBottomSheet.tsx:34`). `.mantine-Modal-content` is a flex column with `overflow: hidden` (it keeps its 24px radius and max-height). The header and the footer are non-scrolling flex children; the footer moves out of `Modal.Body` (no `pos="sticky"`). Only the body region has `flex: 1; min-height: 0; overflow-y: auto`. The scrollbar therefore starts below the header divider and ends above the footer divider, never touching a rounded corner. `MantineDeleteConfirmModal` and every `MantineModal` consumer inherit it; no consumer changes. `LightboxView`'s raw full-screen `Modal` (radius 0, no header/footer chrome) is out of this requirement; record why in the log. | P1 | AC45 |
+| **R52** | **`AdminUsersTable` works in Storybook.** Split `AdminUsersTableView.tsx` (presentational: data plus `onNavigate(params)`, `onToggleVerified(user)`) from the container `AdminUsersTable.tsx`. The container keeps `router.push` and `toggleUserVerified` with today's behaviour: same URLs, same toast, same `data-testid`s. The Story renders the View inside a stateful harness: tabs, search, role, status, location chip, pagination and the shield all change what is shown, with fixture filtering in the Story's harness and no server action. `LocationFilter` shows only users with a `location_request`. Each export has a `play` that operates its control and asserts the change. | P1 | AC46 |
+| **R53** | **One removable filter chip.** Extract the chip in `ActiveFilterChips.tsx:184–199` into a shared presentational pattern under `src/design-system/mantine/patterns/` (props: chips `{ key, label, ariaLabel }[]`, `onRemove(key)`), with its own direct Story (one, several, long label, 390 wrap) and manifest enrolment. `ActiveFilterChips` renders it; its Story must be pixel-identical before and after. `AdminUsersTableView` renders the location filter with it. The "City request" marker under a user's name stops using `c="orange.6"` and becomes a `MantineBadge` registry entry (`user.locationRequest`, `warning`) with `MapPin`. | P2 | AC47 |
+| **R54** | **One badge type for the site and the admin (owner, 2026-10-08).** Every badge element in F34 becomes `MantineBadge` with a registry meaning, as an explicit migration bridge: only the badge element changes, and the rest of each legacy surface stays with its own task (916 admin managers, 895 cabinet, 905 listing form, 906 `ImageUpload`). Add registry entries for every meaning they need: page published/draft, property type active/inactive, user type agent, verified, cabinet listing statuses (reuse `listing`), premium, main photo, locations count, unread count (`count` circle for `CabinetShell:122`). `AdminPropertyTypesManager`'s clickable badge keeps its toggle, through the parent `UnstyledButton`/`onClick`, with no `cursor`/`opacity` class. The four Stories render `MantineBadge`. When no consumer of `@/components/ui/badge` remains, delete `badge.tsx` and `badge.stories.tsx` and update every live reference (clause 9: `scripts/surface-census-baseline.json`, the component catalog and the three docs), and remove `--badge-premium` / `--color-badge-premium` from `globals.css` if they have no other consumer. | P1 | AC48 |
+
+### 23.6 Acceptance criteria
+
+- **AC43 [R49, R50] — parity.** Copy `review-8/r8-badge-census.mjs` to `r7-badge-census.mjs` (output renamed) and run it
+  on the final `storybook-static`. Pass: every status/tone label has **exactly one look** across all Stories. Count
+  badges are grouped separately: one look per emphasis. Plus a contrast table, white on each index-7 fill ≥ 4.5:1.
+- **AC44 [R50] — hardcode grep.** In every file R49–R53 change and in their Stories:
+  `Select-String -Pattern 'styles=|style=\{|className=|c="[a-z]+\.[0-9]|color="[a-z]+\.[0-9]|var\(--mantine-color'`
+  has zero hits, except Mantine runtime geometry listed and justified one by one. `check:stories` and `check:i18n`
+  exit 0. Every Badge Story caption is a `storyT` key.
+- **AC45 [R51] — scroll.** Copy `review-8/r8-scroll.mjs` to `r7-scroll.mjs` and run it on the final build at
+  1440×900, 1440×600 and 390×844. Pass: in every open dialog, no scroller contains the title or the footer buttons
+  (`bad: 0`), and `.mantine-Modal-content` itself never scrolls. A DPR 1 crop of the top-right corner of
+  `ticketdetaildialogview--with-timeline` and `modal--detail` at 1440×600 shows the scrollbar starting below the header.
+- **AC46 [R52] — operate.** Copy `review-8/r8-users-story.mjs` to `r7-users-story.mjs`, extended:
+  - the shield toggles and nothing throws;
+  - search narrows the rows;
+  - each role and status option changes the rows;
+  - the tabs switch;
+  - `LocationFilter` shows 1 row, and removing its chip shows all.
+  Run at 1440 and 390, 0 page errors. The container's existing `AdminUsersTable.smoke.test.tsx` passes unchanged in
+  intent: it may be pointed at the View, but no assertion is weakened.
+- **AC47 [R53].** The chip pattern's Story exists and is enrolled (`check:story-coverage`, `check:pattern-enrolment`).
+  `ActiveFilterChips` Story: before/after DPR 1 shots, 0 differing pixels.
+- **AC48 [R54] — every badge.** In `src/` outside `MantineBadge.tsx`, zero hits for: `<Badge` from
+  `@mantine/core` or `@/components/ui/badge`; and `rounded-full` with `text-xs` / `text-2xs` on a label element. The
+  R49 census, extended to also record every element whose class contains `badge` (legacy) and every
+  `.mantine-Badge-root`, reports **only** `.mantine-Badge-root` in all 569+ Stories, and one look per meaning. Every
+  F34 surface's Story (`ListingsTab`, the admin managers' Stories where they exist, cabinet, `ImageUpload`, the listing
+  form) is in that census.
+- **Gates:** the §21.5 block plus `npm.cmd run check:pattern-enrolment`. Governance at start and end, with counts.
+  vitest per AC26 (§21.4).
+- **Receipts:** `GR-12 ELEMENT PARITY` for badge, dialog shell and filter chip. `GR-9` step 6 for every changed Story.
+  GR-3b…3e for the new chip Story, the Badge Story and `AdminUsersTable` at 320/390/1024/1440. GR-11 crops for the
+  modal corner after R51.
+
+`GR-4 AC AUDIT — 6 new criteria (AC43–AC48); each states an observable property; absolutes: "exactly one look" (GR-12's own definition), "0 differing pixels" and "bad: 0" (a structural property, measured), WCAG 4.5:1.`
+
+### 23.7 Reference research (GR-7), review 8
+
+Library `docs/research/references/2026-10-04/` (row 057 Lahomes `/ui-modal.html` lists "Vertically centered scrollable
+modal"). Live, this session (`research-review/r8-modal-scroll-live2.json`, `r8-modal-scroll-kamr.json`, screenshots;
+`win32`, Node v22.22.3):
+
+| Ref | Page, state operated | Which element scrolls |
+|---|---|---|
+| Lahomes | `/ui-modal.html`, "Vertically centered scrollable modal", 1440×420 and 390×420 | **`.modal-body` only** (219/450 and 259/492 px); `.modal-content` `overflow: hidden`; header and footer outside. DOM: 2 `.modal-dialog-scrollable` dialogs, both the same. |
+| Kamr | `/ui-modal` (after login), "Long content Modal", 1440×420 and 390×420 | the whole overlay (`.modal.show`), header and footer inside |
+| TailAdmin | `/modals`, the four "Open Modal" dialogs at 1440×420 | "Personal Information": the whole overlay, title and last button inside; another: an inner `overflow-y-auto` holding the title |
+| Omah | `/xhtml/ui-modal.html` | 404, no modal page (library row absent too) |
+
+**Chosen:** Lahomes's scrollable pattern, content-only scroll. It is the owner's instruction and the WAI-ARIA APG /
+Material 3 practice, and our bottom sheet already does it. Kamr and TailAdmin scroll the overlay, which is the defect
+returned. **Badges:** owner D78-26 (the card's solid look). **Filter chip:** our own canonical (`ActiveFilterChips`),
+extracted and shared.
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: owner return O78-13 — status badge look, dialog scroll region, admin users table filters and location chip; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: Lahomes ui-modal (scrollable modal operated 1440×420/390×420), Kamr ui-modal (Long content Modal operated, logged in), TailAdmin modals (4 dialogs at 1440×420), Omah ui-modal (404) + the r7 table pages (unchanged); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library; no re-crawl: the live differences are recorded above); inspected in depth: every page (library summary.md rows) + the pages above; workflow states operated: open a long dialog at a short viewport, scroll region, Esc; options across references: body-only scroll (Lahomes) vs overlay scroll (Kamr, TailAdmin); chosen 2026 best practice: body-only scroll (owner instruction, WAI-ARIA APG), D78-26 solid status badge, shared filter chip; absent or unverified: Omah has no modal page; lero.al data map: users.location_request → dashboard card → /admin/users?location_request=1 → profile resolve; owner decisions: D78-26; evidence: docs/sessions/evidence/task859/research-review/r8-*.`
+
+`GR-12 ELEMENT PARITY — badge: Stories compared 569 (census docs/sessions/evidence/task859/review-8/r8-badge-census.json); meanings 65; meanings with more than one look: 22 (Archived, Active, Sold, Rented, Expired, Inactive, Pending, Under review, Blocked, Open, In progress, New, Agent, Price reduced, Brand, Info, Purple, Sale, counts 1/2/3/5) (owner decisions: D78-26 sets the target; none permits two looks); hardcode in changed files and their Stories: Badge.stories.tsx captions, MantineBadge.tsx styles + gray.9, AdminTable.stories.tsx raw Badge colours, AdminUsersTable.tsx c="orange.6" → F29.`
+
+### 23.8 Write set (Revision 7)
+
+- `src/design-system/mantine/theme.ts` (the `Badge` and `Modal` entries);
+- `MantineBadge.tsx`, `badgeTones.ts`, `badgeTextShade.ts` (and the tests named in R49);
+- `MantineModal.tsx`;
+- the new chip pattern plus its Story, `scripts/mantine-migration-scope.json`;
+- `ActiveFilterChips.tsx`;
+- `AdminUsersTable.tsx` plus the new `AdminUsersTableView.tsx`;
+- `AdminHeader.tsx`, `AdminSidebar.tsx`, `AdminReportsView.tsx`, `MantineListingCardPattern.tsx` (prop removals only);
+- `Badge.stories.tsx`, `AdminTable.stories.tsx`, `AdminUsersTable.stories.tsx`;
+- R54: the badge element only, in `AdminLegalManager.tsx`, `AdminPropertyTypesManager.tsx`, `AdminLocationsManager.tsx`,
+  `CabinetShell.tsx`, `ListingsTab.tsx` (+ `ListingsTab.stories.tsx`), `ImageUpload.tsx`, `StepPreview.tsx`; the four
+  Stories of F34; `src/components/ui/badge.tsx` and `badge.stories.tsx` (deletion); `src/app/globals.css` (the premium
+  token only); `scripts/surface-census-baseline.json`, `scripts/governance/reports/component-catalog.latest.json`,
+  `docs/component-coverage-matrix.md`, `docs/mantine-responsive-design-system.md`,
+  `docs/responsive-storybook-inventory.md` (references only);
+- `messages/{sq,en,uk,it}.json` (Story captions, chip aria, the location marker);
+- tests under the touched folders;
+- evidence `r7-*`, the session log `# Revision 7`, and the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: the six support files of §19.3 and the server actions. **Any other file is a stop and
+report.**
+
+### 23.9 Owner visual review — O78-13 (after review 9)
+
+§20.8's list, with these replaced:
+- Badge `Default` / `Statuses` beside `ListingCard` `Default`, en and uk;
+- every dialog Story at 1440×600, scrolled to the middle;
+- `AdminUsersTable` `Default` / `VerifiedTab` / `Empty` / `LocationFilter`, operated;
+- the chip pattern Story;
+- `ActiveFilterChips`;
+- every F34 surface's Story (cabinet `ListingsTab`, the admin managers, `ImageUpload`, the listing form preview),
+  each badge beside the Badge Story.
+
+Review 9 runs `r7-badge-census`, `r7-scroll` and `r7-users-story` itself before the matrix goes out.
+
+### 23.10 Completion (Revision 7)
+
+Append `# Revision 7` to the session log with: I0 and the GR-7 execution receipt; R49–R53 with AC43–AC47 evidence;
+the GR-12, GR-9 step 6 and GR-3 receipts; the gate block with governance counts; a `Files Changed` table. Set the 859
+backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.

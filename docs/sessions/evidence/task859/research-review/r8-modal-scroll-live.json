@@ -1,0 +1,128 @@
+{
+ "checkedAt": "2026-10-08T08:07:59.578Z",
+ "platform": "win32",
+ "node": "v22.22.3",
+ "results": [
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "w": 1440,
+   "trigger": "Scrollspy",
+   "shot": "r8-modal-scroll-lahomes-1440-0.png",
+   "opened": false
+  },
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "w": 390,
+   "trigger": "Scrollspy",
+   "shot": "r8-modal-scroll-lahomes-390-0.png",
+   "opened": false
+  },
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "w": 390,
+   "trigger": "Vertically centered scrollable modal",
+   "shot": "r8-modal-scroll-lahomes-390-1.png",
+   "radius": "8px",
+   "scrollers": []
+  },
+  {
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "w": 1440,
+   "note": "no scroll trigger found",
+   "triggers": []
+  },
+  {
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "w": 390,
+   "note": "no scroll trigger found",
+   "triggers": []
+  },
+  {
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/ui-modal.html",
+   "w": 1440,
+   "note": "no scroll trigger found",
+   "triggers": [
+    "Open Sans"
+   ]
+  },
+  {
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/ui-modal.html",
+   "w": 390,
+   "note": "no scroll trigger found",
+   "triggers": [
+    "Open Sans"
+   ]
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 1440,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-1440-0.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 1440,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-1440-1.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 1440,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-1440-2.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 1440,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-1440-3.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 390,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-390-0.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 390,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-390-1.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 390,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-390-2.png",
+   "opened": false
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/modals",
+   "w": 390,
+   "trigger": "Open Modal",
+   "shot": "r8-modal-scroll-tailadmin-390-3.png",
+   "opened": false
+  }
+ ]
+}

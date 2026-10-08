@@ -1,0 +1,3328 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "out": [
+  {
+   "id": "primitives-select--mobile-bottom-sheet",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "primitives-select--mobile-bottom-sheet",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-badge--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-badge--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-badge--statuses",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-badge--statuses",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-dialog-open",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 651,
+    "w": 390,
+    "h": 249
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-dialog-open",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 331,
+    "w": 440,
+    "h": 238
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--populated",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--populated",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--structured",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--structured",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--form",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--form",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-responsivebottomsheet--default",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 782.96875,
+    "w": 1440,
+    "h": 117.03125
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-responsivebottomsheet--default",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 722.921875,
+    "w": 390,
+    "h": 177.078125
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--delete-confirm",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-modal--delete-confirm",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--dialog-open",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 272.484375,
+    "w": 440,
+    "h": 355.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--dialog-open",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 533.984375,
+    "w": 390,
+    "h": 366.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--closed",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--closed",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--saving",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 272.484375,
+    "w": 440,
+    "h": 355.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-savetocollectionbutton--saving",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 533.984375,
+    "w": 390,
+    "h": 366.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--delete-confirm",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 674,
+    "w": 390,
+    "h": 226
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--delete-confirm",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 342.5,
+    "w": 440,
+    "h": 215
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--detail",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 142,
+    "w": 440,
+    "h": 616
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admincurrenciesview--detail",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 256,
+    "w": 390,
+    "h": 644
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 190.5,
+    "w": 440,
+    "h": 519
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 380,
+    "w": 390,
+    "h": 520
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 674,
+    "w": 390,
+    "h": 226
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--delete-confirm",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 342.5,
+    "w": 440,
+    "h": 215
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--pending",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminexchangeprovidersview--pending",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--migration-pending",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--migration-pending",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--delete-confirm",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 342.5,
+    "w": 440,
+    "h": 215
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--delete-confirm",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 674,
+    "w": 390,
+    "h": 226
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--unsaved",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 332,
+    "w": 440,
+    "h": 236
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--unsaved",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 653,
+    "w": 390,
+    "h": 247
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--cancel",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 653,
+    "w": 390,
+    "h": 247
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--cancel",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 332,
+    "w": 440,
+    "h": 236
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--deactivate",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 229.5,
+    "w": 440,
+    "h": 441
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--deactivate",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 448,
+    "w": 390,
+    "h": 452
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--deactivate-loading",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 229.5,
+    "w": 440,
+    "h": 441
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--deactivate-loading",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 448,
+    "w": 390,
+    "h": 452
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--deleting",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminpagesview--deleting",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--reactivate",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 240,
+    "w": 440,
+    "h": 420
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--reactivate",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 469,
+    "w": 390,
+    "h": 431
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--delete",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 442,
+    "w": 390,
+    "h": 458
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--delete",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 237,
+    "w": 440,
+    "h": 426
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--delete-loading",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 237,
+    "w": 440,
+    "h": 426
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--delete-loading",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 442,
+    "w": 390,
+    "h": 458
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--clear-row",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 332,
+    "w": 440,
+    "h": 236
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--clear-row",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 653,
+    "w": 390,
+    "h": 247
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--clear-entity",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 332,
+    "w": 440,
+    "h": 236
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserprofiledialogsview--clear-entity",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 632,
+    "w": 390,
+    "h": 268
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--verified-tab",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--empty",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--empty",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--location-filter",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-adminuserstable--location-filter",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--default",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 171,
+    "w": 440,
+    "h": 558
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--default",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 331,
+    "w": 390,
+    "h": 569
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--empty",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 307.296875,
+    "w": 440,
+    "h": 285.390625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--empty",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 603.609375,
+    "w": 390,
+    "h": 296.390625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--support",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 150.484375,
+    "w": 440,
+    "h": 599.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--support",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 289.984375,
+    "w": 390,
+    "h": 610.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--complaint",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 49.484375,
+    "w": 440,
+    "h": 801.03125
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--complaint",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 661,
+     "scrollH": 663,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--complaint-same-user",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 664,
+     "scrollH": 715,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--complaint-same-user",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 835,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-createticketdialogview-complaint-same-user-1440.png"
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--errors",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 665,
+     "scrollH": 755,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-createticketdialogview--errors",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 893,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-createticketdialogview-errors-1440.png"
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 142,
+    "w": 440,
+    "h": 616
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 256,
+    "w": 390,
+    "h": 644
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default-currency",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 171.5,
+    "w": 440,
+    "h": 557
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--default-currency",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 315,
+    "w": 390,
+    "h": 585
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--inactive",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 315,
+    "w": 390,
+    "h": 585
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencydetaildialogview--inactive",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 171.5,
+    "w": 440,
+    "h": 557
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--new",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 89.5,
+    "w": 440,
+    "h": 721
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--new",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 662,
+     "scrollH": 672,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--edit",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 89.5,
+    "w": 440,
+    "h": 721
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--edit",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 662,
+     "scrollH": 672,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--submitting",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 89.5,
+    "w": 440,
+    "h": 721
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-currencyformdialogview--submitting",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 662,
+     "scrollH": 672,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--new",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 68.96875,
+    "w": 620,
+    "h": 762.046875
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--new",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--with-replies",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 653,
+     "scrollH": 907,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--with-replies",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 991,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-inquirydetaildialogview-with-replies-1440.png"
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--replies-load-failed",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 873,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-inquirydetaildialogview-replies-load-failed-1440.png"
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--replies-load-failed",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 647,
+     "scrollH": 789,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--sending",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 991,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-inquirydetaildialogview-sending-1440.png"
+  },
+  {
+   "id": "patterns-mantine-inquirydetaildialogview--sending",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 653,
+     "scrollH": 907,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--active",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 107,
+    "w": 390,
+    "h": 793
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--active",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 67.5,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 81,
+    "w": 620,
+    "h": 738
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--sold-status-actions",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 134,
+    "w": 390,
+    "h": 766
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--hidden",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 166,
+    "w": 390,
+    "h": 734
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--hidden",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 110.5,
+    "w": 620,
+    "h": 679
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 67.5,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--delete-confirm",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 107,
+    "w": 390,
+    "h": 793
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--premium",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 67.5,
+    "w": 620,
+    "h": 765
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-listingpreviewdialogview--premium",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 107,
+    "w": 390,
+    "h": 793
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--new",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 829,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-new-1440.png"
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--new",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 663,
+     "scrollH": 709,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--edit-published",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 664,
+     "scrollH": 727,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--edit-published",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 847,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-edit-published-1440.png"
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--empty-locale-warning",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 668,
+     "scrollH": 817,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--empty-locale-warning",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 917,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-empty-locale-warning-1440.png"
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--slug-error",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 664,
+     "scrollH": 727,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--slug-error",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 847,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-slug-error-1440.png"
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--publish-body-required",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 665,
+     "scrollH": 738,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--publish-body-required",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 843,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-publish-body-required-1440.png"
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--saving",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 664,
+     "scrollH": 727,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--saving",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 847,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-saving-1440.png"
+  },
+  {
+   "id": "patterns-mantine-notificationpattern--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-notificationpattern--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--rich-content",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 673,
+     "scrollH": 1409,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-pageeditordialogview--rich-content",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 330,
+    "y": 45,
+    "w": 780,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1543,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-pageeditordialogview-rich-content-1440.png"
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 306,
+    "w": 390,
+    "h": 594
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 167,
+    "w": 440,
+    "h": 566
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 69.5,
+    "w": 440,
+    "h": 761
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 111,
+    "w": 390,
+    "h": 789
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium-active",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 111,
+    "w": 390,
+    "h": 789
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium-active",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 69.5,
+    "w": 440,
+    "h": 761
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 250,
+    "w": 390,
+    "h": 650
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 139,
+    "w": 440,
+    "h": 622
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--saving",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 69.5,
+    "w": 440,
+    "h": 761
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--saving",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 111,
+    "w": 390,
+    "h": 789
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--new",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 663,
+     "scrollH": 711,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--new",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 70,
+    "w": 440,
+    "h": 760
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--edit",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 70,
+    "w": 440,
+    "h": 760
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--edit",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 663,
+     "scrollH": 711,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--api-key-revealed",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 70,
+    "w": 440,
+    "h": 760
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--api-key-revealed",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 663,
+     "scrollH": 711,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--submitting",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 70,
+    "w": 440,
+    "h": 760
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-providerformdialogview--submitting",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 663,
+     "scrollH": 711,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--pending",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 649,
+     "scrollH": 827,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--pending",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 953,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-reportdetaildialogview-pending-1440.png"
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--full-management",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1038,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-reportdetaildialogview-full-management-1440.png"
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--full-management",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 653,
+     "scrollH": 912,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--terminal-reopen",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 48.984375,
+    "w": 440,
+    "h": 802.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--terminal-reopen",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 639,
+     "scrollH": 676,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--owner-missing",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 645,
+     "scrollH": 769,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--owner-missing",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 915,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-reportdetaildialogview-owner-missing-1440.png"
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--delete-confirm",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 649,
+     "scrollH": 827,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--delete-confirm",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 953,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-reportdetaildialogview-delete-confirm-1440.png"
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--saving",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 653,
+     "scrollH": 912,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-reportdetaildialogview--saving",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 45,
+    "w": 440,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1038,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-reportdetaildialogview-saving-1440.png"
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--with-content",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--with-content",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--image-uploading",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 491,
+    "w": 390,
+    "h": 409
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--image-uploading",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 251,
+    "w": 440,
+    "h": 398
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--with-error",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-richtexteditor--with-error",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--open-modal",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 316.5,
+    "w": 440,
+    "h": 267
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--open-modal",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 622,
+    "w": 390,
+    "h": 278
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--default",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--default",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--pending",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 316.5,
+    "w": 440,
+    "h": 267
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-savesearchbutton--pending",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 622,
+    "w": 390,
+    "h": 278
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 633,
+     "scrollH": 883,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1029,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-ticketdetaildialogview-support-1440.png"
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--complaint",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 658,
+     "scrollH": 1037,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--complaint",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1162,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-ticketdetaildialogview-complaint-1440.png"
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 662,
+     "scrollH": 1184,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1309,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-ticketdetaildialogview-with-timeline-1440.png"
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--updating",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 90,
+    "w": 390,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "DIV",
+     "clientH": 662,
+     "scrollH": 1184,
+     "holdsTitle": false,
+     "holdsFooter": false,
+     "isShell": false
+    }
+   ],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--updating",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 410,
+    "y": 45,
+    "w": 620,
+    "h": 810
+   },
+   "scrollers": [
+    {
+     "cls": "mantine-Modal-content mantine-Paper-root",
+     "clientH": 810,
+     "scrollH": 1309,
+     "holdsTitle": true,
+     "holdsFooter": true,
+     "isShell": true
+    }
+   ],
+   "bad": true,
+   "crop": "r8-scroll-ticketdetaildialogview-updating-1440.png"
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--searching",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 710.96875,
+    "w": 390,
+    "h": 189.03125
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--idle",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--idle",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--searching",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--results",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 618.984375,
+    "w": 390,
+    "h": 281.015625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--no-results",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 710.96875,
+    "w": 390,
+    "h": 189.03125
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--results",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--no-results",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--selected",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--selected",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--selected-blocked",
+   "w": 1440,
+   "open": false,
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 321.796875,
+    "w": 440,
+    "h": 256.390625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 632.609375,
+    "w": 390,
+    "h": 267.390625
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 331,
+    "w": 440,
+    "h": 238
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 651,
+    "w": 390,
+    "h": 249
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 332,
+    "w": 440,
+    "h": 236
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 653,
+    "w": 390,
+    "h": 247
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "w": 1440,
+   "open": true,
+   "shellCls": "mantine-Modal-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 500,
+    "y": 171,
+    "w": 440,
+    "h": 558
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "w": 390,
+   "open": true,
+   "shellCls": "mantine-Drawer-content mantine-Paper-root",
+   "radius": "24px",
+   "box": {
+    "x": 0,
+    "y": 331,
+    "w": 390,
+    "h": 569
+   },
+   "scrollers": [],
+   "bad": false,
+   "crop": null
+  },
+  {
+   "id": "patterns-mantine-userpickerfieldview--selected-blocked",
+   "w": 390,
+   "open": false,
+   "bad": false,
+   "crop": null
+  }
+ ]
+}

@@ -12,5 +12,6 @@ Before publishing a kickoff, confirm:
 
 Reopen the saved kickoff after writing and verify headings, references, requirement/AC IDs, route, and amendment
 inventory. Then inspect status/diff and provide an explicit-path owner `git add` plus `git commit` handoff for files
-Opus changed. Task design never emits `git push`. Follow the detailed lock/status procedure in
+Opus changed. The commit is an unattributed owner commit: no `Co-Authored-By`, AI/agent credit, or `--author` may
+appear in its command or message. Task design never emits `git push`. Follow the detailed lock/status procedure in
 `docs/orchestrator-procedures.md`.

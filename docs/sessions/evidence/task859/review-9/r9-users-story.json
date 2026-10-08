@@ -1,0 +1,553 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "net404": [
+  "/api/presence"
+ ],
+ "checks": [
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "all four users shown",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "shield: a verify toggle became a revoke toggle",
+   "pass": true,
+   "detail": {
+    "before": 2,
+    "after": 4
+   }
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "shield: no page error",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "search \"Marco\" narrows to Marco",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "clearing search restores all",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "role \"agent\"",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "role \"user\"",
+   "pass": true,
+   "detail": [
+    "Oksana",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "role \"moderator\"",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "role \"admin\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "role \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "status \"active\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "status \"inactive\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "status \"blocked\"",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "status \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default",
+   "name": "0 page or console errors for the whole story",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Default tabs",
+   "name": "verified tab shows only the verified agent",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default tabs",
+   "name": "all tab shows everyone again",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Default tabs",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "VerifiedTab",
+   "name": "agent shown",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "VerifiedTab",
+   "name": "revoke removes the agent from the list",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "VerifiedTab",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Empty",
+   "name": "no user shown, 0 page errors",
+   "pass": true,
+   "detail": {
+    "names": [],
+    "log": []
+   }
+  },
+  {
+   "width": 1440,
+   "story": "LocationFilter",
+   "name": "filter on shows exactly 1 row (Oksana)",
+   "pass": true,
+   "detail": [
+    "Oksana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "LocationFilter",
+   "name": "removing the chip shows all four",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "LocationFilter",
+   "name": "the chip is gone",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "width": 1440,
+   "story": "LocationFilter",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 1440,
+   "story": "Paginated",
+   "name": "next page shows different users",
+   "pass": true,
+   "detail": {
+    "first": [
+     "Arben",
+     "Oksana"
+    ],
+    "second": [
+     "Marco",
+     "Gentiana"
+    ]
+   }
+  },
+  {
+   "width": 1440,
+   "story": "Paginated",
+   "name": "prev page returns",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana"
+   ]
+  },
+  {
+   "width": 1440,
+   "story": "Paginated",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "all four users shown",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "shield: a verify toggle became a revoke toggle",
+   "pass": true,
+   "detail": {
+    "before": 2,
+    "after": 4
+   }
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "shield: no page error",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "search \"Marco\" narrows to Marco",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "clearing search restores all",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "role \"agent\"",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "role \"user\"",
+   "pass": true,
+   "detail": [
+    "Oksana",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "role \"moderator\"",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "role \"admin\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "role \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "status \"active\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "status \"inactive\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "status \"blocked\"",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "status \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default",
+   "name": "0 page or console errors for the whole story",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Default tabs",
+   "name": "verified tab shows only the verified agent",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default tabs",
+   "name": "all tab shows everyone again",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Default tabs",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "VerifiedTab",
+   "name": "agent shown",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "VerifiedTab",
+   "name": "revoke removes the agent from the list",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "VerifiedTab",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Empty",
+   "name": "no user shown, 0 page errors",
+   "pass": true,
+   "detail": {
+    "names": [],
+    "log": []
+   }
+  },
+  {
+   "width": 390,
+   "story": "LocationFilter",
+   "name": "filter on shows exactly 1 row (Oksana)",
+   "pass": true,
+   "detail": [
+    "Oksana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "LocationFilter",
+   "name": "removing the chip shows all four",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "LocationFilter",
+   "name": "the chip is gone",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "width": 390,
+   "story": "LocationFilter",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "width": 390,
+   "story": "Paginated",
+   "name": "next page shows different users",
+   "pass": true,
+   "detail": {
+    "first": [
+     "Arben",
+     "Oksana"
+    ],
+    "second": [
+     "Marco",
+     "Gentiana"
+    ]
+   }
+  },
+  {
+   "width": 390,
+   "story": "Paginated",
+   "name": "prev page returns",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana"
+   ]
+  },
+  {
+   "width": 390,
+   "story": "Paginated",
+   "name": "0 page errors",
+   "pass": true,
+   "detail": []
+  }
+ ]
+}

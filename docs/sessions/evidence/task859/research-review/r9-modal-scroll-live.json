@@ -1,0 +1,139 @@
+{
+ "checkedAt": "2026-10-08T13:37:42.369Z",
+ "platform": "win32",
+ "node": "v22.22.3",
+ "results": [
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "kind": "dom",
+   "finalUrl": "https://techzaa.in/lahomes/admin/ui-modal.html",
+   "scrollableDialogs": [
+    {
+     "id": "exampleModalScrollable",
+     "content": "hidden",
+     "header": "visible",
+     "body": "auto",
+     "footer": "visible"
+    },
+    {
+     "id": "exampleModalCenteredScrollable",
+     "content": "hidden",
+     "header": "visible",
+     "body": "auto",
+     "footer": "visible"
+    }
+   ]
+  },
+  {
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/ui-modal",
+   "kind": "dom",
+   "finalUrl": "https://kamr-vite.vercel.app/login",
+   "scrollableDialogs": []
+  },
+  {
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/ui-modal.html",
+   "kind": "dom",
+   "finalUrl": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+   "scrollableDialogs": []
+  },
+  {
+   "ref": "lahomes",
+   "kind": "operated",
+   "trigger": "Vertically centered scrollable modal",
+   "w": 1440,
+   "h": 420,
+   "shot": "r9-modal-scroll-lahomes-scrollable-1440.png",
+   "opened": true,
+   "scrollers": [
+    {
+     "cls": "modal-body",
+     "clientH": 219,
+     "scrollH": 450,
+     "holdsHeader": false,
+     "holdsFooter": false
+    }
+   ]
+  },
+  {
+   "ref": "lahomes",
+   "kind": "operated",
+   "trigger": "Vertically centered scrollable modal",
+   "w": 390,
+   "h": 420,
+   "shot": "r9-modal-scroll-lahomes-scrollable-390.png",
+   "opened": true,
+   "scrollers": [
+    {
+     "cls": "modal-body",
+     "clientH": 259,
+     "scrollH": 492,
+     "holdsHeader": false,
+     "holdsFooter": false
+    }
+   ]
+  },
+  {
+   "ref": "tailadmin",
+   "kind": "operated",
+   "trigger": "Open Modal #0",
+   "w": 1440,
+   "h": 420,
+   "shot": "r9-modal-scroll-tailadmin-1440x420-0.png",
+   "opened": true,
+   "title": "Modal Heading",
+   "scrollers": []
+  },
+  {
+   "ref": "tailadmin",
+   "kind": "operated",
+   "trigger": "Open Modal #1",
+   "w": 1440,
+   "h": 420,
+   "shot": "r9-modal-scroll-tailadmin-1440x420-1.png",
+   "opened": true,
+   "title": "All Done! Success Confirmed",
+   "scrollers": []
+  },
+  {
+   "ref": "tailadmin",
+   "kind": "operated",
+   "trigger": "Open Modal #2",
+   "w": 1440,
+   "h": 420,
+   "shot": "r9-modal-scroll-tailadmin-1440x420-2.png",
+   "opened": true,
+   "title": "Personal Information",
+   "scrollers": [
+    {
+     "cls": "modal fixed inset-0 z-99999 flex items-center justify-center overflow-y-auto p-5",
+     "clientH": 420,
+     "scrollH": 456,
+     "holdsTitle": true,
+     "holdsLastButton": true
+    }
+   ]
+  },
+  {
+   "ref": "tailadmin",
+   "kind": "operated",
+   "trigger": "Open Modal #3",
+   "w": 1440,
+   "h": 420,
+   "shot": "r9-modal-scroll-tailadmin-1440x420-3.png",
+   "opened": true,
+   "title": "Modal Heading",
+   "scrollers": [
+    {
+     "cls": "overflow-y-auto",
+     "clientH": 198,
+     "scrollH": 226,
+     "holdsTitle": true,
+     "holdsLastButton": false
+    }
+   ]
+  }
+ ]
+}

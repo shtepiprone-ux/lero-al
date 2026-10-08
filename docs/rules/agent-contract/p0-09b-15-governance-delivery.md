@@ -34,7 +34,8 @@
     delegates mutating git commands, including any `git push` form, and it cannot approve its own task. Opus alone
     may issue an approval verdict after review; it may emit explicit-path commit commands after verified task design
     or approved review, and a push command only after an approved review, using the single handoff protocol in
-    `docs/orchestrator-procedures.md`.
+    `docs/orchestrator-procedures.md`. Every permitted commit handoff is an unattributed owner commit: neither
+    `Co-Authored-By` nor any other AI/agent credit or `--author` is allowed in its command or message.
 
 11. **Mobile and overlay behavior remain protected.** For in-scope UI below 640px, text controls use the full
     available width, mobile-reachable controls provide adequate touch targets, labels wrap without horizontal

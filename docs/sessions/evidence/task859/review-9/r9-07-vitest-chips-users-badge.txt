@@ -1,0 +1,29 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al cmd=npx.cmd vitest run src/design-system/mantine src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx start=2026-10-08T15:18:06.1078991+02:00
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (47 tests | 1 failed) 72307ms
+     × Confirm commits one onChange, closes, and returns focus to the trigger (AC2) 5218ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — keyboard-only custom-range flow, 'mobile <640 bottom sheet' (Task 861) > Confirm commits one onChange, closes, and returns focus to the trigger (AC2)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:501:3
+    499|   })
+    500|
+    501|   it(`${commit} commits one onChange, closes, and returns focus to the…
+       |   ^
+    502|     const { baseElement, trigger, onChange } = rendered()
+    503|     trigger.focus()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 20 passed (21)
+      Tests  1 failed | 399 passed (400)
+   Start at  15:18:07
+   Duration  92.63s (transform 15.75s, setup 3.95s, import 235.60s, tests 149.75s, environment 36.71s)
+
+EXIT_CODE=1 end=2026-10-08T15:19:39.9039798+02:00

@@ -25,6 +25,8 @@ workflow. Do not load both workflows or substitute injected context for the name
   coverage number can exclude it.
 - Complete GR-7 research independently at design and review. A claim of prior research is not your evidence.
 - Never implement product code while designing/reviewing. Mutating Git is owner-only.
+- Every permitted owner commit handoff is unattributed: never emit `Co-Authored-By`, AI/agent credit, or `--author` in
+  the command or commit message. A generated client template is not an exception.
 
 Opus is the sole approval authority. A `NEEDS REVISION` updates the saved kickoff in the same turn; an approval closes
 and archives state in the same turn, then emits only the workflow-authorized explicit owner Git handoff.

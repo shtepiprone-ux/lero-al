@@ -1,0 +1,55 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al cmd=node docs/sessions/evidence/task859/review-9/r9-story-scan.mjs start=2026-10-08T15:22:53.9160817+02:00
+FAIL src/stories/mantine/primitives/Badge.stories.tsx tracked=true changed-lines=93 hits=29
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":36,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":36,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":36,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":53,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":53,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":53,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":64,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Stack>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":65,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":65,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":65,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":68,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Group>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":75,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":75,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":75,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":86,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Stack>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":87,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":87,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":87,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":90,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Group>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":100,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":100,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":100,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":103,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Group>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":122,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Stack>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":124,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Stack>` through `gap`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":125,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":125,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `c`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":125,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Badge.stories.tsx","line":126,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Group>` through `gap`; use the production component's public state instead"}
+FAIL src/stories/mantine/primitives/Table.stories.tsx tracked=true changed-lines=20 hits=7
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":54,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":54,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":67,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":72,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":83,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":83,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/mantine/primitives/Table.stories.tsx","line":295,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+FAIL src/stories/patterns/mantine/AdminTable.stories.tsx tracked=true changed-lines=14 hits=3
+    {"rel":"src/stories/patterns/mantine/AdminTable.stories.tsx","line":41,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/patterns/mantine/AdminTable.stories.tsx","line":42,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/patterns/mantine/AdminTable.stories.tsx","line":55,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+ok   src/stories/patterns/mantine/AdminUsersTable.stories.tsx tracked=true changed-lines=197 hits=0
+ok   src/stories/patterns/mantine/MantineFilterChips.stories.tsx tracked=false changed-lines=62 hits=0
+FAIL src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx tracked=true changed-lines=14 hits=4
+    {"rel":"src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx","line":74,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx","line":74,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `fw`; use the production component's public state instead"}
+    {"rel":"src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx","line":86,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+    {"rel":"src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx","line":90,"rule":"story-wrapper-presentation","message":"canonical Story styles wrapper `<Text>` through `size`; use the production component's public state instead"}
+ok   src/stories/patterns/mantine/DetailList.stories.tsx tracked=true changed-lines=2 hits=0
+ok   src/stories/patterns/mantine/ActiveFilterChips.stories.tsx tracked=true changed-lines=0 hits=0
+ok   src/modules/cabinet/components/ListingsTab.stories.tsx tracked=true changed-lines=7 hits=0
+total hits 43
+EXIT_CODE=1

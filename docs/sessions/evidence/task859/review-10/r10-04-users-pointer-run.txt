@@ -1,0 +1,38 @@
+checks 36 failed 0
+ok   1440 Default opens with 4 users ["Arben","Oksana","Marco","Gentiana"]
+ok   1440 Default pointer: shield verifies {"before":1}
+ok   1440 Default keyboard: search "Gent" narrows to Gentiana ["Gentiana"]
+ok   1440 Default pointer: role "user" ["Oksana","Gentiana"]
+ok   1440 Default pointer: role "agent" ["Arben"]
+ok   1440 Default pointer: role "moderator" ["Marco"]
+ok   1440 Default pointer: role "admin" []
+ok   1440 Default pointer: role "all" ["Arben","Oksana","Marco","Gentiana"]
+ok   1440 Default pointer: status "active" ["Arben","Oksana","Marco"]
+ok   1440 Default pointer: status "inactive" []
+ok   1440 Default pointer: status "blocked" ["Gentiana"]
+ok   1440 Default pointer: status "all" ["Arben","Oksana","Marco","Gentiana"]
+ok   1440 Default pointer: verified tab hides the search ""
+ok   1440 Default pointer: all tab restores 4 users ["Arben","Oksana","Marco","Gentiana"]
+ok   1440 Default no page/console error []
+ok   1440 LocationFilter shows 1 user ["Oksana"]
+ok   1440 LocationFilter pointer: removing the chip shows 4 ["Arben","Oksana","Marco","Gentiana"]
+ok   1440 LocationFilter no page/console error []
+ok   390 Default opens with 4 users ["Arben","Oksana","Marco","Gentiana"]
+ok   390 Default pointer: shield verifies {"before":1}
+ok   390 Default keyboard: search "Gent" narrows to Gentiana ["Gentiana"]
+ok   390 Default pointer: role "user" ["Oksana","Gentiana"]
+ok   390 Default pointer: role "agent" ["Arben"]
+ok   390 Default pointer: role "moderator" ["Marco"]
+ok   390 Default pointer: role "admin" []
+ok   390 Default pointer: role "all" ["Arben","Oksana","Marco","Gentiana"]
+ok   390 Default pointer: status "active" ["Arben","Oksana","Marco"]
+ok   390 Default pointer: status "inactive" []
+ok   390 Default pointer: status "blocked" ["Gentiana"]
+ok   390 Default pointer: status "all" ["Arben","Oksana","Marco","Gentiana"]
+ok   390 Default pointer: verified tab hides the search ""
+ok   390 Default pointer: all tab restores 4 users ["Arben","Oksana","Marco","Gentiana"]
+ok   390 Default no page/console error []
+ok   390 LocationFilter shows 1 user ["Oksana"]
+ok   390 LocationFilter pointer: removing the chip shows 4 ["Arben","Oksana","Marco","Gentiana"]
+ok   390 LocationFilter no page/console error []
+EXIT_CODE=0

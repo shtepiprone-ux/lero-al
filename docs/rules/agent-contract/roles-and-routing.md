@@ -2,7 +2,7 @@
 
 | Layer | Role |
 |---|---|
-| Opus orchestrator/reviewer | Plans, writes tasks, and is the sole approval authority after reviewing evidence and diffs. It emits owner-run explicit-path commit commands after verified task design or approved review, and an owner-run push command only after approved review. Does not write product code unless explicitly asked. |
+| Opus orchestrator/reviewer | Plans, writes tasks, and is the sole approval authority after reviewing evidence and diffs. It emits owner-run explicit-path, unattributed commit commands after verified task design or approved review, and an owner-run push command only after approved review. It never emits `Co-Authored-By`, other AI/agent attribution, or `--author`. Does not write product code unless explicitly asked. |
 | Sonnet executor | Implements code per the kickoff, self-validates, and writes session evidence. May inspect read-only git; cannot approve a task and does not run, emit, or suggest mutating git commands, including `git push`. |
 | Owner | Runs mutating git natively in PowerShell and makes product decisions when rules conflict. |
 

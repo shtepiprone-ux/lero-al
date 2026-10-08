@@ -16,6 +16,9 @@
 - The executor report is an index, never approval evidence. A green narrow check never proves a gate's blind spot.
 - Agents use read-only Git only. The owner performs mutations. Sonnet never emits mutating Git commands; Opus emits an
   explicit owner-run handoff only when its workflow permits it.
+- Every owner-run commit handoff is an unattributed owner commit. Agents must never emit, suggest, or include
+  `Co-Authored-By` (any case, spelling, name, vendor, or email), other AI/agent credit, or `--author` in its command,
+  subject, body, or trailer. This is mandatory even if a client/model template proposes it.
 - Policy/governance files and `.claude/**` are read-only to Sonnet. Report `POLICY-EDIT AUTHORITY REQUIRED` instead.
 
 ## One executable route

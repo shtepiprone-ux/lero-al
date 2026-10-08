@@ -1,0 +1,6 @@
+{"story":"complaint","h":812,"headerH":69.53125,"headerScrollH":73,"flexShrink":"1","position":"sticky","overflow":"visible","dividerTop":112.859375,"headerBottom":110.125,"bodyTop":110.125,"bodyOverflows":true}
+{"story":"complaint-same-user","h":812,"headerH":66.40625,"headerScrollH":72,"flexShrink":"1","position":"sticky","overflow":"visible","dividerTop":111.296875,"headerBottom":107,"bodyTop":107,"bodyOverflows":true}
+{"story":"support","h":812,"headerH":77,"headerScrollH":77,"flexShrink":"1","position":"sticky","overflow":"visible","dividerTop":182.484375,"headerBottom":183.484375,"bodyTop":183.484375,"bodyOverflows":false}
+{"story":"complaint","h":600,"headerH":60,"headerScrollH":69,"flexShrink":"1","position":"sticky","overflow":"visible","dividerTop":97.5,"headerBottom":90,"bodyTop":90,"bodyOverflows":true}
+{"story":"complaint","h":1200,"headerH":77,"headerScrollH":77,"flexShrink":"1","position":"sticky","overflow":"visible","dividerTop":275.484375,"headerBottom":276.484375,"bodyTop":276.484375,"bodyOverflows":false}
+EXIT_CODE=0

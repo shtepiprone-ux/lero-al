@@ -130,6 +130,10 @@ git add <explicit-file-1> <explicit-file-2>
 git commit -m "<type>(TaskN): <short description>"
 ```
 
+The handoff is an unattributed owner commit. The command and every commit-message argument must omit
+`Co-Authored-By` in every spelling/case, all AI/agent/vendor names or emails, and `--author`. This is a prohibition,
+not a formatting preference; a client or model-generated template never authorizes an exception.
+
 For an approved review only, append the verified owner-run push command:
 
 ```powershell
@@ -141,6 +145,9 @@ Forbidden emission:
 - `git add -A`
 - `git add -u`
 - wildcard staging
+- `Co-Authored-By` or any other AI/agent attribution anywhere in a `git commit` command or message, including a
+  second `-m` argument
+- `--author` in an owner handoff
 - `git push` before an `APPROVED` / `APPROVED WITH NOTES` review, or without a verified remote and branch
 - mutating recovery commands unless the owner explicitly asks for them
 

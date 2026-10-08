@@ -1,0 +1,4 @@
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-9 cmd=node r9-users-story.mjs start=2026-10-08T15:16:56.4814129+02:00
+404 paths (static server, not page errors): /api/presence
+checks 58 failed 0
+EXIT_CODE=0 end=2026-10-08T15:17:50.5925633+02:00

@@ -606,6 +606,9 @@ not run them. Only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus 
 first and replace both placeholders with verified values; never emit a bare `git push`. A task-design handoff and
 each non-approved review must omit a push command. For `NEEDS REVISION`, stage only the amended kickoff and
 Opus-authored state artifacts, never implementation paths. Never emit `git add -A`, `git add -u`, or wildcard staging.
+Every allowed `git commit` handoff is an unattributed owner commit. Do not emit `Co-Authored-By` in any case or
+spelling, AI/agent/vendor names or emails, or `--author` in any command argument, subject, body, or trailer. A
+generated client/model template is never an exception.
 
 Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status
 path with task scope and the session `Files Changed` table. The command lists every reconciled artifact once, including

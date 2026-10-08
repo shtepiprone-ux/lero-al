@@ -1903,3 +1903,401 @@ Review 9 runs `r7-badge-census`, `r7-scroll` and `r7-users-story` itself before 
 Append `# Revision 7` to the session log with: I0 and the GR-7 execution receipt; R49–R53 with AC43–AC47 evidence;
 the GR-12, GR-9 step 6 and GR-3 receipts; the gate block with governance counts; a `Files Changed` table. Set the 859
 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+
+## 24. Revision 8 (review 9, 2026-10-08): `NEEDS REVISION` — the dialog header shrinks, five canonical Stories fail `check:ui-contract`, AC43/AC48 still open
+
+**This section is the only executable route.** §23 and §21 stay binding where §24 does not replace them. **Re-entry:
+`remediation`** on the current tree. Evidence goes to `docs/sessions/evidence/task859/r8-*` (Sonnet; the prefix is the
+revision number). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md`, `docs/rules/golden/gr-12-no-hardcode.md`, then §24.3.
+
+### 24.1 Owner return and decisions (2026-10-08)
+
+- **Owner, verbatim, on Revision 7's dialogs** (screenshots of `CreateTicketDialogView` `Complaint` and `Complaint Same
+  User` at 1387×812): *"я вже бачу баг, під час скролу обрізання контенту відбувається не так як треба … Коли ви … вже
+  почнете робити якісний код?"*
+- **D78-27** (owner, 2026-10-08, accepting Revision 7's deviation 1, verbatim: *"Я закріпив виміряне значення тестом і не
+  вигадував темніший колір. - приймаю."*): white on `brand[7]` (`#EC5447`, 3.14:1) is accepted for the `brand` tone, the
+  `brand` count and the cover mark. `badgeTones.test.ts` keeps pinning the measured ratio (≥ 3.0, < 4.5) and cites
+  D78-27; every other registry and tone colour stays ≥ 4.5:1.
+- **D78-28** (owner, 2026-10-08, AskUserQuestion "the word *New* has two meanings — card 'published in the last 7 days'
+  green, inquiry 'not yet handled' yellow"): *"Один колір для обох"*. Inquiry `new` takes the `success` tone, the look of
+  the listing card's "new" badge.
+
+### 24.2 What review 9 inspected (FACT unless marked)
+
+Final tree; `storybook-static` rebuilt by the reviewer from it (`review-9/r9-01-build-storybook.txt`, exit 0); `win32`,
+Node v22.22.3. Evidence: `docs/sessions/evidence/task859/review-9/`.
+
+| Area | Result | Evidence |
+|---|---|---|
+| R52 / AC46 | **VERIFIED.** `r9-users-story.mjs` 58/58; reviewer pointer probe (real `locator.click` and keyboard only, no `el.click()`) **36/36** at 1440 and 390: shield, search, every role and status option, both tabs, the location chip; 0 page or console errors. | `r9-users-story.json`, `r9-users-pointer.json` |
+| R53 registry rows | Structurally valid, each Story imports its component (`check:ui-contract:verify` exit 0). | `r9-05-ui-contract-verify.txt` |
+| AC44 grep (R49–R53 files and their Stories) | Only `theme.ts` (token owner), `rowClassName … 'opacity-50'` ×2 in `AdminUsersTableView.tsx` (the `MantineDataTableToCards` loading-row contract, moved verbatim) and `className="active-filter-chips"` (test hook). **Accepted** as listed. | review session grep |
+| AC48 grep | Zero `<Badge` outside `MantineBadge.tsx`, zero `ui/badge` import; two hand-made pills remain (F38). | review session grep |
+| `typecheck`, final tree | exit 0 | `r9-06-typecheck.txt` |
+| Gate timing | `MantineFilterChips.tsx` was written at 13:56:10, **after** the executor's vitest (13:49–13:51), typecheck, lint, `build-storybook` (13:53) and `build` (13:55); the log says the final builds ran after the last source edit (F41). Reviewer re-ran typecheck and `build-storybook` on the final tree: exit 0. | file times, `r9-01`, `r9-06` |
+| Badge parity (AC43) | `r9-badge-census.mjs` = r7's script with **padding and icon identity added to the look key** (GR-12 lists both; r7 omitted them): 571 Stories, 1 023 badges, 69 labels, **14 with more than one look** (F37), 8 legacy elements (`photoCountBadge`). | `r9-02-badge-census-run.txt`, `r9-badge-groups-after.json` |
+| Dialog geometry (AC45) | r7's `bad: 0` measures only which element scrolls; the **header shrinks** (F35). | `r9-header-shrink.json`, `r9-scroll-clip.json`, `r9-clip-*.png` |
+| `check:ui-contract` | Not "not runnable": the reviewer ran its own scanner (`scanChangedCanonicalStory`, unchanged) on the working tree. **63 hits in 5 canonical Stories** (F36). | `r9-09-story-scan.txt`, `r9-10-story-scan-all-changed.txt` |
+
+### 24.3 Findings (review 9)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| **F35** | **P1**, owner return | **The structured dialog header shrinks when the body overflows.** The theme `Modal` `header` has no `flexShrink: 0`; R51 made `.mantine-Modal-content` a flex column, so the header (`flex-shrink: 1`, `position: sticky`) is squeezed: natural height 77px, measured **69.5px** (`Complaint`, 1387×812), **66.4px** (`Complaint Same User`), **60px** (`Complaint`, 1387×600). Its `Divider` then sits 2.8–7.5px **below** the header box, inside the body, and scrolled body content shows in the band between the shrunken header and the divider line, the owner's screenshot. Without overflow (`Support`; `Complaint` at 1387×1200) the header is 77px. The footer does not shrink (`flex="none"`). | R55 |
+| **F36** | **P1**, GR-12 / enforcement model | **`check:ui-contract` fails on the owner's commit.** Its scanner on the uncommitted 859 tree: `Badge.stories.tsx` 29 hits (caption `<Text size c fw>`, section `<Stack gap>` / `<Group gap>`), `Modal.stories.tsx` 20 (body `<Text size c="gray.7" fw fz>`, `<Stack gap>`, raw `color=`), `Table.stories.tsx` 7, `AdminSurfacePattern.stories.tsx` 4, `AdminTable.stories.tsx` 3 (cell `<Text size fw ff>`); rules `story-wrapper-presentation`, `raw-palette`. A failing CI diff gate is a hard failure (`enforcement-model.md`). | R56 |
+| **F37** | P1, GR-12 / AC43 | **14 labels with more than one look** (`r9-badge-groups-after.json`). Colour: `Open` / `In progress` (`AdminDashboardView.tsx:276–277` hands the work list `tone: 'neutral' / 'warning'`; registry ticket `open` / `in_progress` = `warning` / `info`), `Agent` (`AdminUserProfileView.tsx:359`, `:492` profile type `tone="neutral"`; registry `userRole.agent` = `info`), `New` (D78-28). **Icon** (same colour, r7 did not measure icons): `Resolved` (ticket: Solar `check-circle`; report: none), `Closed` (ticket: `close-circle`; inquiry: `check-circle`), `Verified` (`AdminUserProfileView.tsx:499` lucide `ShieldCheck` via `leftSection`; registry `agentVerification.verified`: none), `Premium` (registry `listingFlag.premium`: Solar `star`; `MantineListingDetailPattern` via `LISTING_DETAIL_BADGE_TONES.premium`: none). Accepted, not findings: `Active` `lg` (the Badge Story's typed size row), `Info` with icon (the Badge Story's `leftSection` row, a documented public prop), and the number labels `1/2/3/5` (counts one look per emphasis; the rest are tone badges whose label is a number). | R57 |
+| **F38** | P2, AC48 | Two hand-made pills: the gallery photo counter (`MantineListingGalleryPattern.tsx:126`, `rounded-full px-2 py-0.5 text-xs` + `.photoCountBadge`; the census's 8 legacy elements) and the saved-search "N new" counter (`SavedSearchesTab.tsx:179`, `bg-primary … rounded-full`). `.orderBadge` (`ImageUpload.module.css:25–30`) has had no consumer since Revision 7. | R58 |
+| **F39** | P3, R50 | The count variant still picks its colours inside `MantineBadge` (`color="gray" variant="light"`, `color="brand"`, `variant={… 'white' : 'filled'}`, `:73–90`); R50 asked for the theme entry or the registry. | R59 |
+| **F40** | P3, owner "усіх модальних вікон" | `MantineModal`'s plain path below 640 puts `footer` inside `SheetContent` (`:201–211`), so that footer scrolls with the body; `ResponsiveBottomSheet` has a pinned `footer` slot (`responsiveBottomSheet.tsx:105–114`). Only the `Modal` primitive Story uses plain + footer today. | R60 |
+| **F41** | P3, report accuracy | The final-gate claim was false for one file (§24.2, gate timing). | §24.5 gates |
+
+**Rulings on Revision 7's open items.** (1) brand contrast: closed by D78-27. (2) four labels: F37 → R57. (3) two pills:
+F38 → R58. (4) the two `ui-contract-registry.json` rows: **accepted**; `enforcement-model.md` requires them, and the
+§23.8 omission was the kickoff's. (5) `check:ui-contract` "not runnable": superseded by F36 and AC50. (6) the hook: the
+em-dash defect is already fixed in the current `.claude/hooks/phase-write-gate.ps1` (`:87–89` builds the em dash at
+runtime); the one-message transcript lag remains, and the hook also blocks read-only `Bash` commands that merely name a
+Story path (reviewer, this session). Both are owner-only policy items, not executor work.
+
+### 24.4 Requirements (Revision 8)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R55** | **Fixed dialog chrome.** In the theme `Modal` entry only, the header keeps its natural height in every state (`header` gets `flexShrink: 0`; the footer already has `flex="none"`). No consumer change. Measure `ResponsiveBottomSheet`'s header the same way below 640; if it shrinks, give it `flex-shrink: 0` in its owner (`responsiveBottomSheet.tsx`) only. | P1 | AC49 |
+| **R56** | **Canonical Stories pass `check:ui-contract`.** (a) Add one Story-chrome owner to `src/stories/mantine/_MantineStoryShell.tsx`: `MantineStorySection` (`label: string`, `children`) renders the caption (the 12px / dimmed / 500 the captions use today) above a wrapping row of examples, and `MantineStoryStack` (`children`) stacks sections; both read theme tokens and take no style prop. (b) `Badge.stories.tsx` and `Modal.stories.tsx` use them instead of `Stack` / `Group` / `Text` with visual props. (c) Dialog bodies in `Modal.stories.tsx` use plain `Text` (no `size` / `c` / `fw` / `fz`) or the canonical body pattern production dialogs already use (`DetailList`); no raw `color=`. (d) Table cells in `Table.stories.tsx`, `AdminTable.stories.tsx`, `AdminSurfacePattern.stories.tsx` pass plain values (strings, numbers, `MantineBadge`). Every visible string stays locale-backed; no new visual value appears anywhere. | P1 | AC50 |
+| **R57** | **One look per label, icon included.** (a) `MantineDashboardWorkList` row `status` also accepts `meaning: MantineBadgeMeaning` (EXTEND; its direct Story `DashboardWorkList.stories.tsx` gains a row that uses it); `AdminDashboardView.tsx` passes `{ variant: 'status', entity: 'ticket', value: row.status }` for ticket rows. (b) New registry entity `profileType` (`Record<ProfileType, …>`): `admin`, `moderator`, `agent` reuse the `USER_ROLE_TONES` entries of the same name, `private` reuses `user`, `developer` is `neutral` (today's look); `AdminUserProfileView.tsx:359`, `:492` render `variant="status" entity="profileType"`. (c) D78-28: `INQUIRY_STATUS_TONES.new` → `success` (icon kept), with a test that it equals the listing "new" tone. (d) Icons follow the label: report `resolved` takes ticket `resolved`'s `CheckCircleIcon`; inquiry `closed` takes ticket `closed`'s `CloseCircleIcon`; `agentVerification.verified` takes a Solar shield-check icon (per-icon entry point) and `AdminUserProfileView.tsx:499` renders `variant="status" entity="agentVerification" value="verified"` without `leftSection`; `MantineListingDetailPattern`'s premium badge renders `variant="status" entity="listingFlag" value="premium"` (and `LISTING_DETAIL_BADGE_TONES.premium` is removed if unused, clause 9). | P1 | AC43 |
+| **R58** | **The last two pills.** The gallery counter renders `MantineBadge variant="tone" tone="neutral"` with the card's `Camera` icon (the card photo count, `MantineListingCardPattern.tsx:169–173`), placed by a `Box` with theme spacing, and `.photoCountBadge` leaves the CSS module. `SavedSearchesTab` renders `MantineBadge variant="count"` (brand) for its "N new" label. `.orderBadge` leaves `ImageUpload.module.css`. | P2 | AC48 |
+| **R59** | **Count colours from the registry.** `badgeTones.ts` gains `BADGE_COUNT_EMPHASIS: Record<'brand' \| 'onBrand' \| 'neutral', { color: MantineColor; variant: 'filled' \| 'white' \| 'light' }>` with today's three pairs; `MantineBadge` reads it and has no colour or variant literal. Pixels unchanged. | P3 | AC51 |
+| **R60** | **Plain dialog footer pinned below 640.** `MantineModal`'s plain mobile path passes `footer` to `ResponsiveBottomSheet`'s `footer` slot, as the structured path does. | P3 | AC49 |
+
+### 24.5 Acceptance criteria
+
+- **AC49 [R55, R60] — dialog geometry.** Copy `review-9/r9-header-shrink.mjs` to `r8-dialog-geometry.mjs` and run it on
+  `r7-scroll.mjs`'s job list (the review-5 dialog Stories plus its named additions, the `Modal` primitive's triggers
+  operated) plus every `CreateTicketDialogView` export, at 1440×900, 1440×600, 1387×812 and 390×844 (review 9's attempt
+  on all 571 Stories × 3 sizes ran over 60 minutes and was stopped). In every open dialog: header height = header `scrollHeight`;
+  every header descendant's bottom ≤ header bottom; footer height = its `scrollHeight`; body top = header bottom and body
+  bottom = footer top (±1px); r7's `bad: 0` and `shell scrolls 0` still hold. Pass: 0 violations. DPR 2 crops of
+  `createticketdialogview--complaint` and `--complaint-same-user` at 1387×812, body scrolled to 40px and to the end,
+  show nothing between the header and its divider.
+- **AC50 [R56] — `check:ui-contract` on the working tree.** From the repo root,
+  `node docs/sessions/evidence/task859/review-9/r9-story-scan.mjs --all-changed` (it imports the unchanged scanner of
+  `scripts/check-ui-contract.mjs`) prints `total hits 0` and exits 0; `npm.cmd run check:ui-contract:verify` exits 0. No
+  checker, hook, registry schema or rule is edited.
+- **AC43 (re-stated) [R57].** `review-9/r9-badge-census.mjs`, copied to `r8-badge-census.mjs` (outputs renamed), on the
+  final build: every status/tone label has exactly one look with padding and icon in the key; the only accepted
+  differences are those F37 lists as accepted.
+- **AC48 (re-stated) [R58].** The §23.6 grep has zero hits outside `MantineBadge.tsx` (`ui/avatar.tsx:49`, the avatar
+  fallback, is not a label badge and stays); the census reports 0 legacy badge-like elements.
+- **AC51 [R59].** `MantineBadge.tsx` contains no `color=` / `variant=` string literal for counts; the Badge Story's count
+  rows are pixel-identical before/after (DPR 1, en, 390 and 1440).
+- **Gates:** the §21.5 block, `check:pattern-enrolment`, AC50's two commands, and the AC26 vitest rule. **Every gate runs
+  after the last source edit:** `r8-60-hashes-end.txt` records each changed file's hash and `LastWriteTime`, and none is
+  later than the first gate's start. Review 9's isolated `RangeDatePicker` timeout (one run while 8 browser workers ran)
+  is not a finding; AC26's two whole-repository runs decide.
+
+`GR-4 AC AUDIT — 3 new criteria (AC49–AC51) and 2 re-stated (AC43, AC48); each states an observable property; absolutes: "0 violations", "total hits 0", "exactly one look" (GR-12), "pixel-identical".`
+
+### 24.6 Reference research (GR-7), review 9
+
+`research-review/r9-live-check.mjs` and `r9-modal-scroll-live.mjs` (`win32`, Node v22.22.3, both exit 0): the 9 table
+pages unchanged against the library; Lahomes' scrollable modal scrolls `.modal-body` only (219/450 px at 1440×420, 259/492
+at 390×420), header and footer outside it and `.modal-content` `overflow: hidden`; TailAdmin scrolls the overlay or an
+inner box holding the title; Kamr's modal opened and closed on Esc in `r9-live-check` (logged in), while the
+sessionless DOM probe of `r9-modal-scroll-live` was redirected to login; Omah 404.
+
+`GR-7 REFERENCE RESEARCH — moment: review; role: Opus; task: 859; subject: Revision 7 outcome (dialog scroll region and header geometry, badge parity with icons, users table, filter chip); references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal (operated logged in; the sessionless DOM probe redirected to login); Omah ecom-customers, ecom-product-order, ui-modal (404) → tables unchanged, modal behaviour unchanged from review 8; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library; no live difference, no re-crawl); inspected in depth: every page (library summary.md rows) + the pages above; workflow states operated: modal open, scroll region at 1440×420 and 390×420, Esc; options across references: body-only scroll with fixed header/footer (Lahomes) vs overlay scroll (Kamr, TailAdmin); chosen 2026 best practice: Lahomes body-only scroll with non-shrinking chrome (R55), D78-26 solid badge, D78-28 one "New"; absent or unverified: Kamr ui-modal scroll-region DOM this run (sessionless probe; review 8's r8-modal-scroll-kamr.json stands), Omah modal page; lero.al data map: §23.4 (unchanged); owner decisions: D78-27, D78-28; evidence: docs/sessions/evidence/task859/research-review/r9-*.`
+
+`GR-12 ELEMENT PARITY — badge: Stories compared 571 (census docs/sessions/evidence/task859/review-9/r9-badge-groups-after.json); meanings 69 labels; meanings with more than one look: Open, In progress, Agent, New, Resolved, Closed, Verified, Premium (owner decisions: D78-28 sets New; none permits the others) → F37; accepted: Active (typed size), Info (public leftSection), number labels; hardcode in changed files and their Stories: 63 check:ui-contract hits in Badge/Modal/Table/AdminSurfacePattern/AdminTable Stories → F36; MantineBadge count colour literals → F39; gallery and saved-search pills → F38.`
+
+`GR-12 ELEMENT PARITY — dialog shell: Stories compared 3 CreateTicketDialogView exports at 4 sizes (census review-9/r9-header-shrink.json, r9-scroll-clip.json); meanings 1; meanings with more than one look: the header (77px vs 60–69.5px when the body overflows) → F35 (owner decisions: none); hardcode in changed files and their Stories: Modal.stories.tsx 20 hits → F36.`
+
+`GR-12 ELEMENT PARITY — filter chip: Stories compared 2 (MantineFilterChips, ActiveFilterChips; executor census r7-chips-ab.json, reviewer pointer probe r9-users-pointer.json for the admin chip); meanings 1; meanings with more than one look: NONE (owner decisions: none); hardcode in changed files and their Stories: NONE.`
+
+### 24.7 Write set (Revision 8)
+
+- `src/design-system/mantine/theme.ts` (the `Modal` entry only); `responsiveBottomSheet.tsx` (header shrink only, if
+  AC49 shows it); `MantineModal.tsx` (R60);
+- `src/stories/mantine/_MantineStoryShell.tsx`; `Badge.stories.tsx`, `Modal.stories.tsx`, `Table.stories.tsx`,
+  `AdminTable.stories.tsx`, `AdminSurfacePattern.stories.tsx`;
+- `badgeTones.ts`, `badgeTones.test.ts`, `MantineBadge.tsx` (+ its smoke test);
+- `MantineDashboardWorkList.tsx`, `DashboardWorkList.stories.tsx`, `AdminDashboardView.tsx`, `AdminUserProfileView.tsx`,
+  `MantineListingDetailPattern.tsx`;
+- `MantineListingGalleryPattern.tsx` + `.module.css`, `SavedSearchesTab.tsx`, `ImageUpload.module.css`;
+- `messages/{sq,en,uk,it}.json` (only if a Story caption needs a key);
+- tests under the touched folders; evidence `r8-*`; the session log `# Revision 8`; the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: §19.3's six support files and the server actions. **Any other file is a stop and
+report.**
+
+### 24.8 Owner visual review — O78-13 (after review 10)
+
+§23.9's list, plus: `CreateTicketDialogView` `Complaint` / `Complaint Same User` at 1387×812 and 1440×600, scrolled to
+the middle and to the end; the Badge Story beside `DashboardWorkList`, `AdminDashboardView`, `AdminUserProfileView`,
+`AdminInquiriesView`, `ListingDetailPattern` and the listing gallery. Review 10 runs `r8-dialog-geometry`,
+`r8-badge-census`, AC50's scan and `review-9/r9-users-pointer.mjs` itself before the matrix goes out.
+
+### 24.9 Completion (Revision 8)
+
+Append `# Revision 8` to the session log with: I0 (hashes and write times) and the GR-7 execution receipt; R55–R60 with
+AC43, AC48–AC51 evidence; the GR-12 receipts for badge, dialog shell and filter chip; GR-3b…3e for the changed Stories at
+320/390/1024/1440; the gate block with governance counts; a `Files Changed` table. Set the 859 backlog cell. Status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+
+## 25. Revision 9 (review 10, 2026-10-08): `NEEDS REVISION` — no icon in any badge (D78-29), two Stories still style their content, a choice with two looks
+
+**This section is the only executable route.** §24, §23 and §21 stay binding where §25 does not replace them.
+**Re-entry: `remediation`** on the current tree. Evidence goes to `docs/sessions/evidence/task859/r9x-*` (Sonnet; `r9x`
+because `r9-*` is review 9's prefix). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md`, `docs/rules/golden/gr-12-no-hardcode.md`,
+`docs/mantine-responsive-design-system.md` §26 (the D78-29 paragraph), then §25.3.
+
+### 25.1 Owner decisions (2026-10-08, review 10, AskUserQuestion; verbatim in the sprint file)
+
+- **D78-29 — no icon in any badge.** Owner: *"у бейджах не використовуй іконки. Іконки використовувати будемо у картках
+  оголошень біля деталей (поверх/кількість кімнат/кількість ванних і так далі), як у рефренесі"*. Revision 8's `bold`
+  glyphs, the clock / refresh glyphs and the card's `Camera` in the photo count are all withdrawn: every badge is text
+  only. The listing card's feature icons (Solar `broken` 16px grey, the reference's look) are **918** R2 (D89-4), not
+  this task.
+- **D78-30 — two pushes.** At approval Opus hands over two commit + push steps, each under the
+  `check:surface-census:changed` limit (60) and each building green. No gate or limit changes.
+
+**Why the reference's icons read and ours did not (FACT, `research-review/r10-lahomes-icons.json`, screenshots
+`r10-lahomes-grid-*.png`, live 2026-10-08, `win32` Node v22.22.3):** Lahomes `property-grid` puts **no icon in its status
+badges** ("For Rent", "Sold", "For Sale" are text on a solid fill). Its icons sit in the feature chips beside the
+details: `solar:bed-broken`, `bath-broken`, `scale-broken`, `double-alt-arrow-up-broken` at **16px**, colour
+`rgb(104, 125, 146)` on a transparent chip with a light border. Ours were **12px white glyphs on a solid fill**. Our
+card's feature row still renders lucide icons (`ListingFeatureIcon.tsx:1`) until 918 lands.
+
+### 25.2 What review 10 inspected (FACT unless marked)
+
+Final tree: every write-set hash equal to the executor's `r8-60-hashes-end.txt` (27 of 27) and the six frozen files
+equal; no file under `src/`, `messages/`, `scripts/` written after the executor's first gate. `storybook-static` rebuilt
+by the reviewer (`review-10/r10-01-build-storybook.txt`, exit 0). `win32`, Node v22.22.3. Evidence:
+`docs/sessions/evidence/task859/review-10/`.
+
+| Area | Result | Evidence |
+|---|---|---|
+| R55 / R60 / AC49 | **VERIFIED.** `r10-dialog-geometry.mjs` (the executor's script; ports and output names changed only): 110 Stories × 4 sizes, **315 open dialogs (84 sheets), 0 violations, 0 errors**; 129 jobs open no dialog at that size. The executor's DPR 2 crop shows header → divider → content clipped at the divider. | `r10-02-geometry-run.txt`, `r10-dialog-geometry-after.json` |
+| R52 / AC46 | **Still VERIFIED** on the final tree: `r10-users-pointer.mjs` 36/36 real-pointer checks, 1440 and 390, 0 errors. | `r10-04-users-pointer-run.txt`, `r10-users-pointer.json` |
+| AC50 | `r9-story-scan.mjs --all-changed`: `total hits 0`, exit 0; `check:ui-contract:verify` exit 0. | `r10-05-story-scan.txt`, `r10-06-ui-contract-verify.txt` |
+| AC43 / AC48 | Against §24 **VERIFIED**: `r10-badge-census.mjs` (the executor's `r8-badge-census.mjs`, port and output names changed only), en, 1440: 571 Stories, 1 036 `.mantine-Badge-root`, 72 labels, **6 with more than one look, exactly §24.3's accepted set** (counts 1/2/3/5, `Active` `lg`, `Info` `leftSection`); **0 legacy** badge-like elements. Against D78-29 (new): **222 badges render an icon** — Solar bold `star`, `info-circle`, `check-circle`, `clock-circle`, `refresh-circle`, `close-circle`, `shield-check`, `map-point` (registry) and lucide `camera`, `triangle-alert`, `shield-check` (consumers) → F42. | `r10-03-badge-census-run.txt`, `r10-badge-groups-after.json`, `r10-badge-legacy-after.json` |
+| R58 / R59 | Source as reported: the gallery and saved-search counters are `MantineBadge`; `BADGE_COUNT_EMPHASIS` owns the count pairs; `.photoCountBadge`, `.orderBadge` gone. The gallery's `style={{ pointerEvents: 'none' }}` is behaviour, accepted. | source |
+| R56 | **Incomplete** (F43, F44). AC50 is green because the scanner reads changed lines only; R56(c)/(d) name every dialog body and every table cell. | source grep |
+| `check:surface-census:changed` | 62 > 60, red, as reported. CI runs it on every push range (`.github/workflows/governance-pr.yml`, `SURFACE_CENSUS_BASE_SHA = github.event.before`), so one 859 push would fail → D78-30. | `r8-54-census-changed.txt`, workflow |
+| `main` CI | The last two `Governance Validation (PR)` runs on `main` (2026-10-07) failed; not caused by 859 (uncommitted). Recorded for the push. | `gh run list --branch main` |
+
+### 25.3 Findings (review 10)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| **F42** | **P1**, owner D78-29 | Badges carry icons: the registry (`badgeTones.ts:6–12`, 11 entries), `MantineBadge`'s `leftSection` prop (`:24–25`, `:105`) and 7 consumers that pass one: `MantineListingCardPattern.tsx:171` and `MantineListingGalleryPattern.tsx:130` (`Camera`), `MantineDashboardWorkList.tsx:48`, `:54` (`status.icon`), `MantineDashboardCard.tsx:105` and `MantineDashboardHeader.tsx:90` (`AlertTriangle` at `iconSize.compact`, a third icon size), `AdminPermissionsView.tsx:42–50` (`ShieldCheck` in a `Box c="green"`, a colour literal), `Badge.stories.tsx:57` (`InfoCircleIcon`). | R61 |
+| **F43** | **P1**, R56(c), GR-12 | `Modal.stories.tsx` still styles its dialog content: `:44` `color="gray"`, `:51` `color="brand"` (footer buttons), `:61` and `:85–88` `<Text size="sm" c="gray.7" style={{ whiteSpace, wordBreak }}>`, `:140` `<Text fz="sm">`, `:143` `<Text fz="sm" c="dimmed">`. They are unchanged since `HEAD`, so the changed-line scanner passes, but R56(c) covers every dialog body ("plain `Text` … no raw `color=`"). The log's R56 row says done. | R62 |
+| **F44** | **P1**, R56(d), GR-12 | Table cells still carry typography: `AdminTable.stories.tsx:40` (`<Text size="sm" fw={600} ff="monospace">`), `:62`, `:63`, `:178`, `:181`, `:192`, `:194`; `AdminSurfacePattern.stories.tsx:104` (`<Text fw={500}>`). The log says the cells "pass plain strings" — false for these 8. | R62 |
+| **F45** | **P1**, GR-12 one meaning one look | Revision 8 replaced `Modal` `Detail`'s `Radio.Card` choice with a plain `Radio`, while the production detail dialogs it stands for (`TicketDetailDialogView.tsx:156–161`, `PremiumDialogView.tsx:79–84`) render `Radio.Card`: "a status choice in a detail dialog" now has two looks. The executor's reason is real: the option content (`Group wrap="nowrap" gap="sm"` + `Radio.Indicator` + `Text component="span" fz="sm" fw={500}`) has no owner and is copied in both views and in `Radio.stories.tsx:104–147`. | R63 |
+| F46 | P3, report accuracy | The GR-12 badge receipt says "hardcode … NONE"; F42–F44 are hardcode in changed files and their Stories. The `badgeTones.ts` comments at `:40` and on `TICKET_STATUS_TONES` still say "Solar `broken`". | §25.5 |
+| — | Noted, not 859's | `Table.stories.tsx:39–49` and `AdminSurfacePattern.stories.tsx:61–70` card `actions` / `avatar` slots: `ActionIcon color="red" mih="2.75rem" miw="2.75rem"`, icon `size={14}`, `Avatar size={40} color="brand"` — unchanged since `HEAD`; the row-action anatomy (D78-13…16) is **919**'s. Filed there (§25.7). | — |
+
+**Rulings on Revision 8's deviations.** (1) `New` without icon: superseded by D78-29. (2) `responsiveBottomSheet.tsx`
+body/scroll padding: **accepted** — the sheet's owner, at-rest pixels unchanged, AC49 0 violations on 84 sheets (review
+10). (3) `enrolled-tailwind-baseline.json`: **accepted** — the gate's own updater, 8 entries lowered or dropped, none
+added. (4) sequencing of the pre-write census: noted; it measured the pre-edit build. (5) `Radio.Card` owner:
+**accepted as a finding** → F45 / R63. (6) the surface-census gate: D78-30. (7) dimmed captions: accepted (Story chrome,
+one owner). (8) icon weight and glyphs: superseded by D78-29.
+
+### 25.4 Requirements (Revision 9)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R61** | **No icon in any badge (D78-29).** (a) `badgeTones.ts`: remove `icon` from `BadgeToneEntry`, the `entry()` helper and every entry; remove every `@solar-icons` import and the `BadgeIcon` type; the comments stop mentioning icons. (b) `MantineBadge.tsx`: remove the `leftSection` prop from every variant's props type and the registry-icon rendering; it renders text only. (c) Every consumer stops passing an icon (typecheck finds them; today the 7 in F42): `MantineDashboardWorkList` drops `status.icon` from its row type; the card and gallery photo counts render the count text only; `MantineDashboardCard` / `MantineDashboardHeader` render the stale warning badge as text only; `AdminPermissionsView` renders its badge with no `Box c="green"` wrapper and no icon (tone or registry meaning, no colour literal); the Badge Story drops the `leftSection` row and its caption key (all four locales) if unused. (d) Tests: `badgeTones.test.ts` asserts no registry entry has an `icon` field, for every entity and value; the smoke tests that asserted a badge icon assert its absence. (e) Remove imports and keys left without a consumer (clause 9 whole-repo audit); `iconSize.badge` stays (other consumers). | P1 | AC52 |
+| **R62** | **R56(c)/(d) completed.** `Modal.stories.tsx`: every dialog body is plain `Text` (no `size` / `c` / `fw` / `fz` / `style`) or a canonical body part already imported there; the `Default` footer is `MantineDialogFooter` (secondary `variant="default"`, primary default), no `color=`. If plain `Text` overflows at 320 (GR-3b), fix it once in the theme `Modal` `body` entry (`overflowWrap: 'anywhere'`), never in the Story. `AdminTable.stories.tsx` and `AdminSurfacePattern.stories.tsx`: every column `cell` / `render` and every card `title` / `subtitle` / `meta` value is a plain string or number (or `MantineBadge`); the cell typography is the table pattern's. | P1 | AC53 |
+| **R63** | **One owner for a `Radio.Card` option (GR-0 CREATE, the smallest).** New pattern `src/design-system/mantine/patterns/MantineRadioCardOption.tsx`: props `value: string`, `label: ReactNode`, `description?: ReactNode`, `disabled?: boolean`; renders `Radio.Card` > `Radio.Indicator` + the label (and a dimmed description line under it), with the gap and type `TicketDetailDialogView` renders today (pixel-identical). Direct Story `src/stories/mantine/primitives/RadioCardOption.stories.tsx` (`Mantine/Primitives/RadioCardOption`: one, with description, long label, disabled checked and unchecked; locale-backed labels; a `play` that operates the choice). Enrol it in `scripts/mantine-migration-scope.json` **and** add its `scripts/ui-contract-registry.json` row in the same change. Consumers: `TicketDetailDialogView`, `PremiumDialogView` (its option only; the revealed `RangeDatePicker` unchanged), `Radio.stories.tsx` `Card` (its captions move to `MantineStorySection` with locale keys, since the file becomes a changed canonical Story), and `Modal.stories.tsx` `Detail` goes back to `Radio.Card` options through it. | P1 | AC54 |
+
+### 25.5 Acceptance criteria
+
+- **AC52 [R61].** (a) A multiline search for `<MantineBadge[^>]*leftSection` over `src` returns 0 hits; `badgeTones.ts`
+  has 0 `@solar-icons` imports; `MantineBadge.tsx` has no `leftSection`. (b) `review-9/r9-badge-census.mjs` copied to
+  `r9x-badge-census.mjs` (outputs renamed) on the final build: **0 badges with an icon**, every status/tone label exactly
+  one look; the only accepted differences are `Active` `lg` (typed size row) and the number labels (§24.3 F37). (c) The
+  card and gallery photo-count badges: DPR 1 element shots before/after at 390 and 1440 differ only by the removed icon
+  (text, fill and height equal).
+- **AC53 [R62].** Over the **whole files** `Modal.stories.tsx`, `AdminTable.stories.tsx`,
+  `AdminSurfacePattern.stories.tsx`, the §23.6 AC44 grep plus `\bfz=|\bfw=|\bff=` and `size="(xs|sm|md|lg)"` on `Text`
+  returns 0 hits outside the card `actions` / `avatar` slots §25.3 files to 919. `r9-story-scan.mjs --all-changed`:
+  `total hits 0`. GR-3b at 320 / 390 / 1024 / 1440: no horizontal overflow in the three Stories' open dialogs and tables.
+- **AC54 [R63].** `check:story-coverage`, `check:pattern-enrolment`, `check:ui-contract:verify` exit 0 with the new row.
+  `TicketDetailDialogView` (dialog open, status options) and `PremiumDialogView` (duration options) at 390 and 1440, en,
+  DPR 1: before/after element shots of the options, **0 differing pixels**. A census of `.mantine-RadioCard-card` over
+  every Story: one look (border, radius, padding, indicator size, label size and weight).
+- **Gates:** the §21.5 block, `check:pattern-enrolment`, AC50's two commands, `check:enrolled-tailwind`,
+  `check:surface-census:changed -- --base HEAD` (record the count: red only for `surface-limit-exceeded` is expected and
+  handled by D78-30; any other reason is a stop), and the AC26 vitest rule. Every gate runs after the last source edit
+  (`r9x-60-hashes-end.txt`, as §24.5).
+
+`GR-4 AC AUDIT — 3 new criteria (AC52–AC54); each states an observable property; absolutes: "0 hits", "0 badges with an icon", "exactly one look" (GR-12), "0 differing pixels".`
+
+### 25.6 Reference research (GR-7), review 10
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: Revision 8 outcome (dialog chrome, badge icons, Story hardcode) and the owner's question on icon legibility; references: Lahomes, Kamr, Omah, TailAdmin + owner URL https://techzaa.in/lahomes/admin/property-grid.html; library: docs/research/references/2026-10-04; live-checked pages: Lahomes property-grid (1440 DPR 1 and 2, 390 DPR 2: status badges text-only; feature chips Solar broken 16px rgb(104,125,146) on a bordered transparent chip; type tile bold-duotone 24px); the modal and table pages of review 9 unchanged (research-review/r9-*, same day); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library, no live difference); inspected in depth: every page (library summary.md rows) + property-grid; workflow states operated: page load at two widths and two DPRs; options across references: an icon in a status badge (none of the references' status badges) vs icons beside feature details (Lahomes cards); chosen 2026 best practice: text-only badges (D78-29), feature icons per 918; absent or unverified: Kamr and Omah property-card icon sizes this run (the owner named Lahomes); lero.al data map: badge registry → MantineBadge → every status/tone/count; owner decisions: D78-29, D78-30; evidence: docs/sessions/evidence/task859/research-review/r10-*.`
+
+`GR-12 ELEMENT PARITY — badge: Stories compared 571 (census docs/sessions/evidence/task859/review-10/r10-badge-groups-after.json, r10-badge-census-after.json); meanings 72 labels; meanings with more than one look: counts 1/2/3/5, Active (typed lg), Info (leftSection row) — §24.3's accepted set; 222 badges carry an icon (owner decisions: D78-29 forbids any badge icon → F42); hardcode in changed files and their Stories: Modal.stories.tsx dialog bodies and footer colours → F43, AdminTable/AdminSurfacePattern cell typography → F44, AdminPermissionsView Box c="green" → F42.`
+
+`GR-12 ELEMENT PARITY — dialog shell: Stories compared 110 at 4 sizes (census review-10/r10-dialog-geometry-after.json); meanings 1; meanings with more than one look: NONE (315 open dialogs, 0 violations) (owner decisions: none); hardcode in changed files and their Stories: Modal.stories.tsx → F43.`
+
+`GR-12 ELEMENT PARITY — Radio.Card option: Stories compared 4 (Modal Detail, TicketDetailDialogView, PremiumDialogView, Radio Card; source review 10); meanings 1 (a choice in a detail dialog); meanings with more than one look: Modal Detail (plain Radio) vs the three Radio.Card renderings (owner decisions: none) → F45; hardcode in changed files and their Stories: the option's Group gap + Text fz fw copied in TicketDetailDialogView, PremiumDialogView, Radio.stories → F45.`
+
+### 25.7 Write set (Revision 9)
+
+- `badgeTones.ts`, `__tests__/badgeTones.test.ts`; `MantineBadge.tsx` (+ its smoke test);
+- `MantineDashboardWorkList.tsx`, `MantineDashboardCard.tsx`, `MantineDashboardHeader.tsx`,
+  `MantineListingCardPattern.tsx` (the photo-count badge only), `MantineListingGalleryPattern.tsx` (the counter only),
+  `AdminPermissionsView.tsx` (the badge only), and the smoke tests under their folders that assert a badge icon;
+- new `MantineRadioCardOption.tsx` + `RadioCardOption.stories.tsx`, `scripts/mantine-migration-scope.json`,
+  `scripts/ui-contract-registry.json` (its row), `patterns/index.ts` (export);
+- `TicketDetailDialogView.tsx`, `PremiumDialogView.tsx` (the option only);
+- `Badge.stories.tsx`, `Modal.stories.tsx`, `Radio.stories.tsx`, `AdminTable.stories.tsx`,
+  `AdminSurfacePattern.stories.tsx`, `DashboardWorkList.stories.tsx` and any Story that passes a badge icon;
+- `src/design-system/mantine/theme.ts` (the `Modal` `body` entry, only if AC53's GR-3b needs it);
+- `messages/{sq,en,uk,it}.json` (Story captions; removal of an unused caption key);
+- `scripts/enrolled-tailwind-baseline.json` (only through its own updater, decrease-only);
+- evidence `r9x-*`, the session log `# Revision 9`, the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: §19.3's six support files and the server actions. **Any other file is a stop and
+report.** Filed outside 859: the card `actions` / `avatar` slot literals of `Table.stories.tsx` and
+`AdminSurfacePattern.stories.tsx` join **919** (row actions, D78-13…16); the card's feature icons are **918** R2.
+
+### 25.8 Owner visual review — O78-13 (after review 11)
+
+§24.8's list, with these replaced: every badge Story beside `ListingCard` `Default`, **no icon anywhere** (Badge
+`Default` / `Statuses`, `DashboardWorkList`, the `DashboardCard` / `DashboardHeader` stale states,
+`AdminPermissionsView`, `AdminInquiriesView`, `AdminUserProfileView`, `ListingDetailPattern`, the card photo count, the
+gallery counter); `Modal` `Default` / `Detail` (the `Radio.Card` choice is back); `RadioCardOption`;
+`TicketDetailDialogView` `Default` and `PremiumDialogView` options. Review 11 runs `r9x-badge-census`,
+`r8-dialog-geometry`, AC50's scan and `r9-users-pointer.mjs` itself before the matrix goes out.
+
+### 25.9 Completion (Revision 9)
+
+Append `# Revision 9` to the session log with: I0 (hashes and write times) and the GR-7 execution receipt; R61–R63 with
+AC52–AC54 evidence; the GR-0 receipt for `MantineRadioCardOption` (CREATE) and the GR-12 receipts for badge and the
+`Radio.Card` option, with **whole-file** hardcode lists for every changed file and its Stories; GR-3b…3e for the changed
+Stories at 320/390/1024/1440; the gate block with governance counts and the surface-census count; a `Files Changed`
+table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No Git.
+
+## 26. Revision 10 (review 11, 2026-10-08): `NEEDS REVISION` — a broken Story, two spacings for one set of choices, Story captions with colour literals
+
+**This section is the only executable route.** §25, §24, §23 and §21 stay binding where §26 does not replace them.
+**Re-entry: `remediation`** on the current tree. Evidence goes to `docs/sessions/evidence/task859/r10x-*` (Sonnet;
+`r10-*` is review 10's prefix). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md`, `docs/rules/golden/gr-12-no-hardcode.md`, then §26.2 and §26.3.
+
+### 26.1 What review 11 inspected (FACT unless marked)
+
+Final tree: every Revision 9 write-set hash equal to `r9x-60-hashes-end.txt`; no file under `src/`, `messages/` or
+`scripts/` written after 19:04:53Z, the executor's last write (reviewer scan of the write time of every changed and
+untracked file). `storybook-static` rebuilt by the reviewer (`review-11/r11-01-build-storybook.txt`, exit 0). `win32`, Node
+v22.22.3. Evidence: `docs/sessions/evidence/task859/review-11/`.
+
+| Area | Result | Evidence |
+|---|---|---|
+| R61 / AC52(a) | **VERIFIED.** Multiline `<MantineBadge[^>]*leftSection` / `<Badge[^>]*leftSection` over `src`: 0; `badgeTones.ts`: no `icon`, no `@solar-icons`; `MantineBadge.tsx`: no `leftSection`, text only; the 7 consumers render text only (`AdminPermissionsView` badge `tone="neutral" outline`, the form section's `Box c="green"` shield at `:48` is HEAD's and not a badge). | source |
+| AC52(b) | **VERIFIED** (reviewer run on the final build, `r11-badge-census.mjs` = the executor's script + a 20s per-Story probe timeout, progress logging and an error screen recorded as an error; the first run, slowed by a foreign CPU-bound process, was stopped after 75 min and re-run): 572 Stories, **1 035 `.mantine-Badge-root`, 0 with an icon**, 72 labels, **5 with more than one look = §24.3's accepted set** (counts 1/2/3/5, `Active` `lg`; `Info` no longer differs), **0 legacy** badge-like elements. **1 error: `patterns-mantine-dashboardheader--default` shows an error screen** → F51 (its stale badge is not counted). | `r11-03-badge-census-run.txt`, `r11-badge-groups-after.json` |
+| AC52(c) | **VERIFIED** from the executor's A/B (`r9x-30-radiocard-ab-run.txt`): card count 41×25 → 25×25, gallery 59×24 → 43×24, height, text and computed style equal. | executor evidence, read |
+| R61(d) Stories | **FAILED (F51).** `DashboardHeader.stories.tsx:56–61` `Default` `play` still asserts `badge.querySelector('svg')` is not null. On the built Storybook the Story shows Storybook's error screen `expected null not to be null` (`r11-play-check.mjs` over the 48 Stories of the changed components: 1 error screen). The executor's censuses count an errored Story as 0 badges / no error (`r9x-badge-census-after.json` records `patterns-mantine-dashboardheader--default` with 0 badges), so AC52(b) never saw the stale badge. | `r11-10-play-check-run.txt`, `r11-play-check.json` |
+| R63 / AC54 | Option **VERIFIED**: one look over 24 jobs (11 Stories × 1440/390 + Modal `Detail` opened): `1px solid · 6px · 16/16 · 20×20 · 14px · 500`; 100% of the group's width everywhere (the executor's deviation 4 is not observed). **Group spacing: two values (F52)** — 12px in `Modal` `Detail`, `Radio` `Card`, `RadioCardOption` `Default`; 8px in all `TicketDetailDialogView` and `PremiumDialogView` Stories. `check:ui-contract:verify` exit 0. | `r11-05-radiocard-group-run.txt`, `r11-radiocard-group.json`, `r11-07-ui-contract-verify.txt` |
+| R62 / AC53 | **VERIFIED** for the three named files (whole-file grep: only the 919 slots `AdminSurfacePattern.stories.tsx:61/:64/:70` and prose). A whole-file sweep of the other changed canonical Stories finds F53. AC50's scan `--all-changed`: 28 files, `total hits 0`. | `r11-06-story-scan.txt`, review grep |
+| AC49 | **Still VERIFIED**: `r11-dialog-geometry.mjs` 315 open dialogs (84 sheets), 0 violations, 0 errors. | `r11-02-geometry-run.txt` |
+| AC46 | **Still VERIFIED**: `r11-users-pointer.mjs` 36/36, 0 errors. | `r11-04-users-pointer-run.txt` |
+| Tests | Badge vitest (4 files) 191/191, `typecheck` exit 0 (reviewer run). | `r11-08-vitest-badge.txt`, `r11-09-typecheck.txt` |
+| `main` CI | Unchanged: the last two `Governance Validation (PR)` runs on `main` (2026-10-07) failed, before 859. | `gh run list --branch main` |
+| Noted, not 859's | `AdminPermissionsView` Stories log next-intl `ENVIRONMENT_FALLBACK` console errors (their Story file is unchanged since `HEAD`; the formatter, not the badge) — recorded, no change here. | `r11-play-check.json` |
+
+### 26.2 Findings (review 11)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| **F51** | **P1**, R61(d), storybook-proof "a control that fails" | `src/stories/patterns/mantine/DashboardHeader.stories.tsx` `Default` is broken: `:60` `expect(badge!.querySelector('svg')).not.toBeNull()` fails since D78-29, the Story renders Storybook's error screen instead of the header. `:37` and `:56` still describe "icon + text". R61(d) asked for every icon assertion to become an absence assertion; this Story `play` was missed, and the censuses hid it (an errored Story contributes no badge and no error). | R64 |
+| **F52** | **P1**, GR-12 one meaning one look | A set of choice cards has two spacings: production `TicketDetailDialogView.tsx:155` and `PremiumDialogView.tsx:117` stack the options with `Stack gap="xs"` (8px, a spacing chosen in each consumer); the three Stories stack them with `MantineDialogSection` (`gap="sm"`, 12px), a section part used as a list. The executor reported it (deviation 2: "the group spacing has no owner"). | R65 |
+| **F53** | **P2**, GR-12 / storybook-proof (Story text locale-backed, no Story colour or gutter) | Whole-file Story hardcode in canonical Stories this task changed: `Radio.stories.tsx` `Default` `:26/:34/:44/:52/:63/:74` — six raw English captions in `<Text size="xs" c="gray.5" fw={500}>`; `Combobox.stories.tsx` `Default` `:109/:128/:146/:162/:178/:194/:209/:225/:246/:266` — ten such captions, and `:70` a result line `<Text size="xs" c="brand.7" fw={500}>`; `AdminSurfacePattern.stories.tsx:135` `Default` writes its own gutter `<Box px={{ base: 'md', sm: 'xl' }} py="md">` (GR-3d) and its docs text says so (`:29` "fw=500", `:37–38`). Unchanged since `HEAD`, so the changed-line gates pass. | R66 |
+| F54 | P3, report accuracy | (a) "0 page errors or error screens" (AC54, GR-3 receipts) while `DashboardHeader` `Default` shows an error screen — the probes looked for `.sb-errordisplay:visible` / `pageerror`, not `body.sb-show-errordisplay`; (b) the `Radio.Card` GR-12 receipt says "more than one look: NONE" while deviation 2 reports two spacings; (c) deviation 4 (cards not full width) is not what renders (100% in 24 of 24 jobs); (d) `DashboardWorkList.stories.tsx:42` comment "the colour and icon it has". | §26.5 |
+| — | Filed outside 859 (unchanged lines, HEAD debt) | `DashboardWorkList.stories.tsx:57–146` `SimpleGrid p="md"` + eight `Box maw={…content}` / `p="md"` — the same Story-written gutter and width as **902** (`DashboardStatCard.stories.tsx`): **902** widened to both files. `ListingCardPattern.stories.tsx:97/:104/:189/:213/:247` Story-local footer/title values — **918** (it restyles this Story). `ListingsTab.stories.tsx` is a legacy Story — **895** (the cabinet listings migration). `Table.stories.tsx` / `AdminSurfacePattern.stories.tsx` card slots — **919** (§25.3). | — |
+
+### 26.3 Requirements (Revision 10)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R64** | **The stale header Story works again.** `DashboardHeader.stories.tsx` `Default` `play`: the badge exists, has **no** `svg` (D78-29) and non-empty label text; the comments at `:37` and `:56` say "text-only warning badge". Then, over every Story `play` in `src/` (`rg -n "play:" src --glob "*.stories.tsx"` → the files that query a `Badge` or `svg`), no assertion expects an icon in a badge. `DashboardWorkList.stories.tsx:42`: drop "and icon". | P1 | AC55 |
+| **R65** | **One owner for a set of choice cards (GR-0 EXTEND).** In `src/design-system/mantine/patterns/MantineRadioCardOption.tsx` add `MantineRadioCardGroup`: props `value?: string`, `defaultValue?: string`, `onChange?: (value: string) => void`, `children: ReactNode` (`MantineRadioCardOption` elements); renders `Radio.Group` > `Stack gap="xs"` (8px — the spacing the production dialogs render today, pixel-identical). Export it from `patterns/index.ts`. Consumers: `TicketDetailDialogView` (status), `PremiumDialogView` (duration; the revealed `RangeDatePicker` stays outside the group, unchanged), `Modal.stories.tsx` `Detail`, `Radio.stories.tsx` `Card`, `RadioCardOption.stories.tsx` `Default` — none keeps its own `Radio.Group` + `Stack` / `MantineDialogSection` around options. `scripts/ui-contract-registry.json`: add to the row `mantine-radio-card-option` a parity element `radio card group (a set of choices)` with `storyExports: ["Default"]`. | P1 | AC56 |
+| **R66** | **Whole-file Story clean-up of the changed canonical Stories.** (a) `Radio.stories.tsx` `Default` and `Combobox.stories.tsx` `Default`: each caption becomes a `MantineStorySection label={t('<key>')}` (new `storybook.mantine.*` keys in sq/en/uk/it; the demonstrated controls unchanged); no `Text` with `size` / `c` / `fw` remains; the Combobox result line (`:70`) is plain `<Text>`. (b) `AdminSurfacePattern.stories.tsx` `Default` renders inside `MantineStoryShell` (the shell owns the gutter, GR-3d); no `Box px/py`; the docs text names the shell instead of the `Box` and loses "fw=500". The 919 slots (`:61/:64/:70`) stay. | P2 | AC57 |
+
+### 26.4 Acceptance criteria
+
+- **AC55 [R64].** Copy `review-11/r11-play-check.mjs` to `r10x-play-check.mjs` (port and output names only; it already
+  lists the 48 Stories of the changed components, `DashboardHeader` included); run on the final build: **0 error screens**
+  (`body.sb-show-errordisplay`), **0 `pageerror`**; console errors only the recorded `AdminPermissionsView`
+  `ENVIRONMENT_FALLBACK`. The badge census (AC52(b) re-run, `r10x-badge-census.mjs`) counts the `DashboardHeader`
+  `Default` stale badge (≥ 1 badge in that Story) and, for every Story, records an error screen as an error.
+- **AC56 [R65].** Copy `review-11/r11-radiocard-group.mjs` to `r10x-radiocard-group.mjs`: **one gap value (8px)**,
+  one width value (100%), one card look, 0 errors, at 1440 and 390. `r9x-radiocard-ab.mjs` copied to
+  `r10x-radiocard-ab.mjs` with Revision 9's after-shots as the before: the 28 production options, **0 differing pixels**.
+  A search for `<Radio.Group` in files that render `MantineRadioCardOption` returns only `MantineRadioCardOption.tsx`.
+  `check:ui-contract:verify`, `check:pattern-enrolment`, `check:story-coverage` exit 0.
+- **AC57 [R66].** Over the **whole files** `Radio.stories.tsx`, `Combobox.stories.tsx`, `AdminSurfacePattern.stories.tsx`:
+  the AC53 grep plus `\bp[xy]?=|\bm[xy]?=` returns 0 hits outside the 919 slots; `check:i18n` and `check:i18n-dynamic`
+  exit 0; GR-3b / GR-3d at 320 / 390 / 1024 / 1440 for the three Stories: no horizontal overflow, gutter from the shell.
+- **Gates:** §25.5's block (governance start/end, vitest twice, `typecheck`, `lint`, `build`, `build-storybook`, the
+  check list, AC50's two commands, `check:surface-census:changed -- --base HEAD` — red only for
+  `surface-limit-exceeded`, the count recorded, D78-30), and the reviewer probes `review-11/r11-dialog-geometry.mjs` and
+  `review-11/r11-users-pointer.mjs` copied to `r10x-*` (ports and output names only): 0 violations, 36/36. Every gate
+  after the last source edit (`r10x-60-hashes-end.txt`).
+
+`GR-4 AC AUDIT — 3 new criteria (AC55–AC57); each states an observable property; absolutes: "0 error screens", "one gap value", "0 differing pixels", "0 hits".`
+
+### 26.5 Reference research (GR-7) and parity receipts, review 11
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: Revision 9 outcome (text-only badges, plain Story bodies, Radio.Card option owner); references: Lahomes, Kamr, Omah, TailAdmin + owner URL https://techzaa.in/lahomes/admin/property-grid.html; library: docs/research/references/2026-10-04; live-checked pages: none new this review — the same-day live runs of review 10 (research-review/r10-lahomes-*: status badges text-only) and review 9 (r9-live-*, modals and tables of all four) stand, and the executor re-ran them (research-exec/r9xe-*, unchanged); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library); inspected in depth: unchanged from review 10; workflow states operated: none new; options across references: no new reference-dependent choice — the choice-card spacing keeps production's 8px (pixel-identical rule), not a reference value; chosen 2026 best practice: unchanged (D78-29); absent or unverified: none relied on; lero.al data map: unchanged; owner decisions: D78-29, D78-30; evidence: docs/sessions/evidence/task859/research-review/r10-*, research-exec/r9xe-*.`
+
+`GR-12 ELEMENT PARITY — badge: Stories compared 572 (census docs/sessions/evidence/task859/review-11/r11-badge-groups-after.json, r11-badge-census-after.json; en, 1440, DPR 1); meanings 72 labels; meanings with more than one look: counts 1, 2, 3, 5 and Active (typed lg) — §24.3's accepted set (owner decisions: D78-28, D78-29); badges with an icon: 0 of 1 035; legacy badge-like elements: 0; errored Stories: 1 (DashboardHeader Default, F51, its stale badge uncounted); hardcode in changed files and their Stories: NONE in the badge owner and its consumers; Radio/Combobox Story captions → F53.`
+
+`GR-12 ELEMENT PARITY — dialog shell: Stories compared 110 at 4 sizes (census review-11/r11-dialog-geometry-after.json); meanings 1; meanings with more than one look: NONE (315 open dialogs, 0 violations) (owner decisions: none); hardcode in changed files and their Stories: NONE in the dialog Stories (Modal.stories.tsx whole file clean).`
+
+`GR-12 ELEMENT PARITY — Radio.Card option and group: Stories compared 11 at 1440 and 390 + Modal Detail opened (census review-11/r11-radiocard-group.json); meanings 1 (a set of choices in a detail dialog); meanings with more than one look: group spacing 12px (Modal Detail, Radio Card, RadioCardOption Default) vs 8px (TicketDetailDialogView ×4, PremiumDialogView ×5) (owner decisions: none) → F52; card look and width one value; hardcode in changed files and their Stories: Stack gap="xs" in TicketDetailDialogView/PremiumDialogView and MantineDialogSection as a list in three Stories → F52; Radio.stories.tsx Default captions → F53.`
+
+### 26.6 Write set (Revision 10)
+
+- `src/stories/patterns/mantine/DashboardHeader.stories.tsx` (`Default` `play` + comments), `DashboardWorkList.stories.tsx`
+  (the `:42` comment only), and any other Story whose `play` expects a badge icon (R64 search; list it);
+- `src/design-system/mantine/patterns/MantineRadioCardOption.tsx`, `patterns/index.ts` (export),
+  `scripts/ui-contract-registry.json` (the row's parity element);
+- `src/components/admin/TicketDetailDialogView.tsx`, `PremiumDialogView.tsx` (the group only);
+- `src/stories/mantine/primitives/{Modal, Radio, RadioCardOption, Combobox}.stories.tsx`,
+  `src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx`;
+- `messages/{sq,en,uk,it}.json` (caption keys);
+- evidence `r10x-*`, the session log `# Revision 10`, the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: §19.3's six support files, the server actions, and every Revision 9 write-set file not
+listed above. **Any other file is a stop and report.**
+
+### 26.7 Owner visual review — O78-13 (after review 12)
+
+§25.8's list, plus: `DashboardHeader` `Default` (the stale badge, text only, no error screen); `Radio` `Default` /
+`Card`, `Combobox` `Default` (captions in the shell's caption style, four locales); `AdminSurfacePattern` `Default`
+(shell gutter); the choice cards in `Modal` `Detail`, `RadioCardOption` and the two production dialogs side by side
+(one spacing). Review 12 runs `r10x-play-check`, `r10x-radiocard-group`, the badge census, the dialog geometry, AC50's
+scan and the users pointer probe itself before the matrix goes out.
+
+### 26.8 Completion (Revision 10)
+
+Append `# Revision 10` to the session log with: I0 (hashes and write times); R64–R66 with AC55–AC57 evidence; the GR-0
+receipt for `MantineRadioCardGroup` (EXTEND); GR-12 receipts for badge and the `Radio.Card` option and group with
+**whole-file** hardcode lists for every changed file and its Stories; GR-3b…3e for the changed Stories at
+320/390/1024/1440; the gate block with governance counts and the surface-census count; a `Files Changed` table; F54's
+four corrections. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
+`PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.

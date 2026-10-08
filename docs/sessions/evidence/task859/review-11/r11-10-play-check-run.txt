@@ -1,0 +1,83 @@
+stories 48 with an error 6
+ERR patterns-mantine-adminpermissionsview--default  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--all-allowed  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--saving  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--audit-empty  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--audit-unavailable  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6481)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:1111:6903
+    at l (http://127.0.0.1:6215/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-dashboardheader--default [error display] expected null not to be null console: Error rendering story 'patterns-mantine-dashboardheader--default': | console: AssertionError: expected null not to be null
+    at play (http://127.0.0.1:6215/assets/DashboardHeader.stories-Bad_HUeA.js:1:2859)
+    at http://127.0.0.1:6215/assets/iframe-C8EgeA1a.js:911:3855
+    a
+EXIT_CODE=0

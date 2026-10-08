@@ -1,0 +1,344 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "checks": [
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "opens with 4 users",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: shield verifies",
+   "pass": true,
+   "detail": {
+    "before": 1
+   }
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "keyboard: search \"Gent\" narrows to Gentiana",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: role \"user\"",
+   "pass": true,
+   "detail": [
+    "Oksana",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: role \"agent\"",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: role \"moderator\"",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: role \"admin\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: role \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: status \"active\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: status \"inactive\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: status \"blocked\"",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: status \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: verified tab hides the search",
+   "pass": true
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "pointer: all tab restores 4 users",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "Default",
+   "name": "no page/console error",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 1440,
+   "story": "LocationFilter",
+   "name": "shows 1 user",
+   "pass": true,
+   "detail": [
+    "Oksana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "LocationFilter",
+   "name": "pointer: removing the chip shows 4",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 1440,
+   "story": "LocationFilter",
+   "name": "no page/console error",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "opens with 4 users",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: shield verifies",
+   "pass": true,
+   "detail": {
+    "before": 1
+   }
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "keyboard: search \"Gent\" narrows to Gentiana",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: role \"user\"",
+   "pass": true,
+   "detail": [
+    "Oksana",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: role \"agent\"",
+   "pass": true,
+   "detail": [
+    "Arben"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: role \"moderator\"",
+   "pass": true,
+   "detail": [
+    "Marco"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: role \"admin\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: role \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: status \"active\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: status \"inactive\"",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: status \"blocked\"",
+   "pass": true,
+   "detail": [
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: status \"all\"",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: verified tab hides the search",
+   "pass": true
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "pointer: all tab restores 4 users",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "Default",
+   "name": "no page/console error",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "w": 390,
+   "story": "LocationFilter",
+   "name": "shows 1 user",
+   "pass": true,
+   "detail": [
+    "Oksana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "LocationFilter",
+   "name": "pointer: removing the chip shows 4",
+   "pass": true,
+   "detail": [
+    "Arben",
+    "Oksana",
+    "Marco",
+    "Gentiana"
+   ]
+  },
+  {
+   "w": 390,
+   "story": "LocationFilter",
+   "name": "no page/console error",
+   "pass": true,
+   "detail": []
+  }
+ ]
+}

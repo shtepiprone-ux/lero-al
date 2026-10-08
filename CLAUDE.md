@@ -43,6 +43,9 @@ must pass the built-Storybook parity census, or have a dated owner decision expl
   preserved only when the selected task explicitly retains the legacy surface.
 - Agents use read-only Git inspection only. The owner makes mutations. Sonnet never emits mutating Git commands;
   Opus emits explicit owner commands only when its selected workflow permits them.
+- An owner-run commit handoff is an ordinary owner commit, never an agent attribution. No agent may emit, suggest, or
+  include `Co-Authored-By` (in any spelling), an AI/vendor identity, or `--author` in a commit command, subject,
+  body, or trailer.
 - Sonnet cannot edit policy/governance or `.claude/**`; it reports a policy issue to Opus. Opus does not implement
   product code while designing or reviewing.
 

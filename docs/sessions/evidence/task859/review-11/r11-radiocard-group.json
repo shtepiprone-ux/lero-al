@@ -1,0 +1,626 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "stories": 572,
+ "jobs": 1144,
+ "gapBetweenCards": {
+  "12px": [
+   "mantine-primitives-modal--detail@1440",
+   "mantine-primitives-modal--detail@390",
+   "mantine-primitives-radio--card@1440",
+   "mantine-primitives-radio--card@390",
+   "mantine-primitives-radiocardoption--default@1440",
+   "mantine-primitives-radiocardoption--default@390"
+  ],
+  "8px": [
+   "patterns-mantine-premiumdialogview--custom-date@1440",
+   "patterns-mantine-premiumdialogview--custom-date@390",
+   "patterns-mantine-premiumdialogview--not-premium@1440",
+   "patterns-mantine-premiumdialogview--not-premium@390",
+   "patterns-mantine-premiumdialogview--premium-active@1440",
+   "patterns-mantine-premiumdialogview--premium-active@390",
+   "patterns-mantine-premiumdialogview--premium@1440",
+   "patterns-mantine-premiumdialogview--premium@390",
+   "patterns-mantine-premiumdialogview--saving@1440",
+   "patterns-mantine-premiumdialogview--saving@390",
+   "patterns-mantine-ticketdetaildialogview--complaint@1440",
+   "patterns-mantine-ticketdetaildialogview--complaint@390",
+   "patterns-mantine-ticketdetaildialogview--support@1440",
+   "patterns-mantine-ticketdetaildialogview--support@390",
+   "patterns-mantine-ticketdetaildialogview--updating@1440",
+   "patterns-mantine-ticketdetaildialogview--updating@390",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@1440",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@390"
+  ]
+ },
+ "cardWidthShareOfGroupContainer": {
+  "100%": [
+   "mantine-primitives-modal--detail@1440",
+   "mantine-primitives-modal--detail@390",
+   "mantine-primitives-radio--card@1440",
+   "mantine-primitives-radio--card@390",
+   "mantine-primitives-radiocardoption--default@1440",
+   "mantine-primitives-radiocardoption--default@390",
+   "patterns-mantine-premiumdialogview--custom-date@1440",
+   "patterns-mantine-premiumdialogview--custom-date@390",
+   "patterns-mantine-premiumdialogview--not-premium@1440",
+   "patterns-mantine-premiumdialogview--not-premium@390",
+   "patterns-mantine-premiumdialogview--premium-active@1440",
+   "patterns-mantine-premiumdialogview--premium-active@390",
+   "patterns-mantine-premiumdialogview--premium@1440",
+   "patterns-mantine-premiumdialogview--premium@390",
+   "patterns-mantine-premiumdialogview--saving@1440",
+   "patterns-mantine-premiumdialogview--saving@390",
+   "patterns-mantine-ticketdetaildialogview--complaint@1440",
+   "patterns-mantine-ticketdetaildialogview--complaint@390",
+   "patterns-mantine-ticketdetaildialogview--support@1440",
+   "patterns-mantine-ticketdetaildialogview--support@390",
+   "patterns-mantine-ticketdetaildialogview--updating@1440",
+   "patterns-mantine-ticketdetaildialogview--updating@390",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@1440",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@390"
+  ]
+ },
+ "cardLook": {
+  "1px solid | 6px | 16px/16px | 20x20 | 14px | 500": [
+   "mantine-primitives-modal--detail@1440",
+   "mantine-primitives-modal--detail@390",
+   "mantine-primitives-radio--card@1440",
+   "mantine-primitives-radio--card@390",
+   "mantine-primitives-radiocardoption--default@1440",
+   "mantine-primitives-radiocardoption--default@390",
+   "patterns-mantine-premiumdialogview--custom-date@1440",
+   "patterns-mantine-premiumdialogview--custom-date@390",
+   "patterns-mantine-premiumdialogview--not-premium@1440",
+   "patterns-mantine-premiumdialogview--not-premium@390",
+   "patterns-mantine-premiumdialogview--premium-active@1440",
+   "patterns-mantine-premiumdialogview--premium-active@390",
+   "patterns-mantine-premiumdialogview--premium@1440",
+   "patterns-mantine-premiumdialogview--premium@390",
+   "patterns-mantine-premiumdialogview--saving@1440",
+   "patterns-mantine-premiumdialogview--saving@390",
+   "patterns-mantine-ticketdetaildialogview--complaint@1440",
+   "patterns-mantine-ticketdetaildialogview--complaint@390",
+   "patterns-mantine-ticketdetaildialogview--support@1440",
+   "patterns-mantine-ticketdetaildialogview--support@390",
+   "patterns-mantine-ticketdetaildialogview--updating@1440",
+   "patterns-mantine-ticketdetaildialogview--updating@390",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@1440",
+   "patterns-mantine-ticketdetaildialogview--with-timeline@390"
+  ]
+ },
+ "raw": [
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 390,
+   "groups": [
+    {
+     "first": "Active",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "Active",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "For sale",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    },
+    {
+     "first": "For sale",
+     "cards": 2,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "w": 390,
+   "groups": [
+    {
+     "first": "For sale",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    },
+    {
+     "first": "For sale",
+     "cards": 2,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "For sale",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    },
+    {
+     "first": "For sale",
+     "cards": 2,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "w": 390,
+   "groups": [
+    {
+     "first": "For sale",
+     "cards": 3,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    },
+    {
+     "first": "For sale",
+     "cards": 2,
+     "gaps": [
+      12
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 390,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium",
+   "w": 390,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium-active",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--premium-active",
+   "w": 390,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 390,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--saving",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--saving",
+   "w": 390,
+   "groups": [
+    {
+     "first": "1 month",
+     "cards": 5,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 390,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--complaint",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--complaint",
+   "w": 390,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--with-timeline",
+   "w": 390,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--updating",
+   "w": 1440,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--updating",
+   "w": 390,
+   "groups": [
+    {
+     "first": "Open",
+     "cards": 4,
+     "gaps": [
+      8
+     ],
+     "widthShare": [
+      100
+     ],
+     "looks": [
+      "1px solid | 6px | 16px/16px | 20x20 | 14px | 500"
+     ]
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

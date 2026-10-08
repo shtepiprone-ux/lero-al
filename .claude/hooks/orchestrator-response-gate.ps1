@@ -100,10 +100,13 @@ try {
         $problems += "GR-6 VIOLATED. 'git push' appears in a response that is not an APPROVED / APPROVED WITH NOTES review."
     }
 
-    # GR-6 - Co-Authored-By trailers are forbidden in every owner-run commit handoff. Reject
-    # all variants so an alternate Claude model/address cannot bypass the policy.
-    if ($last -match '(?im)^\s*Co-Authored-By\s*:') {
-        $problems += "GR-6 VIOLATED. Owner-run commit handoffs must not include a Co-Authored-By trailer. Emit only the intended commit subject and any task-required body."
+    # GR-6 - Commit handoffs are unattributed owner commits. The former start-of-line trailer
+    # check missed `git commit -m "Co-Authored-By: ..."`; inspect the whole commit block instead.
+    # \u2010-\u2015 closes common Unicode-hyphen spelling bypasses without putting non-ASCII in this PS 5.1 source.
+    $hasCommitCommand = $last -match '(?im)^\s*git(?:\s+\S+)*\s+commit\b'
+    $hasAgentAttribution = $last -match '(?i)\bco[\s\-\u2010-\u2015]*authored[\s\-\u2010-\u2015]*by\b'
+    if ($hasCommitCommand -and $hasAgentAttribution) {
+        $problems += "GR-6 VIOLATED. Owner-run commit handoffs are unattributed: Co-Authored-By and every AI/agent attribution are forbidden anywhere in the git commit command or message."
     }
 
     # GR-5 - closing a task in the backlog requires the archive row in the same response.

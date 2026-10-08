@@ -14,7 +14,8 @@ For `NEEDS REVISION`, revise the existing kickoff and active state records in th
 single corrected route, and provide only a commit-only owner handoff for Opus-authored artifacts. For approval,
 synchronize GR-5 state, archive the closed task/stale closed rows, re-read active backlog, run its gate, and emit the
 required receipt. Reconcile real status/diff and then give the explicit-path owner commit + verified push handoff.
-Never issue a handoff for unreconciled or unapproved work.
+Never issue a handoff for unreconciled or unapproved work. Every permitted commit handoff is an unattributed owner
+commit: `Co-Authored-By`, AI/agent credit, and `--author` are forbidden in every command and message.
 
 The final response uses the concise headings and exact command format in `docs/orchestrator-procedures.md`; detailed
 transcripts remain in the review/session record.

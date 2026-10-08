@@ -1672,3 +1672,56 @@ evidence; the gate block with the governance start and end counts; a `Files Chan
 
 Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`. No Git.
+
+## 22. Review 7 (2026-10-08): `PARTIALLY VERIFIED` — Revisions 5 and 6 verified; the owner matrix O78-13 is the only open item
+
+**No executor action.** Approval waits on the owner's visual review of §20.8 (O78-13), then a closing review.
+
+### 22.1 Evidence
+
+- **R48 / AC41 — VERIFIED.** `badgeTones.ts` lines 2–5 import the four icons from their own entry points; `@solar-icons`
+  appears in no other line of the file. Reviewer A/B (`review-7/r7-01-reset-ab.txt`, native PowerShell, 3 runs per
+  tree): `ResetPasswordClient`'s first test takes 1 657–1 711 ms in the 859 tree and 1 609–1 771 ms in the `HEAD`
+  worktree, a ratio of ≈1.0, where review 6 measured ≈2.0. The executor's warm A/B (`r6-04-ab-probe-barrel.txt`: barrel
+  2.06–2.13 s, per-icon 1.44–1.48 s) agrees in direction. Its finding that `HEAD` alone varies 2× with cache state is
+  accepted; the per-icon import is the smaller graph either way.
+- **AC26 — VERIFIED.** `r6-12-vitest-run1.txt` and `r6-13-vitest-run2.txt`: 154/154 files, 2 464/2 464 tests,
+  `EXIT_CODE=0` both times.
+- **AC42 — VERIFIED.** `r6-badge-ab.json`: 0 differing pixels in all four shots at the same size; the "after"
+  `statuses-en-390` shot was opened and shows every badge with its icon (the comparison is between real renders).
+- **Gate block — VERIFIED.** Every `r6-1*`/`r6-2*` transcript ends `EXIT_CODE=0` (typecheck, lint, story-coverage,
+  check:stories, rendered-scope, i18n, file-integrity, mojibake, build-storybook, build). Governance start and end:
+  C0 / H0 and identical per-scanner counts (`r6-01`, `r6-11`).
+- **R45–R47 — VERIFIED** (review 6 artifacts, plus review 7's own measurement below).
+
+### 22.2 Reviewer GR-3 / GR-9 measurement of the five Revision 5 Stories
+
+`review-7/r7-gr3.mjs` → `r7-gr3.json`, `r7-gr3-*.png` (final `storybook-static`, sq, DPR 1, 320/390/1024/1440; every
+`play` reached its end state, 0 page or console errors).
+
+`GR-3b STORY RESPONSIVE CHECK — the five Stories: dialog 320 320/320 (sheet) · 390 390/390 (sheet) · 1024 440/1024 · 1440 440/1440; overflow: none; fixed-width containers, style objects, viewport pins (Story source, review 6 diff): NONE.`
+
+`GR-3c TYPE RESPONSIVE CHECK — the five Stories: largest text 20px (ModalOpen card title), 18px (CollectionsSection, AvatarCropModal) at every width; ≥24px: NONE; heading above 20px below 640: NONE; child heading larger than the page title: NONE.`
+
+`GR-3d STORY GUTTER CHECK — admindashboardrecentlistings--modal-open: n/a: own gutter (MantineDashboardGrid.tsx:58, p base md 16 → md xl 24); left/right/top 320 16/16/16 · 390 16/16/16 · 1024 24/24/24 · 1440 24/24/24; collectionssection--create-error, --rename-dialog-open, --delete-confirm-open: n/a: MantineStoryShell primitive (16 → 24); avatarcropmodal--saving: n/a: overlay-only; side at 0: NONE; doubled gutter: NONE; gutter written in the Story: NONE.`
+
+`GR-3e TEXT BUTTONS STACKED — the five Stories: text buttons (subtle/transparent) in the open popup 0; groups of ≥2: 0; pairs sharing a row at 390/1440: NONE.` The footer pairs (Anulo + Krijo / Ruaj / Fshi koleksionin) are `default` + filled buttons, the §23.6 footer, not text buttons.
+
+GR-3f / GR-3g / GR-11: no circular control, line or corner changed (the `Saving` `Loader` is unchanged; `theme.ts` has no
+`Loader` hunk). Sheet corners 24/24/0/0, modal 24 on all four, as AC29/AC40.
+
+`GR-9 REVIEW DEPTH — the five Stories: (1) census r5-gr9-census-final.json + r7-gr3.json; (2) each renders the real production component (direct import), no authored value; (3) states: CollectionsSection Empty, Populated, CreateDialogOpen, CreateError, RenameDialogOpen, DeleteConfirmOpen (renameError and the pending state need a server action, not mocked: accepted in §21.2); AvatarCropModal Default, Saving; recent-listings ModalOpen opens; (4) 390 sheet vs 1440 modal by design (§23.7); (5) the executor's dialogOpen, GR-3b, GR-3d and GR-3e claims match the reviewer's numbers.`
+
+### 22.3 Reference research (GR-7), review 7
+
+`research-review/r7-live-check.mjs` → `r7-live-check.json`, `r7-live-*.png` (`win32`, Node v22.22.3, exit 0): the 9
+table pages unchanged against the library; the 3 modal pages opened at 1440 and 390, TailAdmin Esc does not close, Kamr
+and Lahomes Esc closes, as in reviews 5 and 6.
+
+`GR-7 REFERENCE RESEARCH — moment: review; role: Opus; task: 859; subject: Revision 6 outcome (icon import path, no pixel change) and the five Revision 5 Stories before the owner matrix; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal; Omah ecom-customers, ecom-product-order → unchanged, modals operated at 1440/390 with Esc recorded; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library; no live difference, no re-crawl); inspected in depth: every page (library summary.md rows) + the live pages above; workflow states operated: modal open, Esc, table first-row checkbox; options across references: unchanged from §20.6; chosen 2026 best practice: unchanged (§17.3, D78-21…D78-25); absent or unverified: none; lero.al data map: §17.3 (unchanged); owner decisions: none new; evidence: docs/sessions/evidence/task859/research-review/r7-*.`
+
+### 22.4 What is still open
+
+- **O78-13**: the owner's visual review of §20.8, every row at the stated locales and widths. Until the owner returns it,
+  the visual criterion is `NOT VERIFIABLE`. A returned row becomes a revision; all rows accepted → the closing review.
+- The `/admin/support` table row of §20.8 waits for 919 (D78-17), as before.

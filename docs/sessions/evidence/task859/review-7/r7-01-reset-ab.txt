@@ -1,0 +1,32 @@
+win32 v22.22.3 C:\Claude_Code_Projects\lero-al
+RUN 1 C:\Claude_Code_Projects\lero-al EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1711ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 53ms
+      Tests  5 passed (5)
+   Duration  3.89s (transform 702ms, setup 84ms, import 837ms, tests 2.03s, environment 715ms)
+RUN 2 C:\Claude_Code_Projects\lero-al EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1657ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 52ms
+      Tests  5 passed (5)
+   Duration  3.68s (transform 695ms, setup 82ms, import 846ms, tests 1.94s, environment 679ms)
+RUN 3 C:\Claude_Code_Projects\lero-al EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1688ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 62ms
+      Tests  5 passed (5)
+   Duration  3.77s (transform 703ms, setup 84ms, import 829ms, tests 2.02s, environment 700ms)
+win32 v22.22.3 C:\Claude_Code_Projects\lero-al-859-head
+RUN 1 C:\Claude_Code_Projects\lero-al-859-head EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1771ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 63ms
+      Tests  5 passed (5)
+   Duration  3.90s (transform 765ms, setup 89ms, import 818ms, tests 2.10s, environment 682ms)
+RUN 2 C:\Claude_Code_Projects\lero-al-859-head EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1609ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 47ms
+      Tests  5 passed (5)
+   Duration  3.78s (transform 665ms, setup 99ms, import 871ms, tests 1.90s, environment 693ms)
+RUN 3 C:\Claude_Code_Projects\lero-al-859-head EXIT_CODE=0
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1650ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 53ms
+      Tests  5 passed (5)
+   Duration  3.86s (transform 695ms, setup 91ms, import 862ms, tests 1.97s, environment 697ms)

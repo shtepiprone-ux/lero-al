@@ -1,0 +1,922 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "out": [
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "width": 320,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-admindashboardrecentlistings-modal-open-320.png",
+   "W": 320,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 320,
+    "top": 353
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 20,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 20,
+     "text": "Njoftime të fundit",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Mbyll"
+   ],
+   "rowPairs": [],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_8bffd616 mantine-Flex-root __m__-_r_2_",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "width": 390,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-admindashboardrecentlistings-modal-open-390.png",
+   "W": 390,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 390,
+    "top": 380
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 20,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 20,
+     "text": "Njoftime të fundit",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Mbyll"
+   ],
+   "rowPairs": [],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_8bffd616 mantine-Flex-root __m__-_r_2_",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "width": 1024,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-admindashboardrecentlistings-modal-open-1024.png",
+   "W": 1024,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 292,
+    "right": 292,
+    "width": 440,
+    "top": 191
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 20,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 20,
+     "text": "Njoftime të fundit",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Mbyll"
+   ],
+   "rowPairs": [],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_8bffd616 mantine-Flex-root __m__-_r_2_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "patterns-mantine-admindashboardrecentlistings--modal-open",
+   "width": 1440,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-admindashboardrecentlistings-modal-open-1440.png",
+   "W": 1440,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 500,
+    "right": 500,
+    "width": 440,
+    "top": 191
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 20,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 20,
+     "text": "Njoftime të fundit",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Mbyll"
+   ],
+   "rowPairs": [],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_8bffd616 mantine-Flex-root __m__-_r_2_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "width": 320,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-create-error-320.png",
+   "W": 320,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 320,
+    "top": 633
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Krijo"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Krijo"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "width": 390,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-create-error-390.png",
+   "W": 390,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 390,
+    "top": 633
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Krijo"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Krijo"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "width": 1024,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-create-error-1024.png",
+   "W": 1024,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 292,
+    "right": 292,
+    "width": 440,
+    "top": 322
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Krijo"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Krijo"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--create-error",
+   "width": 1440,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-create-error-1440.png",
+   "W": 1440,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 500,
+    "right": 500,
+    "width": 440,
+    "top": 322
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Krijo"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Krijo"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "width": 320,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-rename-dialog-open-320.png",
+   "W": 320,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 320,
+    "top": 651
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "width": 390,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-rename-dialog-open-390.png",
+   "W": 390,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 390,
+    "top": 651
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "width": 1024,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-rename-dialog-open-1024.png",
+   "W": 1024,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 292,
+    "right": 292,
+    "width": 440,
+    "top": 331
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--rename-dialog-open",
+   "width": 1440,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-rename-dialog-open-1440.png",
+   "W": 1440,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 500,
+    "right": 500,
+    "width": 440,
+    "top": 331
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "width": 320,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-delete-confirm-open-320.png",
+   "W": 320,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 320,
+    "top": 653
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Fshi koleksionin"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Fshi koleksionin"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "width": 390,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-delete-confirm-open-390.png",
+   "W": 390,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 390,
+    "top": 653
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Fshi koleksionin"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Fshi koleksionin"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "m_6d731127 mantine-Stack-root",
+    "left": 16,
+    "right": 16,
+    "top": 16
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "width": 1024,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-delete-confirm-open-1024.png",
+   "W": 1024,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 292,
+    "right": 292,
+    "width": 440,
+    "top": 332
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Fshi koleksionin"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Fshi koleksionin"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "mantine-primitives-collectionssection--delete-confirm-open",
+   "width": 1440,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-collectionssection-delete-confirm-open-1440.png",
+   "W": 1440,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 500,
+    "right": 500,
+    "width": 440,
+    "top": 332
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [
+    {
+     "tag": "H2",
+     "fs": 18,
+     "text": "Koleksione",
+     "inDialog": false
+    }
+   ],
+   "dialogTextButtons": [
+    "Anulo",
+    "Fshi koleksionin"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Fshi koleksionin"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "width": 320,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-avatarcropmodal-saving-320.png",
+   "W": 320,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 320,
+    "top": 331
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "width": 390,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-avatarcropmodal-saving-390.png",
+   "W": 390,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 0,
+    "right": 0,
+    "width": 390,
+    "top": 331
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "0px",
+    "0px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": null
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "width": 1024,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-avatarcropmodal-saving-1024.png",
+   "W": 1024,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 292,
+    "right": 292,
+    "width": 440,
+    "top": 171
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  },
+  {
+   "id": "patterns-mantine-avatarcropmodal--saving",
+   "width": 1440,
+   "playEndState": true,
+   "errors": [],
+   "shot": "r7-gr3-avatarcropmodal-saving-1440.png",
+   "W": 1440,
+   "overflowX": false,
+   "dialogs": 1,
+   "dialog": {
+    "left": 500,
+    "right": 500,
+    "width": 440,
+    "top": 171
+   },
+   "radius": [
+    "24px",
+    "24px",
+    "24px",
+    "24px"
+   ],
+   "maxFont": 18,
+   "big": [],
+   "headings": [],
+   "dialogTextButtons": [
+    "Anulo",
+    "Ruaj"
+   ],
+   "rowPairs": [
+    [
+     "Anulo",
+     "Ruaj"
+    ]
+   ],
+   "pageContent": {
+    "tag": "DIV",
+    "cls": "__m__-_r_3_",
+    "left": 24,
+    "right": 24,
+    "top": 24
+   }
+  }
+ ]
+}

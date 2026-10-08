@@ -1,0 +1,30 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 3430ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 46ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount 88ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 78ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered 69ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:25:42
+   Duration  5.42s (transform 885ms, setup 83ms, import 799ms, tests 3.71s, environment 691ms)
+
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 3279ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 53ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount 95ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 80ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered 73ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:25:48
+   Duration  5.37s (transform 833ms, setup 79ms, import 821ms, tests 3.58s, environment 686ms)
+
+

@@ -1527,3 +1527,148 @@ Append `# Revision 5` to the session log with:
 Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`. No Git.
 
+## 21. Revision 6 (review 6, 2026-10-08): `NEEDS REVISION` — the new badge registry slows every barrel consumer past the test timeout
+
+**This section is the only executable route.** §20 stays binding where §21 does not replace it. Everything Revisions
+0–5 built stays. **One production file changes: the icon imports of `src/design-system/mantine/badgeTones.ts`.**
+
+**Re-entry: `remediation`**, on the current tree. Evidence goes to `docs/sessions/evidence/task859/r6-*`. Do not
+overwrite any `r5-*` artifact or anything under `review-*/` or `research-review/` (the reviewer's evidence).
+
+### 21.1 What review 6 inspected
+
+The pasted Revision 5 report; session log `# Revision 5`; the diff of the three Story files (+103 / −20, equal to the
+log); `r5-04*`, `r5-11-file-integrity.txt`, `r5-modalopen-final.json`, `r5-gr9-census-final.json` (the five Stories:
+`dialogOpen: true`; the non-canonical markers are only the preview wrapper and Mantine runtime geometry), `r5-sheets.json`
+(ten consumers, 24px / 24px); `CollectionsSection.tsx` (create/rename error slots, server actions) and `.storybook/main.ts`
+(no action mock).
+
+Reviewer measurements (`review-6/`, `win32`, Node v22.22.3, native PowerShell):
+- `ResetPasswordClient.smoke.test.ts` alone, 3 runs per tree, `--reporter=verbose`: the first test
+  (`tokenHash + type=recovery …`) takes **1 595–1 630 ms in the `HEAD` worktree** (`r6-02-reset-head.txt`) and
+  **3 279–3 430 ms in the 859 tree** (`r6-03-reset-859tree-verbose.txt`); test totals 1.9 s vs 3.6–4.4 s
+  (`r6-01-reset-859tree.txt`). The first test performs the file's cold `await import('../ResetPasswordClient')`.
+- `ResetPasswordView.tsx:7` imports the patterns barrel. 859 added `MantineBadge` to that barrel
+  (`patterns/index.ts`, +6 lines). `MantineBadge.tsx:10` imports `../badgeTones`; `badgeTones.ts:2` imports four icons
+  from `@solar-icons/react/broken`, which the package maps to `dist/icons/style/broken.mjs`, the style barrel over
+  2 928 icon files. It is the only `@solar-icons` import under `src/design-system/mantine/` (grep). A cold Node import of
+  that specifier alone takes 721–760 ms (`r6-04-solar-import.txt`).
+- `CabinetPasswordSectionView.tsx:6` imports the same barrel; Task 790's Phase 1 runs in this shared tree record
+  `CabinetPasswordSection` red beside `ResetPasswordClient` (`docs/sessions/2026-10-07-task790-rest-main-ci-green.md` §5).
+- `check:file-integrity` (`r6-05-file-integrity.txt`): every offending path is under the untracked
+  `docs/sessions/evidence/task790/rest/`; no 859 path.
+
+### 21.2 Rulings on the Revision 5 deviations
+
+1. **vitest, `ResetPasswordClient`: rejected (CONTRADICTION).** The report says the five failures are "outside 859".
+   Its own `r5-04c-head-two-files.txt` shows `ResetPasswordClient` **passing** in the `HEAD` worktree, and review 6's
+   A/B shows the 859 tree doubles that file's cold import. Revision 5 did not cause it; Revisions 2–4 did (the badge
+   registry), so 859 owns it. **`RangeDatePicker` (`Confirm commits one onChange…`): accepted as not 859's.** It fails
+   in the `HEAD` worktree (`r5-04c`) and is Task 790's F5, stopped there for an owner timeout decision.
+2. **BOMs in `task790/rest/`: accepted.** Untracked work of the 790 session, outside 859's write set.
+3. **`CreateError` through client validation: accepted.** §20.4's "existing fixture's failing action" does not exist
+   (Opus kickoff defect): no action is mocked in Storybook. `name_required` and `error_generic` render through the same
+   `TextInput` `error` slot (`CollectionsSection.tsx:60–66`, `:194`), so the state is shown; only the string differs.
+4. Accepted. 5. Accepted.
+
+**Kickoff defect (Opus, §20.5):** "vitest fails only the four `HEAD` tests" was stale when written: `bc7c90385` (790)
+had already turned those four green. AC26 is re-stated in §21.4.
+
+### 21.3 Findings (review 6)
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| F26 | P1, AC26 / R32 | `npx.cmd vitest run --maxWorkers=3` exits 1 in the 859 tree (`r5-04`, `r5-04b`): `ResetPasswordClient.smoke.test.ts` fails 4 tests (the first times out at 5 000 ms, the next three cascade). The same file passes in the `HEAD` worktree. FACT: the cold import is ≈2× slower in the 859 tree (§21.1). INFERENCE, to be proved by R48's A/B: the `@solar-icons/react/broken` style barrel that `badgeTones.ts` pulls into the patterns barrel. After a push, `main`'s vitest job would carry it. | R48 |
+| F27 | P3, backlog accuracy | The 859 backlog cell said "two gates red outside 859". The `ResetPasswordClient` half is false (F26). | Corrected by Opus in review 6 |
+
+Not findings: R45–R47 / AC38–AC40 are supported by the artifacts in §21.1. Review 6 did **not** take its own
+GR-3b/3c/3d/3e measurements of the five new or changed Stories; review 7 takes them before the owner matrix.
+
+### 21.4 Requirements and acceptance criteria (Revision 6)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R48** | In `src/design-system/mantine/badgeTones.ts`, import each of the four icons from its own entry point instead of the style barrel: `CheckCircleIcon` from `@solar-icons/react/broken/check-circle`, `CloseCircleIcon` from `@solar-icons/react/broken/close-circle`, `DangerCircleIcon` from `@solar-icons/react/broken/danger-circle`, `RecordCircleIcon` from `@solar-icons/react/broken/record-circle`. The package (2.3.2) exports `./broken/*` → `dist/icons/broken/*.mjs` with `.d.mts` types, and each of the four files exports exactly that name (verified in review 6). Nothing else in the file changes. No other file changes. **Stop and report** if typecheck or the build rejects a specifier, or if AC41 still fails after the change (then record which module dominates the import, measured, not guessed). | P1 | AC41, AC26 |
+
+- **AC41 [R48].** Before the write and again after it, run each of these files alone 3 times with
+  `--reporter=verbose` in the 859 tree, and 3 times in the `HEAD` worktree `..\lero-al-859-head`:
+  `src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts` and
+  `src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx`. Record every first-test duration
+  (`r6-01-ab-before.txt`, `r6-02-ab-after.txt`, `r6-03-ab-head.txt`). Pass: after the change, each file's median
+  first-test duration in the 859 tree is at most 1.5× its `HEAD` median, and every run passes.
+- **AC26 (re-stated, third time) [R32, R48].** `npx.cmd vitest run --maxWorkers=3`, run twice. For every failing
+  test, run its file alone 3 times in the `HEAD` worktree. The test must also fail there, **or** be `RangeDatePicker`
+  `Confirm commits one onChange…` (790 F5). Any failure that passes at `HEAD` blocks. Record the table in the log.
+- **AC42 [R48, no pixel change].** Before the write, screenshot `mantine-primitives-badge--statuses` and
+  `mantine-primitives-badge--default` (en, 1440 and 390, DPR 1) from the current `storybook-static`; after
+  `build-storybook`, the same four shots. Pixel diff: 0 differing pixels in all four (`r6-badge-ab.json`, PNGs beside it).
+- **`check:file-integrity` (re-stated).** Exit 0, **or** every offending path is under
+  `docs/sessions/evidence/task790/` (790's untracked work). Any other offending path blocks.
+- Every other gate of §21.5 exits 0. `governance` runs before the first write and at the end; counts recorded.
+
+`GR-4 AC AUDIT — 2 new criteria (AC41–AC42) plus AC26 and the file-integrity criterion re-stated; each states an observable property; absolutes: "0 differing pixels" (an import-path change must not change a rendered icon) and the gates' own exit contracts.`
+
+### 21.5 Verification (Revision 6)
+
+**I0** → `r6-00-i0.txt`: platform (`win32` only); `git --no-optional-locks status --porcelain` (every Revision 0–5 path
+present); `git --no-optional-locks diff --stat 58719f5d8 HEAD -- src messages` prints nothing (the `HEAD` worktree is
+still content-current; otherwise `BLOCKED — HEAD worktree stale`); `git hash-object` of the §20.7 set plus
+`badgeTones.ts`, `MantineBadge.tsx` and `patterns/index.ts`; the GR-7 execution receipt (re-run
+`research-review/r6-live-check.mjs`, output redirected to `research-exec/r6-*`). Then AC41's "before" runs and AC42's
+"before" shots.
+
+**Gate block** after the write. Each transcript is UTF-8 without a BOM and ends `EXIT_CODE=`. PowerShell 5.1
+`Out-File -Encoding utf8` writes a BOM: write transcripts through Node, or strip the BOM with Node over an explicit file
+list afterwards (review 6 had to).
+
+```powershell
+node.exe -p "process.platform + ' ' + process.version + ' ' + process.cwd()"
+npm.cmd run governance
+npx.cmd vitest run --maxWorkers=3
+npx.cmd vitest run --maxWorkers=3
+npm.cmd run typecheck
+npm.cmd run lint
+npm.cmd run check:story-coverage
+npm.cmd run check:stories
+npm.cmd run check:rendered-scope
+npm.cmd run check:i18n
+npm.cmd run check:file-integrity
+npm.cmd run check:mojibake
+npm.cmd run build-storybook
+npm.cmd run build
+git --no-optional-locks status --porcelain
+```
+
+Then AC41's "after" and `HEAD` runs, and AC42's "after" shots on the new `storybook-static`.
+
+### 21.6 Reference research (GR-7), review 6
+
+**Library:** `docs/research/references/2026-10-04/` (unchanged). **Live, this session:**
+`research-review/r6-live-check.mjs` (a copy of `review-5/r5-live-check.mjs` with renamed output) → `r6-live-check.json`,
+`r6-live-check-stdout.txt`, `r6-live-*.png` (Playwright, `win32`, Node v22.22.3, exit 0): the 9 table pages unchanged
+(library 051, 052, 016, 016, 020, 002, 019, 025, 022); the 3 modal pages operated at 1440 and 390 with review 5's
+results (TailAdmin 24px, title 30px / 600, Esc does not close; Kamr and Lahomes 0px, Esc closes). R48 changes no
+rendered pixel (AC42), so no reference pattern is in question.
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: Revision 5 outcome (matrix Story dialogs, sheet corners) and a test-time regression from the badge registry import; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: TailAdmin support-tickets, support-ticket-reply, products-list, modals; Lahomes customers-list, orders, ui-modal; Kamr guest-list, ecom-customers, ui-modal; Omah ecom-customers, ecom-product-order → the 9 table pages unchanged, the 3 modal pages operated at 1440/390 with Esc recorded; route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library; no live difference, no missing page, so no re-crawl); inspected in depth: every page (library summary.md rows) + the live pages above; workflow states operated: modal open at 1440/390, Esc, table first-row checkbox, badge computed styles; options across references: unchanged from §20.6; chosen 2026 best practice: unchanged (§17.3, D78-21…D78-25), this revision changes no pixel; absent or unverified: none for the subject; lero.al data map: §17.3 (unchanged); owner decisions: none new; evidence: docs/sessions/evidence/task859/research-review/r6-*.`
+
+### 21.7 Write set (Revision 6)
+
+- `src/design-system/mantine/badgeTones.ts`: the four icon import specifiers only (R48);
+- probes and evidence under `docs/sessions/evidence/task859/r6-*` and `research-exec/r6-*`;
+- the session log (`# Revision 6`) and the 859 backlog cell.
+
+Frozen, hashed at I0 and at the end: the §20.7 set, `MantineBadge.tsx`, `patterns/index.ts`, every test file and
+`vitest.config.*`. No timeout is raised. **Any other file needed is a stop and report.**
+
+### 21.8 Owner visual review — O78-13
+
+§20.8 unchanged. It goes to the owner after review 7 approves Revision 6 and has taken its own GR-3 measurements.
+
+### 21.9 Completion (Revision 6)
+
+Append `# Revision 6` to the session log with: I0 and the GR-7 execution receipt; R48 with the AC41, AC26 and AC42
+evidence; the gate block with the governance start and end counts; a `Files Changed` table.
+
+Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. No Git.

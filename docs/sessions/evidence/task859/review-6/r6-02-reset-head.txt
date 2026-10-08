@@ -1,0 +1,48 @@
+RUN 1 (HEAD worktree) EXIT_CODE=0
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al-859-head
+
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1630ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 53ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount 95ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 86ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered 72ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:25:27
+   Duration  3.77s (transform 666ms, setup 84ms, import 845ms, tests 1.94s, environment 691ms)
+
+
+RUN 2 (HEAD worktree) EXIT_CODE=0
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al-859-head
+
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1595ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 48ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount 77ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 72ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered 67ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:25:32
+   Duration  3.65s (transform 669ms, setup 84ms, import 802ms, tests 1.86s, environment 692ms)
+
+
+RUN 3 (HEAD worktree) EXIT_CODE=0
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al-859-head
+
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 1626ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > no tokenHash: calls getSession (legacy session path), verifyOtp NOT called on mount 48ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount 88ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 72ms
+ ✓ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered 64ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:25:37
+   Duration  3.63s (transform 669ms, setup 82ms, import 814ms, tests 1.90s, environment 705ms)
+
+

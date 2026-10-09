@@ -1,0 +1,9 @@
+platform win32 v22.22.3 start 2026-10-08T22:38:41Z
+tailadmin https://demo.tailadmin.com/form-elements status 200 final Form Elements | TailAdmin - Tailwind CSS | controls 13, >=95% of container 1, under 60% 2
+tailadmin https://demo.tailadmin.com/form-layout status 200 final Form Layout | TailAdmin - Tailwind CSS A | controls 19, >=95% of container 9, under 60% 10
+lahomes https://techzaa.in/lahomes/admin/forms-basic.html status 200 final Form basics | Lahomes - Real Estate Mana | controls 14, >=95% of container 3, under 60% 11
+lahomes https://techzaa.in/lahomes/admin/forms-choices.html status 200 final Form Select | Lahomes - Real Estate Mana | controls 10, >=95% of container 0, under 60% 10
+lahomes https://techzaa.in/lahomes/admin/forms-checkbox-radio.html status 200 final Checkbox & Radio | Lahomes - Real Estate | controls 0, >=95% of container 0, under 60% 0
+kamr https://kamr-vite.vercel.app/form-element status 200 final Kamr : Vite Hotel Admin Dashboard Templa | controls 40, >=95% of container 12, under 60% 18
+omah https://omah.dexignzone.com/xhtml/page-error-404.html status 200 final Omah - Real Estate Admin Dashboard Templ | controls 2, >=95% of container 0, under 60% 2
+EXIT_CODE=0

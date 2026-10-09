@@ -1,0 +1,2822 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "res": [
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "en",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "input variant, resting — the standard input chrome; type to ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "button variant with search — compact trigger; the search fie",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "button variant without search — compact trigger; a static li",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "error — red border, no shadow; the message renders below in ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (label, field and chev",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "empty options — an immediate no-results row and no crash; th",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "long label — a long sq, uk or it option text wraps in the dr",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "trigger width override — the trigger keeps the wrapper full ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "numeric typeahead — typing a full valid year commits it with",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Enter to search — desktop trigger only; press Enter to fire ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "en",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "input variant, resting — the standard input chrome; type to ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "button variant with search — compact trigger; the search fie",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "button variant without search — compact trigger; a static li",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "error — red border, no shadow; the message renders below in ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (label, field and chev",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "empty options — an immediate no-results row and no crash; th",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "long label — a long sq, uk or it option text wraps in the dr",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "trigger width override — the trigger keeps the wrapper full ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "numeric typeahead — typing a full valid year commits it with",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Enter to search — desktop trigger only; press Enter to fire ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "en",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "input variant, resting — the standard input chrome; type to ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "button variant with search — compact trigger; the search fie",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "button variant without search — compact trigger; a static li",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "error — red border, no shadow; the message renders below in ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (label, field and chev",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "empty options — an immediate no-results row and no crash; th",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "long label — a long sq, uk or it option text wraps in the dr",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "trigger width override — the trigger keeps the wrapper full ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 926,
+       "ctlW": 926,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "numeric typeahead — typing a full valid year commits it with",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "Enter to search — desktop trigger only; press Enter to fire ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "en",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "input variant, resting — the standard input chrome; type to ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "button variant with search — compact trigger; the search fie",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "button variant without search — compact trigger; a static li",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "error — red border, no shadow; the message renders below in ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (label, field and chev",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "empty options — an immediate no-results row and no crash; th",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "long label — a long sq, uk or it option text wraps in the dr",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "trigger width override — the trigger keeps the wrapper full ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 1342,
+       "ctlW": 1342,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "numeric typeahead — typing a full valid year commits it with",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "Enter to search — desktop trigger only; press Enter to fire ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "sq",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "varianti input, në qetësi — kromi standard i fushës; shkruan",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton me kërkim — nxitës kompakt; fusha e kërkimit ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton pa kërkim — nxitës kompakt; listë statike dhe",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi i kuq, pa hije; mesazhi shfaqet poshtë me të ku",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (etiketa, ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "pa opsione — rresht i menjëhershëm pa rezultate dhe pa gabim",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — teksti i gjatë i opsionit sq, uk ose it th",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "ndryshimi i gjerësisë së nxitësit — nxitësi mban gjerësinë e",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "shkrim numerik — shkrimi i një viti të vlefshëm e vendos men",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Enter për kërkim — vetëm nxitësi në desktop; shtypni Enter p",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "sq",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "varianti input, në qetësi — kromi standard i fushës; shkruan",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton me kërkim — nxitës kompakt; fusha e kërkimit ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton pa kërkim — nxitës kompakt; listë statike dhe",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi i kuq, pa hije; mesazhi shfaqet poshtë me të ku",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (etiketa, ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "pa opsione — rresht i menjëhershëm pa rezultate dhe pa gabim",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — teksti i gjatë i opsionit sq, uk ose it th",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "ndryshimi i gjerësisë së nxitësit — nxitësi mban gjerësinë e",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "shkrim numerik — shkrimi i një viti të vlefshëm e vendos men",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Enter për kërkim — vetëm nxitësi në desktop; shtypni Enter p",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "sq",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "varianti input, në qetësi — kromi standard i fushës; shkruan",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton me kërkim — nxitës kompakt; fusha e kërkimit ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton pa kërkim — nxitës kompakt; listë statike dhe",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi i kuq, pa hije; mesazhi shfaqet poshtë me të ku",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (etiketa, ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "pa opsione — rresht i menjëhershëm pa rezultate dhe pa gabim",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — teksti i gjatë i opsionit sq, uk ose it th",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "ndryshimi i gjerësisë së nxitësit — nxitësi mban gjerësinë e",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 926,
+       "ctlW": 926,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "shkrim numerik — shkrimi i një viti të vlefshëm e vendos men",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "Enter për kërkim — vetëm nxitësi në desktop; shtypni Enter p",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 23
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-combobox--default",
+   "loc": "sq",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "varianti input, në qetësi — kromi standard i fushës; shkruan",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton me kërkim — nxitës kompakt; fusha e kërkimit ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "varianti buton pa kërkim — nxitës kompakt; listë statike dhe",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi i kuq, pa hije; mesazhi shfaqet poshtë me të ku",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (etiketa, ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "pa opsione — rresht i menjëhershëm pa rezultate dhe pa gabim",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — teksti i gjatë i opsionit sq, uk ose it th",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "ndryshimi i gjerësisë së nxitësit — nxitësi mban gjerësinë e",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 1342,
+       "ctlW": 1342,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "shkrim numerik — shkrimi i një viti të vlefshëm e vendos men",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    },
+    {
+     "caption": "Enter për kërkim — vetëm nxitësi në desktop; shtypni Enter p",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "STYLE",
+       "w": 0,
+       "ctlW": null,
+       "pct": 0
+      },
+      {
+       "cls": "DIV",
+       "w": 212,
+       "ctlW": 212,
+       "pct": 16
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "en",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "unchecked — gray-3 border, 20px circle, fully rounded, label",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 29
+      }
+     ]
+    },
+    {
+     "caption": "checked — brand-7 fill and a white 10px center dot; the labe",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 29
+      }
+     ]
+    },
+    {
+     "caption": "focus — keyboard focus ring (brand, focus-visible); no ring ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 29
+      }
+     ]
+    },
+    {
+     "caption": "error — red-6 border and ring when unchecked; checked with e",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 61
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 61
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (circle and label at o",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 29
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 29
+      }
+     ]
+    },
+    {
+     "caption": "long label — wraps to 2 or more lines at 320; no clip and no",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 288,
+       "ctlW": null,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "en",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "unchecked — gray-3 border, 20px circle, fully rounded, label",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "checked — brand-7 fill and a white 10px center dot; the labe",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "focus — keyboard focus ring (brand, focus-visible); no ring ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "error — red-6 border and ring when unchecked; checked with e",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 49
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 49
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (circle and label at o",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 23
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 23
+      }
+     ]
+    },
+    {
+     "caption": "long label — wraps to 2 or more lines at 320; no clip and no",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 358,
+       "ctlW": null,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "en",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "unchecked — gray-3 border, 20px circle, fully rounded, label",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 9
+      }
+     ]
+    },
+    {
+     "caption": "checked — brand-7 fill and a white 10px center dot; the labe",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 9
+      }
+     ]
+    },
+    {
+     "caption": "focus — keyboard focus ring (brand, focus-visible); no ring ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 9
+      }
+     ]
+    },
+    {
+     "caption": "error — red-6 border and ring when unchecked; checked with e",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 19
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 19
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (circle and label at o",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 9
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 9
+      }
+     ]
+    },
+    {
+     "caption": "long label — wraps to 2 or more lines at 320; no clip and no",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 587,
+       "ctlW": null,
+       "pct": 63
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "en",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "unchecked — gray-3 border, 20px circle, fully rounded, label",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 6
+      }
+     ]
+    },
+    {
+     "caption": "checked — brand-7 fill and a white 10px center dot; the labe",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 6
+      }
+     ]
+    },
+    {
+     "caption": "focus — keyboard focus ring (brand, focus-visible); no ring ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 6
+      }
+     ]
+    },
+    {
+     "caption": "error — red-6 border and ring when unchecked; checked with e",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 13
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 177,
+       "ctlW": null,
+       "pct": 13
+      }
+     ]
+    },
+    {
+     "caption": "disabled — the whole control is faded (circle and label at o",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 6
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 83,
+       "ctlW": null,
+       "pct": 6
+      }
+     ]
+    },
+    {
+     "caption": "long label — wraps to 2 or more lines at 320; no clip and no",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 587,
+       "ctlW": null,
+       "pct": 44
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "sq",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "i pazgjedhur — kufi gri-3, rreth 20px, plotësisht i rrumbull",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 32
+      }
+     ]
+    },
+    {
+     "caption": "i zgjedhur — mbushje brand-7 dhe pikë e bardhë 10px në qendë",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 32
+      }
+     ]
+    },
+    {
+     "caption": "fokus — unaza e fokusit të tastierës (brand, focus-visible);",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 32
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi dhe unazë e kuqe kur nuk është zgjedhur; i zgje",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 71
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 71
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (rrethi dh",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 32
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 32
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — thyhet në 2 ose më shumë rreshta në 320; p",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 288,
+       "ctlW": null,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "sq",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "i pazgjedhur — kufi gri-3, rreth 20px, plotësisht i rrumbull",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 26
+      }
+     ]
+    },
+    {
+     "caption": "i zgjedhur — mbushje brand-7 dhe pikë e bardhë 10px në qendë",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 26
+      }
+     ]
+    },
+    {
+     "caption": "fokus — unaza e fokusit të tastierës (brand, focus-visible);",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 26
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi dhe unazë e kuqe kur nuk është zgjedhur; i zgje",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 57
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 57
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (rrethi dh",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 26
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 26
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — thyhet në 2 ose më shumë rreshta në 320; p",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 358,
+       "ctlW": null,
+       "pct": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "sq",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "i pazgjedhur — kufi gri-3, rreth 20px, plotësisht i rrumbull",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 10
+      }
+     ]
+    },
+    {
+     "caption": "i zgjedhur — mbushje brand-7 dhe pikë e bardhë 10px në qendë",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 10
+      }
+     ]
+    },
+    {
+     "caption": "fokus — unaza e fokusit të tastierës (brand, focus-visible);",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 10
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi dhe unazë e kuqe kur nuk është zgjedhur; i zgje",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 22
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 22
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (rrethi dh",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 10
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 10
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — thyhet në 2 ose më shumë rreshta në 320; p",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 591,
+       "ctlW": null,
+       "pct": 64
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--default",
+   "loc": "sq",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "i pazgjedhur — kufi gri-3, rreth 20px, plotësisht i rrumbull",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 7
+      }
+     ]
+    },
+    {
+     "caption": "i zgjedhur — mbushje brand-7 dhe pikë e bardhë 10px në qendë",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 7
+      }
+     ]
+    },
+    {
+     "caption": "fokus — unaza e fokusit të tastierës (brand, focus-visible);",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 7
+      }
+     ]
+    },
+    {
+     "caption": "gabim — kufi dhe unazë e kuqe kur nuk është zgjedhur; i zgje",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 15
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 205,
+       "ctlW": null,
+       "pct": 15
+      }
+     ]
+    },
+    {
+     "caption": "i çaktivizuar — i gjithë kontrolli është i zbehtë (rrethi dh",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 7
+      },
+      {
+       "cls": "mantine-Radio-root",
+       "w": 93,
+       "ctlW": null,
+       "pct": 7
+      }
+     ]
+    },
+    {
+     "caption": "etiketë e gjatë — thyhet në 2 ose më shumë rreshta në 320; p",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-Radio-root",
+       "w": 591,
+       "ctlW": null,
+       "pct": 44
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "en",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 41
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "en",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 33
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "en",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 632,
+       "ctlW": 632,
+       "pct": 68
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 13
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "en",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 632,
+       "ctlW": 632,
+       "pct": 47
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 9
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "sq",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 44
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "sq",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 36
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "sq",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 635,
+       "ctlW": 635,
+       "pct": 69
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 14
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "loc": "sq",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 635,
+       "ctlW": 635,
+       "pct": 47
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 10
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "en",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 41
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "en",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 33
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "en",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 632,
+       "ctlW": 632,
+       "pct": 68
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 13
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "en",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Options — one checked, one with a description, one with a lo",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 632,
+       "ctlW": 632,
+       "pct": 47
+      }
+     ]
+    },
+    {
+     "caption": "Disabled options — the whole card is faded; the checked one ",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 118,
+       "ctlW": 118,
+       "pct": 9
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "sq",
+   "w": 320,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 288,
+       "ctlW": 288,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 288,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 44
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "sq",
+   "w": 390,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 358,
+       "ctlW": 358,
+       "pct": 100
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 358,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 36
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "sq",
+   "w": 1024,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 635,
+       "ctlW": 635,
+       "pct": 69
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 926,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 14
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "loc": "sq",
+   "w": 1440,
+   "errorScreen": false,
+   "pageerror": null,
+   "overflowX": false,
+   "sections": [
+    {
+     "caption": "Opsione — një e zgjedhur, një me përshkrim, një me etiketë t",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 635,
+       "ctlW": 635,
+       "pct": 47
+      }
+     ]
+    },
+    {
+     "caption": "Opsione të çaktivizuara — karta e tërë është e zbehtë; ajo e",
+     "rowW": 1342,
+     "items": [
+      {
+       "cls": "mantine-InputWrapper-root",
+       "w": 128,
+       "ctlW": 128,
+       "pct": 10
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** since Revision 2 (it moves `MantineListingCardPattern`'s badges, critical flow; Q3 before) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-04 (review 2, under GR-7 rewritten + GR-8) — the only executable route is §17 (Revision 2): one canonical badge and dialog anatomy migrated product-wide (D78-18, folds 915), the picker on `MantineCombobox`; the support table anatomy is 919's (D78-17). QA profile raised to Q4 (§17.7). Starts after 741 lands.**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 12) — the only executable route is §27 (Revision 11): `MantineRadioCardGroup` fills its container. Earlier sections stay binding where a later one does not replace them; the history starts at §17 (Revision 2, 2026-10-04: one canonical badge and dialog anatomy product-wide, D78-18, folds 915; the support table anatomy is 919's, D78-17; QA profile Q4, §17.7).**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -2301,3 +2301,111 @@ receipt for `MantineRadioCardGroup` (EXTEND); GR-12 receipts for badge and the `
 320/390/1024/1440; the gate block with governance counts and the surface-census count; a `Files Changed` table; F54's
 four corrections. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+
+## 27. Revision 11 (review 12, 2026-10-09): `NEEDS REVISION` — the choice-card set in its own Stories shrinks to its content (632px and 118px on one page)
+
+**This section is the only executable route.** §26, §25, §24, §23 and §21 stay binding where §27 does not replace them.
+**Re-entry: `remediation`** on the current tree. Evidence goes to `docs/sessions/evidence/task859/r11x-*` (Sonnet; `r11-*`
+is review 11's prefix). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md` ("Reproduce the real production width contract or leave it fluid"),
+`docs/rules/golden/gr-12-no-hardcode.md`, then §27.2 and §27.3.
+
+### 27.1 What review 12 inspected (FACT unless marked)
+
+Final tree: the 16 Revision 10 write-set files equal to `r10x-60-hashes-end.txt` (reviewer re-hash, 16 of 16); no file
+under `src/`, `messages/` or `scripts/` written after the executor's last write (2026-10-08T21:33:12Z, reviewer scan of
+every changed and untracked file). `storybook-static` rebuilt by the reviewer (`review-12/r12-01-build-storybook.txt`,
+exit 0). `win32`, Node v22.22.3. Evidence: `docs/sessions/evidence/task859/review-12/`.
+
+| Area | Result | Evidence |
+|---|---|---|
+| R64 / AC55 | **VERIFIED.** `DashboardHeader` `Default` `play` asserts a badge with no `svg` and non-empty text (`DashboardHeader.stories.tsx:57–61`); the `:37`/`:56` comments say text-only. `r12-play-check.mjs` (= `r11-play-check.mjs`, port and output names only): 48 Stories, **0 error screens** (`body.sb-show-errordisplay`), 0 `pageerror`; console errors only the five recorded `AdminPermissionsView` `ENVIRONMENT_FALLBACK` Stories. The only `svg` assertions left in Story `play`s are `DashboardStatRows` (no chevron), `DashboardSparkline` (the chart) — none in a badge. | `r12-run-play-check.txt`, `r12-play-check.json` |
+| R65 / AC56 | **VERIFIED** for spacing and look: `r12-radiocard-group.mjs` (= `r11-radiocard-group.mjs`): 572 Stories, 24 jobs with a group, **one gap value (8px)**, one card look (`1px solid · 6px · 16/16 · 20×20 · 14px · 500`), 0 errors. `MantineRadioCardGroup` = HEAD's `Radio.Group` + `Stack gap="xs"` (same props, no accessible name before or after — unchanged). Registry row `mantine-radio-card-option` carries the parity element `radio card group (a set of choices)`. **Width: F55.** | `r12-run-radiocard-group.txt`, `ui-contract-registry.json` |
+| Group width (new probe) | `r12-group-width.mjs` (each group's width against its parent's content box, en, 390 / 1440): production `TicketDetailDialogView` `Support`, `PremiumDialogView` `NotPremium` / `CustomDate` and `Modal` `Detail`: **100%** in 8 of 8 (parent a column `Stack`). `Radio` `Card` and `RadioCardOption` `Default`: **632 / 1342 px (47%) and 118 / 1342 px (9%) at 1440; 358 / 358 and 118 / 358 (33%) at 390** — the group now sits in `MantineStorySection`'s wrapping row and shrinks to its content. | `r12-03-group-width-run.txt`, `r12-group-width.json`, `r12-section-width-radiocardoption-default-1440.png` |
+| R66 / AC57 | **VERIFIED.** Whole-file grep (AC53 + `\bp[xy]?=|\bm[xy]?=`) over `Radio`, `Combobox`, `AdminSurfacePattern`, `RadioCardOption`, `Modal`, `DashboardHeader` Stories: 0 hits. 16 `radio_caption_*` / `combobox_caption_*` keys in each locale, none empty or with ICU braces; `check:i18n` exit 0 (2 623 keys). `AdminSurfacePattern` `Default` renders in `MantineStoryShell` (shots at 390 and 1440, no overflow). AC50 scan `--all-changed`: `total hits 0`; `check:ui-contract:verify` exit 0; `typecheck` exit 0. | `r12-04`…`r12-07`, `r12-asp-default-*.png` |
+| Combobox `Default` width | The `variant="input"` and default `variant="button"` triggers are **212px from 640** (they were the full content width, 1 342px at 1440, before Revision 10: `r3-after-mantine-primitives-combobox--default.png`); 100% below 640 and in section 8 (`triggerWidth` override). **Ruling: not a defect.** 212px is the component's documented default (`MantineCombobox.tsx:61–63`, `:294` `{ base: '100%', sm: 'auto' }`, content width on desktop; `ListingsFilterBar` and `AuthSheet` render it so), and section 8's caption contrasts it with the override; HEAD's column `Stack` stretched it and so contradicted that caption. The report's "the controls themselves look the same" omits it → F56, and the owner matrix shows it. | `r12-02-section-width-run.txt`, `r12-section-width-combobox-default-1440.png` |
+| AC49 | `r12-dialog-geometry.mjs`: **Still VERIFIED**: 110 Stories × 4 sizes, **315 open dialogs (84 sheets), 0 violations, 0 errors**, 129 jobs open no dialog at that size — the same as review 11. | `r12-run-dialog-geometry.txt` |
+| AC46 | **Still VERIFIED**: `r12-users-pointer.mjs` 36/36, 0 errors. | `r12-run-users-pointer.txt` |
+| AC52(b) badge census | **VERIFIED** (reviewer run on a quiet machine, `r12-badge-census.mjs` = `r11-badge-census.mjs`): 572 Stories, **1 035 `.mantine-Badge-root`, 0 with an icon, 0 legacy badge-like elements, 0 errors** (no error screen anywhere, `CmsPageView` included), 72 labels, **5 with more than one look = §24.3's accepted set** (counts 1 / 2 / 3 / 5, `Active` `lg`). `DashboardHeader` `Default` contributes its stale badge (`Data may be outdated`, text only). | `r12-run-badge-census.txt`, `r12-badge-groups-after.json` |
+| Frozen files | 22 of 22 `EQUAL` in the executor's end hashes; reviewer re-hash of the write set equal. | `r10x-60-hashes-end.txt` |
+| `main` CI | Unchanged: the last two `Governance Validation (PR)` runs on `main` (2026-10-07) failed, before 859. | `gh run list --branch main` |
+
+**Rulings on Revision 10's deviations.** (1) `Radio` `Default` `defaultChecked`: **accepted** — HEAD put each checked
+radio alone in its own `Radio.Group`, so every radio was already independent; 13 of 16 circles pixel-identical, 3 differ
+by 2–8 anti-aliased edge pixels at a sub-pixel offset with equal computed style. (2) wrapping rows: **accepted** for the
+plain `Radio` examples (a radio has no box, so its row width is invisible) and for the Combobox (the documented default,
+above); **rejected** for the choice-card sets → F55. (3) the `CmsPageView` census error: **accepted** — the reviewer census on a quiet machine records 0 errors (load, as the executor read it). (4)
+`AdminSurfacePattern` shell frame: accepted (R66(b)). (5)–(7): accepted.
+
+### 27.2 Findings (review 12)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| **F55** | **P1**, GR-12 one meaning one look; storybook-proof "reproduce the real production width contract or leave it fluid" | A set of choice cards has two widths. Production and `Modal` `Detail` render the group at the full width of its section (8 of 8 jobs). The direct Stories of its owner — `RadioCardOption` `Default` and `Radio` `Card` — now put the group in `MantineStorySection`'s wrapping `Group`, where it shrinks to its content: on one page the options set is 632px and the disabled set 118px at 1440, 118 of 358px at 390. Revision 9 rendered both at the section width (INFERENCE: §26.2 F52 records them in a column `MantineDialogSection`, which stretches its children). The cause is in the owner: `MantineRadioCardGroup` states no width, so its width depends on whoever holds it. | R67 |
+| F56 | P3, report accuracy | (a) "The controls themselves look the same" while every Combobox trigger except section 8 went from 1 342px to 212px at 1440 — a visible change the report does not name. (b) The `Radio.Card` GR-12 receipt "card width / group container: 1 value (100%)" measures a card against its own group, which says nothing about the group's width; review 11's "100% of the group's width everywhere" had the same blind spot (retracted below). | §27.4 |
+
+**RETRACTION (Opus, review 11).** §26.1 says the option is "100% of the group's width everywhere"; that probe measured
+the card against its own `Radio.Group`, so it could not see a group that shrinks to its content. Review 12's
+`r12-group-width.mjs` measures the group against its parent; AC58 requires it.
+
+### 27.3 Requirements (Revision 11)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R67** | **The choice-card set fills its container, in every context (GR-0 EXTEND, the owner).** `MantineRadioCardGroup` (`MantineRadioCardOption.tsx`) renders its `Radio.Group` at `w="100%"` and its JSDoc states the width contract ("fills the width of its container, like a form field"). No Story and no consumer passes a width; `RadioCardOption.stories.tsx`, `Radio.stories.tsx`, `Modal.stories.tsx`, `TicketDetailDialogView.tsx`, `PremiumDialogView.tsx` are **not** changed. | P1 | AC58 |
+| **R68** | **Report corrections (F56).** The `# Revision 11` log names the Combobox desktop width (212px from 640, documented default) and the group-width measurement in the GR-12 receipt. | P3 | AC58 |
+
+### 27.4 Acceptance criteria
+
+- **AC58 [R67, R68].** (a) Copy `review-12/r12-group-width.mjs` to `r11x-group-width.mjs` (port and output names only)
+  and add the widths 320 and 1024: on the final build **every group is 100% of its parent's content box** in all
+  6 Stories × 4 widths (the two Story sets included). (b) `r10x-radiocard-ab.mjs` copied to `r11x-radiocard-ab.mjs` with
+  Revision 10's after-shots as the before: the 28 production options, **0 differing pixels**, computed style equal.
+  (c) `r12-radiocard-group.mjs` copied to `r11x-radiocard-group.mjs`: one gap (8px), one card look, 0 errors.
+  (d) `r12-play-check.mjs` copied to `r11x-play-check.mjs`: 0 error screens, 0 `pageerror` (the `RadioCardOption`
+  `play` still passes). (e) `check:ui-contract:verify`, `check:pattern-enrolment`, `check:story-coverage`,
+  `check:design-tokens:strict` exit 0. (f) The GR-12 receipt for the `Radio.Card` option and group states the group
+  width against its parent, before (632 / 118 px) and after.
+- **Gates:** §25.5's block (governance start/end, vitest twice, `typecheck`, `lint`, `build`, `build-storybook`, the check
+  list, AC50's two commands, `check:surface-census:changed -- --base HEAD` — red only for `surface-limit-exceeded`, the
+  count recorded, D78-30), `r12-dialog-geometry.mjs` and `r12-users-pointer.mjs` copied to `r11x-*` (ports and output
+  names only): 0 violations, 36/36. Every gate after the last source edit (`r11x-60-hashes-end.txt`).
+
+`GR-4 AC AUDIT — 1 new criterion (AC58); it states observable properties; absolutes: "100% of its parent", "0 differing pixels", "one gap", "0 error screens".`
+
+### 27.5 Reference research (GR-7) and parity receipts, review 12
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: Revision 10 outcome (text-only stale badge Story, one owner and one spacing for a set of choice cards, shell-captioned Stories) and the width of a block form control in a showcase; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04; live-checked pages: the executor's nine table pages and three modal pages (research-review/r12-live-check.mjs, 2026-10-08T23:29Z: 8 of 9 table pages unchanged against the library, TailAdmin support-ticket-reply has no comparable table (null, as before); modals: TailAdmin radius 24px, title 30px / 600, Esc does not close; Kamr and Lahomes radius 0, title 15.75 / 15px, Esc closes — unchanged) + form pages live 2026-10-08T22:38Z at 1440 (research-review/r12-form-width.mjs): TailAdmin form-elements and form-layout — every input, select and date field fills its card; Kamr form-element (demo login) — inputs and selects fill their card; Lahomes forms-choices — a select at a fixed column of about half the card, forms-basic — fields fill their column; Omah form-element.html — 404 (UNVERIFIED, not relied on); route inventory: Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0 (library); inspected in depth: the live pages above; workflow states operated: none new; options across references: a block field or choice set either fills its container (TailAdmin, Kamr) or a fixed grid column (Lahomes) — none sizes it to its own content; chosen 2026 best practice: a set of choice cards fills its container, as the production dialogs already render it; absent or unverified: Omah form page; lero.al data map: unchanged; owner decisions: D78-29, D78-30; evidence: docs/sessions/evidence/task859/research-review/r12-*.`
+
+`GR-12 ELEMENT PARITY — Radio.Card option and group: Stories compared 11 at 1440 and 390 + Modal Detail opened (census docs/sessions/evidence/task859/review-12/r12-radiocard-group.json, r12-group-width.json); meanings 1 (a set of choices); meanings with more than one look: group width — 100% of its section in the production dialogs and Modal Detail vs 632px / 118px (content width) in RadioCardOption Default and Radio Card (owner decisions: none) → F55; spacing 8px one value; card look one value; hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): NONE (whole-file grep, 6 Stories).`
+
+`GR-12 ELEMENT PARITY — badge: Stories compared 572 (census docs/sessions/evidence/task859/review-12/r12-badge-groups-after.json, r12-badge-census-after.json; en, 1440, DPR 1); meanings 72 labels; meanings with more than one look: counts 1, 2, 3, 5 and Active (typed lg) — §24.3's accepted set (owner decisions: D78-28, D78-29); badges with an icon: 0 of 1 035; legacy badge-like elements: 0; errored Stories: 0; hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): NONE.`
+
+`GR-12 ELEMENT PARITY — dialog shell: Stories compared 110 at 4 sizes (census review-12/r12-dialog-geometry-after.json); meanings 1; meanings with more than one look: NONE (315 open dialogs, 0 violations) (owner decisions: none); hardcode in changed files and their Stories: NONE (Modal.stories.tsx whole file clean).`
+
+### 27.6 Write set (Revision 11)
+
+- `src/design-system/mantine/patterns/MantineRadioCardOption.tsx` (`MantineRadioCardGroup` only: `w="100%"` and its
+  JSDoc);
+- evidence `r11x-*`, the session log `# Revision 11`, the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: §19.3's six support files, the server actions, and every Revision 10 write-set file
+except `MantineRadioCardOption.tsx`. **Any other file is a stop and report.**
+
+### 27.7 Owner visual review — O78-13 (after review 13)
+
+§26.7's list, with these made explicit: the choice cards in `RadioCardOption` `Default`, `Radio` `Card`, `Modal`
+`Detail` and the two production dialogs side by side (one spacing, every set full width); `Combobox` `Default` at
+1440 — the triggers are 212px (the component's documented desktop default) where they used to stretch across the
+page; section 8 shows the full-width override. Review 13 runs `r11x-group-width`, `r11x-radiocard-group`,
+`r11x-play-check`, the badge census, the dialog geometry and the users pointer probe itself before the matrix goes out.
+
+### 27.8 Completion (Revision 11)
+
+Append `# Revision 11` to the session log with: I0 (hashes and write times); R67–R68 with AC58 evidence; the GR-0
+receipt (EXTEND `MantineRadioCardGroup`); the GR-12 receipt for the `Radio.Card` option and group with the group width;
+GR-3b at 320/390/1024/1440 for `RadioCardOption` `Default` and `Radio` `Card`; the gate block with governance counts and
+the surface-census count; a `Files Changed` table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING
+ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.

@@ -1,0 +1,202 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "res": [
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 390,
+   "n": 4,
+   "groups": [
+    {
+     "cards": 4,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-ticketdetaildialogview--support",
+   "w": 1440,
+   "n": 4,
+   "groups": [
+    {
+     "cards": 4,
+     "w": 588,
+     "parent": 588,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 390,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 5,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--not-premium",
+   "w": 1440,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 5,
+     "w": 408,
+     "parent": 408,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 390,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 5,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "patterns-mantine-premiumdialogview--custom-date",
+   "w": 1440,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 5,
+     "w": 408,
+     "parent": 408,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "w": 390,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/row",
+     "pct": 100
+    },
+    {
+     "cards": 2,
+     "w": 118,
+     "parent": 358,
+     "parentDisplay": "flex/row",
+     "pct": 33
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radio--card",
+   "w": 1440,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 632,
+     "parent": 1342,
+     "parentDisplay": "flex/row",
+     "pct": 47
+    },
+    {
+     "cards": 2,
+     "w": 118,
+     "parent": 1342,
+     "parentDisplay": "flex/row",
+     "pct": 9
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "w": 390,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/row",
+     "pct": 100
+    },
+    {
+     "cards": 2,
+     "w": 118,
+     "parent": 358,
+     "parentDisplay": "flex/row",
+     "pct": 33
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-radiocardoption--default",
+   "w": 1440,
+   "n": 5,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 632,
+     "parent": 1342,
+     "parentDisplay": "flex/row",
+     "pct": 47
+    },
+    {
+     "cards": 2,
+     "w": 118,
+     "parent": 1342,
+     "parentDisplay": "flex/row",
+     "pct": 9
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 390,
+   "n": 3,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 358,
+     "parent": 358,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  },
+  {
+   "id": "mantine-primitives-modal--detail",
+   "w": 1440,
+   "n": 3,
+   "groups": [
+    {
+     "cards": 3,
+     "w": 408,
+     "parent": 408,
+     "parentDisplay": "flex/column",
+     "pct": 100
+    }
+   ]
+  }
+ ]
+}

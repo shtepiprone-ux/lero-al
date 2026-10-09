@@ -1,0 +1,80 @@
+platform win32 v22.22.3 start 2026-10-08T22:37:54Z
+stories 48 with an error 5
+ERR patterns-mantine-adminpermissionsview--default  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--all-allowed  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--saving  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--audit-empty  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+ERR patterns-mantine-adminpermissionsview--audit-unavailable  console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Mr: ENVIRONMENT_FALLBACK
+    at s (http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6481)
+    at http://127.0.0.1:6315/assets/iframe-Ddf6dWo1.js:1111:6903
+    at l (http://127.0.0.1:6315/assets/if | console: Failed to load resource: the server responded with a status of 404 (Not Found)
+EXIT_CODE=0 end 2026-10-08T22:40:09Z

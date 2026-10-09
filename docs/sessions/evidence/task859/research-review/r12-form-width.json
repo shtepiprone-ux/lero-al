@@ -1,0 +1,657 @@
+{
+ "platform": "win32",
+ "node": "v22.22.3",
+ "at": "2026-10-08T22:39:09.995Z",
+ "res": [
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/form-elements",
+   "status": 200,
+   "shot": "r12-form-width-00-tailadmin.png",
+   "title": "Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "controls": [
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 430,
+     "container": 430,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.datepickerTwo",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.border-error-300",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.border-success-300",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.shadow-theme-xs.focus:border-brand-300",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 539,
+     "pct": 91
+    },
+    {
+     "tag": "select.focus:border-brand-300.focus:ring-brand-500/10",
+     "w": 70,
+     "container": 539,
+     "pct": 13
+    },
+    {
+     "tag": "select.focus:border-brand-300.focus:ring-brand-500/10",
+     "w": 70,
+     "container": 539,
+     "pct": 13
+    }
+   ]
+  },
+  {
+   "ref": "tailadmin",
+   "url": "https://demo.tailadmin.com/form-layout",
+   "status": 200,
+   "shot": "r12-form-width-01-tailadmin.png",
+   "title": "Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template",
+   "controls": [
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 430,
+     "container": 430,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.datepickerTwo",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 489,
+     "container": 489,
+     "pct": 100
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "input.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    },
+    {
+     "tag": "select.dark:bg-dark-900.shadow-theme-xs",
+     "w": 235,
+     "container": 489,
+     "pct": 48
+    }
+   ]
+  },
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/forms-basic.html",
+   "status": 200,
+   "shot": "r12-form-width-02-lahomes.png",
+   "title": "Form basics | Lahomes - Real Estate Management Admin Template",
+   "controls": [
+    {
+     "tag": "input.form-control",
+     "w": 768,
+     "container": 768,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control",
+     "w": 768,
+     "container": 768,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control",
+     "w": 768,
+     "container": 768,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control.form-control-lg",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control.form-control-sm",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control-plaintext",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "input.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "select.form-select",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "select.form-control",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "select.form-select",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    }
+   ]
+  },
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/forms-choices.html",
+   "status": 200,
+   "shot": "r12-form-width-03-lahomes.png",
+   "title": "Form Select | Lahomes - Real Estate Management Admin Template",
+   "controls": [
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    },
+    {
+     "tag": "div.choices.is-disabled",
+     "w": 384,
+     "container": 768,
+     "pct": 50
+    }
+   ]
+  },
+  {
+   "ref": "lahomes",
+   "url": "https://techzaa.in/lahomes/admin/forms-checkbox-radio.html",
+   "status": 200,
+   "shot": "r12-form-width-04-lahomes.png",
+   "title": "Checkbox & Radio | Lahomes - Real Estate Management Admin Template",
+   "controls": []
+  },
+  {
+   "ref": "kamr",
+   "url": "https://kamr-vite.vercel.app/form-element",
+   "status": 200,
+   "shot": "r12-form-width-05-kamr.png",
+   "title": "Kamr : Vite Hotel Admin Dashboard Template",
+   "controls": [
+    {
+     "tag": "input.form-control.",
+     "w": 204,
+     "container": 1440,
+     "pct": 14
+    },
+    {
+     "tag": "input.form-control",
+     "w": 190,
+     "container": 1440,
+     "pct": 13
+    },
+    {
+     "tag": "input.form-control.input-default",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control.input-rounded",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control.form-control-lg",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control.form-control-sm",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "select.form-control.form-control-lg",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "select.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "select.form-control.form-control-sm",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "select.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "select.form-control",
+     "w": 142,
+     "container": 486,
+     "pct": 29
+    },
+    {
+     "tag": "input.form-control",
+     "w": 56,
+     "container": 486,
+     "pct": 12
+    },
+    {
+     "tag": "input.form-control",
+     "w": 357,
+     "container": 486,
+     "pct": 73
+    },
+    {
+     "tag": "input.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control-plaintext",
+     "w": 357,
+     "container": 486,
+     "pct": 73
+    },
+    {
+     "tag": "input.form-control-plaintext",
+     "w": 139,
+     "container": 486,
+     "pct": 29
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control",
+     "w": 228,
+     "container": 486,
+     "pct": 47
+    },
+    {
+     "tag": "input.form-control.form-control-sm",
+     "w": 400,
+     "container": 486,
+     "pct": 82
+    },
+    {
+     "tag": "input.form-control",
+     "w": 400,
+     "container": 486,
+     "pct": 82
+    },
+    {
+     "tag": "input.form-control.form-control-lg",
+     "w": 400,
+     "container": 486,
+     "pct": 82
+    },
+    {
+     "tag": "input.form-control",
+     "w": 271,
+     "container": 486,
+     "pct": 56
+    },
+    {
+     "tag": "input.form-control",
+     "w": 78,
+     "container": 486,
+     "pct": 16
+    },
+    {
+     "tag": "input.form-control",
+     "w": 78,
+     "container": 486,
+     "pct": 16
+    },
+    {
+     "tag": "input.form-control.mb-2",
+     "w": 189,
+     "container": 486,
+     "pct": 39
+    },
+    {
+     "tag": "input.form-control",
+     "w": 189,
+     "container": 486,
+     "pct": 39
+    },
+    {
+     "tag": "select.form-control.form-control-lg",
+     "w": 102,
+     "container": 486,
+     "pct": 21
+    },
+    {
+     "tag": "input.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "select.form-control",
+     "w": 486,
+     "container": 486,
+     "pct": 100
+    },
+    {
+     "tag": "input.form-control",
+     "w": 443,
+     "container": 486,
+     "pct": 91
+    },
+    {
+     "tag": "input.form-control",
+     "w": 443,
+     "container": 486,
+     "pct": 91
+    },
+    {
+     "tag": "input.form-control",
+     "w": 368,
+     "container": 486,
+     "pct": 76
+    },
+    {
+     "tag": "input.form-control",
+     "w": 335,
+     "container": 486,
+     "pct": 69
+    },
+    {
+     "tag": "input.form-control",
+     "w": 401,
+     "container": 486,
+     "pct": 82
+    }
+   ]
+  },
+  {
+   "ref": "omah",
+   "url": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+   "status": 200,
+   "shot": "r12-form-width-06-omah.png",
+   "title": "Omah - Real Estate Admin Dashboard Template",
+   "controls": [
+    {
+     "tag": "select.selectpicker.form-select",
+     "w": 1,
+     "container": 1440,
+     "pct": 0
+    },
+    {
+     "tag": "button.btn.dropdown-toggle",
+     "w": 665,
+     "container": 1440,
+     "pct": 46
+    }
+   ]
+  }
+ ]
+}

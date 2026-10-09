@@ -1,0 +1,17 @@
+platform win32 v22.22.3 start 2026-10-08T23:28:57Z
+table tailadmin https://demo.tailadmin.com/support-tickets -> https://demo.tailadmin.com/support-tickets lib 051 unchanged true badges 6
+table tailadmin https://demo.tailadmin.com/support-ticket-reply -> https://demo.tailadmin.com/support-ticket-reply lib 052 unchanged null badges 6
+table tailadmin https://demo.tailadmin.com/products-list -> https://demo.tailadmin.com/products-list lib 016 unchanged true badges 6
+table lahomes https://techzaa.in/lahomes/admin/customers-list.html -> https://techzaa.in/lahomes/admin/customers-list.html lib 016 unchanged true badges 0
+table lahomes https://techzaa.in/lahomes/admin/orders.html -> https://techzaa.in/lahomes/admin/orders.html lib 020 unchanged true badges 6
+table kamr https://kamr-vite.vercel.app/guest-list -> https://kamr-vite.vercel.app/guest-list lib 002 unchanged true badges 6
+table kamr https://kamr-vite.vercel.app/ecom-customers -> https://kamr-vite.vercel.app/ecom-customers lib 019 unchanged true badges 0
+table omah https://omah.dexignzone.com/xhtml/ecom-customers.html -> https://omah.dexignzone.com/xhtml/ecom-customers.html lib 025 unchanged true badges 0
+table omah https://omah.dexignzone.com/xhtml/ecom-product-order.html -> https://omah.dexignzone.com/xhtml/ecom-product-order.html lib 022 unchanged true badges 6
+modal tailadmin 1440 triggers 4 opened true esc closes false {"r":"24px","title":{"text":"Modal Heading","fontSize":"30px","fontWeight":"600"},"buttons":["","Close","Save Changes"]}
+modal tailadmin 390 triggers 4 opened true esc closes false {"r":"24px","title":{"text":"Modal Heading","fontSize":"30px","fontWeight":"600"},"buttons":["","Close","Save Changes"]}
+modal kamr 1440 triggers 7 opened true esc closes true {"r":"0px","title":{"text":"Modal title","fontSize":"15.75px","fontWeight":"500"},"buttons":["","Close","Save changes"]}
+modal kamr 390 triggers 7 opened true esc closes true {"r":"0px","title":{"text":"Modal title","fontSize":"15.75px","fontWeight":"500"},"buttons":["","Close","Save changes"]}
+modal lahomes 1440 triggers 24 opened true esc closes true {"r":"0px","title":{"text":"Modal title","fontSize":"15px","fontWeight":"500"},"buttons":["Close","Close","Save changes"]}
+modal lahomes 390 triggers 24 opened true esc closes true {"r":"0px","title":{"text":"Modal title","fontSize":"15px","fontWeight":"500"},"buttons":["Close","Close","Save changes"]}
+EXIT_CODE=0

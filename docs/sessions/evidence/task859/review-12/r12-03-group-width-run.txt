@@ -1,0 +1,14 @@
+platform win32 v22.22.3 start 2026-10-08T22:47:58Z
+patterns-mantine-ticketdetaildialogview--support 390 (cards in page 4): 4 cards 358/358 (100%, parent flex/column)
+patterns-mantine-ticketdetaildialogview--support 1440 (cards in page 4): 4 cards 588/588 (100%, parent flex/column)
+patterns-mantine-premiumdialogview--not-premium 390 (cards in page 5): 5 cards 358/358 (100%, parent flex/column)
+patterns-mantine-premiumdialogview--not-premium 1440 (cards in page 5): 5 cards 408/408 (100%, parent flex/column)
+patterns-mantine-premiumdialogview--custom-date 390 (cards in page 5): 5 cards 358/358 (100%, parent flex/column)
+patterns-mantine-premiumdialogview--custom-date 1440 (cards in page 5): 5 cards 408/408 (100%, parent flex/column)
+mantine-primitives-radio--card 390 (cards in page 5): 3 cards 358/358 (100%, parent flex/row); 2 cards 118/358 (33%, parent flex/row)
+mantine-primitives-radio--card 1440 (cards in page 5): 3 cards 632/1342 (47%, parent flex/row); 2 cards 118/1342 (9%, parent flex/row)
+mantine-primitives-radiocardoption--default 390 (cards in page 5): 3 cards 358/358 (100%, parent flex/row); 2 cards 118/358 (33%, parent flex/row)
+mantine-primitives-radiocardoption--default 1440 (cards in page 5): 3 cards 632/1342 (47%, parent flex/row); 2 cards 118/1342 (9%, parent flex/row)
+mantine-primitives-modal--detail 390 (cards in page 3): 3 cards 358/358 (100%, parent flex/column)
+mantine-primitives-modal--detail 1440 (cards in page 3): 3 cards 408/408 (100%, parent flex/column)
+EXIT_CODE=0

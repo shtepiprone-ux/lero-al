@@ -1,0 +1,232 @@
+jobs 660, Stories 66, crashed 0, error screens 0
+card top stacks 3260; distinct (rowGap|gaps):
+  2080  other|16px|16
+  804  record|12px|12,12,12,12
+  136  record|12px|12,12,12,12,12
+  72  record|12px|12,12,12
+  40  other|12px|12
+  36  other|16px|31
+  36  other|16px|18
+  20  other|16px|16,16
+  18  other|16px|26
+  18  record|12px|12,12
+card stacks with a gap != 12: 90
+  3  patterns-mantine-adminsupportview--default 320 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 767 uk other|16px|26
+  3  patterns-mantine-adminsupportview--default 767 en other|16px|26
+  3  patterns-mantine-adminsupportview--default 768 uk other|16px|18
+  3  patterns-mantine-adminsupportview--default 768 en other|16px|18
+  3  patterns-mantine-adminsupportview--default 320 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 1440 uk other|16px|18
+  3  patterns-mantine-adminsupportview--default 1440 en other|16px|18
+  3  patterns-mantine-adminsupportview--unassigned-landing 320 uk other|16px|31
+  3  patterns-mantine-adminsupportview--unassigned-landing 320 en other|16px|31
+  3  patterns-mantine-adminsupportview--unassigned-landing 390 uk other|16px|31
+  3  patterns-mantine-adminsupportview--unassigned-landing 390 en other|16px|31
+  3  patterns-mantine-adminsupportview--unassigned-landing 767 uk other|16px|26
+  3  patterns-mantine-adminsupportview--unassigned-landing 767 en other|16px|26
+  3  patterns-mantine-adminsupportview--unassigned-landing 768 uk other|16px|18
+  3  patterns-mantine-adminsupportview--unassigned-landing 768 en other|16px|18
+  3  patterns-mantine-adminsupportview--unassigned-landing 1440 uk other|16px|18
+  3  patterns-mantine-adminsupportview--unassigned-landing 1440 en other|16px|18
+badge -> nearest leaf above (root:kind:px):
+  1378  card:block:14
+  440  card:block:12
+  304  cell:block:15
+  63  card:block:38
+  56  card:wrapSameRow:10
+  24  card:block:16
+  24  card:block:10
+  16  cell:wrapSameRow:12
+  8  cell:block:12
+  7  card:block:62
+  6  card:block:8
+badges off 12 that are not a wrapped line of their own row: 1806
+  40  patterns-mantine-agentstatisticsview--default :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--default :: card 14px above "Visible" <- ""
+  40  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Visible" <- ""
+  40  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Visible" <- ""
+  40  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Visible" <- ""
+  40  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Visible" <- ""
+  40  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Видиме" <- ""
+  40  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Visible" <- ""
+  24  patterns-mantine-agentstatisticsview--default :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--default :: card 14px above "Active" <- ""
+  24  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Active" <- ""
+  24  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Active" <- ""
+  24  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Active" <- ""
+  24  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Active" <- ""
+  24  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Активне" <- ""
+  24  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Active" <- ""
+  9  patterns-mantine-adminuserstable--default :: card 14px above "Активний" <- ""
+  9  patterns-mantine-adminuserstable--default :: card 14px above "Active" <- ""
+  9  patterns-mantine-adminuserstable--location-filter-removed :: card 14px above "Активний" <- ""
+  9  patterns-mantine-adminuserstable--location-filter-removed :: card 14px above "Active" <- ""
+  8  mantine-primitives-table--cards-below-lg :: card 14px above "Active" <- ""
+  8  mantine-primitives-table--cards-below-lg :: card 14px above "Активний" <- ""
+  6  mantine-primitives-table--cards-below-md :: card 14px above "Активний" <- ""
+  6  mantine-primitives-table--cards-below-md :: card 14px above "Active" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--default :: card 14px above "Увімкнено" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--default :: card 14px above "Enabled" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--pending :: card 14px above "Увімкнено" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--pending :: card 14px above "Enabled" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--delete-confirm :: card 14px above "Увімкнено" <- ""
+  6  patterns-mantine-adminexchangeprovidersview--delete-confirm :: card 14px above "Enabled" <- ""
+  6  patterns-mantine-adminuserstable--default :: card 14px above "Користувач" <- ""
+  6  patterns-mantine-adminuserstable--default :: card 14px above "User" <- ""
+records-cell stacks holding objects 636:
+  472  12px|12
+  128  12px|12,12
+  36  2px|2
+records-cell stacks with a gap != 12: 36
+  3  patterns-mantine-adminexchangeprovidersview--default 768 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 768 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1440 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1440 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--pending 768 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--pending 768 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--pending 1440 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--pending 1440 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--delete-confirm 768 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--delete-confirm 768 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--delete-confirm 1440 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--delete-confirm 1440 en 2px|2
+text-only cell stacks (listed, not judged):
+  108  2px|2
+  36  0px|0,0
+  20  12px|12
+  18  8px|8
+  12  4px|4
+  12  0px|0
+inquiry rows 100:
+  42  blocks:12 ; text:4,4 ; blocks:12
+  40  blocks:12 ; blocks:12 ; text:4,4
+  18  blocks:12 ; text:4,4
+inquiry rows with a block gap != 12: 0
+  (none)
+one-link list rows (anchor stacks) 1380:
+  462  8px|8
+  320  0px|0
+  290  16px|16
+  180  8px|8,8,8
+  88  8px|8,8,8,8
+  40  8px|8,8
+name elements 1608; cut 64
+  8  mantine-primitives-table--sticky-column 767 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  8  mantine-primitives-table--sticky-column 767 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  8  mantine-primitives-table--sticky-column 768 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  8  mantine-primitives-table--sticky-column 768 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 767 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 768 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 767 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 768 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 1440 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--row-click 1440 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--sticky-column 1440 uk ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+  4  mantine-primitives-table--sticky-column 1440 en ancClip+ancClip "Arben Gjergj Krasniqi-Marashi"
+stress: text nodes replaced 2928; lines:
+  633  fits:1
+  399  needsWrap:1:FAIL
+  270  fits:2
+  137  needsWrap:2
+  103  needsWrap:3
+  8  fits:5
+  6  needsWrap:6
+  2  needsWrap:9
+  2  needsWrap:8
+  2  fits:9
+  2  fits:4
+  2  fits:3
+  2  needsWrap:4
+needs-wrap but 1 line: 399
+  6  patterns-mantine-adminsupportview--default 320 uk
+  6  patterns-mantine-adminsupportview--default 390 uk
+  6  patterns-mantine-adminsupportview--default 390 en
+  6  patterns-mantine-adminsupportview--default 767 uk
+  6  patterns-mantine-adminsupportview--default 767 en
+  6  patterns-mantine-adminsupportview--default 320 en
+  6  patterns-mantine-dashboardworklist--default 767 en
+  6  patterns-mantine-dashboardworklist--default 768 en
+  6  patterns-mantine-dashboardworklist--default 1440 en
+  4  patterns-mantine-admindashboardview--default 768 uk
+  4  patterns-mantine-admindashboardview--default 1440 en
+  4  patterns-mantine-admindashboardview--default 767 en
+  4  patterns-mantine-admindashboardview--default 768 en
+  4  patterns-mantine-admindashboardview--adm-02-error 767 en
+  4  patterns-mantine-admindashboardview--adm-02-error 768 uk
+  4  patterns-mantine-admindashboardview--adm-02-error 768 en
+  4  patterns-mantine-admindashboardview--adm-02-error 1440 en
+  4  patterns-mantine-admindashboardview--adm-09-zero 767 en
+  4  patterns-mantine-admindashboardview--adm-09-zero 768 uk
+  4  patterns-mantine-admindashboardview--adm-09-zero 768 en
+  4  patterns-mantine-admindashboardview--adm-09-zero 1440 en
+  4  patterns-mantine-admindashboardview--no-location-requests 767 en
+  4  patterns-mantine-admindashboardview--no-location-requests 768 en
+  4  patterns-mantine-admindashboardview--no-location-requests 1440 en
+  4  patterns-mantine-admindashboardview--activity-stale 767 en
+  4  patterns-mantine-admindashboardview--activity-stale 768 uk
+  4  patterns-mantine-admindashboardview--activity-stale 768 en
+  4  patterns-mantine-admindashboardview--activity-stale 1440 en
+  4  patterns-mantine-admindashboardview--activity-error 768 uk
+  4  patterns-mantine-admindashboardview--activity-error 767 en
+  4  patterns-mantine-admindashboardview--activity-error 1440 en
+  4  patterns-mantine-admindashboardview--activity-error 768 en
+  4  patterns-mantine-admindashboardview--activity-empty-period 767 en
+  4  patterns-mantine-admindashboardview--activity-empty-period 768 uk
+  4  patterns-mantine-admindashboardview--activity-empty-period 768 en
+  4  patterns-mantine-admindashboardview--activity-empty-period 1440 en
+  4  patterns-mantine-admindashboardview--trends-error 767 en
+  4  patterns-mantine-admindashboardview--trends-error 768 uk
+  4  patterns-mantine-admindashboardview--trends-error 768 en
+  4  patterns-mantine-admindashboardview--trends-error 1440 en
+overlaps 138
+  3  patterns-mantine-adminuserstable--default 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  3  patterns-mantine-adminuserstable--default 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  3  patterns-mantine-adminuserstable--default 767 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x15
+  3  patterns-mantine-adminuserstable--default 767 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x15
+  3  patterns-mantine-adminuserstable--location-filter-removed 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  3  patterns-mantine-adminuserstable--location-filter-removed 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  3  patterns-mantine-adminuserstable--location-filter-removed 767 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x15
+  3  patterns-mantine-adminuserstable--location-filter-removed 767 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x15
+  2  mantine-primitives-table--default 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--default 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-md 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-md 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--cards-below-md 767 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--cards-below-md 767 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-lg 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-lg 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--cards-below-lg 767 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-lg 767 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--cards-below-lg 768 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--cards-below-lg 768 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--row-click 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--row-click 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--responsive-columns 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--responsive-columns 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--sticky-column 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--sticky-column 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  mantine-primitives-table--card-detail 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  mantine-primitives-table--card-detail 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  patterns-mantine-adminuserstable--paginated 390 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  2  patterns-mantine-adminuserstable--paginated 390 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  2  patterns-mantine-adminuserstable--paginated 767 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x15
+  2  patterns-mantine-adminuserstable--paginated 767 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x15
+  1  mantine-primitives-table--default 320 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18
+  1  mantine-primitives-table--default 390 en "Arben Gjergj Krasniqi-Marashi" x "Pending" 46x18
+  1  mantine-primitives-table--default 390 en "Arben Gjergj Krasniqi-Marashi" x "Archived" 50x18
+  1  mantine-primitives-table--default 320 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  1  mantine-primitives-table--default 390 uk "Arben Gjergj Krasniqi-Marashi" x "На розгляді" 69x18
+  1  mantine-primitives-table--default 390 uk "Arben Gjergj Krasniqi-Marashi" x "Архів" 32x18
+  1  mantine-primitives-table--cards-below-md 320 uk "Arben Gjergj Krasniqi-Marashi" x "Активний" 59x18
+  1  mantine-primitives-table--cards-below-md 320 en "Arben Gjergj Krasniqi-Marashi" x "Active" 34x18

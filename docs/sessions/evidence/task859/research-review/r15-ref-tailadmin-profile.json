@@ -1,0 +1,36 @@
+[
+ {
+  "w": 390,
+  "labelToValue": [
+   8,
+   -493
+  ],
+  "valueToNextLabel": [
+   20,
+   607
+  ],
+  "sameColumn": true,
+  "label": "12px 400 rgb(102, 112, 133) lh 18px",
+  "value": "14px 500 rgb(29, 41, 57) lh 20px",
+  "labelClass": "mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400",
+  "valueClass": "text-sm font-medium text-gray-800 dark:text-white/90",
+  "gridClass": "relative grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 xl:gap-x-11 xl:gap-y-7"
+ },
+ {
+  "w": 1440,
+  "labelToValue": [
+   8,
+   -355
+  ],
+  "valueToNextLabel": [
+   -46,
+   439
+  ],
+  "sameColumn": true,
+  "label": "12px 400 rgb(102, 112, 133) lh 18px",
+  "value": "14px 500 rgb(29, 41, 57) lh 20px",
+  "labelClass": "mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400",
+  "valueClass": "text-sm font-medium text-gray-800 dark:text-white/90",
+  "gridClass": "relative grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 xl:gap-x-11 xl:gap-y-7"
+ }
+]

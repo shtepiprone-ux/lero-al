@@ -1,0 +1,198 @@
+jobs 4224, Stories 66, crashed 1, error screens 0
+card top stacks 20532; distinct (rowGap|gaps):
+  13312  other|16px|16
+  4824  record|12px|12,12,12,12
+  896  record|12px|12,12,12,12,12
+  432  record|12px|12,12,12
+  256  other|12px|12
+  252  other|16px|18
+  216  other|16px|31
+  128  other|16px|16,16
+  108  other|16px|26
+  108  record|12px|12,12
+card stacks with a gap != 12: 576
+  3  patterns-mantine-adminsupportview--default 320 sq other|16px|31
+  3  patterns-mantine-adminsupportview--default 320 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 320 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 320 it other|16px|31
+  3  patterns-mantine-adminsupportview--default 375 sq other|16px|31
+  3  patterns-mantine-adminsupportview--default 375 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 375 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 375 it other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 sq other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 390 it other|16px|31
+  3  patterns-mantine-adminsupportview--default 480 sq other|16px|31
+  3  patterns-mantine-adminsupportview--default 480 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 480 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 480 it other|16px|31
+  3  patterns-mantine-adminsupportview--default 560 sq other|16px|31
+  3  patterns-mantine-adminsupportview--default 560 en other|16px|31
+  3  patterns-mantine-adminsupportview--default 560 uk other|16px|31
+  3  patterns-mantine-adminsupportview--default 560 it other|16px|31
+badge -> nearest leaf above (root:kind:px):
+  8016  card:block:14
+  3268  card:block:12
+  2243  cell:block:15
+  399  card:block:16
+  172  card:wrapSameRow:10
+  144  card:block:10
+  111  cell:wrapSameRow:12
+  80  card:block:13
+  56  cell:block:12
+  42  card:block:38
+  36  card:block:8
+  7  card:block:62
+  4  cell:block:4
+  1  cell:wrapSameRow:14
+badges off 12 that are not a wrapped line of their own row: 10971
+  120  patterns-mantine-agentstatisticsview--default :: card 14px above "I dukshëm" <- ""
+  120  patterns-mantine-agentstatisticsview--default :: card 14px above "Visible" <- ""
+  120  patterns-mantine-agentstatisticsview--default :: card 14px above "Видиме" <- ""
+  120  patterns-mantine-agentstatisticsview--default :: card 14px above "Visibile" <- ""
+  120  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "I dukshëm" <- ""
+  120  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Visible" <- ""
+  120  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Видиме" <- ""
+  120  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "I dukshëm" <- ""
+  120  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Visible" <- ""
+  120  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Видиме" <- ""
+  120  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Visibile" <- ""
+  120  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Видиме" <- ""
+  120  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "I dukshëm" <- ""
+  120  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Visible" <- ""
+  120  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Visibile" <- ""
+  120  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Видиме" <- ""
+  120  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "I dukshëm" <- ""
+  120  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Visible" <- ""
+  120  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Visibile" <- ""
+  120  patterns-mantine-agentstatisticsview--sorted-by-views :: card 14px above "Видиме" <- ""
+  110  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Visibile" <- ""
+  110  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "I dukshëm" <- ""
+  110  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Visible" <- ""
+  110  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Visibile" <- ""
+  72  patterns-mantine-agentstatisticsview--default :: card 14px above "Aktiv" <- ""
+  72  patterns-mantine-agentstatisticsview--default :: card 14px above "Active" <- ""
+  72  patterns-mantine-agentstatisticsview--default :: card 14px above "Активне" <- ""
+  72  patterns-mantine-agentstatisticsview--default :: card 14px above "Attivo" <- ""
+  72  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Aktiv" <- ""
+  72  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Active" <- ""
+  72  patterns-mantine-agentstatisticsview--agt-01-all-zero :: card 14px above "Активне" <- ""
+  72  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Aktiv" <- ""
+  72  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Active" <- ""
+  72  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Активне" <- ""
+  72  patterns-mantine-agentstatisticsview--activity-stale :: card 14px above "Attivo" <- ""
+  72  patterns-mantine-agentstatisticsview--activity-error :: card 14px above "Активне" <- ""
+  72  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Aktiv" <- ""
+  72  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Active" <- ""
+  72  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Attivo" <- ""
+  72  patterns-mantine-agentstatisticsview--no-activity :: card 14px above "Активне" <- ""
+records-cell stacks holding objects 4811:
+  3538  12px|12
+  1016  12px|12,12
+  249  2px|2
+  4  normal|14
+  4  normal|0
+records-cell stacks with a gap != 12: 257
+  3  patterns-mantine-adminexchangeprovidersview--default 768 sq 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 768 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 768 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 768 it 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 810 sq 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 810 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 810 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 810 it 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 960 sq 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 960 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 960 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 960 it 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1024 sq 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1024 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1024 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1024 it 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1200 sq 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1200 en 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1200 uk 2px|2
+  3  patterns-mantine-adminexchangeprovidersview--default 1200 it 2px|2
+text-only cell stacks (listed, not judged):
+  755  2px|2
+  251  0px|0,0
+  140  12px|12
+  84  4px|4
+  84  0px|0
+  72  8px|8
+  1  normal|14,14
+inquiry rows 640:
+  280  blocks:12 ; text:4,4 ; blocks:12
+  240  blocks:12 ; blocks:12 ; text:4,4
+  120  blocks:12 ; text:4,4
+inquiry rows with a block gap != 12: 0
+  (none)
+one-link list rows (anchor stacks) 8832:
+  3080  8px|8
+  2048  0px|0
+  1856  16px|16
+  1080  8px|8,8,8
+  528  8px|8,8,8,8
+  240  8px|8,8
+name elements 10779; cut 328
+  2  mantine-primitives-table--sticky-column 680 sq ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 680 sq ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 680 sq ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 680 sq ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 680 en ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 680 en ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 680 en ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 680 en ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 680 uk ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 680 uk ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 680 uk ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 680 uk ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 680 it ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 680 it ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 680 it ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 680 it ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 767 sq ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 767 sq ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 767 sq ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 767 sq ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 767 en ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 767 en ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 767 en ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 767 en ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 767 uk ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 767 uk ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 767 uk ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 767 uk ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 767 it ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 767 it ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 767 it ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 767 it ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 768 sq ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 768 sq ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 768 sq ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 768 sq ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 768 en ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 768 en ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 768 en ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 768 en ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 768 uk ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 768 uk ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 768 uk ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 768 uk ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 768 it ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 768 it ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 768 it ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 768 it ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 810 sq ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 810 sq ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 810 sq ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 810 sq ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 810 en ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 810 en ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 810 en ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 810 en ancClip+ancClip "Arben Krasniqi-Marashi"
+  2  mantine-primitives-table--sticky-column 810 uk ancClip+ancClip "Arben Krasniqi"
+  2  mantine-primitives-table--sticky-column 810 uk ancClip+ancClip "Antonio Berluskoni"
+  2  mantine-primitives-table--sticky-column 810 uk ancClip+ancClip "Oksana Petrenko"
+  2  mantine-primitives-table--sticky-column 810 uk ancClip+ancClip "Arben Krasniqi-Marashi"

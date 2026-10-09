@@ -1,0 +1,65 @@
+patterns-mantine-adminuserstable--default 390 {
+ "otherCards": [],
+ "badges": [
+  "10px \"City request\" <- p.mantine-focus-auto.mantine-Text-root \"Online: 04/10/2026\" | badge parent div. rowGap normal"
+ ],
+ "clip": []
+}
+patterns-mantine-adminsupportview--default 390 {
+ "otherCards": [
+  {
+   "rowGap": "16px",
+   "gaps": [
+    31
+   ],
+   "kids": [
+    "div.mantine-Group-root mt=0px mb=0px h=48 \"\"",
+    "div.mantine-Stack-root mt=0px mb=0px h=53 \"Open.__m__-_r_5f_{font-size:va\""
+   ],
+   "card": "Open.__m__-_r_5f_{font-size:va"
+  },
+  {
+   "rowGap": "16px",
+   "gaps": [
+    31
+   ],
+   "kids": [
+    "div.mantine-Group-root mt=0px mb=0px h=48 \"\"",
+    "div.mantine-Stack-root mt=0px mb=0px h=53 \"In progress.__m__-_r_5m_{font-\""
+   ],
+   "card": "In progress.__m__-_r_5m_{font-"
+  },
+  {
+   "rowGap": "16px",
+   "gaps": [
+    31
+   ],
+   "kids": [
+    "div.mantine-Group-root mt=0px mb=0px h=48 \"\"",
+    "div.mantine-Stack-root mt=0px mb=0px h=53 \"Resolved.__m__-_r_5t_{font-siz\""
+   ],
+   "card": "Resolved.__m__-_r_5t_{font-siz"
+  }
+ ],
+ "badges": [
+  "8px \"Harassment or abuse\" <- p.mantine-focus-auto.mantine-Text-root \"Përdoruesi dërgon mesazhe të p\" | badge parent div.mantine-Group-root rowGap 8px"
+ ],
+ "clip": []
+}
+mantine-primitives-table--row-click 1440 {
+ "otherCards": [],
+ "badges": [],
+ "clip": [
+  "\"Active\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport",
+  "\"Agent\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport",
+  "\"2026-06-24\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport",
+  "\"Pending\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport",
+  "\"Agent\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport",
+  "\"2026-06-23\" clipped by div.mantine-ScrollArea-root ox=hidden oy=hidden; scroll ancestor between: div.mantine-ScrollArea-viewport"
+ ]
+}
+patterns-mantine-agentstatisticsview--activity-error 390 {
+ "otherCards": [],
+ "badges": [],
+ "clip": []
+}

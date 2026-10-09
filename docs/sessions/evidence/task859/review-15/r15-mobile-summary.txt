@@ -1,0 +1,634 @@
+jobs 6468, crashed 0, error screens 0, page-level horizontal overflow 0
+
+## mantine/primitives/Table.stories.tsx
+  KV-INLINE: 120 distinct
+    "Telefoni" | "+355 69 123 4567" [default]  — widths 320/390/560/639/640 · sq
+    "Regjistruar" | "2026-06-24" [default]  — widths 320/390/560/639/640 · sq
+    "Regjistruar" | "2026-06-23" [default]  — widths 320/390/560/639/640 · sq
+    "Regjistruar" | "2026-06-22" [default]  — widths 320/390/560/639/640 · sq
+    "Regjistruar" | "2026-06-21" [default]  — widths 320/390/560/639/640 · sq
+    "Phone" | "+355 69 123 4567" [default]  — widths 320/390/560/639/640 · en
+    "Registered" | "2026-06-24" [default]  — widths 320/390/560/639/640 · en
+    "Registered" | "2026-06-23" [default]  — widths 320/390/560/639/640 · en
+    … 112 more
+
+## patterns/mantine/AdminCurrenciesView.stories.tsx
+  KV-INLINE: 9 distinct
+    "ALL" | "L" [default]  — widths 768 · sq/en/uk/it
+    "EUR" | "€" [default]  — widths 768 · sq/en/uk/it
+    "USD" | "$" [default]  — widths 768 · sq/en/uk/it
+    "ALL" | "L" [delete-confirm]  — widths 768 · sq/en/it/uk
+    "EUR" | "€" [delete-confirm]  — widths 768 · sq/en/it/uk
+    "USD" | "$" [delete-confirm]  — widths 768 · sq/en/it/uk
+    "ALL" | "L" [detail]  — widths 768 · en/sq/it/uk
+    "EUR" | "€" [detail]  — widths 768 · en/sq/it/uk
+    … 1 more
+  EMPTY-FIRST-ROW: 3 distinct
+    [default]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+    [delete-confirm]  — widths 320/390/560/639/640/767 · sq/uk/en/it
+    [detail]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+  TARGET<44: 9 distinct
+    38x20 button "ALL" [default]  — widths 768 · sq/en/uk/it
+    39x20 button "EUR" [default]  — widths 768 · sq/en/uk/it
+    39x20 button "USD" [default]  — widths 768 · sq/en/uk/it
+    38x20 button "ALL" [delete-confirm]  — widths 768 · sq/en/it/uk
+    39x20 button "EUR" [delete-confirm]  — widths 768 · sq/en/it/uk
+    39x20 button "USD" [delete-confirm]  — widths 768 · sq/en/it/uk
+    38x20 button "ALL" [detail]  — widths 768 · en/sq/it/uk
+    39x20 button "EUR" [detail]  — widths 768 · en/sq/it/uk
+    … 1 more
+
+## patterns/mantine/AdminCurrencyTabs.stories.tsx
+  KV-INLINE: 3 distinct
+    "ALL" | "L" [default]  — widths 768 · en/sq/it/uk
+    "EUR" | "€" [default]  — widths 768 · en/sq/it/uk
+    "USD" | "$" [default]  — widths 768 · en/sq/it/uk
+  EMPTY-FIRST-ROW: 1 distinct
+    [default]  — widths 320/390/560/639/640/767 · en/sq/uk/it
+  TARGET<44: 3 distinct
+    38x20 button "ALL" [default]  — widths 768 · en/sq/it/uk
+    39x20 button "EUR" [default]  — widths 768 · en/sq/it/uk
+    39x20 button "USD" [default]  — widths 768 · en/sq/it/uk
+
+## patterns/mantine/AdminDashboardRecentListings.stories.tsx
+  CUT: 28 distinct
+    clamp2+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center with B" [default]  — widths 320/390 · en
+    clamp2+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 320/390 · sq
+    clamp2+ellipsisStyle+overflowHidden "Апартаменти в центрі Тирани з чудовим ви" [default]  — widths 320/390 · uk
+    clamp2+ellipsisStyle+overflowHidden "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390 · it
+    clamp1+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës" [default]  — widths 640 · sq
+    clamp1+ellipsisStyle+overflowHidden "Studio e Komodshme në Lagjen Sauk" [default]  — widths 640 · sq
+    clamp1+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 640/767/768 · sq
+    clamp1+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center" [default]  — widths 640 · en
+    … 20 more
+  CLAMP-LATENT: 36 distinct
+    clamp2+ellipsisStyle "Modern Apartment in Tirana Center" [default]  — widths 320/390/560/639 · en
+    clamp2+ellipsisStyle "Cozy Studio in Sauk District" [default]  — widths 320/390/560/639 · en
+    clamp2+ellipsisStyle "Apartament Modern në Qendër të Tiranës" [default]  — widths 320/390/560/639 · sq
+    clamp2+ellipsisStyle "Studio e Komodshme në Lagjen Sauk" [default]  — widths 320/390/560/639 · sq
+    clamp2+ellipsisStyle "Сучасна Квартира в Центрі Тирани" [default]  — widths 320/390/560/639 · uk
+    clamp2+ellipsisStyle "Затишна Студія в Районі Саук із Зручност" [default]  — widths 320/390/560/639 · uk
+    clamp2+ellipsisStyle "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390/560/639 · it
+    clamp2+ellipsisStyle "Accogliente Monolocale nel Quartiere Sau" [default]  — widths 320/390/560/639 · it
+    … 28 more
+
+## patterns/mantine/AdminDashboardView.stories.tsx
+  KV-INLINE: 464 distinct
+    "Shikime të regjistruar" | "103" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Klikime WhatsApp" | "9" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Kërkesa nga formulari" | "3" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Pa datë skadimi" | "15" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Skaduar" | "25" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Recorded views" | "103" [default]  — widths 320/390/560/639/640/767/768 · en
+    "WhatsApp clicks" | "9" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Form inquiries" | "3" [default]  — widths 320/390/560/639/640/767/768 · en
+    … 456 more
+  CUT: 141 distinct
+    clamp2+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 320/390/768 · sq
+    clamp2+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center with B" [default]  — widths 320/390/768 · en
+    clamp2+ellipsisStyle+overflowHidden "Апартаменти в центрі Тирани з чудовим ви" [default]  — widths 320/390/768 · uk
+    clamp2+ellipsisStyle+overflowHidden "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390/768 · it
+    clamp1+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës" [default]  — widths 640 · sq
+    clamp1+ellipsisStyle+overflowHidden "Studio e Komodshme në Lagjen Sauk" [default]  — widths 640 · sq
+    clamp1+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 640/767/768 · sq
+    clamp1+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center" [default]  — widths 640 · en
+    … 133 more
+  CLAMP-LATENT: 788 distinct
+    clamp2+ellipsisStyle "Të dukshme tani" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Aktive dhe pa skaduar" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Në moderim" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "radha aktuale" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Ankesa në shqyrtim" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Tiketa pa caktuar" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "të hapura ose në proces" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Shikime të regjistruara" [default]  — widths 320/390/560/639/640/767/768 · sq
+    … 780 more
+  EMPTY-FIRST-ROW: 10 distinct
+    [default]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    [adm-02-error]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    [all-queues-zero]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    [adm-09-zero]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    [no-location-requests]  — widths 320/390/560/639/640/767/768 · sq/en/it/uk
+    [activity-stale]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    [activity-error]  — widths 320/390/560/639/640/767/768 · sq/en/it/uk
+    [activity-empty-period]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    … 2 more
+  TARGET<44: 80 distinct
+    22x22 button "Rreth njoftimeve të dukshme" [default]  — widths 320/390/560/639/640/767/768 · sq
+    22x22 button "Rreth serive të aktivitetit" [default]  — widths 320/390/560/639/640/767/768 · sq
+    22x22 button "About visible listings" [default]  — widths 320/390/560/639/640/767/768 · en
+    22x22 button "About the activity series" [default]  — widths 320/390/560/639/640/767/768 · en
+    22x22 button "Про видимі оголошення" [default]  — widths 320/390/560/639/640/767/768 · uk
+    22x22 button "Про серії активності" [default]  — widths 320/390/560/639/640/767/768 · uk
+    22x22 button "Informazioni sugli annunci vis" [default]  — widths 320/390/560/639/640/767/768 · it
+    22x22 button "Informazioni sulle serie di at" [default]  — widths 320/390/560/639/640/767/768 · it
+    … 72 more
+
+## patterns/mantine/AdminExchangeProvidersView.stories.tsx
+  KV-INLINE: 108 distinct
+    "Mënyra" | "Automatik" [default]  — widths 320/390/560/639/640/767 · sq
+    "Prioriteti" | "1" [default]  — widths 320/390/560/639/640/767 · sq
+    "Pika fundore API" | "https://api.bankofalbania." [default]  — widths 320/390/560/639/640/767 · sq
+    "Mënyra" | "Hibrid" [default]  — widths 320/390/560/639/640/767 · sq
+    "Prioriteti" | "2" [default]  — widths 320/390/560/639/640/767 · sq
+    "Pika fundore API" | "https://api.exchangeratesa" [default]  — widths 320/390/560/639/640/767 · sq
+    "Mënyra" | "Manual" [default]  — widths 320/390/560/639/640/767 · sq
+    "Prioriteti" | "10" [default]  — widths 320/390/560/639/640/767 · sq
+    … 100 more
+  CUT: 9 distinct
+    ellipsis+overflowHidden "https://api.bankofalbania.example/rates" [default]  — widths 320/390 · sq/en/uk/it
+    ellipsis+overflowHidden "https://api.exchangeratesapi.example/lat" [default]  — widths 320/390 · sq/en/uk/it
+    ellipsis+overflowHidden "https://internal.example/manual" [default]  — widths 320/390 · sq/en/uk/it
+    ellipsis+overflowHidden "https://api.bankofalbania.example/rates" [pending]  — widths 320/390 · sq/en/it/uk
+    ellipsis+overflowHidden "https://api.exchangeratesapi.example/lat" [pending]  — widths 320/390 · sq/en/it/uk
+    ellipsis+overflowHidden "https://internal.example/manual" [pending]  — widths 320/390 · sq/en/it/uk
+    ellipsis+overflowHidden "https://api.bankofalbania.example/rates" [delete-confirm]  — widths 320/390 · sq/en/uk/it
+    ellipsis+overflowHidden "https://api.exchangeratesapi.example/lat" [delete-confirm]  — widths 320/390 · sq/en/uk/it
+    … 1 more
+  EMPTY-FIRST-ROW: 3 distinct
+    [default]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+    [pending]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+    [delete-confirm]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+  TARGET<44: 57 distinct
+    99x20 button "BankOfAlbania" [default]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    122x20 button "ExchangeRatesAPI" [default]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    87x20 button "ManualRates" [default]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    22x22 button "Çaktivizo" [default]  — widths 768 · sq
+    22x22 button "Ndrysho" [default]  — widths 768 · sq
+    22x22 button "Fshi" [default]  — widths 768 · sq
+    22x22 button "Aktivizo" [default]  — widths 768 · sq
+    22x22 button "Вимкнути" [default]  — widths 768 · uk
+    … 49 more
+
+## patterns/mantine/AdminInquiriesView.stories.tsx
+  KV-INLINE: 18 distinct
+    "27.09.2026" | "2" [default]  — widths 320/390/560/639 · sq/uk
+    "20.09.2026" | "1" [default]  — widths 320/390/560/639 · sq/uk
+    "09/27/2026" | "2" [default]  — widths 320/390/560/639 · en
+    "09/20/2026" | "1" [default]  — widths 320/390/560/639 · en
+    "27/09/2026" | "2" [default]  — widths 320/390/560/639 · it
+    "20/09/2026" | "1" [default]  — widths 320/390/560/639 · it
+    "09/27/2026" | "2" [unscoped]  — widths 320/390/560/639 · en
+    "09/20/2026" | "1" [unscoped]  — widths 320/390/560/639 · en
+    … 10 more
+  CUT: 1 distinct
+    ellipsis+overflowHidden "agim.krasniqi-berisha.hoxha.with.a.very." [long-subject]  — widths 320/390 · sq/en/it/uk
+
+## patterns/mantine/AdminListingsView.stories.tsx
+  CUT: 35 distinct
+    clamp1+ellipsisStyle+overflowHidden "3+1 apartament në qendër të Tiranës — ka" [default]  — widths 320/390/560 · sq/en/it/uk
+    clamp1+ellipsisStyle+overflowHidden "Shtëpi 250 m² me kopsht — Kombinat, Tira" [default]  — widths 320/390 · sq/en/it/uk
+    clamp1+ellipsisStyle+overflowHidden "Lokal tregtar 120 m² — Rruga e Kavajës" [default]  — widths 320 · sq/en/it/uk
+    clamp1+ellipsisStyle+overflowHidden "Apartament 2+1 — Durrës, pranë bregdetit" [default]  — widths 320 · sq/en/it/uk
+    clamp1+ellipsisStyle+overflowHidden "Tokë 500 m² — Vlorë, zonë rezidenciale m" [default]  — widths 320/390 · sq/en/it/uk
+    clamp2+ellipsisStyle+overflowHidden "3+1 apartament në qendër të Tiranës — ka" [default]  — widths 768 · en/sq/it/uk
+    clamp2+ellipsisStyle+overflowHidden "Shtëpi 250 m² me kopsht — Kombinat, Tira" [default]  — widths 768 · en/sq/it/uk
+    clamp2+ellipsisStyle+overflowHidden "Apartament 2+1 — Durrës, pranë bregdetit" [default]  — widths 768 · en/sq/it/uk
+    … 27 more
+  CLAMP-LATENT: 22 distinct
+    clamp1+ellipsisStyle "Lokal tregtar 120 m² — Rruga e Kavajës" [default]  — widths 390/560/639/640/767 · sq/en/uk/it
+    clamp1+ellipsisStyle "Apartament 2+1 — Durrës, pranë bregdetit" [default]  — widths 390/560/639/640/767 · sq/en/uk/it
+    clamp1+ellipsisStyle "Shtëpi 250 m² me kopsht — Kombinat, Tira" [default]  — widths 560/639/640/767 · sq/en/it/uk
+    clamp1+ellipsisStyle "Tokë 500 m² — Vlorë, zonë rezidenciale m" [default]  — widths 560/639/640/767 · sq/en/it/uk
+    clamp1+ellipsisStyle "3+1 apartament në qendër të Tiranës — ka" [default]  — widths 639/640/767 · en/sq/uk/it
+    clamp2+ellipsisStyle "Lokal tregtar 120 m² — Rruga e Kavajës" [default]  — widths 768 · en/sq/it/uk
+    clamp1+ellipsisStyle "3+1 apartament në qendër të Tiranës — ka" [premium-tab]  — widths 639/640/767 · sq/en/it/uk
+    clamp1+ellipsisStyle "Shtëpi 250 m² me kopsht — Kombinat, Tira" [filtered-pending]  — widths 560/639/640/767 · en/sq/uk/it
+    … 14 more
+  EMPTY-FIRST-ROW: 7 distinct
+    [default]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+    [premium-tab]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+    [filtered-pending]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+    [visible-filter]  — widths 320/390/560/639/640/767 · sq/en/uk/it
+    [hidden-eligible]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+    [audit-zero]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+    [paginated]  — widths 320/390/560/639/640/767 · sq/en/it/uk
+  TARGET<44: 84 distinct
+    180x20 button "Public-eligible but hidden: 2" [default]  — widths 640/767/768 · en
+    61x20 button "expired 1" [default]  — widths 640/767/768 · en
+    72x20 button "no expiry 1" [default]  — widths 640/767/768 · en
+    282x20 button "Të pranueshëm publikisht por t" [default]  — widths 640/767/768 · sq
+    64x20 button "skaduar 1" [default]  — widths 640/767/768 · sq
+    93x20 button "pa skadencë 1" [default]  — widths 640/767/768 · sq
+    258x20 button "Публічно-прийнятні, але прихов" [default]  — widths 640/767/768 · uk
+    96x20 button "прострочені 1" [default]  — widths 640/767/768 · uk
+    … 76 more
+
+## patterns/mantine/AdminPagesView.stories.tsx
+  KV-INLINE: 29 distinct
+    "Slug" | "terms-of-use" [default]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+    "Updated" | "in about 2 months" [default]  — widths 320/390/560/639/640/767 · en
+    "Slug" | "about-us" [default]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+    "Slug" | "privacy-policy" [default]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+    "Përditësuar" | "në rreth 2 muaj" [default]  — widths 320/390/560/639/640/767 · sq
+    "Aggiornato" | "tra circa 2 mesi" [default]  — widths 320/390/560/639/640/767 · it
+    "Оновлено" | "приблизно за 2 місяці" [default]  — widths 320/390/560/639/640/767 · uk
+    "Slug" | "terms-of-use" [migration-pending]  — widths 320/390/560/639/640/767 · sq/it/en/uk
+    … 21 more
+  CUT: 12 distinct
+    clamp2+ellipsisStyle+overflowHidden "Політика конфіденційності · Умови обслуг" [default]  — widths 768 · uk
+    clamp2+ellipsisStyle+overflowHidden "Politika e privatësisë · Kushtet e shërb" [migration-pending]  — widths 768 · sq
+    clamp2+ellipsisStyle+overflowHidden "Informativa sulla privacy · Termini di s" [migration-pending]  — widths 768 · it
+    clamp2+ellipsisStyle+overflowHidden "Політика конфіденційності · Умови обслуг" [deleting]  — widths 768 · uk
+    clamp2+ellipsisStyle+overflowHidden "Politika e privatësisë · Kushtet e shërb" [default]  — widths 768 · sq
+    clamp2+ellipsisStyle+overflowHidden "Informativa sulla privacy · Termini di s" [default]  — widths 768 · it
+    clamp2+ellipsisStyle+overflowHidden "Informativa sulla privacy · Termini di s" [deleting]  — widths 768 · it
+    clamp2+ellipsisStyle+overflowHidden "Politika e privatësisë · Kushtet e shërb" [deleting]  — widths 768 · sq
+    … 4 more
+  CLAMP-LATENT: 36 distinct
+    clamp2+ellipsisStyle "Умови обслуговування" [default]  — widths 768 · uk
+    clamp2+ellipsisStyle "Про нас" [default]  — widths 768 · uk
+    clamp2+ellipsisStyle "Kushtet e shërbimit" [migration-pending]  — widths 768 · sq
+    clamp2+ellipsisStyle "Rreth nesh" [migration-pending]  — widths 768 · sq
+    clamp2+ellipsisStyle "Termini di servizio" [migration-pending]  — widths 768 · it
+    clamp2+ellipsisStyle "Chi siamo" [migration-pending]  — widths 768 · it
+    clamp2+ellipsisStyle "Умови обслуговування" [deleting]  — widths 768 · uk
+    clamp2+ellipsisStyle "Про нас" [deleting]  — widths 768 · uk
+    … 28 more
+  EMPTY-FIRST-ROW: 4 distinct
+    [default]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+    [migration-pending]  — widths 320/390/560/639/640/767 · sq/it/en/uk
+    [deleting]  — widths 320/390/560/639/640/767 · uk/en/sq/it
+    [delete-confirm]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+  TARGET<44: 48 distinct
+    22x22 a "Відкрити перегляд" [default]  — widths 768 · uk
+    22x22 button "Редагувати" [default]  — widths 768 · uk
+    22x22 button "Видалити" [default]  — widths 768 · uk
+    22x22 a "Hap pamjen" [migration-pending]  — widths 768 · sq
+    22x22 button "Ndrysho" [migration-pending]  — widths 768 · sq
+    22x22 button "Fshi" [migration-pending]  — widths 768 · sq
+    22x22 a "Apri anteprima" [migration-pending]  — widths 768 · it
+    22x22 button "Modifica" [migration-pending]  — widths 768 · it
+    … 40 more
+
+## patterns/mantine/AdminPermissionsView.stories.tsx
+  KV-INLINE: 20 distinct
+    "Permesso" | "Consentito" [default]  — widths 320/390/560/639/640/767/768 · it
+    "Leja" | "E lejuar" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Дозвіл" | "Дозволено" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Permission" | "Allowed" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Дозвіл" | "Дозволено" [all-allowed]  — widths 320/390/560/639/640/767/768 · uk
+    "Leja" | "E lejuar" [all-allowed]  — widths 320/390/560/639/640/767/768 · sq
+    "Permission" | "Allowed" [all-allowed]  — widths 320/390/560/639/640/767/768 · en
+    "Permesso" | "Consentito" [all-allowed]  — widths 320/390/560/639/640/767/768 · it
+    … 12 more
+  TARGET<44: 260 distinct
+    38x44 input "Elimina annunci" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Imposta annunci come premium" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Crea utenti" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Cambia ruolo utente" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Disattiva utenti (eliminazione" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Elimina utenti definitivamente" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Gestisci posizioni" [default]  — widths 320/390/560/639/640/767/768 · it
+    38x44 input "Gestisci impostazioni sito" [default]  — widths 320/390/560/639/640/767/768 · it
+    … 252 more
+
+## patterns/mantine/AdminReportsView.stories.tsx
+  CUT: 4 distinct
+    clamp2+ellipsisStyle+overflowHidden "Vila me pishinë në Durrës — përballë pla" [default]  — widths 768 · en/uk/sq/it
+    ellipsis+overflowHidden "5" [all-tab]  — widths 560 · en
+    clamp2+ellipsisStyle+overflowHidden "Vila me pishinë në Durrës — përballë pla" [all-tab]  — widths 768 · sq/it/en/uk
+    ellipsis+overflowHidden "5" [default]  — widths 560 · en
+  CLAMP-LATENT: 2 distinct
+    clamp2+ellipsisStyle "Apartament 2+1 në Tiranë" [default]  — widths 768 · en/uk/sq/it
+    clamp2+ellipsisStyle "Apartament 2+1 në Tiranë" [all-tab]  — widths 768 · sq/it/en/uk
+  EMPTY-FIRST-ROW: 2 distinct
+    [default]  — widths 320/390/560/639/640/767 · en/sq/it/uk
+    [all-tab]  — widths 320/390/560/639/640/767 · sq/it/uk/en
+
+## patterns/mantine/AdminSupportView.stories.tsx
+  KV-INLINE: 28 distinct
+    "Reporter:" | "Oksana Petrenko" [default]  — widths 320/390/560/639/640/767 · en
+    "Reporter:" | "Gentiana Hoxha" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Reported user:" | "Arben Krasniqi" [default]  — widths 320/390/560/639/640/767 · en
+    "Reporter:" | "Driton Berisha" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Reported user:" | "usr-006…" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Segnalante:" | "Oksana Petrenko" [default]  — widths 320/390/560/639/640/767 · it
+    "Segnalante:" | "Gentiana Hoxha" [default]  — widths 320/390/560/639/640/767 · it
+    "Utente segnalato:" | "Arben Krasniqi" [default]  — widths 320/390/560/639/640/767 · it
+    … 20 more
+  CUT: 17 distinct
+    clamp2+ellipsisStyle+overflowHidden "Fatura e pagesës për paketën Premium nuk" [default]  — widths 320/768 · en/uk/sq/it
+    clamp1+ellipsisStyle+overflowHidden "Pagesa u debitua dy herë dhe asnjë fatur" [default]  — widths 320/390/768 · en/it/sq/uk
+    clamp1+ellipsisStyle+overflowHidden "Përdoruesi dërgon mesazhe të përsëritura" [default]  — widths 320/390/768 · en/it/sq/uk
+    ellipsis+overflowHidden "Admin" [unassigned-landing]  — widths 320 · sq
+    ellipsis+overflowHidden "Tiketat e brendshme" [unassigned-landing]  — widths 320 · sq
+    clamp2+ellipsisStyle+overflowHidden "Fatura e pagesës për paketën Premium nuk" [unassigned-landing]  — widths 320/768 · sq/it/en/uk
+    clamp1+ellipsisStyle+overflowHidden "Pagesa u debitua dy herë dhe asnjë fatur" [unassigned-landing]  — widths 320/390/768 · sq/uk/it/en
+    clamp2+ellipsisStyle+overflowHidden "Nuk mund të redaktoj njoftimin pas publi" [default]  — widths 768 · en/uk/it/sq
+    … 9 more
+  CLAMP-LATENT: 46 distinct
+    clamp2+ellipsisStyle "Open" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "In progress" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Resolved" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Nuk mund të redaktoj njoftimin pas publi" [default]  — widths 320/390/560/639/640/767 · en/it/uk/sq
+    clamp2+ellipsisStyle "Ankesë për foto false të pronës" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    clamp2+ellipsisStyle "Disputa pagese për depozitën e qirasë" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    clamp2+ellipsisStyle "Ankesë për ngacmim në mesazhet private" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    clamp2+ellipsisStyle "Aperti" [default]  — widths 320/390/560/639/640/767/768 · it
+    … 38 more
+  TEXT-ELLIPSIS: 1 distinct
+    "usr-006…" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+  EMPTY-FIRST-ROW: 3 distinct
+    [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    [unassigned-landing]  — widths 320/390/560/639/640/767/768 · sq/uk/en/it
+    [empty]  — widths 320/390/560/639/640/767/768 · uk/sq/en/it
+  TARGET<44: 7 distinct
+    98x18 a "Oksana Petrenko" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    92x18 a "Gentiana Hoxha" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    84x18 a "Arben Krasniqi" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    82x18 a "Driton Berisha" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    52x18 a "usr-006…" [default]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    98x18 a "Oksana Petrenko" [unassigned-landing]  — widths 320/390/560/639/640/767/768 · sq/uk/en/it
+    82x18 a "Driton Berisha" [unassigned-landing]  — widths 320/390/560/639/640/767/768 · sq/uk/en/it
+
+## patterns/mantine/AdminSurfacePattern.stories.tsx
+  KV-INLINE: 17 distinct
+    "Role" | "Agent" [default]  — widths 320/390/560/639/640 · en
+    "Phone" | "+355 69 123 4567" [default]  — widths 320/390/560/639/640 · en
+    "Date" | "2026-06-24" [default]  — widths 320/390/560/639/640 · en
+    "Date" | "2026-06-23" [default]  — widths 320/390/560/639/640 · en
+    "Date" | "2026-06-22" [default]  — widths 320/390/560/639/640 · en
+    "Roli" | "Agjent" [default]  — widths 320/390/560/639/640 · sq
+    "Telefoni" | "+355 69 123 4567" [default]  — widths 320/390/560/639/640 · sq
+    "Data" | "2026-06-24" [default]  — widths 320/390/560/639/640 · sq/it
+    … 9 more
+
+## patterns/mantine/AdminTable.stories.tsx
+  KV-INLINE: 3 distinct
+    "L" | "Albanian Lek" [synthesized]  — widths 320/390/560/639/640/767 · uk/en/sq/it
+    "€" | "Euro" [synthesized]  — widths 320/390/560/639/640/767 · uk/en/sq/it
+    "$" | "US Dollar" [synthesized]  — widths 320/390/560/639/640/767 · uk/en/sq/it
+  EMPTY-FIRST-ROW: 2 distinct
+    [row-click]  — widths 320/390/560/639/640/767 · sq/it/uk/en
+    [wrapped-title-column]  — widths 320/390/560/639/640/767 · uk/en/sq/it
+
+## patterns/mantine/AdminUserProfileView.stories.tsx
+  KV-INLINE: 360 distinct
+    "Account type" | "Private person" [view]  — widths 320/390/560/639/640/767/768 · en
+    "Status *" | "Active" [view]  — widths 320/390/560/639/640/767/768 · en
+    "arben@example.com" | "Email konfirmuar" [view]  — widths 390/560/639/640/767/768 · sq
+    "Lloji i llogarisë" | "Person privat" [view]  — widths 320/390/560/639/640/767/768 · sq
+    "Statusi *" | "Aktiv" [view]  — widths 320/390/560/639/640/767/768 · sq
+    "arben@example.com" | "Email confermato" [view]  — widths 390/560/639/640/767/768 · it
+    "Tipo account" | "Privato" [view]  — widths 320/390/560/639/640/767/768 · it
+    "Stato *" | "Attivo" [view]  — widths 320/390/560/639/640/767/768 · it
+    … 352 more
+  CUT: 14 distinct
+    ellipsis+overflowHidden "arben@example.com" [view]  — widths 320 · en/uk/sq/it
+    ellipsis+overflowHidden "arben@example.com" [view-blocked]  — widths 320 · sq/it/en/uk
+    ellipsis+overflowHidden "arben@example.com" [view-agent]  — widths 320 · uk/sq/it/en
+    ellipsis+overflowHidden "arben@example.com" [view-location-request]  — widths 320 · en/uk/sq/it
+    ellipsis+overflowHidden "arben@example.com" [view-no-history-controls]  — widths 320 · sq/it/en/uk
+    ellipsis+overflowHidden "Приватна особа" [edit]  — widths 320 · uk
+    ellipsis+overflowHidden "arben@example.com" [edit]  — widths 320 · uk/sq/it/en
+    ellipsis+overflowHidden "arben@example.com" [edit-blocked]  — widths 320 · en/uk/sq/it
+    … 6 more
+  TARGET<44: 29 distinct
+    28x28 button "Завантажити фото" [edit]  — widths 320/390/560/639/640/767/768 · uk
+    16x16 input "" [edit]  — widths 320/390/560/639/640/767/768 · uk/sq/en/it
+    28x28 button "Ngarko foto" [edit]  — widths 320/390/560/639/640/767/768 · sq
+    28x28 button "Upload photo" [edit]  — widths 320/390/560/639/640/767/768 · en
+    28x28 button "Carica foto" [edit]  — widths 320/390/560/639/640/767/768 · it
+    28x28 button "Ngarko foto" [edit-blocked]  — widths 320/390/560/639/640/767/768 · sq
+    16x16 input "" [edit-blocked]  — widths 320/390/560/639/640/767/768 · sq/en/uk/it
+    22x22 button "Pastro" [edit-blocked]  — widths 320/390/560/639/640/767/768 · sq
+    … 21 more
+
+## patterns/mantine/AdminUsersTable.stories.tsx
+  KV-INLINE: 148 distinct
+    "Roli" | "Agjent" [default]  — widths 320/390/560/639/640/767 · sq
+    "Telefon" | "+355691234567" [default]  — widths 320/390/560/639/640/767 · sq
+    "Data" | "15.01.2026Online: 01.05.20" [default]  — widths 320/390/560/639/640/767 · sq
+    "Roli" | "Përdorues" [default]  — widths 320/390/560/639/640/767 · sq
+    "Telefon" | "+380509876543" [default]  — widths 320/390/560/639/640/767 · sq
+    "Data" | "20.02.2026Online: 10.04.20" [default]  — widths 320/390/560/639/640/767 · sq
+    "Kërkesë qyteti" | "Kërkesë qyteti" [default]  — widths 320/390/560/639/640/767 · sq
+    "Roli" | "Moderator" [default]  — widths 320/390/560/639/640/767 · sq
+    … 140 more
+  CUT: 4 distinct
+    ellipsis+overflowHidden "Запит на місто" [location-filter-removed]  — widths 768 · uk
+    ellipsis+overflowHidden "Запит на місто" [paginated]  — widths 768 · uk
+    ellipsis+overflowHidden "Запит на місто" [default]  — widths 768 · uk
+    ellipsis+overflowHidden "Запит на місто" [location-filter]  — widths 768 · uk
+  AVATAR-OFF-CENTRE: 32 distinct
+    "AktivOksana Petrenko" [default]  — widths 320/390/560/639/640/767 · sq
+    "AktivMarco Rossi" [default]  — widths 320/390/560/639/640/767 · sq
+    "AttivoOksana Petrenko" [default]  — widths 320/390/560/639/640/767 · it
+    "AttivoMarco Rossi" [default]  — widths 320/390/560/639/640/767 · it
+    "АктивнийOksana Petrenko" [default]  — widths 390/560/639/640/767 · uk
+    "АктивнийMarco Rossi" [default]  — widths 320/390/560/639/640/767 · uk
+    "ЗаблокованийGentiana Hoxha" [default]  — widths 390/560/639/640/767 · uk
+    "ActiveOksana Petrenko" [default]  — widths 320/390/560/639/640/767 · en
+    … 24 more
+  TARGET<44: 51 distinct
+    100x20 a "Arben Krasniqi" [default]  — widths 768 · sq/it/en/uk
+    22x22 button "Hiq verifikimin" [default]  — widths 768 · sq
+    22x22 a "" [default]  — widths 768 · sq/it/en/uk
+    100x40 a "Oksana Petrenko" [default]  — widths 768 · sq/it/en/uk
+    22x22 button "Verifiko" [default]  — widths 768 · sq
+    80x20 a "Marco Rossi" [default]  — widths 768 · sq/it/en/uk
+    100x40 a "Gentiana Hoxha" [default]  — widths 768 · sq/it/en/uk
+    22x22 button "Revoca verifica" [default]  — widths 768 · it
+    … 43 more
+
+## patterns/mantine/AgentStatisticsView.stories.tsx
+  KV-INLINE: 491 distinct
+    "На модерації" | "2" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Не відображається" | "2" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Спливає протягом 7 дні" | "3" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Видимість" | "Видиме" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Спливає" | "08.10.2026 (за 20 днів)" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Перегляди" | "42" [default]  — widths 320/390/560/639/640/767/768 · uk
+    "WhatsApp" | "5" [default]  — widths 320/390/560/639/640/767/768 · uk/sq/it/en
+    "Запити з форми" | "2" [default]  — widths 320/390/560/639/640/767/768 · uk
+    … 483 more
+  CUT: 55 distinct
+    clamp2+ellipsisStyle+overflowHidden "Апартаменти в центрі Тирани з чудовим ви" [default]  — widths 320/390/560 · uk
+    clamp2+ellipsisStyle+overflowHidden "Гірський будиночок у Бераті" [default]  — widths 390 · uk
+    clamp2+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 320/390 · sq
+    clamp2+ellipsisStyle+overflowHidden "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390 · it
+    clamp2+ellipsisStyle+overflowHidden "Accogliente Monolocale nel Quartiere Sau" [default]  — widths 320 · it
+    clamp2+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center with B" [agt-01-all-zero]  — widths 320/390 · en
+    clamp2+ellipsisStyle+overflowHidden "Апартаменти в центрі Тирани з чудовим ви" [agt-01-all-zero]  — widths 320/390/560 · uk
+    clamp2+ellipsisStyle+overflowHidden "Затишна Студія в Районі Саук із Зручност" [agt-01-all-zero]  — widths 320 · uk
+    … 47 more
+  CLAMP-LATENT: 422 distinct
+    clamp2+ellipsisStyle "Зафіксовані перегляди · останніх 30 днів" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Кліки WhatsApp · останніх 30 днів" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Запити з форми · останніх 30 днів" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Видимі зараз" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "На модерації" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Не відображається" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Спливає протягом 7 днів" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Сучасна Квартира в Центрі Тирани" [default]  — widths 320/390/560/639/640/767/768 · uk
+    … 414 more
+  TEXT-ELLIPSIS: 96 distinct
+    "Сучасна Квартира в Цен..." [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Апартаменти в центрі Ти..." [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Затишна Студія в Районі ..." [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Сучасна квартира в цент..." [default]  — widths 320/390/560/639/640/767/768 · uk
+    "Apartament Modern në Qe..." [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Apartament Modern në Q..." [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Studio e Komodshme në L..." [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Apartament Modern në Tir..." [default]  — widths 320/390/560/639/640/767/768 · sq
+    … 88 more
+  EMPTY-FIRST-ROW: 8 distinct
+    [default]  — widths 320/390/560/639/640/767/768 · uk/sq/it/en
+    [agt-01-all-zero]  — widths 320/390/560/639/640/767/768 · en/sq/uk/it
+    [agt-10-empty]  — widths 320/390/560/639/640/767/768 · en/it/uk/sq
+    [agt-10-filtered-empty]  — widths 320/390/560/639/640/767/768 · sq/it/uk/en
+    [activity-stale]  — widths 320/390/560/639/640/767/768 · uk/en/sq/it
+    [activity-error]  — widths 320/390/560/639/640/767/768 · en/sq/it/uk
+    [no-activity]  — widths 320/390/560/639/640/767/768 · sq/it/en/uk
+    [sorted-by-views]  — widths 320/390/560/639/640/767/768 · uk/en/it/sq
+  TARGET<44: 2387 distinct
+    22x22 button "Докладніше" [default]  — widths 320/390/560/639/640/767/768 · uk
+    155x38 a "Очікують2" [default]  — widths 390 · uk
+    155x38 a "Неактивні3" [default]  — widths 390 · uk
+    222x40 a "Сучасна Квартира в Центрі Тира" [default]  — widths 390 · uk
+    222x40 a "Апартаменти в центрі Тирани з " [default]  — widths 390 · uk
+    222x40 a "Затишна Студія в Районі Саук і" [default]  — widths 390 · uk
+    222x40 a "Сучасна квартира в центрі Тира" [default]  — widths 390 · uk
+    132x40 a "Вілла з садом у Дурресі" [default]  — widths 390 · uk
+    … 2379 more
+
+## patterns/mantine/DashboardBarChart.stories.tsx
+  KV-INLINE: 4 distinct
+    "Njoftimetqer 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Annuncigiu 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+    "Оголошеннячерв. 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+    "ListingsJun 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+  TEXT-ELLIPSIS: 4 distinct
+    "Офісне приміщення в Ко..." [horizontal]  — widths 320/390/560/639/640/767/768 · uk
+    "Пляжний будинок у Вль..." [horizontal]  — widths 320/390/560/639/640/767/768 · uk
+    "Гірський будиночок у Бер..." [horizontal]  — widths 320/390/560/639/640/767/768 · uk
+    "Villa con Giardino a Dura..." [horizontal]  — widths 320/390/560/639/640/767/768 · it
+
+## patterns/mantine/DashboardDonut.stories.tsx
+  KV-INLINE: 4 distinct
+    "Статус оголошеньчерв. " | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+    "Listing statusJun 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+    "Statusi i njoftimeveqe" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Stato degli annuncigiu" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+
+## patterns/mantine/DashboardGrid.stories.tsx
+  CLAMP-LATENT: 48 distinct
+    clamp2+ellipsisStyle "Active listings" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Views" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Inquiries" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Favorites" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Shpallje aktive" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Shikime" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Kërkesa" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Të preferuarat" [default]  — widths 320/390/560/639/640/767/768 · sq
+    … 40 more
+  EMPTY-FIRST-ROW: 3 distinct
+    [default]  — widths 320/390/560/639/640/767/768 · en/sq/it/uk
+    [max-columns]  — widths 320/390/560/639/640/767/768 · sq/it/uk/en
+    [deferred-four-up]  — widths 320/390/560/639/640/767/768 · uk/en/sq/it
+
+## patterns/mantine/DashboardLineChart.stories.tsx
+  KV-INLINE: 4 distinct
+    "Щоденна активністьчерв" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+    "Daily activityJun 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+    "Aktiviteti ditorqer 20" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Attività giornalieragi" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+
+## patterns/mantine/DashboardRadar.stories.tsx
+  KV-INLINE: 4 distinct
+    "Порівняння показниківч" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+    "Performance comparison" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+    "Krahasimi i performanc" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Confronto delle presta" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+
+## patterns/mantine/DashboardRadialProgress.stories.tsx
+  KV-INLINE: 4 distinct
+    "Response rateJun 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+    "Shkalla e përgjigjesqe" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Tasso di rispostagiu 2" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+    "Рівень відповідейчерв." | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+
+## patterns/mantine/DashboardSemiDonut.stories.tsx
+  KV-INLINE: 4 distinct
+    "Burimi i trafikutqer 2" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · sq
+    "Fonte di trafficogiu 2" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · it
+    "Джерело трафікучерв. 2" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · uk
+    "Traffic sourceJun 2026" | ".__m__-_r_c_{width:100%;}@" [default]  — widths 640/767/768 · en
+
+## patterns/mantine/DashboardStatCard.stories.tsx
+  CLAMP-LATENT: 40 distinct
+    clamp2+ellipsisStyle "On moderation" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "current queue" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Queue is empty" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Në moderim" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "radha aktuale" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Radha është bosh" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "In moderazione" [default]  — widths 320/390/560/639/640/767/768 · it
+    clamp2+ellipsisStyle "coda attuale" [default]  — widths 320/390/560/639/640/767/768 · it
+    … 32 more
+  EMPTY-FIRST-ROW: 6 distinct
+    [default]  — widths 320/390/560/639/640/767/768 · en/sq/it/uk
+    [loading]  — widths 320/390/560/639/640/767/768 · sq/it/uk/en
+    [zero]  — widths 320/390/560/639/640/767/768 · uk/en/sq/it
+    [with-chart]  — widths 320/390/560/639/640/767/768 · sq/it/uk/en
+    [accent-with-substats]  — widths 320/390/560/639/640/767/768 · uk/sq/en/it
+    [accent]  — widths 320/390/560/639/640/767/768 · en/sq/it/uk
+  TARGET<44: 78 distinct
+    120x38 a "Очікують2" [accent-with-substats]  — widths 320 · uk
+    120x38 a "Неактивні3" [accent-with-substats]  — widths 320 · uk
+    240x38 a "Në pritje2" [accent-with-substats]  — widths 560 · sq
+    240x38 a "Joaktive3" [accent-with-substats]  — widths 560 · sq
+    240x38 a "Shitur (shënuar prej meje)1" [accent-with-substats]  — widths 560 · sq
+    240x38 a "Dhënë me qira (shënuar prej me" [accent-with-substats]  — widths 560 · sq
+    155x38 a "Pending2" [accent-with-substats]  — widths 390 · en
+    155x38 a "Inactive3" [accent-with-substats]  — widths 390 · en
+    … 70 more
+
+## patterns/mantine/DashboardStatRows.stories.tsx
+  CLAMP-LATENT: 24 distinct
+    clamp2+ellipsisStyle "Në pritje" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Në shqyrtim" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Refuzuar" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "In attesa" [default]  — widths 320/390/560/639/640/767/768 · it
+    clamp2+ellipsisStyle "In revisione" [default]  — widths 320/390/560/639/640/767/768 · it
+    clamp2+ellipsisStyle "Rifiutato" [default]  — widths 320/390/560/639/640/767/768 · it
+    clamp2+ellipsisStyle "Очікує" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "На розгляді" [default]  — widths 320/390/560/639/640/767/768 · uk
+    … 16 more
+
+## patterns/mantine/DashboardWorkList.stories.tsx
+  CUT: 4 distinct
+    clamp2+ellipsisStyle+overflowHidden "Апартаменти в центрі Тирани з чудовим ви" [default]  — widths 320/390 · uk
+    clamp2+ellipsisStyle+overflowHidden "Apartament Modern në Qendër të Tiranës m" [default]  — widths 320 · sq
+    clamp2+ellipsisStyle+overflowHidden "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390 · it
+    clamp2+ellipsisStyle+overflowHidden "Modern Apartment in Tirana Center with B" [default]  — widths 320 · en
+  CLAMP-LATENT: 7 distinct
+    clamp2+ellipsisStyle "Сучасна Квартира в Центрі Тирани" [default]  — widths 320/390/560/639/640/767/768 · uk
+    clamp2+ellipsisStyle "Modern Apartment in Tirana Center" [default]  — widths 320/390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Modern Apartment in Tirana Center with B" [default]  — widths 390/560/639/640/767/768 · en
+    clamp2+ellipsisStyle "Apartament Modern në Qendër të Tiranës" [default]  — widths 320/390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Apartament Modern në Qendër të Tiranës m" [default]  — widths 390/560/639/640/767/768 · sq
+    clamp2+ellipsisStyle "Appartamento Moderno nel Centro di Tiran" [default]  — widths 320/390/560/639/640/767/768 · it
+    clamp2+ellipsisStyle "Апартаменти в центрі Тирани з чудовим ви" [default]  — widths 560/639/640/767/768 · uk
+
+## patterns/mantine/DetailList.stories.tsx
+  KV-INLINE: 20 distinct
+    "Public visibility" | "Visible" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Agent" | "Premium status" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Status" | "Premium feature is not rea" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Premium" | "Not premium" [default]  — widths 320/390/560/639/640/767/768 · en
+    "Dukshmëria publike" | "I dukshëm" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Agjent" | "Statusi Premium" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Statusi" | "Funksioni premium nuk ësht" [default]  — widths 320/390/560/639/640/767/768 · sq
+    "Premium" | "Jo Premium" [default]  — widths 320/390/560/639/640/767/768 · sq
+    … 12 more
+
+## Files per defect kind
+  KV-INLINE: 21 files — Table, AdminCurrenciesView, AdminCurrencyTabs, AdminDashboardView, AdminExchangeProvidersView, AdminInquiriesView, AdminPagesView, AdminPermissionsView, AdminSupportView, AdminSurfacePattern, AdminTable, AdminUserProfileView, AdminUsersTable, AgentStatisticsView, DashboardBarChart, DashboardDonut, DashboardLineChart, DashboardRadar, DashboardRadialProgress, DashboardSemiDonut, DetailList
+  CUT: 12 files — AdminDashboardRecentListings, AdminDashboardView, AdminExchangeProvidersView, AdminInquiriesView, AdminListingsView, AdminPagesView, AdminReportsView, AdminSupportView, AdminUserProfileView, AdminUsersTable, AgentStatisticsView, DashboardWorkList
+  CLAMP-LATENT: 11 files — AdminDashboardRecentListings, AdminDashboardView, AdminListingsView, AdminPagesView, AdminReportsView, AdminSupportView, AgentStatisticsView, DashboardGrid, DashboardStatCard, DashboardStatRows, DashboardWorkList
+  TEXT-ELLIPSIS: 3 files — AdminSupportView, AgentStatisticsView, DashboardBarChart
+  AVATAR-OFF-CENTRE: 1 files — AdminUsersTable
+  EMPTY-FIRST-ROW: 12 files — AdminCurrenciesView, AdminCurrencyTabs, AdminDashboardView, AdminExchangeProvidersView, AdminListingsView, AdminPagesView, AdminReportsView, AdminSupportView, AdminTable, AgentStatisticsView, DashboardGrid, DashboardStatCard
+  TARGET<44: 12 files — AdminCurrenciesView, AdminCurrencyTabs, AdminDashboardView, AdminExchangeProvidersView, AdminListingsView, AdminPagesView, AdminPermissionsView, AdminSupportView, AdminUserProfileView, AdminUsersTable, AgentStatisticsView, DashboardStatCard

@@ -1,0 +1,971 @@
+[
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/profile",
+  "w": 390,
+  "final": "https://demo.tailadmin.com/profile",
+  "modes": {
+   "stacked": 9
+  },
+  "stackedGapMedian": 8,
+  "stackedGaps": [
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "First Name",
+    "value": "Chowdury",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Last Name",
+    "value": "Musharof",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Email address",
+    "value": "randomuser@pimjo.com",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Phone",
+    "value": "+09 363 398 46",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Bio",
+    "value": "Team Manager",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Country",
+    "value": "United States",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "City/State",
+    "value": "Arizona, United States.",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Postal Code",
+    "value": "ERT 2489",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "TAX ID",
+    "value": "AS4568384",
+    "mode": "stacked",
+    "gap": 8
+   }
+  ]
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/profile",
+  "w": 1440,
+  "final": "https://demo.tailadmin.com/profile",
+  "modes": {
+   "stacked": 9
+  },
+  "stackedGapMedian": 8,
+  "stackedGaps": [
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "First Name",
+    "value": "Chowdury",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Last Name",
+    "value": "Musharof",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Email address",
+    "value": "randomuser@pimjo.com",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Phone",
+    "value": "+09 363 398 46",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Bio",
+    "value": "Team Manager",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Country",
+    "value": "United States",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "City/State",
+    "value": "Arizona, United States.",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "Postal Code",
+    "value": "ERT 2489",
+    "mode": "stacked",
+    "gap": 8
+   },
+   {
+    "label": "TAX ID",
+    "value": "AS4568384",
+    "mode": "stacked",
+    "gap": 8
+   }
+  ]
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/single-invoice",
+  "w": 390,
+  "final": "https://demo.tailadmin.com/single-invoice",
+  "modes": {
+   "stacked": 6,
+   "inline": 8
+  },
+  "stackedGapMedian": 6,
+  "stackedGaps": [
+   4,
+   4,
+   6,
+   6,
+   10
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "From",
+    "value": "Pimjo LLC",
+    "mode": "stacked",
+    "gap": 4
+   },
+   {
+    "label": "Issued On:",
+    "value": "11 March, 2027",
+    "mode": "stacked",
+    "gap": 6
+   },
+   {
+    "label": "11 March, 2027",
+    "value": "To",
+    "mode": "stacked",
+    "gap": 49
+   },
+   {
+    "label": "To",
+    "value": "Albert Ward",
+    "mode": "stacked",
+    "gap": 4
+   },
+   {
+    "label": "Due On:",
+    "value": "16 March, 2027",
+    "mode": "stacked",
+    "gap": 6
+   },
+   {
+    "label": "Products",
+    "value": "Quantity",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "1",
+    "value": "Macbook pro 13”",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "2",
+    "value": "Apple Watch Ultra",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "3",
+    "value": "iPhone 15 Pro Max",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "4",
+    "value": "iPad Pro 3rd Gen",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "Sub Total",
+    "value": "$3,850",
+    "mode": "inline",
+    "gap": 120
+   },
+   {
+    "label": "Vat (10%):",
+    "value": "$385",
+    "mode": "inline",
+    "gap": 129
+   }
+  ]
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/single-invoice",
+  "w": 1440,
+  "final": "https://demo.tailadmin.com/single-invoice",
+  "modes": {
+   "stacked": 5,
+   "inline": 9
+  },
+  "stackedGapMedian": 6,
+  "stackedGaps": [
+   4,
+   4,
+   6,
+   6,
+   10
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "From",
+    "value": "Pimjo LLC",
+    "mode": "stacked",
+    "gap": 4
+   },
+   {
+    "label": "Issued On:",
+    "value": "11 March, 2027",
+    "mode": "stacked",
+    "gap": 6
+   },
+   {
+    "label": "11 March, 2027",
+    "value": "To",
+    "mode": "inline",
+    "gap": 642
+   },
+   {
+    "label": "To",
+    "value": "Albert Ward",
+    "mode": "stacked",
+    "gap": 4
+   },
+   {
+    "label": "Due On:",
+    "value": "16 March, 2027",
+    "mode": "stacked",
+    "gap": 6
+   },
+   {
+    "label": "Products",
+    "value": "Quantity",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "1",
+    "value": "Macbook pro 13”",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "2",
+    "value": "Apple Watch Ultra",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "3",
+    "value": "iPhone 15 Pro Max",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "4",
+    "value": "iPad Pro 3rd Gen",
+    "mode": "inline",
+    "gap": 0
+   },
+   {
+    "label": "Sub Total",
+    "value": "$3,850",
+    "mode": "inline",
+    "gap": 120
+   },
+   {
+    "label": "Vat (10%):",
+    "value": "$385",
+    "mode": "inline",
+    "gap": 129
+   }
+  ]
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/customers-details.html",
+  "w": 390,
+  "final": "https://techzaa.in/lahomes/admin/customers-details.html",
+  "modes": {
+   "stacked": 11,
+   "inline": 3
+  },
+  "stackedGapMedian": 5,
+  "stackedGaps": [
+   0,
+   0,
+   0,
+   4,
+   5,
+   5,
+   5,
+   10,
+   10,
+   10
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Customer Details",
+    "value": "Add Customer",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Email Address :",
+    "value": "daavidnumminen@teleworm.",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "daavidnumminen@teleworm.",
+    "value": "Phone Number :",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "Phone Number :",
+    "value": "+231 06-75820711",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "+231 06-75820711",
+    "value": "Location :",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "Location :",
+    "value": "Schoolstraat 161 5151 HH",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Schoolstraat 161 5151 HH",
+    "value": "Status :",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "Social Media :",
+    "value": "Preferences :",
+    "mode": "stacked",
+    "gap": 56
+   },
+   {
+    "label": "Jan-Dec 2023",
+    "value": "First Week 37",
+    "mode": "inline",
+    "gap": 122
+   },
+   {
+    "label": "Holder Name",
+    "value": "Ray C. Nichols",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Valid",
+    "value": "05/26",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Own",
+    "value": "27",
+    "mode": "stacked",
+    "gap": 4
+   }
+  ]
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/customers-details.html",
+  "w": 1440,
+  "final": "https://techzaa.in/lahomes/admin/customers-details.html",
+  "modes": {
+   "stacked": 7,
+   "inline": 7
+  },
+  "stackedGapMedian": 5,
+  "stackedGaps": [
+   4,
+   5,
+   5,
+   5,
+   10,
+   10,
+   10
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Customer Details",
+    "value": "Add Customer",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Email Address :",
+    "value": "daavidnumminen@teleworm.",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "daavidnumminen@teleworm.",
+    "value": "Phone Number :",
+    "mode": "inline",
+    "gap": 20
+   },
+   {
+    "label": "Phone Number :",
+    "value": "+231 06-75820711",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "+231 06-75820711",
+    "value": "Location :",
+    "mode": "inline",
+    "gap": 20
+   },
+   {
+    "label": "Location :",
+    "value": "Schoolstraat 161 5151 HH",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Schoolstraat 161 5151 HH",
+    "value": "Status :",
+    "mode": "inline",
+    "gap": 20
+   },
+   {
+    "label": "Social Media :",
+    "value": "Preferences :",
+    "mode": "inline",
+    "gap": 20
+   },
+   {
+    "label": "Jan-Dec 2023",
+    "value": "First Week 37",
+    "mode": "inline",
+    "gap": 120
+   },
+   {
+    "label": "Holder Name",
+    "value": "Ray C. Nichols",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Valid",
+    "value": "05/26",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "Own",
+    "value": "27",
+    "mode": "stacked",
+    "gap": 4
+   }
+  ]
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/agents-details.html",
+  "w": 390,
+  "final": "https://techzaa.in/lahomes/admin/agents-details.html",
+  "modes": {
+   "stacked": 8,
+   "inline": 2
+  },
+  "stackedGapMedian": 10,
+  "stackedGaps": [
+   5,
+   5,
+   5,
+   10,
+   14,
+   14,
+   14
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Agent Details",
+    "value": "Add Agent",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "# 1",
+    "value": "Michael A. Miner",
+    "mode": "inline",
+    "gap": 55
+   },
+   {
+    "label": "Message",
+    "value": "Work With Michael",
+    "mode": "inline",
+    "gap": 3
+   },
+   {
+    "label": "Social Media :",
+    "value": "About Michael :",
+    "mode": "stacked",
+    "gap": 86
+   },
+   {
+    "label": ":",
+    "value": "Agent License",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": ":",
+    "value": "Text Number",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": ":",
+    "value": "Services Area",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": "Total Listing",
+    "value": "243",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Property Sold",
+    "value": "136",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Property Rent",
+    "value": "105",
+    "mode": "stacked",
+    "gap": 5
+   }
+  ]
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/agents-details.html",
+  "w": 1440,
+  "final": "https://techzaa.in/lahomes/admin/agents-details.html",
+  "modes": {
+   "stacked": 8,
+   "inline": 2
+  },
+  "stackedGapMedian": 10,
+  "stackedGaps": [
+   5,
+   5,
+   5,
+   10,
+   14,
+   14,
+   14
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Agent Details",
+    "value": "Add Agent",
+    "mode": "stacked",
+    "gap": 10
+   },
+   {
+    "label": "# 1",
+    "value": "Michael A. Miner",
+    "mode": "inline",
+    "gap": 55
+   },
+   {
+    "label": "Message",
+    "value": "Work With Michael",
+    "mode": "inline",
+    "gap": 3
+   },
+   {
+    "label": "Social Media :",
+    "value": "About Michael :",
+    "mode": "stacked",
+    "gap": 86
+   },
+   {
+    "label": ":",
+    "value": "Agent License",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": ":",
+    "value": "Text Number",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": ":",
+    "value": "Services Area",
+    "mode": "stacked",
+    "gap": 14
+   },
+   {
+    "label": "Total Listing",
+    "value": "243",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Property Sold",
+    "value": "136",
+    "mode": "stacked",
+    "gap": 5
+   },
+   {
+    "label": "Property Rent",
+    "value": "105",
+    "mode": "stacked",
+    "gap": 5
+   }
+  ]
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/agent-profile.html",
+  "w": 390,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "modes": {
+   "stacked": 2
+  },
+  "stackedGapMedian": 1,
+  "stackedGaps": [
+   1
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 1
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 20
+   }
+  ]
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/agent-profile.html",
+  "w": 1440,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "modes": {
+   "stacked": 1,
+   "inline": 1
+  },
+  "stackedGapMedian": 1,
+  "stackedGaps": [
+   1
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 1
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "inline",
+    "gap": 726
+   }
+  ]
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/app-profile.html",
+  "w": 390,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "modes": {
+   "stacked": 2
+  },
+  "stackedGapMedian": 1,
+  "stackedGaps": [
+   1
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 1
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 20
+   }
+  ]
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/app-profile.html",
+  "w": 1440,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "modes": {
+   "stacked": 1,
+   "inline": 1
+  },
+  "stackedGapMedian": 1,
+  "stackedGaps": [
+   1
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 1
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "inline",
+    "gap": 726
+   }
+  ]
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/guest-details",
+  "w": 390,
+  "final": "https://kamr-vite.vercel.app/guest-details",
+  "modes": {
+   "stacked": 2
+  },
+  "stackedGapMedian": 17,
+  "stackedGaps": [
+   0,
+   17
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Guest Details",
+    "value": "Concierge",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 17
+   }
+  ]
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/guest-details",
+  "w": 1440,
+  "final": "https://kamr-vite.vercel.app/guest-details",
+  "modes": {
+   "stacked": 2
+  },
+  "stackedGapMedian": 17,
+  "stackedGaps": [
+   0,
+   17
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Guest Details",
+    "value": "Concierge",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 17
+   }
+  ]
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/app-profile",
+  "w": 390,
+  "final": "https://kamr-vite.vercel.app/app-profile",
+  "modes": {
+   "stacked": 3,
+   "inline": 2
+  },
+  "stackedGapMedian": 17,
+  "stackedGaps": [
+   0,
+   17
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Profile",
+    "value": "Post Details",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "UX / UI Designer",
+    "value": "hello@email.com",
+    "mode": "stacked",
+    "gap": 21
+   },
+   {
+    "label": "Follower",
+    "value": "140",
+    "mode": "inline",
+    "gap": 51
+   },
+   {
+    "label": "Place Stay",
+    "value": "45",
+    "mode": "inline",
+    "gap": 44
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 17
+   }
+  ]
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/app-profile",
+  "w": 1440,
+  "final": "https://kamr-vite.vercel.app/app-profile",
+  "modes": {
+   "stacked": 2,
+   "inline": 3
+  },
+  "stackedGapMedian": 17,
+  "stackedGaps": [
+   0,
+   17
+  ],
+  "overflowX": false,
+  "sample": [
+   {
+    "label": "Profile",
+    "value": "Post Details",
+    "mode": "stacked",
+    "gap": 0
+   },
+   {
+    "label": "UX / UI Designer",
+    "value": "hello@email.com",
+    "mode": "inline",
+    "gap": 21
+   },
+   {
+    "label": "Follower",
+    "value": "140",
+    "mode": "inline",
+    "gap": 44
+   },
+   {
+    "label": "Place Stay",
+    "value": "45",
+    "mode": "inline",
+    "gap": 38
+   },
+   {
+    "label": "*Note :",
+    "value": "documentation.",
+    "mode": "stacked",
+    "gap": 17
+   }
+  ]
+ }
+]

@@ -1,7 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** since Revision 2 (it moves `MantineListingCardPattern`'s badges, critical flow; Q3 before) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 13, owner return) — the only executable route is §28 (Revision 12): the record card and table cell keep one vertical rhythm (`sm` 12px: title → badge row = badge row → divider, via a new `badges` card slot; GR-3h, blocking) and names wrap instead of being cut (GR-3i). Earlier sections stay binding where a later one does not replace them; the history starts at §17 (Revision 2, 2026-10-04: one canonical badge and dialog anatomy product-wide, D78-18, folds 915; the support table anatomy is 919's, D78-17; QA profile Q4, §17.7).**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 15b, owner return of O78-13 under the mobile adaptation contract GR-3j) — the only executable route is §30 (Revision 14), at the end of this file: one labelled-field owner (label above value), one record-card order (id → primary → badges → fields → actions), nothing cut anywhere, a name centred on its avatar, "No name" for a user without one. §30 is self-contained and names the earlier decisions that stay binding; §1–§29 are history.**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -87,7 +87,7 @@ read). FACT (`AdminSupportManager.tsx:669-676`).
 | User search | `MantineCombobox` filters a fixed option list client-side and has no async search hook (`MantineCombobox.tsx:31-70`) | rejected; compose `TextInput` + an inline result list (`Paper` + `UnstyledButton` rows) |
 | Width | legacy `max-w-6xl` (72rem); no token | **extend** `adminPageWideMaxWidth` |
 
-## 4. Requirements
+## 4. Revision 1 requirements (history; the route is §30)
 
 | ID | Source | Observable requirement | P | Verification | Status |
 |---|---|---|---|---|---|
@@ -190,7 +190,7 @@ timeline update; unchecking "open" writes `status=in_progress`.
 | No tickets / none match | Yes | `support_empty` | `Empty` Story |
 | Mobile < 640 | Yes | stacked toolbar, scrollable segmented controls, cards, bottom sheets | GR-3b receipts |
 
-## 12. Acceptance criteria
+## 12. Revision 1 acceptance criteria (history; the route is §30)
 
 - **AC1 [R2–R5]** Given the four containers, then each renders only its View (plus the dialogs from the manager), with 0
   `className` and 0 `ui/*`, and the cited logic ranges are unchanged in the diff except R5's listener removal.
@@ -2698,3 +2698,243 @@ GR-0, UI-contract and Storybook-proof receipts; GR-3h and GR-3i receipts per §2
 the rhythm; the gate block with governance counts and the surface-census count; a `Files Changed` table. Set the 859
 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. A rhythm
 off by any amount is `BLOCKED — GR-3h`; a cut name is `BLOCKED — GR-3i`. No Git.
+
+## 30. Revision 14 (review 15, 2026-10-09): `NEEDS REVISION` — owner return of O78-13: the mobile cards are squeezed desktop rows and content is cut (GR-3j)
+
+**This section is the only executable route, and it is self-contained.** §1–§29 are history; nothing in them adds
+work. These earlier results stay as they are and are not reopened: the canonical badge and dialog anatomy (D78-18,
+D78-21…D78-29), the support table anatomy is 919's (D78-17), the vertical rhythm of §28–§29 (record card, records cell
+and inquiry row on `sm`; GR-3h), names wrap (GR-3i), and the surface-census red count (D78-30). **Re-entry:
+`remediation`** on the current uncommitted tree (Revision 13's nine files as they are). Evidence goes to
+`docs/sessions/evidence/task859/r14x-*` (Sonnet); `review-15/` and `research-review/r15*` are the reviewer's. Do not
+write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/mobile-adaptation-contract.md`,
+`docs/rules/golden/gr-3j-mobile-adaptation.md`, `.claude/rules/shared/ui-token-contract.md`,
+`.claude/rules/shared/enforcement-model.md`, `.claude/rules/shared/storybook-proof.md`,
+`docs/rules/golden/gr-3h-vertical-rhythm.md`, `docs/rules/golden/gr-3i-names-wrap.md`, then this section.
+
+### 30.1 Owner return and decisions (2026-10-09, verbatim)
+
+**Return of O78-13 (after review 15's first verdict, `PARTIALLY VERIFIED`):** *"я не приймаю задачу. Або ти, або Sonnet
+проігнорували мою вказівку щодо переносу імені, якщо воно занадто довге, щоб знаходитись в рядку з назвою рядка."* ·
+*"На мобільних екранах в картках все має бути з нового рядка, тобто назва рядка, а під ним ім'я чи інший контент."* ·
+*"жоден з цих пунктів не зловив таку елементарну річ як обрізання контенту."* · *"AdminUserTable Story - не приймаю, бо
+якщо ім'я в один рядок, воно має бути відцуентровано по вертикалі відносно аватару."* · *"AdminUserStory - Verified Tab
+Story - не приймаю. Не відповідає патернам мобільної адаптації."* · *"Тобто всі сторі, які наразі я перевірив вони не
+відповідають паттернам мобільної адапатції. Всі їх необхідно переробити."* The owner wrote the mobile adaptation
+contract (GR-3j) the same day.
+
+**Decisions (AskUserQuestion, 2026-10-09):** labelled fields in cards and dialog fact panels — *"Назва над значенням
+завжди (Рекомендовано)"* (option text: TailAdmin /profile, label 12px gray-500, 8px = `xs` to the value, value
+14px/500, 20px between fields; one rule for every width); a user without a name — *"Текст «Без імені»
+(Рекомендовано)"*; long titles and subjects in the desktop tables — *"Ніде не обрізати (Рекомендовано)"*; the avatar
+beside a name of two or three lines — *"По центру всього блоку імені (Рекомендовано)"*.
+
+### 30.2 What review 15 inspected (FACT unless marked)
+
+**RETRACTION (Opus, review 15, first verdict).** The first verdict of review 15 (`PARTIALLY VERIFIED`) measured only what
+§29's criteria named: the rhythm gaps and person names. It did not look for cut content of any other kind, for a label
+and its value on one line, for the avatar's alignment or for the order of a card. Each of the three Stories the owner
+opened failed on exactly those. The verdict is withdrawn.
+
+Built Storybook of 2026-10-09 (`build-storybook` 11:00:09Z, after the last source write at 10:56:23Z), served
+read-only; `win32`, Node v22.22.3. **GR-3j census** `review-15/r15-mobile.mjs`: 231 Stories (51 Story files: every
+`Patterns/Mantine` admin, agent, dashboard and dialog Story, `Mantine/Primitives/Table`, `Modal`) × 320 / 390 / 560 /
+639 / 640 / 767 / 768 × sq / en / uk / it = 6 468 jobs, 0 crashes, 0 error screens, 0 page-level horizontal overflow
+(`review-15/r15-mobile.jsonl`, summary `r15-mobile-summary.txt`). Owner Stories at 320: `r15b-*.png`.
+
+| Defect (GR-3j) | Where (files, from the census) | Cause in source |
+|---|---|---|
+| Label and value on one line in a card | `AdminUsersTable` (All and Verified tabs), `AgentStatisticsView`, `AdminExchangeProvidersView`, `AdminPagesView`, `AdminPermissionsView`, `AdminCurrenciesView`, `AdminSurfacePattern`, `Mantine/Primitives/Table`, `AdminTable` `Synthesized`, `AdminSupportView` ("Reporter: name"), `AdminUserProfileView` (account status) | the card owner's meta row and generic row; the support people line; the profile's two `Group` rows |
+| Label and value on one line in a dialog fact panel | `DetailList` and every dialog that uses it | `MantineDetailList` row |
+| Cut text (line clamp, ellipsis, hidden overflow) | subjects and reasons (support), listing titles (listings, reports, dashboard, recent listings, work list, agent statistics), page titles and slugs, provider URLs and notes, the inquiry e-mail, the profile e-mail and website, the header title, the user phone, a badge label ("Запит на місто", uk, 768) | `lineClamp` / `truncate` in each file; Mantine's own badge label ellipsis |
+| Text cut in code | `usr-006…` (support card and table, ticket dialog, user picker) | `user.id.slice(0, 8)` |
+| One-line name not centred on its avatar | `AdminUsersTable` (32 distinct cases, 7–8px off) | the card's primary row aligns to the top |
+| A first card row with no content but a chevron, and action icons above the title | support, listings, reports, providers, pages, currencies, agent statistics, `AdminTable` `RowClick` / `WrappedTitleColumn` | the card header renders for the chevron and holds the actions |
+| A control under 44px in a card | the Verified tab revoke button (22×22) | `ActionIcon size="sm"` without the touch-target token |
+| A long word (an e-mail typed as a name) runs past its box at 320 | inquiry sender, recent-listing owner, listings and reports meta lines | no `overflow-wrap` on `Text` |
+
+Not defects (classified, kept): a chart card's header (title beside its period); a stat row (label beside its count,
+an inline control); the inquiry row's date beside its reply count; the stat cards' icon tile as their first block.
+
+**Outside this task (16d tier 3, filed as 921 in Sprint 78, this review):** `MantineDashboardStatCard` (label line
+clamps; sub-stat links 38px tall), `MantineDashboardBarChart` (ApexCharts trims category labels with "..."), and the
+dashboard info icons whose text is only a hover tooltip. 859 never changed these three owners.
+
+**GR-7 (review 15).** `research-review/r15-ref-keyvalue.mjs` and `r15-ref-tailadmin-profile.mjs`, live 2026-10-09 at
+390 and 1440: TailAdmin `/profile` puts every label above its value at both widths (label `text-xs text-gray-500` with
+`mb-2`, value `text-sm font-medium`, one column with `gap-5` on a phone); Lahomes `customers-details` and
+`agents-details` stack most pairs at 390; Kamr `guest-details` stacks; Omah `account/*` pages 404 (UNVERIFIED, not
+relied on). Primary sources: W3C Reflow, Apple HIG Layout and Lists and tables, Android Adapt layouts and Content
+structure (`scripts/mobile-adaptation-patterns.json`).
+
+## Claim ledger
+
+| ID | Status | Claim | Evidence |
+|---|---|---|---|
+| C1 | FACT | The card owner renders each meta field as a label-left / value-right row. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:431-431`; observed: `justify="space-between" wrap="nowrap" align="center" gap="md"` |
+| C2 | FACT | Without a card config, the card owner renders a 38% label column beside the value. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:480-480`; observed: `style={{ width: '38%', flexShrink: 0 }}` |
+| C3 | FACT | The state-3 avatar row aligns its children to the top. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:147-147`; observed: `<Group gap="sm" wrap="nowrap" align="flex-start">` |
+| C4 | FACT | The inline primary row aligns its children to the top. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:166-166`; observed: `<Group gap="sm" wrap="nowrap" align="flex-start">` |
+| C5 | FACT | The card header renders when there is only an automatic chevron. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:376-376`; observed: `const hasHeader = !!(cfg.id` |
+| C6 | FACT | The card's actions render in its header, above the title. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:399-399`; observed: `{hasActions ? actionsContent : null}` |
+| C7 | FACT | The dialog fact panel renders each field as a label-left / value-right row. | source: `src/design-system/mantine/patterns/MantineDetailList.tsx:26-26`; observed: `justify="space-between" align="flex-start" wrap="nowrap" gap="md"` |
+| C8 | FACT | A fact panel item's label is typed as a string. | source: `src/design-system/mantine/patterns/MantineDetailList.tsx:7-7`; observed: `label: string` |
+| C9 | FACT | The fact panel stacks its rows with the sm spacing token. | source: `src/design-system/mantine/patterns/MantineDetailList.tsx:24-24`; observed: `<Stack gap="sm">` |
+| C10 | FACT | The synthesized AdminTable card lists its detail columns as unlabeled spans. | source: `src/components/admin/AdminTable.tsx:101-101`; observed: `{metaCols.map(c => <span key={c.key}>{c.cell(row)}</span>)}` |
+| C11 | FACT | AdminTable passes its card meta into the card's free-form detail slot. | source: `src/components/admin/AdminTable.tsx:130-130`; observed: `detail: w => cardOf(w).meta,` |
+| C12 | FACT | An AdminTable column header is a ReactNode. | source: `src/components/admin/AdminTable.tsx:14-14`; observed: `header: ReactNode` |
+| C13 | FACT | The support view shows a user without a name as the first 8 characters of the id. | source: `src/components/admin/AdminSupportView.tsx:107-107`; observed: `user.id.slice(0, 8)` |
+| C14 | FACT | The support people line puts the label and the name on one line. | source: `src/components/admin/AdminSupportView.tsx:118-119`; observed: `{t('col_reporter')}:` |
+| C15 | FACT | The support card title clamps the subject to two lines. | source: `src/components/admin/AdminSupportView.tsx:246-246`; observed: `lineClamp={2}>{tk.subject}` |
+| C16 | FACT | The support card clamps the reason to one line. | source: `src/components/admin/AdminSupportView.tsx:257-257`; observed: `lineClamp={1}>{tk.reason}` |
+| C17 | FACT | The support table cell clamps the subject and the reason. | source: `src/components/admin/AdminSupportView.tsx:144-145`; observed: `lineClamp={1}>{tk.reason}` |
+| C18 | FACT | The ticket dialog shows a user without a name as the first 8 characters of the id. | source: `src/components/admin/TicketDetailDialogView.tsx:64-64`; observed: `user.id.slice(0, 8)` |
+| C19 | FACT | The user picker describes an option by its phone, falling back to a cut id. | source: `src/components/admin/UserPickerFieldView.tsx:62-62`; observed: `description: user.phone ??` |
+| C20 | FACT | The Verified tab renders the table owner with columns only. | source: `src/components/admin/AdminUsersTableView.tsx:377-382`; observed: `columns={verifiedColumns}` |
+| C21 | FACT | The Verified tab's revoke button is a small ActionIcon. | source: `src/components/admin/AdminUsersTableView.tsx:338-338`; observed: `size="sm"` |
+| C22 | FACT | The users table truncates the phone. | source: `src/components/admin/AdminUsersTableView.tsx:222-222`; observed: `truncate="end">{u.phone}` |
+| C23 | FACT | The All-users card actions already use the touch-target token. | source: `src/components/admin/AdminUsersTableView.tsx:123-124`; observed: `mih={theme.other.touchTarget}` |
+| C24 | FACT | The listings table title is clamped to two lines. | source: `src/components/admin/AdminListingsView.tsx:146-146`; observed: `lineClamp={2}>{l.title}` |
+| C25 | FACT | The listings card title is clamped to one line. | source: `src/components/admin/AdminListingsView.tsx:284-284`; observed: `lineClamp={1}>{l.title}` |
+| C26 | FACT | The reports view clamps the listing title. | source: `src/components/admin/AdminReportsView.tsx:58-58`; observed: `lineClamp={2}>{r.listing?.title` |
+| C27 | FACT | The pages view clamps the title and truncates the slug. | source: `src/components/admin/AdminPagesView.tsx:133-134`; observed: `truncate="end">{r.page.slug}` |
+| C28 | FACT | The providers view truncates the endpoint URL and the notes. | source: `src/components/admin/AdminExchangeProvidersView.tsx:171-177`; observed: `truncate="end">{r.provider.notes}` |
+| C29 | FACT | The inquiry row truncates the e-mail. | source: `src/components/admin/AdminInquiriesView.tsx:118-118`; observed: `truncate="end">{inq.email}` |
+| C30 | FACT | The recent-listings rows clamp the title. | source: `src/components/admin/AdminDashboardRecentListings.tsx:91-91`; observed: `lineClamp={2} flex={1}` |
+| C31 | FACT | The work list clamps a primary line that is not a name. | source: `src/design-system/mantine/patterns/MantineDashboardWorkList.tsx:168-168`; observed: `lineClamp={row.primaryIsName ? undefined : 2}` |
+| C32 | FACT | The dashboard passes primaryIsName for location-request rows. | source: `src/modules/admin/dashboard/components/AdminDashboardView.tsx:290-290`; observed: `primaryIsName: true,` |
+| C33 | FACT | The agent statistics title link is clamped. | source: `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx:276-276`; observed: `lineClamp={2}>` |
+| C34 | FACT | The stat rows clamp their label. | source: `src/design-system/mantine/patterns/MantineDashboardStatRows.tsx:114-114`; observed: `lineClamp={2}>` |
+| C35 | FACT | The admin header truncates its title and shows it as a tooltip. | source: `src/components/admin/AdminHeader.tsx:57-57`; observed: `truncate="end" title={title}` |
+| C36 | FACT | The profile's account-status rows put the label left and the badge right. | source: `src/components/admin/AdminUserProfileView.tsx:355-363`; observed: `<Group justify="space-between" gap="sm">` |
+| C37 | FACT | The profile truncates the website link. | source: `src/components/admin/AdminUserProfileView.tsx:711-711`; observed: `size="sm" truncate="end">` |
+| C38 | FACT | The theme spacing xs token is 8px. | source: `src/design-system/mantine/theme.ts:663-663`; observed: `xs: '0.5rem',` |
+| C39 | FACT | The theme spacing lg token is 20px. | source: `src/design-system/mantine/theme.ts:666-666`; observed: `lg: '1.25rem',` |
+| C40 | FACT | The touch-target token is 44px. | source: `src/design-system/mantine/theme.ts:739-739`; observed: `touchTarget: '2.75rem',` |
+| C41 | FACT | TailAdmin's profile puts the label 8px above the value in a one-column grid with a 20px gap. | source: `docs/sessions/evidence/task859/research-review/r15-ref-tailadmin-profile.json:15-17`; observed: `grid-cols-1 gap-5` |
+| C42 | FACT | The GR-3j census ran 6 468 jobs with no crash, no error screen and no page overflow. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:1-1`; observed: `jobs 6468, crashed 0, error screens 0, page-level horizontal overflow 0` |
+| C43 | FACT | The support card shows "Reporter:" beside the name. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:301-301`; observed: `"Reporter:"` |
+| C44 | FACT | The support reason is cut at 320, 390 and 768. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:312-312`; observed: `clamp1+ellipsisStyle+overflowHidden "Pagesa u debitua` |
+| C45 | FACT | The support view shows the code-cut id text. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:331-331`; observed: `"usr-006…"` |
+| C46 | FACT | The users card shows the phone label beside its value. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:401-401`; observed: `"+355691234567" [default]` |
+| C47 | FACT | The users card has one-line names off the avatar's centre. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:414-414`; observed: `AVATAR-OFF-CENTRE: 32 distinct` |
+| C48 | FACT | The Verified tab card shows "Agent" beside the agent and a 22×22 revoke button. | source: `docs/sessions/evidence/task859/review-15/r15-mobile.jsonl:5368-5368`; observed: `22x22 button \"Revoke verification\"` |
+| C49 | FACT | A badge label is cut in the users table at 768 (uk). | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:410-410`; observed: `ellipsis+overflowHidden "Запит на місто"` |
+| C50 | FACT | The admin header title is cut at 320 (sq). | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:315-315`; observed: `ellipsis+overflowHidden "Tiketat e brendshme"` |
+| C51 | FACT | The provider endpoint URL is cut at 320 and 390. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:139-139`; observed: `https://api.bankofalbania.example/rates` |
+| C52 | FACT | The profile e-mail is cut at 320. | source: `docs/sessions/evidence/task859/review-15/r15-mobile-summary.txt:378-378`; observed: `ellipsis+overflowHidden "arben@example.com" [view]` |
+| C53 | FACT | A name with no space runs 31px past its box in the inquiry row at 320. | source: `docs/sessions/evidence/task859/review-15/r15-unbroken.jsonl:1-1`; observed: `31px past its box` |
+| C54 | FACT | GR-3j requires a label first and its complete value below it on compact screens. | source: `docs/rules/golden/gr-3j-mobile-adaptation.md:56-57`; observed: `label first and complete value below it` |
+| C55 | FACT | The support messages already hold labels for reporter, reported user, update date, reason and complaint type. | source: `messages/en.json:1132-1137`; observed: `"col_reported": "Reported user",` |
+| D1 | OWNER DECISION | In mobile cards every field is the label, then the name or other content on the next line. | owner: 2026-10-09; decision: `На мобільних екранах в картках все має бути з нового рядка, тобто назва рядка, а під ним ім'я чи інший контент.` |
+| D2 | OWNER DECISION | A one-line name is vertically centred on its avatar. | owner: 2026-10-09; decision: `якщо ім'я в один рядок, воно має бути відцуентровано по вертикалі відносно аватару.` |
+| D3 | OWNER DECISION | The Verified tab card is rejected as not following the mobile patterns. | owner: 2026-10-09; decision: `AdminUserStory - Verified Tab Story - не приймаю. Не відповідає патернам мобільної адаптації.` |
+| D4 | OWNER DECISION | Labelled fields in cards and dialog fact panels: label above value at every width (TailAdmin /profile measures). | owner: 2026-10-09; decision: `Назва над значенням завжди (Рекомендовано)` |
+| D5 | OWNER DECISION | A user without a name shows the text "No name". | owner: 2026-10-09; decision: `Текст «Без імені» (Рекомендовано)` |
+| D6 | OWNER DECISION | No content is cut anywhere, the desktop tables included. | owner: 2026-10-09; decision: `Ніде не обрізати (Рекомендовано)` |
+| D7 | OWNER DECISION | The avatar is centred on the whole name block when the name wraps. | owner: 2026-10-09; decision: `По центру всього блоку імені (Рекомендовано)` |
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: record card and labelled fields (`MantineDataTableToCards`, `MantineDetailList`) with every consumer below; support, users (All, Verified), listings, reports, inquiries, providers, pages, permissions, currencies tables; agent statistics; admin dashboard, recent listings, work list, stat rows; admin header; user profile account status; ticket dialog; user picker; badge label; long words in `Text`/`Anchor`
+- Component families: record-list-and-data, inline-status-and-utility-control
+- Pattern IDs: record-card, key-value-stack, data-table-to-cards, linear-flow, inline-control
+- Standards: w3c-reflow, w3c-meaningful-sequence, w3c-focus-order, w3c-target-size, apple-hig-layout, apple-hig-lists-tables, apple-hig-menus, android-adapt-layouts, android-layout-basics, android-common-layouts, android-content-structure, android-layout-navigation
+- Mantine mechanism: responsive-props, visibility-props
+- Mantine owner: src/design-system/mantine/patterns/MantineDataTableToCards.tsx, src/design-system/mantine/patterns/MantineDetailList.tsx, src/design-system/mantine/patterns/MantineDashboardWorkList.tsx, src/design-system/mantine/patterns/MantineDashboardStatRows.tsx, src/design-system/mantine/patterns/MantineBadge.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm) compact range; card switches at 768px (cardsBelow md) and 1024px (cardsBelow lg) where a table uses them; the primary row's measured badge state; 640px transition
+- Mobile order: record card = id (when present) → avatar + title + subtitle + status badge (+ chevron when the row opens) → badges row → fields (label above value) or free detail → actions; dialog fact panel = label above value per field
+- Required-content treatment: wrap; every text shows in full and its container grows; long words break inside the word; no clipping, clamp, ellipsis or tooltip-only text
+- Story and verification: direct Stories `Patterns/Mantine/DetailList`, `Mantine/Primitives/Table`, `Patterns/Mantine/DashboardWorkList`, `Mantine/Primitives/Badge`, then every composition Story of the census; 320/390/560/639/640/767/768 (both sides of 640 and 768) × sq/en/uk/it
+
+## Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R78 [C7; C8; C9; C38; C39; C41; C54; D1; D4] | **One owner of a labelled field (GR-0 EXTEND `MantineDetailList`).** Every item renders its label on its own line and its value on the line(s) below, at every width, in both variants: `variant?: 'panel' \| 'plain'` (`panel` default = today's tinted `Paper`; `plain` = no panel, used inside a card). Label `Text size="xs" c="gray.5"`, value `Text component="div" size="sm" fw={500}` (TailAdmin `/profile`); label → value spacing `xs`, field → field spacing `lg` (the measured TailAdmin field gap, D4). `MantineDetailListItem.label` widens to `ReactNode` (React key = index). The label-left / value-right `Group` goes. JSDoc states the rule and cites GR-3j. | P1 | AC68 |
+| R79 [C1; C2; C3; C4; C5; C6; D1; D2; D3; D7] | **One record-card order (GR-0 EXTEND `MantineDataTableToCards`).** (a) `cfg.meta` renders as `MantineDetailList variant="plain"` (label widened to `ReactNode`); the meta `Group justify="space-between"` goes. (b) Without `card`, each row is a card whose fields are its columns (label = column label, value = the cell) through the same `MantineDetailList variant="plain"`; the 38% label column and the per-row borders go. (c) The avatar, the text zone and the trailing chevron are centred on each other (`align="center"`) in the inline layout and in the state-3 avatar row, for one line of name and for several; the state-3 badge row stays first. (d) The header row renders only when `cfg.id` returns content and holds the id only. (e) Actions render last, after the fields or detail block, in `Group justify="flex-end" gap="xs" wrap="wrap"`, as one step of the card's `Stack gap="sm"`, with no divider before them. (f) A row that opens (`onRowClick`) with no actions shows its chevron at the end of the primary row; a card without `card` config shows it in the actions position. (g) The component and `CardConfig` JSDoc state the order id → primary → badges → fields/detail → actions. | P1 | AC69, AC71, AC72, AC76 |
+| R80 [C10; C11; C12; D1] | **Labelled fields through `AdminTable`.** `AdminTableCard` gains `fields?: { label: ReactNode; value: ReactNode }[]`, forwarded to `CardConfig.meta`; the synthesized card turns its detail columns into fields (label = the column `header`, value = the cell) instead of unlabeled spans. `meta` stays for free text that is not a field. | P1 | AC69 |
+| R81 [C13; C14; C15; C16; C17; C18; C19; C43; C44; C45; C55; D1; D5; D6] | **Support card, table, dialog and picker.** (a) The card's title is the subject without a clamp; its fields are Reason (`reason_section`) → the reason, Complaint type (`complaint_type_label`) → the complaint badge, Reporter (`col_reporter`) → the user link, Reported user (`col_reported`, complaints only) → the user link, Updated (`col_updated`) → the date; an empty field is skipped; the card no longer uses `peopleLine`. (b) The table's subject and reason have no clamp. (c) A user without a name shows `t('user_no_name')` in the support View and the ticket dialog; new key `admin.support.user_no_name` in four locales — en "No name", uk "Без імені", sq "Pa emër", it "Senza nome"; `slice(0, 8)` is gone from both files. (d) `UserPickerFieldView` describes an option by its phone, else by the full user id. | P1 | AC69, AC70, AC73 |
+| R82 [C20; C21; C22; C23; C46; C47; C48; D2; D3] | **Users table.** (a) The Verified tab passes a `card` config: avatar (as its table cell), title = the name link, subtitle = the company, field Date (`col_date`), actions = the revoke `ActionIcon` with `mih` and `miw` = `theme.other.touchTarget`, as the All-users card actions already do. (b) The phone has no `truncate`. | P1 | AC69, AC71, AC72 |
+| R83 [C24; C25; C26; C27; C28; C29; C30; C31; C32; C33; C34; C35; C37; C50; C51; C52; D6] | **No cut content (D6).** Remove `lineClamp` / `truncate` (and the `title=` tooltip that only served the cut) at: `AdminListingsView.tsx:146`, `:284`; `AdminReportsView.tsx:58`; `AdminPagesView.tsx:133`, `:134`; `AdminExchangeProvidersView.tsx:135`, `:171`, `:177`; `AdminInquiriesView.tsx:118`; `AdminDashboardRecentListings.tsx:91`, `:133`; `MantineDashboardWorkList.tsx:168`, `:194` together with the now redundant `primaryIsName` prop, its JSDoc and its two callers (`AdminDashboardView.tsx:290`, `DashboardWorkList.stories.tsx`); `AgentStatisticsView.tsx:276`; `MantineDashboardStatRows.tsx:114`; `AdminHeader.tsx:57`; `AdminUserProfileView.tsx:504`, `:567`, `:711`. | P1 | AC70 |
+| R84 [C49; D6] | **A badge never cuts its label (theme `Badge`, `theme.ts:1244`).** `styles`: root `height: 'auto'`, `minHeight: 'var(--badge-height)'`; label `whiteSpace: 'normal'`, `overflow: 'visible'`, `textOverflow: 'clip'`. A label that fits keeps today's single-line badge; a longer one wraps inside the pill. | P1 | AC75 |
+| R85 [C53; D6] | **Long words break (theme `Text` and `Anchor`).** `styles: { root: { overflowWrap: 'break-word' } }` — a word or e-mail longer than its box breaks inside the word; text that fits renders unchanged. | P1 | AC74 |
+| R86 [C36; D1; D4] | **Profile account status.** `AdminUserProfileView.tsx:355–370`: the account-type and status rows become `MantineDetailList variant="plain"` items (label above badge). | P2 | AC69 |
+| R87 [C42; D1; D4; D6] | **Stories, tests and report.** Stories pass data and public props only: `DetailList` gains a `Plain` export with the same items; `DashboardWorkList` drops `primaryIsName`; any card state missing from `Mantine/Primitives/Table` (actions row, row chevron, a long field value) is added as data to an existing export. A test that asserts the replaced anatomy (header actions, the 38% row, a clamp, `primaryIsName`) is updated to assert the new one; each is listed with its old and new assertion; no assertion is dropped without a replacement. The `# Revision 14` log carries one GR-3j receipt per surface of the Mobile adaptation record, the GR-3h, GR-3i and GR-12 receipts, and the classification of every census hit that remains. | P2 | AC77, AC78 |
+
+## Acceptance criteria
+
+- **AC68 [R78; C7; C41; D4].** On `Patterns/Mantine/DetailList` (`Default`, `Plain`) and every dialog Story with a fact panel, at 320/390/639/640/1440 × sq/en/uk/it: every value's top is at or below its label's bottom; label → value gap 8px; field → field gap 20px; 0 fields with label and value on one line.
+- **AC69 [R79; R80; R81; R82; R86; C42; C43; C46; C48; D1; D3].** `r14x-mobile.mjs` (a copy of `review-15/r15-mobile.mjs`, same Story set and widths 320/390/560/639/640/767/768 × sq/en/uk/it): KV-INLINE inside record cards and fact panels = 0. Every remaining hit is listed with one of three classes — chart card header (title | period), stat row (label | count), inquiry row (date | reply count).
+- **AC70 [R81; R83; R84; C44; C45; C50; C51; C52; D6].** The same run: CUT = 0, CLAMP-LATENT = 0, TEXT-ELLIPSIS = 0, except elements rendered by `MantineDashboardStatCard` or `MantineDashboardBarChart` (task 921), each listed by Story. A search of the changed source files for `lineClamp`, `truncate` and `slice(0, 8)` returns only lines the report names as not semantic content (none expected).
+- **AC71 [R79; R82; C47; D2; D7].** The same run, with the probe extended: AVATAR-OFF-CENTRE = 0 (avatar centre and text-zone centre within 1px, one line of name and several); EMPTY-FIRST-ROW = 0 among record cards (a card whose own `Stack` holds a `Divider`); in every record card every button and `ActionIcon` sits in the card's last block.
+- **AC72 [R79; R82; C40; C48].** Below 768, every button and `ActionIcon` inside a record card is at least 44×44 CSS px; every text link in a field passes WCAG 2.5.8's spacing test (a 24px circle centred on it meets no other target).
+- **AC73 [R81; C13; C45; D5].** `Patterns/Mantine/AdminSupportView` `Default` at 320/390/639/640 × sq/en/uk/it: the Reported user field of the ticket whose user has no name shows the `user_no_name` text in full, under its label; the ticket dialog Story shows the same text.
+- **AC74 [R85; C53].** `r14x-unbroken.mjs` (a copy of `review-15/r15-unbroken.mjs`) at 320/390/560/768/1024/1440, uk: 0 name elements past their box; page overflow false.
+- **AC75 [R84; C49].** On the 66 Stories of `review-15/r15-probe.mjs` at 320/768/1440 × uk/en: every badge whose label fits one line has the same height and width as in the pre-write badge census (`r14x-badges-before.json` against `r14x-badges-after.json`, 0 differences); every badge label has `scrollWidth <= clientWidth`; the uk users-table "Запит на місто" at 768 shows in full.
+- **AC76 [R78; R79; C1; C3].** `r14x-probe.mjs` (a copy of `review-15/r15-probe.mjs`, matrix and stress) and `r14x-stress-check.mjs` (a copy of `review-15/r15-stress-check.mjs`): every block gap of a record card 12px (the fields block and the actions row included), records-cell object stacks 12px, inquiry rows 12px; names 0 cut; long-name stress 0 cut, 0 one-line where two are needed, 0 overlaps.
+- **AC77 [R87; C42].** Story scan of the changed Stories 0 hits; `check:ui-contract:verify` exit 0; every changed test listed with its old and new assertion; vitest twice green.
+- **AC78 [R87; C42; D1].** The `# Revision 14` log carries the GR-3j receipt per surface, the GR-3h / GR-3i / GR-12 receipts and the classification of every remaining census hit.
+
+
+## 30.4 Verification, write set and completion (Revision 14)
+
+`GR-4 AC AUDIT — 11 new criteria (AC68–AC78); each states an observable property; absolutes: "0 fields with label and value on one line", "KV-INLINE = 0", "CUT = 0", "AVATAR-OFF-CENTRE = 0", "at least 44×44", "0 differences", "every block gap 12px".`
+
+**Canonical decision record.** GR-0 `EXTEND MantineDetailList` (owner of a labelled field; direct Story
+`src/stories/patterns/mantine/DetailList.stories.tsx`); GR-0 `EXTEND MantineDataTableToCards` (owner of the record
+card; direct Story `src/stories/mantine/primitives/Table.stories.tsx`); GR-0 `EXTEND` theme `Badge`, `Text`, `Anchor`
+(`src/design-system/mantine/theme.ts`; direct Story `src/stories/mantine/primitives/Badge.stories.tsx`); GR-0 `REUSE`
+for every consumer line (existing tokens `xs`, `sm`, `lg`, `touchTarget`; no new token). No new component, no new
+manifest entry, no registry row. The receipts `MOBILE ADAPTATION PREFLIGHT COMPLETE`, `GR-0 CANONICAL REUSE PREFLIGHT`,
+`UI CONTRACT PREFLIGHT COMPLETE` and, for the Story files, `STORYBOOK PROOF PREFLIGHT COMPLETE` precede the first write.
+
+**Negative flows.**
+
+| Branch | Applicable? | Expected behaviour | Evidence |
+|---|---:|---|---|
+| Empty value of a field | Yes | the field is skipped (no empty label) | AC69 run, support and users Stories |
+| User without a name | Yes | "No name" text, still a link to the profile | AC73 |
+| Very long word in a value | Yes | breaks inside the word, no overflow | AC74 |
+| Validation / authorization / network / concurrent writer | No | the task changes presentation only | — |
+
+**QA profile Q4** (§17.7). **Gates**, each after the last source write (`r14x-60-hashes-end.txt`): governance start and
+end, vitest twice, `typecheck`, `lint`, `build`, `build-storybook`, `check:story-coverage`, `check:stories`,
+`check:rendered-scope` (+`:verify`), `check:i18n`, `check:i18n-dynamic`, `check:file-integrity`, `check:mojibake`,
+`check:pattern-enrolment`, `check:design-tokens:strict`, `check:enrolled-tailwind`, `check:type-responsive`,
+`check:badge-canonical` (+`:verify`), `check:dialog-canonical` (+`:verify`), `check:ui-contract:verify`, the Story scan,
+`node scripts/check-mobile-adaptation-contract.mjs --verify-gate`, `check:backlog-active`,
+`check:surface-census:changed -- --base HEAD` (red only for `surface-limit-exceeded`, count recorded, D78-30); the
+copies of `review-14`'s dialog-geometry, users-pointer, play-check and group-width probes as `r14x-*`.
+
+**Write set.** `src/design-system/mantine/patterns/MantineDetailList.tsx`, `MantineDataTableToCards.tsx`,
+`MantineDashboardWorkList.tsx`, `MantineDashboardStatRows.tsx`; `src/design-system/mantine/theme.ts` (`Badge`,
+`Text`, `Anchor` entries only); `src/components/admin/AdminTable.tsx`, `AdminSupportView.tsx`,
+`TicketDetailDialogView.tsx`, `UserPickerFieldView.tsx`, `AdminUsersTableView.tsx`, `AdminListingsView.tsx`,
+`AdminReportsView.tsx`, `AdminPagesView.tsx`, `AdminExchangeProvidersView.tsx`, `AdminInquiriesView.tsx`,
+`AdminDashboardRecentListings.tsx`, `AdminHeader.tsx`, `AdminUserProfileView.tsx`;
+`src/modules/admin/dashboard/components/AdminDashboardView.tsx`;
+`src/modules/cabinet/statistics/components/AgentStatisticsView.tsx`; `messages/{en,sq,uk,it}.json`
+(`admin.support.user_no_name` only); `src/stories/patterns/mantine/DetailList.stories.tsx`,
+`src/stories/patterns/mantine/DashboardWorkList.stories.tsx`, `src/stories/mantine/primitives/Table.stories.tsx`
+(data only); the tests that assert the replaced anatomy (listed in the report); evidence `r14x-*`, the session log
+`# Revision 14`, the 859 backlog cell. Every other file is frozen; touching one is a stop and report.
+
+**Owner visual review — O78-13 (after review 16).** Each at 320, 390, 560, 639, 640, 767 and 768 in uk and en:
+`AdminSupportView` `Default`, `AdminUsersTable` `Default` and `VerifiedTab`, `AdminListingsView` `Default`,
+`AdminReportsView` `Default`, `AdminInquiriesView` `Default` and `LongSubject`, `AdminExchangeProvidersView` `Default`,
+`AdminPagesView` `Default`, `AgentStatisticsView` `Default`, `AdminDashboardView` `Default`,
+`AdminDashboardRecentListings` `Default`, `DashboardWorkList` `Default`, `AdminUserProfileView` `View`,
+`TicketDetailDialogView` (the fact panel), `DetailList` `Default` and `Plain`, `Mantine/Primitives/Table` `CardsBelowMd`:
+every field label above its value, nothing cut, a one-line name centred on its avatar, actions last. Review 16 runs
+AC68–AC76 itself before the matrix goes out.
+
+**Completion.** Append `# Revision 14` to the session log: I0 (hashes and write times), the pre-write census
+(`r14x-mobile-before.jsonl`, `r14x-badges-before.json`), R78–R87 with AC68–AC78 evidence, the receipts, the gate
+block, a `Files Changed` table. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
+`BLOCKED`. A label and value on one line in a card, any cut text or a rhythm off by any amount is `BLOCKED — GR-3j` /
+`BLOCKED — GR-3h`. No Git.
+
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55; owner decisions: D1, D2, D3, D4, D5, D6, D7; blocked claims: NONE.

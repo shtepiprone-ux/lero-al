@@ -2552,3 +2552,149 @@ receipt; GR-3h and GR-3i receipts per §28.8 Story; the GR-12 badge receipt with
 for `AdminSupportView` `Default`; the gate block with governance counts and the surface-census count; a `Files Changed`
 table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
 `BLOCKED`. A rhythm off by any amount is `BLOCKED — GR-3h`, never `IMPLEMENTED`. No Git.
+
+## 29. Revision 13 (review 14, 2026-10-09): `NEEDS REVISION` — the executor's `BLOCKED — GR-3h` upheld; four more rhythm and name breaks in components this task already changed
+
+**This section is the only executable route.** §28 stays binding where §29 does not replace it; §27, §26, §25, §24,
+§23 and §21 as §28 states. **Re-entry: `remediation`** on the current tree (Revision 12's eight files stay as they are
+unless a line below names them). Evidence goes to `docs/sessions/evidence/task859/r13x-*` (Sonnet; `review-14/` and
+`research-review/r14*` are the reviewer's). Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `docs/rules/golden/gr-3h-vertical-rhythm.md`, `docs/rules/golden/gr-3i-names-wrap.md`,
+`.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md`, §28.3, then §29.2 and §29.3.
+
+### 29.1 What review 14 inspected (FACT unless marked)
+
+Built Storybook of 2026-10-09 (`build-storybook` started 08:47:32Z, after the last write-set edit at 08:47:19Z; no
+write-set file changed after `r12x-60-hashes-end.txt`), served read-only; `win32`, Node v22.22.3. Reviewer probes:
+`review-14/r14-probe.mjs` (11 Stories × 320/390/767/768/1440 × uk/en, 110 jobs, 0 errors, `r14-probe.jsonl`,
+`r14-probe-summary.txt`), `review-14/r14-detail.mjs`, DPR-1 screenshots `review-14/r14-*.png`.
+
+| Area | Result | Evidence |
+|---|---|---|
+| Executor's block | **Upheld.** `src/stories/patterns/mantine/AdminTable.stories.tsx:193` (`WrappedTitleColumn`) passes its own `cardRow` with `subtitle: <MantineBadge …/>`, so it never reaches R69(d)'s synthesized card. Badge 0px under the title at 320/390/767 × uk/en (18 of 18 in the reviewer probe; 108 of 108 in `r12x-31`). It is the only `subtitle:` in `src/` that carries an object (grep `subtitle[:=].*(Badge|Group|Chip|Button)`). §28 assumed the synthesized card — a kickoff error, not an executor one. | `r14-probe-summary.txt`, `r14-admintable--wrapped-title-column-uk-390.png` |
+| R69–R71 in the eight §28.7 files | Verified in source: `CardConfig.badges` (`MantineDataTableToCards.tsx:216–220`) rendered as its own child of the card's `Stack gap="sm"` (`:420`), state-3 `Stack gap="sm"` (`:141`), subtitle `truncate` removed (`:151–156`, `:176–180`); `AdminTable.tsx` forwards `badges` (`:32–35`, `:93–98`, `:129`; it was clean at I0, so `git diff HEAD` is exactly Revision 12); consumers moved; stacked cells `sm`; the named clamps gone. Reviewer probe: every record card's section gaps 12px in support/listings/reports/users/`Table`/providers/agent statistics. | `r14-probe-summary.txt` |
+| Gates | vitest 154/154 files, 2543/2543 twice; `typecheck`, `lint`, `build` (10:07Z, after the last edit), `build-storybook`, `check:ui-contract:verify`, Story scan 0 hits, `check:backlog-active`: `EXIT_CODE=0` in each transcript; governance C0/H0 start = end; `check:surface-census:changed` red 63 > 60 (62 → 63 because `AdminTable.tsx` became dirty; D78-30). `main` CI red since 2026-10-07 (Task 790's open scope). | `r12x-40…66` |
+| **Inquiry row rhythm** | `AdminInquiriesView` rows (`[data-testid="inquiry-row"]`) stack a badge row (status + mailbox) **4px** above the subject (`Stack gap="tight"`, `:104`), and below 640 the date row sits 8px under them (`Flex gap="xs"`, `:103`); at ≥ 640 the date and the reply-count row (icon + number) are 4px apart (`gap={{ base: 'md', sm: 'tight' }}`, `:114`). Reviewer probe: `4,4` in 30 of 30 rows. The executor's GR-3h receipt for this Story measured nothing ("block gaps measured: … none") and still reported "gaps off the rhythm: NONE" — its probe only looked at `.mantine-Card-root` and `td`. | `r14-admininquiriesview--default-uk-390.png` |
+| Consumer `style` | `AdminInquiriesView.tsx:112` `style={{ overflowWrap: 'anywhere' }}` on a consumer `Text` (the executor flagged it). A consumer visual/behaviour decision through `style` is forbidden for migrated UI (`ui-token-contract.md`). The need came from §28 R71 treating `name · email` as one name line; an e-mail is not a name (GR-3i "Not covered"). | source |
+| **Cells of two more changed Views** | `AdminExchangeProvidersView.tsx:146` (mode + enabled badges) and `AgentStatisticsView.tsx:352` (status + visibility badges), `:362` (expires / last-activity rows, icon + value), `:379` (views / WhatsApp / inquiries rows, icon + value) stack rows of objects **4px** apart (`gap="tight"`). Both Views were changed by this task (R26 badges, §17), so GR-3h ("per changed component") applies; the executor's "outside 859" is wrong. The 2px stack in `AdminExchangeProvidersView.tsx:132` (name + endpoint) is one text block (a title and its secondary line) — not a rhythm step. The 16px "card sub-stacks" in `r12x-31` are `MantineDashboardCard` bodies (`Stack gap="md"`, one rhythm, consistent) — not a break. | `r14-probe-summary.txt` (`cell stack gaps 4`), `r14-agentstatisticsview--default-uk-1440.png`, `r14-adminexchangeprovidersview--default-uk-1024.png` |
+| **Names still cut** | `lineClamp` on a person's name in three components this task changed: `AdminDashboardRecentListings.tsx:103`, `:145` (owner name, `lineClamp={1}`: "Ana Koci", "Arben Krasniqi", "Blerim Hoxha"); `MantineDashboardWorkList.tsx:160`, `:179` (`primary`, `lineClamp={2}`; `AdminDashboardView.tsx:289` passes the location-request user's `displayName`: "Flutura Lleshi"); `AdminListingsView.tsx:147` (table `metaLine`, `lineClamp={1}`, ends with the owner: "For sale · house · Oksana Petrenko"). Executor census: 2 304 such elements in `AdminDashboardView` and 448 in `AdminListingsView` (`r12x-rhythm-final.jsonl` `clamps`, listed in `r12x-31` "remaining clamped / ellipsised elements"; the census did not include `AdminDashboardRecentListings`' own Story); the report says "0 cut" because §28 AC61's selector list did not include them — a kickoff gap the receipts carried over. | `r14-probe-summary.txt` (`clamped names`), `r12x-rhythm-final.jsonl` |
+| AC61(b) | "≥ 2 lines at 320" cannot hold for a name that fits one line (the executor measured `Arben Gjergj Krasniqi-Marashi` on one line in the 12px subtitle). Restated as AC66. | `r12x-31` |
+| Reports title `span` → `div` | Accepted: a public `component` prop; the card owner wraps the title in a `div` anyway. | `AdminReportsView.tsx:110` |
+| Listings price / reports time in the badge row | Now the table cell's look (`Text size="sm" fw={500}`, `xs dimmed`); GR-12 one look with the table. Owner matrix. | source |
+
+**RETRACTION (Opus, review 13 / §28).** §28 (1) assumed `WrappedTitleColumn` renders the synthesized card; (2) scoped
+the rhythm to four Views and the card, although R26 had already changed `AdminExchangeProvidersView` and
+`AgentStatisticsView`, and never measured the inquiry row; (3) gave AC61 a selector list that missed names inside a
+meta line and in the dashboard lists; (4) wrote an unconditional "≥ 2 lines at 320"; (5) prescribed R71 for
+`inq.name · inq.email` as if it were one name. §29 replaces those parts.
+
+**GR-7 (review 14).** `research-review/r14-ref-spacing.mjs` (a copy of `r13-ref-spacing.mjs`, output names only),
+live 2026-10-09 at 390 and 1440 on the same eight pages: 16 runs, 0 errors, **0 ellipsis cells**; no badge flush
+under a title; TailAdmin horizontal badge spacing 22.6px median. Unchanged from review 13
+(`research-review/r14-ref-spacing.json`, `research-review/r14/gr7-r14-*.png`).
+
+### 29.2 Findings (review 14)
+
+| # | Severity | Finding (FACT, evidence) | Req |
+|---|---|---|---|
+| **F61** | **P1**, GR-3h (blocking) | `AdminTable` `WrappedTitleColumn` puts its badge in `subtitle`: 0px under the title, 320–767. | R73 |
+| **F62** | **P1**, GR-3h, GR-12 | The inquiry row puts its badge row 4px above the subject (8px to the date row below 640; 4px between date and reply row at ≥ 640); the same record kind uses 12px everywhere else. | R74 |
+| **F63** | **P1**, GR-3h rule 3 | Records-table cells of `AdminExchangeProvidersView` and `AgentStatisticsView` stack rows of objects 4px apart; every other records-table cell uses `sm`. | R75 |
+| **F64** | **P1**, GR-3i | Person names clamped in `AdminDashboardRecentListings`, `MantineDashboardWorkList` (location-request rows) and the listings table meta line. | R76 |
+| F65 | P2, GR-12 / `ui-token-contract.md` | `AdminInquiriesView.tsx:112` writes `style={{ overflowWrap: 'anywhere' }}` in a consumer. | R74 |
+| F66 | P2, report accuracy (GR-9) | The inquiries GR-3h receipt measured no container and reported NONE; the GR-3i receipts and the report said "0 cut" with 2 752 clamped name elements in the run's own list; providers / agent statistics called "outside 859". | R77 |
+
+### 29.3 Requirements (Revision 13)
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| **R73** | `src/stories/patterns/mantine/AdminTable.stories.tsx:193`: the `cardRow` key `subtitle:` becomes `badges:` (same element, same props). Nothing else in the file changes. | P1 | AC63 |
+| **R74** | **The inquiry row keeps the records rhythm (`sm`), and the sender's name wraps without a consumer style.** In `AdminInquiriesView.tsx`: (a) `:104` `Stack gap="tight"` becomes `Stack gap="sm"` over two blocks: the badge row (`:105–110`, unchanged) and a text block `Stack gap="tight"` holding the subject `Text` (`:111`), a name line `<Text size="xs" c="dimmed">{inq.name}</Text>` and an e-mail line `<Text size="xs" c="dimmed" truncate="end">{inq.email}</Text>` (an e-mail is not a name; it keeps a one-line cut as today). The `·` separator and the `style` prop are removed; no `style`, `styles` or `className` anywhere in the file. (b) `:103` `Flex … gap="xs"` becomes `gap={{ base: 'sm', sm: 'xs' }}` (below 640 the date row is the row's next vertical block; at ≥ 640 the horizontal gap between the two columns stays `xs`). (c) `:114` `gap={{ base: 'md', sm: 'tight' }}` becomes `gap={{ base: 'md', sm: 'sm' }}` (at ≥ 640 the date and the reply-count row are two vertical blocks). | P1 | AC64, AC65 |
+| **R75** | **One records-cell rhythm in the two remaining changed Views (GR-3h rule 3).** `gap="tight"` → `gap="sm"` on the cell `Stack`s at `AdminExchangeProvidersView.tsx:146`, `AgentStatisticsView.tsx:352`, `:362` and `:379`. The inner icon ↔ value `Group gap="tight"` pairs (`:363`, `:367`, `:380`, `:384`, `:388`) stay (one object unit). `AdminExchangeProvidersView.tsx:132` (`Stack gap="micro"`, name + endpoint) stays — one text block. | P1 | AC64 |
+| **R76** | **Names wrap in the dashboards and the listings meta line (GR-3i).** (a) `AdminDashboardRecentListings.tsx:103` and `:145`: remove `lineClamp={1}` from the owner-name `Text`. (b) `MantineDashboardWorkList.tsx` (GR-0 EXTEND, the owner of the primary line): `DashboardWorkListRow` gains `primaryIsName?: boolean` with JSDoc "the primary line is a person's name: it wraps in full and is never clamped (GR-3i); default false keeps the two-line clamp for titles". When true, the primary `Text` at `:160` and `:179` has no `lineClamp` and carries `style={{ overflowWrap: 'anywhere' }}` — the declaration the card owner already uses (`MantineDataTableToCards.tsx:150`), set in the canonical owner only. Update the component JSDoc at `:63`. (c) `AdminDashboardView.tsx:286–292`: the location-request rows pass `primaryIsName: true`. (d) Direct Story `src/stories/patterns/mantine/DashboardWorkList.stories.tsx` `Default`: the second list (`:67–69`, today `fiveRows(l).slice(0, 2)`) becomes `fiveRows(l).slice(0, 1)` plus one row built from the existing fixture `adminDashboardAllOk(l).locationRequests` (`src/stories/fixtures/adminDashboard.fixtures.ts:61`) exactly as `AdminDashboardView.tsx:286–292` maps it, with `primaryIsName: true` (data and public props only; "Flutura Lleshi" is already on `scripts/check-locale-leak.mjs:89–91`'s allowlist; no new text, no style, no wrapper). (e) `AdminListingsView.tsx:147`: remove `lineClamp={1}` from the table `metaLine` `Text` (it ends with the owner's name). | P1 | AC65, AC66 |
+| **R77** | **Report.** The `# Revision 13` log carries one GR-3h and one GR-3i receipt per Story in §29.7, each naming the container it measured (card, records cell, inquiry row, work-list row) with the measured gaps — a receipt that measured no container of its Story is invalid — and a classification of every clamped/ellipsised element of the final census whose text contains a fixture person name (expected: 0). | P2 | AC67 |
+
+### 29.4 Acceptance criteria
+
+- **AC63 [R73].** `r13x-rhythm.mjs` (start from `r12x-rhythm.mjs`), every id of `r12x-ids-census.txt` plus every Story
+  rendering `MantineDashboardWorkList`, `AdminDashboardRecentListings`, `AdminInquiriesView`,
+  `AdminExchangeProvidersView` or `AgentStatisticsView` (built `index.json` import paths), widths 320/375/390/480/560/639/640/680/767/768/810/960/1024/1200/1440/1920 ×
+  sq/en/uk/it: every gap between blocks of a record card = 12px; badge → block above in a card: no value below 12
+  except a badge on a wrapped second line of its own row (row gap `xs`); `.mantine-Badge-root` inside a card subtitle
+  wrapper = 0. `WrappedTitleColumn` at 320/390/767 (uk, en): title → badge row = badge row → divider = 12px, listed.
+- **AC64 [R74, R75].** The same run: in every inquiry row, the gap between the badge row and the text block = 12px at
+  every width, and below 640 the gap between the text block and the date row = 12px; at ≥ 640 the date ↔ reply-row
+  gap = 12px where a reply row renders. In every records-table cell, every `Stack` with two or more children of which
+  at least one holds a badge, `svg`, button or image (a row of objects) has every child gap = 12px; a `Stack` whose
+  children are all text-only is a text block and is listed, not judged. Gaps off the rhythm: **0**, the two Views of
+  R75 included.
+- **AC65 [R74, R76].** The same run: every visible element whose text contains a fixture person name (the names of
+  `scripts/check-locale-leak.mjs:89–91` plus every `name`/`displayName`/`ownerName` of the fixtures the census
+  Stories render — list them in the evidence) has no `-webkit-line-clamp`, a `text-overflow` other than `ellipsis`,
+  `scrollWidth <= clientWidth` and `scrollHeight <= clientHeight` → **0 cut**. A search of
+  `src/components/admin/AdminInquiriesView.tsx` for `style=`, `styles=`, `className=` → 0 hits.
+- **AC66 [R76], replaces AC61(b).** `r13x-longname.mjs` (start from `r12x-rhythm-long2`'s probe): the same name
+  elements plus the work-list primary of a `primaryIsName` row and the dashboard owner line, at 320/390/767/768/1440
+  (uk, en), text set in the DOM to `Arben Gjergj Krasniqi-Marashi` (probe only), one frame later: 0 cut, no overlap
+  with a neighbour, rhythm still 0 off; and wherever that text's one-line width (a `white-space: nowrap` clone in the
+  same font) exceeds the element's `clientWidth`, the element renders ≥ 2 lines.
+- **AC67 [R77].** The log's receipts follow GR-3h/GR-3i exactly and name a measured container; the clamped-name
+  classification is present.
+- **Gates:** §28.4's block unchanged (governance start/end, vitest twice, `typecheck`, `lint`, `build`,
+  `build-storybook`, the check list, AC50's two commands, `check:ui-contract:verify`, `check:surface-census:changed --
+  --base HEAD` — red only for `surface-limit-exceeded`, count recorded, D78-30), the four `r12x-*` probes copied to
+  `r13x-*`; every gate after the last source edit (`r13x-60-hashes-end.txt`).
+
+`GR-4 AC AUDIT — 5 new criteria (AC63–AC67; AC66 replaces AC61(b)); each states an observable property; absolutes: "= 12px", "gaps off the rhythm: 0", "0 cut", "0 hits", "≥ 2 lines where the one-line width exceeds clientWidth".`
+
+### 29.5 Receipts, review 14
+
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: vertical rhythm around a badge row in records rows/cells and cut names; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04 + docs/tailadmin-style-reference.md §6l; live-checked pages: TailAdmin support-tickets, products-list; Lahomes customers-list, orders; Omah ecom-customers, ecom-product-order; Kamr ecom-customers, guest-list (demo login) — 2026-10-09 at 390 and 1440 (research-review/r14-ref-spacing.mjs, 16 runs, 0 errors); inspected in depth: badge ↔ neighbour distances, cell text-overflow; workflow states operated: none (read-only tables); options across references: badges inline beside text or in their own column, none flush under a title; 0 ellipsis cells; chosen 2026 best practice: unchanged from review 13 (a badge row is one rhythm step; names wrap in full); absent or unverified: none relied on; lero.al data map: unchanged; owner decisions: GR-3h, GR-3i; evidence: docs/sessions/evidence/task859/research-review/r14-ref-spacing.json, r14/.`
+
+`GR-3h VERTICAL RHYTHM — Patterns/Mantine/AdminTable WrappedTitleColumn: rhythm token sm = 12px (MantineDataTableToCards.tsx:393); widths 320/390/767 × uk/en (reviewer) + 16 widths × 4 locales (r12x-31); block gaps measured 12px (sections), 0px (title → badge in subtitle); gaps off the rhythm: 18 (reviewer) / 108 (executor); horizontal row gaps n/a; evidence review-14/r14-probe-summary.txt → NEEDS REVISION.`
+
+`GR-3h VERTICAL RHYTHM — Patterns/Mantine/AdminInquiriesView Default (inquiry row): rhythm token required sm = 12px (records rhythm, GR-3h rule 3); widths 320/390/767/768/1440 × uk/en; block gaps measured 4px (badge row → subject), 8px (<640, text → date row), 4px (≥640, date → reply row); gaps off the rhythm: 30 of 30 rows; evidence review-14/r14-probe-summary.txt, r14-admininquiriesview--default-uk-390.png → NEEDS REVISION.`
+
+`GR-3h VERTICAL RHYTHM — records-table cells, AdminExchangeProvidersView Default and AgentStatisticsView Default: rhythm token required sm = 12px; widths 768/1440 × uk/en (reviewer) + 16 × 4 (r12x-31); block gaps measured 4px (rows of objects), 2px (a text block, not judged); gaps off the rhythm: providers 12, agent statistics 60 (reviewer); evidence review-14/r14-probe-summary.txt → NEEDS REVISION.`
+
+`GR-3i NAMES WRAP — AdminDashboardView Default / AdminDashboardRecentListings Default / AdminListingsView Default: widths 320/390/767/768/1440 × uk/en; name elements with a clamp: 40 / 30 / 16 (reviewer); cut (clamped or ellipsis): 86; longest fixture name Flutura Lleshi (lineClamp 2), Arben Krasniqi (lineClamp 1); owners MantineDashboardWorkList.tsx:160,179, AdminDashboardRecentListings.tsx:103,145, AdminListingsView.tsx:147; evidence review-14/r14-probe.jsonl → NEEDS REVISION.`
+
+`GR-12 ELEMENT PARITY — badge row / row of objects in a record: Stories compared 11 at 5 widths × 2 locales (census docs/sessions/evidence/task859/review-14/r14-probe.jsonl) + 68 (r12x-rhythm-final.jsonl); meanings 1; meanings with more than one look: distance to the neighbouring block 12px (cards, four Views' cells), 0px (WrappedTitleColumn), 4px (inquiry row, providers and agent-statistics cells) (owner decisions: none) → F61–F63; hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): AdminInquiriesView.tsx:112 style → F65.`
+
+### 29.6 Write set (Revision 13)
+
+- `src/stories/patterns/mantine/AdminTable.stories.tsx` (R73, line 193 only);
+- `src/components/admin/AdminInquiriesView.tsx` (R74, lines 103–114 only);
+- `src/components/admin/AdminExchangeProvidersView.tsx` (R75, line 146 only);
+- `src/modules/cabinet/statistics/components/AgentStatisticsView.tsx` (R75, lines 352, 362, 379 only);
+- `src/components/admin/AdminDashboardRecentListings.tsx` (R76(a), lines 103 and 145 only);
+- `src/design-system/mantine/patterns/MantineDashboardWorkList.tsx` (R76(b): the row type, the two primary `Text`s, JSDoc);
+- `src/modules/admin/dashboard/components/AdminDashboardView.tsx` (R76(c), the location-row mapping only);
+- `src/stories/patterns/mantine/DashboardWorkList.stories.tsx` (R76(d), the second list of `Default` and the fixture
+  import only; its `Box maw` wrappers are 902's and stay);
+- `src/components/admin/AdminListingsView.tsx` (R76(e), line 147 only);
+- evidence `r13x-*`, the session log `# Revision 13`, the 859 backlog cell.
+
+Frozen, hashed at I0 and the end: every other file, including Revision 12's other files, every test, every fixture,
+`scripts/**`. **Any other file is a stop and report**; a test or `play` that asserts the old clamp, gap or row shape is
+a stop and report, not an edit. Receipts: GR-0 `EXTEND MantineDashboardWorkList` (owner of the primary line) with
+direct Story `src/stories/patterns/mantine/DashboardWorkList.stories.tsx`; GR-0 `REUSE` for the consumer lines (no
+new token: `sm`, `xs`, `tight`, `md` exist in `theme.ts`); Storybook-proof receipts for the two Story files, public
+props `badges` (`AdminTable` `cardRow`) and `primaryIsName` (`DashboardWorkListRow`), local presentation NONE.
+
+### 29.7 Owner visual review — O78-13 (after review 15)
+
+§28.8's list, plus: `AdminExchangeProvidersView` `Default`, `AgentStatisticsView` `Default`, `AdminDashboardView`
+`Default`, `AdminDashboardRecentListings` `Default`, `DashboardWorkList` `Default` — each at 320, 390, 560, 639, 640,
+767, 768 and 1440 in uk and en: one 12px rhythm in every card, records cell and inquiry row; every name in full.
+Review 15 runs AC63–AC66 itself on the full matrix before the matrix goes out.
+
+### 29.8 Completion (Revision 13)
+
+Append `# Revision 13` to the session log with: I0 (hashes and write times); R73–R77 with AC63–AC67 evidence; the
+GR-0, UI-contract and Storybook-proof receipts; GR-3h and GR-3i receipts per §29.7 Story; the GR-12 badge receipt with
+the rhythm; the gate block with governance counts and the surface-census count; a `Files Changed` table. Set the 859
+backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. A rhythm
+off by any amount is `BLOCKED — GR-3h`; a cut name is `BLOCKED — GR-3i`. No Git.

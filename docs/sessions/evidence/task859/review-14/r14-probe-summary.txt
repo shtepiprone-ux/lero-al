@@ -1,0 +1,66 @@
+## admintable--wrapped-title-column errors 0
+  card stack gaps {"12,12":18}
+  badge->above in card {"0":18} 320/uk:0 320/en:0 390/uk:0 390/en:0 767/uk:0 767/en:0
+  cell stack gaps {}
+  inquiry row gaps {}
+  clamped names {}
+## adminsupportview--default errors 0
+  card stack gaps {"18":12,"26":6,"31":12,"12,12,12,12":30}
+  badge->above in card {"8":6,"12":66} 320/uk:8 320/en:8 390/uk:8 390/en:8 767/uk:8 767/en:8
+  cell stack gaps {"4":8,"12":32,"12,12":8}
+  inquiry row gaps {}
+  clamped names {}
+## adminlistingsview--default errors 0
+  card stack gaps {"12,12,12,12":30}
+  badge->above in card {"10":16,"12":44} 320/uk:10 320/en:10 390/uk:10 390/en:10
+  cell stack gaps {"2":20,"12":20}
+  inquiry row gaps {}
+  clamped names {"Продаж · apartment · Arben Krasniqi [clamp 1, ell true]":4,"Продаж · house · Oksana Petrenko [clamp 1, ell true]":2,"Оренда · commercial · Marco Rossi [clamp 1, ell true]":2,"For sale · apartment · Arben Krasniqi [clamp 1, ell true]":4,"For sale · house · Oksana Petrenko [clamp 1, ell true]":2,"For rent · commercial · Marco Rossi [clamp 1, ell true]":2}
+## adminreportsview--default errors 0
+  card stack gaps {"12,12,12,12":18}
+  badge->above in card {"12":18} 
+  cell stack gaps {"2":12,"12":12}
+  inquiry row gaps {}
+  clamped names {}
+## adminuserstable--default errors 0
+  card stack gaps {"12,12,12,12":24}
+  badge->above in card {"10":6,"14":48} 320/uk:10 320/uk:14 320/en:10 320/en:14 390/uk:10 390/uk:14 390/en:10 390/en:14 767/uk:10 767/uk:14 767/en:10 767/en:14
+  cell stack gaps {"0":4,"8":6,"12":20,"0,0":12}
+  inquiry row gaps {}
+  clamped names {}
+## admininquiriesview--default errors 0
+  card stack gaps {}
+  badge->above in card {} 
+  cell stack gaps {}
+  inquiry row gaps {"4,4":30}
+  clamped names {}
+## table--cards-below-md errors 0
+  card stack gaps {"12,12,12,12,12":24}
+  badge->above in card {"14":24,"16":18,"38":5,"62":1} 320/uk:14 320/uk:16 320/uk:38 320/uk:62 320/en:14 320/en:16 320/en:38 390/uk:14 390/uk:16 390/en:14 390/en:16 767/uk:14
+  cell stack gaps {}
+  inquiry row gaps {}
+  clamped names {}
+## adminexchangeprovidersview--default errors 0
+  card stack gaps {"12,12,12,12":18}
+  badge->above in card {"14":36} 320/uk:14 320/en:14 390/uk:14 390/en:14 767/uk:14 767/en:14
+  cell stack gaps {"2":12,"4":12}
+  inquiry row gaps {}
+  clamped names {}
+## agentstatisticsview--default errors 0
+  card stack gaps {"16":90,"12,12,12,12":80}
+  badge->above in card {"7":20,"14":320,"31":20,"33":2,"44":18} 320/uk:14 320/uk:31 320/en:14 320/en:31 390/uk:14 390/uk:31 390/en:14 390/en:31 767/uk:14 767/uk:31 767/en:14 767/en:31
+  cell stack gaps {"4":40,"4,4":20}
+  inquiry row gaps {}
+  clamped names {}
+## admindashboardview--default errors 0
+  card stack gaps {"16":140}
+  badge->above in card {"8":10,"12":20,"18":10,"20":12,"28":9,"30":2,"31":10} 320/uk:8 320/uk:18 320/uk:28 320/uk:31 320/en:8 320/en:18 320/en:28 320/en:30 320/en:31 390/uk:8 390/uk:18 390/uk:28
+  cell stack gaps {}
+  inquiry row gaps {}
+  clamped names {"Flutura Lleshi [clamp 2, ell true]":10,"Ana Koci [clamp 1, ell true]":10,"Arben Krasniqi [clamp 1, ell true]":10,"Blerim Hoxha [clamp 1, ell true]":10}
+## admindashboardrecentlistings--default errors 0
+  card stack gaps {"16":10}
+  badge->above in card {"8":10,"20":12,"30":2} 320/uk:8 320/en:8 320/en:30 390/uk:8 390/en:8 390/en:30 767/uk:20 767/en:20 768/uk:20 768/en:20 1440/uk:20 1440/en:20
+  cell stack gaps {}
+  inquiry row gaps {}
+  clamped names {"Ana Koci [clamp 1, ell true]":10,"Arben Krasniqi [clamp 1, ell true]":10,"Blerim Hoxha [clamp 1, ell true]":10}

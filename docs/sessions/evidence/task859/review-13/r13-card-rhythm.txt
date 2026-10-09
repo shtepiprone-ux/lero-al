@@ -1,0 +1,15 @@
+adminsupportview--default 320 {"stackGap":"16px","sectionGaps":[31],"kinds":["block","block"],"titleToBadge":null}
+adminsupportview--default 390 {"stackGap":"16px","sectionGaps":[31],"kinds":["block","block"],"titleToBadge":null}
+adminsupportview--default 767 {"stackGap":"16px","sectionGaps":[26],"kinds":["block","block"],"titleToBadge":null}
+adminlistingsview--default 320 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":0}
+adminlistingsview--default 390 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":0}
+adminlistingsview--default 767 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":0}
+adminuserstable--default 320 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}
+adminuserstable--default 390 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}
+adminuserstable--default 767 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}
+adminreportsview--default 320 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":1}
+adminreportsview--default 390 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":1}
+adminreportsview--default 767 {"stackGap":"12px","sectionGaps":[12,12,12],"kinds":["block","block","divider","block"],"titleToBadge":1}
+table--cards-below-md 320 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}
+table--cards-below-md 390 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}
+table--cards-below-md 767 {"stackGap":"12px","sectionGaps":[12,12,12,12],"kinds":["block","divider","block","divider","block"],"titleToBadge":null}

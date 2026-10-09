@@ -19,8 +19,8 @@ shows it. The rule holds at every width, not only on a phone, because the table 
 **Required.**
 - The name shows in full. When it does not fit, it continues on the next line, and on as many lines as it needs.
   A long unbroken token breaks inside the word (`overflow-wrap: anywhere`) rather than overflowing.
-- The row, cell or card grows in height for it. A neighbour (badge, action, chevron) keeps its GR-3h gap and does not
-  overlap the name.
+- The row, cell or card grows in height for it. The container keeps its GR-3h rhythm, and a neighbour (badge, action, chevron)
+  does not overlap the name.
 - A label beside the name (for example "Reporter:") wraps on its own. It never takes the space the name needs.
 - The canonical owner of the slot sets this behaviour once (for example the card's title and subtitle in
   `MantineDataTableToCards`), with its direct Story showing a long name at 320. A consumer never adds a truncation to a

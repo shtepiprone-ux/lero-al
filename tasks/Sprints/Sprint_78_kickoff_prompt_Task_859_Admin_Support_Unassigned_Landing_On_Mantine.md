@@ -1,7 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** since Revision 2 (it moves `MantineListingCardPattern`'s badges, critical flow; Q3 before) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 13, owner return) — the only executable route is §28 (Revision 12): one `xs` gap between every object (card title ↔ badges, stacked badges; GR-3h) and names that wrap instead of being cut (GR-3i). Earlier sections stay binding where a later one does not replace them; the history starts at §17 (Revision 2, 2026-10-04: one canonical badge and dialog anatomy product-wide, D78-18, folds 915; the support table anatomy is 919's, D78-17; QA profile Q4, §17.7).**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 13, owner return) — the only executable route is §28 (Revision 12): the record card and table cell keep one vertical rhythm (`sm` 12px: title → badge row = badge row → divider, via a new `badges` card slot; GR-3h, blocking) and names wrap instead of being cut (GR-3i). Earlier sections stay binding where a later one does not replace them; the history starts at §17 (Revision 2, 2026-10-04: one canonical badge and dialog anatomy product-wide, D78-18, folds 915; the support table anatomy is 919's, D78-17; QA profile Q4, §17.7).**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -2410,102 +2410,109 @@ GR-3b at 320/390/1024/1440 for `RadioCardOption` `Default` and `Radio` `Card`; t
 the surface-census count; a `Files Changed` table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 
-## 28. Revision 12 (review 13, 2026-10-09): `NEEDS REVISION` — owner return: badges pressed against titles below 768px, names cut in the tables; two new rules GR-3h and GR-3i
+## 28. Revision 12 (review 13, 2026-10-09): `NEEDS REVISION` — owner return: the record card breaks its vertical rhythm (badges pressed against the title), names cut in the tables; two new rules GR-3h and GR-3i
 
 **This section is the only executable route.** §27, §26, §25, §24, §23 and §21 stay binding where §28 does not replace
 them. **Re-entry: `remediation`** on the current tree. Evidence goes to `docs/sessions/evidence/task859/r12x-*`
 (Sonnet; `review-13/` and `research-review/r13-*` are the reviewer's). Do not write to `review-*/` or `research-review/`.
 
-**Read first, in this order:** `docs/rules/golden/gr-3h-object-spacing.md`, `docs/rules/golden/gr-3i-names-wrap.md`
-(both new, owner rules 2026-10-09), `.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
-`.claude/rules/shared/storybook-proof.md`, `docs/mantine-responsive-design-system.md` §7.1–§7.2 (updated by this review:
-title ↔ subtitle gap `xs`, subtitle wraps), then §28.2 and §28.3.
+**Read first, in this order:** `docs/rules/golden/gr-3h-vertical-rhythm.md`, `docs/rules/golden/gr-3i-names-wrap.md`
+(both new, owner rules 2026-10-09; **GR-3h is blocking: a task that breaks the rhythm cannot be completed**),
+`.claude/rules/shared/ui-token-contract.md`, `.claude/rules/shared/enforcement-model.md`,
+`.claude/rules/shared/storybook-proof.md`, `docs/mantine-responsive-design-system.md` §7.1–§7.2 (updated by this
+review: vertical rhythm row, `badges` slot, subtitle wraps), then §28.2 and §28.3.
 
 ### 28.1 What review 13 inspected (FACT unless marked)
 
 **Owner return (verbatim, 2026-10-09):** *"Візуально я перевірив AdminSupportView Story і я не приймаю виконання
 задачі. Не витримані відступи на мобільних екранах. Це пропустила Sonnet і ти вже протягом 13 рев'ю. Наразі бейджі
 притиснуті до заголовків."* · *"також імена користувачів на мобільних екранах у таблиці треба переносити на новий рядок,
-а не обрізати їх."* · *"насправді бейджі не мають відступів починаючи з 767px, ти дуже паршиво провів аудит"*.
+а не обрізати їх."* · *"насправді бейджі не мають відступів починаючи з 767px, ти дуже паршиво провів аудит"* · on the
+first draft of this section, which set an invented minimum gap of `xs`: *"Це повна хуйня, відступ має бути такий самий
+як і між бейджем і сепаратором."* · *"От і запиши в правила, що обов'язково має дотримуватись вертикальний ритм, інакше
+задача не може бути виконаною!"*
 
-**RETRACTION (Opus, reviews 1–12 and the first pass of review 13).** No review of 859 measured the gap between two
-neighbouring objects. The GR-3b/3d/3g/9/12 receipts measured widths, gutters, corners, looks and parity, and every one
-of them was green while every support card put its badges 0px under the title. Review 13's first probe sampled 320 and
-390 only and reported that as the phone result; the owner found the defect on the whole card range up to 767px. The
-rules now close both holes: GR-3h (object spacing), GR-3i (names wrap), GR-9 step 8 (every width plus both sides of
-every layout switch).
+**RETRACTION (Opus, reviews 1–12 and two drafts of review 13).** No review of 859 measured the vertical rhythm. The
+GR-3b/3d/3g/9/12 receipts measured widths, gutters, corners, looks and parity, and every one was green while every
+support card put its badges 0px under the title and 12px above the divider. Review 13's first probe sampled 320 and 390
+only; the owner found the defect on the whole card range up to 767px. Review 13's first draft then prescribed a gap of
+`xs` (8px) that no component owns — a value chosen by the task, which GR-3h now forbids; the card's own rhythm is `sm`
+(12px). That draft is withdrawn; this section replaces it.
 
 Evidence `docs/sessions/evidence/task859/review-13/` (built Storybook of 2026-10-09 07:51 — Revision 11 changed only
 `MantineRadioCardOption.tsx`, so these surfaces are unchanged — served at :6111; `win32`, Node v22.22.3):
 
 | Area | Result | Evidence |
 |---|---|---|
-| Badge ↔ neighbour, census | `r13-spacing-names.mjs` / `r13-measure-par.mjs` (badges, nearest neighbour above or left): 189 admin/table/dashboard Stories at 390 and 767 (uk), 378 jobs, 0 errors → **12 Stories in 4 Views below 8px**; then the full matrix 320/375/390/480/560/639/640/680/767/768/810/960/1024/1200/1440/1920 × uk/en on the 29 Stories of `AdminListingsView`, `AdminReportsView`, `AdminSupportView`, `AdminTable`, `AdminUsersTable`, `AdminInquiriesView`: 928 jobs, 0 errors. | `r13-census-390-767.jsonl`, `r13-census-full.jsonl` |
-| Card form (320–767, every width) | Badge 0px under the card title: `AdminSupportView` 30 of 32, `AdminListingsView` 48–76 of 76, `AdminTable` `WrappedTitleColumn` 6 of 30; 1px in `AdminReportsView` 16 of 16. **Cause, in the owner:** `MantineDataTableToCards` `CardPrimaryRow` renders title and subtitle as two plain `div`s with no gap (`:148–151`, `:169–173`), while §7.2 documented a gap; every consumer that puts a badge in the subtitle (the synthesized `AdminTable` card included) inherits 0px. | `r13-support-default-uk-320.png` |
-| Table form (768–1920, every width) | Stacked badges 4px apart (`gap="tight"`): `AdminListingsView` 38 of 38, `AdminUsersTable` 30 of 30, `AdminSupportView` 18 of 18. Source: `AdminListingsView.tsx:163`, `AdminUsersTableView.tsx:231` and `:220` (`Box mt="tight"`), `AdminSupportView.tsx:142` and `:155`, `AdminReportsView.tsx:68` (badge → date below it: the review probe only looked up and left, so it did not count this pair — FACT for the source value `tight` = 4px). Card meta `AdminSupportView.tsx:252` stacks the complaint badge 4px from text. | `r13-support-default-uk-768.png` |
-| Names cut | `AdminSupportView` `userLink` has `lineClamp={1}` (`:105`): "Arben…" at 320 (uk); in the table 4 distinct names cut at every width 768–1920 ("Oksana…", "Gentiana…", "Arben…", "usr-006…"). Same pattern, not cut with today's short fixtures but cut by construction: `AdminUsersTableView.tsx:153`, `:212`, `:307` (name, `truncate="end"`), `:215`, `:310` (company), `AdminInquiriesView.tsx:112` (`inq.name · inq.email`, `lineClamp={1}`), `AdminReportsView.tsx:59` (reporter, `lineClamp={1}`), `MantineDataTableToCards.tsx:150`, `:172` (card subtitle, `truncate="end"`). No test pins any of these (grep of every `__tests__` file). | `r13-spacing-names-full.json` |
+| **The card's rhythm** | `MantineDataTableToCards.tsx:377` `Stack gap="sm"` stacks header, divider, primary row, divider, detail. Measured, uk, 320 / 390 / 767: **every gap between sections = 12px** in `AdminListingsView` `Default`, `AdminUsersTable` `Default`, `AdminReportsView` `Default`, `Mantine/Primitives/Table` `CardsBelowMd`; badge row → divider 12px; **title → badge row 0px (listings), 1px (reports)**. | `r13-card-rhythm.txt` |
+| Rhythm break, census | `r13-measure-par.mjs` (badges, nearest neighbour above or left): 189 admin/table/dashboard Stories at 390 and 767 (uk), 378 jobs, 0 errors → **12 Stories in 4 Views** with a badge closer than the rhythm; then the full matrix 320/375/390/480/560/639/640/680/767/768/810/960/1024/1200/1440/1920 × uk/en on the 29 Stories of `AdminListingsView`, `AdminReportsView`, `AdminSupportView`, `AdminTable`, `AdminUsersTable`, `AdminInquiriesView`: 928 jobs, 0 errors. | `r13-census-390-767.jsonl`, `r13-census-full.jsonl` |
+| Card form (320–767, every width) | Badge row 0px under the title: `AdminSupportView` 30 of 32 badges, `AdminListingsView` 48–76 of 76, `AdminTable` `WrappedTitleColumn` 6 of 30; 1px in `AdminReportsView` 16 of 16. **Cause, in the owner:** `CardPrimaryRow` renders title and subtitle as two plain `div`s with no gap (`:148–151`, `:169–173`), and the subtitle is the only slot under the title, so `AdminSupportView` (`:245–250`), `AdminListingsView` (`:287–293`), `AdminReportsView` (`:110–115`) and the synthesized `AdminTable` card (`AdminTable.tsx:90–94`) put their badges into a text line. In state 3 the owner's own badge row sits `xs` (8px, `:139`) above the title — also off the 12px rhythm. | `r13-support-default-uk-320.png` |
+| Table form (768–1920, every width) | Blocks stacked in one cell are 4px apart (`gap="tight"` / `mt="tight"`): `AdminListingsView` 38 of 38, `AdminUsersTable` 30 of 30, `AdminSupportView` 18 of 18. Source: `AdminListingsView.tsx:163`, `AdminUsersTableView.tsx:231` and `:220` (`Box mt="tight"` under a `Stack gap={0}` at `:210`), `AdminSupportView.tsx:142` and `:155`, `AdminReportsView.tsx:68` (badge → date below it; the review probe looked only up and left, so it did not count this pair — FACT for the source value `tight` = 4px). The card's detail region in `AdminSupportView.tsx:252` stacks its blocks 4px apart. | `r13-support-default-uk-768.png` |
+| Names cut | `AdminSupportView` `userLink` has `lineClamp={1}` (`:105`): "Arben…" at 320 (uk); in the table 4 distinct names cut at every width 768–1920 ("Oksana…", "Gentiana…", "Arben…", "usr-006…"). Same pattern, cut by construction: `AdminUsersTableView.tsx:153`, `:212`, `:307` (name, `truncate="end"`), `:215`, `:310` (company), `AdminInquiriesView.tsx:112` (`inq.name · inq.email`, `lineClamp={1}`), `AdminReportsView.tsx:59` (reporter, `lineClamp={1}`), `MantineDataTableToCards.tsx:150`, `:172` (card subtitle, `truncate="end"`). No test pins any of these (grep of every `__tests__` file). | `r13-census-full.jsonl` |
 | Complaint-type badge label | In the table form the subject column (`tableTitleColumnWidth`) cuts the complaint-type badge's label: "Фейкове оголошенн…", "Переслідування або …" (uk, 768–1440). Not a name (GR-3i does not cover it) → owner question **O78-15**, §28.6; **not** in Revision 12. | `r13-support-default-uk-768.png` |
 | R67 / AC58 | Source FACT: `MantineRadioCardOption.tsx:38` `Radio.Group … w="100%"`. Not re-measured in review 13 (owner rejection first); review 14 runs `r11x-group-width.mjs` itself. | — |
-| GR-7 (spacing, names) | `research-review/r13-ref-spacing.mjs`, live 2026-10-09 at 390 and 1440: TailAdmin `support-tickets`, `products-list`; Lahomes `customers-list`, `orders`; Omah `ecom-customers`, `ecom-product-order`; Kamr `ecom-customers`, `guest-list` (demo login). **0 ellipsis cells on 16 page/width runs** — no reference cuts a name or a cell value in a records table; TailAdmin's inline badge sits 22.6px from its text neighbour; no reference stacks a badge flush under a title. | `research-review/r13-ref-spacing.json`, `gr7-r13-*.png` |
+| GR-7 (rhythm, names) | `research-review/r13-ref-spacing.mjs`, live 2026-10-09 at 390 and 1440: TailAdmin `support-tickets`, `products-list`; Lahomes `customers-list`, `orders`; Omah `ecom-customers`, `ecom-product-order`; Kamr `ecom-customers`, `guest-list` (demo login). **0 ellipsis cells on 16 page/width runs** — no reference cuts a name or a cell value in a records table; no reference stacks a badge flush under a title. TailAdmin's measured composition rhythm (`docs/tailadmin-style-reference.md` §6l): one gap per level (title → body 8px, body → actions 16px). | `research-review/r13-ref-spacing.json`, `gr7-r13-*.png` |
 
 ### 28.2 Findings (review 13)
 
 | # | Severity | Finding (FACT, evidence) | Req |
 |---|---|---|---|
-| **F57** | **P1**, GR-3h (owner rule 2026-10-09), owner return O78-13 | Badges touch the title in the card form of every `AdminTable`-based list on every width 320–767 (0px; 1px in reports), because the canonical owner `CardPrimaryRow` leaves no gap between title and subtitle. | R69 |
-| **F58** | **P1**, GR-3h, GR-12 one gap per pair | In the table form, badges stacked in one cell, and a badge and its text neighbour, are 4px apart (`gap="tight"` / `mt="tight"`) in four Views; the same pair is 8px (`Group gap="xs"`) in the card form. | R70 |
+| **F57** | **P1**, GR-3h (blocking, owner rule 2026-10-09), owner return O78-13 | The record card's rhythm is 12px (`sm`), but a badge row sits 0px (1px in reports) under the title on every width 320–767, because the owner has no slot for a row of objects and consumers put badges in the title's text line; the owner's own state-3 badge row is 8px off the rhythm. | R69 |
+| **F58** | **P1**, GR-3h, GR-12 one rhythm per container | In the table form, blocks stacked in one cell are 4px apart in four Views; the same record's card uses 12px. | R70 |
 | **F59** | **P1**, GR-3i (owner rule 2026-10-09), owner return | Person and company names are cut with `lineClamp={1}` / `truncate="end"` in the support, users, inquiries and reports tables and in the canonical card subtitle; four names cut on every width 768–1920 in `AdminSupportView`. | R71 |
-| F60 | P2, report accuracy / GR-9 | Revisions 1–11 and their GR-12 receipts reported "one look" for badges while their layout neighbours differed; no report measured gaps. The `# Revision 12` log states the GR-3h and GR-3i receipts per Story. | R72 |
+| F60 | P2, report accuracy / GR-9 | Revisions 1–11 and their GR-12 receipts reported "one look" for badges while the rhythm around them broke; no report measured it. | R72 |
 
 ### 28.3 Requirements (Revision 12)
 
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
-| **R69** | **The card owner keeps the gap (GR-0 EXTEND `MantineDataTableToCards`).** In `CardPrimaryRow`, in both layout paths (state 3 `:145–153` and states 1–2 `:160–177`), the subtitle sits `xs` below the title: the subtitle wrapper is a Mantine `Box mt="xs"` (states 1–2 keep its `clear: 'right'`, so the floated-badge layout is unchanged). The subtitle `Text` loses `truncate="end"` and wraps (`overflowWrap: 'anywhere'` on its wrapper, the mechanism `:148` already uses for the title); the states 1–2 title wrapper (`:169`) gets the same `overflowWrap: 'anywhere'`. The badge fit maths (`compute`, `SURNAME_WIDTH_RATIO`) is unchanged. The JSDoc above `CardPrimaryRow` states: title ↔ subtitle `xs`, subtitle wraps, no truncation. No consumer adds a margin or wrapper for this. | P1 | AC59 |
-| **R70** | **One object gap in the table form (GR-3h, GR-12).** Every `Stack`/margin that separates a badge from another badge or from a text block uses `xs`: `AdminListingsView.tsx:163`, `AdminUsersTableView.tsx:231`, `AdminUsersTableView.tsx:220` (`Box mt="xs"`), `AdminSupportView.tsx:142`, `:155`, `:252`, `AdminReportsView.tsx:68` — `gap="tight"` → `gap="xs"`. Text-only stacks keep their token (`AdminReportsView.tsx:57`, `AdminListingsView.tsx:145` `micro`; `AdminUsersTableView.tsx:210`, `:305` `gap={0}` name/company lines). The label ↔ link pairs in `AdminSupportView` `peopleLine` (`:119`, `:125`) keep `gap="tight"` (one text unit) but become `wrap="wrap"`. | P1 | AC60 |
-| **R71** | **Names wrap (GR-3i).** Remove the cut from every name: `AdminSupportView.tsx:105` (`lineClamp={1}` on the user link), `AdminUsersTableView.tsx:153`, `:212`, `:307` (name) and `:215`, `:310` (company line), `AdminInquiriesView.tsx:112` (`inq.name · inq.email`), `AdminReportsView.tsx:59` (reporter). They wrap; no `truncate`, `lineClamp`, `nowrap`, `maw` or tooltip-only access. Subjects, reasons, listing titles, slugs, URLs and phone numbers keep their current clamp (not names; outside GR-3i). The `usr-006…` id fallback (`AdminSupportView.tsx:108`) is unchanged text, no longer cut by CSS. | P1 | AC61 |
-| **R72** | **Report (F60).** The `# Revision 12` log carries one GR-3h and one GR-3i receipt per Story in §28.8's set, and the GR-12 badge receipt names the gap per pair. | P2 | AC62 |
+| **R69** | **The card owner carries a badge row as one step of its rhythm (GR-0 EXTEND `MantineDataTableToCards`).** (a) `CardConfig` gains `badges?: (row: R) => ReactNode` — a row of badges, or text mixed with badges, under the primary row. `renderDesignedCard` renders it as its own child of the card's `Stack gap="sm"` (`:377`), directly after `CardPrimaryRow`, so title ↔ badge row = badge row ↔ divider = 12px by construction. JSDoc: "one rhythm step; never put objects in `subtitle`". (b) `CardPrimaryRow` state 3: the badge-row `Stack gap="xs"` (`:139`) becomes `gap="sm"` (rhythm). (c) The subtitle `Text` loses `truncate="end"` and wraps (`overflowWrap: 'anywhere'` on its wrapper, as `:148` does for the title); the states 1–2 title wrapper (`:169`) gets the same. Title and subtitle stay one text block (no gap added between them). The badge fit maths is unchanged. (d) `AdminTable.tsx`: `AdminTableCard` gains `badges?: ReactNode`, forwarded to `CardConfig.badges`; the synthesized card moves `subtitleCols` (`:86`, `:90–94`) from `subtitle` to `badges` (same `Group gap="xs" wrap="wrap"`). (e) Consumers move their badge rows from `subtitle` to `badges` unchanged in content: `AdminSupportView.tsx:245–250` (status + type), `AdminListingsView.tsx:287–293` (price + status + visibility), `AdminReportsView.tsx:110–115` (status + time). (f) The direct Story `Mantine/Primitives/Table` shows the slot: its shared card config passes `badges` with the role badge that today sits in the `meta` "Role" row, and that meta row is removed (data/props only, no new text). | P1 | AC59 |
+| **R70** | **One rhythm per records-table cell, the card's (GR-3h rule 3).** A cell that stacks blocks uses `sm`: `AdminListingsView.tsx:163`, `AdminUsersTableView.tsx:231`, `AdminSupportView.tsx:155`, `AdminReportsView.tsx:68` — `gap="tight"` → `gap="sm"`. `AdminSupportView.tsx:142` (subject cell) becomes `Stack gap="sm"` over three blocks: a `Stack gap="tight"` text block (subject, reason), the complaint-badge row, the people line. `AdminUsersTableView.tsx:210–220` becomes `Stack gap="sm"` over the text block (`Stack gap={0}`: name link, company line, phone) and the location-request badge (no `Box mt`). The card detail region `AdminSupportView.tsx:252` uses the canonical meta rhythm `xs` (§7.1 "`Stack gap="xs"` for meta rows") instead of `tight`. Text-only stacks keep their token (`AdminReportsView.tsx:57`, `AdminListingsView.tsx:145` `micro`; `AdminUsersTableView.tsx:305` `gap={0}`). `peopleLine` label ↔ link pairs (`:119`, `:125`) keep `gap="tight"` (one text unit) and become `wrap="wrap"`. | P1 | AC60 |
+| **R71** | **Names wrap (GR-3i).** Remove the cut from every name: `AdminSupportView.tsx:105` (`lineClamp={1}` on the user link), `AdminUsersTableView.tsx:153`, `:212`, `:307` (name) and `:215`, `:310` (company line), `AdminInquiriesView.tsx:112` (`inq.name · inq.email`), `AdminReportsView.tsx:59` (reporter). They wrap; no `truncate`, `lineClamp`, `nowrap`, `maw` or tooltip-only access. Subjects, reasons, listing titles, slugs, URLs and phone numbers keep their current clamp (not names). The `usr-006…` id fallback (`AdminSupportView.tsx:108`) is unchanged text, no longer cut by CSS. | P1 | AC61 |
+| **R72** | **Report (F60).** The `# Revision 12` log carries one GR-3h and one GR-3i receipt per Story in §28.8's set, and the GR-12 badge receipt names the rhythm around the badge row. | P2 | AC62 |
 
-No fixture, Story, test or allowlist changes: the long-name stress is a DOM probe (AC61(b)), because a new fixture name
-needs a `check-locale-leak.mjs` allowlist entry, which is a gate edit.
+No fixture or allowlist change: the long-name stress is a DOM probe (AC61(b)), because a new fixture name needs a
+`check-locale-leak.mjs` allowlist entry, which is a gate edit. The only Story change is R69(f).
 
 ### 28.4 Acceptance criteria
 
-- **AC59 [R69].** (a) `r12x-spacing.mjs` (copy `review-13/r13-measure-par.mjs`, then extend it: objects =
-  `.mantine-Badge-root, .mantine-Button-root, .mantine-ActionIcon-root, .mantine-Avatar-root, .mantine-Chip-root,
-  .mantine-SegmentedControl-root, .mantine-Input-wrapper`; nearest neighbour in **all four directions**, text blocks and
-  objects; one JSON line per job) on the final build, widths 320/375/390/480/560/639/640/680/767/768/810/960/1024/1200/
-  1440/1920 × sq/en/uk/it, over every Story id in `review-13/r13-census-ids.txt` plus every Story that renders
-  `MantineDataTableToCards` (grep the built `index.json` import paths): **0 object gaps below 8px** in every card form.
-  (b) `Mantine/Primitives/Table` `CardsBelowMd` at 390: title ↔ subtitle gap = 8px, measured. (c) The table form of
-  `Mantine/Primitives/Table` `Default` at 1440 is unchanged: A/B against the reviewer's build, 0 differing pixels.
-- **AC60 [R70].** The same run: **0 object gaps below 8px** in every table form (768–1920); the pairs status ↔ type
-  (support), status ↔ visibility (listings), role ↔ status (users), status → date (reports) measure 8px in the table
-  form and ≥ 8px in the card form.
+- **AC59 [R69].** (a) `r12x-rhythm.mjs` (start from `review-13/r13-card-rhythm.mjs` and `r13-measure-par.mjs`): for
+  every card (`.mantine-Card-root`) and every table cell that stacks blocks, the gaps between consecutive blocks,
+  dividers included, in all four directions for rows of objects; widths 320/375/390/480/560/639/640/680/767/768/810/
+  960/1024/1200/1440/1920 × sq/en/uk/it; Stories: every id in `review-13/r13-census-ids.txt` plus every Story that
+  renders `MantineDataTableToCards` (built `index.json` import paths). Result: **every gap between blocks of a card =
+  12px; gaps off the rhythm: 0**, the state-3 badge row included. (b) In `AdminSupportView`, `AdminListingsView`,
+  `AdminReportsView`, `AdminTable` `WrappedTitleColumn` and `Mantine/Primitives/Table` `CardsBelowMd` at 320, 390, 767
+  (uk, en): title → badge row = badge row → divider = 12px, listed per Story. (c) No badge or object inside any
+  `subtitle` (DOM check: `.mantine-Badge-root` inside the subtitle wrapper = 0).
+- **AC60 [R70].** The same run, 768–1920: every gap between blocks stacked in a records-table cell = 12px; the card
+  detail region of `AdminSupportView` = 8px between its blocks; gaps off these rhythms: 0.
 - **AC61 [R71].** (a) The same run: every element that shows a name (`a[href*="/admin/users/"]`, the users-table name
   and company `Text`, the inquiry sender line, the report reporter line, the card subtitle) has `scrollWidth <=
   clientWidth`, `scrollHeight <= clientHeight`, no `-webkit-line-clamp`, `text-overflow` not `ellipsis` → **0 cut**.
-  (b) `r12x-longname.mjs`: for the same Stories at 320, 390, 767, 768 and 1440 (uk, en), set each name element's text in
-  the DOM to `Arben Gjergj Krasniqi-Marashi` (probe only, nothing written), wait one frame, re-measure: 0 cut, the name
-  takes ≥ 2 lines at 320, no overlap with a neighbour (bounding boxes disjoint), GR-3h gaps still ≥ 8px.
-- **AC62 [R72].** The log's receipts follow GR-3h/GR-3i exactly; the GR-12 badge receipt adds "gap per pair".
+  (b) `r12x-longname.mjs`: same Stories at 320, 390, 767, 768 and 1440 (uk, en), each name element's text set in the
+  DOM to `Arben Gjergj Krasniqi-Marashi` (probe only, nothing written), one frame later re-measured: 0 cut, ≥ 2 lines at
+  320, no overlap with a neighbour, the rhythm still 0 off.
+- **AC62 [R72].** The log's receipts follow GR-3h/GR-3i exactly; the GR-12 badge receipt adds the rhythm.
 - **Gates:** §25.5's block as in §27.4 (governance start/end, vitest twice, `typecheck`, `lint`, `build`,
   `build-storybook`, the check list, AC50's two commands, `check:ui-contract:verify`, `check:surface-census:changed --
   --base HEAD` — red only for `surface-limit-exceeded`, count recorded, D78-30); `r12-dialog-geometry.mjs`,
   `r12-users-pointer.mjs`, `r12-play-check.mjs`, `r11x-group-width.mjs` copied to `r12x-*` (ports and output names
   only): 0 violations, 36/36, 0 error screens, 100%. Every gate after the last source edit (`r12x-60-hashes-end.txt`).
 
-`GR-4 AC AUDIT — 4 new criteria (AC59–AC62); each states an observable property; absolutes: "0 object gaps below 8px", "0 cut", "0 differing pixels", "≥ 2 lines at 320".`
+`GR-4 AC AUDIT — 4 new criteria (AC59–AC62); each states an observable property; absolutes: "every gap = 12px", "gaps off the rhythm: 0", "0 cut", "≥ 2 lines at 320".`
 
-### 28.5 Reference research (GR-7) and parity receipts, review 13
+### 28.5 Reference research (GR-7) and receipts, review 13
 
-`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: spacing between a records-list title and its badges, and whether names in records tables are cut; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04 (route inventory Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0); live-checked pages: TailAdmin support-tickets, products-list; Lahomes customers-list, orders; Omah ecom-customers, ecom-product-order; Kamr ecom-customers, guest-list (demo login) — 2026-10-09 at 390 and 1440 (research-review/r13-ref-spacing.mjs, 16 runs, 0 errors); inspected in depth: badge ↔ neighbour distances and cell text-overflow on those pages; workflow states operated: none (read-only tables); options across references: badges inline with ≥ 20px from their text (TailAdmin 22.6px), status in its own column (Lahomes, Omah); no reference stacks a badge flush under a title; 0 ellipsis cells in 16 runs; chosen 2026 best practice: every object at least 8px (xs) from its neighbour, names wrap in full; absent or unverified: Omah form-element.html (404, not relied on); lero.al data map: unchanged; owner decisions: GR-3h, GR-3i (2026-10-09); evidence: docs/sessions/evidence/task859/research-review/r13-*.`
+`GR-7 REFERENCE RESEARCH — moment: review + task revision; role: Opus; task: 859; subject: the vertical rhythm of a records card/cell around a badge row, and whether names in records tables are cut; references: Lahomes, Kamr, Omah, TailAdmin (no owner URL); library: docs/research/references/2026-10-04 (route inventory Lahomes 106/106/0, Kamr 62/62/0, Omah 339/339/0, TailAdmin 88/88/0) + docs/tailadmin-style-reference.md §6l (measured composition rhythm); live-checked pages: TailAdmin support-tickets, products-list; Lahomes customers-list, orders; Omah ecom-customers, ecom-product-order; Kamr ecom-customers, guest-list (demo login) — 2026-10-09 at 390 and 1440 (research-review/r13-ref-spacing.mjs, 16 runs, 0 errors); inspected in depth: badge ↔ neighbour distances and cell text-overflow on those pages; workflow states operated: none (read-only tables); options across references: badges inline beside their text (TailAdmin 22.6px) or in their own column (Lahomes, Omah); no reference stacks a badge flush under a title; one gap per composition level (TailAdmin §6l); 0 ellipsis cells in 16 runs; chosen 2026 best practice: a badge row is one step of the card's rhythm (12px, the same as to the divider), names wrap in full; absent or unverified: Omah form-element.html (404, not relied on); lero.al data map: unchanged; owner decisions: GR-3h, GR-3i (2026-10-09); evidence: docs/sessions/evidence/task859/research-review/r13-*.`
 
-`GR-12 ELEMENT PARITY — badge ↔ neighbour gap: Stories compared 189 at 390/767 + 29 at 16 widths × 2 locales (census docs/sessions/evidence/task859/review-13/r13-census-390-767.jsonl, r13-census-full.jsonl); meanings 1 (a status/type badge beside its record); meanings with more than one look: gap — 0px (card: support, listings, AdminTable), 1px (card: reports), 4px (table: listings, users, support), 8px (card subtitle row, between badges) (owner decisions: none) → F57, F58; hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): NONE new (the existing `overflowWrap` style at MantineDataTableToCards.tsx:148 is the owner's, not a visual value).`
+`GR-3h VERTICAL RHYTHM — admin record card (MantineDataTableToCards): rhythm token sm = 12px (MantineDataTableToCards.tsx:377); widths 320…1920 incl. 639/640 and 767/768 × uk/en (census) and uk at 320/390/767 (rhythm probe); block gaps measured 12px (header/divider/primary/divider/detail), 0px and 1px (title → badge row), 8px (state-3 badge row → title); gaps off the rhythm: title → badge row in AdminSupportView, AdminListingsView, AdminReportsView, AdminTable WrappedTitleColumn on every width 320–767; horizontal row gaps badge ↔ badge 8px (Group gap="xs"); evidence review-13/r13-card-rhythm.txt, r13-census-full.jsonl → NEEDS REVISION.`
 
-`GR-3h OBJECT SPACING — Patterns/Mantine/AdminSupportView (Default, UnassignedLanding): widths 320…1920 incl. 639/640 and 767/768 × uk/en/sq/it; badges with a text neighbour 64 per width below 768 (4 locales × 2 Stories); gaps below xs: 56 of 64 at every width 320–767 (0px), 8 of 8 at 4px from 768; smallest gap 0px at 320–767; named pairs title ↔ status badge 0px (card), status ↔ type 8px (card) / 4px (table); owner of each gap MantineDataTableToCards.tsx:148-151/169-173, AdminSupportView.tsx:155; evidence review-13/r13-spacing-names-full.json → NEEDS REVISION.`
+`GR-3h VERTICAL RHYTHM — records-table cell (AdminListingsView, AdminUsersTable, AdminSupportView, AdminReportsView): rhythm token required sm = 12px (rule 3, the card's); widths 768…1920 × uk/en; block gaps measured 4px (gap/mt "tight"); gaps off the rhythm: every stacked cell in the four Views; evidence review-13/r13-census-full.jsonl → NEEDS REVISION.`
 
 `GR-3i NAMES WRAP — Patterns/Mantine/AdminSupportView (Default, UnassignedLanding): widths 320…1920 × uk/en/sq/it; name elements 7 per Story; cut: 1 at 320 (uk), 20 per width 768–1920 (4 locales × 2 Stories); longest fixture name Arben Krasniqi → "Arben…" at 320 (uk); owner of the name slot AdminSupportView.tsx:97-111; evidence review-13/r13-spacing-names-full.json → NEEDS REVISION.`
+
+`GR-12 ELEMENT PARITY — badge row in a record: Stories compared 189 at 390/767 + 29 at 16 widths × 2 locales (census docs/sessions/evidence/task859/review-13/r13-census-390-767.jsonl, r13-census-full.jsonl); meanings 1 (the status/type badges of a record); meanings with more than one look: distance to the block above — 0px (card: support, listings, AdminTable), 1px (card: reports), 4px (table: listings, users, support), 8px (state-3 badge row), against a 12px card rhythm (owner decisions: none) → F57, F58; hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): NONE new.`
 
 ### 28.6 Owner question (not in Revision 12)
 
@@ -2515,27 +2522,33 @@ decide it. Review 14 or a separate task acts on the owner's answer; Revision 12 
 
 ### 28.7 Write set (Revision 12)
 
-- `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` (`CardPrimaryRow` and its JSDoc only);
+- `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` (`CardConfig.badges`, `renderDesignedCard`,
+  `CardPrimaryRow` and their JSDoc only);
+- `src/components/admin/AdminTable.tsx` (`AdminTableCard.badges`, the synthesized card, the `card` mapping);
 - `src/components/admin/AdminSupportView.tsx`, `AdminListingsView.tsx`, `AdminUsersTableView.tsx`,
-  `AdminInquiriesView.tsx`, `AdminReportsView.tsx` (only the lines R70 and R71 name);
+  `AdminInquiriesView.tsx`, `AdminReportsView.tsx` (only the lines R69(e), R70 and R71 name);
+- `src/stories/mantine/primitives/Table.stories.tsx` (R69(f) only: `badges` passed, the meta "Role" row removed);
 - evidence `r12x-*`, the session log `# Revision 12`, the 859 backlog cell.
 
-Frozen, hashed at I0 and the end: §19.3's six support files, the server actions, every Story and fixture, every test,
-`scripts/**`, and every Revision 11 write-set file. **Any other file is a stop and report.** The GR-0 receipt is
-`EXTEND MantineDataTableToCards` (owner of the title ↔ subtitle gap); the UI-contract receipt names
-`src/stories/mantine/primitives/Table.stories.tsx` as its direct Story (data unchanged).
+Frozen, hashed at I0 and the end: §19.3's six support files, the server actions, every other Story and every fixture,
+every test, `scripts/**`, and every Revision 11 write-set file. **Any other file is a stop and report.** A test or
+`play` function that asserts the old subtitle position or the removed meta row is a stop and report, not an edit. The
+GR-0 receipt is `EXTEND MantineDataTableToCards` (owner of the card rhythm and of the new `badges` step); the
+UI-contract receipt names `src/stories/mantine/primitives/Table.stories.tsx` as its direct Story, and the Storybook
+proof receipt lists `badges` among its public props.
 
 ### 28.8 Owner visual review — O78-13 (after review 14)
 
 §27.7's list, plus: `AdminSupportView` `Default` and `UnassignedLanding`, `AdminListingsView` `Default`,
-`AdminUsersTable` `Default`, `AdminReportsView` `Default`, `AdminInquiriesView` `Default`, `Mantine/Primitives/Table`
-`CardsBelowMd` — each at 320, 390, 560, 767, 768 and 1440 in uk and en: badges 8px from the title and from each other,
-every name in full. Review 14 runs AC59–AC61 itself on the full matrix before the matrix goes out.
+`AdminUsersTable` `Default`, `AdminReportsView` `Default`, `AdminInquiriesView` `Default`, `AdminTable`
+`WrappedTitleColumn`, `Mantine/Primitives/Table` `CardsBelowMd` — each at 320, 390, 560, 767, 768 and 1440 in uk and
+en: one 12px rhythm in every card and stacked cell (title → badge row = badge row → divider), every name in full.
+Review 14 runs AC59–AC61 itself on the full matrix before the matrix goes out.
 
 ### 28.9 Completion (Revision 12)
 
 Append `# Revision 12` to the session log with: I0 (hashes and write times); R69–R72 with AC59–AC62 evidence; the GR-0
-receipt; GR-3h and GR-3i receipts per §28.8 Story; the GR-12 badge receipt with gap per pair; GR-3b at 320/390/1024/1440
+receipt; GR-3h and GR-3i receipts per §28.8 Story; the GR-12 badge receipt with the rhythm; GR-3b at 320/390/1024/1440
 for `AdminSupportView` `Default`; the gate block with governance counts and the surface-census count; a `Files Changed`
 table. Set the 859 backlog cell. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or
-`BLOCKED`. No Git.
+`BLOCKED`. A rhythm off by any amount is `BLOCKED — GR-3h`, never `IMPLEMENTED`. No Git.

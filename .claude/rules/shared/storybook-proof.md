@@ -21,9 +21,11 @@ viewport is not a distinct proof surface. Probe-only Story markup must be revers
   heading exceeds its page title. Use canonical rich-text scaling.
 - A popup with two or more text actions stacks them one per row. Circles and rounded-edge lines are fixed in the
   canonical owner, proved with required DPR-1 crops, never patched by a consumer.
-- Neighbouring objects keep their canonical gap, never below `xs`, and a person's name wraps instead of being cut
-  (GR-3h, GR-3i). Measure both on the built Storybook at every width of the canonical matrix and on both sides of
-  every layout switch, in all four locales. A sample of two widths does not prove either rule.
+- Every block keeps its container's vertical rhythm — one spacing token between blocks, dividers included, so a badge
+  row sits as far from its title as from the divider below — and a person's name wraps instead of being cut (GR-3h,
+  GR-3i). A rhythm break means the task is not done. Measure both on the built Storybook at every width of the
+  canonical matrix and on both sides of every layout switch, in all four locales. A sample of two widths does not
+  prove either rule.
 - Operate every Story control at 390 and 1440. If a real action fails or the control does nothing, provide a proper
   presentational view/stateful harness rather than handing over a broken Story.
 

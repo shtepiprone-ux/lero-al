@@ -15,7 +15,7 @@ relevant GR-3b…GR-3i fragment. The operational token/parity decision tree is
 | GR-1 surface census | [gr-1-surface-census.md](rules/golden/gr-1-surface-census.md) |
 | GR-2 gate blind spots | [gr-2-gate-blind-spots.md](rules/golden/gr-2-gate-blind-spots.md) |
 | GR-3 direct Story / GR-3a preflight | [gr-3-direct-story.md](rules/golden/gr-3-direct-story.md), [gr-3a-story-preflight.md](rules/golden/gr-3a-story-preflight.md) |
-| GR-3b…GR-3i visual Story checks | [responsive width](rules/golden/gr-3b-responsive-width.md), [type](rules/golden/gr-3c-responsive-type.md), [gutter](rules/golden/gr-3d-story-gutter.md), [actions](rules/golden/gr-3e-popup-actions.md), [circles](rules/golden/gr-3f-circles.md), [rounded lines](rules/golden/gr-3g-rounded-lines.md), [object spacing](rules/golden/gr-3h-object-spacing.md), [names wrap](rules/golden/gr-3i-names-wrap.md) |
+| GR-3b…GR-3i visual Story checks | [responsive width](rules/golden/gr-3b-responsive-width.md), [type](rules/golden/gr-3c-responsive-type.md), [gutter](rules/golden/gr-3d-story-gutter.md), [actions](rules/golden/gr-3e-popup-actions.md), [circles](rules/golden/gr-3f-circles.md), [rounded lines](rules/golden/gr-3g-rounded-lines.md), [vertical rhythm](rules/golden/gr-3h-vertical-rhythm.md), [names wrap](rules/golden/gr-3i-names-wrap.md) |
 | GR-4…GR-6 | [observable AC](rules/golden/gr-4-observable-acceptance.md), [state/archive](rules/golden/gr-5-state-archive.md), [owner Git handoff](rules/golden/gr-6-owner-git-handoff.md) |
 | GR-7 references | [standing audit](rules/golden/gr-7-reference-research.md), [owner links](rules/golden/gr-7-owner-links.md) |
 | GR-8 table anatomy | [gr-8-table-anatomy.md](rules/golden/gr-8-table-anatomy.md) |

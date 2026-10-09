@@ -49,10 +49,15 @@ review. It applies before the first finding and before the matrix reaches the ow
    - a state the Story shows that does not match what it claims (an "active filter" whose rows are not filtered).
    The fix is a presentational View with callbacks plus a stateful Story harness, never a disabled control or a
    removed Story. The owner found all three in `AdminUsersTable` after seven reviews had passed it.
-7. **Only then** run the GR-3b…GR-3g measurements and hand the matrix to the owner.
+7. **Only then** run the GR-3b…GR-3i measurements and hand the matrix to the owner.
+8. **Width coverage (owner return 2026-10-09, Task 859 review 13: "бейджі не мають відступів починаючи з 767px, ти
+   дуже паршиво провів аудит").** Every measurement in steps 1–7 that depends on layout runs at every width of the
+   canonical matrix and on both sides of every layout switch the Story has (for example 767 and 768 where a table
+   becomes cards). The reviewer measured badge gaps at 320 and 390 only and reported them as the phone result; the
+   whole card range up to 767px had the defect. A sampled width is not a finding of absence.
 
 **Forbidden:**
-- handing a Story to the owner with any of steps 1–6 not done;
+- handing a Story to the owner with any of steps 1–6 or 8 not done;
 - writing "measured", "ready" or "verified" for a Story on the strength of geometry receipts alone;
 - sampling: "the rest look the same" is not a check.
 

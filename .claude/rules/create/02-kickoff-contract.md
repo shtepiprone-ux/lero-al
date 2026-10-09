@@ -23,5 +23,7 @@ writes, and before review. A kickoff cannot prescribe one consumer's colour, rad
 it prescribes the owning token/component and the evidence that proves cross-Story parity.
 
 For visible UI, include the responsive width/type, gutter, popup text-action, circular-control, rounded-corner, state,
-locale, viewport, and interactive-control requirements selected by `shared/storybook-proof.md` and GR-3b…GR-3g/GR-9.
-Require an owner visual-QA matrix; never specify retired `screenshots:assert` as a verdict.
+locale, viewport, and interactive-control requirements selected by `shared/storybook-proof.md` and GR-3b…GR-3i/GR-9.
+Require an owner visual-QA matrix; never specify retired `screenshots:assert` as a verdict. Every visible-UI kickoff
+names, per changed component and matrix Story, the GR-3h object-spacing probe and the GR-3i name-wrap probe with
+their widths: the full canonical matrix plus both sides of every layout switch, in all four locales.

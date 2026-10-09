@@ -44,7 +44,9 @@ Visible Story text is locale-backed. Fixture data is labelled and never becomes 
 
 At task design, before Sonnet's first visual write, and before Opus's verdict, run a built-Storybook census for every
 changed element type and semantic meaning. Find **all** Stories rendering it and measure at the same locale/width:
-fill, text colour, border, radius, height, typography, padding, and icon. A different look is permitted only by a
+fill, text colour, border, radius, height, typography, padding, icon, and the gap to each neighbouring object or text
+block (GR-3h: never below `xs` between objects, one gap per pair in every layout form). Spacing between objects is part
+of the look; a token used by the element itself does not prove the gap its layout owner leaves around it. A different look is permitted only by a
 dated owner decision naming both contexts. Do not rely on source grep or a parent screenshot.
 
 Required receipt, one per element type:

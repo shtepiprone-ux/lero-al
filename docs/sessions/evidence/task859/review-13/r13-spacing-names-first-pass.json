@@ -1,0 +1,744 @@
+[
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "uk",
+  "w": 320,
+  "minGap": 0,
+  "gaps": [
+   {
+    "badge": "Відкритий",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "В роботі",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Скарга",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Фейкове оголошення а",
+    "gap": 49,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Вирішений",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Відкритий",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Закритий",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Скарга",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Переслідування або з",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [
+   {
+    "name": "Arben Krasniqi",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 78
+   }
+  ],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "uk",
+  "w": 390,
+  "minGap": 0,
+  "gaps": [
+   {
+    "badge": "Відкритий",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "В роботі",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Скарга",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Фейкове оголошення а",
+    "gap": 49,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Вирішений",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Відкритий",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Підтримка",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Закритий",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Скарга",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Переслідування або з",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "uk",
+  "w": 768,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Фейкове оголошення а",
+    "gap": 4,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": true
+   },
+   {
+    "badge": "Переслідування або з",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Gentiana Hoxha",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Arben Krasniqi",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 51
+   },
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Gentiana Hoxha",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "usr-006…",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 37
+   }
+  ],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "uk",
+  "w": 1440,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Фейкове оголошення а",
+    "gap": 4,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": true
+   },
+   {
+    "badge": "Переслідування або з",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Gentiana Hoxha",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Arben Krasniqi",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 51
+   },
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "Gentiana Hoxha",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 87
+   },
+   {
+    "name": "usr-006…",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 37
+   }
+  ],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "en",
+  "w": 320,
+  "minGap": 0,
+  "gaps": [
+   {
+    "badge": "Open",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "In progress",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Complaint",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Fake listing or prof",
+    "gap": 49,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Resolved",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Open",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Closed",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Complaint",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Harassment or abuse",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "en",
+  "w": 390,
+  "minGap": 0,
+  "gaps": [
+   {
+    "badge": "Open",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Nuk mund të redaktoj njoftimin",
+    "inTable": false
+   },
+   {
+    "badge": "In progress",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Complaint",
+    "gap": 0,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Fake listing or prof",
+    "gap": 49,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": false
+   },
+   {
+    "badge": "Resolved",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Disputa pagese për depozitën e",
+    "inTable": false
+   },
+   {
+    "badge": "Open",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Support",
+    "gap": 0,
+    "above": "Fatura e pagesës për paketën P",
+    "inTable": false
+   },
+   {
+    "badge": "Closed",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Complaint",
+    "gap": 0,
+    "above": "Ankesë për ngacmim në mesazhet",
+    "inTable": false
+   },
+   {
+    "badge": "Harassment or abuse",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "en",
+  "w": 768,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Fake listing or prof",
+    "gap": 4,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": true
+   },
+   {
+    "badge": "Harassment or abuse",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 95
+   },
+   {
+    "name": "Arben Krasniqi",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 74
+   },
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 95
+   }
+  ],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminsupportview--default",
+  "loc": "en",
+  "w": 1440,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Fake listing or prof",
+    "gap": 4,
+    "above": "Ankesë për foto false të pronë",
+    "inTable": true
+   },
+   {
+    "badge": "Harassment or abuse",
+    "gap": 4,
+    "above": "Përdoruesi dërgon mesazhe të p",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 95
+   },
+   {
+    "name": "Arben Krasniqi",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 74
+   },
+   {
+    "name": "Oksana Petrenko",
+    "clipped": true,
+    "clamp": "1",
+    "ws": "normal",
+    "w": 95
+   }
+  ],
+  "names": 7
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "uk",
+  "w": 320,
+  "minGap": 10,
+  "gaps": [
+   {
+    "badge": "Агент",
+    "gap": 27,
+    "above": "Tirana Real Estate Group",
+    "inTable": false
+   },
+   {
+    "badge": "Користувач",
+    "gap": 47,
+    "above": "Oksana Petrenko",
+    "inTable": false
+   },
+   {
+    "badge": "Запит на місто",
+    "gap": 10,
+    "above": "Онлайн: 10.04.2026",
+    "inTable": false
+   },
+   {
+    "badge": "Модератор",
+    "gap": 47,
+    "above": "Marco Rossi",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 4
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "uk",
+  "w": 390,
+  "minGap": 10,
+  "gaps": [
+   {
+    "badge": "Агент",
+    "gap": 27,
+    "above": "Tirana Real Estate Group",
+    "inTable": false
+   },
+   {
+    "badge": "Користувач",
+    "gap": 47,
+    "above": "Oksana Petrenko",
+    "inTable": false
+   },
+   {
+    "badge": "Запит на місто",
+    "gap": 10,
+    "above": "Онлайн: 10.04.2026",
+    "inTable": false
+   },
+   {
+    "badge": "Модератор",
+    "gap": 47,
+    "above": "Marco Rossi",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 4
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "uk",
+  "w": 768,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Запит на місто",
+    "gap": 4,
+    "above": "+380509876543",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [],
+  "names": 8
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "uk",
+  "w": 1440,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "Запит на місто",
+    "gap": 4,
+    "above": "+380509876543",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [],
+  "names": 8
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "en",
+  "w": 320,
+  "minGap": 10,
+  "gaps": [
+   {
+    "badge": "Agent",
+    "gap": 27,
+    "above": "Tirana Real Estate Group",
+    "inTable": false
+   },
+   {
+    "badge": "City request",
+    "gap": 10,
+    "above": "Online: 04/10/2026",
+    "inTable": false
+   },
+   {
+    "badge": "Moderator",
+    "gap": 47,
+    "above": "Marco Rossi",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 4
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "en",
+  "w": 390,
+  "minGap": 10,
+  "gaps": [
+   {
+    "badge": "Agent",
+    "gap": 27,
+    "above": "Tirana Real Estate Group",
+    "inTable": false
+   },
+   {
+    "badge": "City request",
+    "gap": 10,
+    "above": "Online: 04/10/2026",
+    "inTable": false
+   },
+   {
+    "badge": "Moderator",
+    "gap": 47,
+    "above": "Marco Rossi",
+    "inTable": false
+   }
+  ],
+  "clippedNames": [],
+  "names": 4
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "en",
+  "w": 768,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "City request",
+    "gap": 4,
+    "above": "+380509876543",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [],
+  "names": 8
+ },
+ {
+  "id": "patterns-mantine-adminuserstable--default",
+  "loc": "en",
+  "w": 1440,
+  "minGap": 4,
+  "gaps": [
+   {
+    "badge": "City request",
+    "gap": 4,
+    "above": "+380509876543",
+    "inTable": true
+   }
+  ],
+  "clippedNames": [],
+  "names": 8
+ }
+]

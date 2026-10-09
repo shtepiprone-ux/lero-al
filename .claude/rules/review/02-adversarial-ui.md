@@ -16,7 +16,7 @@ For every changed visible artifact, read `shared/ui-token-contract.md`, `shared/
 Run the final built-Storybook parity census yourself. A local visual decision, missing semantic token process,
 Story-level styling, raw value/palette semantic literal, unlocalized visible Story text, duplicate child markup, or
 one meaning with two looks without a dated owner decision is `NEEDS REVISION`. Geometry checks never override this
-result. Verify all required GR-3b…GR-3g, GR-9, GR-12 receipts, the `check:ui-contract` result, and every Story
+result. Verify all required GR-3b…GR-3i, GR-9, GR-12 receipts, the `check:ui-contract` result, and every Story
 control. A missing registry row for a newly enrolled component, a changed Story-local presentation violation, or a
 checker/hook bypass attempt is `NEEDS REVISION`.
 

@@ -191,6 +191,12 @@ Every kickoff must be executable by a fresh Sonnet session with no hidden chat c
 - exact verification plan when known;
 - completion report contract.
 
+Before the kickoff can be published, apply the compact
+`.claude/rules/shared/claim-evidence-contract.md` and run `npm run check:kickoff-evidence`. Each material premise has
+a `C# FACT` with a current path/range/literal or a `D# OWNER DECISION` with a dated verbatim choice. `INFERENCE`,
+`UNKNOWN`, `UNVERIFIED`, `CONTRADICTION`, and `ASSUMPTION` cannot support scope, requirements, ACs, exclusions, or
+expected command output; resolve them or return `BLOCKED — KICKOFF EVIDENCE GAP`.
+
 Every kickoff must select pre-read files from `docs/rule-index.md`. Never write "read all docs."
 Save implementation kickoffs under `tasks/` using the project naming/location rules; do not hand off only in chat.
 

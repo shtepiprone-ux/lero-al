@@ -1,0 +1,32 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al (native Windows PowerShell)
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-ticketdetaildialogview--support,patterns-mantine-userpickerfieldview--results,patterns-mantine-listingpreviewdialogview--active --widths 320,390 --no-closed --port 6044 --out <scratchpad>/rv-ac4
+rendered state census: 3 registered state(s), 24 state job(s) (0 state x locale x width cell(s) skipped: the state does not exist at that width) + 0 closed job(s); 6 worker(s); out C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\77cce12a-901d-4951-92fb-308ed600ed5f\scratchpad\rv-ac4
+
+rendered state census — rows 48 (failing 24); {"statesRun":3,"locales":["sq","en","uk","it"],"widths":[320,390],"stateJobs":24,"skippedCells":0,"closedJobs":0,"appRows":24,"portalRows":24,"runtimeSeconds":15,"ruleKeys":19}
+rows failing per rule:
+  text-clamp             16
+  text-ellipsis          0
+  text-hidden            4
+  word-split             8
+  viewport-overflow      7
+  component-overflow     16
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+Story x state x root with a violation: 3
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | portal:0 :: text-clamp, text-hidden (8 cell(s))
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | portal:0 :: text-clamp, component-overflow (8 cell(s))
+  patterns-mantine-userpickerfieldview--results | patterns-mantine-userpickerfieldview--results | portal:0 :: word-split, viewport-overflow, component-overflow (8 cell(s))
+
+rows 48 = 24 app-root rows + 24 portal-root rows; 24 state jobs + 0 closed jobs; runtime 15s
+EXIT_CODE=1

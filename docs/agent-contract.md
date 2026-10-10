@@ -14,6 +14,7 @@ This is the compact contract index. The complete P0 wording has been moved witho
 | P0 16d: rendered-component census | [p0-16d-surface-census.md](rules/agent-contract/p0-16d-surface-census.md) |
 | Roles and routing | [roles-and-routing.md](rules/agent-contract/roles-and-routing.md) |
 | “Report is not proof” | [report-not-proof.md](rules/agent-contract/report-not-proof.md) |
+| Claim-to-evidence invariant | [claim-evidence-contract.md](rules/agent-contract/claim-evidence-contract.md) |
 
 Every role starts with the compact parent in `.claude/skills/`, then reads only the selected contract fragment and
 task bundle from `docs/rule-index.md`. Visible UI always requires P0 16–16d and the shared token/Story contract.

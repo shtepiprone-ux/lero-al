@@ -5,8 +5,12 @@ Open this phase file before the saved task; do not open source, diff, or Storybo
 1. Read `.claude/rules/shared/role-boundaries.md`.
 2. Read the complete saved task and its named rule bundle. If it is incomplete, contradictory, or lacks executable
    acceptance criteria, stop with the precise gap.
-3. Read `.claude/rules/shared/ui-token-contract.md` for every visible/UI/Story/token task. For a confirmed non-visible
-   task, record why it is not applicable.
+3. Read `.claude/rules/shared/mobile-adaptation-contract.md`, then `.claude/rules/shared/ui-token-contract.md`, for
+   every visible/UI/Story/token task. Verify the saved Mobile adaptation record selects a real source-backed pattern,
+   registry-allowed Mantine mechanism, and canonical Mantine owner; a current Story is not its authority. Mantine
+   owns responsive mechanism/interaction/a11y; do not implement a parallel viewport solution. If the record is
+   absent or incompatible, report `BLOCKED — MOBILE PATTERN EXTENSION REQUIRED`; Sonnet must not edit the registry.
+   For a confirmed non-visible task, record why it is not applicable.
 4. Read the affected source, callers, tests, Stories, and current diff. Reproduce the stated current behavior or
    retain direct evidence before changing it.
 5. Record in session evidence: requirement/AC ledger, preserved and required behavior, QA profile, relevant negative

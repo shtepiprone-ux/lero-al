@@ -107,6 +107,8 @@ not placeholders):
 
 The tool call, rather than prose emitted beside another tool call, is the durable transcript evidence. `mobile order` is
 free text: ordinary semicolons are permitted there, and it ends only at the required delimiter `; required content:`.
+If any receipt value contains an apostrophe, escape it in the PowerShell single-quoted literal as `''`; the helper and
+gate recover the original value before validation.
 The helper checks receipt structure and prints it without writing project state. Immediately before a guarded write,
 the phase gate separately checks the selected family, patterns, standards, Mantine mechanism, and single canonical
 owner against the registry; the helper is not a bypass.

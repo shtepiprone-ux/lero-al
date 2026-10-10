@@ -21,6 +21,10 @@ only execution workflow; read each phase before its named step.
 - A Story or component differs from same-meaning Stories without a dated owner decision: `BLOCKED — GR-12`.
 - The exact `shared/enforcement-model.md` receipts are absent before an in-scope UI/Story write, or its CI contract
   gate reports a failure: stop. Do not work around the hook, registry, checker, or Story restriction.
+- No source-backed mobile adaptation record/preflight for visible UI: stop. It must include a registry-allowed Mantine
+  mechanism and canonical owner. Do not squeeze a desktop row, truncate content, treat a current Story as a correct
+  mobile pattern, or bypass/duplicate Mantine responsive behavior; implement only the selected profile and rendered
+  proof.
 - An in-scope rendered component lacks its direct Story/manifest: `BLOCKED — CLAUSE 16d`.
 - Missing required evidence, final build for non-Q0, or required validation: use `PARTIALLY IMPLEMENTED`/`BLOCKED`.
 

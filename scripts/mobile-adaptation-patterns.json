@@ -1,0 +1,188 @@
+{
+  "version": 3,
+  "mobileGate": {
+    "compactRange": "<640px",
+    "transition": "640px",
+    "source": "src/design-system/mantine/theme.ts"
+  },
+  "mantine": {
+    "package": "@mantine/core",
+    "versionRange": "^8.3.18",
+    "projectAuthority": {
+      "source": "docs/mantine-responsive-design-system.md",
+      "rule": "Mantine supplies responsive mechanism, interaction, and accessibility behavior; this registry supplies only the required semantic compact outcome and verification."
+    },
+    "mechanisms": [
+      { "id": "responsive-props", "title": "Mantine responsive prop system", "url": "https://mantine.dev/styles/responsive/" },
+      { "id": "visibility-props", "title": "Mantine visibleFrom and hiddenFrom", "url": "https://mantine.dev/styles/responsive/" },
+      { "id": "app-shell-responsive", "title": "Mantine AppShell responsive navbar and header", "url": "https://mantine.dev/core/app-shell/?t=props" },
+      { "id": "media-query-exception", "title": "Mantine useMediaQuery exception with SSR behavior", "url": "https://mantine.dev/hooks/use-media-query/" }
+    ]
+  },
+  "standards": [
+    { "id": "w3c-reflow", "title": "W3C WCAG 2.2 - Reflow", "url": "https://www.w3.org/WAI/WCAG21/Understanding/reflow" },
+    { "id": "w3c-meaningful-sequence", "title": "W3C WCAG 2.2 - Meaningful Sequence", "url": "https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence" },
+    { "id": "w3c-focus-order", "title": "W3C WCAG 2.2 - Focus Order", "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" },
+    { "id": "w3c-labels-instructions", "title": "W3C WCAG 2.2 - Labels or Instructions", "url": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions" },
+    { "id": "w3c-hover-focus", "title": "W3C WCAG 2.2 - Content on Hover or Focus", "url": "https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html" },
+    { "id": "w3c-target-size", "title": "W3C WCAG 2.2 - Target Size", "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum" },
+    { "id": "apple-hig-layout", "title": "Apple HIG - Layout", "url": "https://developer.apple.com/design/human-interface-guidelines/layout" },
+    { "id": "apple-hig-lists-tables", "title": "Apple HIG - Lists and tables", "url": "https://developer.apple.com/design/human-interface-guidelines/lists-and-tables" },
+    { "id": "apple-hig-toolbars", "title": "Apple HIG - Toolbars", "url": "https://developer.apple.com/design/human-interface-guidelines/toolbars" },
+    { "id": "apple-hig-menus", "title": "Apple HIG - Menus", "url": "https://developer.apple.com/design/human-interface-guidelines/menus" },
+    { "id": "apple-hig-sheets", "title": "Apple HIG - Sheets", "url": "https://developer.apple.com/design/human-interface-guidelines/sheets" },
+    { "id": "apple-hig-navigation-search", "title": "Apple HIG - Navigation and search", "url": "https://developer.apple.com/design/human-interface-guidelines/navigation-and-search" },
+    { "id": "android-adapt-layouts", "title": "Android - Adapt layouts", "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/adapt-layout" },
+    { "id": "android-common-layouts", "title": "Android - Common layouts", "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/common-layouts" },
+    { "id": "android-layout-basics", "title": "Android - Layout basics", "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics" },
+    { "id": "android-content-structure", "title": "Android - Content composition and structure", "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/content-structure" },
+    { "id": "android-layout-navigation", "title": "Android - Layouts and navigation patterns", "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-and-nav-patterns" }
+  ],
+  "patterns": [
+    { "id": "linear-flow", "sourceIds": ["w3c-reflow", "w3c-meaningful-sequence", "apple-hig-layout", "android-adapt-layouts", "android-layout-basics"] },
+    { "id": "record-card", "sourceIds": ["w3c-meaningful-sequence", "w3c-focus-order", "apple-hig-lists-tables", "android-common-layouts"] },
+    { "id": "key-value-stack", "sourceIds": ["w3c-reflow", "w3c-meaningful-sequence", "apple-hig-layout", "android-content-structure"] },
+    { "id": "data-table-to-cards", "sourceIds": ["w3c-reflow", "apple-hig-lists-tables", "android-common-layouts"] },
+    { "id": "form-stack", "sourceIds": ["w3c-labels-instructions", "w3c-reflow", "apple-hig-layout", "android-content-structure"] },
+    { "id": "toolbar-priority", "sourceIds": ["w3c-focus-order", "apple-hig-toolbars", "android-layout-navigation"] },
+    { "id": "navigation-adaptive", "sourceIds": ["w3c-focus-order", "apple-hig-navigation-search", "android-layout-navigation", "android-adapt-layouts"] },
+    { "id": "overlay-adaptive", "sourceIds": ["w3c-focus-order", "w3c-hover-focus", "apple-hig-sheets", "android-common-layouts", "android-adapt-layouts"] },
+    { "id": "grid-media-reflow", "sourceIds": ["w3c-reflow", "apple-hig-layout", "android-common-layouts", "android-adapt-layouts"] },
+    { "id": "inline-control", "sourceIds": ["w3c-target-size", "apple-hig-menus", "android-layout-navigation"] },
+    { "id": "data-visualization-reflow", "sourceIds": ["w3c-reflow", "w3c-meaningful-sequence", "apple-hig-layout", "android-adapt-layouts", "android-content-structure"] },
+    { "id": "editor-adaptive", "sourceIds": ["w3c-reflow", "w3c-focus-order", "apple-hig-toolbars", "android-adapt-layouts"] }
+  ],
+  "componentFamilies": [
+    {
+      "id": "structural-layout-and-feedback",
+      "patternIds": ["linear-flow", "toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props", "app-shell-responsive"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineAppShellFoundation.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardCard.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardGrid.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardHeader.tsx",
+        "src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx",
+        "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+        "src/design-system/mantine/patterns/MantineNotificationPattern.tsx",
+        "src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx"
+      ]
+    },
+    {
+      "id": "record-list-and-data",
+      "patternIds": ["linear-flow", "record-card", "key-value-stack", "data-table-to-cards"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardStatCard.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardStatRows.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardWorkList.tsx",
+        "src/design-system/mantine/patterns/MantineDataTableToCards.tsx",
+        "src/design-system/mantine/patterns/MantineDetailList.tsx",
+        "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx",
+        "src/design-system/mantine/patterns/MantineListingPrice.tsx",
+        "src/design-system/mantine/patterns/MantineNavRowList.tsx"
+      ]
+    },
+    {
+      "id": "form-picker-and-choice",
+      "patternIds": ["form-stack", "toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "media-query-exception"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineAddItemPanel.tsx",
+        "src/design-system/mantine/patterns/MantineAuthFormPattern.tsx",
+        "src/design-system/mantine/patterns/MantineCombobox.tsx",
+        "src/design-system/mantine/patterns/MantineFilterSection.tsx",
+        "src/design-system/mantine/patterns/MantineFormSectionStack.tsx",
+        "src/design-system/mantine/patterns/MantineRadioCardOption.tsx",
+        "src/design-system/mantine/patterns/MantineSelect.tsx",
+        "src/design-system/mantine/patterns/MantineTwoColumnForm.tsx",
+        "src/design-system/mantine/patterns/PasswordRequirementsHint.tsx",
+        "src/design-system/mantine/patterns/RangeDatePicker.tsx"
+      ]
+    },
+    {
+      "id": "editor",
+      "patternIds": ["editor-adaptive", "form-stack", "toolbar-priority"],
+      "mantineMechanismIds": ["responsive-props"],
+      "members": ["src/design-system/mantine/patterns/MantineRichTextEditor.tsx"]
+    },
+    {
+      "id": "filter-and-action-toolbar",
+      "patternIds": ["toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineDashboardPeriodControl.tsx",
+        "src/design-system/mantine/patterns/MantineFilterChips.tsx",
+        "src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx"
+      ]
+    },
+    {
+      "id": "navigation-and-pagination",
+      "patternIds": ["navigation-adaptive", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props", "media-query-exception"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineNavigationMenu.tsx",
+        "src/design-system/mantine/patterns/MantinePagination.tsx"
+      ]
+    },
+    {
+      "id": "overlay-and-disclosure",
+      "patternIds": ["overlay-adaptive", "toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "media-query-exception"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx",
+        "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx",
+        "src/design-system/mantine/patterns/MantineDialogFooter.tsx",
+        "src/design-system/mantine/patterns/MantineDialogSections.tsx",
+        "src/design-system/mantine/patterns/MantineDrawer.tsx",
+        "src/design-system/mantine/patterns/MantineDropdownMenu.tsx",
+        "src/design-system/mantine/patterns/MantineModal.tsx",
+        "src/design-system/mantine/patterns/MantinePopover.tsx",
+        "src/design-system/mantine/patterns/MantineTooltip.tsx",
+        "src/design-system/mantine/patterns/responsiveBottomSheet.tsx"
+      ]
+    },
+    {
+      "id": "media-gallery-and-listing-contact",
+      "patternIds": ["grid-media-reflow", "toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props"],
+      "members": [
+        "src/design-system/mantine/patterns/GalleryDesktopNavigation.tsx",
+        "src/design-system/mantine/patterns/GalleryNavActionIcon.tsx",
+        "src/design-system/mantine/patterns/GalleryThumbnailButton.tsx",
+        "src/design-system/mantine/patterns/MantineListingCardTrack.tsx",
+        "src/design-system/mantine/patterns/MantineListingContactPattern.tsx",
+        "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx"
+      ]
+    },
+    {
+      "id": "data-visualization",
+      "patternIds": ["data-visualization-reflow", "toolbar-priority", "inline-control"],
+      "mantineMechanismIds": ["responsive-props", "visibility-props"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineDashboardBarChart.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardChartLegend.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardChartStateFrame.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardDonut.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardLineChart.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardRadar.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardRadialProgress.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardSemiDonut.tsx",
+        "src/design-system/mantine/patterns/MantineDashboardSparkline.tsx"
+      ]
+    },
+    {
+      "id": "inline-status-and-utility-control",
+      "patternIds": ["inline-control", "toolbar-priority"],
+      "mantineMechanismIds": ["responsive-props", "media-query-exception"],
+      "members": [
+        "src/design-system/mantine/patterns/MantineBadge.tsx",
+        "src/design-system/mantine/patterns/MantineCopyIdButton.tsx",
+        "src/design-system/mantine/patterns/MantineCountButton.tsx",
+        "src/design-system/mantine/patterns/MantineProgress.tsx"
+      ]
+    }
+  ]
+}

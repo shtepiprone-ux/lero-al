@@ -83,12 +83,64 @@ try {
     $design = @($paths | Where-Object { $_ -match $designRe })
     if ($design.Count -eq 0 -and -not $backlogProblem) { exit 0 }
 
+    # Changed active kickoffs must carry mechanically traceable claims. This runs only for Opus governance responses;
+    # an unknown/missing Node runtime is a fail-closed evidence gap, not a reason to publish an invented premise.
+    $kickoffPaths = @($design | Where-Object {
+        $_ -match '^tasks/(?!Archive/).+kickoff.*\.md$'
+    })
+    $kickoffEvidenceProblem = $null
+    if ($kickoffPaths.Count -gt 0) {
+        if (-not (Test-Path -LiteralPath 'scripts/check-kickoff-evidence.mjs')) {
+            $kickoffEvidenceProblem = 'KICKOFF EVIDENCE GAP - scripts/check-kickoff-evidence.mjs is unavailable.'
+        }
+        else {
+            $previousEap = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            $kickoffEvidenceOut = & node scripts/check-kickoff-evidence.mjs --files $kickoffPaths 2>&1 | Out-String
+            $kickoffEvidenceExit = $LASTEXITCODE
+            $ErrorActionPreference = $previousEap
+            if ($kickoffEvidenceExit -ne 0) {
+                $kickoffEvidenceProblem = "KICKOFF EVIDENCE GAP - changed kickoff claim ledger is invalid:`n" + $kickoffEvidenceOut.Trim()
+            }
+        }
+    }
+
+    # Every changed active kickoff has an explicit mobile-adaptation record. This is separate from claim evidence:
+    # a factually sourced kickoff can still publish a desktop-compression route unless the semantic mobile profile,
+    # standards and verification matrix are present. The checker is fail-closed once this Opus governance path is known.
+    $mobileAdaptationProblem = $null
+    if ($kickoffPaths.Count -gt 0) {
+        if (-not (Test-Path -LiteralPath 'scripts/check-mobile-adaptation-contract.mjs')) {
+            $mobileAdaptationProblem = 'MOBILE ADAPTATION GAP - scripts/check-mobile-adaptation-contract.mjs is unavailable.'
+        }
+        else {
+            $previousEap = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            $mobileAdaptationOut = & node scripts/check-mobile-adaptation-contract.mjs --files $kickoffPaths 2>&1 | Out-String
+            $mobileAdaptationExit = $LASTEXITCODE
+            $ErrorActionPreference = $previousEap
+            if ($mobileAdaptationExit -ne 0) {
+                $mobileAdaptationProblem = "MOBILE ADAPTATION GAP - changed kickoff record is invalid:`n" + $mobileAdaptationOut.Trim()
+            }
+        }
+    }
+
     # Last assistant message from the already-read transcript.
     $last = if ($assistantTexts.Count -gt 0) { $assistantTexts[$assistantTexts.Count - 1] } else { '' }
-    if (-not $last) { exit 0 }   # cannot read the response - do not guess
+    if (-not $last -and ($kickoffEvidenceProblem -or $mobileAdaptationProblem)) {
+        $gaps = @()
+        if ($kickoffEvidenceProblem) { $gaps += $kickoffEvidenceProblem }
+        if ($mobileAdaptationProblem) { $gaps += $mobileAdaptationProblem }
+        $gapMessage = $gaps -join "`n`n"
+        [Console]::Error.WriteLine("BLOCKED by .claude/hooks/orchestrator-response-gate.ps1:`n`n$gapMessage`n`nThe kickoff cannot be published while its evidence or mobile adaptation record is invalid. Repair it and keep the response transcript available for the required handoff check.")
+        exit 2
+    }
+    if (-not $last) { exit 0 }   # no output available to assess beyond the fail-closed kickoff-evidence result above
 
     $problems = @()
     if ($backlogProblem) { $problems += $backlogProblem }
+    if ($kickoffEvidenceProblem) { $problems += $kickoffEvidenceProblem }
+    if ($mobileAdaptationProblem) { $problems += $mobileAdaptationProblem }
 
     # GR-6 - uncommitted task/doc artifacts require the owner-run git block in this same response.
     if ($design.Count -gt 0 -and $last -notmatch '(?m)^\s*git add\s') {

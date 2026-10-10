@@ -10,9 +10,12 @@ previous session, a summary, or a task's assertion for the required read.
 
 ## Non-negotiable visual rule, loaded first
 
-No new or changed visible UI may choose a visual value locally. Search and use the canonical semantic token/component;
-if it does not exist, create it in the shared registry and prove it in the real component's direct Story before any
-consumer uses it. Stories pass data/public props only and never patch appearance. One semantic meaning has one look
+No new or changed visible UI may compress its desktop layout into mobile. First verify the saved source-backed semantic
+profile, allowed Mantine mechanism, and canonical Mantine owner in `shared/mobile-adaptation-contract.md`; Mantine
+owns the responsive mechanism and the contract adds semantic order/content treatment/proof only. Then search and use
+the canonical semantic token/component. If the mobile family/profile/mechanism/owner does not exist, stop with
+`BLOCKED — MOBILE PATTERN EXTENSION REQUIRED`: Sonnet must not create or alter the shared mobile registry. Stories
+pass data/public props only and never patch appearance. One semantic meaning has one look
 across all Stories unless a dated owner decision says otherwise. A missing owner/token/Story or a parity mismatch is
 `BLOCKED — GR-12`, never permission for a hardcode.
 
@@ -20,7 +23,7 @@ across all Stories unless a dated owner decision says otherwise. A missing owner
 
 | When | Read and complete | Stop condition |
 |---|---|---|
-| Before task/source/diff | `.claude/rules/execute/01-start.md` | missing saved task, preflight, reference audit, or in-scope component census |
+| Before task/source/diff | `.claude/rules/execute/01-start.md` | missing saved task, mobile adaptation record, preflight, reference audit, or in-scope component census |
 | Before UI/Story write | `.claude/rules/execute/02-implement.md`, then `shared/enforcement-model.md` and `shared/storybook-proof.md` | missing machine-gated preflight, local visual decision, absent canonical token/Story, or unclear ownership |
 | After final edit | `.claude/rules/execute/03-validate-handoff.md` | missing AC evidence, required check, build, direct Story, or parity receipt |
 

@@ -44,6 +44,7 @@ Register the exact mobile receipt from `shared/mobile-adaptation-contract.md` th
 
 This PowerShell call is required because prose beside another tool call may be stored as unavailable thinking. Its
 `mobile order` value is free text and may contain ordinary semicolons; the named delimiter is `; required content:`.
+Escape an apostrophe in any receipt value as `''` inside the PowerShell single-quoted argument.
 The helper validates only syntax and prints the receipt. The phase gate then validates registry compatibility before
 the write, so registration is durable evidence rather than a bypass.
 

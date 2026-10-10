@@ -13,9 +13,11 @@ Before opening task, diff, source, executor report, validation evidence, or writ
    evidence, QA profile, current backlog state, dirty-worktree witnesses, and final non-Q0 build transcript.
 5. On Windows, only native-Windows/CI terminal evidence supports the verdict. Retain platform, Node version, cwd,
    exact command, output, and exit code; otherwise mark evidence missing.
-6. For visible surfaces, read `shared/ui-token-contract.md`, then `shared/enforcement-model.md`, and run the 16d
-   rendered-component census yourself. A missing direct Story/manifest entry for a rendered in-scope component is
-   `NEEDS REVISION`.
+6. For visible surfaces, read `shared/mobile-adaptation-contract.md`, then `shared/ui-token-contract.md` and
+   `shared/enforcement-model.md`; verify the saved Mobile adaptation record against its primary sources, allowed
+   Mantine mechanism, and canonical owner, then run the 16d rendered-component census yourself. Mantine owns
+   responsive mechanism/interaction/a11y; a contract-driven parallel implementation is `NEEDS REVISION`. A missing
+   direct Story/manifest entry for a rendered in-scope component is `NEEDS REVISION`.
 
 Required first substantive receipt:
 

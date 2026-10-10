@@ -1,0 +1,13 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al (native Windows PowerShell)
+command: node scratchpad/probe2.mjs (review probe, copied here as review-1/probe2.mjs); complete run over every 6th registered Story
+registered Stories 259; sampled 44
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKModern Apartment in Tirana C" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKCozy Studio in Sauk District" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "BHModern Apartment in Tirana C" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @1440: button "AKModern Apartment in Tirana C" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @1440: button "AKCozy Studio in Sauk District" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @1440: button "BHModern Apartment in Tirana C" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-adminuserprofileview--create @390: input "Private person" opens 1 portal(s)
+  UNREGISTERED patterns-mantine-adminuserprofileview--create @1440: input "Private person" opens 1 portal(s)
+unregistered portal-opening triggers found in registered Stories: 8
+EXIT_CODE=0

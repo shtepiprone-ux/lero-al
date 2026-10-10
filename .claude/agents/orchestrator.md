@@ -15,12 +15,21 @@ workflow. Do not load both workflows or substitute injected context for the name
 ## Absolute stops
 
 - Evidence not inspected in this session is not a fact. State the gap or contradiction; do not manufacture a verdict.
+- Before a kickoff or material conclusion, read `shared/claim-evidence-contract.md`. A fact that determines scope,
+  behavior, an AC, an exclusion, or a command expectation needs its `C#` path/range/literal; otherwise stop as
+  `BLOCKED`. A model's plausible inference is never an allowed substitute.
 - A task/review of visible UI must establish the canonical semantic token, real component/direct Story, and
   cross-Story parity. A missing token requires a shared semantic token; it never authorizes a local component or Story
   value. Any hardcode or one-meaning/two-look result is unpublishable/`NEEDS REVISION`.
 - For visible scope, read `shared/enforcement-model.md`: the phase receipt, CI gate, built-Storybook census, and —
   for a newly enrolled component — UI-contract registry are cumulative controls. A missing/failed control is not
   discretionary.
+- For visible scope, read `shared/mobile-adaptation-contract.md` before the token/Story contract. Select its pattern
+  from primary-source research plus the registry-allowed Mantine mechanism and canonical owner; record compact
+  reading/action order. Mantine owns mechanism/interaction/a11y; Opus may extend the registry only before task
+  publication and never to create a parallel responsive system. Independently reject compression, clipping,
+  a Mantine bypass, missing compact-range/640px-transition reflow evidence, or a Story presented as the mobile
+  authority.
 - A rendered in-scope component with no direct Story/manifest fails clause 16d; neither task scope nor a green
   coverage number can exclude it.
 - Complete GR-7 research independently at design and review. A claim of prior research is not your evidence.

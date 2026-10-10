@@ -8,10 +8,15 @@ the moment a rule becomes relevant. `CLAUDE.md` is the entry point; a role's `SK
 1. Read the role parent in `.claude/skills/<workflow>/SKILL.md`. It is deliberately short and establishes the gate.
 2. Read the numbered phase file it names **before** starting that phase. Never treat a parent summary as permission
    to skip the phase file.
-3. For UI, Storybook, tokens, or visual review, read `shared/ui-token-contract.md`, then
-   `shared/enforcement-model.md`, before inspecting or changing the visual implementation, then
-   `shared/storybook-proof.md` before producing Storybook evidence.
-4. Read the exact legacy/reference document named by `docs/rule-index.md` only when the task type needs it. The
+3. Before a kickoff or material review conclusion, read `shared/claim-evidence-contract.md`. It is the shared
+   contract for factual claims; task/review phases say when its ledger is required.
+4. For UI, Storybook, tokens, or visual review, first read `shared/mobile-adaptation-contract.md`, then
+   `shared/ui-token-contract.md` and `shared/enforcement-model.md`, before inspecting or changing the visual
+   implementation, then `shared/storybook-proof.md` before producing Storybook evidence. Mantine and the project
+   theme remain authoritative for responsive mechanism, interaction, accessibility, and canonical owner; the mobile
+   contract supplies semantic outcome/proof only. Existing Stories are proof targets, never the source of an
+   adaptation pattern.
+5. Read the exact legacy/reference document named by `docs/rule-index.md` only when the task type needs it. The
    long documents remain the historical and detailed source of record; they are not a default "read everything" list.
 
 ## Size and ownership rules

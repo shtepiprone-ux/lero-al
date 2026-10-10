@@ -2,7 +2,8 @@
 
 **Sprint 78** · **P1** · QA profile **Q4** (a new blocking gate: planted-failure proof required) · **blocks 859
 Revision 15** (kickoff §31 R94) and every visible task whose surface opens an overlay (`BLOCKED — RENDERED STATE
-CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: `KICKOFF FILED` 2026-10-10.**
+CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: review 1 `NEEDS REVISION` 2026-10-10 →
+Revision 1 = §10 (R10–R14, AC6–AC10).** Executor: §1–§9 stay binding; §10 adds to them and wins where they differ.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Precedents, read-only: the card-track gate (`scripts/check-card-track-monotonicity.mjs`, a rendered gate on the built
@@ -59,8 +60,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C9 | FACT | CI builds Storybook in the rendered-gate job. | source: `.github/workflows/governance-pr.yml:308-308`; observed: `run: npm run build-storybook` |
 | C10 | FACT | CI runs the card-track gate and its self-test after the build. | source: `.github/workflows/governance-pr.yml:311-314`; observed: `run: npm run check:card-track-monotonicity:verify` |
 | C11 | FACT | The card-track gate exposes a --verify-gate self-test script. | source: `package.json:118-119`; observed: `node scripts/check-card-track-monotonicity.mjs --verify-gate` |
-| C12 | FACT | Playwright is installed. | source: `package.json:208-208`; observed: `"playwright": "^1.60.0",` |
-| C13 | FACT | Storybook 10 is installed. | source: `package.json:211-211`; observed: `"storybook": "^10.4.2",` |
+| C12 | FACT | Playwright is installed. | source: `package.json:211-211`; observed: `"playwright": "^1.60.0",` |
+| C13 | FACT | Storybook 10 is installed. | source: `package.json:214-214`; observed: `"storybook": "^10.4.2",` |
 | C14 | FACT | The overlay owners are registered as one component family. | source: `scripts/mobile-adaptation-patterns.json:131-131`; observed: `"id": "overlay-and-disclosure",` |
 | C15 | FACT | The touch-target token is 44px. | source: `src/design-system/mantine/theme.ts:739-739`; observed: `touchTarget: '2.75rem',` |
 | C16 | FACT | The owner ruled that legacy components are migrated, not instrumented. | source: `docs/backlog-archive.md:68-68`; observed: `legacy components are migrated, not instrumented` |
@@ -68,6 +69,20 @@ Every fact below is a ledger row; nothing else sets scope.
 | C18 | FACT | The contract measures the app root and each portal root separately. | source: `.claude/rules/shared/rendered-state-census.md:26-26`; observed: `Separate targets** — the app root` |
 | C19 | FACT | The contract counts a word split across lines as cut text. | source: `.claude/rules/shared/rendered-state-census.md:30-30`; observed: `a word split across lines because its box is` |
 | C20 | FACT | The contract requires planted violations inside a portal root. | source: `.claude/rules/shared/rendered-state-census.md:42-42`; observed: `overflow only inside a portal root` |
+| C21 | FACT | `component-overflow` exempts any side that has a negative margin, however far the element overflows. | source: `scripts/rendered-state-census/in-page.mjs:180-180`; observed: `!(marginR < 0)` |
+| C22 | FACT | `component-overflow` skips every element whose parent is a table box. | source: `scripts/rendered-state-census/in-page.mjs:179-179`; observed: `!/^table/.test(pcs.display)` |
+| C23 | FACT | A planted negative-margin element overflowing its parent inside a portal is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:3-3`; observed: `FIXTURE neg-margin: app green` |
+| C24 | FACT | A page scrollable to 616px at a 390px viewport is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:4-4`; observed: `[page scrollWidth 616 clientWidth 390]` |
+| C25 | FACT | The runner silently skips a state at a width outside its `widths`. | source: `scripts/check-rendered-state-census.mjs:145-145`; observed: `if (!appliesAtWidth(state, width)) { skippedCells++; continue; }` |
+| C26 | FACT | A state registered `widths: {min: 1440}` opens at 1024. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:6-6`; observed: `widths {"min":1440} trigger BUTTON "AKAlba Krasniqi" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS` |
+| C27 | FACT | 41 sampled `widths` states open at a width the runner skips. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:46-46`; observed: `states whose same-named trigger opens a portal at a skipped width: 41` |
+| C28 | FACT | The theme's breakpoints include `sm` 640, `lg` 1024 and `xxl` 1440. | source: `src/design-system/mantine/theme.ts:637-641`; observed: `lg: '64em',   // 1024px — desktop` |
+| C29 | FACT | A not-applicable dismissal returns no detail, so the evidence row records nothing. | source: `scripts/rendered-state-census/runner.mjs:194-194`; observed: `if (fl.sheet) return { details: [], closed: false, notApplicable: true };` |
+| C30 | FACT | Discovery click-checks only Stories that have no registry row. | source: `scripts/rendered-state-census/discover.mjs:83-83`; observed: `if (imports.length > 0 && !rowsByStory.has(story.id)) flaggedImport.push` |
+| C31 | FACT | A registered Story has triggers that open a portal with no registry row. | source: `docs/sessions/evidence/task923/review-1/rv-probe2.txt:4-4`; observed: `UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKModern Apartment in Tirana C" opens 1 portal(s)` |
+| C32 | FACT | The discovery click-through stops after 12 candidates. | source: `scripts/rendered-state-census/discover.mjs:56-56`; observed: `window.__census.candidates(12)` |
+| C33 | FACT | The self-test behaves as stated at review. | source: `docs/sessions/evidence/task923/review-1/rv-verify.txt:19-19`; observed: `verify-gate: every case behaves as stated.` |
+| C34 | FACT | The AC4 targets fail on the portal root only at review: 24 of 48 rows fail. | source: `docs/sessions/evidence/task923/review-1/rv-ac4.txt:5-5`; observed: `rows 48 (failing 24)` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 
 ## Mobile adaptation record
@@ -155,6 +170,61 @@ blocking at once; `check:rendered-state-census` blocking the day the full run is
 violations are owned tasks, and the contract's per-task rule applies). Add the gate to `docs/storybook-governance.md`
 and `docs/rules/golden/enforcement-status.md`.
 
+## 10. Revision 1 — review 1, 2026-10-10 (`NEEDS REVISION`)
+
+Review evidence: `docs/sessions/evidence/task923/review-1/` (native Windows, Node v22.22.3). The self-test and AC4
+reproduce (C33, C34). The gate still passes four kinds of violation, which R4 and the contract require it to catch.
+
+**Findings.**
+
+1. **P1, R4 viewport-overflow.** The page's own horizontal scroll is never measured, and the target root's own box
+   is skipped. A page scrollable to 616px at 390 passes (C24).
+2. **P1, R4 component-overflow, deviation D5.** The exemptions have no bound. Any negative margin exempts its side
+   whatever the overflow (C21), and any child of a table box is skipped (C22). A 140px planted overflow passes (C23).
+   Without a bound, an exemption works as an allowlist written into the metric.
+3. **P1, R3, deviation D2.** `widths` bounds come from the five probe widths, not from the component's switch, and
+   the runner skips a state outside them without checking anything (C25). 41 of 41 sampled `min: 1440` states open
+   at 1024 (C26, C27), so a task run at 768 or 1024 would never measure them.
+4. **P1, R2, deviation D3.** Discovery only click-checks Stories that have no row at all (C30), and stops after 12
+   candidates (C32). A registered Story has row triggers that open an unregistered portal (C31). Registry
+   completeness is therefore unproven, and the generator that produced it is not in the repository.
+5. **P2, R5, deviation D4.** A "not applicable" dismissal or focus check leaves no trace in its row (C29), so the
+   evidence cannot be audited.
+
+**Opus rulings on the deviations.** D1 (ordering): recorded; in this revision the GR-7 receipt and ledger come
+before the first write. D2 (`widths`): kept, but bounded by R12. D3: replaced by R14. D4: accepted as Mantine's
+native behaviour (a `Modal` / `Drawer` traps focus, and the app behind it is inert), on condition of R13. D5:
+accepted only within R11. D6 (structural selectors): accepted; a broken selector fails `open-failed`. D7 (CI scope):
+Opus decides at closure (§9). D8: matches R3.
+
+**Write set.** As §4, plus the new fixtures under `scripts/__fixtures__/rendered-state-census/` and the evidence
+directory `docs/sessions/evidence/task923/r2-*`. Out of scope: as §4. The review probes and fixtures in
+`review-1/` are diagnosis only and stay unchanged.
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R10 [C24; D1] | **viewport-overflow measures the page.** In every job, the app row fails `viewport-overflow` when `document.documentElement.scrollWidth > clientWidth + 0.5` after the open action, and names the deepest element that causes it. The target root's own box is measured like its descendants. The off-canvas exemption covers only a closed `position: fixed` panel. An in-flow transformed element past the edge fails (it scrolls the page). | P1 | AC6 |
+| R11 [C21; C22; C23; D1] | **Every component-overflow exemption has a bound and a proof.** A negative margin exempts at most its own size: an overflow larger than the margin's absolute size plus 0.5px fails. A table-box parent is not exempt: a non-text child past the padding box of a cell in a `table-layout: fixed` table fails. Every remaining exemption from deviation D5 (clipped-away slide, `text-hidden` inner box, off-canvas, hidden-away, stacked dialog) gets a pair of self-test fixtures: the benign layout passes, and the same shape with a real violation fails. | P1 | AC6 |
+| R12 [C25; C26; C27; C28] | **`widths` is a real switch and is checked.** Each `min` is a theme breakpoint in px and each `max` is a theme breakpoint minus 1 (`theme.ts` `breakpoints`, C28); the validator receives the breakpoint list and rejects any other value. In the full run, each `widths` state is also measured at its in-range bound (`min`, or `max`). At the first out-of-range width (`min − 1`, `max + 1`), and at every requested width outside the range, the runner fails `widths-mismatch` if a visible app-root element with the trigger's role and accessible name opens a portal, unless another row of the same Story covers that width. The trigger's role and name are captured at an in-range width. `widths-mismatch` becomes a rule key of every row. | P1 | AC7 |
+| R13 [C29; D1] | **Not-applicable is evidence.** Every row carries `notApplicable: { <rule>: "<reason>" }` for each D4 skip: close-control on a sheet without one, outside on a full-bleed overlay, focus return to a trigger that cannot take focus, focus mode overridden to `trap` by a modal presentation, and app actions not measured behind a modal. The summary prints the n/a count per rule, and lists every Story × state × width where neither `close-control` nor `outside` applies (no pointer dismissal). That list is a report for Opus, not a new violation rule. | P2 | AC8 |
+| R14 [C30; C31; C32; D1] | **Discovery proves completeness.** `--discover` clicks every candidate trigger (no cap) of every in-scope Story, registered or not, at 390, at 1440 and at each `widths` bound of the Story's rows. It lists (c) every candidate that opens a portal and is not the trigger of an in-range row of that Story at that width, and exits 1 unless (a), (b) and (c) are all empty. The executor registers rows until all three lists are empty. | P1 | AC9 |
+
+- **AC6 [R10; R11; C23; C24].** `npm run check:rendered-state-census:verify` exits 0. Its transcript shows the nine R6 cases as stated, plus:
+  - `page-scroll-only` fails `viewport-overflow` on the app root;
+  - `neg-margin-overflow` fails `component-overflow` on `portal:0` while the app root is green;
+  - its benign twin, a `margin: 0 -16px` full-bleed divider, passes;
+  - `table-cell-overflow` fails `component-overflow`;
+  - `widths-contradicted` fails `widths-mismatch`;
+  - every R11 exemption pair behaves as stated.
+- **AC7 [R12; C26; C27; C28].** The validator accepts the registry with the theme breakpoint list. Every `widths` bound is a breakpoint, or a breakpoint minus 1. The full run has 0 `widths-mismatch` and lists each `widths` state at its in-range bound. The 75 former `min: 1440` rows carry the switch that the R12 check confirms.
+- **AC8 [R13; C29].** Every row of `full/rows.jsonl` has `notApplicable`. The summary prints the n/a counts per rule and the no-pointer-dismissal list.
+- **AC9 [R14; C31; C32].** `npm run check:rendered-state-census:discover` exits 0 with (a), (b) and (c) all 0. The `admindashboardview` recent-listing triggers of C31 and the `adminuserprofileview--create` input of the same probe file have rows, and the report gives the row count, per-family counts and runtime.
+- **AC10 [R10; R11; R12; R13; R14; C34].** The full run is repeated on the final build; AC3 and AC4 still hold. A new owner table is written, with the same counts in the session log and in its evidence file. Vitest passes twice. `typecheck`, `lint`, `build`, `build-storybook`, `check:file-integrity` and `check:mojibake` exit 0.
+
+**Verification order:** as §7, with evidence prefix `r2-`. The session log gets a `# Revision 1` section: R10–R14 →
+evidence, AC6–AC10 with transcripts, the new owner table, and deviations. Strongest status: `IMPLEMENTED - AWAITING
+ORCHESTRATOR REVIEW`.
+
 ## Rule-compliance ledger
 
 | Rule | How this task complies |
@@ -166,4 +236,4 @@ and `docs/rules/golden/enforcement-status.md`.
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20; owner decisions: D1; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34; owner decisions: D1; blocked claims: NONE.

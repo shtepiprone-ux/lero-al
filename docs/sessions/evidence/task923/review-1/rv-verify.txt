@@ -1,0 +1,20 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al (native Windows PowerShell)
+command: npm run check:rendered-state-census:verify
+
+> lero-al@0.1.0 check:rendered-state-census:verify
+> node scripts/check-rendered-state-census.mjs --verify-gate
+
+check-rendered-state-census.mjs --verify-gate (fixtures served locally, no Storybook build)
+
+PASS clean                      as stated: every root green   [observed: app green | portal:0 green]
+FAIL portal-overflow-only       as stated: portal:0: component-overflow + viewport-overflow   [observed: app green | portal:0 viewport-overflow+component-overflow]
+FAIL portal-clamp-only          as stated: portal:0: text-clamp   [observed: app green | portal:0 text-clamp+text-hidden]
+FAIL portal-word-split-only     as stated: portal:0: word-split   [observed: app green | portal:0 word-split]
+FAIL app-root-only              as stated: app: component-overflow + viewport-overflow   [observed: app viewport-overflow+component-overflow | portal:0 green]
+FAIL unregistered-portal        as stated: app: unregistered-portal   [observed: app unregistered-portal]
+FAIL registered-opens-nothing   as stated: app: portal-count   [observed: app portal-count]
+FAIL focus-escapes-trap         as stated: portal:0: focus-trap   [observed: app green | portal:0 focus-trap]
+FAIL escape-does-not-close      as stated: portal:0: dismiss-escape   [observed: app green | portal:0 dismiss-escape]
+
+verify-gate: every case behaves as stated.
+EXIT_CODE=0

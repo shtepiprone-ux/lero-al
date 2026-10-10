@@ -20,9 +20,9 @@ Read [`.claude/rules/README.md`](.claude/rules/README.md), then use exactly one 
 - Sonnet execution: `.claude/skills/execute-task/SKILL.md` → `.claude/rules/execute/`
 
 Each parent is a short, ordered checklist. Read its numbered phase file immediately before the named phase. For visible
-UI, tokens, Stories, or visual review, always read `.claude/rules/shared/ui-token-contract.md`, then
-`.claude/rules/shared/enforcement-model.md`, and, before Story work, `.claude/rules/shared/storybook-proof.md`. The
-parent workflow tells each role when to do this.
+UI, tokens, Stories, or visual review, always read `.claude/rules/shared/mobile-adaptation-contract.md`, then
+`.claude/rules/shared/ui-token-contract.md`, then `.claude/rules/shared/enforcement-model.md`, and, before Story
+work, `.claude/rules/shared/storybook-proof.md`. The parent workflow tells each role when to do this.
 
 Do not load all rules by default. Select the exact detailed documents using `docs/rule-index.md`; the longer `docs/`
 files remain the complete policy record and historical evidence, while the `.claude/rules/` tree is the executable
@@ -35,9 +35,16 @@ missing, add it at the shared owner and its direct Story before a consumer uses 
 feature, route, wrapper, or Story. Stories pass data and documented public props only. All same-meaning Story variants
 must pass the built-Storybook parity census, or have a dated owner decision explaining the difference.
 
+Mobile is a semantic presentation, not compressed desktop geometry: source-backed reflow/stack/wrap behavior across
+the project's `<640px` compact range and its `640px` transition is mandatory under
+`shared/mobile-adaptation-contract.md`. Mantine and the project theme remain authoritative for responsive mechanism,
+interaction, accessibility, canonical owner, and breakpoint; the contract adds semantic order/content treatment and
+proof only. Current Stories only prove that result; they are never the mobile design authority.
+
 ## Evidence, scope, and Git
 
-- A report is not proof. Inspect current source/diff/evidence before claiming a fact or approving work.
+- A report is not proof. Before publishing or revising a kickoff, use the claim-to-evidence contract: a material fact
+  has a current source/artifact locator and literal observation; uncertainty is `BLOCKED`, never a plausible route.
 - Every task has one saved kickoff, selected QA profile, explicit acceptance criteria, and one implementation route.
 - New/migrated UI uses canonical Mantine behavior plus the approved token/provenance path; legacy styling may be
   preserved only when the selected task explicitly retains the legacy surface.

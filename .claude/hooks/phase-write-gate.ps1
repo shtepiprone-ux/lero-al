@@ -1,9 +1,9 @@
-# Blocks a UI/Story source write until the ordered GR-0/GR-12 preflight exists in the real transcript.
+# Blocks a UI/Story source write or active kickoff write until its ordered preflight exists in the real transcript.
 #
 # This is intentionally a phase gate, not an evidence substitute: it prevents an agent from silently jumping straight
-# to an Edit/Write call or an obvious shell-based write. CI's check:ui-contract verifies the resulting repository
-# state independently. The hook fails closed for an in-scope write when hook input or transcript evidence cannot be
-# read.
+# to an Edit/Write call or an obvious shell-based write. CI's check:ui-contract and check:kickoff-evidence verify the
+# resulting repository state independently. The hook fails closed for an in-scope write when hook input or transcript
+# evidence cannot be read.
 
 [CmdletBinding()]
 param(
@@ -15,6 +15,7 @@ $ErrorActionPreference = 'Stop'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8
 [Console]::OutputEncoding = $utf8
+. (Join-Path $PSScriptRoot 'phase-receipt-contract.ps1')
 
 function Write-Deny([string]$Reason) {
     @{
@@ -34,7 +35,17 @@ function Test-UiSourcePath([string]$Path) {
     }
     $normalized = ($Path -replace '\\', '/').TrimStart('./').TrimStart('/').ToLowerInvariant()
     if ($normalized -match '(^|/)(?:__tests__|tests)/' -or $normalized -match '\.(?:test|spec)\.(?:ts|tsx)$') { return $false }
-    return $normalized -match '^(?:src/stories/(?:mantine|patterns/mantine)/.+\.stories\.(?:ts|tsx)|src/design-system/(?:mantine|media)/.+\.(?:ts|tsx|css)|src/components/(?:admin|layout|shared)/.+\.(?:ts|tsx|css)|src/modules/[^/]+/components/.+\.(?:ts|tsx|css)|src/app/(?:\[locale\]|admin)/.+\.(?:ts|tsx|css))$'
+    return $normalized -match '^(?:src/(?:stories|components)/.+\.stories\.(?:ts|tsx)|src/design-system/(?:mantine|media)/.+\.(?:ts|tsx|css)|src/components/.+\.(?:ts|tsx|css)|src/modules/[^/]+/components/.+\.(?:ts|tsx|css)|src/app/(?:\[locale\]|admin)/.+\.(?:ts|tsx|css))$'
+}
+
+function Test-ActiveKickoffPath([string]$Path) {
+    if ([string]::IsNullOrWhiteSpace($Path)) { return $false }
+    $projectRoot = [string]$env:CLAUDE_PROJECT_DIR
+    if ($projectRoot -and $Path.StartsWith($projectRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        $Path = $Path.Substring($projectRoot.Length)
+    }
+    $normalized = ($Path -replace '\\', '/').TrimStart('./').TrimStart('/').ToLowerInvariant()
+    return $normalized -match '^tasks/(?!archive/).+kickoff.*\.md$'
 }
 
 function Get-ToolInputValues([object]$HookEvent) {
@@ -59,6 +70,48 @@ function Get-ToolInputValues([object]$HookEvent) {
     return [PSCustomObject]@{ Path = $path; Command = $command }
 }
 
+function Get-RegisteredPhaseReceiptFromToolUse([object]$Block) {
+    # A late preflight emitted as prose next to a tool call may be retained by Claude as empty-signature thinking,
+    # not as readable assistant text. The explicit registration command below is a durable tool_use record instead.
+    # Accept only the exact PowerShell helper invocation; arbitrary tool input or a shell comment cannot manufacture
+    # a receipt. The helper itself validates the same receipt shape and writes no project state.
+    if (-not $Block) { return '' }
+    $typeProperty = $Block.PSObject.Properties['type']
+    $nameProperty = $Block.PSObject.Properties['name']
+    $inputProperty = $Block.PSObject.Properties['input']
+    if (-not $typeProperty -or $typeProperty.Value -ne 'tool_use' -or -not $nameProperty -or $nameProperty.Value -ne 'PowerShell' -or -not $inputProperty -or -not $inputProperty.Value) {
+        return ''
+    }
+    $commandProperty = $inputProperty.Value.PSObject.Properties['command']
+    if (-not $commandProperty -or -not $commandProperty.Value) { return '' }
+
+    # Required invocation, using single quotes around the receipt:
+    # & .\.claude\hooks\emit-phase-receipt.ps1 -Kind <StorybookProof|KickoffEvidence|MobileAdaptation> -Receipt '<exact receipt>'
+    # A PowerShell single-quoted literal represents an embedded apostrophe as two adjacent apostrophes. Preserve
+    # that normal language in a registered receipt instead of treating it as the end of the literal.
+    $registrationPattern = '(?is)^\s*&\s+(?:\.[\\/])?\.claude[\\/]hooks[\\/]emit-phase-receipt\.ps1\s+-Kind\s+(?<kind>StorybookProof|KickoffEvidence|MobileAdaptation)\s+-Receipt\s+''(?<receipt>(?:''''|[^''])+)''\s*$'
+    $match = [regex]::Match([string]$commandProperty.Value, $registrationPattern)
+    if (-not $match.Success) { return '' }
+    $kind = [string]$match.Groups['kind'].Value
+    $receipt = ([string]$match.Groups['receipt'].Value).Replace("''", "'")
+    if ($kind -eq 'StorybookProof') {
+        $storybookPattern = '(?im)^\s*STORYBOOK PROOF PREFLIGHT COMPLETE\s*-\s*direct Story:\s*[^;\r\n]+\s*;\s*production component:\s*[^;\r\n]+\s*;\s*allowed public states:\s*[^;\r\n]+\s*;\s*local presentation:\s*NONE\.?\s*$'
+        if ($receipt -notmatch $storybookPattern) { return '' }
+    }
+    elseif ($kind -eq 'KickoffEvidence') {
+        $emDash = [string][char]0x2014
+        $kickoffPattern = '(?ims)^\s*KICKOFF EVIDENCE PREFLIGHT COMPLETE\s*[' + $emDash + '-]\s*claims:\s*C\d+.*?owner decisions:\s*(?:D\d+(?:\s*,\s*D\d+)*|NONE).*?blocked claims:\s*NONE\s*\.'
+        if ($receipt -notmatch $kickoffPattern) { return '' }
+    }
+    elseif ($kind -eq 'MobileAdaptation') {
+        if (-not [regex]::IsMatch($receipt, (Get-MobileAdaptationReceiptPattern))) { return '' }
+    }
+    else {
+        return ''
+    }
+    return $receipt
+}
+
 function Get-AssistantTranscript([object]$HookEvent) {
     $transcriptProperty = if ($HookEvent) { $HookEvent.PSObject.Properties['transcript_path'] } else { $null }
     $transcriptPath = if ($transcriptProperty -and $transcriptProperty.Value) { [string]$transcriptProperty.Value } else { '' }
@@ -68,13 +121,153 @@ function Get-AssistantTranscript([object]$HookEvent) {
     $parts = @()
     foreach ($line in Get-Content -LiteralPath $transcriptPath -Encoding UTF8) {
         try { $event = $line | ConvertFrom-Json } catch { continue }
-        if ($event.type -ne 'assistant' -or -not $event.message.content) { continue }
-        foreach ($block in $event.message.content) {
-            if ($block.type -eq 'text' -and $block.text) { $parts += [string]$block.text }
+        $eventTypeProperty = $event.PSObject.Properties['type']
+        $messageProperty = $event.PSObject.Properties['message']
+        if (-not $eventTypeProperty -or $eventTypeProperty.Value -ne 'assistant' -or -not $messageProperty -or -not $messageProperty.Value) { continue }
+        $contentProperty = $messageProperty.Value.PSObject.Properties['content']
+        if (-not $contentProperty -or -not $contentProperty.Value) { continue }
+        $content = $contentProperty.Value
+        if ($content -is [string]) {
+            $parts += $content
+            continue
+        }
+        foreach ($block in @($content)) {
+            if ($block -is [string]) {
+                $parts += $block
+                continue
+            }
+            $blockTypeProperty = $block.PSObject.Properties['type']
+            $blockTextProperty = $block.PSObject.Properties['text']
+            if ($blockTypeProperty -and $blockTypeProperty.Value -eq 'text' -and $blockTextProperty -and $blockTextProperty.Value) {
+                $parts += [string]$blockTextProperty.Value
+                continue
+            }
+            $registeredReceipt = Get-RegisteredPhaseReceiptFromToolUse $block
+            if ($registeredReceipt) {
+                $parts += $registeredReceipt
+            }
         }
     }
     if ($parts.Count -eq 0) { throw 'the transcript contains no assistant text to prove the ordered UI preflight' }
     return ($parts -join "`n")
+}
+
+function ConvertTo-NormalizedProjectPath([string]$Path) {
+    if ([string]::IsNullOrWhiteSpace($Path)) { return '' }
+    $projectRoot = [string]$env:CLAUDE_PROJECT_DIR
+    if ($projectRoot -and $Path.StartsWith($projectRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        $Path = $Path.Substring($projectRoot.Length)
+    }
+    return ($Path -replace '\\', '/').TrimStart('./').TrimStart('/').ToLowerInvariant()
+}
+
+function Test-StorybookProofPreflight([string]$Transcript, [string]$StoryPath) {
+    if ([string]::IsNullOrWhiteSpace($Transcript) -or [string]::IsNullOrWhiteSpace($StoryPath)) { return $false }
+    $targetPath = ConvertTo-NormalizedProjectPath $StoryPath
+    if (-not $targetPath) { return $false }
+    $pattern = '(?im)^\s*STORYBOOK PROOF PREFLIGHT COMPLETE\s*-\s*direct Story:\s*([^;\r\n]+?)\s*;\s*production component:\s*[^;\r\n]+\s*;\s*allowed public states:\s*[^;\r\n]+\s*;\s*local presentation:\s*NONE\.?\s*$'
+    foreach ($match in [regex]::Matches($Transcript, $pattern)) {
+        $declaredStories = @($match.Groups[1].Value -split '\s*,\s*')
+        foreach ($declaredStory in $declaredStories) {
+            if ((ConvertTo-NormalizedProjectPath $declaredStory) -eq $targetPath) { return $true }
+        }
+    }
+    return $false
+}
+
+function Normalize-KickoffReceiptMarkdown([string]$Transcript) {
+    if ([string]::IsNullOrWhiteSpace($Transcript)) { return $Transcript }
+
+    # Claude normally records text exactly as rendered. A receipt may therefore be nested in Markdown: quote, list,
+    # task-list, heading, bold/italic, or inline-code wrappers. Strip only a sequence of those structural wrappers
+    # when it immediately precedes this exact receipt label. Claims/decision fields remain mandatory, and a label
+    # merely mentioned inside arbitrary prose does not become a receipt.
+    $markdownToken = '(?:(?:>[ \t]*)|(?:[-+*][ \t]+(?:\[[ xX]\][ \t]+)?)|(?:\d+[.)][ \t]+)|(?:#{1,6}[ \t]+)|(?:(?:\*{1,3}|_{1,3}|`{1,3})[ \t]*))'
+    $markdownReceiptPrefix = '(?m)^[ \t]*(?:' + $markdownToken + ')*(?=KICKOFF EVIDENCE PREFLIGHT COMPLETE\b)'
+    return [regex]::Replace($Transcript, $markdownReceiptPrefix, '')
+}
+
+function Get-MobileAdaptationRegistry {
+    $projectRoot = [string]$env:CLAUDE_PROJECT_DIR
+    if (-not $projectRoot) { $projectRoot = (Get-Location).Path }
+    $registryPath = Join-Path $projectRoot 'scripts/mobile-adaptation-patterns.json'
+    if (-not (Test-Path -LiteralPath $registryPath)) {
+        throw 'scripts/mobile-adaptation-patterns.json is unavailable'
+    }
+    $registry = Get-Content -LiteralPath $registryPath -Raw -Encoding UTF8 | ConvertFrom-Json -ErrorAction Stop
+    if ($registry.version -ne 3 -or -not $registry.mantine -or -not $registry.mantine.mechanisms -or -not $registry.standards -or -not $registry.patterns -or -not $registry.componentFamilies) {
+        throw 'scripts/mobile-adaptation-patterns.json has no valid version-3 mobile adaptation registry'
+    }
+    return $registry
+}
+
+function Get-MobileAdaptationPatternIds([object]$Registry) {
+    $ids = @($Registry.patterns | ForEach-Object { [string]$_.id } | Where-Object { $_ -match '^[a-z][a-z0-9-]*$' })
+    if ($ids.Count -eq 0 -or $ids.Count -ne @($Registry.patterns).Count -or $ids.Count -ne @($ids | Select-Object -Unique).Count) {
+        throw 'scripts/mobile-adaptation-patterns.json has an invalid pattern ID'
+    }
+    return $ids
+}
+
+function Get-MobileAdaptationFamilyIds([object]$Registry) {
+    $ids = @($Registry.componentFamilies | ForEach-Object { [string]$_.id } | Where-Object { $_ -match '^[a-z][a-z0-9-]*$' })
+    if ($ids.Count -eq 0 -or $ids.Count -ne @($Registry.componentFamilies).Count -or $ids.Count -ne @($ids | Select-Object -Unique).Count) {
+        throw 'scripts/mobile-adaptation-patterns.json has an invalid component family ID'
+    }
+    return $ids
+}
+
+function Get-MobileAdaptationMantineMechanismIds([object]$Registry) {
+    $ids = @($Registry.mantine.mechanisms | ForEach-Object { [string]$_.id } | Where-Object { $_ -match '^[a-z][a-z0-9-]*$' })
+    if ($ids.Count -eq 0 -or $ids.Count -ne @($Registry.mantine.mechanisms).Count -or $ids.Count -ne @($ids | Select-Object -Unique).Count) {
+        throw 'scripts/mobile-adaptation-patterns.json has an invalid Mantine mechanism ID'
+    }
+    return $ids
+}
+
+function Test-MobileAdaptationReceipt(
+    [System.Text.RegularExpressions.Match]$Match,
+    [object]$Registry,
+    [string[]]$AllowedPatterns,
+    [string[]]$AllowedFamilies,
+    [string[]]$AllowedMantineMechanisms
+) {
+    $selectedFamilies = @($match.Groups[1].Value -split '\s*,\s*')
+    $selectedPatterns = @($match.Groups[2].Value -split '\s*,\s*')
+    $selectedStandards = @($match.Groups[3].Value -split '\s*,\s*')
+    $selectedMantineMechanisms = @($match.Groups[4].Value -split '\s*,\s*')
+    $selectedMantineOwner = [string]$match.Groups[5].Value
+    if (@($selectedFamilies | Where-Object { $_ -notin $AllowedFamilies }).Count -gt 0 -or @($selectedPatterns | Where-Object { $_ -notin $AllowedPatterns }).Count -gt 0 -or @($selectedMantineMechanisms | Where-Object { $_ -notin $AllowedMantineMechanisms }).Count -gt 0) { return $false }
+    $selectedFamilyObjects = @($Registry.componentFamilies | Where-Object { $_.id -in $selectedFamilies })
+    $familyPatterns = @($selectedFamilyObjects | ForEach-Object { $_.patternIds } | ForEach-Object { [string]$_ })
+    if (@($selectedPatterns | Where-Object { $_ -notin $familyPatterns }).Count -gt 0) { return $false }
+    $familyMantineMechanisms = @($selectedFamilyObjects | ForEach-Object { $_.mantineMechanismIds } | ForEach-Object { [string]$_ })
+    if (@($selectedMantineMechanisms | Where-Object { $_ -notin $familyMantineMechanisms }).Count -gt 0) { return $false }
+    $familyOwners = @($selectedFamilyObjects | ForEach-Object { $_.members } | ForEach-Object { [string]$_ })
+    if ($selectedMantineOwner -notin $familyOwners) { return $false }
+    $standardIds = @($Registry.standards | ForEach-Object { [string]$_.id })
+    $requiredStandards = @($Registry.patterns | Where-Object { $_.id -in $selectedPatterns } | ForEach-Object { $_.sourceIds } | ForEach-Object { [string]$_ })
+    return @($selectedStandards | Where-Object { $_ -notin $standardIds }).Count -eq 0 -and @($requiredStandards | Where-Object { $_ -notin $selectedStandards }).Count -eq 0
+}
+
+function Test-MobileAdaptationPreflight([string]$Transcript) {
+    if ([string]::IsNullOrWhiteSpace($Transcript)) { return $false }
+    $matches = [regex]::Matches($Transcript, (Get-MobileAdaptationReceiptPattern))
+    if ($matches.Count -eq 0) { return $false }
+
+    $registry = Get-MobileAdaptationRegistry
+    $allowedPatterns = Get-MobileAdaptationPatternIds $registry
+    $allowedFamilies = Get-MobileAdaptationFamilyIds $registry
+    $allowedMantineMechanisms = Get-MobileAdaptationMantineMechanismIds $registry
+
+    # A transcript is append-only. Validate every complete candidate newest first so a corrected receipt can recover
+    # from an earlier malformed one. Invalid candidates never count as proof; we accept only a fully valid receipt.
+    for ($index = $matches.Count - 1; $index -ge 0; $index--) {
+        if (Test-MobileAdaptationReceipt $matches[$index] $registry $allowedPatterns $allowedFamilies $allowedMantineMechanisms) {
+            return $true
+        }
+    }
+    return $false
 }
 
 function Get-UiWriteBlockReason([string]$Path, [string]$Transcript) {
@@ -88,15 +281,32 @@ function Get-UiWriteBlockReason([string]$Path, [string]$Transcript) {
     $emDash = [string][char]0x2014
     $hasGr0 = $Transcript -match ('(?im)^\s*GR-0 CANONICAL REUSE PREFLIGHT\s*[' + $emDash + '-]')
     $hasUiContract = $Transcript -match '(?ims)^\s*UI CONTRACT PREFLIGHT COMPLETE\s*-\s*scope:\s*\S+.*?canonical owner:\s*\S+.*?token owner:\s*\S+.*?direct Story:\s*\S+'
-    if (-not $hasGr0 -or -not $hasUiContract) {
-        return 'UI/Story write blocked: first emit both the GR-0 CANONICAL REUSE PREFLIGHT receipt and `UI CONTRACT PREFLIGHT COMPLETE - scope: ...; canonical owner: ...; token owner: ...; direct Story: ...`. A missing token/owner/Story is BLOCKED - GR-12, not permission for a local value.'
+    $hasMobileAdaptation = Test-MobileAdaptationPreflight $Transcript
+    if (-not $hasGr0 -or -not $hasUiContract -or -not $hasMobileAdaptation) {
+        return 'UI/Story write blocked: emit the GR-0 CANONICAL REUSE PREFLIGHT and `UI CONTRACT PREFLIGHT COMPLETE - scope: ...; canonical owner: ...; token owner: ...; direct Story: ...`, then register the valid mobile receipt through the PowerShell tool: `& .\.claude\hooks\emit-phase-receipt.ps1 -Kind MobileAdaptation -Receipt ''MOBILE ADAPTATION PREFLIGHT COMPLETE - surfaces: ...; component families: <IDs from scripts/mobile-adaptation-patterns.json>; pattern IDs: <allowed IDs from those families>; standards: <all required source IDs>; mantine mechanism: <allowed registry ID>; mantine owner: <one canonical selected-family path>; mobile range: <640px (theme.other.mobileGate / sm); mobile order: ...; required content: no semantic loss; verification: <direct Story> across actual <640px thresholds and the 640px transition x <locales>.''`. A corrected valid mobile receipt supersedes an earlier invalid one. A missing token/owner/Story/pattern/Mantine mechanism is BLOCKED, not permission for a local value.'
     }
 
-    if (($Path -replace '\\', '/') -match '/stories/(?:mantine|patterns/mantine)/.+\.stories\.(?:ts|tsx)$') {
-        $hasStoryProof = $Transcript -match '(?im)^\s*STORYBOOK PROOF PREFLIGHT COMPLETE\s*-\s*'
+    if (($Path -replace '\\', '/') -match '(?i)(?:^|/)src/(?:stories|components)/.+\.stories\.(?:ts|tsx)$') {
+        $hasStoryProof = Test-StorybookProofPreflight $Transcript $Path
         if (-not $hasStoryProof) {
-            return 'Canonical Story write blocked: emit `STORYBOOK PROOF PREFLIGHT COMPLETE - direct Story: ...; production component: ...; allowed public states: ...; local presentation: NONE.` before editing. Stories may not repair appearance locally.'
+            return 'Canonical Story write blocked: register a Story-specific proof before editing. Run the PowerShell tool command `& .\.claude\hooks\emit-phase-receipt.ps1 -Kind StorybookProof -Receipt ''STORYBOOK PROOF PREFLIGHT COMPLETE - direct Story: <this Story path>; production component: <name>; allowed public states: <typed props>; local presentation: NONE.''`. The registration command is durable transcript evidence, not a bypass; its direct Story must include the file being changed. Stories may not repair appearance locally.'
         }
+    }
+    return $null
+}
+
+function Get-KickoffWriteBlockReason([string]$Path, [string]$Transcript) {
+    if (-not (Test-ActiveKickoffPath $Path)) { return $null }
+    if ([string]::IsNullOrWhiteSpace($Transcript)) {
+        return 'Kickoff write blocked: transcript claim-evidence preflight is unavailable. Establish traced facts before editing an active kickoff.'
+    }
+
+    # Keep this source ASCII-only for Windows PowerShell 5.1; the transcript itself is explicitly decoded as UTF-8.
+    $emDash = [string][char]0x2014
+    $normalizedTranscript = Normalize-KickoffReceiptMarkdown $Transcript
+    $receiptPattern = '(?ims)^\s*KICKOFF EVIDENCE PREFLIGHT COMPLETE\s*[' + $emDash + '-]\s*claims:\s*C\d+.*?owner decisions:\s*(?:D\d+(?:\s*,\s*D\d+)*|NONE).*?blocked claims:\s*NONE\s*\.'
+    if ($normalizedTranscript -notmatch $receiptPattern) {
+        return ('Kickoff write blocked: register valid evidence through the PowerShell tool: `& .\.claude\hooks\emit-phase-receipt.ps1 -Kind KickoffEvidence -Receipt ''KICKOFF EVIDENCE PREFLIGHT COMPLETE ' + $emDash + ' claims: C1, ...; owner decisions: D1, ... | NONE; blocked claims: NONE.''`. A prose receipt next to a tool call is not durable evidence. Every material premise needs a current C# source/range/literal or a dated D# owner decision. Do not draft an executable route from an inference.')
     }
     return $null
 }
@@ -116,37 +326,125 @@ function Get-ShellUiWritePaths([string]$Command) {
     return @($paths | Select-Object -Unique)
 }
 
+function Get-ShellKickoffWritePaths([string]$Command) {
+    if ([string]::IsNullOrWhiteSpace($Command)) { return @() }
+    $writePrimitive = '(?i)(?:\bapply_patch\b|\b(?:set|add)-content\b|\bout-file\b|\btee\b|\b(?:copy|move|remove|new)-item\b|\b(?:cp|mv|rm)\b|>>|(?<![=<>])>(?![=>]))'
+    if ($Command -notmatch $writePrimitive) { return @() }
+    $candidatePattern = '(?i)(?:[A-Z]:[\\/][^\s''""`|;<>]*?\\)?tasks[\\/][^\s''""`|;<>]*?kickoff[^\s''""`|;<>]*?\.md'
+    $paths = @()
+    foreach ($match in [regex]::Matches($Command, $candidatePattern)) {
+        $path = $match.Value.Trim('''""')
+        if (Test-ActiveKickoffPath $path) { $paths += $path }
+    }
+    return @($paths | Select-Object -Unique)
+}
+
 function Invoke-SelfTest {
     # Build the em dash at runtime: the test proves the UTF-8 transcript form, while the .ps1 source remains ASCII.
     $emDash = [string][char]0x2014
+    # Regression: an ordered mobile sequence may naturally use semicolons. The next named field, not arbitrary
+    # punctuation, terminates `mobile order`.
+    $mobileReceipt = 'MOBILE ADAPTATION PREFLIGHT COMPLETE - surfaces: src/design-system/mantine/patterns/MantineBadge.tsx status control; component families: inline-status-and-utility-control; pattern IDs: inline-control; standards: w3c-target-size, apple-hig-menus, android-layout-navigation; mantine mechanism: responsive-props; mantine owner: src/design-system/mantine/patterns/MantineBadge.tsx; mobile range: <640px (theme.other.mobileGate / sm); mobile order: label then operation''s status; secondary context below; required content: no semantic loss; verification: src/stories/mantine/primitives/Badge.stories.tsx across actual <640px thresholds and the 640px transition x sq,en,uk,it.'
+    $storybookReceipt = 'STORYBOOK PROOF PREFLIGHT COMPLETE - direct Story: src/stories/mantine/primitives/Badge.stories.tsx; production component: MantineBadge; allowed public states: tone,size; local presentation: NONE.'
     $valid = @(
         "GR-0 CANONICAL REUSE PREFLIGHT $emDash request: Badge; decision: EXTEND.",
         'UI CONTRACT PREFLIGHT COMPLETE - scope: src/design-system/mantine/patterns/MantineBadge.tsx; canonical owner: src/design-system/mantine/patterns/MantineBadge.tsx; token owner: src/design-system/mantine/badgeTones.ts; direct Story: src/stories/mantine/primitives/Badge.stories.tsx.',
-        'STORYBOOK PROOF PREFLIGHT COMPLETE - direct Story: src/stories/mantine/primitives/Badge.stories.tsx; production component: MantineBadge; allowed public states: tone,size; local presentation: NONE.'
+        $mobileReceipt,
+        $storybookReceipt
     ) -join "`n"
+    $validWithoutStorybookProof = $valid -replace [regex]::Escape($storybookReceipt), ''
+    $validWithoutMobileAndStorybookProof = $validWithoutStorybookProof -replace [regex]::Escape($mobileReceipt), ''
+    $registeredStorybookCommand = "& .\.claude\hooks\emit-phase-receipt.ps1 -Kind StorybookProof -Receipt '$storybookReceipt'"
+    $escapedMobileReceipt = $mobileReceipt.Replace("'", "''")
+    $registeredMobileCommand = "& .\.claude\hooks\emit-phase-receipt.ps1 -Kind MobileAdaptation -Receipt '$escapedMobileReceipt'"
+    $wrongStorybookReceipt = $storybookReceipt -replace 'src/stories/mantine/primitives/Badge\.stories\.tsx', 'src/stories/mantine/primitives/Table.stories.tsx'
+    # This is deliberately a syntactically complete receipt with two owners. The registry requires exactly one owner;
+    # the next test proves that a later corrected receipt is accepted instead of permanently poisoning the session.
+    $multiOwnerMobileReceipt = $mobileReceipt -replace 'mantine owner: src/design-system/mantine/patterns/MantineBadge\.tsx;', 'mantine owner: src/design-system/mantine/patterns/MantineBadge.tsx, src/design-system/mantine/patterns/MantineDataTableToCards.tsx;'
+    $mobileReceiptWithoutNamedTerminator = $mobileReceipt -replace '; required content:', '; content treatment:'
+    $validAfterBadMobileReceipt = $valid -replace [regex]::Escape($mobileReceipt), ($multiOwnerMobileReceipt + "`n" + $mobileReceipt)
+    $kickoffReceipt = "KICKOFF EVIDENCE PREFLIGHT COMPLETE $emDash claims: C1; owner decisions: D1; blocked claims: NONE."
+    $registeredKickoffCommand = "& .\.claude\hooks\emit-phase-receipt.ps1 -Kind KickoffEvidence -Receipt '$kickoffReceipt'"
+    $malformedKickoffCommand = "& .\.claude\hooks\emit-phase-receipt.ps1 -Kind KickoffEvidence -Receipt 'KICKOFF EVIDENCE PREFLIGHT COMPLETE - claims: NONE; owner decisions: NONE; blocked claims: NONE.'"
+    $malformedMobileCommand = "& .\.claude\hooks\emit-phase-receipt.ps1 -Kind MobileAdaptation -Receipt 'MOBILE ADAPTATION PREFLIGHT COMPLETE - invalid'"
+    $transcriptPath = New-TemporaryFile
+    try {
+        $transcriptEvents = @(
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = 'String transcript text is retained.' } },
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = @([PSCustomObject]@{ type = 'text'; text = 'Structured transcript text is retained.' }) } },
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = $validWithoutMobileAndStorybookProof } },
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = @([PSCustomObject]@{ type = 'tool_use'; name = 'PowerShell'; input = [PSCustomObject]@{ command = $registeredMobileCommand } }) } },
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = @([PSCustomObject]@{ type = 'tool_use'; name = 'PowerShell'; input = [PSCustomObject]@{ command = $registeredStorybookCommand } }) } },
+            [PSCustomObject]@{ type = 'assistant'; message = [PSCustomObject]@{ content = @([PSCustomObject]@{ type = 'tool_use'; name = 'PowerShell'; input = [PSCustomObject]@{ command = $registeredKickoffCommand } }) } }
+        )
+        $transcriptJsonl = (($transcriptEvents | ForEach-Object { $_ | ConvertTo-Json -Compress -Depth 4 }) -join "`n") + "`n"
+        [System.IO.File]::WriteAllText($transcriptPath.FullName, $transcriptJsonl, (New-Object System.Text.UTF8Encoding($false)))
+        $parsedTranscript = Get-AssistantTranscript ([PSCustomObject]@{ transcript_path = $transcriptPath.FullName })
+        $registeredMobilePass = Test-MobileAdaptationPreflight $parsedTranscript
+        $registeredStoryProofPass = Test-StorybookProofPreflight $parsedTranscript 'src/stories/mantine/primitives/Badge.stories.tsx'
+        $wrongToolBlock = [PSCustomObject]@{ type = 'tool_use'; name = 'Bash'; input = [PSCustomObject]@{ command = $registeredStorybookCommand } }
+        $rejectsWrongToolPass = -not (Get-RegisteredPhaseReceiptFromToolUse $wrongToolBlock)
+        $malformedKickoffBlock = [PSCustomObject]@{ type = 'tool_use'; name = 'PowerShell'; input = [PSCustomObject]@{ command = $malformedKickoffCommand } }
+        $rejectsMalformedKickoffPass = -not (Get-RegisteredPhaseReceiptFromToolUse $malformedKickoffBlock)
+        $malformedMobileBlock = [PSCustomObject]@{ type = 'tool_use'; name = 'PowerShell'; input = [PSCustomObject]@{ command = $malformedMobileCommand } }
+        $rejectsMalformedMobilePass = -not (Get-RegisteredPhaseReceiptFromToolUse $malformedMobileBlock)
+        $registeredKickoffPass = $null -eq (Get-KickoffWriteBlockReason 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md' $parsedTranscript)
+        $transcriptShapePass = $parsedTranscript -match 'KICKOFF EVIDENCE PREFLIGHT COMPLETE' -and $parsedTranscript -match 'String transcript text is retained\.' -and $parsedTranscript -match 'Structured transcript text is retained\.' -and $registeredMobilePass -and $registeredStoryProofPass -and $registeredKickoffPass -and $rejectsWrongToolPass -and $rejectsMalformedKickoffPass -and $rejectsMalformedMobilePass
+        [Console]::Out.WriteLine(('{0} transcript parser accepts text and registered Mobile/Storybook/Kickoff proofs' -f $(if ($transcriptShapePass) { 'GREEN' } else { 'FAIL ' })))
+    }
+    finally {
+        Remove-Item -LiteralPath $transcriptPath.FullName -Force -ErrorAction SilentlyContinue
+    }
     $cases = @(
         @{ Name = 'blocks missing receipts'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ''; ExpectBlock = $true },
+        @{ Name = 'blocks component without mobile adaptation preflight'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ($valid -replace '(?ms)^MOBILE ADAPTATION.*?\r?\n', ''); ExpectBlock = $true },
+        @{ Name = 'blocks incompatible Mantine mechanism'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ($valid -replace 'mantine mechanism: responsive-props', 'mantine mechanism: app-shell-responsive'); ExpectBlock = $true },
+        @{ Name = 'blocks incompatible Mantine owner'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ($valid -replace 'mantine owner: src/design-system/mantine/patterns/MantineBadge.tsx', 'mantine owner: src/design-system/mantine/patterns/MantineDataTableToCards.tsx'); ExpectBlock = $true },
+        @{ Name = 'blocks a multi-owner mobile receipt'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ($valid -replace [regex]::Escape($mobileReceipt), $multiOwnerMobileReceipt); ExpectBlock = $true },
+        @{ Name = 'blocks a mobile receipt without its required named terminator'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = ($valid -replace [regex]::Escape($mobileReceipt), $mobileReceiptWithoutNamedTerminator); ExpectBlock = $true },
+        @{ Name = 'allows correction after an invalid mobile receipt'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = $validAfterBadMobileReceipt; ExpectBlock = $false },
+        @{ Name = 'allows component after registered mobile adaptation receipt'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = $parsedTranscript; ExpectBlock = $false },
         @{ Name = 'allows component after GR-0 and UI contract receipts'; Path = 'src/design-system/mantine/patterns/MantineBadge.tsx'; Text = $valid; ExpectBlock = $false },
         @{ Name = 'blocks Story without Storybook preflight'; Path = 'src/stories/mantine/primitives/Badge.stories.tsx'; Text = ($valid -replace '(?ms)^STORYBOOK.*?NONE\.\s*', ''); ExpectBlock = $true },
         @{ Name = 'allows Story after all receipts'; Path = 'src/stories/mantine/primitives/Badge.stories.tsx'; Text = $valid; ExpectBlock = $false },
-        @{ Name = 'does not gate a unit test'; Path = 'src/design-system/mantine/__tests__/MantineBadge.test.tsx'; Text = ''; ExpectBlock = $false }
+        @{ Name = 'allows Story after registered Storybook proof'; Path = 'src/stories/mantine/primitives/Badge.stories.tsx'; Text = $parsedTranscript; ExpectBlock = $false },
+        @{ Name = 'blocks Story when proof names a different Story'; Path = 'src/stories/mantine/primitives/Badge.stories.tsx'; Text = ($validWithoutStorybookProof + "`n" + $wrongStorybookReceipt); ExpectBlock = $true },
+        @{ Name = 'blocks legacy Story without Storybook preflight'; Path = 'src/stories/LegacyComponent.stories.tsx'; Text = ($valid -replace '(?ms)^STORYBOOK.*?NONE\.\s*', ''); ExpectBlock = $true },
+        @{ Name = 'does not gate a unit test'; Path = 'src/design-system/mantine/__tests__/MantineBadge.test.tsx'; Text = ''; ExpectBlock = $false },
+        @{ Name = 'blocks kickoff without claim-evidence receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ''; ExpectBlock = $true },
+        @{ Name = 'allows kickoff after claim-evidence receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = $kickoffReceipt; ExpectBlock = $false },
+        @{ Name = 'allows kickoff after registered claim-evidence receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = $parsedTranscript; ExpectBlock = $false },
+        @{ Name = 'allows bold kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('**' + $kickoffReceipt + '**'); ExpectBlock = $false },
+        @{ Name = 'allows inline-code kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('`' + $kickoffReceipt + '`'); ExpectBlock = $false },
+        @{ Name = 'allows bullet kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('- **' + $kickoffReceipt + '**'); ExpectBlock = $false },
+        @{ Name = 'allows blockquote kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('> ' + $kickoffReceipt); ExpectBlock = $false },
+        @{ Name = 'allows numbered kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('1. ' + $kickoffReceipt); ExpectBlock = $false },
+        @{ Name = 'allows nested task-list kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('> - [x] **' + $kickoffReceipt + '**'); ExpectBlock = $false },
+        @{ Name = 'allows heading-plus-code kickoff receipt'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('### `' + $kickoffReceipt + '`'); ExpectBlock = $false },
+        @{ Name = 'blocks receipt label mentioned in prose'; Path = 'tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ('Evidence: ' + $kickoffReceipt); ExpectBlock = $true },
+        @{ Name = 'does not gate archived kickoff'; Path = 'tasks/Archive/Sprint_90_kickoff_prompt_Task_920_Example.md'; Text = ''; ExpectBlock = $false }
     )
-    $ok = $true
+    $ok = $transcriptShapePass
     foreach ($case in $cases) {
         $blocked = $null -ne (Get-UiWriteBlockReason $case.Path $case.Text)
+        if (-not $blocked) { $blocked = $null -ne (Get-KickoffWriteBlockReason $case.Path $case.Text) }
         $pass = $blocked -eq $case.ExpectBlock
         [Console]::Out.WriteLine(("{0} {1}" -f $(if ($pass) { 'GREEN' } else { 'FAIL ' }), $case.Name))
         $ok = $ok -and $pass
     }
     $shellHit = @(Get-ShellUiWritePaths 'Set-Content src/design-system/mantine/patterns/MantineBadge.tsx $value').Count -eq 1
     $shellMiss = @(Get-ShellUiWritePaths 'rg MantineBadge src/design-system/mantine/patterns/MantineBadge.tsx').Count -eq 0
+    $kickoffShellHit = @(Get-ShellKickoffWritePaths 'Set-Content tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md $value').Count -eq 1
+    $kickoffShellMiss = @(Get-ShellKickoffWritePaths 'rg kickoff tasks/Sprints/Sprint_90_kickoff_prompt_Task_920_Example.md').Count -eq 0
     $shellEvent = '{"tool_input":{"command":"git status --short"}}' | ConvertFrom-Json
     $shellValues = Get-ToolInputValues $shellEvent
     $shellEventPass = [string]::IsNullOrEmpty($shellValues.Path) -and $shellValues.Command -eq 'git status --short'
     [Console]::Out.WriteLine("{0} detects an obvious shell-based UI write" -f $(if ($shellHit) { 'GREEN' } else { 'FAIL ' }))
     [Console]::Out.WriteLine("{0} does not gate a read-only shell command" -f $(if ($shellMiss) { 'GREEN' } else { 'FAIL ' }))
+    [Console]::Out.WriteLine("{0} detects an obvious shell-based kickoff write" -f $(if ($kickoffShellHit) { 'GREEN' } else { 'FAIL ' }))
+    [Console]::Out.WriteLine("{0} does not gate a read-only kickoff shell command" -f $(if ($kickoffShellMiss) { 'GREEN' } else { 'FAIL ' }))
     [Console]::Out.WriteLine("{0} accepts a shell hook event with no file_path" -f $(if ($shellEventPass) { 'GREEN' } else { 'FAIL ' }))
-    $ok = $ok -and $shellHit -and $shellMiss -and $shellEventPass
+    $ok = $ok -and $shellHit -and $shellMiss -and $kickoffShellHit -and $kickoffShellMiss -and $shellEventPass
     [Console]::Out.WriteLine($(if ($ok) { 'phase-write-gate self-test PASSED' } else { 'phase-write-gate self-test FAILED' }))
     return $ok
 }
@@ -160,17 +458,25 @@ try {
     $inputJson = [Console]::In.ReadToEnd() | ConvertFrom-Json -ErrorAction Stop
     $toolValues = Get-ToolInputValues $inputJson
     $path = $toolValues.Path
-    $paths = @()
-    if (Test-UiSourcePath $path) { $paths += $path }
-    $paths += Get-ShellUiWritePaths $toolValues.Command
-    $paths = @($paths | Select-Object -Unique)
-    if ($paths.Count -eq 0) { exit 0 }
+    $uiPaths = @()
+    if (Test-UiSourcePath $path) { $uiPaths += $path }
+    $uiPaths += Get-ShellUiWritePaths $toolValues.Command
+    $uiPaths = @($uiPaths | Select-Object -Unique)
+    $kickoffPaths = @()
+    if (Test-ActiveKickoffPath $path) { $kickoffPaths += $path }
+    $kickoffPaths += Get-ShellKickoffWritePaths $toolValues.Command
+    $kickoffPaths = @($kickoffPaths | Select-Object -Unique)
+    if ($uiPaths.Count -eq 0 -and $kickoffPaths.Count -eq 0) { exit 0 }
     $transcript = Get-AssistantTranscript $inputJson
-    foreach ($uiPath in $paths) {
+    foreach ($kickoffPath in $kickoffPaths) {
+        $reason = Get-KickoffWriteBlockReason $kickoffPath $transcript
+        if ($reason) { Write-Deny $reason; exit 0 }
+    }
+    foreach ($uiPath in $uiPaths) {
         $reason = Get-UiWriteBlockReason $uiPath $transcript
-        if ($reason) { Write-Deny $reason; break }
+        if ($reason) { Write-Deny $reason; exit 0 }
     }
 }
 catch {
-    Write-Deny ("UI/Story write blocked because the phase gate could not verify its required receipts: " + $_.Exception.Message)
+    Write-Deny ("Guarded write blocked because the phase gate could not verify its required receipts: " + $_.Exception.Message)
 }

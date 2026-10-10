@@ -82,6 +82,12 @@ decision, complete the applicable sections of
 [`docs/orchestrator-evidence-preflight-template.md`](orchestrator-evidence-preflight-template.md). This is a
 **fail-closed gate**, not optional planning prose.
 
+For task design and every kickoff revision, also apply the compact claim-to-evidence contract and its mechanical gate:
+`npm run check:kickoff-evidence`. A `C# FACT` needs its current evidence path/range and a literal observed there;
+`D# OWNER DECISION` needs a dated verbatim owner choice; every `R#`/`AC#` cites those entries. An inference or
+unresolved row is an investigation result, not executable task input. Return `BLOCKED — KICKOFF EVIDENCE GAP` rather
+than delegating a premise to Sonnet.
+
 The preflight must distinguish these evidence layers:
 
 1. **Source semantics:** inspect the exact implementation, enum, conditional branches, and configuration that make

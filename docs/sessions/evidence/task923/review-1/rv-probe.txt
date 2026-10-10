@@ -1,0 +1,47 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al (native Windows PowerShell)
+command: node scratchpad/probe.mjs (review probe, copied here as review-1/probe.mjs)
+FIXTURE neg-margin: app green | portal:0 green  [page scrollWidth 390 clientWidth 390]
+FIXTURE page-scroll: app green | portal:0 green  [page scrollWidth 616 clientWidth 390]
+widths click rows 186, distinct Stories 82; probing up to 40
+  mantine-primitives-headerview--default~akalba-krasniqi widths {"min":1440} trigger BUTTON "AKAlba Krasniqi" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  mantine-primitives-usermenu--default~akalba-krasniqi widths {"max":639} trigger BUTTON "AKAlba Krasniqi" -> 640:present 1024:OPENS 1440:OPENS
+  patterns-mantine-admincurrenciesview--default~all widths {"min":1440} trigger BUTTON "ALL" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admincurrenciesview--empty~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admincurrencytabs--default~all widths {"min":1440} trigger BUTTON "ALL" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--activity-empty-period~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--activity-error~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--activity-stale~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--adm-02-error~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--adm-09-zero~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--all-queues-zero~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--cities-only-other~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--default~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--no-location-requests~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admindashboardview--trends-error~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminexchangeprovidersview--default~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminexchangeprovidersview--empty~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminexchangeprovidersview--pending~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admininquiriesview--default~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admininquiriesview--empty~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admininquiriesview--long-subject~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-admininquiriesview--unscoped~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--audit-zero~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--default~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--empty~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--filtered-pending~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--hidden-eligible~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--paginated~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--premium-tab~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminlistingsview--visible-filter~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--form~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--narrow~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--page~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--panel~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--shell-fixed-gutter~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpageframe--shell~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpagesview--default~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpagesview--deleting~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpagesview--empty~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+  patterns-mantine-adminpagesview--migration-pending~en-english widths {"min":1440} trigger BUTTON "EN English" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS
+states whose same-named trigger opens a portal at a skipped width: 41
+EXIT_CODE=0

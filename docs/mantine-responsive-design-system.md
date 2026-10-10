@@ -27,7 +27,7 @@ onward must use Mantine. The old `.container-wide` / Tailwind breakpoint / `with
 proof model is retired for new work.
 
 Task 482 delivers:
-- Mantine v9.4.0 installed and wired into the App Router root layout.
+- Mantine v8.3.18 installed and wired into the App Router root layout.
 - Light-only Mantine theme with brand colors and project breakpoints.
 - 14 canonical reusable pattern components in `src/design-system/mantine/patterns/`.
 - Mantine-native Storybook proof path: global `withMantine` decorator, `skipCanvas: true`,
@@ -103,10 +103,10 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Mantine docs — layout components | Layout API | `AppShell`, `Grid`, `SimpleGrid`, `Stack`, `Group`, `Container` | Used in all 14 canonical patterns | `src/design-system/mantine/patterns/**` |
 | Mantine docs — `AppShell` | AppShell API | `AppShell.Navbar` collapses to burger on mobile; `opened` + `toggle` control burger state | `MantineAppShellFoundation` uses `useDisclosure` + `AppShell.Navbar` | `src/design-system/mantine/patterns/MantineAppShellFoundation.tsx` |
 | Storybook 10 docs | Storybook 10+ integration | Viewport via `globals.viewport`; toolbar globals | `withMantine` global decorator; viewport via toolbar; `parameters.skipCanvas` pattern | `.storybook/preview.tsx` |
-| npm registry | Package version | `@mantine/core@^9.4.0` requires `react@^19.2.0` | React 19.2.4 installed; no peer conflict | `package.json` |
+| npm registry | Package version | `@mantine/core@^8.3.18` supports `react@^18.x \|\| ^19.x` | React 19.2.4 installed; no peer conflict | `package.json`, `node_modules/@mantine/core/package.json` |
 | MIT license | License | Mantine is MIT-licensed | Compatible with commercial use; no restriction | `package.json` |
 | Tailwind v4 docs | CSS layer coexistence | Mantine CSS is imported directly and UNLAYERED — there is no `@layer mantine`. Tailwind v4 uses `@layer base, components, utilities`. Unlayered rules always beat layered rules, so Mantine component CSS overrides Tailwind utilities | `postcss-preset-mantine`'s layer option is NOT enabled (would wrap Mantine CSS in `@layer mantine`); Mantine CSS is imported directly, unlayered, by design | `postcss.config.mjs` (unchanged), `src/app/layout.tsx` |
-| Mantine docs — `useMediaQuery` | SSR/hydration caveat | Returns `initialValue` (`false`) on first render; media query evaluated only in `useEffect` (`getInitialValueInEffect: true` default in v9) | Documented in `MantineDialogDrawerPattern.tsx`; overlay is always closed on SSR so no visible flash | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` |
+| Mantine docs — `useMediaQuery` | SSR/hydration caveat | Returns `initialValue` (`false`) on first render; media query evaluates after mount when `getInitialValueInEffect: true` | Documented in `MantineDialogDrawerPattern.tsx`; overlay is always closed on SSR so no visible flash | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` |
 
 ---
 
@@ -244,6 +244,7 @@ story exports.
 | P0 mobile gate | All tappable text buttons, selects, inputs, tabs, and controls must be full-width below `sm` (40em / 640px) |
 | P0 popup gate | All popups (Dialog, Drawer, Select, Menu, Combobox) must render as full-width bottom sheet below `sm`: `position="bottom"`, top-only radius, ≤90dvh, internal scroll, drag handle, closes on backdrop + Esc |
 | 🔴 P0 table gate (owner P0, 2026-06-25, restated) | **Every data table MUST collapse to stacked cards below `sm` (40em/640px) — one card per row, via `MantineDataTableToCards`.** Horizontal scrolling of table *content* on mobile is **FORBIDDEN** — neither page-level nor an internal `ScrollArea`/`overflow-x`. The mobile reader never side-scrolls a table; they read cards. At ≥`sm` the desktop §6b card-wrapped table is kept (a desktop-only `ScrollArea` inside the card is acceptable there). **Table-specific** — does NOT override the §7.1 filter-control rule, where `SegmentedControl`/`Tabs` MAY use horizontal swipe-scroll (those are controls, not data tables). A data table left scrolling horizontally on mobile is a TASK FAILURE. |
+| 🔴 P0 mobile adaptation contract (GR-3j) | Before code, select the source-backed semantic compact profile, registry-allowed Mantine mechanism, and canonical Mantine pattern owner in `.claude/rules/shared/mobile-adaptation-contract.md`; then use that Mantine mechanism to implement it. Mantine retains responsive mechanism, interaction, and accessibility authority; the contract adds semantic content order/treatment and proof only. Across the actual `<640px` compact range, semantic content follows its recorded treatment, fields stack label → value, sections reflow, and the `640px` transition is verified. Current Stories only prove the result — they never define the pattern. |
 | Responsive API | Use `{ base: X, sm: Y }` responsive objects on Mantine props (e.g. `w={{ base: '100%', sm: 'auto' }}`) |
 | 🔴 P0 sections stack on a phone (owner rule, 2026-10-01 — `docs/golden-rules.md` **GR-3b**) | Below `sm`, sections never sit beside each other: an avatar/media block, text column, card, form column or side panel. Each one takes its own row, through `Flex direction={{ base: 'column', sm: 'row' }}` (precedent `MantineDashboardHeader`), `Grid.Col span={{ base: 12, sm: … }}`, or `wrap="wrap"`. `wrap="nowrap"`, a static `direction="row"` or a fixed span that holds a section beside its sibling at 320 is forbidden. Inline items are not affected: an icon with its label, a badge, a count beside a button. Checked at 320/390: the second section's top is at or below the first one's bottom. |
 | 🔴 P0 responsive type gate (owner rule, 2026-09-26 — `docs/golden-rules.md` **GR-3c**) | `theme.headings.sizes` is fixed at every width: h1 48, h2 36, h3 30, h4 24 px. Text of **24px or more** therefore needs a breakpoint-keyed `fz` made of theme keys only, e.g. `fz={{ base: 'h5', sm: 'h4', md: 'h3' }}`; for a `Title` of size h2/h3/h4 use the canonical `TITLE_FZ.h2`/`.h3`/`.h4` (`src/design-system/mantine/typography.ts`, Task 886). `npm run check:type-responsive` fails a new static large `Title`/`fz`/`size` and a new bare Tailwind `text-2xl`+. Below `sm`, headings are at most 20px (`h5`/`xl`), and a named hero at most 30px (`h3`). Rich text uses the canonical responsive scale in `src/design-system/mantine/typography-chrome.css`, never the fixed theme scale. A child heading never exceeds its page title. Verified by computed `fontSize` at 320/390/768/1440. |
@@ -261,9 +262,10 @@ exclusively. Raw px values for spacing, gap, padding, or margin are forbidden.**
 |---|---|---|
 | Vertical padding on rows | Use `py="xs"` / `py="sm"` / `py="md"` | `py="xs"` (8px) not `py={4}` |
 | Gap between elements | Use Mantine `gap="xs"` / `gap="sm"` | `gap="sm"` (12px) not `gap={8}`, not `marginRight: 8` |
+| Vertical rhythm (GR-3h, owner 2026-10-09, blocking) | A container has one rhythm token between its blocks, dividers included: the record card is `Stack gap="sm"` (12px) — header, divider, primary row, badge row, divider, detail. A row of objects (badges, price + badges) is its own block, so title ↔ badge row = badge row ↔ divider. Lines inside one text block (name and company) are not rhythm steps. The same kind of container uses the same token everywhere (table cell = card). A consumer never repairs a gap | Badge row 12px under the title and 12px above the divider, not 0 |
 | Table cell rhythm | Use `verticalSpacing="sm"` (12px) + `horizontalSpacing="xl"` (24px) on `<Table>` — CRM §6b standard (px-6 py-3), comes from `theme.components.Table.defaultProps`; explicit only when overriding | Replaces sparse auto columns |
 | Touch-target minimum | `mih="2.75rem"` (rem string) is the ONLY raw-value exemption — it is a touch-target, not spacing | `mih="2.75rem"` ✅ |
-| Card meta row layout | `Group justify="space-between"` — label flush LEFT edge, value flush RIGHT edge (`textAlign: 'right'`). NO fixed-percentage columns (38%/62% retracted). Vertical rhythm: `Stack gap="xs"` for meta rows, `gap="md"` on each row Group | Label left · value right |
+| Card meta row layout | **Below `sm`: `Stack gap="xs"` — label first, then full value below it with `minWidth:0`/safe wrapping.** At `sm` and above, `Group justify="space-between"` may edge-anchor label/value if both remain fully readable. NO fixed-percentage columns (38%/62% retracted). | Mobile: label above value; desktop: label left · value right |
 | Table column alignment | Pass `align?: 'left' \| 'center' \| 'right'` and `width?` through `TableColumn` → applied to `Table.Th`/`Table.Td` | No sparse sparse auto-column sprawl |
 | Filter controls | Use `SegmentedControl` (not individual Buttons) for mutually exclusive single-select filters; wrap in `ScrollArea scrollbars="x"` when i18n labels exceed container width at 320px | No full-width gray button bars |
 
@@ -288,24 +290,28 @@ When providing a `card` prop, the mobile card MUST follow this anatomy:
 │ [Avatar]  Name fw=500      [Status badge]│  ← Primary: Group justify="space-between"
 │           Company gray.5 xs             │     align="flex-start" (badge top-aligned)
 ├─────────────────────────────────────────┤  ← Divider color="gray.1" (ONE above meta)
-│ Role                     [Role badge] ► │  ← Meta: Stack gap="xs"
-│ Phone             +355 69 xxx         ► │     Each row: Group justify="space-between"
-│ Date               24 Jun 2026        ► │     label: Text xs gray.5 flexShrink:0
-└─────────────────────────────────────────┘     value: div textAlign:'right'
+│ Role                                      │  ← Meta: Stack gap="xs"
+│ [Role badge]                              │     Compact: label, then full value below
+│ Phone                                     │     Wider: Group justify="space-between"
+│ +355 69 xxx                               │
+└─────────────────────────────────────────┘
 ```
 
-Edge-anchoring rule: every card row is `Group justify="space-between"` — label hugs the LEFT padded edge, value hugs the RIGHT padded edge. NO fixed-percentage columns.
+Edge anchoring is a wider-screen enhancement only. Below `sm`, every semantic label/value pair is a vertical pair:
+label first, complete value below it. Do not use a desktop `Group justify="space-between"`/`wrap="nowrap"` row to
+make mobile content compete for one line. NO fixed-percentage columns.
 
 | Anatomy zone | Rule |
 |---|---|
-| Header | `Group justify="space-between" wrap="nowrap" align="center"` → `Text size="xs" c="gray.5"` (id left) \| `Group gap="xs" wrap="nowrap"` (actions right); followed by `<Divider color="gray.1" />` |
-| Primary | `Group justify="space-between" wrap="nowrap" align="flex-start"` → `Group gap="sm"(avatar + Stack gap={2}(title, subtitle))` \| badge `div flexShrink:0` |
+| Header | Compact: record id then the `toolbar-priority` action presentation; multiple text actions stack/wrap. At `sm`+, `Group justify="space-between" wrap="nowrap" align="center"` may show id left/actions right; followed by `<Divider color="gray.1" />`. |
+| Primary | Compact: primary identity/title text block first (with avatar if present), then status/badge context as its next semantic block; no badge/action may steal the title/value line. At `sm`+, `Group justify="space-between" align="flex-start"` may restore the side-by-side presentation. A row of badges is **not** part of the subtitle (it is the `badges` slot below). |
 | Title | Consumer-provided ReactNode (`size="sm" fw={500} c="gray.7"` recommended); pattern does NOT re-style |
-| Subtitle | `Text size="xs" c="gray.5" truncate="end"`; omitted if null/undefined |
+| Subtitle | Text only: `Text size="xs" c="gray.5"` that wraps (`overflow-wrap: anywhere`) — never `truncate` (GR-3i, owner 2026-10-09: a name is never cut); omitted if null/undefined. Objects never go in the subtitle (GR-3h) |
+| Badges row | `badges` slot (Task 859 R69): a row of badges or of text mixed with badges under the primary row, rendered as its own child of the card's `Stack gap="sm"` — one rhythm step, 12px from the title above and from the divider below |
 | Badge | Status badge `div flexShrink:0` top-aligned right; omitted if null/undefined |
 | Divider (meta) | `<Divider color="gray.1" />` — ONE above meta block, ONE after header. NOT one per field |
-| Meta rows | `Group justify="space-between" wrap="nowrap" align="center" gap="md"` → label `Text size="xs" c="gray.5" flexShrink:0` left \| value `div textAlign:'right' minWidth:0` right. Null returns skipped |
-| All spacing | Theme tokens only. `gap={2}` (title/subtitle micro-gap) is the only numeric exemption |
+| Meta rows | **Compact/base:** `Stack gap="xs"` per field → label `Text size="xs" c="gray.5"`, then value `div minWidth:0` that wraps in full. **`sm`+:** `Group justify="space-between" wrap="nowrap" align="center" gap="md"` may return → label left \| value right. Null returns skipped. |
+| All spacing | Theme tokens only. Between blocks: the card rhythm `sm` (GR-3h). Inside the title text block: the title and subtitle lines follow each other (the documented `gap={2}` was never rendered; the code has 0px, and the text block keeps it) |
 | Actions touch | Card action `ActionIcon`: add `mih="2.75rem" miw="2.75rem"` (touch-target rem exemption). Keep visual `size="sm"` for icon proportions. |
 | No generic dump | Providing `card` prop = designed anatomy. Omitting `card` = backward-compatible generic layout |
 
@@ -498,7 +504,7 @@ UI governance docs.
 | `src/components/ui/tabs.tsx` | Tab navigation | shadcn/radix Tabs | P0 risk: tabs may not be full-width on mobile | Story exists | MIGRATE TO MANTINE | `<Tabs>` | Phase 2 | — |
 | `src/components/ui/select.tsx` | Dropdown select | shadcn/radix Select | P0 risk: dropdown may not bottom-sheet on mobile | Story exists | MIGRATE TO MANTINE | `<Select>` / `<Combobox>` | Phase 2 | — |
 | `src/components/ui/checkbox.tsx` | Checkbox | shadcn/radix Checkbox | Low risk | Story exists | MIGRATE TO MANTINE | `<Checkbox>` | Phase 3 | — |
-| `src/components/ui/badge.tsx` | Status badge | shadcn/ui Badge | Low risk | No story | MIGRATE TO MANTINE | `<Badge>` | Phase 3 | — |
+| `src/components/ui/badge.tsx` (deleted, Task 859 R54) | Status badge | shadcn/ui Badge | — | — | DONE — `MantineBadge` | `<MantineBadge>` | — | — |
 | `src/components/ui/card.tsx` | Card container | shadcn/ui Card | Low risk | No story | MIGRATE TO MANTINE | `<Card>` | Phase 3 | — |
 | `src/components/ui/command.tsx` | Command palette | shadcn/radix Command | P0 risk: command not bottom-sheet on mobile | Story exists | MIGRATE TO MANTINE | `<Combobox>` with bottom Drawer | Phase 2 | — |
 | `src/components/ui/popover.tsx` | Popover overlay | shadcn/radix Popover | P0 risk: popover not bottom-sheet on mobile | Story exists | MIGRATE TO MANTINE | `<Popover>` with mobile Drawer fallback | Phase 2 | — |
@@ -640,7 +646,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Checkbox | `src/components/ui/checkbox.tsx` | `<Checkbox>` | Replace | Cabinet forms, admin | Phase 3 | Low |
 | Radio | shadcn RadioGroup | `<Radio>` + `<Radio.Group>` | Replace | Cabinet settings | Phase 3 | Low |
 | Switch | shadcn Switch | `<Switch>` | Replace | Admin settings | Phase 3 | Low |
-| Badge | `src/components/ui/badge.tsx` | `<Badge>` | Replace | Listing cards, admin tables | Phase 3 | Low |
+| Badge | `src/components/ui/badge.tsx` (deleted, Task 859 R54) | `<MantineBadge>` | Done | Listing cards, admin tables | — | — |
 | Card | `src/components/ui/card.tsx` | `<Card>` | Replace | Listings, cabinet | Phase 3 | Medium |
 | Paper | shadcn Card (no header/footer) | `<Paper>` | Replace | Cabinet forms | Phase 3 | Low |
 | Dialog | `src/components/ui/dialog.tsx` | `<Modal>` + `<Drawer position="bottom">` | Replace + P0 bottom-sheet | Admin CRUD, confirms | Phase 2 | High — P0 compliance |
@@ -736,7 +742,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Phase | Deliverables | Dependencies | Acceptance criteria | Storybook proof | Rollback risk |
 |---|---|---|---|---|---|
 | **Phase 0 — Stop old UI path** | `docs/rule-index.md`, `docs/design-system.md`, `docs/storybook-governance.md` | None | Mantine listed as future source of truth; design-system.md demoted; storybook-governance.md supersession notice | n/a | Zero — docs only |
-| **Phase 1 — Mantine foundation** ✅ Task 482 | `src/design-system/mantine/**`, `src/app/layout.tsx`, `.storybook/preview.tsx`, 14 story files, `scripts/story-realmode-allowlist.json`, `messages/*.json` | React 19 (installed), Mantine v9.4.0 | Provider wired, theme complete, 14 patterns + stories, toolbar proof, check:stories=0, typecheck=0, check:i18n=0, build-storybook=0 | 14 `Patterns/Mantine/*` Default stories — toolbar-driven | Low — new files only, no product UI changed |
+| **Phase 1 — Mantine foundation** ✅ Task 482 | `src/design-system/mantine/**`, `src/app/layout.tsx`, `.storybook/preview.tsx`, 14 story files, `scripts/story-realmode-allowlist.json`, `messages/*.json` | React 19 (installed), Mantine v8.3.18 | Provider wired, theme complete, 14 patterns + stories, toolbar proof, check:stories=0, typecheck=0, check:i18n=0, build-storybook=0 | 14 `Patterns/Mantine/*` Default stories — toolbar-driven | Low — new files only, no product UI changed |
 | **Phase 2 — Primitive replacement** | `src/components/ui/button.tsx`, `input.tsx`, `dialog.tsx`, `sheet.tsx`, `select.tsx`, `tabs.tsx`, `command.tsx`, `popover.tsx`, `dropdown-menu.tsx` | Phase 1 complete; owner AC per primitive | Each UI primitive replaced; P0 popups fixed (bottom-sheet); all consumers compile; `check:stories=0`, `typecheck=0` | Update primitive stories to Mantine-native proof | Medium — UI primitives used everywhere |
 | **Phase 3 — Layout migration** | `src/components/layout/**`, `src/components/admin/**`, `src/modules/notifications/**`, auth pages | Phase 2 complete; owner review per component | Header/Footer/AdminShell → Mantine AppShell; admin CRUD → MantineAdminSurfacePattern; auth → MantineAuthFormPattern; notification center → Mantine | Update component stories | High — Header/Admin shell are load-bearing |
 | **Phase 4 — Product surface migration** | `src/app/[locale]/**`, `src/modules/listings/**`, `src/app/[locale]/cabinet/**` | Phase 3 complete; owner sign-off per page | All public pages use Mantine patterns; listings index/detail migrated; cabinet pages migrated | Update/add page-level stories | Very high — main product surface |
@@ -793,7 +799,7 @@ All future Mantine UI tasks must pass these gates:
 | No DB/security | UI tasks must not touch DB migrations, RLS, or server actions |
 | Spacing tokens | No raw px for spacing/gap/padding/margin in `src/design-system/mantine/**` or migrated surfaces. Touch-target `mih="2.75rem"` (rem) is the only exemption. See §7.1 |
 | Card meta row rhythm | Each card meta row MUST use `Group justify="space-between"` — label `flexShrink:0` at left edge, value `textAlign:'right'` at right edge. NO fixed `width:'38%'` (retracted). `gap="md"` per row. `Divider color="gray.1"` between sections |
-| Table column rhythm | Desktop table must be card-wrapped (`Paper` radius=2xl, gray-2 border) per `docs/tailadmin-style-reference.md §6b`. Table uses `verticalSpacing="sm"` (12px) + `horizontalSpacing="xl"` (24px) from theme defaults. Thead bg-gray-0, border-y gray-1. Th: 12px fw=500 gray-500, NOT uppercase. Td: whitespace-nowrap, 14px gray-700. Each `TableColumn` must declare `align` and `width` for non-trivial surfaces |
+| Table column rhythm | Desktop table must be card-wrapped (`Paper` radius=2xl, gray-2 border) per `docs/tailadmin-style-reference.md §6b`. Table uses `verticalSpacing="sm"` (12px) + `horizontalSpacing="xl"` (24px) from theme defaults. Thead bg-gray-0, border-y gray-1. Th: 12px fw=500 gray-500, NOT uppercase. At table widths, compact structural columns may stay `nowrap`; semantic/localized cell content must remain fully readable. At mobile the table becomes GR-3j cards, never a clipped `nowrap` row. Each `TableColumn` must declare `align` and `width` for non-trivial surfaces |
 | Filter controls | Mutually exclusive single-select filters must use `SegmentedControl`, not individual Button chips. Wrap in `ScrollArea scrollbars="x"` when i18n labels clip at 320px |
 | Admin card anatomy | Any surface with `card` prop on `MantineDataTableToCards` MUST use the §7.2 anatomy: header (id + actions), primary (avatar + title + subtitle \| badge), meta (ONE divider + compact rows). Generic label:value dump rejected |
 | Card anatomy story proof | Pattern stories with `card` prop must demonstrate the full anatomy (avatar/title/subtitle/badge/meta/actions visible in Default story at 320 mobile viewport) |
@@ -1315,7 +1321,7 @@ Every `MantineModal` / `MantineDrawer` consumer, and every new or migrated popup
 | **Secondary** | `Button variant="default"` | Cancel, or a second real action. At most two. |
 | **Tertiary / navigation** | `Button variant="subtle"` + `leftSection` icon | Text buttons for links and minor actions: view, open, edit elsewhere. |
 | **Destructive (resting)** | `Button variant="subtle" color="red"` + icon | Never filled while it is not the step's purpose. |
-| **Destructive (confirm step)** | filled `Button color="red"` as that step's primary, `variant="default"` Cancel | The confirm step replaces the footer. |
+| **Destructive (confirm step)** | filled `Button color="red"` as that step's primary, `variant="default"` Cancel | The confirm step is `MantineDeleteConfirmModal`, opened over the dialog, which is `covered` while it is open (D78-18; Task 859 R36, R42). |
 
 Rules that apply in every state:
 
@@ -1508,6 +1514,12 @@ by D89-4:
 - the property-type tile uses `bold-duotone`.
 
 Other surfaces reuse these two styles for the same roles unless their kickoff records a different owner decision.
+
+**A badge carries no icon (owner decision D78-29, 2026-10-08).** Status, tone, count and photo-count badges are text
+only, on the site and in the admin; `MantineBadge` has no icon prop and `badgeTones.ts` stores no icon. A 12px glyph in
+white on a solid fill is unreadable in any Solar style (measured in Task 859, Revisions 7–8). Icons go where the
+reference puts them: next to a listing's feature details, Solar `broken` 16px grey on a light surface (Lahomes
+`property-grid`, measured 2026-10-08), the role D89-4 fixes above.
 
 **Size and colour come from the theme, never from a literal.**
 - `size` takes a `theme.other.iconSize` value (`micro` 10 · `badge` 12 · `compact` 14 · `standard` 16 · `roomy` 20 ·

@@ -166,6 +166,18 @@ jobs:
       - name: Story coverage gate (fail-on-new; exemption allowlist)
         run: npm run check:story-coverage
 
+      - name: Badge canonical gate (Task 859 R30 — one MantineBadge, one badgeTones registry)
+        run: npm run check:badge-canonical
+
+      - name: Badge canonical gate self-test (two planted violations, Task 859 R30)
+        run: npm run check:badge-canonical:verify
+
+      - name: Dialog canonical gate (Task 859 R30 — structured MantineModal, buttons only in MantineDialogFooter)
+        run: npm run check:dialog-canonical
+
+      - name: Dialog canonical gate self-test (two planted violations, Task 859 R30)
+        run: npm run check:dialog-canonical:verify
+
       - name: Rendered-but-unenrolled component scope gate (Task 818 — blocking, baselined fail-on-new)
         run: npm run check:rendered-scope
 
@@ -217,6 +229,24 @@ jobs:
 
       - name: UI contract gate self-test (planted Story styling and missing contract must fail)
         run: npm run check:ui-contract:verify
+
+      - name: Mobile adaptation contract gate (GR-3j — changed UI may not add text clipping; changed kickoffs need a source-backed record)
+        env:
+          MOBILE_ADAPTATION_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          MOBILE_ADAPTATION_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/check-mobile-adaptation-contract.mjs
+
+      - name: Mobile adaptation contract gate self-test (planted clipping and missing record must fail)
+        run: node scripts/check-mobile-adaptation-contract.mjs --verify-gate
+
+      - name: Kickoff claim-evidence gate (blocking — changed kickoffs require traceable facts)
+        env:
+          KICKOFF_EVIDENCE_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          KICKOFF_EVIDENCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: npm run check:kickoff-evidence
+
+      - name: Kickoff claim-evidence gate self-test (planted unsupported fact must fail)
+        run: npm run check:kickoff-evidence:verify
 
       - name: Tailwind runtime-token gate (blocking — CSS Module var() references owned by Tailwind, not this project)
         run: npm run check:tailwind-runtime-tokens

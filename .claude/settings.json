@@ -45,7 +45,7 @@
               "${CLAUDE_PROJECT_DIR}/.claude/hooks/phase-write-gate.ps1"
             ],
             "timeout": 5,
-            "statusMessage": "Verifying required UI preflight"
+            "statusMessage": "Verifying required phase preflight"
           }
         ]
       },

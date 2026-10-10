@@ -1785,3 +1785,21 @@ The probe for F1–F3: `review-16/r16-dialogs.mjs` (r15-mobile's checks on `docu
 ## Decision
 
 `NEEDS REVISION` — F1–F3 are P1 GR-3j / D6 defects on 859 surfaces (ticket dialog, user picker, listing preview opened from the dashboard). **Revision 15 = kickoff §31** (R88–R94, AC79–AC85; claim ledger C1–C27, D4–D6; `check:kickoff-evidence` PASS `r16-check-kickoff-evidence.txt`, `check-mobile-adaptation-contract --files` PASS). §30's ledger, mobile record and tables are kept as history. O78-13 stays owed after review 17.
+
+## Owner decision D7 (2026-10-10) — the portal census is a project contract
+
+The owner rejected R94 as a task-local probe: *"R94 буде достатнім лише якщо він робить це загальним контрактом, а не
+латкою Task 859"* — a registry of interaction states that open a portal, every state opened in Storybook, a separate
+target for the app root and each portal root, text / viewport / component overflow / actions / focus / dismiss
+measured, evidence per Story × state × portal root × locale × viewport, and a planted portal-only violation that fails
+while the page root is green.
+
+Done in this session (Opus, policy + task design): the contract `.claude/rules/shared/rendered-state-census.md`
+(adds the `word-split` rule the owner's picker screenshot needs; interim: no overlay-opening visible task is approved
+before 923, afterwards only with the gate green on its own Stories' rows), linked from
+`shared/mobile-adaptation-contract.md`, `shared/enforcement-model.md` (layer 5), `shared/storybook-proof.md`,
+`create/02-kickoff-contract.md`, `execute/03-validate-handoff.md`, `review/02-adversarial-ui.md`, `docs/rule-index.md`
+and `docs/rules/golden/gr-3j-mobile-adaptation.md`. **Task 923** filed (Sprint 78, P1, Q4: registry, discovery,
+runner, per-root metrics, JSONL, `--verify-gate` with eight planted cases; CI wiring at Opus closure). 859 §31 R94
+now takes its rendered proof from that gate and **Revision 15 starts after 923 is approved**; AC79–AC81 and AC84
+read the gate's rules (`check:kickoff-evidence` PASS for both kickoffs).

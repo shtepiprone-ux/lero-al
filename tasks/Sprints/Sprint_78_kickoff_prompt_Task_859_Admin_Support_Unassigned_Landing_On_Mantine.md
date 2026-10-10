@@ -1,7 +1,7 @@
 # Task 859 — `/admin/support` honours `?assigned=unassigned&status=` and moves to canonical Mantine
 
 **Sprint 78** (Wave E — landings) · **P2** · QA profile **Q4** since Revision 2 (it moves `MantineListingCardPattern`'s badges, critical flow; Q3 before) · **runs after 857** (addendum 2026-10-02: `AdminPageFrame`, `withAdminShell`, `AdminTable` `cardsBelow="md"`) · **blocks 885** (Sprint 84, D84-1) · owner action
-**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-09 (review 15b, owner return of O78-13 under the mobile adaptation contract GR-3j) — the only executable route is §30 (Revision 14), at the end of this file: one labelled-field owner (label above value), one record-card order (id → primary → badges → fields → actions), nothing cut anywhere, a name centred on its avatar, "No name" for a user without one. §30 is self-contained and names the earlier decisions that stay binding; §1–§29 are history.**
+**O78-13** · **Status: 🔁 `NEEDS REVISION` 2026-10-10 (review 16) — the only executable route is §31 (Revision 15), at the end of this file, and it starts after task 923 (the rendered state census gate) is approved.** Before: `NEEDS REVISION` 2026-10-09 (review 15b, owner return of O78-13 under the mobile adaptation contract GR-3j) — route §30 (Revision 14): one labelled-field owner (label above value), one record-card order (id → primary → badges → fields → actions), nothing cut anywhere, a name centred on its avatar, "No name" for a user without one. §30 is self-contained and names the earlier decisions that stay binding; §1–§29 are history.**
 §1–§15 and both addenda stay binding wherever §16 does not replace them.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -2983,6 +2983,10 @@ Record cards pass (C16). **GR-7 (review 16, live in Chrome):** TailAdmin `/modal
 wraps to four lines and nothing is cut (C24). The project's own rule decides it in any case: no content is cut
 anywhere (D6).
 
+**Sequencing (owner decision D7, 2026-10-10):** the portal blind spot is closed by the project-wide contract
+`.claude/rules/shared/rendered-state-census.md` and its gate, task 923 — not by a probe of this task. **Revision 15
+starts after 923 is approved**; its rendered proof is that gate (R94).
+
 **Outside this task, filed as 922 (Sprint 78, 16d tier 3):** listings toolbar count buttons 20px tall at 640–767,
 `MantinePagination` 32×32 below the agent-statistics cards, the `AdminPermissionsView` switch, `AdminSidebar` and
 `RangeDatePicker` label truncation.
@@ -3018,6 +3022,8 @@ anywhere (D6).
 | C25 | FACT | Revision 14 took no governance baseline before its first write. | source: `docs/sessions/2026-10-04-task859-admin-support-mantine.md:1605-1605`; observed: `Governance start baseline: not taken.` |
 | C26 | FACT | The theme spacing xs token is 8px. | source: `src/design-system/mantine/theme.ts:663-663`; observed: `xs: '0.5rem',` |
 | C27 | FACT | A sheet option is at least 44px tall. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:470-470`; observed: `mih="2.75rem"` |
+| C28 | FACT | The project rendered-state contract registers every overlay-opening state in one registry. | source: `.claude/rules/shared/rendered-state-census.md:19-19`; observed: `scripts/rendered-interaction-states.json` |
+| D7 | OWNER DECISION | The overlay census is a project-wide contract (registry, every state opened, separate portal roots, full metrics, planted portal-only violation), not a Task 859 patch. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 | D4 | OWNER DECISION | Labelled fields: label above value at every width. | owner: 2026-10-09; decision: `Назва над значенням завжди (Рекомендовано)` |
 | D5 | OWNER DECISION | A user without a name shows the text "No name". | owner: 2026-10-09; decision: `Текст «Без імені» (Рекомендовано)` |
 | D6 | OWNER DECISION | No content is cut anywhere. | owner: 2026-10-09; decision: `Ніде не обрізати (Рекомендовано)` |
@@ -3045,16 +3051,16 @@ anywhere (D6).
 | R91 [C18; C19; C20; C21; D5] | **Story data (data only).** `TicketDetailDialogView.stories.tsx`: `SUPPORT_TICKET` is built from `FIXTURE_SUPPORT_TICKETS_EXTRA[0]` (tkt-004, the long subject: proves the whole sheet header and the unclamped title); `Complaint` renders `FIXTURE_SUPPORT_TICKETS_EXTRA[1]` (tkt-005, the reported user without a name: AC73's dialog half); `WithTimeline` and `Updating` keep `COMPLAINT_TICKET`. | P2 | AC82 |
 | R92 [C22; D4] | **The synthesized `AdminTable` card labels every value.** Without `cardRow`, every column except the title column is a field (label = the column `header`, value = the cell); the unlabelled badges row of the synthesized card goes. The `AdminTable` JSDoc states it. | P2 | AC83 |
 | R93 [C23] | **JSDoc.** The `card` prop's JSDoc in `MantineDataTableToCards` describes the generic card as Revision 14 built it (the same shell, label above value). | P3 | AC84 |
-| R94 [C15; C16; C17; C25] | **Proof covers portals; governance baseline first.** Every census copy reads `document.body`: `r15x-dialogs.mjs` (a copy of `review-16/r16-dialogs.mjs`), `r15x-picker.mjs` (a copy of `review-16/r16-picker.mjs`), `r15x-mobile.mjs` (a copy of `r14x-mobile.mjs` with its root set to `document.body`). `npm run governance` runs before the first write and after the last. | P2 | AC84, AC85 |
+| R94 [C15; C16; C17; C25; C28; D7] | **Rendered proof is the project gate, not a task probe; governance baseline first.** Revision 15 starts only after task 923 is approved. Its rendered proof is `npm run check:rendered-state-census -- --stories <the Stories below> --out docs/sessions/evidence/task859/r15x-census` on the final build: the app root and every portal root of each registered state, 320 / 390 / 639 / 640 / 1440 × sq / en / uk / it. The Stories: `TicketDetailDialogView` (all four), `ListingPreviewDialogView` (all), `UserPickerFieldView` (all), `Mantine/Primitives/Modal` (all), `Mantine/Primitives/Combobox` (all), `AdminTable` (all) and every Story of the §30 census set; a missing registry row for one of them is added in this task's change. No `r15x-*` copy of a review probe is evidence. `npm run governance` runs before the first write and after the last. | P2 | AC79, AC80, AC81, AC84, AC85 |
 
 ## Acceptance criteria
 
-- **AC79 [R88; C13].** `r15x-dialogs.mjs` (80 Stories × 320/390/639/640/1440 × sq/en/uk/it): `headerSqueezed` is empty in every job; `TicketDetailDialogView` `Support` (tkt-004, long subject) at 320 and 390 shows its whole header, and its body still scrolls.
-- **AC80 [R89; C11; C12].** The same run: every dialog cut hit (ACTIVE and latent) on a dialog title or description = 0; `ListingPreviewDialogView` `Active` at 320 shows the whole listing title. Every remaining dialog hit is listed by Story and text with its cause (expected: the Mantine `Alert` title's latent `ellipsisStyle`, which wraps).
-- **AC81 [R90; C14].** `r15x-picker.mjs` on `UserPickerFieldView` `Results` at 320/390/639/640 × sq/en/uk/it: every option's name is at least as wide as its longest word (no word split into letters); the badges and description sit below the name (their top ≥ the name's bottom); `spillPastOption ≤ 0` and `spillPastViewport ≤ 0`. The same probe on `Selected` and `SelectedBlocked`: the selected check is on the name line.
+- **AC79 [R88; R94; C13; C28].** The 923 gate run of R94: 0 violations on every root of `TicketDetailDialogView` (`Support` with tkt-004's long subject at 320 and 390 included — no `component-overflow` or `text-hidden` in the sheet header) and of `Mantine/Primitives/Modal`; the body still scrolls.
+- **AC80 [R89; R94; C11; C12; C28].** The same run: 0 `text-clamp` / `text-ellipsis` / `text-hidden` on any portal root of a dialog Story of the R94 set; `ListingPreviewDialogView` `Active` at 320 shows the whole listing title.
+- **AC81 [R90; R94; C14; C28].** The same run on `UserPickerFieldView` and `Mantine/Primitives/Combobox`: 0 `word-split`, `viewport-overflow` and `component-overflow` on every portal root at every width and locale; in `Results` the badges and the phone or id sit below the name; in `Selected` / `SelectedBlocked` the check is on the name line.
 - **AC82 [R91; C19; C21; D5].** `TicketDetailDialogView` `Complaint` at 320/390/639/640 × sq/en/uk/it: the Reported user field shows the `user_no_name` text in full under its label.
-- **AC83 [R92; C22].** `AdminTable` `Synthesized` at 320/390/639/767 × sq/en/uk/it: KV-INLINE = 0; every value of the card has its label above it.
-- **AC84 [R93; R94; C16; C17].** `r15x-mobile.mjs` (body-wide) on the §30 Story set at 320/390/560/639/640/767/768 × sq/en/uk/it: KV-INLINE in record cards and fact panels 0, CUT 0 except `MantineDashboardStatCard` / `MantineDashboardBarChart` (921), AVATAR-OFF-CENTRE 0, ACTION-NOT-LAST 0, page overflow 0; the copy of the dialog-geometry probe: 0 violations.
+- **AC83 [R92; C22].** `AdminTable` `Synthesized` at 320/390/639/767 × sq/en/uk/it: KV-INLINE = 0 (`r15x-mobile.mjs`, a copy of `r14x-mobile.mjs` for the label/value rule the 923 gate does not measure); every value of the card has its label above it.
+- **AC84 [R93; R94; C16; C17; C28].** The R94 gate run over the §30 Story set adds 560 / 767 / 768: 0 violations on every root, except rows whose only violations are owned by 921 (`MantineDashboardStatCard`, `MantineDashboardBarChart`) or 922, each listed; the `card` JSDoc reads as R93 states.
 - **AC85 [R94; C25].** Governance start and end both recorded (start before the first write); vitest twice green; the §31.2 gates exit 0 except `check:surface-census:changed` (D78-30); the Story scan of the changed Story 0 hits; every changed test listed with its old and new assertion.
 
 ## 31.2 Verification, write set and completion (Revision 15)
@@ -3071,7 +3077,9 @@ COMPLETE` and, for the Story file, the `StorybookProof` registration through `.c
 precede the first write. Blast radius: every structured dialog, every bottom sheet and every combobox in the project;
 the GR-12 receipts name the dialog-header and combobox-option censuses.
 
-**The mobile receipt, exactly once per session and before any other mobile receipt** (copy verbatim, one line):
+**The mobile receipt, exactly once per session and before any other mobile receipt**, registered through the
+PowerShell tool as `.claude/rules/shared/mobile-adaptation-contract.md` requires:
+`& .\.claude\hooks\emit-phase-receipt.ps1 -Kind MobileAdaptation -Receipt '<the line below, verbatim>'`.
 
 ```text
 MOBILE ADAPTATION PREFLIGHT COMPLETE - surfaces: structured dialog header, bottom sheet header, combobox option row, ticket dialog fact panel and the synthesized AdminTable card of kickoff §31; component families: overlay-and-disclosure, form-picker-and-choice, record-list-and-data; pattern IDs: overlay-adaptive, form-stack, record-card, key-value-stack; standards: w3c-focus-order, w3c-hover-focus, apple-hig-sheets, android-common-layouts, android-adapt-layouts, w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, w3c-meaningful-sequence, apple-hig-lists-tables; mantine mechanism: responsive-props, media-query-exception; mantine owner: src/design-system/mantine/patterns/MantineModal.tsx; mobile range: <640px (theme.other.mobileGate / sm); mobile order: dialog drag handle, then the whole title and description, then the scrolling body, then the footer; picker option name, then its badges and phone or id; required content: no semantic loss; verification: src/stories/mantine/primitives/Modal.stories.tsx and the r15x dialog and picker Stories across actual <640px thresholds and the 640px transition x sq,en,uk,it.
@@ -3095,14 +3103,16 @@ the first write) and end, vitest twice, `typecheck`, `lint`, `build`, `build-sto
 `check:pattern-enrolment`, `check:design-tokens:strict`, `check:enrolled-tailwind`, `check:type-responsive`,
 `check:badge-canonical` (+`:verify`), `check:dialog-canonical` (+`:verify`), `check:ui-contract:verify`, the Story scan,
 `node scripts/check-mobile-adaptation-contract.mjs --verify-gate`, `check:backlog-active`,
-`check:surface-census:changed -- --base HEAD` (red only for `surface-limit-exceeded`, D78-30); copies of the
-dialog-geometry, users-pointer, play-check and group-width probes as `r15x-*`.
+`check:surface-census:changed -- --base HEAD` (red only for `surface-limit-exceeded`, D78-30),
+`check:rendered-state-census` with the R94 `--stories` set and `check:rendered-state-census:verify`; copies of the
+users-pointer, play-check and group-width probes as `r15x-*` (the dialog-geometry probe is replaced by the gate).
 
 **Write set.** `src/design-system/mantine/patterns/responsiveBottomSheet.tsx` (`bottomSheetDrawerStyles.header`
 only), `MantineModal.tsx` (`DialogHeading` and its JSDoc only), `MantineCombobox.tsx` (the two option renderers only),
 `MantineDataTableToCards.tsx` (the `card` JSDoc only); `src/components/admin/AdminTable.tsx` (`synthesizeCard` and its
-JSDoc); `src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx` (data only); the tests that assert the
-replaced anatomy (listed in the report); evidence `r15x-*`, the session log `# Revision 15`, the 859 backlog cell.
+JSDoc); `src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx` (data only);
+`scripts/rendered-interaction-states.json` (rows for the R94 Stories only, if 923 left one out); the tests that assert
+the replaced anatomy (listed in the report); evidence `r15x-*`, the session log `# Revision 15`, the 859 backlog cell.
 Every other file is frozen; touching one is a stop and report.
 
 **Owner visual review — O78-13 (after review 17).** At 320, 390, 639, 640 and 1440 in uk and en:
@@ -3114,4 +3124,4 @@ the sheet header whole, every name on whole words, nothing past the screen, ever
 evidence, the receipts, the gate block, a `Files Changed` table. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
 `PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27; owner decisions: D4, D5, D6; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28; owner decisions: D4, D5, D6, D7; blocked claims: NONE.

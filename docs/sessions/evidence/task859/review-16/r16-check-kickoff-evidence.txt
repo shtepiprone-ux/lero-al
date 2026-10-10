@@ -1,0 +1,2 @@
+﻿check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+EXIT_CODE=0

@@ -1,0 +1,82 @@
+﻿[
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/modals",
+  "w": 390,
+  "final": "https://demo.tailadmin.com/modals",
+  "triggers": 10,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/modals",
+  "w": 1440,
+  "final": "https://demo.tailadmin.com/modals?",
+  "triggers": 12,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-modals.html",
+  "w": 390,
+  "final": "https://techzaa.in/lahomes/admin/ui-modals.html",
+  "triggers": 0,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-modals.html",
+  "w": 1440,
+  "final": "https://techzaa.in/lahomes/admin/ui-modals.html",
+  "triggers": 0,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/ui-modal.html",
+  "w": 390,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "triggers": 1,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/ui-modal.html",
+  "w": 1440,
+  "final": "https://omah.dexignzone.com/xhtml/page-error-404.html",
+  "triggers": 1,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/ui-modals",
+  "w": 390,
+  "final": "https://kamr-vite.vercel.app/ui-modals",
+  "triggers": 0,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/ui-modals",
+  "w": 1440,
+  "final": "https://kamr-vite.vercel.app/ui-modals",
+  "triggers": 0,
+  "dialogsOpened": 0,
+  "cut": 0,
+  "sample": []
+ }
+]

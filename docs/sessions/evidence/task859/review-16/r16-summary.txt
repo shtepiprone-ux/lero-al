@@ -1,0 +1,22 @@
+Task 859 review 16 (Opus, 2026-10-10) - Revision 14 on the built Storybook of 2026-10-09 (storybook-static/index.json 20:06:36Z, after the last source write 20:05:59Z); win32, Node v22.22.3.
+
+A. Record cards, independent re-run of r14x-mobile.mjs (RE support|users|listings|providers|Table|inquiries, W 320,390,639,640,767, 4 locales) -> r16-cards.jsonl
+jobs 640, errors 0, error screens 0, page overflow 0
+record cards: label and value on one line 0 (every KV hit is the inquiry row date | reply count); avatar off centre 0; actions not last 0
+cut 180 distinct, every one latent clamp2 on the support stat-card labels (MantineDashboardStatCard, task 921)
+small targets: none below 640; at 640 and 767 the listings toolbar count buttons are 20px tall (outside record cards)
+
+B. Dialogs and pickers, r16-dialogs.mjs on document.body (the r15/r14x census scans #storybook-root only; a Modal or sheet renders in a portal outside it) -> r16-dialogs.jsonl
+80 Stories (src/stories/**Dialog|Modal|Picker|DetailList) x 320,390,639,640,1440 x 4 locales: jobs 1600, errors 0, error screens 0, page overflow 0, jobs with an open dialog 1268
+dialog title cut on screen: listingpreviewdialogview--active|320 ACTIVE clamp2+ellipsisStyle+overflowHidden "3+1 apartament në qendër të Tiranës — ka" (also --delete-confirm and --premium, 4 locales each)
+dialog title or description clamped (latent) in 12 Story files: adminuserprofiledialogsview, avatarcropmodal, createticketdialogview, currencydetaildialogview, currencyformdialogview, inquirydetaildialogview, listingpreviewdialogview, pageeditordialogview, premiumdialogview, providerformdialogview, reportdetaildialogview, ticketdetaildialogview
+sheet header squeezed below its content: ticketdetaildialogview--support 320 en 86<88, 320 sq/uk/it, 390 sq/en/uk/it 87<89; ticketdetaildialogview--with-timeline 320 sq 61<63; ticketdetaildialogview--updating 320 sq 61<63
+label and value on one line below 640 in a dialog or sheet: userpickerfieldview--results (name | badges + description), inquirydetaildialogview reply header (name | date, a wrapping Group)
+
+C. User picker sheet, r16-picker.mjs (patterns-mantine-userpickerfieldview--results) -> r16-picker.jsonl, r16-picker-<w>-<loc>.png
+320 uk Blerina Hoxha: nameW=0 lines=12 rightW=445 spillOpt=153 spillVp=153
+390 uk Blerina Hoxha: nameW=0 lines=12 rightW=445 spillOpt=83 spillVp=83
+320 uk Driton Berisha: nameW=0 lines=13 rightW=282
+640 every locale: the name on one line, nothing past the option
+
+D. GR-7 live (Claude in Chrome, 2026-10-10): TailAdmin /modals Default Modal opened by its "Open Modal" button; title h3 class "text-title-sm mb-7 font-semibold text-gray-800 dark:text-white/90", line clamp none, white-space normal; a long title set in the open modal wraps to 4 lines, clipped false. The modal has no role=dialog / aria-modal, which is why r16-ref-dialog-title.mjs opened nothing.

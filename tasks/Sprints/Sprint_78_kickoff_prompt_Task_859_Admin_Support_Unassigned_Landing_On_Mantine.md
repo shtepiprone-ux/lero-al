@@ -2701,7 +2701,7 @@ off by any amount is `BLOCKED — GR-3h`; a cut name is `BLOCKED — GR-3i`. No 
 
 ## 30. Revision 14 (review 15, 2026-10-09): `NEEDS REVISION` — owner return of O78-13: the mobile cards are squeezed desktop rows and content is cut (GR-3j)
 
-**This section is the only executable route, and it is self-contained.** §1–§29 are history; nothing in them adds
+**History since review 16 (2026-10-10): the executable route is §31.** Original text: **This section is the only executable route, and it is self-contained.** §1–§29 are history; nothing in them adds
 work. These earlier results stay as they are and are not reopened: the canonical badge and dialog anatomy (D78-18,
 D78-21…D78-29), the support table anatomy is 919's (D78-17), the vertical rhythm of §28–§29 (record card, records cell
 and inquiry row on `sm`; GR-3h), names wrap (GR-3i), and the surface-census red count (D78-30). **Re-entry:
@@ -2769,7 +2769,7 @@ dashboard info icons whose text is only a hover tooltip. 859 never changed these
 relied on). Primary sources: W3C Reflow, Apple HIG Layout and Lists and tables, Android Adapt layouts and Content
 structure (`scripts/mobile-adaptation-patterns.json`).
 
-## Claim ledger
+### Revision 14 claim ledger (history; literals as of 2026-10-09, before Revision 14's writes — the route is §31)
 
 | ID | Status | Claim | Evidence |
 |---|---|---|---|
@@ -2839,20 +2839,20 @@ structure (`scripts/mobile-adaptation-patterns.json`).
 | D6 | OWNER DECISION | No content is cut anywhere, the desktop tables included. | owner: 2026-10-09; decision: `Ніде не обрізати (Рекомендовано)` |
 | D7 | OWNER DECISION | The avatar is centred on the whole name block when the name wraps. | owner: 2026-10-09; decision: `По центру всього блоку імені (Рекомендовано)` |
 
-## Mobile adaptation record
-- Scope: visible
-- Surfaces: record card and labelled fields (`MantineDataTableToCards`, `MantineDetailList`) with every consumer below; support, users (All, Verified), listings, reports, inquiries, providers, pages, permissions, currencies tables; agent statistics; admin dashboard, recent listings, work list, stat rows; admin header; user profile account status; ticket dialog; user picker; badge label; long words in `Text`/`Anchor`
-- Component families: record-list-and-data, inline-status-and-utility-control
-- Pattern IDs: record-card, key-value-stack, data-table-to-cards, linear-flow, inline-control
-- Standards: w3c-reflow, w3c-meaningful-sequence, w3c-focus-order, w3c-target-size, apple-hig-layout, apple-hig-lists-tables, apple-hig-menus, android-adapt-layouts, android-layout-basics, android-common-layouts, android-content-structure, android-layout-navigation
-- Mantine mechanism: responsive-props, visibility-props
-- Mantine owner: src/design-system/mantine/patterns/MantineDataTableToCards.tsx, src/design-system/mantine/patterns/MantineDetailList.tsx, src/design-system/mantine/patterns/MantineDashboardWorkList.tsx, src/design-system/mantine/patterns/MantineDashboardStatRows.tsx, src/design-system/mantine/patterns/MantineBadge.tsx
-- Mobile range and switches: <640px (theme.other.mobileGate / sm) compact range; card switches at 768px (cardsBelow md) and 1024px (cardsBelow lg) where a table uses them; the primary row's measured badge state; 640px transition
-- Mobile order: record card = id (when present) → avatar + title + subtitle + status badge (+ chevron when the row opens) → badges row → fields (label above value) or free detail → actions; dialog fact panel = label above value per field
-- Required-content treatment: wrap; every text shows in full and its container grows; long words break inside the word; no clipping, clamp, ellipsis or tooltip-only text
-- Story and verification: direct Stories `Patterns/Mantine/DetailList`, `Mantine/Primitives/Table`, `Patterns/Mantine/DashboardWorkList`, `Mantine/Primitives/Badge`, then every composition Story of the census; 320/390/560/639/640/767/768 (both sides of 640 and 768) × sq/en/uk/it
+### Revision 14 mobile adaptation record (history; quoted so the checker reads §31's record)
+> - Scope: visible
+> - Surfaces: record card and labelled fields (`MantineDataTableToCards`, `MantineDetailList`) with every consumer below; support, users (All, Verified), listings, reports, inquiries, providers, pages, permissions, currencies tables; agent statistics; admin dashboard, recent listings, work list, stat rows; admin header; user profile account status; ticket dialog; user picker; badge label; long words in `Text`/`Anchor`
+> - Component families: record-list-and-data, inline-status-and-utility-control
+> - Pattern IDs: record-card, key-value-stack, data-table-to-cards, linear-flow, inline-control
+> - Standards: w3c-reflow, w3c-meaningful-sequence, w3c-focus-order, w3c-target-size, apple-hig-layout, apple-hig-lists-tables, apple-hig-menus, android-adapt-layouts, android-layout-basics, android-common-layouts, android-content-structure, android-layout-navigation
+> - Mantine mechanism: responsive-props, visibility-props
+> - Mantine owner: src/design-system/mantine/patterns/MantineDataTableToCards.tsx, src/design-system/mantine/patterns/MantineDetailList.tsx, src/design-system/mantine/patterns/MantineDashboardWorkList.tsx, src/design-system/mantine/patterns/MantineDashboardStatRows.tsx, src/design-system/mantine/patterns/MantineBadge.tsx
+> - Mobile range and switches: <640px (theme.other.mobileGate / sm) compact range; card switches at 768px (cardsBelow md) and 1024px (cardsBelow lg) where a table uses them; the primary row's measured badge state; 640px transition
+> - Mobile order: record card = id (when present) → avatar + title + subtitle + status badge (+ chevron when the row opens) → badges row → fields (label above value) or free detail → actions; dialog fact panel = label above value per field
+> - Required-content treatment: wrap; every text shows in full and its container grows; long words break inside the word; no clipping, clamp, ellipsis or tooltip-only text
+> - Story and verification: direct Stories `Patterns/Mantine/DetailList`, `Mantine/Primitives/Table`, `Patterns/Mantine/DashboardWorkList`, `Mantine/Primitives/Badge`, then every composition Story of the census; 320/390/560/639/640/767/768 (both sides of 640 and 768) × sq/en/uk/it
 
-## Requirements
+### Revision 14 requirements (history; verified in review 16 except AC73's dialog half, which §31 R91 carries)
 
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
@@ -2867,7 +2867,7 @@ structure (`scripts/mobile-adaptation-patterns.json`).
 | R86 [C36; D1; D4] | **Profile account status.** `AdminUserProfileView.tsx:355–370`: the account-type and status rows become `MantineDetailList variant="plain"` items (label above badge). | P2 | AC69 |
 | R87 [C42; D1; D4; D6] | **Stories, tests and report.** Stories pass data and public props only: `DetailList` gains a `Plain` export with the same items; `DashboardWorkList` drops `primaryIsName`; any card state missing from `Mantine/Primitives/Table` (actions row, row chevron, a long field value) is added as data to an existing export. A test that asserts the replaced anatomy (header actions, the 38% row, a clamp, `primaryIsName`) is updated to assert the new one; each is listed with its old and new assertion; no assertion is dropped without a replacement. The `# Revision 14` log carries one GR-3j receipt per surface of the Mobile adaptation record, the GR-3h, GR-3i and GR-12 receipts, and the classification of every census hit that remains. | P2 | AC77, AC78 |
 
-## Acceptance criteria
+### Revision 14 acceptance criteria (history)
 
 - **AC68 [R78; C7; C41; D4].** On `Patterns/Mantine/DetailList` (`Default`, `Plain`) and every dialog Story with a fact panel, at 320/390/639/640/1440 × sq/en/uk/it: every value's top is at or below its label's bottom; label → value gap 8px; field → field gap 20px; 0 fields with label and value on one line.
 - **AC69 [R79; R80; R81; R82; R86; C42; C43; C46; C48; D1; D3].** `r14x-mobile.mjs` (a copy of `review-15/r15-mobile.mjs`, same Story set and widths 320/390/560/639/640/767/768 × sq/en/uk/it): KV-INLINE inside record cards and fact panels = 0. Every remaining hit is listed with one of three classes — chart card header (title | period), stat row (label | count), inquiry row (date | reply count).
@@ -2951,3 +2951,167 @@ block, a `Files Changed` table. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REV
 `BLOCKED — GR-3h`. No Git.
 
 KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58; owner decisions: D1, D2, D3, D4, D5, D6, D7; blocked claims: NONE.
+
+## 31. Revision 15 (review 16, 2026-10-10): `NEEDS REVISION` — dialogs and the picker sheet were never measured: a squeezed sheet header, clamped dialog titles, a picker name one letter per line
+
+**This section is the only executable route, and it is self-contained.** §1–§30 are history; nothing in them adds
+work. Revision 14 (R78–R87) is verified on the record cards and stays as it is: label above value (`MantineDetailList`),
+one record-card order, no clamp in the §30 files, the badge label and long-word rules, `user_no_name`. **Re-entry:
+`remediation`** on the current uncommitted tree. Evidence goes to `docs/sessions/evidence/task859/r15x-*` (Sonnet);
+`review-16/` and `research-review/r16*` are the reviewer's. Do not write to `review-*/` or `research-review/`.
+
+**Read first, in this order:** `.claude/rules/shared/mobile-adaptation-contract.md`,
+`docs/rules/golden/gr-3j-mobile-adaptation.md`, `.claude/rules/shared/ui-token-contract.md`,
+`.claude/rules/shared/enforcement-model.md`, `.claude/rules/shared/storybook-proof.md`, then this section.
+
+### 31.1 What review 16 found (FACT, `review-16/r16-summary.txt`)
+
+The GR-3j census of review 15 and its executor copy read only `#storybook-root` (C17). A Mantine `Modal`, the bottom
+sheet and the combobox sheet render in a portal under `<body>`, so no dialog or picker content was ever measured.
+Review 16 ran the same probe on `document.body` over every dialog, picker and fact-panel Story (C15):
+
+| Defect | Where | Cause in source |
+|---|---|---|
+| The sheet header is squeezed below its content | `TicketDetailDialogView` `Support` at 320 and 390 in four locales, `WithTimeline` / `Updating` at 320 (C13) | the sheet is capped at `90dvh` (C3) and its header keeps the flex default `flex-shrink: 1` (C4); the desktop `Modal` header already has `flexShrink: 0` (C5) |
+| A dialog title is cut on screen | `ListingPreviewDialogView` `Active` / `DeleteConfirm` / `Premium` at 320, four locales (C11) | `DialogHeading` clamps the title and the description to two lines (C1, C2) |
+| A dialog title or description is clamped (not yet overflowing) | 12 dialog Story files (C12) | the same clamp |
+| A picker option's name is 0px wide, one letter per line, and the user id runs 153px past the screen | `UserPickerFieldView` `Results` at 320 and 390 (C14) | the option's right column (badges + description) is `nowrap` and never shrinks (C6, C7); the name uses `wordBreak: 'break-word'`, so it can shrink to one letter (C8, C9); R81(d) made the description the full user id when there is no phone (C10) |
+| AC73's dialog half has no Story | `TicketDetailDialogView` Stories use tickets whose users all have a name (C18); the nameless user is fixture `tkt-005` (C19) | Story data |
+| The synthesized `AdminTable` card shows two values without labels ("$ \| US Dollar") | `AdminTable` `Synthesized` Story only (no production consumer omits `cardRow`) | the first two columns become an unlabelled badges row (C22) |
+
+Record cards pass (C16). **GR-7 (review 16, live in Chrome):** TailAdmin `/modals` — a long title in the open modal
+wraps to four lines and nothing is cut (C24). The project's own rule decides it in any case: no content is cut
+anywhere (D6).
+
+**Outside this task, filed as 922 (Sprint 78, 16d tier 3):** listings toolbar count buttons 20px tall at 640–767,
+`MantinePagination` 32×32 below the agent-statistics cards, the `AdminPermissionsView` switch, `AdminSidebar` and
+`RangeDatePicker` label truncation.
+
+## Claim ledger
+
+| ID | Status | Claim | Evidence |
+|---|---|---|---|
+| C1 | FACT | The structured dialog heading clamps its title to two lines. | source: `src/design-system/mantine/patterns/MantineModal.tsx:52-52`; observed: `<Text component="span" fz="lg" fw={600} lineClamp={2}>` |
+| C2 | FACT | The structured dialog heading clamps its description to two lines. | source: `src/design-system/mantine/patterns/MantineModal.tsx:61-61`; observed: `<Text fz="sm" c="dimmed" lineClamp={2}>{description}</Text>` |
+| C3 | FACT | The bottom sheet is capped at 90dvh. | source: `src/design-system/mantine/patterns/responsiveBottomSheet.tsx:21-21`; observed: `maxHeight: '90dvh',` |
+| C4 | FACT | The bottom sheet's header style sets no flex-shrink. | source: `src/design-system/mantine/patterns/responsiveBottomSheet.tsx:25-25`; observed: `header: { paddingBottom: 0 },` |
+| C5 | FACT | The desktop Modal header never shrinks. | source: `src/design-system/mantine/theme.ts:1346-1346`; observed: `header: { paddingBottom: '0.5rem', flexShrink: 0 }` |
+| C6 | FACT | The desktop combobox option keeps badges and description in a non-wrapping, non-shrinking group. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:268-268`; observed: `<Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>` |
+| C7 | FACT | The sheet combobox option keeps badges and description in a non-wrapping, non-shrinking group. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:483-483`; observed: `<Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>` |
+| C8 | FACT | The sheet option's name may break between any two letters. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:479-479`; observed: `style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 0 }}` |
+| C9 | FACT | The desktop option's name may break between any two letters. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:265-265`; observed: `<span style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 0 }}>` |
+| C10 | FACT | The user picker describes an option by its phone, else the full user id. | source: `src/components/admin/UserPickerFieldView.tsx:62-62`; observed: `description: user.phone ?? user.id,` |
+| C11 | FACT | The listing preview dialog's title is cut at 320. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:11-11`; observed: `ACTIVE clamp2+ellipsisStyle+overflowHidden "3+1 apartament` |
+| C12 | FACT | Twelve dialog Story files render a clamped title or description. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:12-12`; observed: `dialog title or description clamped (latent) in 12 Story files` |
+| C13 | FACT | The ticket dialog sheet header is squeezed at 320 and 390. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:13-13`; observed: `ticketdetaildialogview--support 320 en 86<88` |
+| C14 | FACT | A picker name is 0px wide on 12 lines and the id runs 153px past the screen at 320. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:17-17`; observed: `320 uk Blerina Hoxha: nameW=0 lines=12 rightW=445 spillOpt=153 spillVp=153` |
+| C15 | FACT | The body-wide dialog census ran 1 600 jobs, 1 268 with an open dialog, without errors or page overflow. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:10-10`; observed: `jobs 1600, errors 0, error screens 0, page overflow 0, jobs with an open dialog 1268` |
+| C16 | FACT | The record cards have no label and value on one line. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:5-5`; observed: `record cards: label and value on one line 0` |
+| C17 | FACT | The review-15 census reads only the Storybook root. | source: `docs/sessions/evidence/task859/review-15/r15-mobile.mjs:33-33`; observed: `const root = document.querySelector('#storybook-root') ?? document.body` |
+| C18 | FACT | The ticket dialog Stories build their complaint ticket from the second base fixture. | source: `src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx:31-32`; observed: `const COMPLAINT_TICKET: SupportTicketRow = { ...FIXTURE_TICKETS[1]` |
+| C19 | FACT | Fixture tkt-005 has a reported user without a name. | source: `src/stories/fixtures/admin.fixtures.ts:774-774`; observed: `reported: { id: 'usr-006', name: null },` |
+| C20 | FACT | Fixture tkt-004 has a long subject. | source: `src/stories/fixtures/admin.fixtures.ts:750-751`; observed: `Premium nuk u gjenerua pas` |
+| C21 | FACT | The ticket dialog shows the no-name text for a user without a name. | source: `src/components/admin/TicketDetailDialogView.tsx:64-64`; observed: `user.name ?? t('user_no_name')` |
+| C22 | FACT | The synthesized AdminTable card renders its first two columns as unlabelled spans. | source: `src/components/admin/AdminTable.tsx:103-103`; observed: `subtitleCols.map(c => <span key={c.key}>{c.cell(row)}</span>)` |
+| C23 | FACT | The card prop's JSDoc still describes an aligned label:value layout. | source: `src/design-system/mantine/patterns/MantineDataTableToCards.tsx:275-275`; observed: `When absent, the generic aligned label:value layout is used` |
+| C24 | FACT | TailAdmin's modal title wraps and is not clipped. | source: `docs/sessions/evidence/task859/review-16/r16-summary.txt:22-22`; observed: `a long title set in the open modal wraps to 4 lines, clipped false` |
+| C25 | FACT | Revision 14 took no governance baseline before its first write. | source: `docs/sessions/2026-10-04-task859-admin-support-mantine.md:1605-1605`; observed: `Governance start baseline: not taken.` |
+| C26 | FACT | The theme spacing xs token is 8px. | source: `src/design-system/mantine/theme.ts:663-663`; observed: `xs: '0.5rem',` |
+| C27 | FACT | A sheet option is at least 44px tall. | source: `src/design-system/mantine/patterns/MantineCombobox.tsx:470-470`; observed: `mih="2.75rem"` |
+| D4 | OWNER DECISION | Labelled fields: label above value at every width. | owner: 2026-10-09; decision: `Назва над значенням завжди (Рекомендовано)` |
+| D5 | OWNER DECISION | A user without a name shows the text "No name". | owner: 2026-10-09; decision: `Текст «Без імені» (Рекомендовано)` |
+| D6 | OWNER DECISION | No content is cut anywhere. | owner: 2026-10-09; decision: `Ніде не обрізати (Рекомендовано)` |
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: the structured dialog header (`MantineModal` title and description; the `responsiveBottomSheet` header) in every structured dialog; the combobox option row (`MantineCombobox`, dropdown and sheet) in `UserPickerFieldView`; the ticket dialog fact panel (No name); the synthesized `AdminTable` card fields
+- Component families: overlay-and-disclosure, form-picker-and-choice, record-list-and-data
+- Pattern IDs: overlay-adaptive, form-stack, record-card, key-value-stack
+- Standards: w3c-focus-order, w3c-hover-focus, apple-hig-sheets, android-common-layouts, android-adapt-layouts, w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, w3c-meaningful-sequence, apple-hig-lists-tables
+- Mantine mechanism: responsive-props, media-query-exception
+- Mantine owner: src/design-system/mantine/patterns/MantineModal.tsx, src/design-system/mantine/patterns/responsiveBottomSheet.tsx, src/design-system/mantine/patterns/MantineCombobox.tsx, src/design-system/mantine/patterns/MantineDataTableToCards.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm) compact range — the dialog and the combobox are bottom sheets below 640 (the existing `useResponsiveDropdown`, unchanged), a centred modal / dropdown from 640; `AdminTable` cards below 768 (cardsBelow md); 640px transition
+- Mobile order: dialog = drag handle → icon + whole title → description → divider → body (the only scroller) → footer; picker option = name (wraps between words) with the check at its end → badges, then the phone or user id; synthesized card = title → fields (label above value)
+- Required-content treatment: wrap; titles, descriptions, names and ids show in full and their container grows; no clamp, ellipsis, squeezed header or text past the screen
+- Story and verification: `Mantine/Primitives/Modal`, `Patterns/Mantine/TicketDetailDialogView`, `Patterns/Mantine/ListingPreviewDialogView`, `Patterns/Mantine/UserPickerFieldView`, `Patterns/Mantine/AdminTable` and every dialog Story of `r15x-dialogs`; 320/390/639/640/1440 × sq/en/uk/it
+
+## Requirements
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R88 [C3; C4; C5; C13; D6] | **The sheet header never shrinks (GR-0 EXTEND `responsiveBottomSheet`).** `bottomSheetDrawerStyles.header` becomes `{ paddingBottom: 0, flexShrink: 0 }`, the rule the desktop `Modal` header already has; the body stays the only scroller (`flex: 1`, `minHeight: 0`). A comment cites this requirement. | P1 | AC79 |
+| R89 [C1; C2; C11; C12; C24; D6] | **A dialog title and description are never cut (GR-0 EXTEND `MantineModal`).** `DialogHeading` drops `lineClamp={2}` from the title and the description; both wrap and the header grows (the non-shrinking sheet header above keeps it whole). The JSDoc states D6. No other change to the dialog anatomy, focus, dismissal or keyboard behaviour. | P1 | AC80 |
+| R90 [C6; C7; C8; C9; C10; C14; C26; C27; D6] | **One combobox option anatomy (GR-0 EXTEND `MantineCombobox`), in both renderers, at every width.** Line 1: the label, wrapping between words, with the selected check at its end; the label's `wordBreak: 'break-word'` becomes `overflowWrap: 'break-word'` (a word is never split into letters while it fits the line). Line 2, only when the option has an adornment or a description: `Group gap="xs" wrap="wrap"` with the adornment, then the description (`Text size="xs" c="gray.5" miw={0}`; a long id breaks inside the word). Line 1 → line 2 is `Stack gap="xs"`. The `nowrap` + `flexShrink: 0` right column goes. The sheet option keeps `mih="2.75rem"`. `UserPickerFieldView` is unchanged. | P1 | AC81 |
+| R91 [C18; C19; C20; C21; D5] | **Story data (data only).** `TicketDetailDialogView.stories.tsx`: `SUPPORT_TICKET` is built from `FIXTURE_SUPPORT_TICKETS_EXTRA[0]` (tkt-004, the long subject: proves the whole sheet header and the unclamped title); `Complaint` renders `FIXTURE_SUPPORT_TICKETS_EXTRA[1]` (tkt-005, the reported user without a name: AC73's dialog half); `WithTimeline` and `Updating` keep `COMPLAINT_TICKET`. | P2 | AC82 |
+| R92 [C22; D4] | **The synthesized `AdminTable` card labels every value.** Without `cardRow`, every column except the title column is a field (label = the column `header`, value = the cell); the unlabelled badges row of the synthesized card goes. The `AdminTable` JSDoc states it. | P2 | AC83 |
+| R93 [C23] | **JSDoc.** The `card` prop's JSDoc in `MantineDataTableToCards` describes the generic card as Revision 14 built it (the same shell, label above value). | P3 | AC84 |
+| R94 [C15; C16; C17; C25] | **Proof covers portals; governance baseline first.** Every census copy reads `document.body`: `r15x-dialogs.mjs` (a copy of `review-16/r16-dialogs.mjs`), `r15x-picker.mjs` (a copy of `review-16/r16-picker.mjs`), `r15x-mobile.mjs` (a copy of `r14x-mobile.mjs` with its root set to `document.body`). `npm run governance` runs before the first write and after the last. | P2 | AC84, AC85 |
+
+## Acceptance criteria
+
+- **AC79 [R88; C13].** `r15x-dialogs.mjs` (80 Stories × 320/390/639/640/1440 × sq/en/uk/it): `headerSqueezed` is empty in every job; `TicketDetailDialogView` `Support` (tkt-004, long subject) at 320 and 390 shows its whole header, and its body still scrolls.
+- **AC80 [R89; C11; C12].** The same run: every dialog cut hit (ACTIVE and latent) on a dialog title or description = 0; `ListingPreviewDialogView` `Active` at 320 shows the whole listing title. Every remaining dialog hit is listed by Story and text with its cause (expected: the Mantine `Alert` title's latent `ellipsisStyle`, which wraps).
+- **AC81 [R90; C14].** `r15x-picker.mjs` on `UserPickerFieldView` `Results` at 320/390/639/640 × sq/en/uk/it: every option's name is at least as wide as its longest word (no word split into letters); the badges and description sit below the name (their top ≥ the name's bottom); `spillPastOption ≤ 0` and `spillPastViewport ≤ 0`. The same probe on `Selected` and `SelectedBlocked`: the selected check is on the name line.
+- **AC82 [R91; C19; C21; D5].** `TicketDetailDialogView` `Complaint` at 320/390/639/640 × sq/en/uk/it: the Reported user field shows the `user_no_name` text in full under its label.
+- **AC83 [R92; C22].** `AdminTable` `Synthesized` at 320/390/639/767 × sq/en/uk/it: KV-INLINE = 0; every value of the card has its label above it.
+- **AC84 [R93; R94; C16; C17].** `r15x-mobile.mjs` (body-wide) on the §30 Story set at 320/390/560/639/640/767/768 × sq/en/uk/it: KV-INLINE in record cards and fact panels 0, CUT 0 except `MantineDashboardStatCard` / `MantineDashboardBarChart` (921), AVATAR-OFF-CENTRE 0, ACTION-NOT-LAST 0, page overflow 0; the copy of the dialog-geometry probe: 0 violations.
+- **AC85 [R94; C25].** Governance start and end both recorded (start before the first write); vitest twice green; the §31.2 gates exit 0 except `check:surface-census:changed` (D78-30); the Story scan of the changed Story 0 hits; every changed test listed with its old and new assertion.
+
+## 31.2 Verification, write set and completion (Revision 15)
+
+`GR-4 AC AUDIT — 7 new criteria (AC79–AC85); each states an observable property; absolutes: "headerSqueezed is empty in every job", "cut hit on a dialog title or description = 0", "spillPastViewport ≤ 0", "KV-INLINE = 0".`
+
+**Canonical decision record.** GR-0 `EXTEND responsiveBottomSheet` (sheet header; direct Story
+`src/stories/mantine/primitives/Modal.stories.tsx`); GR-0 `EXTEND MantineModal` (dialog heading; same direct Story);
+GR-0 `EXTEND MantineCombobox` (option row; direct Story `src/stories/mantine/primitives/Combobox.stories.tsx` and
+`Patterns/Mantine/UserPickerFieldView`); GR-0 `EXTEND AdminTable` (synthesized card; direct Story
+`Patterns/Mantine/AdminTable`); existing tokens `xs`, `touchTarget`; no new token, component, manifest entry or registry
+row. The receipts `MOBILE ADAPTATION PREFLIGHT COMPLETE`, `GR-0 CANONICAL REUSE PREFLIGHT`, `UI CONTRACT PREFLIGHT
+COMPLETE` and, for the Story file, the `StorybookProof` registration through `.claude/hooks/emit-phase-receipt.ps1`
+precede the first write. Blast radius: every structured dialog, every bottom sheet and every combobox in the project;
+the GR-12 receipts name the dialog-header and combobox-option censuses.
+
+**The mobile receipt, exactly once per session and before any other mobile receipt** (copy verbatim, one line):
+
+```text
+MOBILE ADAPTATION PREFLIGHT COMPLETE - surfaces: structured dialog header, bottom sheet header, combobox option row, ticket dialog fact panel and the synthesized AdminTable card of kickoff §31; component families: overlay-and-disclosure, form-picker-and-choice, record-list-and-data; pattern IDs: overlay-adaptive, form-stack, record-card, key-value-stack; standards: w3c-focus-order, w3c-hover-focus, apple-hig-sheets, android-common-layouts, android-adapt-layouts, w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, w3c-meaningful-sequence, apple-hig-lists-tables; mantine mechanism: responsive-props, media-query-exception; mantine owner: src/design-system/mantine/patterns/MantineModal.tsx; mobile range: <640px (theme.other.mobileGate / sm); mobile order: dialog drag handle, then the whole title and description, then the scrolling body, then the footer; picker option name, then its badges and phone or id; required content: no semantic loss; verification: src/stories/mantine/primitives/Modal.stories.tsx and the r15x dialog and picker Stories across actual <640px thresholds and the 640px transition x sq,en,uk,it.
+```
+
+A wrong first receipt cannot be repaired in the same session: stop, report it, and the owner starts a fresh session.
+
+**Negative flows.**
+
+| Branch | Applicable? | Expected behaviour | Evidence |
+|---|---:|---|---|
+| A title longer than the sheet can show | Yes | the header grows, the body scrolls, the footer stays | AC79 |
+| An option with no phone | Yes | the full id on line 2, broken inside the word | AC81 |
+| An option with no adornment and no description | Yes | one line, no empty second row | AC81 (Combobox Stories) |
+| A user without a name in the dialog | Yes | "No name", still a profile link | AC82 |
+| Validation / authorization / network / concurrent writer | No | presentation only | — |
+
+**QA profile Q4.** **Gates**, each after the last source write (`r15x-60-hashes-end.txt`): governance start (before
+the first write) and end, vitest twice, `typecheck`, `lint`, `build`, `build-storybook`, `check:story-coverage`,
+`check:stories`, `check:rendered-scope` (+`:verify`), `check:i18n`, `check:file-integrity`, `check:mojibake`,
+`check:pattern-enrolment`, `check:design-tokens:strict`, `check:enrolled-tailwind`, `check:type-responsive`,
+`check:badge-canonical` (+`:verify`), `check:dialog-canonical` (+`:verify`), `check:ui-contract:verify`, the Story scan,
+`node scripts/check-mobile-adaptation-contract.mjs --verify-gate`, `check:backlog-active`,
+`check:surface-census:changed -- --base HEAD` (red only for `surface-limit-exceeded`, D78-30); copies of the
+dialog-geometry, users-pointer, play-check and group-width probes as `r15x-*`.
+
+**Write set.** `src/design-system/mantine/patterns/responsiveBottomSheet.tsx` (`bottomSheetDrawerStyles.header`
+only), `MantineModal.tsx` (`DialogHeading` and its JSDoc only), `MantineCombobox.tsx` (the two option renderers only),
+`MantineDataTableToCards.tsx` (the `card` JSDoc only); `src/components/admin/AdminTable.tsx` (`synthesizeCard` and its
+JSDoc); `src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx` (data only); the tests that assert the
+replaced anatomy (listed in the report); evidence `r15x-*`, the session log `# Revision 15`, the 859 backlog cell.
+Every other file is frozen; touching one is a stop and report.
+
+**Owner visual review — O78-13 (after review 17).** At 320, 390, 639, 640 and 1440 in uk and en:
+`TicketDetailDialogView` `Support` and `Complaint`, `ListingPreviewDialogView` `Active`, `UserPickerFieldView`
+`Results`, `Mantine/Primitives/Modal` `Structured`, `AdminTable` `Synthesized`, plus the §30.4 list: every title whole,
+the sheet header whole, every name on whole words, nothing past the screen, every value under its label.
+
+**Completion.** Append `# Revision 15` to the session log: I0 (hashes, governance start), R88–R94 with AC79–AC85
+evidence, the receipts, the gate block, a `Files Changed` table. Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`,
+`PARTIALLY IMPLEMENTED` or `BLOCKED`. No Git.
+
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27; owner decisions: D4, D5, D6; blocked claims: NONE.

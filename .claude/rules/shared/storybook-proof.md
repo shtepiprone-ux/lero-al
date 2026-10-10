@@ -24,11 +24,15 @@ viewport is not a distinct proof surface. Probe-only Story markup must be revers
 - Every block keeps its container's vertical rhythm — one spacing token between blocks, dividers included, so a badge
   row sits as far from its title as from the divider below — and a person's name wraps instead of being cut (GR-3h,
   GR-3i). A rhythm break means the task is not done. Measure both on the built Storybook at every width of the
-  canonical matrix and on both sides of every layout switch, in all four locales. A sample of two widths does not
-  prove either rule.
+  canonical matrix and on both sides of every layout switch, in all four locales. Apply the chosen compact semantic
+  pattern from `shared/mobile-adaptation-contract.md`: throughout the applicable `<640px` range, semantic content
+  follows its recorded treatment and order and has no horizontal overflow or clipping. Verify every actual component
+  threshold and the `640px` transition; a hand-picked sample does not prove either rule.
+- A Story whose component opens an overlay has a row per opening state in `scripts/rendered-interaction-states.json`,
+  and its proof is the rendered state census over the app root and each portal root (`shared/rendered-state-census.md`).
 - Operate every Story control at 390 and 1440. If a real action fails or the control does nothing, provide a proper
   presentational view/stateful harness rather than handing over a broken Story.
 
-For each changed Story, apply its relevant GR-3b…GR-3i and GR-9 receipts from `docs/golden-rules.md`. A visual
+For each changed Story, apply its relevant GR-3b…GR-3j and GR-9 receipts from `docs/golden-rules.md`. A visual
 change also needs the owner matrix of exact Story/state/locale/viewport tuples; `screenshots:assert` is retired and
 cannot replace owner visual QA.

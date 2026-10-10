@@ -6,8 +6,11 @@ Validate the implementation; do not conduct an implementation review or issue an
 2. Inspect the actual diff against the task's write scope and `Files Changed` table.
 3. Run the exact task/QA commands and retain unpiped transcripts with real exit codes. For every non-Q0 task, run the
    final `npm run build`; a failed or unrun build means `PARTIALLY IMPLEMENTED` or `BLOCKED`.
-4. Produce the task's rendered evidence at required viewports/locales; apply `shared/storybook-proof.md` and the
-   final GR-12 parity census for visible work. Build/typecheck alone does not prove visual behavior.
+4. Produce the task's rendered evidence at required viewports/locales, over the app root and every portal root of
+   each registered interaction state (`shared/rendered-state-census.md`); apply `shared/mobile-adaptation-contract.md`,
+   `shared/storybook-proof.md`, and the final GR-12 parity census for visible work. Include the saved Mantine
+   mechanism/owner in the evidence and flag any unsupported parallel viewport logic. Build/typecheck alone does not
+   prove visual behavior.
 5. Recheck file integrity, active downstream consumers for deletes/renames, and the direct Story/registration for
    every newly created production UI component.
 6. List every owner visual-QA tuple as `OWNER VISUAL QA REQUIRED`; never mark it visually passed on the owner's behalf.

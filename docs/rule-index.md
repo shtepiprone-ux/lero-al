@@ -9,8 +9,11 @@ not use.
 
 1. Classify the role and task type; read the matching compact parent and its current phase file.
 2. Read the Always Required bundle.
-3. For visible UI, tokens, Stories, or visual review, read `.claude/rules/shared/ui-token-contract.md`; for Story
-   work also read `.claude/rules/shared/storybook-proof.md`.
+3. For visible UI, tokens, Stories, or visual review, read `.claude/rules/shared/mobile-adaptation-contract.md` (its
+   registry selects the compatible Mantine mechanism and canonical owner), then
+   `.claude/rules/shared/ui-token-contract.md`; for Story
+   work also read `.claude/rules/shared/storybook-proof.md`; for any surface that opens an overlay also read
+   `.claude/rules/shared/rendered-state-census.md` (app root and every portal root, owner decision 2026-10-10).
 4. Read only the matching task bundle and relevant optional files.
 5. Select a QA profile from `docs/qa-profiles.md`.
 6. If a task spans multiple types, include each matching bundle and state the boundary.
@@ -54,6 +57,8 @@ Required:
 - `docs/component-rules.md`
 - `docs/ui-rules.md` - routing and legacy boundary notes only.
 - `docs/qa-rules.md` - validation and encoding rules.
+- `docs/rules/golden/gr-3j-mobile-adaptation.md` - source-backed semantic mobile adaptation that complements, never
+  replaces, Mantine responsive mechanism; current Stories are proof targets, not pattern authority.
 
 Optional if relevant:
 
@@ -71,6 +76,7 @@ Required:
 - `docs/component-rules.md`
 - `docs/design-system.md`
 - `docs/qa-rules.md`
+- `docs/rules/golden/gr-3j-mobile-adaptation.md` - applies across implementation systems.
 
 Optional if relevant:
 

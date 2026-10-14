@@ -1,0 +1,12 @@
+platform win32 v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/review-2/rv2-hover-probe.mjs relativetime adminlistingsview--default adminreportsview--default
+mantine-primitives-relativetime--default @390: 8 non-candidate hover targets, 0 open a portal
+mantine-primitives-relativetime--default @1440: 8 non-candidate hover targets, 0 open a portal
+mantine-primitives-relativetime--with-base-date @390: 1 non-candidate hover targets, 0 open a portal
+mantine-primitives-relativetime--with-base-date @1440: 1 non-candidate hover targets, 0 open a portal
+patterns-mantine-adminlistingsview--default @390: 0 non-candidate hover targets, 0 open a portal
+patterns-mantine-adminlistingsview--default @1440: 10 non-candidate hover targets, 0 open a portal
+patterns-mantine-adminreportsview--default @390: 0 non-candidate hover targets, 0 open a portal
+patterns-mantine-adminreportsview--default @1440: 6 non-candidate hover targets, 0 open a portal
+EXIT_CODE=0

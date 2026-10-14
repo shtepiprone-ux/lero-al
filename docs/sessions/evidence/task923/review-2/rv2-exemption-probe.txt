@@ -1,0 +1,12 @@
+platform win32 v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/review-2/rv2-exemption-probe.mjs
+rv2-control-benign app GREEN 
+rv2-control-benign portal:0 GREEN 
+rv2-abs-past-dialog app GREEN 
+rv2-abs-past-dialog portal:0 GREEN 
+rv2-transform-past-dialog app GREEN 
+rv2-transform-past-dialog portal:0 GREEN 
+rv2-abs-past-dialog geometry: dialog x 16..310; planted text x 212..332; viewport 0..390
+rv2-transform-past-dialog geometry: dialog x 16..310; planted text x 212..332; viewport 0..390
+EXIT_CODE=0

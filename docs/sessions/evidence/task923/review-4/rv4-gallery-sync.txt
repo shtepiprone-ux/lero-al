@@ -1,0 +1,10 @@
+platform win32 node v22.22.3
+rv4-gallery-probe.txt patterns-mantine-listingdetailpattern--default @320: track box x -272..16; slide in the frame #1 (aria-hidden null, tabindex null); named tabbable slide #1 at x 16..304; in sync true
+rv4-gallery-probe.txt patterns-mantine-listinggallerypattern--default @320: track box x -560..-272; slide in the frame #2 (aria-hidden true, tabindex -1); named tabbable slide #1 at x -272..16; in sync false
+rv4-gallery-probe.txt patterns-mantine-listingdetailpattern--default @639: track box x -591..16; slide in the frame #1 (aria-hidden null, tabindex null); named tabbable slide #1 at x 16..623; in sync true
+rv4-gallery-probe.txt patterns-mantine-listinggallerypattern--default @639: track box x -1198..-591; slide in the frame #2 (aria-hidden true, tabindex -1); named tabbable slide #1 at x -591..16; in sync false
+rv4-gallery-probe-2.txt patterns-mantine-listingdetailpattern--default @320: track box x -272..16; slide in the frame #1 (aria-hidden null, tabindex null); named tabbable slide #1 at x 16..304; in sync true
+rv4-gallery-probe-2.txt patterns-mantine-listinggallerypattern--default @320: track box x -560..-272; slide in the frame #2 (aria-hidden true, tabindex -1); named tabbable slide #1 at x -272..16; in sync false
+rv4-gallery-probe-2.txt patterns-mantine-listingdetailpattern--default @639: track box x -591..16; slide in the frame #1 (aria-hidden null, tabindex null); named tabbable slide #1 at x 16..623; in sync true
+rv4-gallery-probe-2.txt patterns-mantine-listinggallerypattern--default @639: track box x -1198..-591; slide in the frame #2 (aria-hidden true, tabindex -1); named tabbable slide #1 at x -591..16; in sync false
+EXIT_CODE=0

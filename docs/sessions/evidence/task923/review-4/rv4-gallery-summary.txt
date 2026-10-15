@@ -1,0 +1,14 @@
+platform win32 node v22.22.3
+patterns-mantine-listingdetailpattern--default @320 track: box x -272..16 bound x 16..304; slides wholly outside 6, of them aria-hidden+tabindex=-1+no text 6; slides inside 1, tabbable and named: button tabindex=null label="Modern Apartment in Tirana"
+patterns-mantine-listingdetailpattern--default @320 counter: "1 / 5" y 444..470 bound y 104..444; computed top 340px bottom -26px left 0px; inline style "pointer-events: none; position: absolute;"
+patterns-mantine-listinggallerypattern--default @320 track: box x -560..-272 bound x 16..304; slides wholly outside 10, of them aria-hidden+tabindex=-1+no text 9; slides inside 1, tabbable and named: button tabindex=-1 label="null"
+patterns-mantine-listinggallerypattern--default @320 counter: "1 / 9" y 408..434 bound y 68..408; computed top 340px bottom -26px left 0px; inline style "pointer-events: none; position: absolute;"
+patterns-mantine-listingdetailpattern--default @639 track: box x -591..16 bound x 16..623; slides wholly outside 6, of them aria-hidden+tabindex=-1+no text 6; slides inside 1, tabbable and named: button tabindex=null label="Modern Apartment in Tirana"
+patterns-mantine-listingdetailpattern--default @639 counter: "1 / 5" y 444..470 bound y 104..444; computed top 340px bottom -26px left 0px; inline style "pointer-events: none; position: absolute;"
+patterns-mantine-listinggallerypattern--default @639 track: box x -1198..-591 bound x 16..623; slides wholly outside 10, of them aria-hidden+tabindex=-1+no text 9; slides inside 1, tabbable and named: button tabindex=-1 label="null"
+patterns-mantine-listinggallerypattern--default @639 counter: "1 / 9" y 390..416 bound y 50..390; computed top 340px bottom -26px left 0px; inline style "pointer-events: none; position: absolute;"
+patterns-mantine-listingdetailpattern--default @640 track: none (desktop branch)
+patterns-mantine-listingdetailpattern--default @640 counter: "1 / 5" y 104..130 bound y 104..524; computed top 0px bottom 394px left 0px; inline style "pointer-events: none; position: absolute;"
+patterns-mantine-listinggallerypattern--default @640 track: none (desktop branch)
+patterns-mantine-listinggallerypattern--default @640 counter: "1 / 9" y 50..76 bound y 50..470; computed top 0px bottom 394px left 0px; inline style "pointer-events: none; position: absolute;"
+EXIT_CODE=0

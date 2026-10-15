@@ -1,0 +1,2456 @@
+platform win32 node v22.22.3
+
+== patterns-mantine-listingdetailpattern--default @320
+{
+ "tracks": [
+  {
+   "track": [
+    -272,
+    16,
+    104,
+    444
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     104,
+     444
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      104,
+      444
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    2172,
+    2512
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     2172,
+     2512
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      2172,
+      2512
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      2172,
+      2512
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    4169,
+    4509
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     4169,
+     4509
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      4169,
+      4509
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      4169,
+      4509
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    8043,
+    8383
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     8043,
+     8383
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      8043,
+      8383
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      8043,
+      8383
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    9709,
+    10049
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     9709,
+     10049
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      9709,
+      10049
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      9709,
+      10049
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    11890,
+    12230
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     11890,
+     12230
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      11890,
+      12230
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      11890,
+      12230
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -272,
+    16,
+    14016,
+    14356
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     14016,
+     14356
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      14016,
+      14356
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      14016,
+      14356
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  }
+ ],
+ "counters": [
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    444,
+    470
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     104,
+     444
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    2512,
+    2538
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     2172,
+     2512
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    4509,
+    4535
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     4169,
+     4509
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    8383,
+    8409
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     8043,
+     8383
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    10049,
+    10075
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     9709,
+     10049
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    12230,
+    12256
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     11890,
+     12230
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    14356,
+    14382
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     14016,
+     14356
+    ]
+   ]
+  }
+ ]
+}
+
+== patterns-mantine-listinggallerypattern--default @320
+{
+ "tracks": [
+  {
+   "track": [
+    -560,
+    -272,
+    68,
+    408
+   ],
+   "transform": "matrix(1, 0, 0, 1, -288, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     304,
+     68,
+     408
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -560,
+      -272,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      -272,
+      16,
+      68,
+      408
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      304,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      304,
+      592,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      592,
+      880,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      880,
+      1168,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1168,
+      1456,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1456,
+      1744,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1744,
+      2032,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2032,
+      2320,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2320,
+      2608,
+      68,
+      408
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  }
+ ],
+ "counters": [
+  {
+   "text": "1 / 9",
+   "box": [
+    16,
+    59,
+    408,
+    434
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     304,
+     68,
+     408
+    ]
+   ]
+  }
+ ]
+}
+
+== patterns-mantine-listingdetailpattern--default @639
+{
+ "tracks": [
+  {
+   "track": [
+    -591,
+    16,
+    104,
+    444
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     104,
+     444
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      104,
+      444
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      104,
+      444
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    1820,
+    2160
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     1820,
+     2160
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      1820,
+      2160
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      1820,
+      2160
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    3495,
+    3835
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     3495,
+     3835
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      3495,
+      3835
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      3495,
+      3835
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    6660,
+    7000
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     6660,
+     7000
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      6660,
+      7000
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      6660,
+      7000
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    8012,
+    8352
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     8012,
+     8352
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      8012,
+      8352
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      8012,
+      8352
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    9821,
+    10161
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     9821,
+     10161
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      9821,
+      10161
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      9821,
+      10161
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "track": [
+    -591,
+    16,
+    11577,
+    11917
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     11577,
+     11917
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      11577,
+      11917
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      11577,
+      11917
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  }
+ ],
+ "counters": [
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    444,
+    470
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     104,
+     444
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    2160,
+    2186
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     1820,
+     2160
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    3835,
+    3861
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     3495,
+     3835
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    7000,
+    7026
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     6660,
+     7000
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    8352,
+    8378
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     8012,
+     8352
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    10161,
+    10187
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     9821,
+     10161
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    16,
+    59,
+    11917,
+    11943
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     11577,
+     11917
+    ]
+   ]
+  }
+ ]
+}
+
+== patterns-mantine-listinggallerypattern--default @639
+{
+ "tracks": [
+  {
+   "track": [
+    -1198,
+    -591,
+    50,
+    390
+   ],
+   "transform": "matrix(1, 0, 0, 1, -607, 0)",
+   "bound": [
+    "h-full w-full overflow-hidden",
+    [
+     16,
+     623,
+     50,
+     390
+    ]
+   ],
+   "slides": [
+    {
+     "tag": "button",
+     "box": [
+      -1198,
+      -591,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      -591,
+      16,
+      50,
+      390
+     ],
+     "ariaHidden": null,
+     "tabindex": null,
+     "label": "Modern Apartment in Tirana",
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      16,
+      623,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      623,
+      1230,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1230,
+      1837,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      1837,
+      2444,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      2444,
+      3051,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3051,
+      3658,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      3658,
+      4265,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      4265,
+      4872,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    },
+    {
+     "tag": "button",
+     "box": [
+      4872,
+      5479,
+      50,
+      390
+     ],
+     "ariaHidden": "true",
+     "tabindex": "-1",
+     "label": null,
+     "text": ""
+    }
+   ]
+  }
+ ],
+ "counters": [
+  {
+   "text": "1 / 9",
+   "box": [
+    16,
+    59,
+    390,
+    416
+   ],
+   "top": "340px",
+   "bottom": "-26px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     16,
+     623,
+     50,
+     390
+    ]
+   ]
+  }
+ ]
+}
+
+== patterns-mantine-listingdetailpattern--default @640
+{
+ "tracks": [],
+ "counters": [
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    104,
+    130
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     104,
+     524
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    1910,
+    1936
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     1910,
+     2330
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    3676,
+    3702
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     3676,
+     4096
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    6889,
+    6915
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     6889,
+     7309
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    8331,
+    8357
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     8331,
+     8751
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    10231,
+    10257
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     10231,
+     10651
+    ]
+   ]
+  },
+  {
+   "text": "1 / 5",
+   "box": [
+    24,
+    67,
+    12077,
+    12103
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     12077,
+     12497
+    ]
+   ]
+  }
+ ]
+}
+
+== patterns-mantine-listinggallerypattern--default @640
+{
+ "tracks": [],
+ "counters": [
+  {
+   "text": "1 / 9",
+   "box": [
+    24,
+    67,
+    50,
+    76
+   ],
+   "top": "0px",
+   "bottom": "394px",
+   "left": "0px",
+   "inlineStyle": "pointer-events: none; position: absolute;",
+   "bound": [
+    "relative overflow-hidden rounded-lg h-[v",
+    [
+     24,
+     616,
+     50,
+     470
+    ]
+   ]
+  }
+ ]
+}
+EXIT_CODE=0

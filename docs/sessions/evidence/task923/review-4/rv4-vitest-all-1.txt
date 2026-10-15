@@ -1,0 +1,11 @@
+platform win32 node v22.22.3
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  155 passed (155)
+      Tests  2573 passed (2573)
+   Start at  07:32:19
+   Duration  68.77s (transform 22.79s, setup 20.57s, import 425.82s, tests 171.22s, environment 525.63s)
+
+EXIT_CODE=0

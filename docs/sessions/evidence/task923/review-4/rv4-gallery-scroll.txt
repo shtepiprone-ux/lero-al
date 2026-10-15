@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+patterns-mantine-listinggallerypattern--default
+after load (+play): container scrollLeft 0; track transform matrix(1, 0, 0, 1, -288, 0); slide in the frame #1; named tabbable slide #1; portals 1; focus button "Close gallery"
+after Escape: container scrollLeft 0; track transform matrix(1, 0, 0, 1, -288, 0); slide in the frame #1; named tabbable slide #1; portals 1; focus button "Modern Apartment in Tirana"
+patterns-mantine-listingdetailpattern--default
+after load (+play): container scrollLeft 0; track transform matrix(1, 0, 0, 1, -288, 0); slide in the frame #1; named tabbable slide #1; portals 1; focus body ""
+after Escape: container scrollLeft 0; track transform matrix(1, 0, 0, 1, -288, 0); slide in the frame #1; named tabbable slide #1; portals 1; focus body ""
+EXIT_CODE=0

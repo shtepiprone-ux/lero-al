@@ -1,0 +1,15 @@
+platform win32 node v22.22.3
+rows 22740 rule keys 20 rows missing a key 0 rows without notApplicable 0
+unique 22740
+gate-level cells 19 not at 640 and not custom-range-too-long: []
+error-screen cells [
+  'error-screen @390 patterns-mantine-dashboardperiodcontrol--custom-range-too-long~closed'
+]
+at 639 0
+retried jobs 24 widths [ '640' ]
+retried jobs listed in summary 24
+AC4 patterns-mantine-ticketdetaildialogview--support 320 portal rows 4 failing 4 text-clamp,component-overflow must true | app failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support 390 portal rows 4 failing 4 text-clamp,component-overflow must true | app failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results 320 portal rows 4 failing 4 word-split,viewport-overflow,component-overflow must true | app failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active 320 portal rows 4 failing 4 text-clamp,text-hidden must true | app failing 0 of 4
+EXIT_CODE=0

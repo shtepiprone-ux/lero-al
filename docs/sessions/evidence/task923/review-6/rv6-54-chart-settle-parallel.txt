@@ -1,0 +1,32 @@
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+round 1 page 1: open ok; waitStable 1094ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 2: open ok; waitStable 1082ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 4: open ok; waitStable 1080ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 9: open ok; waitStable 1096ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 3: open ok; waitStable 1095ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 6: open ok; waitStable 1083ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 8: open ok; waitStable 1093ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 7: open ok; waitStable 1095ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 10: open ok; waitStable 1189ms; chart details at return 3, 3s later 3; layout unchanged
+round 1 page 5: open ok; waitStable 1208ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 1: open ok; waitStable 1086ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 2: open ok; waitStable 1100ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 5: open ok; waitStable 1087ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 7: open ok; waitStable 1112ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 8: open ok; waitStable 1115ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 9: open ok; waitStable 1112ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 4: open ok; waitStable 1072ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 6: open ok; waitStable 1123ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 3: open ok; waitStable 870ms; chart details at return 3, 3s later 3; layout unchanged
+round 2 page 10: open ok; waitStable 886ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 3: open ok; waitStable 458ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 4: open ok; waitStable 455ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 8: open ok; waitStable 370ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 2: open ok; waitStable 438ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 7: open ok; waitStable 446ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 9: open ok; waitStable 451ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 5: open ok; waitStable 443ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 1: open ok; waitStable 447ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 6: open ok; waitStable 449ms; chart details at return 3, 3s later 3; layout unchanged
+round 3 page 10: open ok; waitStable 486ms; chart details at return 3, 3s later 3; layout unchanged
+EXIT_CODE=0

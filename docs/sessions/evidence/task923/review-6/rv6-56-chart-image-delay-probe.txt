@@ -1,0 +1,11 @@
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+image delay 0ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1212ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 0ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1204ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 0ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1203ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 0ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1219ms; chart details at return 3, 3s later 3; layout unchanged
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+image delay 3000ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1207ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 3000ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1218ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 3000ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1203ms; chart details at return 3, 3s later 3; layout unchanged
+image delay 3000ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1200ms; chart details at return 3, 3s later 3; layout unchanged
+EXIT_CODE=0

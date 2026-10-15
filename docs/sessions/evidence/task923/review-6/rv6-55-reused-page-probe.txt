@@ -1,0 +1,5 @@
+platform win32 node v22.22.3; 7 states of patterns-mantine-admindashboardview--default @ uk 1024; target patterns-mantine-admindashboardview--default~en-english
+round 1: target after [nothing] -> chart details 3; failing text-clamp+text-ellipsis+text-hidden+component-overflow; localStorage []; sessionStorage []
+round 2: target after [about-the-activity-series] -> chart details 3; failing text-clamp+text-ellipsis+text-hidden+component-overflow; localStorage []; sessionStorage []
+round 3: target after [about-the-activity-series, about-visible-listings, bhmodern-apartment-in-tirana-c] -> chart details 3; failing text-clamp+text-ellipsis+text-hidden+component-overflow; localStorage []; sessionStorage []
+EXIT_CODE=0

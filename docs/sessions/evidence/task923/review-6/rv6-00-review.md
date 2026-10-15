@@ -47,9 +47,12 @@ Every AC23–AC28 holds as written. The executor's status `IMPLEMENTED - AWAITIN
 3. **P3: the R24 skip count is written as a "not applicable" reason.** `markSkippedActions` puts it in `notApplicable`
    (`runner.mjs:94`) while the same rule keeps violations of other controls: 64 rows of `r6-full`
    (`rv6-10-na-vs-violation.txt:11-12`). A reader cannot tell "not measured" from "partly measured".
-4. **Note (D34).** The dashboard-chart `component-overflow` details move between runs, but every such row fails other
-   rules, so no row verdict flips on them (`rv6-11-verdict-flips.txt`: no chart-only flip). They go to the chart task
-   filed at closure.
+4. **P1 (D34, root cause found after the owner's D2): the gate measures a page that is still loading.** Every dashboard
+   chart is a lazy, browser-only import (`MantineDashboardBarChart.tsx:14`). With the chunk on time the gate measures
+   the chart's 3 overflow details (`rv6-57-chart-chunk-delay-probe.txt:2`); with the chunk 2 000ms late, `waitStable`
+   returns at ~440ms with 0 chart details, and the page grows from 756 to 1 145 elements after the measurement
+   (`rv6-57…:7`). Ruled out: one page or 10 parallel pages at CPU 1x/4x (`rv6-53`, `rv6-54`), page reuse and storage
+   (`rv6-55`), late images (`rv6-56`).
 
 ## Rulings on the executor's points
 
@@ -60,4 +63,7 @@ Every AC23–AC28 holds as written. The executor's status `IMPLEMENTED - AWAITIN
 
 ## Verdict
 
-`NEEDS REVISION` → kickoff §15, Revision 6 (R28–R30, AC29–AC32). The code delivered for R24–R27 stays as it is.
+`NEEDS REVISION` → kickoff §15, Revision 6 (R28–R31, AC29–AC33; owner D2, 2026-10-15: keep the full run, a kickoff that
+lets the executor find every defect). R31 settles the page before measuring (no same-origin request in flight, an
+unchanged layout signature, an 8 000ms bound); AC32 proves determinism by two full runs that agree. The code delivered
+for R24–R27 stays as it is.

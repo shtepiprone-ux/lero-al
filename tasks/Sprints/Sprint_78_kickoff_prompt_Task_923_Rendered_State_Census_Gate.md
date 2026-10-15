@@ -6,7 +6,7 @@ CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: rev
 Revision 1 = §10 (R10–R14, AC6–AC10); review 2 `NEEDS REVISION` 2026-10-14 → Revision 2 = §11 (R15–R18,
 AC11–AC15); review 3 `NEEDS REVISION` 2026-10-14 → Revision 3 = §12 (R19–R21, AC16–AC19); review 4 `NEEDS REVISION`
 2026-10-15 → Revision 4 = §13 (R22–R23, AC20–AC22); review 5 `NEEDS REVISION` 2026-10-15 → Revision 5 = §14 (R24–R27,
-AC23–AC28); review 6 `NEEDS REVISION` 2026-10-15 → Revision 6 = §15 (R28–R30, AC29–AC32).** Executor: §1–§14 stay
+AC23–AC28); review 6 `NEEDS REVISION` 2026-10-15 → Revision 6 = §15 (R28–R31, AC29–AC33).** Executor: §1–§14 stay
 binding; §15 adds to them and wins where they differ.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
@@ -201,7 +201,17 @@ Every fact below is a ledger row; nothing else sets scope.
 | C146 | FACT | A root measured only by the first attempt is kept in the retried result. | source: `scripts/rendered-state-census/runner.mjs:481-481`; observed: `a root measured only by the first attempt keeps its measured violations` |
 | C147 | FACT | The self-test has a case whose first load fails to open and is retried. | source: `scripts/rendered-state-census/verify.mjs:102-102`; observed: `{ name: 'open-flaky-once', flaky: true, retry: true` |
 | C148 | FACT | A unit test asserts that the first attempt's measured violation is kept after a retry. | source: `scripts/__tests__/rendered-state-census.test.ts:241-241`; observed: `never clears a violation of a measured rule that the first attempt found` |
+| C149 | FACT | Every dashboard chart is loaded lazily, in the browser only. | source: `src/design-system/mantine/patterns/MantineDashboardBarChart.tsx:14-14`; observed: `const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })` |
+| C150 | FACT | `waitStable` settles on the portal count and the finite animations only. | source: `scripts/rendered-state-census/runner.mjs:151-151`; observed: `same = s.n === last && s.running === 0 ? same + 1 : 0;` |
+| C151 | FACT | With the chart chunk on time, the gate measures the chart's three overflow details. | source: `docs/sessions/evidence/task923/review-6/rv6-57-chart-chunk-delay-probe.txt:2-2`; observed: `chart details at return 3, 3s later 3; layout unchanged` |
+| C152 | FACT | With the chart chunk 2 000ms late, `waitStable` returns before the chart is mounted, and the page changes after the measurement. | source: `docs/sessions/evidence/task923/review-6/rv6-57-chart-chunk-delay-probe.txt:7-7`; observed: `chart details at return 0, 3s later 3; layout CHANGED (756/5397334 -> 1145/8138249)` |
+| C153 | FACT | Chart rows lost their chart detail between full runs on unchanged chart code. | source: `docs/sessions/evidence/task923/r6-72-chart-row-diff.txt:8-8`; observed: `9 x chart / chart / no-chart` |
+| C154 | FACT | The open action runs as soon as the load ends, before anything settles. | source: `scripts/rendered-state-census/runner.mjs:180-180`; observed: `const opened = await openAction(page, state);` |
+| C155 | FACT | The static server drops a request's query before it serves the file. | source: `scripts/rendered-state-census/runner.mjs:42-42`; observed: `decodeURIComponent((req.url ?? '/').split('?')[0])` |
+| C156 | FACT | The self-test has a case with an infinite CSS loader and a toast that closes itself. | source: `scripts/rendered-state-census/verify.mjs:99-99`; observed: `{ name: 'infinite-spinner-toast', fail: {}, green: ['app', 'portal:0'] }` |
+| C157 | FACT | Reusing one page across the Story's jobs does not change the chart detail; the page holds no storage. | source: `docs/sessions/evidence/task923/review-6/rv6-55-reused-page-probe.txt:4-4`; observed: `chart details 3; failing text-clamp+text-ellipsis+text-hidden+component-overflow; localStorage []; sessionStorage []` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
+| D2 | OWNER DECISION | Revision 6 keeps a full run, and its kickoff must let the executor find every defect without obstruction. | owner: 2026-10-15; decision: `нехай буде повний прогін, просто треба зробити якісний kickoff, щоб Sonnet все зробила вірно, щоб нічого їй не заважало, нехай знаходить всі помилки. Задача має бути виконана якісно!` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -622,61 +632,115 @@ Review evidence: `docs/sessions/evidence/task923/review-6/` (native Windows, Nod
 Verified on the delivered files (62 of 62 hashes equal `r6-87-hashes-end.txt`): R24–R27 are in the code as written. The
 self-test reproduces with 52 cases (C129), the mutation proof is 21 of 21 (C130), AC25 reproduces (C131), and AC27
 reproduces on a listing over 1 MiB (C145). Every AC23–AC28 holds as written, and the executor's status was right.
-D33, D34, D35, D37 and D38 are accepted. The code of R24–R27 stays as it is.
+D33, D35, D37 and D38 are accepted; D34 and D36 are answered by the findings below. The code of R24–R27 stays.
 
-**Findings.**
+**Owner decision D2 (2026-10-15).** Revision 6 keeps the full run, and this section is written so that the executor
+can finish it without being stopped by the kickoff and finds every defect. Revision 6 therefore removes **every** known
+source of a verdict that changes between identical runs in one revision, and proves it by two full runs that agree.
 
-1. **P1 (kickoff defect, §14 R26 (c)): the full run's verdict still flips on dismissal.** Rows change verdict on
-   `dismiss-outside` alone, in both directions, between two full runs (C132). Run alone, the same Stories show no
-   dismissal violation (C133). The overlay always closes; it takes about 310ms at CPU 1x (C134) and over a second at
-   8x (C135). The 1 000ms bound (C136) under 10 workers (C137) judges the machine's load, not the overlay. A verdict
-   that flips with load can never be the blocking whole-registry step (C138). This is the executor's D36 (v).
-2. **P2 (kickoff defect, §11 R16): a retry merges a different page into the row.** A retry copies the first attempt's
-   violations, and roots, into the result (C139, C146). The first attempt never reached the state: its open failed
-   (C140), so its app root was measured on the closed, non-inert page (C141). 16 retried rows of the Revision 4 full
-   run say "not measured" and carry violations at once (C142). The unit test pins that behaviour (C148). This is the
-   executor's D36 (ii).
-3. **P3: the R24 skip count is written as a not-applicable reason** (C143), on rows that still have violations of the
+### 15.1 Findings — why the verdict still moves
+
+1. **P1 (§14 R26 (c)): dismissal is judged on speed.** Rows change verdict on `dismiss-outside` alone, in both
+   directions (C132). Run alone, the same Stories show no dismissal violation (C133). The overlay always closes: in about
+   310ms at CPU 1x (C134), over a second at 8x (C135). The 1 000ms bound (C136) under 10 workers (C137) judges the
+   machine's load. Such a verdict can never be the blocking whole-registry step (C138).
+2. **P1 (new, §3 `waitStable`): the gate measures a page that is still loading.** Every dashboard chart arrives through
+   a lazy, browser-only import (C149). `waitStable` looks only at the portal count and the finite animations (C150), and
+   the open action runs as soon as the load ends (C154). With the chart chunk on time, the gate measures the chart's
+   three overflow details (C151). With the chunk 2 000ms late — what 10 workers on one local server do — `waitStable`
+   returns first, the chart is not there yet, and the page grows from 756 to 1 145 elements after the measurement
+   (C152). This is the cause of the chart rows that lose their detail between runs (C153, the executor's D34); page
+   reuse and storage are ruled out (C157).
+3. **P2 (§11 R16): a retry merges a different page into the row.** A retry copies the first attempt's violations and
+   roots into the result (C139, C146). The first attempt never reached the state: its open failed (C140), so its app
+   root was measured on the closed, non-inert page (C141). 16 rows of the Revision 4 full run say "not measured" and
+   carry violations at once (C142). The unit test pins that behaviour (C148). This is the executor's D36 (ii).
+4. **P3: the R24 skip count is written as a not-applicable reason** (C143), on rows that still have violations of the
    same rule (C144).
-4. **Note.** The dashboard-chart details still move between runs (D34), but no row verdict flips on them; the chart
-   task filed at closure owns them.
 
-**Write set.** `scripts/rendered-state-census/runner.mjs`, `scripts/rendered-state-census/verify.mjs`, two new fixtures
-(`slow-close`, `open-flaky-once-closed-violation`), and in `scripts/__tests__/rendered-state-census.test.ts` only the
-test of C148 (R29). Evidence prefix `r7-`; `review-6/` is diagnosis only and stays unchanged. Out of scope: as §14
-(`in-page.mjs`, `check-mojibake.mjs`, the registry, `package.json`, CI, policy, every product source stay unchanged).
+### 15.2 Write set and out of scope
+
+Write set: `scripts/rendered-state-census/runner.mjs`, `scripts/rendered-state-census/in-page.mjs`,
+`scripts/rendered-state-census/verify.mjs`, six new fixtures under `scripts/__fixtures__/rendered-state-census/`
+(`slow-close`, `open-flaky-once-closed-violation`, `late-fetch-overflow`, `late-fetch-inside`, `raf-grow-overflow`,
+`raf-grow-inside`), and in `scripts/__tests__/rendered-state-census.test.ts` only the test of C148 (R29). Evidence prefix
+`r7-`; `review-6/` is diagnosis only and stays unchanged. Out of scope and unchanged: `check-mojibake.mjs`, the registry
+`scripts/rendered-interaction-states.json`, `scripts/check-rendered-state-census.mjs`, `discover.mjs`, `registry.mjs`,
+`theme-breakpoints.mjs`, `package.json`, CI, policy, `.claude/**`, every product source and Story. A product defect the
+gate finds is reported in the owner table, never fixed here.
+
+### 15.3 Requirements
 
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
-| R28 [C132; C133; C134; C135; C136; C137; C138; D1] | **A dismissal is judged on whether the overlay closes, not how fast.** After the dismissal action, `dismissCheck` polls the visible portal count every 50ms until it is 0, bounded at **5 000ms** (was 1 000ms). A failure reads `<rule>: the portal is still visible 5000ms after the dismissal`. The carrier row records `dismissMs`, an object from each mechanism that ran to its measured close time in ms, or `null` when the overlay did not close. Nothing else changes: the focus return still uses `settleFocus`, and no retry is added. New fixture `slow-close`, a portal dialog with a green app root (`focus: trap`, `dismiss: ["escape", "close-control", "outside"]`): each mechanism closes it 1 500ms after the event, and the portal stays visible until then. It is PASS on every rule of every root, and its `dismissMs` is at least 1 500 for each mechanism. `escape-does-not-close` stays FAIL `dismiss-escape`, with the 5 000ms detail. Mutation: put the bound back to 1 000ms, and `slow-close` fails `dismiss-escape`. | P1 | AC29, AC30, AC31 |
-| R29 [C139; C140; C141; C146; C147; C148] | **A retry replaces the first attempt.** When `runWithRetry` retries a job, the job's rows are the second attempt's rows only. No rule and no root of the first attempt is copied in (the two merges of C139 and C146 are removed). Every row still records `retry` with the first failure, and a second failure is still the violation. R16's sentence "a retry never clears a violation of a measured rule" is replaced by: **"a job is retried only for a load or open failure, never because a measured rule failed"**; `transientReason` is unchanged. The unit test of C148 is rewritten to assert the new rule: a first attempt with `open-failed` and `text-clamp`, then a clean second attempt, ends with no `text-clamp` and with `retry` recorded. New fixture `open-flaky-once-closed-violation`: like `open-flaky-once` (the trigger is absent on the first load only), and the app root also holds a visible 20×20 button. The state is a modal dialog, so while it is open the app root's actions are not measured. It is PASS on every rule of every root, with `retry` recorded on every row, and the app row has no `target-small` detail. Mutation: put the first-attempt merge back, and the case fails `target-small` on `app`. | P2 | AC29, AC31, AC32 |
-| R30 [C143; C144] | **The R24 skip count is its own key.** Every row carries `skippedActions`, a number (0 when nothing was skipped). `markSkippedActions` writes it there and no longer writes `notApplicable`. `notApplicable` keeps only reasons why a rule was not measured on that row. In `verify.mjs`, `track-flex-synced` asserts `skippedActions` ≥ 1 on `portal:0` and no `action-*` entry in its `notApplicable`. | P3 | AC29, AC31 |
+| R28 [C132; C133; C134; C135; C136; C137; C138; D1; D2] | **A dismissal is judged on whether the overlay closes, not how fast.** After the dismissal action, `dismissCheck` polls the visible portal count every 50ms until it is 0, bounded at **5 000ms** (was 1 000ms). A failure reads `<rule>: the portal is still visible 5000ms after the dismissal`. Every row carries `dismissMs`: an object from each dismissal mechanism that ran on that row to its measured close time in ms, or `null` when the overlay did not close (`{}` on a row where none ran). Nothing else changes: the focus return still uses `settleFocus`, and no retry is added. New fixture `slow-close`, a portal dialog with a green app root (`focus: trap`, `dismiss: ["escape", "close-control", "outside"]`): each mechanism closes it 1 500ms after the event, and the portal stays visible until then. It is PASS on every rule of every root, and its `dismissMs` is at least 1 500 for each of the three mechanisms. `escape-does-not-close` stays FAIL `dismiss-escape`, with the 5 000ms detail. Mutation: the bound back to 1 000ms, and `slow-close` fails `dismiss-escape`. | P1 | AC29, AC30, AC32 |
+| R29 [C139; C140; C141; C146; C147; C148] | **A retry replaces the first attempt.** When `runWithRetry` retries a job, the job's rows are the second attempt's rows only: no rule and no root of the first attempt is copied in (the merges of C139 and C146 are removed). Every row still records `retry` with the first failure, and a second failure is still the violation. R16's sentence "a retry never clears a violation of a measured rule" is replaced by **"a job is retried only for a load or open failure, never because a measured rule failed"**; `transientReason` is unchanged. The unit test of C148 is rewritten to the new rule: a first attempt with `open-failed` and `text-clamp`, then a clean second attempt, ends with no `text-clamp`, `pass: true`, and `retry` recorded. New fixture `open-flaky-once-closed-violation`: like `open-flaky-once` (the trigger is absent on the first load only), and the app root also holds a visible 20×20 button; the state is a modal dialog, so while it is open the app root's actions are not measured. It is PASS on every rule of every root, `retry` is recorded on every row, and the app row has no `target-small` detail. Mutation: the first-attempt merge put back, and the case fails `target-small` on `app`. | P2 | AC29, AC32 |
+| R30 [C143; C144] | **The R24 skip count is its own key.** Every row carries `skippedActions`, a number (0 when nothing was skipped). `markSkippedActions` writes it there and no longer writes `notApplicable`. `notApplicable` keeps only the reasons why a rule was not measured on that row. In `verify.mjs`, `track-flex-synced` asserts `skippedActions` ≥ 1 on `portal:0` and no `action-*` key in that row's `notApplicable`. | P3 | AC29, AC32 |
+| R31 [C149; C150; C151; C152; C153; C154; C155; C156; C157; D2] | **The gate measures a settled page.** One settle function (`waitStable`, extended) is used after the load and **before the open action** (new), after the open action (as now), when a dismissal check reopens the state (as now), and in the closed sweep (as now). The page is settled when, on **3 consecutive polls 100ms apart**, all of these hold: (a) the visible portal count is unchanged (and equals the expected count where one is given), as now; (b) no finite animation runs, as now (R26 (a)); (c) **no request from the page to the page's own origin is in flight** — counted on the Node side from the page's `request`, `requestfinished` and `requestfailed` events; a request to another origin (map tiles) is not counted; (d) **the layout signature is unchanged**: computed in `in-page.mjs` over `#storybook-root` and every visible portal root, it is the number of elements whose box is not empty plus a sum over their boxes rounded to whole pixels (left, top, width, height); an element that runs an infinite animation, and everything inside it, is left out, so a loader never holds the page. The bound is **8 000ms** (was 4 000ms). Every row records `settle: { ms, bounded }` for the settle before its measurement (`bounded: true` when the bound was hit; the page is then measured as it is). The summary prints the number of jobs that hit the bound, listed by Story × state. For the self-test, the static server delays a response by `<n>`ms when the request URL carries `__census_delay=<n>`; it still serves the file named by the path (C155). New fixtures, each a portal dialog with a green app root: `late-fetch-overflow` — on open, the dialog fetches `clean.html?__census_delay=1500`, and when the fetch ends it appends a 300px block inside a 200px `overflow: visible` box: FAIL `component-overflow` on `portal:0`. `late-fetch-inside` — the same with a 150px block: PASS on every rule of every root. `raf-grow-overflow` — on open, a block grows by `requestAnimationFrame` from 0 to 300px wide over 1 200ms inside a 200px box: FAIL `component-overflow` on `portal:0`. `raf-grow-inside` — the same, growing to 150px: PASS. `infinite-spinner-toast` (C156) stays PASS. Three mutations: drop (c), and `late-fetch-overflow` goes green; drop (d), and `raf-grow-overflow` goes green; drop the infinite-animation exclusion of (d), and `infinite-spinner-toast` fails. | P1 | AC29, AC31, AC32 |
 
-- **AC29 [R28; R29; R30; C129; C130].** `npm run check:rendered-state-census:verify` exits 0 with **54 cases**: the 52 of
-  Revision 5 plus `slow-close` and `open-flaky-once-closed-violation`, each as stated in R28–R30. The mutation proof
-  `r7-50-…` is a copy of `r6-50-…` with the two new mutations; it shows **23 of 23 proved**. A mutation of `runner.mjs`
-  edits a copy written outside the repository (the OS temp directory), never a repository file.
+### 15.4 Acceptance criteria
+
+- **AC29 [R28; R29; R30; R31; C129; C130].** `npm run check:rendered-state-census:verify` exits 0 with **58 cases**: the 52
+  of Revision 5 plus `slow-close`, `open-flaky-once-closed-violation`, `late-fetch-overflow`, `late-fetch-inside`,
+  `raf-grow-overflow` and `raf-grow-inside`, each as stated in R28–R31. The mutation proof `r7-50-…` is a copy of
+  `r6-50-…` with five new mutations (R28, R29, and the three of R31); it prints **26 of 26 proved**. How to mutate
+  `runner.mjs` (R28, R29, R31 (c)): copy it into a directory made with `fs.mkdtempSync(path.join(os.tmpdir(), 'census-'))`,
+  replace its relative imports `./in-page.mjs` and `./registry.mjs` by the `pathToFileURL(...).href` of the repository
+  files, apply the one edit, and `import()` the copy; a mutation never writes a repository file. `in-page.mjs` is mutated
+  as `r6-50-…` already does it.
 - **AC30 [R28; C134; C135].** A copy of `review-6/rv6-51-dismiss-throttle-probe.mjs` saved as `r7-51-…`, with only its
-  output path changed, run on `patterns-mantine-adminuserstable--default~en-english` at uk / 1024: 12 of 12 trials
-  `CLOSED` with no detail, at throttles 1x, 4x and 8x.
-- **AC31 [R9; R28; R29; R30; C132; C137; C142; C144].** The full run is repeated on the final build with 10 workers. AC26's
-  checks hold: one row per cell; every row has all 20 rule keys, `notApplicable` and `skippedActions`; AC4 holds;
-  every gate-level cell is a 924 cell at 640 or the 925 cell; 0 `image-layer` details; the `leaflet` lines equal
-  `rv3-d16-classes.txt` lines 6–8. A copy of `review-6/rv6-10-na-vs-violation.mjs` saved as `r7-10-…` prints **0 rows
-  with a rule both not applicable and violated**. A copy of `review-6/rv6-11-verdict-flips.mjs` saved as `r7-11-…`,
-  run against `r6-full`, lists every row whose verdict changed. Each one is attributed, by its details, to one of these:
-  (a) R28, the `r6-full` row's `dismiss-*` detail "still visible 1000ms" is gone; (b) R29, the `r6-full` row carries
-  `retry`; (c) `focus-open` on `patterns-mantine-adminshell--drawer-open` (C118); (d) a 924 cell at 640. Any other flip
-  is run again, alone, three times, and printed. If it does not reproduce, the task stops as `BLOCKED` with that
-  evidence; it is not a reason for another code change. Every `dismiss-*` violation left in the full run is run again,
-  alone, once; one that does not reproduce stops the task as `BLOCKED`. The summary lists every retried job and the
-  runtime. The owner table is Revision 5's, with any reproduced dismissal violation given an owner.
-- **AC32 [R28; R29; R30].** The new test file passes twice. `npm test` (the whole suite) is run once and kept, with
+  comment changed, run on `patterns-mantine-adminuserstable--default~en-english` uk 1024: 12 of 12 trials `CLOSED` with
+  no detail, at 1x, 4x and 8x.
+- **AC31 [R31; C151; C152].** A copy of `review-6/rv6-57-chart-chunk-delay-probe.mjs` saved as `r7-57-…`, with only its
+  comment changed, run on `patterns-mantine-admindashboardview--default~en-english` uk 1024 with delays 0 and 2000:
+  **8 of 8 trials print `chart details at return 3` and `layout unchanged`**.
+- **AC32 [R9; R28; R29; R30; R31; C118; C132; C137; C142; C144; C153; D2].** **Two full runs** on the final build, one
+  after the other, 10 workers each (`--jobs 10`), into `r7-full-a/` and `r7-full-b/`. For each run:
+  - AC26's checks hold: one row per cell; every row has all 20 rule keys, `notApplicable`, `skippedActions`, `dismissMs`
+    and `settle`; AC4 holds; every gate-level cell is a 924 cell at 640 or the 925 cell; 0 `image-layer` details;
+  - a copy of `review-6/rv6-10-na-vs-violation.mjs` saved as `r7-10-…` prints **0 rows with a rule both not applicable
+    and violated**;
+  - the summary lists every retried job, every job that hit the settle bound, and the runtime.
+
+  **Determinism, between `r7-full-a` and `r7-full-b`.** A copy of `review-6/rv6-11-verdict-flips.mjs` saved as
+  `r7-11-…`, plus a per-row comparison of the failing-rule sets (a copy of `r6-61-narrowed-compare.mjs` saved as `r7-61-…`
+  and changed only to take two run directories instead of three), prints every row that differs. **The only difference allowed is `focus-open` on
+  `patterns-mantine-adminshell--drawer-open` rows (C118, a product race).** For every other differing row, run its
+  Story × state alone three times (`--stories <story> --widths <width> --locales <locale> --no-closed`) and keep the
+  output; if it still moves, sample it with a copy of `rv6-53-chart-settle-probe.mjs` (load, settle, measure, wait
+  3 000ms, measure again). Record each such row in the session log with that evidence and the class you see. Do **not**
+  change code outside R28–R31 for it, and do not stop: finish every other AC first, then report it (strongest status
+  `PARTIALLY IMPLEMENTED`).
+
+  **Against `r6-full`, for information.** A copy of `r6-85-row-diff.mjs` with its input paths changed prints the changes
+  of `r7-full-a` per rule and component, attributed by detail to R28 (a `dismiss-*` detail "still visible 1000ms" gone),
+  R29 (the `r6-full` row carries `retry`), R31 (a chart or other detail that `r6-full` lacked and `r4-full` had), or
+  listed. The `chart` lines of a copy of `r5-70-d16-classes.mjs` on `r7-full-a` should be back to `rv3-d16-classes.txt`
+  lines 2–3 (40 + 48); a difference is listed row by row. The owner table is Revision 5's; any dismissal violation that
+  remains gets an owner row.
+- **AC33 [R28; R29; R30; R31].** The new test file passes twice. `npm test` (the whole suite) is run once and kept, with
   AC28's treatment if it is red. `typecheck`, `lint`, `build`, `build-storybook`, `check:file-integrity` and
   `check:mojibake` exit 0. `git status --porcelain` is captured before and after.
 
-**Verification order:** as §7, with evidence prefix `r7-`. The session log gets a `# Revision 6` section with R28–R30
-mapped to evidence, AC29–AC32 with transcripts, the owner table and deviations. Strongest status:
+### 15.5 How to run it so nothing gets in the way
+
+1. Order: I0 and hashes → R29, R30, R28, R31 with their fixtures → AC29 (self-test, then mutations) → `build-storybook`
+   → AC30, AC31 → `r7-full-a` → `r7-full-b` → the AC32 scripts → AC33 → session log.
+2. Run each full run with `run_in_background`. While a full run or the self-test is running, run **nothing else** that
+   loads the machine or writes the same evidence (no vitest, build, second census, probe). One writer per evidence file
+   (the D37 overlap must not recur).
+3. Every transcript starts with the platform line and the command and ends with `EXIT_CODE=`. A census run exits 1
+   because of product findings; that is expected and is not a failure of the AC.
+4. A new full run takes longer than Revision 5's 10 503s because pages now settle; report both runtimes.
+5. Keep the exported names and arguments of `startStaticServer`, `storybookContext`, `newMeasuringPage`, `loadStory`,
+   `waitStable(page, expected, timeout)`, `openAction`, `dismissCheck` and `runStateJob`: the review-6 probes import
+   them and must run unchanged against the new code (AC30, AC31). A page made by `newMeasuringPage` carries the
+   request counter of R31 (c) itself, so a probe needs no extra setup.
+6. If an AC is not met, keep going through the rest and report each unmet AC with its evidence. A gap in this kickoff
+   is reported as a question for Opus in the session log, never solved by a change outside §15.2.
+
+**Verification order:** as §15.5, evidence prefix `r7-`. The session log gets a `# Revision 6` section with R28–R31
+mapped to evidence, AC29–AC33 with transcripts, the determinism table, the owner table and deviations. Strongest status:
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 ## Rule-compliance ledger
@@ -690,4 +754,4 @@ mapped to evidence, AC29–AC32 with transcripts, the owner table and deviations
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128, C129, C130, C131, C132, C133, C134, C135, C136, C137, C138, C139, C140, C141, C142, C143, C144, C145, C146, C147, C148; owner decisions: D1; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128, C129, C130, C131, C132, C133, C134, C135, C136, C137, C138, C139, C140, C141, C142, C143, C144, C145, C146, C147, C148, C149, C150, C151, C152, C153, C154, C155, C156, C157; owner decisions: D1, D2; blocked claims: NONE.

@@ -1,0 +1,11 @@
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+apexcharts chunk delay 0ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1192ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1197ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1199ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1203ms; chart details at return 3, 3s later 3; layout unchanged
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+apexcharts chunk delay 2000ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 547ms; chart details at return 0, 3s later 3; layout CHANGED (756/5397334 -> 1145/8138249)
+apexcharts chunk delay 2000ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 432ms; chart details at return 0, 3s later 3; layout CHANGED (756/5397334 -> 1145/8138249)
+apexcharts chunk delay 2000ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 431ms; chart details at return 0, 3s later 3; layout CHANGED (756/5397334 -> 1145/8138249)
+apexcharts chunk delay 2000ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 443ms; chart details at return 0, 3s later 3; layout CHANGED (756/5397334 -> 1145/8138249)
+EXIT_CODE=0

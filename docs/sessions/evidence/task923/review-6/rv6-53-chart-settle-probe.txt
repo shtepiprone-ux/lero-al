@@ -1,0 +1,10 @@
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+throttle 1x trial 1: open ok; waitStable 993ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 1x trial 2: open ok; waitStable 1199ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 1x trial 3: open ok; waitStable 1206ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 1x trial 4: open ok; waitStable 1191ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 4x trial 1: open ok; waitStable 476ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 4x trial 2: open ok; waitStable 559ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 4x trial 3: open ok; waitStable 567ms; chart details at return 3, 3s later 3; layout unchanged
+throttle 4x trial 4: open ok; waitStable 760ms; chart details at return 3, 3s later 3; layout unchanged
+EXIT_CODE=0

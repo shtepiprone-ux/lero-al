@@ -1,0 +1,14 @@
+platform win32 node v22.22.3; state patterns-mantine-adminuserstable--default~en-english @ uk 1024
+throttle 1x trial 1: open ok, portals 1; gate CLOSED in 313ms 
+throttle 1x trial 2: open ok, portals 1; gate CLOSED in 312ms 
+throttle 1x trial 3: open ok, portals 1; gate CLOSED in 310ms 
+throttle 1x trial 4: open ok, portals 1; gate CLOSED in 312ms 
+throttle 4x trial 1: open ok, portals 1; gate CLOSED in 482ms 
+throttle 4x trial 2: open ok, portals 1; gate CLOSED in 490ms 
+throttle 4x trial 3: open ok, portals 1; gate CLOSED in 706ms 
+throttle 4x trial 4: open ok, portals 1; gate CLOSED in 607ms 
+throttle 8x trial 1: open ok, portals 1; gate CLOSED in 1114ms 
+throttle 8x trial 2: open ok, portals 1; gate CLOSED in 947ms 
+throttle 8x trial 3: open ok, portals 1; gate CLOSED in 1108ms 
+throttle 8x trial 4: open ok, portals 1; gate CLOSED in 1306ms 
+EXIT_CODE=0

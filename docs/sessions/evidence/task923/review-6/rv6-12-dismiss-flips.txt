@@ -1,0 +1,11 @@
+admindashboardview--cities-only-other|admindashboardview--cities-only-other~en-english|portal:0|uk|1440 | FAIL -> green | dismiss-outside: the portal is still visible 1000ms after the dismissal
+admindashboardview--default|admindashboardview--default~en-english|portal:0|sq|1024 | FAIL -> green | dismiss-outside: the portal is still visible 1000ms after the dismissal
+admindashboardview--default|admindashboardview--default~en-english|portal:0|uk|1024 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminexchangeprovidersview--pending|adminexchangeprovidersview--pending~en-english|portal:0|it|1024 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminlistingsview--premium-tab|adminlistingsview--premium-tab~en-english|portal:0|en|1440 | FAIL -> green | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminpagesview--deleting|adminpagesview--deleting~en-english|portal:0|sq|1024 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminuserprofileview--edit-blocked|adminuserprofileview--edit-blocked~en-english|portal:0|en|1024 | FAIL -> green | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminuserprofileview--edit|adminuserprofileview--edit~active|portal:0|uk|639 | FAIL -> green | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminuserprofileview--view-location-request|adminuserprofileview--view-location-request~en-english|portal:0|en|1024 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminuserprofileview--view|adminuserprofileview--view~en-english|portal:0|en|1440 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal
+adminuserstable--default|adminuserstable--default~en-english|portal:0|uk|1024 | green -> FAIL | dismiss-outside: the portal is still visible 1000ms after the dismissal

@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+listing bytes 1063514
+command: npm run check:mojibake
+  src/components/ui/badge.tsx
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+
+check:mojibake: 0 artifacts in 12149 files
+EXIT_CODE=0

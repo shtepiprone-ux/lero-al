@@ -1,0 +1,5 @@
+check:mojibake: 0 artifacts in 12187 files
+EXIT_CODE=0
+
+✅  check:file-integrity PASSED — all 2684 file(s) clean
+EXIT_CODE=0

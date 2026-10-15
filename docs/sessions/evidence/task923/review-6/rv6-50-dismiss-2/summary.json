@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "statesRun": 13,
+    "locales": [
+      "sq",
+      "en",
+      "uk",
+      "it"
+    ],
+    "widths": [
+      1024,
+      1440
+    ],
+    "boundCells": 0,
+    "stateJobs": 64,
+    "rangeJobs": 40,
+    "closedJobs": 0,
+    "appRows": 104,
+    "portalRows": 64,
+    "runtimeSeconds": 77,
+    "ruleKeys": 20
+  },
+  "rows": 168,
+  "failing": 80,
+  "perRule": {
+    "text-clamp": 16,
+    "text-ellipsis": 64,
+    "text-hidden": 24,
+    "word-split": 0,
+    "viewport-overflow": 0,
+    "component-overflow": 0,
+    "action-hidden": 0,
+    "action-covered": 0,
+    "target-small": 0,
+    "focus-open": 0,
+    "focus-trigger": 0,
+    "focus-trap": 0,
+    "dismiss-escape": 0,
+    "dismiss-close-control": 0,
+    "dismiss-outside": 0,
+    "open-failed": 0,
+    "portal-count": 0,
+    "error-screen": 0,
+    "unregistered-portal": 0,
+    "widths-mismatch": 0
+  },
+  "notApplicable": {
+    "action-hidden": 16,
+    "action-covered": 16,
+    "target-small": 16
+  },
+  "noPointerDismissal": [],
+  "widthsStates": [
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--pending~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminexchangeprovidersview--pending~open-menu",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--deleting~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminpagesview--deleting~open-menu",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view-location-request~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view-location-request~open-menu",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--view~open-menu",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminuserstable--default~open-menu",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 4
+        }
+      ]
+    }
+  ],
+  "retries": [],
+  "combos": [
+    {
+      "key": "patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | app",
+      "rules": [
+        "text-ellipsis",
+        "text-hidden"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | portal:0",
+      "rules": [
+        "text-clamp",
+        "text-hidden"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~en-english | app",
+      "rules": [
+        "text-ellipsis",
+        "text-hidden"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | portal:0",
+      "rules": [
+        "text-clamp"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~en-english | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~en-english | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~find-and-assign-city | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminuserprofileview--view | patterns-mantine-adminuserprofileview--view~en-english | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    },
+    {
+      "key": "patterns-mantine-adminuserstable--default | patterns-mantine-adminuserstable--default~en-english | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 8
+    }
+  ]
+}

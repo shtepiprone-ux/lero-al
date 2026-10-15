@@ -1,0 +1,7 @@
+platform win32 node v22.22.3
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-adminshell--drawer-open,patterns-mantine-listingcontactpattern--default --widths 320,390,639,640,1440 --no-closed --out docs/sessions/evidence/task923/review-6/rv6-43-misc-1
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open~en-english | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+
+rows 100 = 60 app-root rows + 40 portal-root rows; 40 state jobs + 20 out-of-range widths jobs + 0 closed jobs; 0 retried job(s); runtime 69s
+EXIT_CODE=1

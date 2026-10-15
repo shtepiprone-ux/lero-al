@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+command: node scripts/check-mobile-adaptation-contract.mjs --base HEAD --head HEAD
+check:mobile-adaptation-contract — GR-3j fail-closed mobile adaptation gate
+    Base: HEAD
+    Head: HEAD
+    Changed files inspected: 0
+PASS  check:mobile-adaptation-contract — no newly added text clipping primitive; changed kickoff records are complete.
+EXIT_CODE=0

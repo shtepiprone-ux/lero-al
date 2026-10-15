@@ -1,0 +1,50 @@
+rendered state census — rows 168 (failing 80); {"statesRun":13,"locales":["sq","en","uk","it"],"widths":[1024,1440],"boundCells":0,"stateJobs":64,"rangeJobs":40,"closedJobs":0,"appRows":104,"portalRows":64,"runtimeSeconds":40,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             16
+  text-ellipsis          64
+  text-hidden            24
+  word-split             0
+  viewport-overflow      0
+  component-overflow     0
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         16
+  action-hidden          16
+  target-small           16
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 0
+widths states: 10; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 10 with a missing cell
+  patterns-mantine-adminexchangeprovidersview--pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x0
+  patterns-mantine-adminexchangeprovidersview--pending~open-menu {"max":1023}: in-range 1023px x0; first outside 1024px x4
+  patterns-mantine-adminpagesview--deleting~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x0
+  patterns-mantine-adminpagesview--deleting~open-menu {"max":1023}: in-range 1023px x0; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-location-request~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x0
+  patterns-mantine-adminuserprofileview--view-location-request~open-menu {"max":1023}: in-range 1023px x0; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x0
+  patterns-mantine-adminuserprofileview--view~open-menu {"max":1023}: in-range 1023px x0; first outside 1024px x4
+  patterns-mantine-adminuserstable--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x0
+  patterns-mantine-adminuserstable--default~open-menu {"max":1023}: in-range 1023px x0; first outside 1024px x4
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+Story x state x root with a violation: 10
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | app :: text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | portal:0 :: text-clamp, text-hidden (8 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~en-english | app :: text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | portal:0 :: text-clamp (8 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~find-and-assign-city | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view | patterns-mantine-adminuserprofileview--view~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--default | patterns-mantine-adminuserstable--default~en-english | app :: text-ellipsis (8 cell(s))

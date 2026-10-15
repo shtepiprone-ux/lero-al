@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-authsheet--forgot-password,patterns-mantine-authsheet--register-agent-add-company-logo,patterns-mantine-authsheet--register-agent-add-company,patterns-mantine-authsheet--register-agent --widths 320,390,640,1440 --locales en,uk --no-closed --out docs/sessions/evidence/task923/review-6/rv6-40-authsheet-2
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 :: component-overflow, target-small (8 cell(s))
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 :: component-overflow, target-small (8 cell(s))
+
+rows 64 = 32 app-root rows + 32 portal-root rows; 32 state jobs + 0 out-of-range widths jobs + 0 closed jobs; 0 retried job(s); runtime 30s
+EXIT_CODE=1

@@ -6,7 +6,8 @@ CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: rev
 Revision 1 = §10 (R10–R14, AC6–AC10); review 2 `NEEDS REVISION` 2026-10-14 → Revision 2 = §11 (R15–R18,
 AC11–AC15); review 3 `NEEDS REVISION` 2026-10-14 → Revision 3 = §12 (R19–R21, AC16–AC19); review 4 `NEEDS REVISION`
 2026-10-15 → Revision 4 = §13 (R22–R23, AC20–AC22); review 5 `NEEDS REVISION` 2026-10-15 → Revision 5 = §14 (R24–R27,
-AC23–AC28).** Executor: §1–§13 stay binding; §14 adds to them and wins where they differ.
+AC23–AC28); review 6 `NEEDS REVISION` 2026-10-15 → Revision 6 = §15 (R28–R30, AC29–AC32).** Executor: §1–§14 stay
+binding; §15 adds to them and wins where they differ.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Precedents, read-only: the card-track gate (`scripts/check-card-track-monotonicity.mjs`, a rendered gate on the built
@@ -72,25 +73,25 @@ Every fact below is a ledger row; nothing else sets scope.
 | C18 | FACT | The contract measures the app root and each portal root separately. | source: `.claude/rules/shared/rendered-state-census.md:26-26`; observed: `Separate targets** — the app root` |
 | C19 | FACT | The contract counts a word split across lines as cut text. | source: `.claude/rules/shared/rendered-state-census.md:30-30`; observed: `a word split across lines because its box is` |
 | C20 | FACT | The contract requires planted violations inside a portal root. | source: `.claude/rules/shared/rendered-state-census.md:42-42`; observed: `overflow only inside a portal root` |
-| C21 | FACT | Since Revision 1 a negative margin exempts at most its own size (review 1 finding 2; the unbounded form is shown by C23). | source: `scripts/rendered-state-census/in-page.mjs:143-143`; observed: `const overBeyond = (over, margin) => over > 0.5 && !(margin < 0 && over <= -margin + 0.5);` |
-| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:270-270`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
+| C21 | FACT | Since Revision 1 a negative margin exempts at most its own size (review 1 finding 2; the unbounded form is shown by C23). | source: `scripts/rendered-state-census/in-page.mjs:169-169`; observed: `const overBeyond = (over, margin) => over > 0.5 && !(margin < 0 && over <= -margin + 0.5);` |
+| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:296-296`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
 | C23 | FACT | A planted negative-margin element overflowing its parent inside a portal is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:3-3`; observed: `FIXTURE neg-margin: app green` |
 | C24 | FACT | A page scrollable to 616px at a 390px viewport is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:4-4`; observed: `[page scrollWidth 616 clientWidth 390]` |
 | C25 | FACT | Since Revision 1 a width outside a state's `widths` runs a range job instead of being skipped (review 1 finding 3; the skip is shown by C26, C27). | source: `scripts/check-rendered-state-census.mjs:179-179`; observed: `runRangeJob(page, ctx, state, locale, width, { inRangeWidth, siblings })` |
 | C26 | FACT | A state registered `widths: {min: 1440}` opens at 1024. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:6-6`; observed: `widths {"min":1440} trigger BUTTON "AKAlba Krasniqi" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS` |
 | C27 | FACT | 41 sampled `widths` states open at a width the runner skips. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:46-46`; observed: `states whose same-named trigger opens a portal at a skipped width: 41` |
 | C28 | FACT | The theme's breakpoints include `sm` 640, `lg` 1024 and `xxl` 1440. | source: `src/design-system/mantine/theme.ts:637-641`; observed: `lg: '64em',   // 1024px — desktop` |
-| C29 | FACT | Since Revision 1 a not-applicable dismissal returns its reason for the row's `notApplicable` (review 1 finding 5). | source: `scripts/rendered-state-census/runner.mjs:203-203`; observed: `a bottom sheet renders no close control of its own` |
+| C29 | FACT | Since Revision 1 a not-applicable dismissal returns its reason for the row's `notApplicable` (review 1 finding 5). | source: `scripts/rendered-state-census/runner.mjs:217-217`; observed: `a bottom sheet renders no close control of its own` |
 | C30 | FACT | Since Revision 1 discovery click-checks every in-scope Story, registered or not (review 1 finding 4; the miss is shown by C31). | source: `scripts/rendered-state-census/discover.mjs:180-180`; observed: `const clickJobs = stories.map((story) => ({` |
 | C31 | FACT | A registered Story has triggers that open a portal with no registry row. | source: `docs/sessions/evidence/task923/review-1/rv-probe2.txt:4-4`; observed: `UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKModern Apartment in Tirana C" opens 1 portal(s)` |
-| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:457-457`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
+| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:519-519`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
 | C33 | FACT | The self-test behaves as stated at review. | source: `docs/sessions/evidence/task923/review-1/rv-verify.txt:19-19`; observed: `verify-gate: every case behaves as stated.` |
 | C34 | FACT | The AC4 targets fail on the portal root only at review: 24 of 48 rows fail. | source: `docs/sessions/evidence/task923/review-1/rv-ac4.txt:5-5`; observed: `rows 48 (failing 24)` |
-| C35 | FACT | Since Revision 2 `component-overflow` measures absolutely positioned, fixed and transformed content (review 2 finding 1; the skip it replaced is shown by C36, C37). | source: `scripts/rendered-state-census/in-page.mjs:202-202`; observed: `if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {` |
+| C35 | FACT | Since Revision 2 `component-overflow` measures absolutely positioned, fixed and transformed content (review 2 finding 1; the skip it replaced is shown by C36, C37). | source: `scripts/rendered-state-census/in-page.mjs:228-228`; observed: `if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {` |
 | C36 | FACT | A planted absolutely positioned text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:7-7`; observed: `rv2-abs-past-dialog portal:0 GREEN` |
 | C37 | FACT | A planted transformed text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:9-9`; observed: `rv2-transform-past-dialog portal:0 GREEN` |
 | C38 | FACT | The planted text paints 22px past the dialog box, inside the viewport. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:10-10`; observed: `dialog x 16..310; planted text x 212..332` |
-| C39 | FACT | An open click has one 4 s attempt and no retry. | source: `scripts/rendered-state-census/runner.mjs:151-151`; observed: `if (open.kind === 'click') await loc.click({ timeout: 4000 });` |
+| C39 | FACT | An open click has one 4 s attempt and no retry. | source: `scripts/rendered-state-census/runner.mjs:165-165`; observed: `if (open.kind === 'click') await loc.click({ timeout: 4000 });` |
 | C40 | FACT | The final full run has two open failures at 639. | source: `docs/sessions/evidence/task923/review-2/rv2-rows-check.txt:5-5`; observed: `"open-failed @639":2` |
 | C41 | FACT | The executor could not reproduce the 639 open failures in isolation. | source: `docs/sessions/2026-10-10-task923-rendered-state-census.md:211-211`; observed: `not reproducible` |
 | C42 | FACT | A whole first full run of Revision 1 was lost to network suspension. | source: `docs/sessions/2026-10-10-task923-rendered-state-census.md:200-200`; observed: `951 of its rows are` |
@@ -111,8 +112,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C57 | FACT | AC4's picker target fails on its portal root while its app root passes. | source: `docs/sessions/evidence/task923/review-2/rv2-rows-check.txt:8-8`; observed: `failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8` |
 | C58 | FACT | A hover over the sampled non-candidate elements opens no portal. | source: `docs/sessions/evidence/task923/review-2/rv2-hover-probe.txt:7-7`; observed: `0 open a portal` |
 | C59 | FACT | The 26 overlay-importing Stories without a row were all clicked through, and none opens a portal. | source: `docs/sessions/evidence/task923/r2-81-discover.txt:13-13`; observed: `26 of the 26 Stories that import an overlay component and have no row render no trigger that opens a portal` |
-| C60 | FACT | A positioned or transformed element is measured against its clipping ancestor or overlay panel (R15); before R19 that path had no clipped-away bound. | source: `scripts/rendered-state-census/in-page.mjs:203-203`; observed: `const bound = positionedBound(e, root);` |
-| C61 | FACT | The in-flow path exempts an element wholly outside a clipping ancestor only on a scroll region or a transformed track (R11). | source: `scripts/rendered-state-census/in-page.mjs:258-258`; observed: `region or the element rides a transformed track (a carousel slide)` |
+| C60 | FACT | A positioned or transformed element is measured against its clipping ancestor or overlay panel (R15); before R19 that path had no clipped-away bound. | source: `scripts/rendered-state-census/in-page.mjs:229-229`; observed: `const bound = positionedBound(e, root);` |
+| C61 | FACT | The in-flow path exempts an element wholly outside a clipping ancestor only on a scroll region or a transformed track (R11). | source: `scripts/rendered-state-census/in-page.mjs:284-284`; observed: `region or the element rides a transformed track (a carousel slide)` |
 | C62 | FACT | 504 positioned details of the Revision 2 full run are gallery-track elements wholly outside their frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:4-4`; observed: `504 gallery-track wholly-out div` |
 | C63 | FACT | The lightbox's off-frame slide holds no text and no control, only media. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:4-4`; observed: `wholly=true coversXY=false text=false controls=0 media=true` |
 | C64 | FACT | 268 positioned details are the card image layer covering its frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:5-5`; observed: `268 image-layer covers img` |
@@ -122,8 +123,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C68 | FACT | That close control is an interactive element with text. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:9-9`; observed: `a.leaflet-popup-close-button wholly=true coversXY=false text=true controls=1` |
 | C69 | FACT | At 1024 the dashboard chart extends past its card. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:3-3`; observed: `(transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7` |
 | C70 | FACT | One error-screen cell of the Revision 2 full run is outside 925. | source: `docs/sessions/evidence/task923/review-3/rv3-rows-check.txt:11-11`; observed: `error-screen @390 mantine-primitives-headerview--signing-out~notifications it` |
-| C71 | FACT | A Story whose render does not finish in 20 s fails the load with a render-timeout reason. | source: `scripts/rendered-state-census/runner.mjs:116-116`; observed: `render did not reach finished/errored within 20s` |
-| C72 | FACT | The R16 transient class retries a load failure on a navigation error; before R20 it named nothing else. | source: `scripts/rendered-state-census/runner.mjs:441-441`; observed: `for (const d of r.rules['error-screen']) if (/^navigation failed` |
+| C71 | FACT | A Story whose render does not finish in 20 s fails the load with a render-timeout reason. | source: `scripts/rendered-state-census/runner.mjs:127-127`; observed: `render did not reach finished/errored within 20s` |
+| C72 | FACT | The R16 transient class retries a load failure on a navigation error; before R20 it named nothing else. | source: `scripts/rendered-state-census/runner.mjs:453-453`; observed: `for (const d of r.rules['error-screen']) if (/^navigation failed` |
 | C73 | FACT | The same cell run alone has no error-screen. | source: `docs/sessions/evidence/task923/r3-85-stray-cell-rerun.txt:40-40`; observed: `portal:0 :: text-clamp, text-hidden (1 cell(s))` |
 | C74 | FACT | The Revision 2 self-test reproduces at review 3. | source: `docs/sessions/evidence/task923/review-3/rv3-verify.txt:47-47`; observed: `verify-gate: every case behaves as stated.` |
 | C75 | FACT | The Revision 2 mutation proof proves 9 of 9 bounds. | source: `docs/sessions/evidence/task923/r3-50-bound-mutations.txt:14-14`; observed: `9 of 9 proved.` |
@@ -149,23 +150,23 @@ Every fact below is a ledger row; nothing else sets scope.
 | C95 | FACT | Every gate-level cell of the Revision 3 full run is a 640 cell or the 925 cell. | source: `docs/sessions/evidence/task923/review-4/rv4-rows-check.txt:4-4`; observed: `not at 640 and not custom-range-too-long: []` |
 | C96 | FACT | The whole vitest suite is green at review 4. | source: `docs/sessions/evidence/task923/review-4/rv4-vitest-all-2.txt:7-7`; observed: `2573 passed (2573)` |
 | C97 | FACT | The executor's first whole-suite run failed 9 tests. | source: `docs/sessions/evidence/task923/r4-91-vitest-all-1.txt:190-190`; observed: `2564 passed (2573)` |
-| C98 | FACT | R22's slide exemption is in the delivered code. | source: `scripts/rendered-state-census/in-page.mjs:232-232`; observed: `const exemptSlide = slideShape && !slideBreak;` |
+| C98 | FACT | R22's slide exemption is in the delivered code. | source: `scripts/rendered-state-census/in-page.mjs:258-258`; observed: `const exemptSlide = slideShape && !slideBreak;` |
 | C99 | FACT | The Revision 4 self-test reproduces at review 5. | source: `docs/sessions/evidence/task923/review-5/rv5-01-verify.txt:55-55`; observed: `verify-gate: every case behaves as stated.` |
 | C100 | FACT | The Revision 4 mutation proof reproduces 15 of 15. | source: `docs/sessions/evidence/task923/review-5/rv5-02-mutations.txt:18-18`; observed: `15 of 15 proved.` |
 | C101 | FACT | The R22 PASS case asserts one rule only; its portal root still fails `action-covered`. | source: `docs/sessions/evidence/task923/review-5/rv5-01-verify.txt:49-49`; observed: `other rules observed, not asserted (portal:0: action-covered)` |
-| C102 | FACT | `action-covered` has no condition for a control that is clipped away, hidden from assistive technology and out of the tab order. | source: `scripts/rendered-state-census/in-page.mjs:398-398`; observed: `if (!ok) add('action-covered',` |
-| C103 | FACT | `action-hidden` has no such condition either. | source: `scripts/rendered-state-census/in-page.mjs:383-383`; observed: `if (!region && !(outsideY && !outsideX && pageScrollable)) add('action-hidden',` |
+| C102 | FACT | The `action-covered` report itself has no condition for a control that is clipped away, hidden from assistive technology and out of the tab order; until R24 nothing before it had one either. | source: `scripts/rendered-state-census/in-page.mjs:433-433`; observed: `if (!ok) add('action-covered',` |
+| C103 | FACT | The `action-hidden` report has no such condition either; R24 adds the skip before both. | source: `scripts/rendered-state-census/in-page.mjs:418-418`; observed: `if (!region && !(outsideY && !outsideX && pageScrollable)) add('action-hidden',` |
 | C104 | FACT | The gallery's off-screen slides are out of the tab order. | source: `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:105-106`; observed: `tabIndex={isVisible ? undefined : -1}` |
 | C105 | FACT | The gallery's slides are in-flow, non-shrinking children of the transformed track. | source: `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:103-103`; observed: `className="block h-full shrink-0"` |
 | C106 | FACT | On the faithful synced gallery shape, the delivered code fails `component-overflow` on the visible slide (inside the frame, past its displaced track box) and the action rules on the hidden slides. | source: `docs/sessions/evidence/task923/review-5/rv5-11-probe.txt:5-5`; observed: `component-overflow [button "" x 212..332 past div 92..212] ; action-hidden [button "" centre 392,183.6 outside the 390x844 viewport` |
-| C107 | FACT | The in-flow path measures an element against its parent's box. | source: `scripts/rendered-state-census/in-page.mjs:277-277`; observed: `past ${describe(parent)} ${px(left)}..${px(right)}` |
-| C108 | FACT | The in-flow clipped-away exemption covers only an element wholly outside its clipping ancestor. | source: `scripts/rendered-state-census/in-page.mjs:266-267`; observed: `clippedAway = wholly && (` |
+| C107 | FACT | The in-flow path measures an element against its parent's box. | source: `scripts/rendered-state-census/in-page.mjs:307-307`; observed: `past ${describe(parent)} ${px(left)}..${px(right)}` |
+| C108 | FACT | The in-flow clipped-away exemption covers only an element wholly outside its clipping ancestor. | source: `scripts/rendered-state-census/in-page.mjs:293-293`; observed: `clippedAway = wholly && (` |
 | C109 | FACT | Two full runs on code that differs only by R22 disagree in 69 rows. | source: `docs/sessions/evidence/task923/r5-85-row-diff.txt:7-7`; observed: `rows in both whose failing-rule set differs: 69` |
 | C110 | FACT | Three narrowed AuthSheet runs with no other load disagree on `focus-trap`. | source: `docs/sessions/evidence/task923/review-5/rv5-41-trap-compare.txt:12-12`; observed: `DIFF register-agent en 640 trap=g open=g` |
-| C111 | FACT | The trap loop reads the focus at once after each key press. | source: `scripts/rendered-state-census/runner.mjs:320-321`; observed: `await page.keyboard.press(key);` |
+| C111 | FACT | The trap loop presses each key and then reads the focus; until R26 (b) it read it at once. | source: `scripts/rendered-state-census/runner.mjs:332-332`; observed: `await page.keyboard.press(key);` |
 | C112 | FACT | Read at once after each Tab, the AuthSheet focus is on `body` at the fourth press. | source: `docs/sessions/evidence/task923/review-5/rv5-42-trap-probe.txt:2-2`; observed: `pause 0 load true tabbables 13: LEAK` |
 | C113 | FACT | With a 300 ms pause after each Tab, the same sheet keeps the focus. | source: `docs/sessions/evidence/task923/review-5/rv5-42-trap-probe.txt:7-7`; observed: `pause 300 load true tabbables 13: kept` |
-| C114 | FACT | `waitStable` counts every running animation, infinite ones included. | source: `scripts/rendered-state-census/runner.mjs:135-135`; observed: `running: document.getAnimations().filter((a) => a.playState === 'running').length,` |
+| C114 | FACT | `waitStable` no longer counts infinite animations since R26 (a); before R26 it counted every running animation, and review 5 measured with that count (C115–C117). | source: `scripts/rendered-state-census/runner.mjs:139-140`; observed: `an infinite one (a loader) never settles and is not counted` |
 | C115 | FACT | On ListingContactPattern "write on WhatsApp", `waitStable` returns only at its 4 s bound, and the notification has closed itself 1 s later. | source: `docs/sessions/evidence/task923/review-5/rv5-46-toast-probe.txt:2-2`; observed: `run 0 waitStable returned at 4030ms: notification 984..1324; 1s later none` |
 | C116 | FACT | The animations that keep running there are infinite. | source: `docs/sessions/evidence/task923/review-5/rv5-47-anim-probe.txt:3-3`; observed: `CSSAnimation:m_f8e89c4b iterations=Infinity` |
 | C117 | FACT | Three narrowed ListingContactPattern runs disagree on `dismiss-close-control`. | source: `docs/sessions/evidence/task923/review-5/rv5-44-misc-compare.txt:99-99`; observed: `DIFF patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 639 :: dismiss-close-control,focus-trigger,target-small` |
@@ -178,8 +179,28 @@ Every fact below is a ledger row; nothing else sets scope.
 | C124 | FACT | `check-mojibake.mjs` lists files through `spawnSync` with no `maxBuffer` option. | source: `scripts/check-mojibake.mjs:138-139`; observed: `cwd: ROOT, encoding: 'utf8',` |
 | C125 | FACT | The listing is larger than the 1 MiB default, and the unmodified command exits 1. | source: `docs/sessions/evidence/task923/review-5/rv5-60-mojibake.txt:7-8`; observed: `listing bytes: 1056579 (maxBuffer default 1048576)` |
 | C126 | FACT | CI runs `check:mojibake`. | source: `.github/workflows/governance-pr.yml:164-164`; observed: `run: npm run check:mojibake` |
-| C127 | FACT | A rule's printed details are capped, with a tail for the rest. | source: `scripts/rendered-state-census/in-page.mjs:410-410`; observed: `more (${counts[key]} in total)` |
+| C127 | FACT | A rule's printed details are capped, with a tail for the rest. | source: `scripts/rendered-state-census/in-page.mjs:445-445`; observed: `more (${counts[key]} in total)` |
 | C128 | FACT | The Revision 4 full run has one unique row per cell and every rule key. | source: `docs/sessions/evidence/task923/review-5/rv5-52-ac21-checks.txt:1-1`; observed: `"rows":22740,"unique":22740,"ruleKeys":20,"missing":0` |
+| C129 | FACT | Review 6 reproduces the Revision 5 self-test. | source: `docs/sessions/evidence/task923/review-6/rv6-01-verify.txt:63-63`; observed: `verify-gate: every case behaves as stated.` |
+| C130 | FACT | Review 6 reproduces the Revision 5 mutation proof. | source: `docs/sessions/evidence/task923/review-6/rv6-02-mutations.txt:34-34`; observed: `21 of 21 proved.` |
+| C131 | FACT | Review 6 reproduces AC25: the narrowed misc runs differ only where AC25 allows. | source: `docs/sessions/evidence/task923/review-6/rv6-44-misc-compare.txt:106-106`; observed: `differences NOT allowed (AC25: stop as BLOCKED): 0` |
+| C132 | FACT | Between the Revision 4 and Revision 5 full runs, rows change verdict on `dismiss-outside` alone, in both directions. | source: `docs/sessions/evidence/task923/review-6/rv6-11-verdict-flips.txt:3-4`; observed: `6 +dismiss-outside` |
+| C133 | FACT | Run alone three times, the Stories of the rows that turned red show no dismissal violation. | source: `docs/sessions/evidence/task923/review-6/rv6-52-dismiss-isolation-counts.txt:1-3`; observed: `rows with a dismiss violation 0` |
+| C134 | FACT | Through the gate's own `dismissCheck`, the menu closes in about 310ms at CPU 1x. | source: `docs/sessions/evidence/task923/review-6/rv6-51-dismiss-throttle-probe.txt:2-2`; observed: `gate CLOSED in 313ms` |
+| C135 | FACT | At CPU 8x the same close takes over a second. | source: `docs/sessions/evidence/task923/review-6/rv6-51-dismiss-throttle-probe.txt:13-13`; observed: `gate CLOSED in 1306ms` |
+| C136 | FACT | `dismissCheck` gives the overlay 1 000ms to close. | source: `scripts/rendered-state-census/runner.mjs:250-250`; observed: `while (Date.now() - t0 < 1000) {` |
+| C137 | FACT | The Revision 5 full run used 10 workers. | source: `docs/sessions/evidence/task923/r6-82-full-run.txt:9-9`; observed: `10 worker(s)` |
+| C138 | FACT | The whole-registry CI step turns blocking once a full run is green. | source: `.claude/rules/shared/rendered-state-census.md:62-62`; observed: `CI step over the whole registry turns blocking the day its full run is green` |
+| C139 | FACT | A retry copies the first attempt's violations into the second attempt's row. | source: `scripts/rendered-state-census/runner.mjs:476-476`; observed: `row.rules[k] = before.rules[k];` |
+| C140 | FACT | An attempt whose open failed still measures the app root. | source: `scripts/rendered-state-census/runner.mjs:283-283`; observed: `if (first.stage === 'open') app.rules['open-failed'].push(first.reason);` |
+| C141 | FACT | The app root is treated as inert only when the state really opened. | source: `scripts/rendered-state-census/runner.mjs:287-287`; observed: `const appInert = first.stage === 'ok' && count > 0` |
+| C142 | FACT | In the Revision 4 full run, 16 retried rows record a rule as not measured and violated at once. | source: `docs/sessions/evidence/task923/review-6/rv6-10-na-vs-violation.txt:2-3`; observed: `{ retry: 16 }` |
+| C143 | FACT | The R24 skip count is written as a not-applicable reason. | source: `scripts/rendered-state-census/runner.mjs:94-94`; observed: `control(s) clipped away by an overflow ancestor` |
+| C144 | FACT | In the Revision 5 full run, 64 rows that were not retried record a rule as not applicable and violated at once. | source: `docs/sessions/evidence/task923/review-6/rv6-10-na-vs-violation.txt:11-12`; observed: `{ 'no-retry': 64 }` |
+| C145 | FACT | Review 6 reproduces AC27 on a listing over 1 MiB. | source: `docs/sessions/evidence/task923/review-6/rv6-20-mojibake.txt:2-2`; observed: `listing bytes 1063514` |
+| C146 | FACT | A root measured only by the first attempt is kept in the retried result. | source: `scripts/rendered-state-census/runner.mjs:481-481`; observed: `a root measured only by the first attempt keeps its measured violations` |
+| C147 | FACT | The self-test has a case whose first load fails to open and is retried. | source: `scripts/rendered-state-census/verify.mjs:102-102`; observed: `{ name: 'open-flaky-once', flaky: true, retry: true` |
+| C148 | FACT | A unit test asserts that the first attempt's measured violation is kept after a retry. | source: `scripts/__tests__/rendered-state-census.test.ts:241-241`; observed: `never clears a violation of a measured rule that the first attempt found` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 
 ## Mobile adaptation record
@@ -595,6 +616,69 @@ AdminShell, AuthSheet and ListingContactPattern sources and Stories.
 `# Revision 5` section with R24–R27 mapped to evidence, AC23–AC28 with transcripts, the owner table and deviations.
 Strongest status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
+## 15. Revision 6 — review 6, 2026-10-15 (`NEEDS REVISION`)
+
+Review evidence: `docs/sessions/evidence/task923/review-6/` (native Windows, Node v22.22.3; record `rv6-00-review.md`).
+Verified on the delivered files (62 of 62 hashes equal `r6-87-hashes-end.txt`): R24–R27 are in the code as written. The
+self-test reproduces with 52 cases (C129), the mutation proof is 21 of 21 (C130), AC25 reproduces (C131), and AC27
+reproduces on a listing over 1 MiB (C145). Every AC23–AC28 holds as written, and the executor's status was right.
+D33, D34, D35, D37 and D38 are accepted. The code of R24–R27 stays as it is.
+
+**Findings.**
+
+1. **P1 (kickoff defect, §14 R26 (c)): the full run's verdict still flips on dismissal.** Rows change verdict on
+   `dismiss-outside` alone, in both directions, between two full runs (C132). Run alone, the same Stories show no
+   dismissal violation (C133). The overlay always closes; it takes about 310ms at CPU 1x (C134) and over a second at
+   8x (C135). The 1 000ms bound (C136) under 10 workers (C137) judges the machine's load, not the overlay. A verdict
+   that flips with load can never be the blocking whole-registry step (C138). This is the executor's D36 (v).
+2. **P2 (kickoff defect, §11 R16): a retry merges a different page into the row.** A retry copies the first attempt's
+   violations, and roots, into the result (C139, C146). The first attempt never reached the state: its open failed
+   (C140), so its app root was measured on the closed, non-inert page (C141). 16 retried rows of the Revision 4 full
+   run say "not measured" and carry violations at once (C142). The unit test pins that behaviour (C148). This is the
+   executor's D36 (ii).
+3. **P3: the R24 skip count is written as a not-applicable reason** (C143), on rows that still have violations of the
+   same rule (C144).
+4. **Note.** The dashboard-chart details still move between runs (D34), but no row verdict flips on them; the chart
+   task filed at closure owns them.
+
+**Write set.** `scripts/rendered-state-census/runner.mjs`, `scripts/rendered-state-census/verify.mjs`, two new fixtures
+(`slow-close`, `open-flaky-once-closed-violation`), and in `scripts/__tests__/rendered-state-census.test.ts` only the
+test of C148 (R29). Evidence prefix `r7-`; `review-6/` is diagnosis only and stays unchanged. Out of scope: as §14
+(`in-page.mjs`, `check-mojibake.mjs`, the registry, `package.json`, CI, policy, every product source stay unchanged).
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R28 [C132; C133; C134; C135; C136; C137; C138; D1] | **A dismissal is judged on whether the overlay closes, not how fast.** After the dismissal action, `dismissCheck` polls the visible portal count every 50ms until it is 0, bounded at **5 000ms** (was 1 000ms). A failure reads `<rule>: the portal is still visible 5000ms after the dismissal`. The carrier row records `dismissMs`, an object from each mechanism that ran to its measured close time in ms, or `null` when the overlay did not close. Nothing else changes: the focus return still uses `settleFocus`, and no retry is added. New fixture `slow-close`, a portal dialog with a green app root (`focus: trap`, `dismiss: ["escape", "close-control", "outside"]`): each mechanism closes it 1 500ms after the event, and the portal stays visible until then. It is PASS on every rule of every root, and its `dismissMs` is at least 1 500 for each mechanism. `escape-does-not-close` stays FAIL `dismiss-escape`, with the 5 000ms detail. Mutation: put the bound back to 1 000ms, and `slow-close` fails `dismiss-escape`. | P1 | AC29, AC30, AC31 |
+| R29 [C139; C140; C141; C146; C147; C148] | **A retry replaces the first attempt.** When `runWithRetry` retries a job, the job's rows are the second attempt's rows only. No rule and no root of the first attempt is copied in (the two merges of C139 and C146 are removed). Every row still records `retry` with the first failure, and a second failure is still the violation. R16's sentence "a retry never clears a violation of a measured rule" is replaced by: **"a job is retried only for a load or open failure, never because a measured rule failed"**; `transientReason` is unchanged. The unit test of C148 is rewritten to assert the new rule: a first attempt with `open-failed` and `text-clamp`, then a clean second attempt, ends with no `text-clamp` and with `retry` recorded. New fixture `open-flaky-once-closed-violation`: like `open-flaky-once` (the trigger is absent on the first load only), and the app root also holds a visible 20×20 button. The state is a modal dialog, so while it is open the app root's actions are not measured. It is PASS on every rule of every root, with `retry` recorded on every row, and the app row has no `target-small` detail. Mutation: put the first-attempt merge back, and the case fails `target-small` on `app`. | P2 | AC29, AC31, AC32 |
+| R30 [C143; C144] | **The R24 skip count is its own key.** Every row carries `skippedActions`, a number (0 when nothing was skipped). `markSkippedActions` writes it there and no longer writes `notApplicable`. `notApplicable` keeps only reasons why a rule was not measured on that row. In `verify.mjs`, `track-flex-synced` asserts `skippedActions` ≥ 1 on `portal:0` and no `action-*` entry in its `notApplicable`. | P3 | AC29, AC31 |
+
+- **AC29 [R28; R29; R30; C129; C130].** `npm run check:rendered-state-census:verify` exits 0 with **54 cases**: the 52 of
+  Revision 5 plus `slow-close` and `open-flaky-once-closed-violation`, each as stated in R28–R30. The mutation proof
+  `r7-50-…` is a copy of `r6-50-…` with the two new mutations; it shows **23 of 23 proved**. A mutation of `runner.mjs`
+  edits a copy written outside the repository (the OS temp directory), never a repository file.
+- **AC30 [R28; C134; C135].** A copy of `review-6/rv6-51-dismiss-throttle-probe.mjs` saved as `r7-51-…`, with only its
+  output path changed, run on `patterns-mantine-adminuserstable--default~en-english` at uk / 1024: 12 of 12 trials
+  `CLOSED` with no detail, at throttles 1x, 4x and 8x.
+- **AC31 [R9; R28; R29; R30; C132; C137; C142; C144].** The full run is repeated on the final build with 10 workers. AC26's
+  checks hold: one row per cell; every row has all 20 rule keys, `notApplicable` and `skippedActions`; AC4 holds;
+  every gate-level cell is a 924 cell at 640 or the 925 cell; 0 `image-layer` details; the `leaflet` lines equal
+  `rv3-d16-classes.txt` lines 6–8. A copy of `review-6/rv6-10-na-vs-violation.mjs` saved as `r7-10-…` prints **0 rows
+  with a rule both not applicable and violated**. A copy of `review-6/rv6-11-verdict-flips.mjs` saved as `r7-11-…`,
+  run against `r6-full`, lists every row whose verdict changed. Each one is attributed, by its details, to one of these:
+  (a) R28, the `r6-full` row's `dismiss-*` detail "still visible 1000ms" is gone; (b) R29, the `r6-full` row carries
+  `retry`; (c) `focus-open` on `patterns-mantine-adminshell--drawer-open` (C118); (d) a 924 cell at 640. Any other flip
+  is run again, alone, three times, and printed. If it does not reproduce, the task stops as `BLOCKED` with that
+  evidence; it is not a reason for another code change. Every `dismiss-*` violation left in the full run is run again,
+  alone, once; one that does not reproduce stops the task as `BLOCKED`. The summary lists every retried job and the
+  runtime. The owner table is Revision 5's, with any reproduced dismissal violation given an owner.
+- **AC32 [R28; R29; R30].** The new test file passes twice. `npm test` (the whole suite) is run once and kept, with
+  AC28's treatment if it is red. `typecheck`, `lint`, `build`, `build-storybook`, `check:file-integrity` and
+  `check:mojibake` exit 0. `git status --porcelain` is captured before and after.
+
+**Verification order:** as §7, with evidence prefix `r7-`. The session log gets a `# Revision 6` section with R28–R30
+mapped to evidence, AC29–AC32 with transcripts, the owner table and deviations. Strongest status:
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
 ## Rule-compliance ledger
 
 | Rule | How this task complies |
@@ -606,4 +690,4 @@ Strongest status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128; owner decisions: D1; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128, C129, C130, C131, C132, C133, C134, C135, C136, C137, C138, C139, C140, C141, C142, C143, C144, C145, C146, C147, C148; owner decisions: D1; blocked claims: NONE.

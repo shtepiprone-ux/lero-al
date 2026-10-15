@@ -49,7 +49,8 @@ another one.
     'column', sm: 'row' }}` (precedent `MantineDashboardHeader`) or `Grid.Col span={{ base: 12, sm: … }}`;
   - or `wrap="wrap"`, when the sections may share a row wherever they fit.
 - **Not affected:** inline items, such as an icon with its label, a badge or a count beside a button, or an action icon
-  at the end of a row.
+  at the end of a row. A semantic label/value field is not this exception: GR-3j requires `key-value-stack` on
+  compact screens.
 
 **Check, before handoff and at review:** open every changed Story with the toolbar at **320, 390, 1024 and 1440**.
 - For each width, measure the component's rendered width against the viewport and against the production parent's

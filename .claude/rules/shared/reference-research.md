@@ -12,3 +12,8 @@ Standing references: Lahomes, Kamr (demo login), Omah, and TailAdmin. Save role-
 session evidence directory and emit the exact GR-7 receipt. If evidence contradicts a kickoff or prior claim, emit
 the required GR-7 retraction and restart the affected preflight. Detailed mandatory coverage remains in
 `docs/golden-rules.md` GR-7.
+
+For a visible responsive/adaptive decision, this standing product-reference audit is not sufficient. Also inspect the
+applicable primary source in `shared/mobile-adaptation-contract.md`: W3C Reflow, Apple HIG Layout, and Android Adapt
+layouts are the default basis. Record the source URL, literal guidance, selected pattern ID, and why the product
+surface fits it. Current Stories/repository code can reveal a bug but cannot be cited as the pattern authority.

@@ -4,7 +4,8 @@ Use one decision only:
 
 - `APPROVED` only when every primary requirement/AC and required QA evidence is verified with no unresolved P0–P2;
 - `APPROVED WITH NOTES` only when approval conditions hold and only P3/notes remain;
-- `NEEDS REVISION` for a wrong/incomplete result or missing required evidence;
+- `NEEDS REVISION` for a wrong/incomplete result, missing required evidence, or missing/failed GR-3j mobile
+  adaptation proof;
 - `PARTIALLY VERIFIED` or `BLOCKED` when evidence/access cannot support a final verdict.
 
 Each confirmed finding names severity, requirement IDs, exact location, observed/expected behavior, evidence/impact,

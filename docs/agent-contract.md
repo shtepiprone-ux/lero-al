@@ -12,6 +12,7 @@ This is the compact contract index. The complete P0 wording has been moved witho
 | P0 9b–15: governance, backlog, rendering, integrity, critical flows | [p0-09b-15-governance-delivery.md](rules/agent-contract/p0-09b-15-governance-delivery.md) |
 | P0 16–16c: visual provenance, canonical components and Stories | [p0-16-16c-ui-canonical.md](rules/agent-contract/p0-16-16c-ui-canonical.md) |
 | P0 16d: rendered-component census | [p0-16d-surface-census.md](rules/agent-contract/p0-16d-surface-census.md) |
+| Mobile adaptation invariant | [GR-3j mobile adaptation](rules/golden/gr-3j-mobile-adaptation.md) and `.claude/rules/shared/mobile-adaptation-contract.md` |
 | Roles and routing | [roles-and-routing.md](rules/agent-contract/roles-and-routing.md) |
 | “Report is not proof” | [report-not-proof.md](rules/agent-contract/report-not-proof.md) |
 | Claim-to-evidence invariant | [claim-evidence-contract.md](rules/agent-contract/claim-evidence-contract.md) |

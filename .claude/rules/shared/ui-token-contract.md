@@ -1,7 +1,9 @@
 # UI token and cross-Story parity contract
 
 This contract is mandatory for every new or changed visible artifact, its canonical component, and every Story that
-renders it. It operationalizes GR-0, GR-3a, GR-9, and GR-12 in a form that every role must apply.
+renders it. It operationalizes GR-0, GR-3a, GR-9, and GR-12 in a form that every role must apply. Read
+`shared/mobile-adaptation-contract.md` first: it determines the semantic compact presentation; this file determines
+the canonical owner and token path that implement it.
 
 Read `shared/enforcement-model.md` immediately after this file. It gives the required receipts and explains the
 phase hook, CI gate, registry, and built-Storybook proof as one mandatory sequence.

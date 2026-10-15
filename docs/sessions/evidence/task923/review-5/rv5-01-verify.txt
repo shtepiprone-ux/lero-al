@@ -1,0 +1,56 @@
+platform win32 node v22.22.3 cwd C:/Claude_Code_Projects/lero-al
+
+> lero-al@0.1.0 check:rendered-state-census:verify
+> node scripts/check-rendered-state-census.mjs --verify-gate
+
+check-rendered-state-census.mjs --verify-gate (fixtures served locally, no Storybook build)
+
+PASS clean                        as stated: every root green   [observed: app green | portal:0 green]
+FAIL portal-overflow-only         as stated: portal:0: component-overflow + viewport-overflow   [observed: app green | portal:0 viewport-overflow+component-overflow]
+FAIL portal-clamp-only            as stated: portal:0: text-clamp   [observed: app green | portal:0 text-clamp+text-hidden]
+FAIL portal-word-split-only       as stated: portal:0: word-split   [observed: app green | portal:0 word-split]
+FAIL app-root-only                as stated: app: component-overflow + viewport-overflow   [observed: app viewport-overflow+component-overflow | portal:0 green]
+FAIL unregistered-portal          as stated: app: unregistered-portal   [observed: app unregistered-portal]
+FAIL registered-opens-nothing     as stated: app: portal-count   [observed: app portal-count]
+FAIL focus-escapes-trap           as stated: portal:0: focus-trap   [observed: app green | portal:0 focus-trap]
+FAIL escape-does-not-close        as stated: portal:0: dismiss-escape   [observed: app green | portal:0 dismiss-escape]
+FAIL page-scroll-only             as stated: app: viewport-overflow   [observed: app viewport-overflow | portal:0 green]
+FAIL root-box-past-viewport       as stated: app: viewport-overflow   [observed: app viewport-overflow | portal:0 green]
+FAIL neg-margin-overflow          as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS neg-margin-fullbleed         as stated: every root green   [observed: app green | portal:0 green]
+FAIL table-cell-overflow          as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow+action-covered]
+PASS table-rowspan                as stated: every root green   [observed: app green | portal:0 green]
+PASS slide-carousel               as stated: every root green   [observed: app green | portal:0 green]
+FAIL slide-hidden-content         as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS text-inner-box               as stated: every root green   [observed: app green | portal:0 green]
+FAIL text-cut                     as stated: portal:0: text-hidden   [observed: app green | portal:0 text-hidden+component-overflow]
+PASS hidden-away-clipped          as stated: every root green   [observed: app green | portal:0 green]
+FAIL hidden-away-wide-clipper     as stated: portal:0: viewport-overflow   [observed: app green | portal:0 viewport-overflow]
+PASS offcanvas-closed-panel       as stated: every root green   [observed: app green | portal:0 green]
+FAIL offcanvas-open-overflow      as stated: app: viewport-overflow   [observed: app viewport-overflow | portal:0 green]
+PASS stacked-dialogs              as stated: every root green   [observed: app green | portal:0 green | portal:1 green]
+FAIL covered-action               as stated: portal:0: action-covered   [observed: app green | portal:0 component-overflow+action-covered+dismiss-close-control]
+FAIL widths-contradicted          as stated: app: widths-mismatch   [observed: app widths-mismatch]
+PASS widths-honoured              as stated: every root green   [observed: app green]
+PASS widths-sibling-covers        as stated: every root green; not applicable recorded: app: widths-mismatch   [observed: app green]
+FAIL widths-sibling-other-element as stated: app: widths-mismatch   [observed: app widths-mismatch]
+PASS sheet-no-pointer-dismissal   as stated: every root green; not applicable recorded: app: action-hidden + action-covered + target-small; portal:0: dismiss-close-control + dismiss-outside; listed with no pointer dismissal   [observed: app green | portal:0 green]
+FAIL abs-past-panel               as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS abs-badge-inside             as stated: every root green   [observed: app green | portal:0 green]
+FAIL transform-past-panel         as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS transform-inside             as stated: every root green   [observed: app green | portal:0 green]
+FAIL abs-past-clipper             as stated: portal:0: component-overflow   [observed: app green | portal:0 text-hidden+component-overflow]
+PASS abs-inside-clipper           as stated: every root green   [observed: app green | portal:0 green]
+PASS positioned-slide-away        as stated: every root green   [observed: app green | portal:0 green]
+FAIL positioned-slide-away-control as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow+action-covered]
+PASS media-cover-zoom             as stated: every root green   [observed: app green | portal:0 green]
+FAIL media-shifted-past-frame     as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+FAIL text-scaled-past-frame       as stated: portal:0: component-overflow   [observed: app green | portal:0 text-hidden+component-overflow]
+PASS track-active-slide-inside    as stated: app green; asserted portal:0: component-overflow empty; other rules observed, not asserted (portal:0: action-covered)   [observed: app green | portal:0 action-covered]
+FAIL track-offscreen-slide-tabbable as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow+action-covered]
+FAIL track-offscreen-slide-aria-only as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow+action-covered]
+PASS open-flaky-once              as stated: every root green; retry recorded (open click "#open": locator.click: Timeout 4000ms exceeded....)   [observed: app green | portal:0 green]
+FAIL open-never                   as stated: app: open-failed; retry recorded (open click "#nothing": locator.click: Timeout 4000ms exceede...)   [observed: app open-failed+portal-count]
+
+verify-gate: every case behaves as stated.
+EXIT_CODE=0

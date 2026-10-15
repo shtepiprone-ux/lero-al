@@ -1,0 +1,7 @@
+platform win32 node v22.22.3
+
+> lero-al@0.1.0 check:kickoff-evidence
+> node scripts/check-kickoff-evidence.mjs
+
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+EXIT_CODE=0

@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "statesRun": 3,
+    "locales": [
+      "en",
+      "uk",
+      "it",
+      "sq"
+    ],
+    "widths": [
+      320,
+      390,
+      639,
+      640,
+      1440
+    ],
+    "boundCells": 0,
+    "stateJobs": 40,
+    "rangeJobs": 20,
+    "closedJobs": 0,
+    "appRows": 60,
+    "portalRows": 40,
+    "runtimeSeconds": 73,
+    "ruleKeys": 20
+  },
+  "rows": 100,
+  "failing": 40,
+  "perRule": {
+    "text-clamp": 0,
+    "text-ellipsis": 20,
+    "text-hidden": 0,
+    "word-split": 0,
+    "viewport-overflow": 1,
+    "component-overflow": 0,
+    "action-hidden": 1,
+    "action-covered": 0,
+    "target-small": 32,
+    "focus-open": 2,
+    "focus-trigger": 20,
+    "focus-trap": 0,
+    "dismiss-escape": 0,
+    "dismiss-close-control": 9,
+    "dismiss-outside": 0,
+    "open-failed": 0,
+    "portal-count": 0,
+    "error-screen": 0,
+    "unregistered-portal": 0,
+    "widths-mismatch": 0
+  },
+  "notApplicable": {
+    "action-hidden": 16,
+    "action-covered": 16,
+    "target-small": 16,
+    "dismiss-outside": 12
+  },
+  "noPointerDismissal": [],
+  "widthsStates": [
+    {
+      "id": "patterns-mantine-adminshell--drawer-open",
+      "widths": {
+        "max": 1023
+      },
+      "inRange": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1024,
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "id": "patterns-mantine-adminshell--drawer-open~en-english",
+      "widths": {
+        "min": 1024
+      },
+      "inRange": [
+        {
+          "width": 1024,
+          "rows": 0
+        }
+      ],
+      "outside": [
+        {
+          "width": 1023,
+          "rows": 0
+        }
+      ]
+    }
+  ],
+  "retries": [],
+  "combos": [
+    {
+      "key": "patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0",
+      "rules": [
+        "text-ellipsis",
+        "target-small",
+        "focus-open"
+      ],
+      "cells": 16
+    },
+    {
+      "key": "patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open~en-english | app",
+      "rules": [
+        "text-ellipsis"
+      ],
+      "cells": 4
+    },
+    {
+      "key": "patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0",
+      "rules": [
+        "target-small",
+        "focus-trigger",
+        "dismiss-close-control",
+        "viewport-overflow",
+        "action-hidden"
+      ],
+      "cells": 20
+    }
+  ]
+}

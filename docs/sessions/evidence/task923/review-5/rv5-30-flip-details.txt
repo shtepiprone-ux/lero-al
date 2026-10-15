@@ -1,0 +1,181 @@
+== target-small (12)
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app | uk | 320 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Відкрити меню" 26x26 < 44px
+      button.mantine-focus-auto "Про видимі оголошення" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app | uk | 390 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Відкрити меню" 26x26 < 44px
+      button.mantine-focus-auto "Про видимі оголошення" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app | uk | 639 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Відкрити меню" 26x26 < 44px
+      button.mantine-focus-auto "Про видимі оголошення" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app | uk | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Відкрити меню" 26x26 < 44px
+      button.mantine-focus-auto "Про видимі оголошення" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~open-menu | app | en | 639 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > header:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Open menu" 26x26 < 44px
+      button.mantine-focus-auto "About visible listings" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-the-activity-series | app | sq | 320 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Hap menunë" 26x26 < 44px
+      button.mantine-focus-auto "Rreth njoftimeve të duks" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | en | 320 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Open menu" 26x26 < 44px
+      button.mantine-focus-auto "About visible listings" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | en | 390 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Open menu" 26x26 < 44px
+      button.mantine-focus-auto "About visible listings" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | en | 639 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Open menu" 26x26 < 44px
+      button.mantine-focus-auto "About visible listings" 22x22 < 44px
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | sq | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Hap menunë" 26x26 < 44px
+      button.mantine-focus-auto "Rreth njoftimeve të duks" 22x22 < 44px
+  r5 FAIL patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~country | app | sq | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Hap menunë" 26x26 < 44px
+      button.mantine-focus-auto "Ngarko foto" 28x28 < 44px
+  r5 FAIL patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~open-menu | app | it | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > header:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Apri menu" 26x26 < 44px
+      button.mantine-focus-auto "Carica foto" 28x28 < 44px
+== component-overflow (10)
+  r4 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | en | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | it | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~en-english | app | uk | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~en-english | app | it | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~en-english | app | uk | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~en-english | app | sq | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | en | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | sq | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r4 FAIL patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | sq | 1024 retry r4=- r5=-
+      div ".apexcharts-flip-y { transfo" x 791.7..1011.7 past div.m_4081bf90 791.7..978.7
+      svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  r5 FAIL patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | sq | 390 retry r4=- r5=-
+      div "" y 631..702 past div 631..696
+== action-hidden (4)
+  r5 FAIL patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~open-menu | app | en | 639 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > header:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      a.m_e615b15f ".__m__-_r_6v_{align-item" centre 319.5,995.7 outside the 639x844 viewport and no scroll region holds it
+      button.mantine-focus-auto "About the activity serie" centre 591,1149.4 outside the 639x844 viewport and no scroll region holds it
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-the-activity-series | app | sq | 320 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2) > button:nth-child(1), :scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(6) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Rreth njoftimeve të duks" centre 174.7,-690 outside the 320x844 viewport and no scroll region holds it
+      a.m_e615b15f ".__m__-_r_67_{align-item" centre 160,-492.8 outside the 320x844 viewport and no scroll region holds it
+  r5 FAIL patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~country | app | sq | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      button.mantine-focus-auto "Përdoruesit" centre 89.2,-387 outside the 640x844 viewport and no scroll region holds it
+      button.mantine-focus-auto "Kliko për të ndryshuar" centre 96.5,-282 outside the 640x844 viewport and no scroll region holds it
+  r5 FAIL patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~open-menu | app | it | 640 retry r4=- r5=open click ":scope > div:nth-child(3) > div:nth-child(2) > header:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+      input.m_8fb7ebe7 "Paese" centre 243.5,963 outside the 640x844 viewport and no scroll region holds it
+      input.m_8fb7ebe7 "67 123 4567" centre 449.3,963 outside the 640x844 viewport and no scroll region holds it
+== dismiss-outside (7)
+  r5 FAIL patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | portal:0 | en | 1440 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~en-english | portal:0 | uk | 1440 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~bhmodern-apartment-in-tirana-c | portal:0 | it | 1440 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | portal:0 | sq | 1024 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~en-english | portal:0 | en | 1440 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~en-english | portal:0 | en | 1024 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~active | portal:0 | uk | 639 retry r4=- r5=-
+      dismiss-outside: the portal is still visible 1000ms after the dismissal
+== dismiss-escape (3)
+  r5 FAIL patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~bhmodern-apartment-in-tirana-c | portal:0 | uk | 1440 retry r4=- r5=-
+      dismiss-escape: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-adminuserstable--location-filter-removed | patterns-mantine-adminuserstable--location-filter-removed~open-menu | portal:0 | en | 390 retry r4=- r5=-
+      dismiss-escape: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-adminuserstable--location-filter-removed | patterns-mantine-adminuserstable--location-filter-removed~open-menu | portal:0 | en | 639 retry r4=- r5=-
+      dismiss-escape: the portal is still visible 1000ms after the dismissal
+== dismiss-close-control (7)
+  r5 FAIL patterns-mantine-adminpermissionsview--all-allowed | patterns-mantine-adminpermissionsview--all-allowed~open-menu | portal:0 | it | 639 retry r4=- r5=-
+      dismiss-close-control: the portal is still visible 1000ms after the dismissal
+  r5 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | en | 639 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+  r5 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | it | 1440 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+  r4 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | uk | 320 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+  r4 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | uk | 390 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+  r5 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | uk | 640 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+  r4 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | uk | 1440 retry r4=- r5=-
+      dismiss-close-control: close control ".mantine-Notification-closeButton, .mantine-CloseButton-root" cannot be clicked (locator.click: Timeout 3000ms exceeded.)
+== focus-open (7)
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | en | 639 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Open menu], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | it | 390 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Apri menu], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | it | 639 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Apri menu], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | sq | 639 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Hap menunë], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | sq | 1023 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Hap menunë], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | uk | 320 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Відкрити меню], outside every portal root
+  r4 FAIL patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | uk | 639 retry r4=- r5=-
+      on open the focus is on button.mantine-focus-auto[Відкрити меню], outside every portal root
+== focus-trap (22)
+  r5 FAIL patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 640 retry r4=- r5=-
+      Tab press 1 of 3 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 320 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 1440 retry r4=- r5=-
+      Tab press 5 of 16 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | it | 320 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | it | 1440 retry r4=- r5=-
+      Tab press 5 of 16 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | sq | 320 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | sq | 390 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | sq | 1440 retry r4=- r5=-
+      Tab press 5 of 16 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 320 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 390 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 639 retry r4=- r5=-
+      Tab press 5 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 320 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 1440 retry r4=- r5=-
+      Tab press 4 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | it | 320 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | it | 1440 retry r4=- r5=-
+      Tab press 4 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | sq | 320 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | sq | 390 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | sq | 1440 retry r4=- r5=-
+      Tab press 4 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 320 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r5 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 390 retry r4=- r5=-
+      Tab press 4 of 14 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 1440 retry r4=- r5=-
+      Tab press 4 of 15 moved the focus out to body.sb-main-fullscreen
+  r4 FAIL patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | it | 320 retry r4=- r5=-
+      Tab press 9 of 12 moved the focus out to body.sb-main-fullscreen
+== viewport-overflow (1)
+  r5 FAIL patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | it | 390 retry r4=- r5=-
+      div.m_5ed0edd0 "Impossibile caricare le info" x 32.9..390.9 outside 0..390
+EXIT_CODE=0

@@ -1,0 +1,42 @@
+platform win32 node v22.22.3
+rendered state census: 3 registered state(s), 40 state job(s) + 20 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 0 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-5\rv5-43-misc-1
+
+rendered state census — rows 100 (failing 40); {"statesRun":3,"locales":["en","uk","it","sq"],"widths":[320,390,639,640,1440],"boundCells":0,"stateJobs":40,"rangeJobs":20,"closedJobs":0,"appRows":60,"portalRows":40,"runtimeSeconds":73,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          20
+  text-hidden            0
+  word-split             0
+  viewport-overflow      1
+  component-overflow     0
+  action-hidden          1
+  action-covered         0
+  target-small           32
+  focus-open             2
+  focus-trigger          20
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  9
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         16
+  action-hidden          16
+  dismiss-outside        12
+  target-small           16
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 0
+widths states: 2; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 2 with a missing cell
+  patterns-mantine-adminshell--drawer-open {"max":1023}: in-range 1023px x0; first outside 1024px x0
+  patterns-mantine-adminshell--drawer-open~en-english {"min":1024}: in-range 1024px x0; first outside 1023px x0
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+Story x state x root with a violation: 3
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 :: text-ellipsis, target-small, focus-open (16 cell(s))
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open~en-english | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 :: target-small, focus-trigger, dismiss-close-control, viewport-overflow, action-hidden (20 cell(s))
+
+rows 100 = 60 app-root rows + 40 portal-root rows; 40 state jobs + 20 out-of-range widths jobs + 0 closed jobs; 0 retried job(s); runtime 73s
+EXIT_CODE=1

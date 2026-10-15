@@ -1,0 +1,6 @@
+platform win32 node v22.22.3
+rv5-flex-track-offscreen-text app: green
+rv5-flex-track-offscreen-text portal:0: text-hidden [div "Caption of slide two" scroll 240x80 > client 120x80]
+rv5-flex-track-synced app: green
+rv5-flex-track-synced portal:0: component-overflow [button "" x 212..332 past div 92..212] ; action-hidden [button "" centre 392,183.6 outside the 390x844 viewport and no scroll region holds it] ; action-covered [button "" centre 152,183.6 is covered by div.dialog]
+EXIT_CODE=0

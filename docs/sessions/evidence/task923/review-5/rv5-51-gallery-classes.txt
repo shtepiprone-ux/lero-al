@@ -1,0 +1,6 @@
+platform win32 node v22.22.3
+input docs/sessions/evidence/task923/r5-full/rows.jsonl
+(i) y-axis counter details: 228  {"patterns-mantine-listingdetailpattern--default":216,"patterns-mantine-listinggallerypattern--default":12}
+(ii) track details that hold a named, tabbable slide button: 12  {"patterns-mantine-listinggallerypattern--default":12}
+track details of any other kind (AC21: must be 0): 0
+for information - in-flow detail "button x..x past div" (visible slide against its displaced track box): 228  {"patterns-mantine-listingdetailpattern--default":216,"patterns-mantine-listinggallerypattern--default":12}

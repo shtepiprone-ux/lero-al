@@ -1,0 +1,4 @@
+platform win32 node v22.22.3
+before click: ["CSSAnimation:m_f8e89c4b iterations=Infinity on span.m_b34414df","CSSAnimation:m_f8e89c4b iterations=Infinity on span.m_b34414df"]
+800ms after click: ["CSSAnimation:m_f8e89c4b iterations=Infinity on span.m_b34414df","CSSAnimation:m_f8e89c4b iterations=Infinity on span.m_b34414df"]
+EXIT_CODE=0

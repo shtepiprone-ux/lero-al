@@ -1,0 +1,10 @@
+platform win32 node v22.22.3
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.22.3
+EXIT_CODE=1
+listing bytes: 1056579 (maxBuffer default 1048576)
+tracked-only bytes: 900684
+task923 evidence bytes: 19351

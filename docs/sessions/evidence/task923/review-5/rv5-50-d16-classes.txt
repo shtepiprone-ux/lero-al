@@ -1,0 +1,6 @@
+31 chart partial div -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: div.m_6d731127 "1102" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+39 chart partial svg -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+240 gallery-track wholly-out div -- e.g. patterns-mantine-listingdetailpattern--default app 320 :: div "1 / 5" (absolute) y 444..470 past div.relative 104..444
+110 leaflet covers div -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 14..308 past div.listing-map 37..283
+4 leaflet partial div -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 38..331 past div.listing-map 37..283
+114 leaflet wholly-out a -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: a.leaflet-popup-close-button "×" (absolute) x 284..308 past div.listing-map 37..283 holds a.leaflet-popup-close-button "Close popup"

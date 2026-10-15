@@ -1,0 +1,380 @@
+platform win32 node v22.22.3 start 11:06:30
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts (5 tests | 4 failed) 12281ms
+     × tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount 10489ms
+     × form submit: verifyOtp called with correct token_hash + type — NOT on mount 43ms
+     × success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount) 36ms
+     × expired/used token on submit → expired state + request-new CTA rendered 28ms
+stderr | src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — server error mapping (Task 873) > invalid_current reason shows the localized alert
+You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx (5 tests | 5 failed) 12562ms
+     × submit stays disabled when current and new password are identical 10277ms
+     × invalid_current reason shows the localized alert 2095ms
+     × a successful change calls signOut("global") 31ms
+     × the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys 109ms
+     × both toggles are not aria-hidden and carry a localized label; clicking toggles the input type 3ms
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx (4 tests | 1 failed) 14304ms
+     × case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload 5483ms
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx (6 tests | 2 failed) 23323ms
+     × clicking the filters button opens FiltersPanel 6710ms
+     × the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge) 8051ms
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx (8 tests | 1 failed) 25164ms
+     × T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it 8087ms
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 4 failed) 41962ms
+     × hydrates the trigger from values.date_from/date_to 8765ms
+     × picking a range then Apply filters commits BOTH date_from + date_to atomically 12589ms
+     × Reset clears date_from + date_to (along with every other filter) 5863ms
+     × picking a range pushes BOTH date_from + date_to in ONE router.push call 6735ms
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx (19 tests | 4 failed) 44958ms
+     × Apply fires onApply with the composed local values 7698ms
+     × Reset clears all filters via the existing handleReset semantics 6821ms
+     × clicking the active type again clears it back to "All types" 5888ms
+     × clicking a market type selects it; "All" clears it 6267ms
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx (47 tests | 1 failed) 79209ms
+     × tapping days alone does NOT fire onChange; only Confirm commits 15939ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 22 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx > AdminExchangeProvidersManager (T1) > case 1 — create: masked API key with a labelled reveal toggle, submit sends the typed payload
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx:92:3
+     90|
+     91| describe('AdminExchangeProvidersManager (T1)', () => {
+     92|   it('case 1 — create: masked API key with a labelled reveal toggle, s…
+       |   ^
+     93|     renderManager()
+     94|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/22]⎯
+
+ FAIL  src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx > AdminPagesManager (T1–T6) > T1 — sq_body_required: sq tab active, body-field error, no toast; editing the body clears it
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx:132:3
+    130|
+    131| describe('AdminPagesManager (T1–T6)', () => {
+    132|   it('T1 — sq_body_required: sq tab active, body-field error, no toast…
+       |   ^
+    133|     mockCreate.mockResolvedValue({ error: 'sq_body_required' })
+    134|     renderManager([PAGE_A])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — Apply / Reset wiring > Apply fires onApply with the composed local values
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:141:3
+    139|
+    140| describe('FiltersPanel shell — Apply / Reset wiring', () => {
+    141|   it('Apply fires onApply with the composed local values', () => {
+       |   ^
+    142|     const { onApply } = renderPanel({ values: { rooms: [2] } })
+    143|     fireEvent.click(screen.getByText('Apply filters'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — Apply / Reset wiring > Reset clears all filters via the existing handleReset semantics
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:147:3
+    145|   })
+    146|
+    147|   it('Reset clears all filters via the existing handleReset semantics'…
+       |   ^
+    148|     const { onChange } = renderPanel({ values: { rooms: [2], price_min…
+    149|     fireEvent.click(screen.getByText('Reset filters'))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — property-type toggle (soft-tint selected) > clicking the active type again clears it back to "All types"
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:170:3
+    168|   })
+    169|
+    170|   it('clicking the active type again clears it back to "All types"', (…
+       |   ^
+    171|     renderPanel()
+    172|     const allTypesBtn = screen.getByText('All types').closest('button'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx > FiltersPanel shell — market-type toggle (soft-tint selected) > clicking a market type selects it; "All" clears it
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx:185:3
+    183|
+    184| describe('FiltersPanel shell — market-type toggle (soft-tint selected)…
+    185|   it('clicking a market type selects it; "All" clears it', () => {
+       |   ^
+    186|     renderPanel()
+    187|     const allBtn = screen.getByText('All').closest('button')!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > hydrates the trigger from values.date_from/date_to
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:133:3
+    131|
+    132| describe('FiltersPanel — RangeDatePicker wiring (Task 559)', () => {
+    133|   it('hydrates the trigger from values.date_from/date_to', () => {
+       |   ^
+    134|     const values: FilterValues = { date_from: DAY_10, date_to: DAY_15 }
+    135|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > picking a range then Apply filters commits BOTH date_from + date_to atomically
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:152:3
+    150|   })
+    151|
+    152|   it('picking a range then Apply filters commits BOTH date_from + date…
+       |   ^
+    153|     const onChange = vi.fn()
+    154|     const onApply = vi.fn()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > FiltersPanel — RangeDatePicker wiring (Task 559) > Reset clears date_from + date_to (along with every other filter)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:185:3
+    183|   })
+    184|
+    185|   it('Reset clears date_from + date_to (along with every other filter)…
+       |   ^
+    186|     const onChange = vi.fn()
+    187|     render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/22]⎯
+
+ FAIL  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx > ListingsFilters — RangeDatePicker wiring (Task 559) > picking a range pushes BOTH date_from + date_to in ONE router.push call
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx:220:3
+    218|   })
+    219|
+    220|   it('picking a range pushes BOTH date_from + date_to in ONE router.pu…
+       |   ^
+    221|     mockSearchParams = new URLSearchParams(`date_from=${ANCHOR_FROM}`)
+    222|     const { baseElement } = render(withProviders(<ListingsFilters loca…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/22]⎯
+
+ FAIL  src/components/shared/__tests__/heroSearch.smoke.test.tsx > HeroSearch — Mantine Button migration (Task 568) > clicking the filters button opens FiltersPanel
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx:125:3
+    123|   })
+    124|
+    125|   it('clicking the filters button opens FiltersPanel', () => {
+       |   ^
+    126|     render(withProviders(<HeroSearch />))
+    127|     expect(screen.queryByPlaceholderText('e.g. 12345')).not.toBeInTheD…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/22]⎯
+
+ FAIL  src/components/shared/__tests__/heroSearch.smoke.test.tsx > HeroSearch — Mantine Button migration (Task 568) > the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/shared/__tests__/heroSearch.smoke.test.tsx:132:3
+    130|   })
+    131|
+    132|   it('the active count badge is absent with no filters, and shows the …
+       |   ^
+    133|     render(withProviders(<HeroSearch />))
+    134|     const filtersButton = screen.getByLabelText('Advanced filters')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/22]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — mount behavior smoke (AC3, Task 441) > tokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:119:3
+    117|
+    118| describe('ResetPasswordClient — mount behavior smoke (AC3, Task 441)',…
+    119|   it('tokenHash + type=recovery: shows form WITHOUT calling verifyOtp …
+       |   ^
+    120|     const { ResetPasswordClient } = await import('../ResetPasswordClie…
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/22]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > form submit: verifyOtp called with correct token_hash + type — NOT on mount
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:180:17
+    178|     const input = container!.querySelector('input#new-password')!
+    179|     await act(async () => {
+    180|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    181|     })
+    182|
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:179:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/22]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > success path: verifyOtp ok → updatePassword → success state shown (link usable post-mount)
+AssertionError: expected null to be truthy
+
+- Expected:
+true
+
++ Received:
+null
+
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:219:46
+    217|     expect(mockVerifyOtp).not.toHaveBeenCalled()
+    218|     // Form is present after mount (link is usable)
+    219|     expect(container!.querySelector('form')).toBeTruthy()
+       |                                              ^
+    220|
+    221|     const input = container!.querySelector('input#new-password')!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/22]⎯
+
+ FAIL  src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts > ResetPasswordClient — submit behavior smoke (AC3, Task 441) > expired/used token on submit → expired state + request-new CTA rendered
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:261:17
+    259|     const input = container!.querySelector('input#new-password')!
+    260|     await act(async () => {
+    261|       fireEvent.change(input, { target: { value: 'NewP@ss123' } })
+       |                 ^
+    262|     })
+    263|     await act(async () => {
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts:260:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/22]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — same-password guard (Task 873) > submit stays disabled when current and new password are identical
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:91:3
+     89|
+     90| describe('CabinetPasswordSection — same-password guard (Task 873)', ()…
+     91|   it('submit stays disabled when current and new password are identica…
+       |   ^
+     92|     const { CabinetPasswordSection } = await import('../CabinetPasswor…
+     93|     let container: HTMLElement
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/22]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — server error mapping (Task 873) > invalid_current reason shows the localized alert
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:132:17
+    130|
+    131|     await act(async () => {
+    132|       fireEvent.change(current, { target: { value: 'WrongPass1!' } })
+       |                 ^
+    133|       fireEvent.change(next, { target: { value: 'Sample123!' } })
+    134|     })
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:131:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/22]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — success path (Task 873) > a successful change calls signOut("global")
+Error: Unable to fire a "change" event - please provide a DOM element.
+ ❯ createEvent node_modules/@testing-library/dom/dist/events.js:27:11
+ ❯ Function.createEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:106:38
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/dom/dist/events.js:110:68
+ ❯ Function.fireEvent.<computed> [as change] node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:162:17
+    160|
+    161|     await act(async () => {
+    162|       fireEvent.change(current, { target: { value: 'OldPass123!' } })
+       |                 ^
+    163|       fireEvent.change(next, { target: { value: 'Sample123!' } })
+    164|     })
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:47:24
+ ❯ process.env.NODE_ENV.exports.act node_modules/react/cjs/react.development.js:814:22
+ ❯ Proxy.<anonymous> node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:161:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/22]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — new-password hint stays linked (Task 873, §16.3, AC5′, owner D81-5) > the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys
+TestingLibraryElementError: Unable to find a label with the text of: /password_new_label/
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:188:29
+    186|     // Found by its label (the mocked `password_new_label` key-echo), …
+    187|     // this component's own implementation detail, not the accessibili…
+    188|     const newInput = screen.getByLabelText(/password_new_label/) as HT…
+       |                             ^
+    189|     const describedBy = newInput.getAttribute('aria-describedby')
+    190|     expect(describedBy).toBeTruthy()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/22]⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — reveal toggles have an accessible name (Task 873, §16.2) > both toggles are not aria-hidden and carry a localized label; clicking toggles the input type
+TypeError: Cannot read properties of null (reading 'closest')
+ ❯ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:216:77
+    214|     })
+    215|
+    216|     const currentRoot = container!.querySelector('#cabinet-current-pas…
+       |                                                                             ^
+    217|     const newRoot = container!.querySelector('#cabinet-new-password')!…
+    218|     const currentToggle = currentRoot.querySelector<HTMLButtonElement>…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/22]⎯
+
+ FAIL  src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx > RangeDatePicker — mobile (Task 558/561) > tapping days alone does NOT fire onChange; only Confirm commits
+Error: Test timed out in 15000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx:276:3
+    274|   beforeEach(() => stubMatchMedia(true))
+    275|
+    276|   it('tapping days alone does NOT fire onChange; only Confirm commits'…
+       |   ^
+    277|     const onChange = vi.fn<(next: DateRange) => void>()
+    278|     const { baseElement, container } = render(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/22]⎯
+
+
+ Test Files  8 failed | 147 passed (155)
+      Tests  22 failed | 2551 passed (2573)
+   Start at  13:06:30
+   Duration  92.54s (transform 38.95s, setup 21.02s, import 735.70s, tests 520.31s, environment 213.53s)
+
+EXIT_CODE=1
+end 11:08:03

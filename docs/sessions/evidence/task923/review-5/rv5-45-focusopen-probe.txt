@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+run 0 gate waitStable returned at 553ms portals 1: focus inside
+run 1 samples t:portals/animations/focus 1:1/1/in 53:1/1/in 116:1/1/in 177:1/1/in 238:1/1/in 301:1/0/in 366:1/0/in 426:1/0/in 487:1/0/in 551:1/0/in 614:1/0/in 676:1/0/in 738:1/0/in 801:1/0/in 862:1/0/in 925:1/0/in 986:1/0/in 1050:1/0/in 1113:1/0/in 1176:1/0/in 1237:1/0/in 1299:1/0/in 1361:1/0/in 1423:1/0/in 1484:1/0/in
+run 2 gate waitStable returned at 545ms portals 1: focus OUTSIDE button.mantine-focus-auto[Open menu]
+run 3 samples t:portals/animations/focus 2:1/1/out 62:1/1/out 125:1/1/out 187:1/1/out 250:1/1/out 312:1/0/out 374:1/0/out 435:1/0/out 498:1/0/out 561:1/0/out 623:1/0/out 685:1/0/out 746:1/0/out 809:1/0/out 870:1/0/out 933:1/0/out 995:1/0/out 1056:1/0/out 1119:1/0/out 1181:1/0/out 1244:1/0/out 1306:1/0/out 1369:1/0/out 1430:1/0/out 1492:1/0/out
+run 4 gate waitStable returned at 553ms portals 1: focus inside
+run 5 samples t:portals/animations/focus 1:1/1/in 65:1/1/in 126:1/1/in 189:1/1/in 247:1/1/in 313:1/0/in 376:1/0/in 438:1/0/in 500:1/0/in 562:1/0/in 624:1/0/in 688:1/0/in 750:1/0/in 813:1/0/in 874:1/0/in 937:1/0/in 999:1/0/in 1060:1/0/in 1124:1/0/in 1186:1/0/in 1249:1/0/in 1311:1/0/in 1372:1/0/in 1434:1/0/in 1495:1/0/in
+EXIT_CODE=0

@@ -1,0 +1,12 @@
+platform win32 node v22.22.3
+pause 0 load true tabbables 13: LEAK | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > OUT:body.sb-main-fullscreen
+pause 0 load true tabbables 13: LEAK | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > OUT:body.sb-main-fullscreen
+pause 0 load true tabbables 13: LEAK | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > OUT:body.sb-main-fullscreen
+pause 0 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+pause 0 load true tabbables 13: LEAK | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > OUT:body.sb-main-fullscreen
+pause 300 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+pause 300 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+pause 300 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+pause 300 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+pause 300 load true tabbables 13: kept | button.mantine-focus-auto > button.mantine-focus-auto > input.m_f2d85dd2 > div > div > div > div > button.mantine-focus-auto > button.mantine-focus-auto > input.m_8fb7ebe7 > input.m_8fb7ebe7 > input.m_8fb7ebe7[Country] > input.m_8fb7ebe7 > input.m_8fb7ebe7[Select your city]
+EXIT_CODE=0

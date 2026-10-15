@@ -1,0 +1,2 @@
+{"rows":22740,"unique":22740,"ruleKeys":20,"missing":0,"gateCells":73,"gateCellsNot640NotCustomRange":1,"widthsOfGate":[640,390]}
+patterns-mantine-dashboardperiodcontrol--custom-range-too-long closed app en 390 {"error-screen":["render finished, sb-show-errordisplay=true"]}

@@ -1,0 +1,50 @@
+rendered state census — rows 64 (failing 32); {"statesRun":4,"locales":["en","uk"],"widths":[320,390,640,1440],"boundCells":0,"stateJobs":32,"rangeJobs":0,"closedJobs":0,"appRows":32,"portalRows":32,"runtimeSeconds":8,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  viewport-overflow      0
+  component-overflow     32
+  action-hidden          0
+  action-covered         0
+  target-small           24
+  focus-open             0
+  focus-trigger          0
+  focus-trap             11
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         32
+  action-hidden          32
+  target-small           32
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 16
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 1440
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 320
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 390
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 640
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 1440
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 320
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 390
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 640
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 1440
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 320
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 390
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 640
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 1440
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 320
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 390
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 640
+widths states: 0; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 0 with a missing cell
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+Story x state x root with a violation: 4
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 :: component-overflow, target-small (8 cell(s))
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 :: component-overflow, target-small, focus-trap (8 cell(s))
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 :: component-overflow, target-small, focus-trap (8 cell(s))
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 :: component-overflow, target-small, focus-trap (8 cell(s))

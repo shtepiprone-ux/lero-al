@@ -1,0 +1,6 @@
+platform win32 node v22.22.3 (diagnostic: buffer raised by the executor's preload; not the AC command)
+  src/components/ui/badge.tsx
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+
+check:mojibake: 0 artifacts in 12040 files
+EXIT_CODE=0

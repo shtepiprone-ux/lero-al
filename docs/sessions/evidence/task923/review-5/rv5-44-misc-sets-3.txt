@@ -1,0 +1,100 @@
+patterns-mantine-adminshell--drawer-open app en 1440 :: 
+patterns-mantine-adminshell--drawer-open app en 320 :: 
+patterns-mantine-adminshell--drawer-open app en 390 :: 
+patterns-mantine-adminshell--drawer-open app en 639 :: 
+patterns-mantine-adminshell--drawer-open app en 640 :: 
+patterns-mantine-adminshell--drawer-open app it 1440 :: 
+patterns-mantine-adminshell--drawer-open app it 320 :: 
+patterns-mantine-adminshell--drawer-open app it 390 :: 
+patterns-mantine-adminshell--drawer-open app it 639 :: 
+patterns-mantine-adminshell--drawer-open app it 640 :: 
+patterns-mantine-adminshell--drawer-open app sq 1440 :: 
+patterns-mantine-adminshell--drawer-open app sq 320 :: 
+patterns-mantine-adminshell--drawer-open app sq 390 :: 
+patterns-mantine-adminshell--drawer-open app sq 639 :: 
+patterns-mantine-adminshell--drawer-open app sq 640 :: 
+patterns-mantine-adminshell--drawer-open app uk 1440 :: 
+patterns-mantine-adminshell--drawer-open app uk 320 :: 
+patterns-mantine-adminshell--drawer-open app uk 390 :: 
+patterns-mantine-adminshell--drawer-open app uk 639 :: 
+patterns-mantine-adminshell--drawer-open app uk 640 :: 
+patterns-mantine-adminshell--drawer-open portal:0 en 320 :: focus-open,target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 en 390 :: focus-open,target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 en 639 :: focus-open,target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 en 640 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 it 320 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 it 390 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 it 639 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 it 640 :: focus-open,target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 sq 320 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 sq 390 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 sq 639 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 sq 640 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 uk 320 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 uk 390 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 uk 639 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open portal:0 uk 640 :: target-small,text-ellipsis
+patterns-mantine-adminshell--drawer-open~en-english app en 1440 :: text-ellipsis
+patterns-mantine-adminshell--drawer-open~en-english app en 320 :: 
+patterns-mantine-adminshell--drawer-open~en-english app en 390 :: 
+patterns-mantine-adminshell--drawer-open~en-english app en 639 :: 
+patterns-mantine-adminshell--drawer-open~en-english app en 640 :: 
+patterns-mantine-adminshell--drawer-open~en-english app it 1440 :: text-ellipsis
+patterns-mantine-adminshell--drawer-open~en-english app it 320 :: 
+patterns-mantine-adminshell--drawer-open~en-english app it 390 :: 
+patterns-mantine-adminshell--drawer-open~en-english app it 639 :: 
+patterns-mantine-adminshell--drawer-open~en-english app it 640 :: 
+patterns-mantine-adminshell--drawer-open~en-english app sq 1440 :: text-ellipsis
+patterns-mantine-adminshell--drawer-open~en-english app sq 320 :: 
+patterns-mantine-adminshell--drawer-open~en-english app sq 390 :: 
+patterns-mantine-adminshell--drawer-open~en-english app sq 639 :: 
+patterns-mantine-adminshell--drawer-open~en-english app sq 640 :: 
+patterns-mantine-adminshell--drawer-open~en-english app uk 1440 :: text-ellipsis
+patterns-mantine-adminshell--drawer-open~en-english app uk 320 :: 
+patterns-mantine-adminshell--drawer-open~en-english app uk 390 :: 
+patterns-mantine-adminshell--drawer-open~en-english app uk 639 :: 
+patterns-mantine-adminshell--drawer-open~en-english app uk 640 :: 
+patterns-mantine-adminshell--drawer-open~en-english portal:0 en 1440 :: 
+patterns-mantine-adminshell--drawer-open~en-english portal:0 it 1440 :: 
+patterns-mantine-adminshell--drawer-open~en-english portal:0 sq 1440 :: 
+patterns-mantine-adminshell--drawer-open~en-english portal:0 uk 1440 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app en 1440 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app en 320 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app en 390 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app en 639 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app en 640 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app it 1440 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app it 320 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app it 390 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app it 639 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app it 640 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app sq 1440 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app sq 320 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app sq 390 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app sq 639 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app sq 640 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app uk 1440 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app uk 320 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app uk 390 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app uk 639 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp app uk 640 :: 
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 en 1440 :: dismiss-close-control,focus-trigger
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 en 320 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 en 390 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 en 639 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 en 640 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 it 1440 :: dismiss-close-control,focus-trigger
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 it 320 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 it 390 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 it 639 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 it 640 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 sq 1440 :: dismiss-close-control,focus-trigger
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 sq 320 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 sq 390 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 sq 639 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 sq 640 :: dismiss-close-control,focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 1440 :: focus-trigger
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 320 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 390 :: focus-trigger,target-small
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 639 :: action-hidden,dismiss-close-control,focus-trigger,target-small,viewport-overflow
+patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 640 :: focus-trigger,target-small

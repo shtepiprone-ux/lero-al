@@ -5,8 +5,8 @@ Revision 15** (kickoff §31 R94) and every visible task whose surface opens an o
 CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: review 1 `NEEDS REVISION` 2026-10-10 →
 Revision 1 = §10 (R10–R14, AC6–AC10); review 2 `NEEDS REVISION` 2026-10-14 → Revision 2 = §11 (R15–R18,
 AC11–AC15); review 3 `NEEDS REVISION` 2026-10-14 → Revision 3 = §12 (R19–R21, AC16–AC19); review 4 `NEEDS REVISION`
-2026-10-15 → Revision 4 = §13 (R22–R23, AC20–AC22).** Executor: §1–§12 stay binding; §13 adds to them and wins where
-they differ.
+2026-10-15 → Revision 4 = §13 (R22–R23, AC20–AC22); review 5 `NEEDS REVISION` 2026-10-15 → Revision 5 = §14 (R24–R27,
+AC23–AC28).** Executor: §1–§13 stay binding; §14 adds to them and wins where they differ.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Precedents, read-only: the card-track gate (`scripts/check-card-track-monotonicity.mjs`, a rendered gate on the built
@@ -72,8 +72,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C18 | FACT | The contract measures the app root and each portal root separately. | source: `.claude/rules/shared/rendered-state-census.md:26-26`; observed: `Separate targets** — the app root` |
 | C19 | FACT | The contract counts a word split across lines as cut text. | source: `.claude/rules/shared/rendered-state-census.md:30-30`; observed: `a word split across lines because its box is` |
 | C20 | FACT | The contract requires planted violations inside a portal root. | source: `.claude/rules/shared/rendered-state-census.md:42-42`; observed: `overflow only inside a portal root` |
-| C21 | FACT | Since Revision 1 a negative margin exempts at most its own size (review 1 finding 2; the unbounded form is shown by C23). | source: `scripts/rendered-state-census/in-page.mjs:126-126`; observed: `const overBeyond = (over, margin) => over > 0.5 && !(margin < 0 && over <= -margin + 0.5);` |
-| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:245-245`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
+| C21 | FACT | Since Revision 1 a negative margin exempts at most its own size (review 1 finding 2; the unbounded form is shown by C23). | source: `scripts/rendered-state-census/in-page.mjs:143-143`; observed: `const overBeyond = (over, margin) => over > 0.5 && !(margin < 0 && over <= -margin + 0.5);` |
+| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:270-270`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
 | C23 | FACT | A planted negative-margin element overflowing its parent inside a portal is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:3-3`; observed: `FIXTURE neg-margin: app green` |
 | C24 | FACT | A page scrollable to 616px at a 390px viewport is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:4-4`; observed: `[page scrollWidth 616 clientWidth 390]` |
 | C25 | FACT | Since Revision 1 a width outside a state's `widths` runs a range job instead of being skipped (review 1 finding 3; the skip is shown by C26, C27). | source: `scripts/check-rendered-state-census.mjs:179-179`; observed: `runRangeJob(page, ctx, state, locale, width, { inRangeWidth, siblings })` |
@@ -83,10 +83,10 @@ Every fact below is a ledger row; nothing else sets scope.
 | C29 | FACT | Since Revision 1 a not-applicable dismissal returns its reason for the row's `notApplicable` (review 1 finding 5). | source: `scripts/rendered-state-census/runner.mjs:203-203`; observed: `a bottom sheet renders no close control of its own` |
 | C30 | FACT | Since Revision 1 discovery click-checks every in-scope Story, registered or not (review 1 finding 4; the miss is shown by C31). | source: `scripts/rendered-state-census/discover.mjs:180-180`; observed: `const clickJobs = stories.map((story) => ({` |
 | C31 | FACT | A registered Story has triggers that open a portal with no registry row. | source: `docs/sessions/evidence/task923/review-1/rv-probe2.txt:4-4`; observed: `UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKModern Apartment in Tirana C" opens 1 portal(s)` |
-| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:432-432`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
+| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:457-457`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
 | C33 | FACT | The self-test behaves as stated at review. | source: `docs/sessions/evidence/task923/review-1/rv-verify.txt:19-19`; observed: `verify-gate: every case behaves as stated.` |
 | C34 | FACT | The AC4 targets fail on the portal root only at review: 24 of 48 rows fail. | source: `docs/sessions/evidence/task923/review-1/rv-ac4.txt:5-5`; observed: `rows 48 (failing 24)` |
-| C35 | FACT | Since Revision 2 `component-overflow` measures absolutely positioned, fixed and transformed content (review 2 finding 1; the skip it replaced is shown by C36, C37). | source: `scripts/rendered-state-census/in-page.mjs:185-185`; observed: `if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {` |
+| C35 | FACT | Since Revision 2 `component-overflow` measures absolutely positioned, fixed and transformed content (review 2 finding 1; the skip it replaced is shown by C36, C37). | source: `scripts/rendered-state-census/in-page.mjs:202-202`; observed: `if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {` |
 | C36 | FACT | A planted absolutely positioned text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:7-7`; observed: `rv2-abs-past-dialog portal:0 GREEN` |
 | C37 | FACT | A planted transformed text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:9-9`; observed: `rv2-transform-past-dialog portal:0 GREEN` |
 | C38 | FACT | The planted text paints 22px past the dialog box, inside the viewport. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:10-10`; observed: `dialog x 16..310; planted text x 212..332` |
@@ -111,8 +111,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C57 | FACT | AC4's picker target fails on its portal root while its app root passes. | source: `docs/sessions/evidence/task923/review-2/rv2-rows-check.txt:8-8`; observed: `failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8` |
 | C58 | FACT | A hover over the sampled non-candidate elements opens no portal. | source: `docs/sessions/evidence/task923/review-2/rv2-hover-probe.txt:7-7`; observed: `0 open a portal` |
 | C59 | FACT | The 26 overlay-importing Stories without a row were all clicked through, and none opens a portal. | source: `docs/sessions/evidence/task923/r2-81-discover.txt:13-13`; observed: `26 of the 26 Stories that import an overlay component and have no row render no trigger that opens a portal` |
-| C60 | FACT | A positioned or transformed element is measured against its clipping ancestor or overlay panel (R15); before R19 that path had no clipped-away bound. | source: `scripts/rendered-state-census/in-page.mjs:186-186`; observed: `const bound = positionedBound(e, root);` |
-| C61 | FACT | The in-flow path exempts an element wholly outside a clipping ancestor only on a scroll region or a transformed track (R11). | source: `scripts/rendered-state-census/in-page.mjs:233-233`; observed: `region or the element rides a transformed track (a carousel slide)` |
+| C60 | FACT | A positioned or transformed element is measured against its clipping ancestor or overlay panel (R15); before R19 that path had no clipped-away bound. | source: `scripts/rendered-state-census/in-page.mjs:203-203`; observed: `const bound = positionedBound(e, root);` |
+| C61 | FACT | The in-flow path exempts an element wholly outside a clipping ancestor only on a scroll region or a transformed track (R11). | source: `scripts/rendered-state-census/in-page.mjs:258-258`; observed: `region or the element rides a transformed track (a carousel slide)` |
 | C62 | FACT | 504 positioned details of the Revision 2 full run are gallery-track elements wholly outside their frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:4-4`; observed: `504 gallery-track wholly-out div` |
 | C63 | FACT | The lightbox's off-frame slide holds no text and no control, only media. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:4-4`; observed: `wholly=true coversXY=false text=false controls=0 media=true` |
 | C64 | FACT | 268 positioned details are the card image layer covering its frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:5-5`; observed: `268 image-layer covers img` |
@@ -132,7 +132,7 @@ Every fact below is a ledger row; nothing else sets scope.
 | C78 | FACT | R15 raised the component-overflow rows from 873 to 1181. | source: `docs/sessions/evidence/task923/r3-84-component-overflow-change.txt:11-11`; observed: `873 -> 1181 (+308)` |
 | C79 | FACT | Discovery records found, clicked and not-operable candidates. | source: `docs/sessions/evidence/task923/r3-81-discover.txt:44-44`; observed: `found 4245, clicked 4091, not operable 154` |
 | C80 | FACT | In the detail pattern at 320 the track's own box lies wholly outside its frame; its 6 off-screen slides are hidden, untabbable and textless, and the slide in the frame is the named, tabbable one. | source: `docs/sessions/evidence/task923/review-4/rv4-gallery-summary.txt:2-2`; observed: `slides wholly outside 6, of them aria-hidden+tabindex=-1+no text 6; slides inside 1, tabbable and named` |
-| C81 | FACT | R19(a) as built rejects a slide when any descendant is a control, wherever that descendant lies. | source: `scripts/rendered-state-census/in-page.mjs:208-208`; observed: `!e.querySelector(BOUND_CONTROL)` |
+| C81 | FACT | R19(a) as built in Revision 3 rejected a slide when any descendant is a control, wherever that descendant lies (R22 replaced it; the Revision 4 mutation proof restores that text). | source: `docs/sessions/evidence/task923/r5-50-bound-mutations.mjs:55-56`; observed: `!e.querySelector(BOUND_CONTROL)` |
 | C82 | FACT | The gallery takes every slide but the visible one out of the tab order and hides it from assistive technology. | source: `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:104-106`; observed: `tabIndex={isVisible ? undefined : -1}` |
 | C83 | FACT | The WAI-ARIA carousel pattern calls a slide that is only placed off-screen incorrectly hidden. | source: `docs/sessions/evidence/task923/review-4/rv4-gr7.md:10-10`; observed: `incorrectly hidden, e.g., displayed off-screen` |
 | C84 | FACT | Below 640 the gallery photo counter lies wholly below the frame that clips it. | source: `docs/sessions/evidence/task923/review-4/rv4-gallery-summary.txt:3-3`; observed: `y 444..470 bound y 104..444; computed top 340px bottom -26px` |
@@ -149,6 +149,37 @@ Every fact below is a ledger row; nothing else sets scope.
 | C95 | FACT | Every gate-level cell of the Revision 3 full run is a 640 cell or the 925 cell. | source: `docs/sessions/evidence/task923/review-4/rv4-rows-check.txt:4-4`; observed: `not at 640 and not custom-range-too-long: []` |
 | C96 | FACT | The whole vitest suite is green at review 4. | source: `docs/sessions/evidence/task923/review-4/rv4-vitest-all-2.txt:7-7`; observed: `2573 passed (2573)` |
 | C97 | FACT | The executor's first whole-suite run failed 9 tests. | source: `docs/sessions/evidence/task923/r4-91-vitest-all-1.txt:190-190`; observed: `2564 passed (2573)` |
+| C98 | FACT | R22's slide exemption is in the delivered code. | source: `scripts/rendered-state-census/in-page.mjs:232-232`; observed: `const exemptSlide = slideShape && !slideBreak;` |
+| C99 | FACT | The Revision 4 self-test reproduces at review 5. | source: `docs/sessions/evidence/task923/review-5/rv5-01-verify.txt:55-55`; observed: `verify-gate: every case behaves as stated.` |
+| C100 | FACT | The Revision 4 mutation proof reproduces 15 of 15. | source: `docs/sessions/evidence/task923/review-5/rv5-02-mutations.txt:18-18`; observed: `15 of 15 proved.` |
+| C101 | FACT | The R22 PASS case asserts one rule only; its portal root still fails `action-covered`. | source: `docs/sessions/evidence/task923/review-5/rv5-01-verify.txt:49-49`; observed: `other rules observed, not asserted (portal:0: action-covered)` |
+| C102 | FACT | `action-covered` has no condition for a control that is clipped away, hidden from assistive technology and out of the tab order. | source: `scripts/rendered-state-census/in-page.mjs:398-398`; observed: `if (!ok) add('action-covered',` |
+| C103 | FACT | `action-hidden` has no such condition either. | source: `scripts/rendered-state-census/in-page.mjs:383-383`; observed: `if (!region && !(outsideY && !outsideX && pageScrollable)) add('action-hidden',` |
+| C104 | FACT | The gallery's off-screen slides are out of the tab order. | source: `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:105-106`; observed: `tabIndex={isVisible ? undefined : -1}` |
+| C105 | FACT | The gallery's slides are in-flow, non-shrinking children of the transformed track. | source: `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:103-103`; observed: `className="block h-full shrink-0"` |
+| C106 | FACT | On the faithful synced gallery shape, the delivered code fails `component-overflow` on the visible slide (inside the frame, past its displaced track box) and the action rules on the hidden slides. | source: `docs/sessions/evidence/task923/review-5/rv5-11-probe.txt:5-5`; observed: `component-overflow [button "" x 212..332 past div 92..212] ; action-hidden [button "" centre 392,183.6 outside the 390x844 viewport` |
+| C107 | FACT | The in-flow path measures an element against its parent's box. | source: `scripts/rendered-state-census/in-page.mjs:277-277`; observed: `past ${describe(parent)} ${px(left)}..${px(right)}` |
+| C108 | FACT | The in-flow clipped-away exemption covers only an element wholly outside its clipping ancestor. | source: `scripts/rendered-state-census/in-page.mjs:266-267`; observed: `clippedAway = wholly && (` |
+| C109 | FACT | Two full runs on code that differs only by R22 disagree in 69 rows. | source: `docs/sessions/evidence/task923/r5-85-row-diff.txt:7-7`; observed: `rows in both whose failing-rule set differs: 69` |
+| C110 | FACT | Three narrowed AuthSheet runs with no other load disagree on `focus-trap`. | source: `docs/sessions/evidence/task923/review-5/rv5-41-trap-compare.txt:12-12`; observed: `DIFF register-agent en 640 trap=g open=g` |
+| C111 | FACT | The trap loop reads the focus at once after each key press. | source: `scripts/rendered-state-census/runner.mjs:320-321`; observed: `await page.keyboard.press(key);` |
+| C112 | FACT | Read at once after each Tab, the AuthSheet focus is on `body` at the fourth press. | source: `docs/sessions/evidence/task923/review-5/rv5-42-trap-probe.txt:2-2`; observed: `pause 0 load true tabbables 13: LEAK` |
+| C113 | FACT | With a 300 ms pause after each Tab, the same sheet keeps the focus. | source: `docs/sessions/evidence/task923/review-5/rv5-42-trap-probe.txt:7-7`; observed: `pause 300 load true tabbables 13: kept` |
+| C114 | FACT | `waitStable` counts every running animation, infinite ones included. | source: `scripts/rendered-state-census/runner.mjs:135-135`; observed: `running: document.getAnimations().filter((a) => a.playState === 'running').length,` |
+| C115 | FACT | On ListingContactPattern "write on WhatsApp", `waitStable` returns only at its 4 s bound, and the notification has closed itself 1 s later. | source: `docs/sessions/evidence/task923/review-5/rv5-46-toast-probe.txt:2-2`; observed: `run 0 waitStable returned at 4030ms: notification 984..1324; 1s later none` |
+| C116 | FACT | The animations that keep running there are infinite. | source: `docs/sessions/evidence/task923/review-5/rv5-47-anim-probe.txt:3-3`; observed: `CSSAnimation:m_f8e89c4b iterations=Infinity` |
+| C117 | FACT | Three narrowed ListingContactPattern runs disagree on `dismiss-close-control`. | source: `docs/sessions/evidence/task923/review-5/rv5-44-misc-compare.txt:99-99`; observed: `DIFF patterns-mantine-listingcontactpattern--default~write-on-whatsapp portal:0 uk 639 :: dismiss-close-control,focus-trigger,target-small` |
+| C118 | FACT | The AdminShell drawer opened on mount sometimes leaves the focus on the app's menu button. | source: `docs/sessions/evidence/task923/review-5/rv5-45-focusopen-probe.txt:4-4`; observed: `focus OUTSIDE button.mantine-focus-auto[Open menu]` |
+| C119 | FACT | Sampled for 1.5 s, that outcome does not change: the focus stays outside the drawer. | source: `docs/sessions/evidence/task923/review-5/rv5-45-focusopen-probe.txt:5-5`; observed: `1369:1/0/out 1430:1/0/out 1492:1/0/out` |
+| C120 | FACT | The whole suite is red at review 5, first run. | source: `docs/sessions/evidence/task923/review-5/rv5-20-vitest-all-1.txt:411-411`; observed: `Tests  24 failed` |
+| C121 | FACT | The whole suite is red at review 5, second run. | source: `docs/sessions/evidence/task923/review-5/rv5-20-vitest-all-2.txt:375-375`; observed: `Tests  22 failed` |
+| C122 | FACT | The eight files that failed in the second run pass when run alone. | source: `docs/sessions/evidence/task923/review-5/rv5-21-vitest-failed-isolated.txt:7-7`; observed: `Tests  108 passed (108)` |
+| C123 | FACT | The Q1 gates ask for targeted tests of the touched area. | source: `docs/qa-profiles.md:13-13`; observed: `Targeted tests or commands for the touched area` |
+| C124 | FACT | `check-mojibake.mjs` lists files through `spawnSync` with no `maxBuffer` option. | source: `scripts/check-mojibake.mjs:138-139`; observed: `cwd: ROOT, encoding: 'utf8',` |
+| C125 | FACT | The listing is larger than the 1 MiB default, and the unmodified command exits 1. | source: `docs/sessions/evidence/task923/review-5/rv5-60-mojibake.txt:7-8`; observed: `listing bytes: 1056579 (maxBuffer default 1048576)` |
+| C126 | FACT | CI runs `check:mojibake`. | source: `.github/workflows/governance-pr.yml:164-164`; observed: `run: npm run check:mojibake` |
+| C127 | FACT | A rule's printed details are capped, with a tail for the rest. | source: `scripts/rendered-state-census/in-page.mjs:410-410`; observed: `more (${counts[key]} in total)` |
+| C128 | FACT | The Revision 4 full run has one unique row per cell and every rule key. | source: `docs/sessions/evidence/task923/review-5/rv5-52-ac21-checks.txt:1-1`; observed: `"rows":22740,"unique":22740,"ruleKeys":20,"missing":0` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 
 ## Mobile adaptation record
@@ -469,6 +500,101 @@ Out of scope: as §12. That includes the gallery pattern, its Story and 859's fi
 mapped to evidence, AC20–AC22 with transcripts, the new owner table, and deviations. Strongest status:
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
+## 14. Revision 5 — review 5, 2026-10-15 (`NEEDS REVISION`)
+
+Review evidence: `docs/sessions/evidence/task923/review-5/` (native Windows, Node v22.22.3). Verified on the delivered
+files (56 of 56 hashes equal `r5-87-hashes-end.txt`): R22 is in the code as written (C98). The self-test reproduces with
+46 cases (C99), and the mutation proof is 15 of 15 (C100). The full run has one row per cell and every rule key (C128).
+Its gate-level cells are 924's at 640 and the 925 cell, and its gallery classes reproduce. R23's owner table is
+accepted. The executor was right to leave the action rules, the mojibake script and the test timeouts alone, and right
+to report `PARTIALLY IMPLEMENTED`.
+
+**Findings.**
+
+1. **P1, R22 (kickoff defect): the action rules.** The R22 PASS case is green only because it asserts one rule, through
+   the new `greenRules` key. Its portal root still fails `action-covered` (C101). Neither action rule has a bound for a
+   control that is clipped away, hidden from assistive technology and out of the tab order (C102, C103). The gallery's
+   off-screen slides are exactly that (C104). A correct carousel can therefore never be green.
+2. **P1 (kickoff defect): the in-flow track.** The gallery's slides are in-flow children of the transformed track
+   (C105). On that shape, the visible slide, inside the frame, fails `component-overflow` against its displaced track
+   box (C106, C107). The in-flow clipped-away exemption covers only slides wholly outside the frame (C108). This is the
+   executor's D27.
+3. **P1: the verdict is not deterministic.** Two full runs disagree in 69 rows (C109). Narrowed runs with no other load
+   disagree too (C110, C117). Three causes:
+   - (a) The trap loop reads the focus at once after each key press (C111). At the fourth Tab, the AuthSheet focus is
+     briefly on `body` (C112); after a pause it is in the sheet (C113). The gate reports a leak that no keyboard user
+     meets.
+   - (b) `waitStable` counts infinite animations (C114). A Story with a loader never settles, so the gate always waits
+     out the 4 s bound. A notification that closes itself is then measured while it leaves (C115, C116, C117).
+   - (c) The AdminShell drawer opened on mount sometimes keeps the focus on the app's menu button (C118). That outcome
+     is stable (C119). This is a product race, not a measuring one, and the gate is right to report it.
+4. **P2, tooling: `check:mojibake` crashes before it scans** (C124, C125). CI runs it (C126). The crash reaches CI when
+   the tracked listing passes 1 MiB. 923's code does not cause it; 923's evidence is what tips this checkout over.
+5. **P3, AC22 whole suite.** It is red twice at review 5 too (C120, C121). The failing files pass alone (C122), and none
+   of them is in 923's write set. Q4 asks for the Q1 targeted tests plus a regression baseline (C123). AC22's two
+   consecutive green whole-suite runs asked more than the profile, and the suite's load timeouts are not 923's to fix.
+6. **Note, D28.** Printed details are capped (C127), so a class count over a capped row is incomplete. AC24 closes this
+   for the gallery rows.
+
+**Opus rulings.** D26 → R24, and `greenRules` is removed. D27 → R25. D29 is accepted. D30 → AC28. D31 → R27. D32 → R26;
+the chart difference is checked again in AC26. Executor question 4 (CI scope): §9, §11 and §12 stand. Filed at closure
+under new numbers: the Leaflet popup, the dashboard chart, the gallery desync, the AdminShell drawer's initial-focus race
+(C118), and the whole-suite smoke-test timeouts (C120–C122).
+
+**Write set.** As §13, plus six fixtures and `scripts/check-mojibake.mjs` (R27 only). `runner.mjs` is already in
+scope (§4). Evidence prefix `r6-`. `review-5/` is diagnosis only and stays unchanged. Out of scope: as §13, plus the
+AdminShell, AuthSheet and ListingContactPattern sources and Stories.
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R24 [C101; C102; C103; C104; C106; D1] | **An action rule skips a clipped-away, hidden, untabbable control, and nothing else.** `action-hidden`, `action-covered` and `target-small` skip an action only when both of these hold. (i) It is out of the tab order and hidden from assistive technology (R22's `outOfTabOrder` and `hiddenFromAT`). (ii) Inside the target there is an ancestor whose computed `overflow-x` or `overflow-y` is not `visible`, and the action's box lies wholly outside that ancestor's padding box on one axis (within 0.5px). The `greenRules` case key is removed from `verify.mjs`, so every PASS case asserts every rule of every root. `track-active-slide-inside` is PASS on every rule of every root. `track-offscreen-slide-aria-only` is FAIL `component-overflow` **and** `action-covered` on `portal:0`. New fixture `visible-hidden-control-covered` is a portal dialog with a green app root. In an `overflow: hidden` frame, a `button aria-hidden="true" tabindex="-1"` lies wholly inside the frame, and an absolutely positioned sibling covers its centre. It is FAIL `action-covered` on `portal:0`. Two mutations: drop (ii), and `visible-hidden-control-covered` goes green on `action-covered`; drop (i), and `track-offscreen-slide-aria-only` goes green on `action-covered`. | P1 | AC23, AC24 |
+| R25 [C105; C106; C107; C108; D1] | **An in-flow slide of a transformed track is judged against the frame.** In the in-flow path, an element whose parent has a computed `transform` other than `none` is not measured against that parent when its box lies wholly inside the padding box of its nearest clipping ancestor (`nearestClipper`), within 0.5px on both axes. Everything else is unchanged: an element wholly outside keeps the R11 clipped-away rule, and every other in-flow element is measured against its parent. New fixtures, each a portal dialog with a green app root: `track-flex-synced` PASS on every rule of every root. It has the shape of `review-5/fixtures/rv5-flex-track-synced.html`: a `display: flex` track at `translateX(-120px)` in a 120×80 `overflow: hidden` frame, holding three `flex: 0 0 120px` slide buttons, each with an `img`; the middle one is named and tabbable, the other two are `aria-hidden="true" tabindex="-1"`. `track-flex-slide-straddles` FAIL `component-overflow` on `portal:0`: the same, with the track at `translateX(-60px)`, so the named slide lies half outside the frame. `inflow-past-untransformed-parent` FAIL `component-overflow` on `portal:0`: a 200px text block in a 120px parent without a transform, inside a 300px `overflow: hidden` box. Two mutations: drop "wholly inside the clipper", and `track-flex-slide-straddles` goes green; drop "parent transformed", and `inflow-past-untransformed-parent` goes green. | P1 | AC23, AC24 |
+| R26 [C109; C110; C111; C112; C113; C114; C115; C116; C117; C118; C119; D1] | **Measure the settled state.** (a) `waitStable` counts only running animations whose effect timing has a finite `iterations`; an infinite animation (a loader) never holds it. (b) Every focus read waits for the focus to settle: after each Tab / Shift+Tab press of the trap loop, after open (`focus-open`, `focus-trigger`) and after a dismissal (focus return). The focus is polled every 50ms until the same element is active on 3 consecutive polls, bounded at 1 000ms, and the settled element (at the bound, the last read) is judged. (c) Nothing else changes: no retry is added, and the 1s dismissal bound stays. New fixtures: `infinite-spinner-toast` PASS on every root. Its app root holds an infinite CSS animation; a click opens a non-modal toast portal (`focus: trigger`, `dismiss: ["close-control"]`) that closes itself 2 500ms after it opens. `trap-transient-body-focus` PASS. It is a modal dialog whose second button, the first time it takes focus, is removed and inserted again 80ms later and focused, so the focus is on `body` for 80ms. `focus-escapes-trap` stays FAIL. Two mutations: count infinite animations again, and `infinite-spinner-toast` fails; read the focus at once, and `trap-transient-body-focus` fails `focus-trap`. The AdminShell drawer's race (C118) is a product defect and stays reported; R26 must not hide it. | P1 | AC23, AC25, AC26 |
+| R27 [C124; C125; C126] | **`check-mojibake.mjs` lists any repository size.** Its one `spawnSync` call gets `maxBuffer: 64 * 1024 * 1024`. Its failure message names `r.error?.code`, so an `ENOBUFS` is named and never shows as an empty stderr. Nothing else in the file changes. | P2 | AC27 |
+
+- **AC23 [R24; R25; R26; C101].** `npm run check:rendered-state-census:verify` exits 0 with 52 cases: the 46 of Revision 4
+  plus `visible-hidden-control-covered`, `track-flex-synced`, `track-flex-slide-straddles`,
+  `inflow-past-untransformed-parent`, `infinite-spinner-toast` and `trap-transient-body-focus`, each as stated in R24–R26.
+  `track-active-slide-inside` and `track-flex-synced` are green on every rule of every root. A search for `greenRules`
+  under `scripts/rendered-state-census/` finds nothing. The mutation proof (`r6-50-…`, a copy of `r5-50-…` with the six
+  new mutations) shows 21 of 21 proved.
+- **AC24 [R24; R25; C104; C105; C127].** Run `--stories patterns-mantine-listingdetailpattern--default,patterns-mantine-listinggallerypattern--default`
+  at the default widths and locales on the final build. A copy of `r5-71-gallery-classes.mjs` saved as `r6-71-…`, with
+  only its input path changed, prints 0 in-flow slide details. Every `component-overflow` detail is (i) a counter
+  (859 R58) or (ii) a desync track detail, and 0 are of any other kind. The script also prints the number of these rows
+  whose `component-overflow` list has a tail; it must be 0. The per-width counts of `action-hidden`, `action-covered`
+  and `target-small` in these rows are printed next to `r5-full`'s, and every remaining detail has an owner in the
+  owner table.
+- **AC25 [R26; C110; C117; C118].** Run the two narrowed configurations of review 5 three times each on the final build:
+  (1) as `review-5/rv5-40-authsheet-1.txt` (4 AuthSheet Stories; widths 320, 390, 640, 1440; locales en, uk;
+  `--no-closed`); (2) as `review-5/rv5-43-misc-1.txt` (`adminshell--drawer-open`, `listingcontactpattern--default`;
+  widths 320, 390, 639, 640, 1440; all four locales; `--no-closed`). A comparison, per row, of the failing-rule set
+  across the three runs prints every difference. The only difference allowed is `focus-open` on
+  `patterns-mantine-adminshell--drawer-open` rows (C118). A copy of `review-5/rv5-46-toast-probe.mjs` saved as `r6-…`
+  shows `waitStable` returning in under 4 000ms. Any other difference stops the task as `BLOCKED`, with a sampling probe
+  of that cell like `rv5-45` / `rv5-46`. It is not a reason for another code change.
+- **AC26 [R9; R24; R25; R26; C109; C128].** The full run is repeated on the final build. One row per cell; every row has
+  all 20 rule keys and `notApplicable`; AC4 holds; every gate-level cell is a 924 cell at 640 or the 925 cell. A copy of
+  `r5-70-d16-classes.mjs` saved as `r6-…`, with only its input path changed, prints 0 `image-layer` details, and its
+  `leaflet` lines equal `rv3-d16-classes.txt` lines 6–8. Its `chart` lines equal lines 2–3, or each difference is
+  explained row by row. A row diff against `r5-full` prints the changes per rule and component, and attributes each one
+  to R24, R25, R26 (a) or R26 (b) by its detail, or lists it. The summary lists every retried job and the runtime. The
+  owner table is R23's, plus "new — Opus to file: AdminShell drawer initial-focus race". The in-flow slide row is gone.
+- **AC27 [R27; C124; C125].** On this checkout, the unmodified command `npm run check:mojibake` exits 0, and the
+  transcript prints the listing's byte count, which is over 1 048 576. A planted untracked file
+  `docs/sessions/evidence/task923/r6-planted-mojibake.md` holding the mojibake form of an en dash (U+00E2 U+20AC U+201C,
+  written by a script, never typed into a tracked document) makes it exit 1 and name that file. After the file
+  is deleted, it exits 0 again. Each of the three transcripts ends with `EXIT_CODE=`.
+- **AC28 [R24; R25; R26; R27; C120; C121; C122; C123].** The new test file passes twice. `npm test` (the whole suite) is
+  run once and kept. If it is red, the evidence lists each failing file and shows that a search of its imports finds
+  no write-set path (`rendered-state-census`, `check-mojibake`), and a run of those files alone is green. `typecheck`,
+  `lint`, `build`, `build-storybook` and `check:file-integrity` exit 0. `git status --porcelain` is captured before
+  and after.
+
+**Verification order:** as §7, with evidence prefix `r6-`, and `check:mojibake` as AC27. The session log gets a
+`# Revision 5` section with R24–R27 mapped to evidence, AC23–AC28 with transcripts, the owner table and deviations.
+Strongest status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+
 ## Rule-compliance ledger
 
 | Rule | How this task complies |
@@ -480,4 +606,4 @@ mapped to evidence, AC20–AC22 with transcripts, the new owner table, and devia
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97; owner decisions: D1; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128; owner decisions: D1; blocked claims: NONE.

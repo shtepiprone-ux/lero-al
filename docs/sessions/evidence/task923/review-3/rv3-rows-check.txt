@@ -1,0 +1,30 @@
+platform win32 node v22.22.3
+rows 22739; app 12820; portal 9919
+rows missing a rule key 0; rows without notApplicable 0; unique 22739
+gate-level failures by width: {"error-screen @390":2,"open-failed @640":24,"portal-count @640":4,"widths-mismatch @640":44}
+AC4 patterns-mantine-ticketdetaildialogview--support @320: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support @390: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results @320: portal rows 4, failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active @320: portal rows 4, failing 4 [text-clamp, text-hidden]; app rows failing 0 of 4
+rows with retry key 48; non-string 0; retried jobs 24; retried jobs not at 640 0
+error-screen @390 closed en
+error-screen @390 mantine-primitives-headerview--signing-out~notifications it
+open-failed @640 mantine-primitives-rangedatepicker--default~select-dates 
+open-failed @640 mantine-primitives-rangedatepicker--single-date-selected~05-02-2026 
+open-failed @640 mantine-primitives-usermenu--default~akalba-krasniqi 
+open-failed @640 patterns-mantine-userpickerfieldview--no-results~requester 
+open-failed @640 patterns-mantine-userpickerfieldview--results~requester 
+open-failed @640 patterns-mantine-userpickerfieldview--searching~requester 
+portal-count @640 mantine-primitives-relativetime--default 
+widths-mismatch @640 patterns-mantine-adminlistingsview--audit-zero~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--default~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--empty~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--filtered-pending~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--hidden-eligible~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--paginated~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--premium-tab~public-visibility 
+widths-mismatch @640 patterns-mantine-adminlistingsview--visible-filter~public-visibility 
+widths-mismatch @640 patterns-mantine-adminsupportview--default~unassigned 
+widths-mismatch @640 patterns-mantine-adminsupportview--empty~unassigned 
+widths-mismatch @640 patterns-mantine-adminsupportview--unassigned-landing~unassigned 
+EXIT_CODE=0

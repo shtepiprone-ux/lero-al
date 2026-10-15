@@ -1,0 +1,9 @@
+platform win32 node v22.22.3
+40 chart partial div -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: div.m_6d731127 "1,102" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+48 chart partial svg -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+504 gallery-track wholly-out div -- e.g. mantine-primitives-lightboxview--default portal:0 320 :: div "" (transformed) x -320..0 past div._fill_1cv8p_22 0..320
+268 image-layer covers img -- e.g. mantine-primitives-favoritesshell--populated app 320 :: img._imageLayer_k8tmc_30 "" (absolute+transformed) x 2.3..317.7 past div._frame_k8tmc_27 17..303
+110 leaflet covers div -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 14..308 past div.listing-map 37..283
+4 leaflet partial div -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 38..331 past div.listing-map 37..283
+114 leaflet wholly-out a -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: a.leaflet-popup-close-button "×" (absolute) x 284..308 past div.listing-map 37..283
+EXIT_CODE=0

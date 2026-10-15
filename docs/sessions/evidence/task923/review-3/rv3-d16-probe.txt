@@ -1,0 +1,15 @@
+platform win32 node v22.22.3
+{
+ "mantine-primitives-lightboxview--default": {
+  "div. wholly=true coversXY=false text=false controls=0 media=true": 1
+ },
+ "patterns-mantine-listingdetailview--archived-listing": {
+  "img.leaflet-tile.leaflet-tile-loaded wholly=false coversXY=false text=false controls=0 media=true": 4,
+  "div.leaflet-popup.leaflet-zoom-animated wholly=false coversXY=false text=true controls=1 media=false": 1,
+  "a.leaflet-popup-close-button wholly=true coversXY=false text=true controls=1 media=false": 1
+ },
+ "mantine-primitives-favoritesshell--populated": {
+  "img._imageLayer_k8tmc_30._fade_k8tmc_30._vis wholly=false coversXY=true text=false controls=0 media=true": 1
+ }
+}
+EXIT_CODE=0

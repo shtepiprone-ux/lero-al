@@ -1,0 +1,79 @@
+platform win32 node v22.22.3 date 2026-10-14T19:30:31Z
+[
+ {
+  "name": "lahomes-ui-carousel",
+  "url": "https://techzaa.in/lahomes/admin/ui-carousel.html",
+  "scroll": [
+   390,
+   390
+  ],
+  "slidesWhollyOut": {
+   "n": 5,
+   "sample": [
+    "div.offcanvas.offcanvas-end x 390..670 past body. 0..390",
+    "div.main-nav x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-horizontal x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-vertical x -11..0 past body. 0..390"
+   ]
+  },
+  "mediaCovering": {
+   "n": 0,
+   "sample": []
+  },
+  "textPast": {
+   "n": 0,
+   "sample": []
+  }
+ },
+ {
+  "name": "lahomes-property-grid",
+  "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+  "scroll": [
+   390,
+   390
+  ],
+  "slidesWhollyOut": {
+   "n": 5,
+   "sample": [
+    "div.offcanvas.offcanvas-end x 390..670 past body. 0..390",
+    "div.main-nav x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-horizontal x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-vertical x -11..0 past body. 0..390"
+   ]
+  },
+  "mediaCovering": {
+   "n": 0,
+   "sample": []
+  },
+  "textPast": {
+   "n": 0,
+   "sample": []
+  }
+ },
+ {
+  "name": "lahomes-property-details",
+  "url": "https://techzaa.in/lahomes/admin/property-details.html",
+  "scroll": [
+   390,
+   390
+  ],
+  "slidesWhollyOut": {
+   "n": 5,
+   "sample": [
+    "div.offcanvas.offcanvas-end x 390..670 past body. 0..390",
+    "div.main-nav x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-horizontal x -260..0 past body. 0..390",
+    "div.simplebar-track.simplebar-vertical x -11..0 past body. 0..390"
+   ]
+  },
+  "mediaCovering": {
+   "n": 0,
+   "sample": []
+  },
+  "textPast": {
+   "n": 0,
+   "sample": []
+  }
+ }
+]
+EXIT_CODE=0

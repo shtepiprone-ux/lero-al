@@ -1,0 +1,124 @@
+platform win32 node v22.22.3
+[
+ {
+  "w": 390,
+  "name": "Next listings",
+  "box": [
+   322,
+   282,
+   44,
+   44
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "svg.lucide.lucide-chevron-right",
+  "hitIsBtn": true,
+  "vw": 390,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ },
+ {
+  "w": 390,
+  "name": "Add to favorites",
+  "box": [
+   204,
+   121,
+   32,
+   32
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "svg.lucide.lucide-heart",
+  "hitIsBtn": true,
+  "vw": 390,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ },
+ {
+  "w": 390,
+  "name": "Copy listing ID",
+  "box": [
+   120,
+   444,
+   40,
+   15
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "button.mantine-focus-auto._copyId_10msk_19.m_87cf2631.man",
+  "hitIsBtn": true,
+  "vw": 390,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ },
+ {
+  "w": 1440,
+  "name": "Next listings",
+  "box": [
+   1339,
+   264,
+   44,
+   44
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "svg.lucide.lucide-chevron-right",
+  "hitIsBtn": true,
+  "vw": 1440,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ },
+ {
+  "w": 1440,
+  "name": "Add to favorites",
+  "box": [
+   257,
+   106,
+   32,
+   32
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "svg.lucide.lucide-heart",
+  "hitIsBtn": true,
+  "vw": 1440,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ },
+ {
+  "w": 1440,
+  "name": "Copy listing ID",
+  "box": [
+   173,
+   444,
+   40,
+   15
+  ],
+  "disabled": false,
+  "ariaDisabled": null,
+  "pe": "auto",
+  "vis": "visible",
+  "op": "1",
+  "hit": "button.mantine-focus-auto._copyId_10msk_19.m_87cf2631.man",
+  "hitIsBtn": true,
+  "vw": 1440,
+  "portalsBefore": 1,
+  "visiblePortalsAfterForcedClick": 0
+ }
+]
+EXIT_CODE=0

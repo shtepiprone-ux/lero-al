@@ -4,7 +4,8 @@
 Revision 15** (kickoff §31 R94) and every visible task whose surface opens an overlay (`BLOCKED — RENDERED STATE
 CENSUS (923)`, `.claude/rules/shared/rendered-state-census.md`) · **Status: review 1 `NEEDS REVISION` 2026-10-10 →
 Revision 1 = §10 (R10–R14, AC6–AC10); review 2 `NEEDS REVISION` 2026-10-14 → Revision 2 = §11 (R15–R18,
-AC11–AC15).** Executor: §1–§10 stay binding; §11 adds to them and wins where they differ.
+AC11–AC15); review 3 `NEEDS REVISION` 2026-10-14 → Revision 3 = §12 (R19–R21, AC16–AC19).** Executor: §1–§11 stay
+binding; §12 adds to them and wins where they differ.
 
 Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Precedents, read-only: the card-track gate (`scripts/check-card-track-monotonicity.mjs`, a rendered gate on the built
@@ -71,20 +72,20 @@ Every fact below is a ledger row; nothing else sets scope.
 | C19 | FACT | The contract counts a word split across lines as cut text. | source: `.claude/rules/shared/rendered-state-census.md:30-30`; observed: `a word split across lines because its box is` |
 | C20 | FACT | The contract requires planted violations inside a portal root. | source: `.claude/rules/shared/rendered-state-census.md:42-42`; observed: `overflow only inside a portal root` |
 | C21 | FACT | Since Revision 1 a negative margin exempts at most its own size (review 1 finding 2; the unbounded form is shown by C23). | source: `scripts/rendered-state-census/in-page.mjs:124-124`; observed: `const overBeyond = (over, margin) => over > 0.5 && !(margin < 0 && over <= -margin + 0.5);` |
-| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:193-193`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
+| C22 | FACT | Since Revision 1 a table-box parent exempts its child unless it is a control or media in a fixed-layout table cell (review 1 finding 2). | source: `scripts/rendered-state-census/in-page.mjs:229-229`; observed: `const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));` |
 | C23 | FACT | A planted negative-margin element overflowing its parent inside a portal is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:3-3`; observed: `FIXTURE neg-margin: app green` |
 | C24 | FACT | A page scrollable to 616px at a 390px viewport is green. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:4-4`; observed: `[page scrollWidth 616 clientWidth 390]` |
-| C25 | FACT | Since Revision 1 a width outside a state's `widths` runs a range job instead of being skipped (review 1 finding 3; the skip is shown by C26, C27). | source: `scripts/check-rendered-state-census.mjs:174-174`; observed: `runRangeJob(page, ctx, state, locale, width, { inRangeWidth, siblings })` |
+| C25 | FACT | Since Revision 1 a width outside a state's `widths` runs a range job instead of being skipped (review 1 finding 3; the skip is shown by C26, C27). | source: `scripts/check-rendered-state-census.mjs:178-178`; observed: `runRangeJob(page, ctx, state, locale, width, { inRangeWidth, siblings })` |
 | C26 | FACT | A state registered `widths: {min: 1440}` opens at 1024. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:6-6`; observed: `widths {"min":1440} trigger BUTTON "AKAlba Krasniqi" -> 320:absent 390:absent 639:absent 640:absent 1024:OPENS` |
 | C27 | FACT | 41 sampled `widths` states open at a width the runner skips. | source: `docs/sessions/evidence/task923/review-1/rv-probe.txt:46-46`; observed: `states whose same-named trigger opens a portal at a skipped width: 41` |
 | C28 | FACT | The theme's breakpoints include `sm` 640, `lg` 1024 and `xxl` 1440. | source: `src/design-system/mantine/theme.ts:637-641`; observed: `lg: '64em',   // 1024px — desktop` |
 | C29 | FACT | Since Revision 1 a not-applicable dismissal returns its reason for the row's `notApplicable` (review 1 finding 5). | source: `scripts/rendered-state-census/runner.mjs:203-203`; observed: `a bottom sheet renders no close control of its own` |
-| C30 | FACT | Since Revision 1 discovery click-checks every in-scope Story, registered or not (review 1 finding 4; the miss is shown by C31). | source: `scripts/rendered-state-census/discover.mjs:162-162`; observed: `const clickJobs = stories.map((story) => ({` |
+| C30 | FACT | Since Revision 1 discovery click-checks every in-scope Story, registered or not (review 1 finding 4; the miss is shown by C31). | source: `scripts/rendered-state-census/discover.mjs:180-180`; observed: `const clickJobs = stories.map((story) => ({` |
 | C31 | FACT | A registered Story has triggers that open a portal with no registry row. | source: `docs/sessions/evidence/task923/review-1/rv-probe2.txt:4-4`; observed: `UNREGISTERED patterns-mantine-admindashboardview--adm-09-zero @390: button "AKModern Apartment in Tirana C" opens 1 portal(s)` |
-| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:380-380`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
+| C32 | FACT | Since Revision 1 the discovery candidate list has no cap (review 1 finding 4). | source: `scripts/rendered-state-census/in-page.mjs:416-416`; observed: `NO cap: discovery clicks every one (Task 923 R14)` |
 | C33 | FACT | The self-test behaves as stated at review. | source: `docs/sessions/evidence/task923/review-1/rv-verify.txt:19-19`; observed: `verify-gate: every case behaves as stated.` |
 | C34 | FACT | The AC4 targets fail on the portal root only at review: 24 of 48 rows fail. | source: `docs/sessions/evidence/task923/review-1/rv-ac4.txt:5-5`; observed: `rows 48 (failing 24)` |
-| C35 | FACT | `component-overflow` measures no absolutely positioned, fixed or transformed element. | source: `scripts/rendered-state-census/in-page.mjs:166-166`; observed: `if (pos !== 'absolute' && pos !== 'fixed' && cs.transform === 'none'` |
+| C35 | FACT | Since Revision 2 `component-overflow` measures absolutely positioned, fixed and transformed content (review 2 finding 1; the skip it replaced is shown by C36, C37). | source: `scripts/rendered-state-census/in-page.mjs:183-183`; observed: `if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {` |
 | C36 | FACT | A planted absolutely positioned text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:7-7`; observed: `rv2-abs-past-dialog portal:0 GREEN` |
 | C37 | FACT | A planted transformed text past the dialog box is green on its portal root. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:9-9`; observed: `rv2-transform-past-dialog portal:0 GREEN` |
 | C38 | FACT | The planted text paints 22px past the dialog box, inside the viewport. | source: `docs/sessions/evidence/task923/review-2/rv2-exemption-probe.txt:10-10`; observed: `dialog x 16..310; planted text x 212..332` |
@@ -99,7 +100,7 @@ Every fact below is a ledger row; nothing else sets scope.
 | C47 | FACT | The AppShell owner already uses an exclusive max-width (minus 0.1px). | source: `src/design-system/mantine/patterns/MantineAppShellFoundation.tsx:96-96`; observed: `(max-width: ${collapseBreakpointPx - 0.1}px)` |
 | C48 | FACT | The mobile contract requires the compact composition below 640px. | source: `.claude/rules/shared/mobile-adaptation-contract.md:23-23`; observed: `the compact composition is required **below` |
 | C49 | FACT | The final full run has 44 `widths-mismatch` cells, all at 640. | source: `docs/sessions/evidence/task923/review-2/rv2-rows-check.txt:5-5`; observed: `"widths-mismatch @640":44` |
-| C50 | FACT | Discovery skips a candidate it cannot click without recording it. | source: `scripts/rendered-state-census/discover.mjs:102-102`; observed: `if (!(await clickPath(page, c.sel))) continue;` |
+| C50 | FACT | Since Revision 2 discovery keeps the result of every candidate click (review 2 finding 5; the unrecorded count it replaced is shown by C51). | source: `scripts/rendered-state-census/discover.mjs:108-108`; observed: `const clicked = await clickPath(page, c.sel);` |
 | C51 | FACT | 148 of 4 236 discovery candidates cannot be operated at first load. | source: `docs/sessions/evidence/task923/review-2/rv2-unclickable-probe.txt:4-4`; observed: `candidates 4236; not operable at first load 148` |
 | C52 | FACT | Only one of them is in a Story with no mount row. | source: `docs/sessions/evidence/task923/review-2/rv2-unclickable-probe.txt:5-5`; observed: `of which in Stories with no mount row: 1` |
 | C53 | FACT | One Story renders the Storybook error display on the final build. | source: `docs/sessions/evidence/task923/r2-81-discover.txt:42-42`; observed: `dashboardperiodcontrol--custom-range-too-long` |
@@ -109,6 +110,26 @@ Every fact below is a ledger row; nothing else sets scope.
 | C57 | FACT | AC4's picker target fails on its portal root while its app root passes. | source: `docs/sessions/evidence/task923/review-2/rv2-rows-check.txt:8-8`; observed: `failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8` |
 | C58 | FACT | A hover over the sampled non-candidate elements opens no portal. | source: `docs/sessions/evidence/task923/review-2/rv2-hover-probe.txt:7-7`; observed: `0 open a portal` |
 | C59 | FACT | The 26 overlay-importing Stories without a row were all clicked through, and none opens a portal. | source: `docs/sessions/evidence/task923/r2-81-discover.txt:13-13`; observed: `26 of the 26 Stories that import an overlay component and have no row render no trigger that opens a portal` |
+| C60 | FACT | Since Revision 2 a positioned or transformed element is measured against its clipping ancestor or overlay panel, with no clipped-away bound. | source: `scripts/rendered-state-census/in-page.mjs:184-184`; observed: `const bound = positionedBound(e, root);` |
+| C61 | FACT | The in-flow path exempts an element wholly outside a clipping ancestor only on a scroll region or a transformed track (R11). | source: `scripts/rendered-state-census/in-page.mjs:216-226`; observed: `region or the element rides a transformed track (a carousel slide)` |
+| C62 | FACT | 504 positioned details of the Revision 2 full run are gallery-track elements wholly outside their frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:4-4`; observed: `504 gallery-track wholly-out div` |
+| C63 | FACT | The lightbox's off-frame slide holds no text and no control, only media. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:4-4`; observed: `wholly=true coversXY=false text=false controls=0 media=true` |
+| C64 | FACT | 268 positioned details are the card image layer covering its frame. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:5-5`; observed: `268 image-layer covers img` |
+| C65 | FACT | The image layer covers its frame on both axes and holds no text. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:12-12`; observed: `wholly=false coversXY=true text=false controls=0 media=true` |
+| C66 | FACT | The listing image scales on hover by product design. | source: `src/design-system/media/AppImage.module.css:61-61`; observed: `hoverClass: 'group-hover:scale-105'` |
+| C67 | FACT | At 320 the Leaflet popup close control lies wholly outside the map that clips it. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:8-8`; observed: `(absolute) x 284..308 past div.listing-map 37..283` |
+| C68 | FACT | That close control is an interactive element with text. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-probe.txt:9-9`; observed: `a.leaflet-popup-close-button wholly=true coversXY=false text=true controls=1` |
+| C69 | FACT | At 1024 the dashboard chart extends past its card. | source: `docs/sessions/evidence/task923/review-3/rv3-d16-classes.txt:3-3`; observed: `(transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7` |
+| C70 | FACT | One error-screen cell of the Revision 2 full run is outside 925. | source: `docs/sessions/evidence/task923/review-3/rv3-rows-check.txt:11-11`; observed: `error-screen @390 mantine-primitives-headerview--signing-out~notifications it` |
+| C71 | FACT | A Story whose render does not finish in 20 s fails the load with a render-timeout reason. | source: `scripts/rendered-state-census/runner.mjs:116-116`; observed: `render did not reach finished/errored within 20s` |
+| C72 | FACT | The R16 transient class retries a load failure only on a navigation error. | source: `scripts/rendered-state-census/runner.mjs:439-439`; observed: `for (const d of r.rules['error-screen']) if (/^navigation failed` |
+| C73 | FACT | The same cell run alone has no error-screen. | source: `docs/sessions/evidence/task923/r3-85-stray-cell-rerun.txt:40-40`; observed: `portal:0 :: text-clamp, text-hidden (1 cell(s))` |
+| C74 | FACT | The Revision 2 self-test reproduces at review 3. | source: `docs/sessions/evidence/task923/review-3/rv3-verify.txt:47-47`; observed: `verify-gate: every case behaves as stated.` |
+| C75 | FACT | The Revision 2 mutation proof proves 9 of 9 bounds. | source: `docs/sessions/evidence/task923/r3-50-bound-mutations.txt:14-14`; observed: `9 of 9 proved.` |
+| C76 | FACT | Every Revision 2 full-run row carries every rule key and `notApplicable`, and the rows are unique. | source: `docs/sessions/evidence/task923/review-3/rv3-rows-check.txt:3-3`; observed: `rows missing a rule key 0; rows without notApplicable 0; unique 22739` |
+| C77 | FACT | Every retried job of the Revision 2 full run is at 640. | source: `docs/sessions/evidence/task923/review-3/rv3-rows-check.txt:9-9`; observed: `retried jobs not at 640 0` |
+| C78 | FACT | R15 raised the component-overflow rows from 873 to 1181. | source: `docs/sessions/evidence/task923/r3-84-component-overflow-change.txt:11-11`; observed: `873 -> 1181 (+308)` |
+| C79 | FACT | Discovery records found, clicked and not-operable candidates. | source: `docs/sessions/evidence/task923/r3-81-discover.txt:44-44`; observed: `found 4245, clicked 4091, not operable 154` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 
 ## Mobile adaptation record
@@ -320,6 +341,62 @@ fixes of 924 and 925.
 evidence, AC11–AC15 with transcripts, the new owner table, and deviations. Strongest status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`.
 
+## 12. Revision 3 — review 3, 2026-10-14 (`NEEDS REVISION`)
+
+Review evidence: `docs/sessions/evidence/task923/review-3/` (native Windows, Node v22.22.3). Verified: R15–R18 are in
+the code. The self-test reproduces with 38 cases (C74), and the mutation proof is 9 of 9 (C75). Every full-run row
+carries all 20 rule keys and `notApplicable` (C76). AC4 holds. Every retried job is a 640 cell owned by 924 (C77).
+Discovery prints its totals and the not-operable list (C79). The executor reported `PARTIALLY IMPLEMENTED` correctly.
+Both open points come from the Revision 2 text, not from the executor.
+
+**Findings.**
+
+1. **P1, R15 (kickoff defect).** The positioned path has no clipped-away bound (C60), unlike the in-flow path (C61).
+   Two classes of by-design content therefore fail `component-overflow`:
+   - 504 details: gallery and lightbox slides translated wholly outside their frame, holding only media (C62, C63);
+   - 268 details: the hover-zoomed card image layer, which covers its clipping frame on both axes (C64, C65, C66).
+
+   A gate that fails on them can never turn green, and these details would be filed as defects against 9 components.
+   Two other classes are real defects and stay failing:
+   - the Leaflet popup is wider than the map, and its close control is clipped away (C67, C68);
+   - the dashboard chart extends past its card (C69).
+2. **P2, R16 / AC14.** A render timeout is not in the transient class (C71, C72). One `error-screen` cell outside 925
+   (C70) does not occur when that cell runs alone (C73). The gate is therefore still not deterministic under load.
+
+**Opus rulings.** D16: R19 below adds two bounds. The Leaflet and chart classes stay under "new — Opus to file"
+and are filed at closure. Executor question 2: R20 below. Executor question 3 (CI scope): §9 and §11 stand. At closure,
+CI adds `check:rendered-state-census:verify` as blocking. The full run becomes blocking the day it is green. Until
+then, a task runs `--stories` on its own rows (the contract's per-task rule). The 3 910 s runtime blocks nothing.
+D17 (the `stacked-dialogs` fixture height), D18, D19, D20 and D21 are accepted. R17 note: a forced click on the six
+non-operable `recentlyviewedgridview--populated` buttons opens no portal (`review-3/rv3-r17-probe.txt`), so no new
+requirement follows.
+
+**Write set.** As §11. Evidence prefix `r4-`. `review-3/` is diagnosis only and stays unchanged. Out of scope: as §11.
+
+| ID | Observable requirement | P | AC |
+|---|---|---|---|
+| R19 [C60; C61; C62; C63; C64; C65; C66; C67; C68; C69; D1] | **Two bounded exemptions for positioned content, nothing else.** A positioned or transformed element is exempt from `component-overflow` only in one of two cases. Both cases require the R15 bound to clip (`overflow` other than `visible`). An overlay panel that does not clip is never such a bound. (a) **Clipped-away slide:** the element lies wholly outside the bound on the overflowing axis. A transformed element lies between it and the bound (the element itself included). The element holds no text, and neither it nor any descendant matches `button, a[href], input, select, textarea, [role=button], [tabindex]:not([tabindex="-1"])`. (b) **Media crop:** the element is an `img`, `video`, `picture` or `canvas` that holds no text. Its box covers the bound's padding box on both axes, within 0.5px. Every other positioned overflow fails as in R15, including an `svg`, a text block or a control. New self-test fixtures, each a portal dialog whose app root is green: `positioned-slide-away` (media-only slide translated wholly out of an `overflow: hidden` frame on a transformed track) PASS; `positioned-slide-away-control` (the same shape, but the slide holds a text button) FAIL `component-overflow` on `portal:0`; `media-cover-zoom` (an `inset: 0` image at `scale(1.1)` in an `overflow: hidden` frame) PASS; `media-shifted-past-frame` (an image the size of its frame, translated 30px, so it no longer covers the frame) FAIL; `text-scaled-past-frame` (a text block at `scale(1.1)` in the same frame) FAIL. The mutation proof adds four cases. Remove (a), and `positioned-slide-away` fails. Drop (a)'s no-text/no-control condition, and `positioned-slide-away-control` goes green. Remove (b), and `media-cover-zoom` fails. Drop (b)'s cover condition, and `media-shifted-past-frame` goes green. | P1 | AC16 |
+| R20 [C70; C71; C72; C73] | **A render timeout is transient.** A first attempt that fails because its render does not reach `finished` / `errored` in time (C71) is retried once on a fresh page under R16, and its rows carry `retry` in the same way. A render that ends `errored`, or that shows the Storybook error display, is never retried. Unit tests: (i) a job whose first attempt fails with the render-timeout reason and whose second attempt is green ends green with `retry` recorded; (ii) a job that fails with `render errored, sb-show-errordisplay=true` is run once only and has no `retry` key; (iii) a render timeout on both attempts still fails `error-screen`. | P2 | AC17 |
+| R21 [C62; C64; C67; C69; C78] | **Owner table after R19.** The new owner table lists the Leaflet popup (`listingdetailview`) and the dashboard chart (`admindashboardview`, `dashboardsemidonut`) as their own rows under "new — Opus to file", naming the class. The component-overflow change against Revision 2 is reported per component. | P2 | AC18 |
+
+- **AC16 [R19; C62; C63; C64; C65].** `npm run check:rendered-state-census:verify` exits 0, with the 38 Revision 2 cases
+  as stated plus the five R19 cases as stated. The mutation proof shows 13 of 13 proved.
+- **AC17 [R20; C71; C72].** The new unit tests (i)–(iii) pass, within the new test file run twice.
+- **AC18 [R19; R20; R21; C70; C76; C77].** The full run is repeated on the final build. Every row carries all 20 rule
+  keys and `notApplicable`, and AC4 still holds. The AC14 cell rule holds with 0 exceptions: every `open-failed`,
+  `portal-count` and `widths-mismatch` cell is a 924 cell at 640, and every `error-screen` cell is
+  `custom-range-too-long` (925). A copy of `review-3/rv3-d16-classes.mjs` saved as `r4-…` with only its input path
+  changed to the new `rows.jsonl` prints 0
+  `gallery-track` and 0 `image-layer` details. Its `leaflet` and `chart` lines equal `rv3-d16-classes.txt` lines 2–3
+  and 6–8, or each difference is explained row by row in the evidence file. The summary lists every retried job.
+- **AC19 [R19; R20].** Vitest passes twice (the new file and the whole suite). `typecheck`, `lint`, `build`,
+  `build-storybook`, `check:file-integrity` and `check:mojibake` exit 0. `git status --porcelain` is captured before
+  and after.
+
+**Verification order:** as §7, with evidence prefix `r4-`. The session log gets a `# Revision 3` section: R19–R21 →
+evidence, AC16–AC19 with transcripts, the new owner table, and deviations. Strongest status: `IMPLEMENTED - AWAITING
+ORCHESTRATOR REVIEW`.
+
 ## Rule-compliance ledger
 
 | Rule | How this task complies |
@@ -331,4 +408,4 @@ ORCHESTRATOR REVIEW`.
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59; owner decisions: D1; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79; owner decisions: D1; blocked claims: NONE.

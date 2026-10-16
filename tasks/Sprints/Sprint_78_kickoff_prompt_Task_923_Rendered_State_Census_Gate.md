@@ -237,6 +237,8 @@ Every fact below is a ledger row; nothing else sets scope.
 | C182 | FACT | Run b's all-photos sq 390 app row fails on the Leaflet popup. | source: `docs/sessions/evidence/task923/r7-full-b/rows.jsonl:17653-17653`; observed: `div.leaflet-popup` |
 | D1 | OWNER DECISION | The census of overlays is a project-wide contract with a registry, separate portal targets, full metrics, a Story × state × root × locale × viewport record and a planted portal-only violation. | owner: 2026-10-10; decision: `R94 буде достатнім лише якщо він робить це загальним контрактом, а не латкою Task 859` |
 | D2 | OWNER DECISION | Revision 6 keeps a full run, and its kickoff must let the executor find every defect without obstruction. | owner: 2026-10-15; decision: `нехай буде повний прогін, просто треба зробити якісний kickoff, щоб Sonnet все зробила вірно, щоб нічого їй не заважало, нехай знаходить всі помилки. Задача має бути виконана якісно!` |
+| D3 | OWNER DECISION | The executor runs the census in parts, looks at each result and fixes what it finds at once, instead of a new revision per cause. | owner: 2026-10-16; decision: `я пропоную, щоб Sonnet почергово робила прогони, наприклад якимись шматками, дивилась результат і одразу його виправляла, і так далі.` |
+| D4 | OWNER DECISION | The parts are single Stories: run Story by Story and fix the problem places. | owner: 2026-10-16; decision: `можна зробити так, щоб Sonnet робила від Story до Story прогони і виправляла проблемині місця` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -776,6 +778,10 @@ mutation proof (C160) reproduce; the determinism comparison reproduces its 4 row
 hold; AC32 does not, and the executor's status `PARTIALLY IMPLEMENTED` was right. D39, D40, D41, D44 and D45 are accepted; D42 and D43 are
 answered by the findings below. The code of R28–R31 stays.
 
+**Owner decisions D3 and D4 (2026-10-16).** A cause found by a run no longer waits for a new revision. The executor runs the registry
+Story by Story, and fixes each gate defect where it finds it, under the fix contract of R33; a product race is classified and goes to the
+owner table. Revision 7 therefore ends with every Story checked on the final code, not with a list of new causes for Revision 8.
+
 ### 16.1 Findings — the three cells
 
 1. **P1 (new): a same-origin stylesheet that fails is not seen, and the gate measures the broken page.** Run a's
@@ -799,8 +805,10 @@ answered by the findings below. The code of R28–R31 stays.
 
 Write set: `scripts/rendered-state-census/runner.mjs`, `scripts/rendered-state-census/verify.mjs`, four new fixture files under
 `scripts/__fixtures__/rendered-state-census/` (`census-target.css`, `stylesheet-fails-once.html`, `stylesheet-missing.html`,
-`fetch-404-benign.html`), and in `scripts/__tests__/rendered-state-census.test.ts` one new test (R32 (c)). Evidence prefix `r8-`; `review-7/`
-is diagnosis only and stays unchanged. Out of scope and unchanged: `in-page.mjs`, `check-mojibake.mjs`, the registry
+`fetch-404-benign.html`), and in `scripts/__tests__/rendered-state-census.test.ts` one new test (R32 (c)). **For the fixes of R33** the
+gate write set is `runner.mjs`, `in-page.mjs`, `verify.mjs`, new or changed files under `scripts/__fixtures__/rendered-state-census/` and
+new tests in `scripts/__tests__/rendered-state-census.test.ts`; nothing else. Evidence prefix `r8-`; `review-7/` is diagnosis only and stays
+unchanged. Out of scope and unchanged: `check-mojibake.mjs`, the registry
 `scripts/rendered-interaction-states.json`, `scripts/check-rendered-state-census.mjs`, `discover.mjs`, `registry.mjs`,
 `theme-breakpoints.mjs`, `package.json`, CI, policy, `.claude/**`, every product source and Story (`Map.tsx` and `ListingShareButton.tsx`
 included: their races go to the owner table, they are not fixed here).
@@ -810,6 +818,7 @@ included: their races go to the owner table, they are not fixed here).
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
 | R32 [C162; C163; C164; C165; C166; C167; C168; C169; C170; C171; D2] | **A failed same-origin document, script or stylesheet is a load failure, never a page to measure.** (a) The request tracker of R31 (c) also records, since the last main-frame navigation, every request to the page's own origin whose `resourceType()` is `document`, `script` or `stylesheet` and that fails (`requestfailed`, with `failure().errorText`) or is answered with a status of 400 or more (`response` event). No other type is recorded (`fetch` above all, C171), and no cross-origin request. (b) `loadTarget` returns `{ ok: false, reason }` when, after `document.fonts.ready`, one is recorded; `loadAndOpen` returns `{ stage: 'load', reason }` when one is recorded after its post-open settle (a chunk the open loaded). The reason is `resource failed: <type> <pathname+query> (status <n>[, <code>])` or `resource failed: <type> <pathname+query> (<errorText>)` for the first recorded one, followed by `, +<k> more` when there are more. The state, closed and range jobs all get it through `loadTarget`; `runStateJob` already writes a `load` stage as `error-screen`. (c) `transientReason` returns an `error-screen` detail that starts with `resource failed: `: the job is retried once on a fresh page (R16 / R29, C170); a second failure is the violation. (d) The static server answers 404 only when the path is outside the root or the file does not exist (`ENOENT`, `ENOTDIR`, `EISDIR`); every other error is answered 503 with the header `x-census-error: <error code>`, and the tracker writes that code into the reason (`status 503, EBUSY`). For the self-test, a request URL that carries `__census_status=<n>` with `n` from 500 to 599 is answered `n` with `x-census-error: CENSUS_STATUS` (no file is read). (e) Fixtures: `census-target.css` holds the one rule that `stylesheet-fails-once` moves out of `clean`'s `<style>`: `button { min-width: 44px; min-height: 44px; font: inherit; }`. `stylesheet-fails-once` is `clean` without that rule, so every button of its dialog is below 44px without the stylesheet; an inline script in `<head>` writes, with `document.write`, `<link rel="stylesheet" href="census-target.css?__census_status=503">` on the first load of the case and `<link rel="stylesheet" href="census-target.css">` on every later load (the case is `flaky: true`, as `open-flaky-once`): PASS on every rule of every root, `retry` recorded on every row with a `resource failed: stylesheet /census-target.css?__census_status=503 (status 503, CENSUS_STATUS)` first failure. `stylesheet-missing` is `clean` plus `<link rel="stylesheet" href="census-missing.css">` (no such file): FAIL `error-screen` on `app` with the detail `/^resource failed: stylesheet \/census-missing\.css \(status 404\)/`, `retry` recorded. `fetch-404-benign` is `clean` plus a script that fetches `census-missing-api.json` on load: PASS on every rule of every root, no `retry` key. (f) Three mutations of `runner.mjs`, applied as AC29 says (a temporary copy, never the repository file): drop (b), and `stylesheet-fails-once` fails `target-small` on `portal:0`; drop (c), and `stylesheet-fails-once` fails `error-screen` on `app`; record `fetch` in (a), and `fetch-404-benign` fails `error-screen` on `app`. | P1 | AC34, AC35, AC36 |
+| R33 [C161; C164; C165; C174; C175; C178; C179; D2; D3; D4] | **Story by Story, fixed on the way.** After R32, every Story of `scripts/rendered-interaction-states.json` (in sorted id order, numbered `001`…) is run twice, one run after the other: `node scripts/check-rendered-state-census.mjs --stories <story id> --jobs 10 --out docs/sessions/evidence/task923/r8-story/<nnn>-a` and the same into `<nnn>-b`. `r8-61` compares the pair. A differing row outside the allowed classes of AC36 is diagnosed (its Story × state alone three times, `--stories <story> --widths <width> --locales <locale> --no-closed`, then a probe in the manner of `review-7/rv7-10-…` / `rv7-11-…`) and ends in exactly one outcome: **(i) gate defect** — the measurement varies while the page does not: fixed under the fix contract below, then `check:rendered-state-census:verify` and the mutation proof re-run green, then the Story's pair is run again; **(ii) product race** — a probe with the gate code unchanged shows the product's own settled page differ between two conditions (CPU throttle, a delayed resource, the time of an action against a product timer), as C174 / C175 and C178 / C179 do: one narrowly named class (Story id pattern, root, rule, detail pattern) is added to `r8-61`'s allowed list with that probe as its evidence, and the owner table gets a row; the gate is not changed for it; **(iii) unresolved** — no cause after the isolation and the probe, or 3 fix attempts on one Story: recorded with its evidence, and the loop goes on to the next Story (it never stops on it). **Fix contract** — a fix (1) stays in the gate write set of §16.2 and keeps the exported names and arguments of §15.5 (5); (2) never makes a rule measure less: no threshold, bound or exemption widened without a fixture pair proving the benign shape green and the violating shape red, no element or rule left out, no allowlist, baseline or suppression in the gate, no retry because a measured rule failed (R29); (3) comes with a fixture that reproduces the defect (it behaves wrongly without the fix and as stated with it), added to `verify.mjs`, and a mutation that reverts the fix and makes that fixture fail, added to the mutation proof; (4) is one row of the session log's iteration table: Story, row, cause, outcome (i) / (ii) / (iii), files changed, fixture, mutation, evidence paths. | P1 | AC36 |
 
 ### 16.4 Acceptance criteria
 
@@ -822,22 +831,28 @@ included: their races go to the owner table, they are not fixed here).
   A line also printing the `error-screen` detail, prints for `A iframe-css-aborted` and `A iframe-css-404` the line `app: error-screen(1)` and
   no other rule, each detail starting `resource failed: stylesheet /assets/iframe-`; `A normal` is unchanged (`app: text-clamp(7)+text-ellipsis(3) | portal:0: green`).
   The B and C lines are evidence only (product races).
-- **AC36 [R9; R28; R29; R30; R31; R32; C118; C161; C172; C173; C174; C175; C176; C177; C178; C179; C180; C181; C182; D2].** **Two full runs** on
-  the final build, one after the other, 10 workers each (`--jobs 10`), into `r8-full-a/` and `r8-full-b/`. For each run, AC32's checks hold
-  (copies of `r7-84-ac32-checks.mjs` and `r7-10-na-vs-violation.mjs` saved as `r8-84-…` and `r8-10-…`, input path only), and the summary lists
-  every retried job with its first failure; the session log lists every retry whose first failure starts `resource failed:`, with its status and
-  code. **Determinism between `r8-full-a` and `r8-full-b`:** a copy of `r7-61-narrowed-compare.mjs` saved as `r8-61-…` prints every row that
-  differs, and its allowed list is exactly these three, nothing else:
+- **AC36 [R9; R28; R29; R30; R31; R32; R33; C118; C161; C172; C173; C174; C175; C176; C177; C178; C179; C180; C181; C182; D2; D3; D4].**
+  **The comparator.** A copy of `r7-61-narrowed-compare.mjs` saved as `r8-61-…` takes two run directories and prints every row that differs.
+  Its allowed list starts with exactly these three classes; it grows only by R33 outcome (ii), one named class per probe:
   1. `focus-open` on `patterns-mantine-adminshell--drawer-open` rows (C118, a product race);
   2. the Leaflet popup race (C172–C176, C182): on an `app` row of a `patterns-mantine-listingdetailview--` Story, a difference only in
      `component-overflow` and/or `text-hidden`, where every detail of those rules in the run that has them contains `leaflet-popup` or
      `listing-map`;
   3. the share tooltip race (C177–C181): on a `portal:0` row of a state whose id ends `~share-listing`, a difference only in `dismiss-escape`,
      whose detail is `dismiss-escape: the portal is still visible 5000ms after the dismissal`.
-  A job retried for `resource failed:` and recovered has no allowance: its rows must equal the other run's. For every other differing row, do
-  what AC32 says (run it alone three times, sample it, record it with its class in the session log), change no code outside R32 for it, finish
-  every other AC first and report it (strongest status `PARTIALLY IMPLEMENTED`). **Against `r7-full-b`, for information:** a copy of
-  `r7-85-row-diff.mjs` with its input paths changed prints the changes of `r8-full-a` per rule and component.
+  A job retried for `resource failed:` and recovered has no allowance: its rows must equal the other run's.
+  **The Story loop (R33).** Every Story of the registry has a pair `r8-story/<nnn>-a` / `-b`, the last pair after its last fix, compared by
+  `r8-61`: it agrees, or each of its differing rows is outcome (ii) or (iii) in the iteration table. The session log lists every retry
+  whose first failure starts `resource failed:`, with its status and code.
+  **The final full run.** After the last fix, one full run on the final build, 10 workers (`--jobs 10`), into `r8-full/`. AC32's checks
+  hold on it (copies of `r7-84-ac32-checks.mjs` and `r7-10-na-vs-violation.mjs` saved as `r8-84-…` and `r8-10-…`, input path only), and its
+  summary lists every retried job with its first failure. A script `r8-62-…` writes the rows of the last `-b` run of every Story into
+  `r8-story-union/rows.jsonl`; `r8-61` compares `r8-full` with it. Each differing row is handled as in R33; when that brings a fix, the
+  fixed Story's pair is run again and the self-test and mutation proof re-run (the full run is not repeated).
+  **Status.** No row is outcome (iii): `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. Any row is (iii): `PARTIALLY IMPLEMENTED`, with each
+  such row and its evidence. Every gate fix of the loop is counted in AC34's case count and mutation count, which grow beyond 61 and 29 by
+  one fixture and one mutation per fix. **Against `r7-full-b`, for information:** a copy of `r7-85-row-diff.mjs` with its input paths changed
+  prints the changes of `r8-full` per rule and component.
 - **AC37 [R32].** The test file passes twice. `npm test` (the whole suite) is run once and kept, with AC28's treatment if it is red.
   `typecheck`, `lint`, `build`, `build-storybook`, `check:file-integrity` and `check:mojibake` exit 0. `git status --porcelain` is captured
   before and after.
@@ -845,16 +860,19 @@ included: their races go to the owner table, they are not fixed here).
 ### 16.5 How to run it so nothing gets in the way
 
 1. Order: I0 and hashes → R32 (a)–(d), then its fixtures (e) → AC34 (self-test, then mutations, then the test file) → `build-storybook` →
-   AC35 → `r8-full-a` → `r8-full-b` → the AC36 scripts → AC37 → session log.
+   AC35 → the Story loop of R33 (Story `001` to the last) → the final full run `r8-full` → the AC36 scripts → AC37 → session log.
 2. Every rule of §15.5 (2)–(6) applies unchanged, with the prefix `r8-` and the review-7 probe (AC35) in place of the review-6 ones; the exported
-   names and arguments listed there stay as they are.
-3. The owner table is Revision 6's (`r7-86-…`), plus two rows: **the Leaflet popup race** (`src/components/shared/Map.tsx`: the popup is sized
+   names and arguments listed there stay as they are. In the loop, one thing runs at a time: a Story's run, a fix, the self-test, the mutation
+   proof. A fix to the gate code needs no `build-storybook` (the Storybook build is product output and does not change).
+3. Keep going. A Story whose cause is not found is outcome (iii) and the loop moves on; the loop and the final full run are never stopped for
+   one Story. A defect that only a file outside the gate write set could fix is outcome (iii) with that file named, never a change to it.
+4. The owner table is Revision 6's (`r7-86-…`), recomputed on `r8-full`, plus a row for every R33 outcome (ii), and these two: **the Leaflet popup race** (`src/components/shared/Map.tsx`: the popup is sized
    before its cross-origin stylesheet applies, and 301px is wider than the map at 390) and **the share tooltip that reappears after Escape**
    (`ListingShareButton`: the 2 000ms label reset reopens a dismissed tooltip under a resting pointer). Opus files them, with the rows marked
    "new" in Revision 6, at closure (§9).
 
-**Verification order:** as §16.5, evidence prefix `r8-`. The session log gets a `# Revision 7` section with R32 mapped to evidence, AC34–AC37
-with transcripts, the determinism table, the owner table and deviations. Strongest status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+**Verification order:** as §16.5, evidence prefix `r8-`. The session log gets a `# Revision 7` section with R32 and R33 mapped to evidence,
+AC34–AC37 with transcripts, the iteration table, the final comparison, the owner table and deviations. Strongest status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 ## Rule-compliance ledger
 
@@ -867,4 +885,4 @@ with transcripts, the determinism table, the owner table and deviations. Stronge
 | No baseline / allowlist | none; a differing Story × state needs a dated owner decision in its row |
 | Role boundaries | CI and policy edits are Opus's at closure (§9) |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128, C129, C130, C131, C132, C133, C134, C135, C136, C137, C138, C139, C140, C141, C142, C143, C144, C145, C146, C147, C148, C149, C150, C151, C152, C153, C154, C155, C156, C157, C158, C159, C160, C161, C162, C163, C164, C165, C166, C167, C168, C169, C170, C171, C172, C173, C174, C175, C176, C177, C178, C179, C180, C181, C182; owner decisions: D1, D2; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112, C113, C114, C115, C116, C117, C118, C119, C120, C121, C122, C123, C124, C125, C126, C127, C128, C129, C130, C131, C132, C133, C134, C135, C136, C137, C138, C139, C140, C141, C142, C143, C144, C145, C146, C147, C148, C149, C150, C151, C152, C153, C154, C155, C156, C157, C158, C159, C160, C161, C162, C163, C164, C165, C166, C167, C168, C169, C170, C171, C172, C173, C174, C175, C176, C177, C178, C179, C180, C181, C182; owner decisions: D1, D2, D3, D4; blocked claims: NONE.

@@ -5,6 +5,11 @@ Built Storybook: `storybook-static/` from the executor's final `build-storybook`
 
 **Verdict: `NEEDS REVISION`** → kickoff §16 (Revision 7: R32, AC34–AC37). The executor's status `PARTIALLY IMPLEMENTED` is right.
 
+**Amended the same day by owner D3 / D4:** the executor runs the registry Story by Story and fixes each gate defect on the spot (R33:
+outcomes gate defect / product race / unresolved; a fixture and a mutation per fix; no rule weakened), then one final full run on the
+final code (AC36). The cause of the repeated `PARTIALLY IMPLEMENTED` was the kickoff: it forbade any fix outside its write set while
+requiring two agreeing full runs, so each newly found cause could only end the revision.
+
 ## What was verified (current session)
 
 | Check | Evidence | Result |

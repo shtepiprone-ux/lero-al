@@ -1,0 +1,7 @@
+command: grep ^DIFF r7-84-determinism-a-b.txt, Story column, counted
+platform MINGW64_NT-10.0-26300 node v22.22.3 2026-10-16T09:00:53Z
+2 patterns-mantine-admindashboardview--activity-error
+9 patterns-mantine-adminshell--drawer-open
+2 patterns-mantine-listingdetailview--archived-listing
+Stories with a differing row: 3 of 260
+EXIT_CODE=0

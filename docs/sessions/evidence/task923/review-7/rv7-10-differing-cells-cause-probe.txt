@@ -1,0 +1,20 @@
+command: node docs/sessions/evidence/task923/review-7/rv7-10-differing-cells-cause-probe.mjs
+platform win32 node v22.22.3 2026-10-16T07:12:21.530Z
+A normal: settle {"ms":655,"bounded":false} | app: text-clamp(7)+text-ellipsis(3) | portal:0: green | viewport-overflow 0 | portal-count [] | target-small[0] null
+A iframe-css-aborted: settle {"ms":8009,"bounded":true} | app: action-hidden(13)+component-overflow(1)+portal-count(1)+target-small(6)+viewport-overflow(13) | viewport-overflow 13 | portal-count ["declared 1 portal root(s), found 0"] | target-small[0] "button.mantine-focus-auto \"Відкрити меню\" 16x6 < 44px"
+A iframe-css-404: settle {"ms":8081,"bounded":true} | app: action-hidden(13)+component-overflow(1)+portal-count(1)+target-small(6)+viewport-overflow(13) | viewport-overflow 13 | portal-count ["declared 1 portal root(s), found 0"] | target-small[0] "button.mantine-focus-auto \"Відкрити меню\" 16x6 < 44px"
+B escape at 504ms after the click (portals after open 1): first seen closed 122ms later, reopened true, portals at 5000ms 1
+B escape at 1505ms after the click (portals after open 1): first seen closed 119ms later, reopened true, portals at 5000ms 1
+B escape at 1915ms after the click (portals after open 1): first seen closed 117ms later, reopened true, portals at 5000ms 1
+B escape at 2007ms after the click (portals after open 1): first seen closed 123ms later, reopened true, portals at 5000ms 1
+B escape at 2103ms after the click (portals after open 1): first seen closed 181ms later, reopened false, portals at 5000ms 0
+B escape at 2615ms after the click (portals after open 1): first seen closed 125ms later, reopened false, portals at 5000ms 0
+C normal trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C normal trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-late-3000 trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-late-3000 trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-aborted trial 1: popup 196..512 (316px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-aborted trial 2: popup 196..512 (316px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C google-fonts-aborted trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C google-fonts-aborted trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+EXIT_CODE=0

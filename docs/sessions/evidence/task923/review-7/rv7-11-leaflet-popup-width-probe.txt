@@ -1,0 +1,9 @@
+command: node docs/sessions/evidence/task923/review-7/rv7-11-leaflet-popup-width-probe.mjs
+platform win32 node v22.22.3 2026-10-16T07:21:04.338Z
+throttle 1x trial 1: at width write [{"t":484,"width":"301px","mapWidth":316,"popupPosition":"static","contentFont":"\"Open Sans\", system-ui, -apple-system, s","fontSize":"16px","fontsStatus":"loading","openSans":false}] | end popup 38..385 font "Helvetica Neue", Arial, Helvetica, sans 13px
+throttle 1x trial 2: at width write [{"t":606,"width":"301px","mapWidth":316,"popupPosition":"static","contentFont":"\"Open Sans\", system-ui, -apple-system, s","fontSize":"16px","fontsStatus":"loading","openSans":false}] | end popup 38..385 font "Helvetica Neue", Arial, Helvetica, sans 13px
+throttle 1x trial 3: at width write [{"t":591,"width":"301px","mapWidth":316,"popupPosition":"static","contentFont":"\"Open Sans\", system-ui, -apple-system, s","fontSize":"16px","fontsStatus":"loading","openSans":false}] | end popup 38..385 font "Helvetica Neue", Arial, Helvetica, sans 13px
+throttle 4x trial 1: at width write [{"t":1638,"width":"248px","mapWidth":316,"popupPosition":"absolute","contentFont":"\"Helvetica Neue\", Arial, Helvetica, sans","fontSize":"13px","fontsStatus":"loaded","openSans":true}] | end popup 49..343 font "Helvetica Neue", Arial, Helvetica, sans 13px
+throttle 4x trial 2: at width write [{"t":1646,"width":"248px","mapWidth":316,"popupPosition":"absolute","contentFont":"\"Helvetica Neue\", Arial, Helvetica, sans","fontSize":"13px","fontsStatus":"loaded","openSans":true}] | end popup 49..343 font "Helvetica Neue", Arial, Helvetica, sans 13px
+throttle 4x trial 3: at width write [{"t":1764,"width":"248px","mapWidth":316,"popupPosition":"absolute","contentFont":"\"Helvetica Neue\", Arial, Helvetica, sans","fontSize":"13px","fontsStatus":"loaded","openSans":true}] | end popup 49..343 font "Helvetica Neue", Arial, Helvetica, sans 13px
+EXIT_CODE=0

@@ -1,0 +1,89 @@
+command: node docs/sessions/evidence/task923/review-7/rv7-12-same-origin-failure-sweep.mjs
+platform win32 node v22.22.3 2026-10-16T07:23:30.904Z; stories 260
+mantine-primitives-favoritesshell--populated: load ok | fetch /api/property-types status 404 ; fetch /api/exchange-rate status 404
+mantine-primitives-favoritesshell--type-filter-no-matches: load ok | fetch /api/property-types status 404 ; fetch /api/exchange-rate status 404
+mantine-primitives-filterspanelshell--default: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+mantine-primitives-herosearch--container: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+mantine-primitives-herosearch--default: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-admincurrenciesview--default: load ok | fetch /api/presence status 404
+patterns-mantine-admincurrenciesview--delete-confirm: load ok | fetch /api/presence status 404
+patterns-mantine-admincurrenciesview--detail: load ok | fetch /api/presence status 404
+patterns-mantine-admincurrenciesview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-admincurrencytabs--default: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--activity-empty-period: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--activity-error: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--activity-stale: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--adm-02-error: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--adm-09-zero: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--all-queues-zero: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--cities-only-other: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--default: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--no-location-requests: load ok | fetch /api/presence status 404
+patterns-mantine-admindashboardview--trends-error: load ok | fetch /api/presence status 404
+patterns-mantine-adminexchangeprovidersview--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminexchangeprovidersview--delete-confirm: load ok | fetch /api/presence status 404
+patterns-mantine-adminexchangeprovidersview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminexchangeprovidersview--pending: load ok | fetch /api/presence status 404
+patterns-mantine-admininquiriesview--default: load ok | fetch /api/presence status 404
+patterns-mantine-admininquiriesview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-admininquiriesview--long-subject: load ok | fetch /api/presence status 404
+patterns-mantine-admininquiriesview--unscoped: load ok | fetch /api/presence status 404
+patterns-mantine-adminlistingsview--audit-zero: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--default: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--empty: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--filtered-pending: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--hidden-eligible: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--paginated: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--premium-tab: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminlistingsview--visible-filter: load ok | fetch /api/property-types status 404 ; fetch /api/presence status 404
+patterns-mantine-adminpageframe--form: load ok | fetch /api/presence status 404
+patterns-mantine-adminpageframe--narrow: load ok | fetch /api/presence status 404
+patterns-mantine-adminpageframe--page: load ok | fetch /api/presence status 404
+patterns-mantine-adminpageframe--panel: load ok | fetch /api/presence status 404
+patterns-mantine-adminpageframe--shell-fixed-gutter: load ok | fetch /api/presence status 404
+patterns-mantine-adminpageframe--shell: load ok | fetch /api/presence status 404
+patterns-mantine-adminpagesview--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminpagesview--delete-confirm: load ok | fetch /api/presence status 404
+patterns-mantine-adminpagesview--deleting: load ok | fetch /api/presence status 404
+patterns-mantine-adminpagesview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminpagesview--migration-pending: load ok | fetch /api/presence status 404
+patterns-mantine-adminpermissionsview--all-allowed: load ok | fetch /api/presence status 404
+patterns-mantine-adminpermissionsview--audit-empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminpermissionsview--audit-unavailable: load ok | fetch /api/presence status 404
+patterns-mantine-adminpermissionsview--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminpermissionsview--saving: load ok | fetch /api/presence status 404
+patterns-mantine-adminreportsview--all-tab: load ok | fetch /api/presence status 404
+patterns-mantine-adminreportsview--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminreportsview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminshell--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminshell--drawer-open: load ok | fetch /api/presence status 404
+patterns-mantine-adminsupportview--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminsupportview--empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminsupportview--unassigned-landing: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--create: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--edit-blocked: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--edit-errors: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--edit: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--saving: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--view-agent: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--view-blocked: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--view-location-request: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--view-no-history-controls: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserprofileview--view: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--default: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--empty: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--location-filter-removed: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--location-filter: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--paginated: load ok | fetch /api/presence status 404
+patterns-mantine-adminuserstable--verified-tab: load ok | fetch /api/presence status 404
+patterns-mantine-listingsfilterbar--default: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsfilterbar--many-active-filters: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsfilterbar--one-active-filter: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsfilters--default: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsshellview--closed-empty: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsshellview--closed-tab: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsshellview--default: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsshellview--empty: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+patterns-mantine-listingsshellview--loading-more: load ok | fetch /api/exchange-rate status 404 ; fetch /api/property-types status 404
+stories with a same-origin failure or a failed load: 85 of 260; failures by resource type {"fetch":107}
+EXIT_CODE=0

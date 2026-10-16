@@ -1,0 +1,3 @@
+command: node scripts/check-mobile-adaptation-contract.mjs
+FAIL  check:mobile-adaptation-contract — fail closed: base is required
+EXIT_CODE=1

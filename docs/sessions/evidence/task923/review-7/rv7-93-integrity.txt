@@ -1,0 +1,10 @@
+command: npm run check:file-integrity
+    Checking 2765 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 2765 file(s) clean
+EXIT_CODE=0
+command: npm run check:mojibake
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+
+check:mojibake: 0 artifacts in 12332 files
+EXIT_CODE=0

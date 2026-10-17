@@ -5,6 +5,10 @@ Open this phase file before the saved task; do not open source, diff, or Storybo
 1. Read `.claude/rules/shared/role-boundaries.md`.
 2. Read the complete saved task and its named rule bundle. If it is incomplete, contradictory, or lacks executable
    acceptance criteria, stop with the precise gap.
+   Read [shared/security-testing.md](../shared/security-testing.md) and its selected companions. Verify the saved
+   `Security test contract` names frontend AND server security criteria, an approved target and scoped synthetic fixtures.
+   Missing product-layer criteria are `BLOCKED — SECURITY TEST CONTRACT MISSING`; report the exact gap to Opus.
+   Do not substitute live customer data, production services or always-successful mocks for missing test facilities.
 3. Read `.claude/rules/shared/mobile-adaptation-contract.md`, then `.claude/rules/shared/ui-token-contract.md`, for
    every visible/UI/Story/token task. Verify the saved Mobile adaptation record selects a real source-backed pattern,
    registry-allowed Mantine mechanism, and canonical Mantine owner; a current Story is not its authority. Mantine

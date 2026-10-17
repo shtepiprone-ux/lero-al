@@ -10,6 +10,13 @@ Build one executable route for a fresh Sonnet session. Before the requirements, 
 5. completion-report contract and a per-rule compliance ledger;
 6. the saved path under the selected sprint, never a chat-only task or `tasks/` root file.
 
+Every created or revised task also includes `## Security test contract`, using the exact fields and applicability
+rules in [shared/security-testing.md](../shared/security-testing.md). Name frontend AND server security tests,
+specific allow/deny/data-leak assertions, fixtures, boundary integration and sensitivity evidence. Existing mapped
+regressions require inspected assertions and a rerun; changed behavior requires its own regression. Resolve missing
+test infrastructure explicitly before promising runnable evidence. Only genuine Q0 documentation-only work may
+justify runtime N/A under that contract. Do not publish a product kickoff missing either layer's criteria.
+
 For each visible artifact, add a canonical decision record: semantic searches, inspected candidates, direct Story and
 source, `reuse`/`extend`/`create canonical`, shared token path, registration, preservation boundary, and component →
 composition → route evidence hierarchy. A missing token becomes a named semantic-token creation in the canonical

@@ -11,6 +11,11 @@ Use one decision only:
 Each confirmed finding names severity, requirement IDs, exact location, observed/expected behavior, evidence/impact,
 specific resolution, and verification. No generic “fix this” finding.
 
+Under [shared/security-testing.md](../shared/security-testing.md), missing required frontend OR server security
+tests, false-positive sensitivity proof, or substituted mock evidence for a required real boundary prevents approval.
+Use `NEEDS REVISION` for deficient tests/implementation; use `PARTIALLY VERIFIED`/`BLOCKED` for genuinely unavailable
+runtime evidence. Never infer an executable CI gate or release readiness from the presence of these Markdown rules.
+
 For `NEEDS REVISION`, revise the existing kickoff and active state records in the same turn, reopen it to verify the
 single corrected route, and provide only a commit-only owner handoff for Opus-authored artifacts. For approval,
 synchronize GR-5 state, archive the closed task/stale closed rows, re-read active backlog, run its gate, and emit the

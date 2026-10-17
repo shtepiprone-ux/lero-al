@@ -18,6 +18,9 @@ the moment a rule becomes relevant. `CLAUDE.md` is the entry point; a role's `SK
    adaptation pattern.
 5. Read the exact legacy/reference document named by `docs/rule-index.md` only when the task type needs it. The
    long documents remain the historical and detailed source of record; they are not a default "read everything" list.
+6. For every new or edited task, read [shared/security-testing.md](shared/security-testing.md) and its selected
+   companion files. Every product task requires frontend AND server security tests, named by Opus, implemented or
+   rerun by Sonnet, and independently verified by Opus. The contract defines the narrow Q0-only N/A exception.
 
 ## Size and ownership rules
 

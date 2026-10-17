@@ -13,6 +13,10 @@ Before opening task, diff, source, executor report, validation evidence, or writ
    evidence, QA profile, current backlog state, dirty-worktree witnesses, and final non-Q0 build transcript.
 5. On Windows, only native-Windows/CI terminal evidence supports the verdict. Retain platform, Node version, cwd,
    exact command, output, and exit code; otherwise mark evidence missing.
+   Read [shared/security-testing.md](../shared/security-testing.md) and its selected companions for every task.
+   Independently inspect both frontend/server criteria and assertions, fixture validity, mock scope, actual test
+   collection, isolated targets and deliberate-break evidence. Source scanners and fake databases do not establish
+   effective access control or real RLS. Verify any Q0 N/A against the complete changed-file scope.
 6. For visible surfaces, read `shared/mobile-adaptation-contract.md`, then `shared/ui-token-contract.md` and
    `shared/enforcement-model.md`; verify the saved Mobile adaptation record against its primary sources, allowed
    Mantine mechanism, and canonical owner, then run the 16d rendered-component census yourself. Mantine owns

@@ -14,6 +14,11 @@ Validate the implementation; do not conduct an implementation review or issue an
 5. Recheck file integrity, active downstream consumers for deletes/renames, and the direct Story/registration for
    every newly created production UI component.
 6. List every owner visual-QA tuple as `OWNER VISUAL QA REQUIRED`; never mark it visually passed on the owner's behalf.
+7. Map both frontend and server rows of the saved `Security test contract` to actual collected/passing tests,
+   denial/data-absence/effect assertions and applicable real-boundary evidence. Follow
+   [shared/security-testing.md](../shared/security-testing.md) and [test quality](../shared/security-test-quality.md).
+   Retain the required deliberate-break failure and restored pass for critical protections. Missing integration
+   evidence, blocked environments or surviving relevant mutations remain explicit gaps; a unit PASS cannot close them.
 
 The factual handoff contains task path/status; per-AC evidence; current/required behavior; changed files; commands
 and actual outcomes; visual source trace; canonical decision/token record; defects/gaps; assumptions/deviations;

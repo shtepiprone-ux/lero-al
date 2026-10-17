@@ -10,6 +10,9 @@ Before opening an existing task, source, diff, executor report, or writing a kic
 3. For a reserved/assigned number, read `docs/backlog-reserved.md` before any task/sprint action and retain the
    required receipt. Read current backlog/sprint state before choosing a sprint.
 4. Classify the task. Select the minimal bundle from `docs/rule-index.md`; do not say "read all docs".
+   Read [shared/security-testing.md](../shared/security-testing.md) for every task created or revised, and its
+   applicable companions. Inspect the actual frontend consumers and server/data boundaries before selecting tests;
+   a diff confined to one layer does not waive security coverage at the other layer.
 5. Read `shared/claim-evidence-contract.md`. Establish facts from current source, callers, tests, direct Stories,
    real behavior, and diff. Create a `C#` entry with its actual path/range/literal for every claim that will determine
    scope, behavior, an AC, an exclusion, or expected command result. Trace a claimed absent/dead prop or token through
